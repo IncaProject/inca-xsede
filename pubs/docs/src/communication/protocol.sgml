@@ -1,0 +1,139 @@
+<section id="communication-protocol">
+<title>Inca Protocol</title>
+
+<para>
+The Inca protocol is intended sit on top of tcp and ssl and enable the basic
+communication between Inca components. 
+</para>
+
+<section id="communication-protocol-types">
+<title>Message Types</title>
+<para>The protocol is made of two basic
+message types, a command message  and a response.  
+</para>
+
+<variableList>
+<varListEntry>
+	<term><emphasis>Command</emphasis></term>
+	<listItem>
+	<para>
+	A command message is of the following format.
+	CMD SP VERSION CRLF
+	PAYLOAD CRLF
+	</para>
+	</listItem>
+</varListEntry>
+<varListEntry>
+	<term><emphasis>Response</emphasis></term>
+	<listItem>
+	<para>
+	A response message is of the following format.
+	OK NNN CRLF
+	</para>
+	</listItem>
+</varListEntry>
+</variableList>
+
+</section>
+<section id="communication-protocol-conversation">
+<title>Conversation Pattern</title>
+
+<para>
+A conversation can consist of the following combinations.</para>
+
+<blockquote>
+<para>
+<itemizedList>
+<listitem><para> Initiator: command</para></listitem>
+<listitem><para>Listener: [command]+ | response </para></listitem>
+<listitem><para>Initiator: response (only if the previous message was a command)</para></listitem>
+</itemizedList>
+</para> 
+</blockquote>
+
+</section>
+<section id="communication-protocol-commands">
+<title>Commands</title>
+
+<para>
+The set of valid commands are listed below.
+</para>
+
+<variableList>
+<varListEntry>
+	<term>POLL</term>
+	<listItem>
+	<para>
+	Initiates a connection between a Reporter Manager and a Reporter Agent.
+	</para>
+	</listItem>
+</varListEntry>
+<varListEntry>
+	<term>REPORT</term>
+	<listItem>
+	<para>
+	Indicates that the payload is a report to be processed.
+	</para>
+	</listItem>
+</varListEntry>
+<varListEntry>
+	<term>CONFIG</term>
+	<listItem>
+	<para>
+	Indicates that the payload is configuration information.
+	This is useful between the Reporter Agents and the Depot.
+	</para>
+	</listItem>
+</varListEntry>
+<varListEntry>
+	<term>ADD/REPLACE/DELETE</term>
+	<listItem>
+	<para>
+	Indicates that the payload is scheduling information for a reporter manager
+	from a reporter agent.  These commands can also be used between reporter
+	agents when forwarding requests.
+	</para>
+	</listItem>
+</varListEntry>
+<varListEntry>
+	<term>QUERY</term>
+	<listItem>
+	<para>
+	Used to query the Reporter Agent for schedule information.  Useful to any
+	remote GUI applications used to run the Agent.
+	</para>
+	</listItem>
+</varListEntry>
+</variableList>
+
+</section>
+<section id="communication-protocol-example">
+<title>Example Conversations</title>
+<variableList>
+	<varlistEntry>
+	<term>Reporter Manager(RM) to Depot(D)</term>
+	<listItem>
+	<para>RM:  Report SP INCA/1.0 CRLF {report XML document} CRLF</para>
+	<para>D:  OK 100 CRLF</para>
+	</listItem>
+	</varlistEntry>
+	<varlistEntry>
+	<term>Reporter Agent(RA) to Depot(D)</term>
+	<listItem>
+	<para>RA:  CONFIG SP INCA/1.0 CRLF {config XML document} CRLF</para>
+	<para>D:  OK 100 CRLF</para>
+	</listItem>
+	</varlistEntry>
+	<varlistEntry>
+	<term>Reporter Manager(RM) to Reporter Agent(RA)</term>
+	<listItem>
+	<para>RM:  POLL SP INCA/1.0 CRLF CRLF</para>
+	<para>RA:  ADD SP INCA/1.0 CRLF {config XML document} CRLF</para>
+	<para>RA:  DELETE SP INCA/1.0 CRLF {config XML document} CRLF CRLF</para>
+	<para>RM:  OK 100 CRLF</para>
+	</listItem>
+	</varlistEntry>
+</variableList>
+</section>
+
+</section>

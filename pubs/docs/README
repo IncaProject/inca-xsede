@@ -1,0 +1,60 @@
+EDIT DOCUMENTS
+==============
+All editing should be done directly in the src directory
+
+CREATE A NEW DOCUMENT
+=====================
+1) choose a name for the document
+2) create a file src/[name].sgml
+3) rerun the configure command
+
+BUILD EXISTING DOCUMENTATION
+=============================
+1) After checking out the docs directory, 
+   use the configure command to set up
+   docbook and the Makefile
+
+	 ** note **
+	 If a new document has been added since the last time configure was run
+	 the configure script must be rerun in order to build the new document.
+
+   % configure
+   loading cache ./config.cache
+   checking whether make sets ${MAKE}... (cached) yes
+   checking for db2html... (cached) /usr/bin/db2html
+   checking for db2pdf... (cached) /usr/bin/db2pdf
+   checking for db2rtf... (cached) /usr/bin/db2rtf
+   creating ./config.status
+   creating Makefile.inc
+   creating ldp.dsl
+
+2) Use the make command to list the available documents.
+
+   % make
+
+	 Inca Documentation
+
+	 Available targets:
+     <doc>.<fmt> where <doc> = [design ] and
+                       <fmt> = [pdf,html,rtf]
+     <doc>       where <doc> = [design ]
+		             Creates html, pdf, and rtf for doc all
+								 Creates all html, pdf, and rtf files
+     clean       Deletes generated docbook files 
+		 clean-all   Does 'clean' and deletes html, pdf, and rtf files
+		 distclean   Does 'clean-all' and deletes autoconf generated files
+
+		 In this example design is the only document availabe for building.
+
+
+3) Use the make command to create html, pdf 
+   and rtf files.  Type "make" for help. 
+
+   %make design
+
+	 - or -
+
+	 %make design.html
+	 to only create the html file
+
+

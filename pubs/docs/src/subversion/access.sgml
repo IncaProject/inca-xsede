@@ -1,0 +1,56 @@
+<section id="subversion-access">
+<title>Accessing the Inca Subversion repository</title>
+
+<para>The Inca Subversion repository is located on
+<filename>cuzco.sdsc.edu</filename> at 
+<filename>/misc/inca/subversion</filename>.  Currently only ssh and local
+authentication access methods are available.  You need an account on
+<filename>cuzco.sdsc.edu</filename> and Subversion needs to be in your path.
+Subversion is installed on <filename>cuzco.sdsc.edu</filename> at
+<filename>/misc/inca/local</filename>.  You should edit your .cshrc (or
+equivalent file) and either add <filename>/misc/inca/local/bin</filename> to
+your path or source <filename>/misc/inca/local/setup.csh</filename> (which
+will do it for you).
+</para>
+
+<para>The Inca Subversion repository is structured as follows (which
+is the recommended structure for Subversion repositories):</para>
+
+<screen>
+trunk/
+branches/
+tags/
+</screen>
+
+<para>The main development occurs in <filename>trunk</filename> which is 
+located at </para>
+
+<screen>
+/misc/inca/subversion/inca/trunk
+</screen>
+
+<para>The following examples demonstrate how to checkout the Inca Subversion
+repository into a directory called <filename>inca-trunk</filename>:</para>
+
+<example>
+<title>Local checkout (from <filename>cuzco.sdsc.edu</filename>)</title>
+<screen>
+svn checkout file:///misc/inca/subversion/inca/trunk inca-trunk
+</screen>
+</example>
+
+<example>
+<title>SSH checkout</title>
+<screen>
+svn checkout svn+ssh://cuzco.sdsc.edu/misc/inca/subversion/inca/trunk inca-trunk
+</screen>
+</example>
+
+<note>
+<para>There is also a Subversion repository co-located with the Inca
+Subversion repository called <filename>testproject</filename>.  This is a 
+play area where you can test out Subversion commands.
+</para>
+</note>
+
+</section>

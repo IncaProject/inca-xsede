@@ -1,0 +1,102 @@
+<section id="subversion-commands">
+<title>Useful Subversion Commands</title>
+
+  <section id="subversion-commands-list">
+  <title>Directory listing</title>
+  <para>
+  The Subversion repository structure is not evident by doing a unix
+  <command>ls</command> at <filename>/misc/inca/subversion</filename>.
+  To see the repository structure, use the <command>list</command> command.
+	</para>
+
+  <example>
+  <title>List directory structure (from cuzco.sdsc.edu)</title>
+  <screen>
+  svn list file:///misc/inca/subversion
+  </screen>
+  </example>
+  
+  <example>
+  <title>List directory structure via SSH</title>
+  <screen>
+  svn list svn+ssh://cuzco.sdsc.edu/misc/inca/subversion
+  </screen>
+  </example>
+  
+  </section>
+
+  <section id="subversion-commands-mkdir">
+  <title>Create a directory</title>
+  <para>
+  To create a new directory <filename>docs</filename> under
+  <filename>inca/trunk</filename>:
+	</para>
+  
+  <example>
+  <title>Within an existing Subversion checkout</title>
+  <screen>
+  svn mkdir docs
+  </screen>
+  </example>
+  
+  <example>
+  <title>Outside of a Subversion checkout</title>
+  <screen>
+  svn mkdir svn+ssh://cuzco.sdsc.edu/misc/inca/subversion/inca/trunk/docs
+  </screen>
+  </example>
+  
+  </section>
+
+  <section id="subversion-commands-import">
+  <title>Import a directory</title>
+  <para>
+  To import a directory <filename>docs</filename> under
+  <filename>inca/trunk</filename>, create a temporary directory 
+  <filename>tmpdir</filename> outside of your Subversion checkout.
+	</para>
+  
+  <screen>
+  mkdir tmpdir
+  </screen>
+  
+	<para>
+  Then move <filename>docs</filename> under <filename>tmpdir</filename> and
+  import it.
+	</para>
+  
+  <screen>
+  mv docs tmpdir
+  cd tmpdir
+  svn import . svn+ssh://cuzco.sdsc.edu/misc/inca/subversion/inca/trunk
+  </screen>
+  
+	<para>
+  You can then verify that the directory exists by listing it.
+	</para>
+  
+  <screen>
+  svn list svn+ssh://cuzco.sdsc.edu/misc/inca/subversion/inca/trunk
+  </screen>
+  
+  </section>
+  
+  <section id="subversion-commands-relocate">
+  <title>Change repository location</title>
+
+  <para>
+	If your Subversion repository location changes, you can use the 
+	<command>--relocate</command> option to the <command>switch</command>
+	command.  The following example shows how to deal with the Subversion
+	repository on <filename>inca.sdsc.edu</filename> being moved to
+	<filename>cuzco.sdsc.edu</filename>.
+	</para>
+
+	<screen>
+  svn switch --relocate svn+ssh://inca.sdsc.edu/misc/inca/subversion/inca/trunk\
+  svn+ssh://cuzco.sdsc.edu/misc/inca/subversion/inca/trunk
+	</screen>
+
+	</section>
+
+</section>
