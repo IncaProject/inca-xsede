@@ -1,0 +1,108 @@
+<section id="control-manager">
+<title>Reporter Manager</title>
+
+<para>
+A reporter manager is responsible for scheduled and on-demand execution of
+reporters and sending the results to a Depot for storage.  A reporter manager
+trusts one and only one reporter agent who it registers with and accepts
+control changes from.  A reporter manager should have a minimal impact on
+the resource it is running on.  It is composed of 3 main
+components shown in <xref linkend="control-manager-architecture-figure">.
+</para>
+
+<figure id="control-manager-architecture-figure">
+<title>Reporter Manager</title>
+<graphic fileref="figures/reporter_manager.jpg" align="center">
+</graphic>
+</figure>
+
+<variableList>
+  <varListEntry>
+    <term>Scheduler</term>
+    <listItem>
+      <para>The Scheduler receives a subscription request from either a
+        reporter agent or a local Inca administrator indicating an
+        add, replace, or delete request followed by a set of reporter 
+				descriptions.  The Scheduler looks at the subscription and then
+				consults the reporter administrator to find out which reporters it
+				needs in order fulfill the subscription and sends it back to the
+				reporter agent.  The reporter agent will then send the necessary
+				reporters to the reporter manager.
+			</para>
+			<para>
+				Each reporter description indicates a reporter
+				url, a set of input arguments, timeout, frequency of execution,
+				execution priority, and a
+				storage policy (for now, a set of depots interested in the results).
+				If the reporter execution is on-demand, the scheduler hands the
+				request to the Reporter Instance Manager (RIM) for execution.
+				Otherwise the reporter execution is scheduled and the frequency of
+				execution is managed by an internal cron table.  Reporters can
+				also be executed in a group with a particular type of scheduler (e.g.,
+				e2e bandwidth measurement scheduler, queue scheduler)). When the
+				scheduled time for a reporter comes, a RIM is launched to run the
+				reporter.
+      </para>
+    </listItem>
+  </varListEntry>
+  <varListEntry>
+    <term>Reporter Instance Manager</term>
+    <listItem>
+      <para>
+				The Reporter Instance Manager (RIM) is responsible for launching a
+				reporter instance and monitoring its execution.  It will request the 
+				reporter from the Reporter Administrator (who will download it if
+				not available locally) and then fork/exec it.  The RIM monitors 
+				system usage of the reporter (CPU time, wall clock time, and 
+				memory) and if it exceeds a specified timeout set for either wall clock
+				time, CPU time, or memory, it will kill the reporter and formulate an
+				error report.  Otherwise, upon reporter exit, the RIM will check to
+				see if a report is produced and create an error report if not.  Once
+				a report is produced, it is wrapped in an envelope.  The statistics
+				on the system usage of the reporter are also included along with
+				the storage policy.  The envelope is sent to the first available 
+				Depot in its list where the data will then get passed to all
+				interested parties.
+      </para>
+    </listItem>
+  </varListEntry>
+  <varListEntry>
+    <term>Reporter Administrator</term>
+    <listItem>
+      <para>
+				The Reporter Administrator (RA) handles the maintenance and
+				installation of reporters and reporter libraries which it receives
+				from the Reporter Agent (who downloads it from one or more Reporter
+				Repositories). 
+				<footnote>
+				<para>
+				A reporter agent will download the reporter packages and send them to
+				each reporter manager.  The reason each reporter manager is not
+				directly contacting the reporter repositories is for firewall purposes
+				(i.e., not having to open another outgoing port) and to be able to
+				handle repeated complexities of unpackaging the reporter package
+				(e.g., authenticate once vs. everywhere).
+				</para>
+				</footnote> 
+				The RA will receive a list of urls from the Scheduler which it will
+				then check to see if has a local copy.  For those it does not have 
+				locally, it will contact the reporter agent and download them.  Once
+				downloaded, it will return success to the Scheduler.  
+      </para>
+    </listItem>
+  </varListEntry>
+</variableList>
+
+
+<para>
+The lifecycle of the reporter manager is shown in 
+<xref linkend="control-manager-lifecycle-figure">.
+</para>
+
+<figure id="control-manager-lifecycle-figure" float=1 pgwide=0>
+<title>Reporter Manager Lifecycle</title>
+<graphic fileref="figures/reporter_manager_lifecycle.jpg" align="center">
+</graphic>
+</figure>
+
+</section>
