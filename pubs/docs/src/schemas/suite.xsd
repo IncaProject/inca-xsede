@@ -80,5 +80,51 @@
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name = "resourceGroupId" type = "xsd:string"/>
-	<xsd:element name = "frequency" type = "xsd:string"/>
+	<xsd:element name = "frequency">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "unit"/>
+				<xsd:element ref = "value"/>
+				<xsd:element ref = "startAt" minOccurs = "0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "unit">
+		<xsd:simpleType>
+			<xsd:restriction base = "xsd:string">
+				<xsd:enumeration value = "minutes"/>
+				<xsd:enumeration value = "hours"/>
+				<xsd:enumeration value = "days"/>
+				<xsd:enumeration value = "weeks"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name = "startAt">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "minute" minOccurs = "0"/>
+				<xsd:element ref = "hour" minOccurs = "0"/>
+				<xsd:element ref = "day" minOccurs = "0"/>
+				<xsd:element ref = "week" minOccurs = "0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "minute">
+		<xsd:simpleType>
+			<xsd:restriction base = "xsd:integer">
+				<xsd:maxInclusive value = "0"/>
+				<xsd:maxExclusive value = "59"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name = "hour">
+		<xsd:simpleType>
+			<xsd:restriction base = "xsd:integer">
+				<xsd:maxInclusive value = "0"/>
+				<xsd:maxExclusive value = "23"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name = "day" type = "xsd:integer"/>
+	<xsd:element name = "week" type = "xsd:integer"/>
 </xsd:schema>
