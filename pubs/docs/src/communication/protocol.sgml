@@ -2,129 +2,118 @@
 <title>Inca Protocol</title>
 
 <para>
-The Inca protocol is intended sit on top of tcp and ssl and enable the basic
+The Inca protocol is intended sit on top of TCP and SSL and enable the basic
 communication between Inca components. 
 </para>
 
 <section id="communication-protocol-types">
 <title>Message Types</title>
-<para>The protocol is made of two basic
-message types, a command message  and a response.  
+<para>The protocol is made of a single message pattern referred to as a
+Statement.
 </para>
 
 <variableList>
 <varListEntry>
-	<term><emphasis>Command</emphasis></term>
+	<term><emphasis>Statement</emphasis></term>
 	<listItem>
 	<para>
-	A command message is of the following format.
-	CMD SP VERSION CRLF
-	TYPE SP PAYLOAD CRLF
-	</para>
-	</listItem>
-</varListEntry>
-<varListEntry>
-	<term><emphasis>Response</emphasis></term>
-	<listItem>
-	<para>
-	A response message is of the following format.
-	OK SP NNN CRLF
+	CMD SP DATA CRLF
 	</para>
 	</listItem>
 </varListEntry>
 </variableList>
 
 </section>
-<section id="communication-protocol-conversation">
-<title>Conversation Pattern</title>
-
+<section id="communication-protocol-basic">
+<title>Basic Commands</title>
 <para>
-A conversation can consist of the following combinations.</para>
-
-<blockquote>
-<para>
-<itemizedList>
-<listitem><para> Initiator: command</para></listitem>
-<listitem><para>Listener: [command]+ | response </para></listitem>
-<listitem><para>Initiator: response (only if the previous message was a command)</para></listitem>
-</itemizedList>
-</para> 
-</blockquote>
-
-</section>
-<section id="communication-protocol-commands">
-<title>Commands</title>
-
-<para>
-The set of valid commands are listed below.
+There is a small set of basic commands which all Inca components that act as
+servers implement.
 </para>
-
 <variableList>
 <varListEntry>
-	<term>POLL</term>
+	<term><emphasis>START SP Version CRLF</emphasis></term>
 	<listItem>
 	<para>
-	Initiates a connection between a Reporter Manager and a Reporter Agent.
+	This command indicates the beginning of a new conversation.  A version check
+is done by the server to be sure that the components are compatible.
 	</para>
 	</listItem>
 </varListEntry>
 <varListEntry>
-	<term>REPORT</term>
+	<term><emphasis> END SP Code CRLF</emphasis></term>
 	<listItem>
 	<para>
-	Indicates that the payload is a report to be processed.
+	This command indicates that a component would like to end the conversation.
+This can be sent by a server or a client, but the component that sends this
+message must keep their Socket alive until they detect that the other
+component has closed their socket.
 	</para>
 	</listItem>
 </varListEntry>
 <varListEntry>
-	<term>CONFIG</term>
+	<term><emphasis> ERROR SP Error Message CRLF</emphasis></term>
 	<listItem>
 	<para>
-	Indicates that the payload is configuration information.
-	This is useful between the Reporter Agents and the Depot.
+	The behavior here is similar to that of End.  The difference is that the
+receiver should see that there was an error and act accordingly.
 	</para>
 	</listItem>
 </varListEntry>
 <varListEntry>
-	<term>ADD/REPLACE/DELETE</term>
+	<term><emphasis> PING SP Test Data  CRLF</emphasis></term>
 	<listItem>
 	<para>
-	Indicates that the payload is scheduling information for a reporter manager
-	from a reporter agent.  These commands can also be used between reporter
-	agents when forwarding requests.
-	</para>
-	</listItem>
-</varListEntry>
-<varListEntry>
-	<term>QUERY</term>
-	<listItem>
-	<para>
-	Used to query the Reporter Agent for schedule information.  Useful to any
-	remote GUI applications used to run the Agent.
+	The component should respond with PINGACK SP Test Data CRLF.
 	</para>
 	</listItem>
 </varListEntry>
 </variableList>
 
+<para>Each Inca component will implement additional commands.  Each statement
+must follow the same format.  A command can require several statements.
+After the first statement is identified the socket is handed off to the
+correct handler which can then send and receive messages as needed.
+</para>
 </section>
+
 <section id="communication-protocol-example">
 <title>Example Conversations</title>
+<para>The following examples demonstrate that the components can add their own
+commands to the protocol as well as use the basic built-in commands.</para>
 <variableList>
-	<varlistEntry>
+	<varListEntry>
 	<term>Reporter Manager(RM) to Depot(D)</term>
 	<listItem>
-	<para>RM:  Report SP INCA/1.0 CRLF {report XML document} CRLF</para>
-	<para>D:  OK 100 CRLF</para>
+	<para>In the following conversation the depot will not need to send any
+response.</para>
+	<para>RM: START SP 1 CRLF</para>
+	<para>RM: REPORT SP {reporter name} CRLF </para>
+	<para>RM: STDERR SP {data} CRLF</para>
+	<para>RM: SYSUSAGE SP {data} CRLF</para>
+	<para>RM: STDOUT SP {data} CRLF</para>
+	<para>RM: END SP 100 CRLF</para>
 	</listItem>
-	</varlistEntry>
-	<varlistEntry>
+	</varListEntry>
+	<varListEntry>
+	<term>Reporter Manager(RM) to Depot(D)</term>
+	<listItem>
+	<para>The depot detects a protocol error and responds.  </para>
+	<para>RM: START SP 1 CRLF</para>
+	<para>RM: REPORT SP {reporter name} CRLF </para>
+	<para>RM: STDERR SP {data} </para>
+	<para>RM: SYSUSAGE SP {data} CRLF</para>
+	<para>D: ERROR SP {error message} CRLF</para>
+	</listItem>
+	</varListEntry>
+	<varListEntry>
 	<term>Reporter Agent(RA) to Depot(D)</term>
 	<listItem>
 	<para>RA:  CONFIG SP INCA/1.0 CRLF {config XML document} CRLF</para>
 	<para>D:  OK 100 CRLF</para>
 	</listItem>
-	</varlistEntry>
-	<varlistEntry>
+	</varListEntry>
+	<varListEntry>
 	<term>Reporter Manager(RM) to Reporter Agent(RA)</term>
 	<listItem>
 	<para>RM:  POLL SP INCA/1.0 CRLF CRLF</para>
@@ -132,7 +121,7 @@ The set of valid commands are listed below.
 	<para>RA:  DELETE SP INCA/1.0 CRLF {config XML document} CRLF CRLF</para>
 	<para>RM:  OK 100 CRLF</para>
 	</listItem>
-	</varlistEntry>
+	</varListEntry>
 </variableList>
 </section>
 
