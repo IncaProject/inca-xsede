@@ -1,0 +1,83 @@
+<section id="javadev-buildfile">
+<title>Build File Requirements</title>
+
+<para>
+There are a few required targets for the build.xml file in each package.
+There is a sample build file that has all of the required targets implemented
+in inca/admin/templates/javaProject
+</para>
+<para>Required Targets</para>
+<variableList>
+<varListEntry>
+<term>compile</term>
+<listItem>
+<para>
+Compiles all of the projects source files and puts them into a directory named
+classes in the same directory.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>clean</term>
+<listItem>
+<para>
+Removes the classes directory and the test-results directory as well as any
+other files that where generated during the build or run.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>dist</term>
+<listItem>
+<para>
+Creates a binary distribution.  If the target is called with the property
+build.output set then the build should be directory at that directory,
+otherwise it should be directed at the current working directory.  This target
+will read the dependencies file and create a lib directory in the build.output
+directory and copy all of the required jar files to that directory.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>help</term>
+<listItem>
+<para>
+Prints out each available target and a description.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>run-tests</term>
+<listItem>
+<para>
+Runs all of the junit tests and puts the output into the test-output
+directory. This target will depend upon the dist... in other words it can't be
+run on a build file that does not exist in a dist directory.  If you want to
+develop and test in the same directory leave build.output to be the current
+working directory and run ant run-tests.  It will rebuild the project and run
+the tests for you.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>jar</term>
+<listItem>
+<para>
+Creates the jar file that contains all of the classes for this project.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>COPYRIGHT</term>
+<listItem>
+<para>
+This file contains the Inca copyright and can be found in the templates
+directory.
+</para>
+</listItem>
+</varListEntry>
+</variableList>
+
+
+</section>
+
