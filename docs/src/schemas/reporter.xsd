@@ -19,36 +19,41 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "gmt" type = "xsd:string"/>
-	<xsd:element name = "hostname" type = "xsd:string"/>
-	<xsd:element name = "name" type = "xsd:string"/>
-	<xsd:element name = "version" type = "xsd:string"/>
-	<xsd:element name = "INCA_Version" type = "xsd:string"/>
-	<xsd:element name = "exit_status" nillable = "true" fixed = "0">
+
+    <xsd:element name = "exit_status" nillable = "true" fixed = "0">
 		<xsd:complexType mixed = "true">
 			<xsd:choice>
 				<xsd:element ref = "rep:message" minOccurs = "0"/>
 			</xsd:choice>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "message" type = "xsd:string"/>
-	<xsd:element name = "body" abstract = "true"/>
-	<xsd:element name = "ID" type = "xsd:string"/>
-	<xsd:element name = "inputs">
+
+    	<xsd:element name = "inputs">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref = "rep:input" minOccurs = "0" maxOccurs = "unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "input"/>
-	<xsd:element name = "verbose" type = "xsd:integer" substitutionGroup = "rep:input"/>
-	<xsd:element name = "help" substitutionGroup = "rep:input">
-		<xsd:simpleType>
-			<xsd:restriction base = "xsd:string">
-				<xsd:enumeration value = "yes"/>
-				<xsd:enumeration value = "no"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:element>
+    	<xsd:element name = "input">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="rep:key"/>
+                <xsd:element ref="rep:value"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name = "gmt" type = "xsd:string"/>
+	<xsd:element name = "hostname" type = "xsd:string"/>
+	<xsd:element name = "name" type = "xsd:string"/>
+	<xsd:element name = "version" type = "xsd:string"/>
+	<xsd:element name = "INCA_Version" type = "xsd:string"/>
+
+	<xsd:element name = "message" type = "xsd:string"/>
+	<xsd:element name = "body" abstract = "true"/>
+	<xsd:element name = "ID" type = "xsd:string"/>
+    <xsd:element name="key" type="xsd:string"/>
+    <xsd:element name="value"/>
+
 </xsd:schema>
