@@ -8,20 +8,51 @@ communication between Inca components.
 
 <section id="communication-protocol-types">
 <title>Message Types</title>
+
 <para>The protocol is made of a single message pattern referred to as a
-Statement.
+<emphasis>Statement</emphasis>:
 </para>
 
+<para>
+CMD SP DATA CRLF
+</para>
+
+<para>where</para>
+
 <variableList>
-<varListEntry>
-	<term><emphasis>Statement</emphasis></term>
-	<listItem>
-	<para>
-	CMD SP DATA CRLF
-	</para>
-	</listItem>
-</varListEntry>
+  <varListEntry>
+    <term><emphasis>CMD</emphasis></term>
+    <listItem>
+      <para>A text string indicating an action or description of the data
+      that follows.
+      </para>
+    </listItem>
+  </varListEntry>
+  <varListEntry>
+    <term><emphasis>SP</emphasis></term>
+    <listItem>
+      <para>A space.
+      </para>
+    </listItem>
+  </varListEntry>
+  <varListEntry>
+    <term><emphasis>DATA</emphasis></term>
+    <listItem>
+      <para>The crux of the message containing any stream of characters except
+      CRLF.
+      </para>
+    </listItem>
+  </varListEntry>
+  <varListEntry>
+    <term><emphasis>CRLF</emphasis></term>
+    <listItem>
+      <para>A carriage return followed by a line feed indicating the end of
+      the statement.
+      </para>
+    </listItem>
+  </varListEntry>
 </variableList>
+
 
 </section>
 <section id="communication-protocol-basic">
