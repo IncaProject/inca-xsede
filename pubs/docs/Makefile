@@ -32,6 +32,7 @@ $(TARGETS):
 	mkdir -p publish/html/stylesheet-images; cp config/stylesheet-images/*.gif publish/html/stylesheet-images
 	cp config/inca.css publish/html/inca.css
 	mkdir -p publish/html/figures; cp src/figures/*.jpg publish/html/figures
+	mkdir -p publish/html/schemas; cp src/schemas/*.xsd publish/html/schemas
 
 %.sgml %.pdf:
 	$(DB2PDF) "$(TOP_DIR)/config/ldp.dsl$(PDF_MODE)" $(CATALOG) -o publish/pdf src/$*.sgml
