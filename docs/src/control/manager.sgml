@@ -56,13 +56,11 @@ components shown in <xref linkend="control-manager-architecture-figure">.
 				system usage of the reporter (CPU time, wall clock time, and 
 				memory) and if it exceeds a specified timeout set for either wall clock
 				time, CPU time, or memory, it will kill the reporter and formulate an
-				error report.  Otherwise, upon reporter exit, the RIM will check to
-				see if a report is produced and create an error report if not.  Once
-				a report is produced, it is wrapped in an envelope.  The statistics
-				on the system usage of the reporter are also included along with
-				the storage policy.  The envelope is sent to the first available 
-				Depot in its list where the data will then get passed to all
-				interested parties.
+				error report.  Otherwise, upon reporter exit, the RIM will gather
+				stderr, stdout, usage statistics, and the depot list and send it
+				to the Depot.  The envelope is sent to the first available Depot in
+				its list where the data will then get passed to all interested
+				parties.
       </para>
     </listItem>
   </varListEntry>
