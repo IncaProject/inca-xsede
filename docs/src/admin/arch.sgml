@@ -1,15 +1,27 @@
 <section id="admin-arch">
 <title>Architecture</title>
 <para>
-The I3 serves as the client interface to an RA.  The I3 user specifies a list of
-RRs to serve as the source of reporters for the VO.  The I3 forwards this list
-to the RA, which retrieves catalog information from each RR, merges them, and
-returns the complete list of reporters to the I3.  The I3 then allows the
-administrator to select a set of reporters to run on the VO resources and
-specifies running parameters for each.  This information is returned to the RA,
-which uses it to download reporters from the RRs and construct schedules for
-transmission to RMs.
+The I3 provides to the Inca administrator a client interface to an RA.  All
+information about the configuration of an Inca installation is kept with the
+RA and retrieved by the I3 as needed.
 </para>
 <para>
+The I3 allows the Inca administrator to specify a list of RRs that serve as the
+source of reporters for the installation.  The I3 forwards this list to the RA,
+which retrieves catalog information from each RR, merges the catalogs, and
+returns the complete list of available reporters to the I3.  The administrator
+selects a set of reporters to run on installation resources, specifying run
+attributes for each. This information is returned to the RA, which uses it to
+download reporters from the RRs and construct schedules for transmission to RMs.
+</para>
+<para>
+The attributes of a particular reporter run include: the name and version of
+the reporter; the resource on which it is to be run (i.e., the RM name), any
+command-line arguments to be passed; the initial run time; how often the
+reporter should be run; the Depot(s) to which the results should be sent;
+optionally, the maximum CPU and/or wall clock time that a single reporter run
+will be allowed to consume; a list of expected output values.  For convenience,
+the version of a reporter may be specified as "current", in which case the
+RA will automatically update the reporter as new versions become available.
 </para>
 </section>
