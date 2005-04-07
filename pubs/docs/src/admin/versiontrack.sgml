@@ -2,7 +2,7 @@
 <title>Version Tracking Concepts</title>
 <para>
 Within Inca there are 2 major concepts behind versions.  The first is the Inca
-version which is made of 2 number seperated by a comma.  For the immediate
+version which is made of 2 number seperated by a period.  For the immediate
 future it will always be 2.[releaseNumber] where releaseNumber starts at 0.
 The second is the component versions.  They are tracked locally and made of 2
 numbers as well.  Each should start at 1.1.  When a component is released its
@@ -16,22 +16,128 @@ released together.
 </para>
 
 <para>
-The component versions are updated at 2 events.  The minor version is updated
-everytime a new copy is checked into stable and the major version is updated
-everytime a stable version is accepted and packaged for release.
-</para>
-
-<para>
-The following is a list of concepts that drove the development of the version
-system.
+The component versions are updated at 2 events.  The major version is
+incremented each time the component reaches a point that it becomes a release
+candidate.  The minor version is a reflection of which revision of the
+release candidate was actually packaged.
 </para>
 
 </section>
-<section id="admin-versiontrackauto">
-<title>Automating Version Tracking</title>
+
+<section id="admin-versiontracksvn">
+<title>A directory Structure to Support Version Tracking</title>
 <para>
-SVN can be used to automate version tracking and to assist in the release
-process.  This will be done using the hook scripts.  Proceedures for how to
-utilize this automation will be published here when they are figured out.
+This section describes the directory structure found inside SVN that will help
+with all this Version stuff.  You should have an understanding of this, but
+all the steps have automated ant tasks and scripts so the next section is of
+more importance.
+</para>
+<para>There are 3 high level directories of immediate concern.  The following
+describes the contents and uses of each.</para>
+
+<variableList>
+<varListEntry>
+<term>trunk</term>
+<listItem>
+<para>
+The trunk represents the core of the Inca developement.  This is what most
+developers will have checked out most of the time.  It contains both the devel
+directory where the components are developed and the contrib directory which
+will hold all third party contributions.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>branches</term>
+<listItem>
+<para>
+This directory will contain all release candidates.  Code should not be put
+here until after the developer is very confident in the release readyness of
+the code.  The only edits allowed on code in this directory are small bug
+fixes and documentation updates.  
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>releases</term>
+<listItem>
+<para>
+When a component or all of the components are actually packaged and released
+to users they get moved to this directory.  There is a directory for each
+release type under releases.  Under each of those directories is a symbolic
+link called current.  It points to the most up to date release. 
+</para>
+</listItem>
+</varListEntry>
+</variableList>
+
+<para>The following is an example snapshot of what the repository could look
+like.</para>
+<note><para>Keep in mind that a developer should never have all of this
+checked at the same time.  Usually it is only necessary to have the trunk
+checked out for developement</para></note>
+<screen>
+trunk/
+          devel/
+                    depot/ 
+                            build.xml ...
+                    manager/
+                            Makefile.PL ...
+                    agent/
+                    util/
+          contrib/
+                    junit.jar ...
+
+branches/
+          depot_1/
+                    build.xml ...
+releases/
+          depot/
+                current@->v1r26
+                v1r23
+                v1r26
+</screen>
+</section>
+
+
+<section id="admin-versiontrackauto">
+<title>Automating Version Tracking -- Doing it</title>
+<para>
+The following is describing how to release your component if your component is
+Java.  It assumes that you followed the Java development guide in setting up
+your project.  If you didn't this won't work.  Perl will be added later.
+</para>
+
+<procedure>
+<title>Inca Release Instructions (java)</title>
+<step>
+<para>Normal deveopment.</para>
+</step>
+<step>
+<para>Code freeze happens and cleanup cycle begins.  NO NEW FUNCTIONALITY!</para>
+</step>
+<step>
+<para>Developer believes their code is ready for release.  Create a release
+candidate.</para>
+<para>ant command: ant release-candidate</para>
+</step>
+<step>
+<para>Code reviews and testing by other team members.  This can result in
+rejection of the release candidate or small updates/changes to the candidate.</para>
+</step>
+<step>
+<para>
+The entire team agrees that the code is ready for release.  So it is released.
+This will result in 2 things.  First a release is recorded in the release directory and second a tar
+and gz file will be create which should be put on the web server.  Wouldn't it
+be cool it that last step was automated?
+</para>
+<para>
+ant command executed from branch: ant release
+</para>
+</step>
+</procedure>
+
+<para>
 </para>
 </section>
