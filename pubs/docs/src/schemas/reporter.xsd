@@ -13,6 +13,7 @@
                 <xsd:element ref = "rep:name"/>
                 <xsd:element ref = "rep:version"/>
                 <xsd:element ref = "rep:inputs"/>
+                <xsd:element ref = "rep:log"/>
                 <xsd:element ref = "rep:body"/>
                 <xsd:element ref = "rep:exit_status"/>
             </xsd:sequence>
@@ -45,6 +46,63 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name = "log">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:debug" minOccurs = "0" maxOccurs = "unbounded"/>
+                <xsd:element ref = "rep:error" minOccurs = "0" maxOccurs = "unbounded"/>
+                <xsd:element ref = "rep:info" minOccurs = "0" maxOccurs = "unbounded"/>
+                <xsd:element ref = "rep:system" minOccurs = "0" maxOccurs = "unbounded"/>
+                <xsd:element ref = "rep:warn" minOccurs = "0" maxOccurs = "unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "debug">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:gmt"/>
+                <xsd:element ref = "rep:message"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "error">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:gmt"/>
+                <xsd:element ref = "rep:message"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "info">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:gmt"/>
+                <xsd:element ref = "rep:message"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "system">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:gmt"/>
+                <xsd:element ref = "rep:message"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "warn">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref = "rep:gmt"/>
+                <xsd:element ref = "rep:message"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
     <xsd:element name = "gmt" type = "xsd:dateTime"/>
     <xsd:element name = "hostname" type = "xsd:string"/>
     <xsd:element name = "name" type = "xsd:string"/>
@@ -53,5 +111,6 @@
     <xsd:element name = "completed" type = "xsd:boolean"/>
     <xsd:element name = "body" abstract = "true"/>
     <xsd:element name = "value" type = "xsd:string"/>
+    <xsd:element name = "message" type = "xsd:string"/>
 
 </xsd:schema>
