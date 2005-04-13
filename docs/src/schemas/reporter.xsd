@@ -16,15 +16,7 @@
                 <xsd:element ref = "rep:log"/>
                 <xsd:element ref = "rep:body"/>
                 <xsd:element ref = "rep:exit_status"/>
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:element>
-
-    <xsd:element name = "exit_status" nillable="true">
-        <xsd:complexType>
-            <xsd:sequence>
-                <xsd:element ref ="rep:completed" />
-                <xsd:element ref ="rep:error_message" minOccurs = "0"/>
+                <xsd:element ref = "rep:help"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -103,14 +95,50 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name = "body" abstract = "true"/>
+
+    <xsd:element name = "exit_status">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref ="rep:completed"/>
+                <xsd:element ref ="rep:error_message" minOccurs = "0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "help" nillable="true">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref ="rep:ID"/>
+                <xsd:element ref ="rep:executable"/>
+                <xsd:element ref ="rep:option" minOccurs = "0" maxOccurs = "unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "option">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref ="rep:ID"/>
+                <xsd:element ref ="rep:accepted"/>
+                <xsd:element ref ="rep:description"/>
+                <xsd:element ref ="rep:default" minOccurs = "0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name = "accepted" type = "xsd:string"/>
+    <xsd:element name = "completed" type = "xsd:boolean"/>
+    <xsd:element name = "default" type = "xsd:string"/>
+    <xsd:element name = "description" type = "xsd:string"/>
+    <xsd:element name = "error_message" type = "xsd:string"/>
+    <xsd:element name = "executable" type = "xsd:string"/>
     <xsd:element name = "gmt" type = "xsd:dateTime"/>
     <xsd:element name = "hostname" type = "xsd:string"/>
+    <xsd:element name = "ID" type = "xsd:string"/>
+    <xsd:element name = "message" type = "xsd:string"/>
     <xsd:element name = "name" type = "xsd:string"/>
     <xsd:element name = "version" type = "xsd:string"/>
-    <xsd:element name = "error_message" type = "xsd:string"/>
-    <xsd:element name = "completed" type = "xsd:boolean"/>
-    <xsd:element name = "body" abstract = "true"/>
     <xsd:element name = "value" type = "xsd:string"/>
-    <xsd:element name = "message" type = "xsd:string"/>
 
 </xsd:schema>
