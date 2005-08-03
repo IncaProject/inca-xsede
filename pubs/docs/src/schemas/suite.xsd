@@ -5,126 +5,112 @@
 	<xsd:element name = "suite">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref = "resources"/>
-				<xsd:element ref = "dataset"/>
+				<xsd:element ref = "reporter" maxOccurs = "unbounded"/>
+				<xsd:element ref = "resourceSet" minOccurs = "0" maxOccurs = "unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "resourceGroup">
+	<xsd:element name = "set">
+		<xsd:complexType>
+			<xsd:sequence/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "resources">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref = "id"/>
-				<xsd:element ref = "resourceGroupId" minOccurs = "0" maxOccurs = "unbounded"/>
+				<xsd:choice>
+					<xsd:element ref = "name"/>
+					<xsd:element ref = "xpath"/>
+				</xsd:choice>
+				<xsd:element ref = "expect" minOccurs = "0" maxOccurs = "unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "expect">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "expectedValues"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "method">
+		<xsd:complexType/>
+	</xsd:element>
+	<xsd:element name = "reporter">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "uri"/>
+				<xsd:element ref = "niced" minOccurs = "0"/>
+				<xsd:element ref = "inputs" minOccurs = "0"/>
+				<xsd:element ref = "timeout" minOccurs = "0"/>
+				<xsd:element ref = "execute" maxOccurs = "unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "execute">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "schedule"/>
+				<xsd:element ref = "resources" maxOccurs = "unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "uri" type = "xsd:string"/>
+	<xsd:element name = "niced" type = "xsd:string"/>
+	<xsd:element name = "inputs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "input" maxOccurs = "unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "timeout">
+		<xsd:complexType>
+			<xsd:sequence>
 				<xsd:element ref = "resource" maxOccurs = "unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:simpleType name = "host">
-		<xsd:restriction base = "xsd:string"/>
-	</xsd:simpleType>
-	<xsd:element name = "id" type = "xsd:string"/>
+	<xsd:element name = "input">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref = "name"/>
+				<xsd:element ref = "value"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name = "name" type = "xsd:string"/>
+	<xsd:element name = "value" type = "xsd:string"/>
 	<xsd:element name = "resource">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref = "id"/>
-				<xsd:element ref = "attributes" minOccurs = "0"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name = "data">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref = "reporter"/>
-				<xsd:element ref = "inputs"/>
-				<xsd:element ref = "frequency"/>
-				<xsd:element ref = "archive"/>
-				<xsd:element ref = "acceptedValues"/>
-				<xsd:element ref = "execType"/>
-				<xsd:element ref = "resourceGroupId"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name = "reporter" type = "xsd:string"/>
-	<xsd:element name = "dataset">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref = "data" maxOccurs = "unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name = "inputs" type = "xsd:string"/>
-	<xsd:element name = "archive" type = "xsd:string"/>
-	<xsd:element name = "acceptedValues" type = "xsd:string"/>
-	<xsd:element name = "execType" type = "xsd:string"/>
-	<xsd:element name = "attributes">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref = "attribute" maxOccurs = "unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name = "attribute">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref = "id"/>
+				<xsd:element ref = "name"/>
 				<xsd:element ref = "value"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "value" type = "xsd:string"/>
-	<xsd:element name = "resources">
+	<xsd:element name = "setup">
+		<xsd:complexType/>
+	</xsd:element>
+	<xsd:element name = "cleanup">
+		<xsd:complexType/>
+	</xsd:element>
+	<xsd:element name = "schedule">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref = "resourceGroup" maxOccurs = "unbounded"/>
+				<xsd:element ref = "schedulerAndArgs"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "resourceGroupId" type = "xsd:string"/>
-	<xsd:element name = "frequency">
+	<xsd:element name = "resourceSet">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element ref = "unit"/>
-				<xsd:element ref = "value"/>
-				<xsd:element ref = "startAt" minOccurs = "0"/>
+				<xsd:element ref = "name"/>
+				<xsd:element ref = "xpath"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name = "unit">
-		<xsd:simpleType>
-			<xsd:restriction base = "xsd:string">
-				<xsd:enumeration value = "minutes"/>
-				<xsd:enumeration value = "hours"/>
-				<xsd:enumeration value = "days"/>
-				<xsd:enumeration value = "weeks"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:element>
-	<xsd:element name = "startAt">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref = "minute" minOccurs = "0"/>
-				<xsd:element ref = "hour" minOccurs = "0"/>
-				<xsd:element ref = "day" minOccurs = "0"/>
-				<xsd:element ref = "week" minOccurs = "0"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name = "minute">
-		<xsd:simpleType>
-			<xsd:restriction base = "xsd:integer">
-				<xsd:maxInclusive value = "0"/>
-				<xsd:maxExclusive value = "59"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:element>
-	<xsd:element name = "hour">
-		<xsd:simpleType>
-			<xsd:restriction base = "xsd:integer">
-				<xsd:maxInclusive value = "0"/>
-				<xsd:maxExclusive value = "23"/>
-			</xsd:restriction>
-		</xsd:simpleType>
-	</xsd:element>
-	<xsd:element name = "day" type = "xsd:integer"/>
-	<xsd:element name = "week" type = "xsd:integer"/>
+	<xsd:element name = "schedulerAndArgs"/>
+	<xsd:element name = "xpath" type = "xsd:string"/>
+	<xsd:element name = "expectedValues"/>
 </xsd:schema>
