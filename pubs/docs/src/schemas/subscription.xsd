@@ -10,7 +10,7 @@
 	<element name = "subscription">
 		<complexType>
 			<sequence>
-        <element name = "action" type = "inca:action"/>
+				<element name = "action" type = "inca:action"/>
 				<element ref = "sub:reporterGroup" maxOccurs = "unbounded"/>
 			</sequence>
 		</complexType>
@@ -18,35 +18,9 @@
 	<element name = "reporterGroup">
 		<complexType>
 			<sequence>
-				<element ref = "sub:scheduler" minOccurs = "0"/>
+				<element name = "schedule" type = "inca:schedule"/>
 				<element name = "reporter" type = "inca:reportSeries"/>
 			</sequence>
 		</complexType>
-	</element>
-	<element name = "scheduler">
-		<complexType>
-			<choice>
-				<element ref = "sub:sequential"/>
-        <element name = "cron" type = "inca:cron"/>
-			</choice>
-		</complexType>
-	</element>
-	<element name = "name" type = "string"/>
-	<element name = "value" type = "string"/>
-	<element name = "resource">
-		<complexType>
-			<sequence>
-				<element ref = "sub:name"/>
-				<element ref = "sub:value"/>
-			</sequence>
-		</complexType>
-	</element>
-	<element name = "hours" type = "positiveInteger"/>
-	<element name = "dayOfMonth" type = "positiveInteger"/>
-	<element name = "months" type = "string"/>
-	<element name = "dayOfWeek" type = "string"/>
-	<element name = "minutes" type = "positiveInteger"/>
-	<element name = "sequential">
-		<complexType/>
 	</element>
 </schema>
