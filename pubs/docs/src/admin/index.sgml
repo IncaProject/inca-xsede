@@ -1,21 +1,44 @@
 <section id="admin">
-    <title>Administration</title>
+    <title>The Inca Administration Tool (incat)</title>
 
+<!--
+    - divide into configuration sections: repositories, resources, suites
+    - mention how to include macros within macros  (@MACRO@)
+    - describe how resource macros override global macros
+    - regex for hostnames (a|b|c).sdsc.edu -- spaces are also replaced by |
+-->
 
     <section id="admin-intro">
         <title>Introduction</title>
         <para>
-            The Inca software will include a set of tools that provide for easy
-            administration of an Inca installation.  The most significant of these will be
-            the <emphasis>Inca Installation Interface</emphasis> (I3), which will allow
-            the Inca administrator to specify the RRs to be used, select reporters to be
-            run, and configure the operation of the RAs, RMs, and Depots within a VO.
+            Inca software includes the <emphasis role="bold">incat</emphasis> tool
+            for easy administration of an Inca installation.  An administrator can use
+            <emphasis role="bold">incat</emphasis> to:
+            <itemizedList>
+                <listItem>
+                    <para>
+                        specify Reporter Repositories
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        select which reporters to execute on a resource and which input parameters
+                        to use for each reporter on each resource
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        configure the operation of Inca components (Reporter Agents,
+                        Reporter Managers and Depots) within a VO
+                    </para>
+                </listItem>
+            </itemizedList>
         </para>
     </section>
 
 
     <section id="admin-features">
-        <title>Feature Summary</title>
+        <title>Features</title>
         <variableList>
             <varListEntry>
                 <term><emphasis>Requirement</emphasis>: Installation, setup, and maintenance
@@ -26,24 +49,29 @@
                         <itemizedList>
                             <listItem>
                                 <para>
-                                    The Inca administrator will only need to tell the RA via the I3 that
-                                    reporters should be retrieved from a particular set of repositories.
-                                    The RA will encapsulate all the knowledge of the contents of Reporter
-                                    Repositories and the format of Reporter packages.
+                                    Via <emphasis role="bold">incat</emphasis>, the Inca administrator tells
+                                    the Reporter Agent which set of repositories to retrieve reporters from.
+                                    The Reporter Agent stores knowledge of Reporter Repository contents
+                                    and reporter package formats.
                                 </para>
                             </listItem>
                             <listItem>
                                 <para>
-                                    Tools packaged with Inca will assist Inca administrators in creating local
-                                    Reporter repositories which may be specified to the RA as sources for
-                                    reporter packages.
+                                    Although <emphasis role="bold">incat</emphasis> is preconfigured to use a
+                                    standard Reporter Repository (http://inca.sdsc.edu/2.0/repository),
+                                    Inca also offers a convenience tool
+                                    (called <emphasis role="bold">incpack</emphasis>) for producing or
+                                    updating a catalog for an Inca Reporter Repository.
+                                    <emphasis role="bold">incpack</emphasis> creates local
+                                    Reporter repositories which may be specified to the
+                                    Reporter Agent as sources for reporter packages.
                                 </para>
                             </listItem>
                             <listItem>
                                 <para>
-                                    The I3 will provide the Inca administrator with the option of automatically
-                                    (i.e., without administrator intervention) updating to new reporter
-                                    versions as they become available.
+                                    <emphasis role="bold">incat</emphasis> provides the Inca administrator with the option of automatically
+                                    (i.e., without administrator intervention) updating and executing new reporter versions
+                                    as they become available.
                                 </para>
                             </listItem>
                         </itemizedList>
@@ -58,10 +86,9 @@
                         <itemizedList>
                             <listItem>
                                 <para>
-                                    The I3 will allow Reporter selection and configuration to be performed on
-                                    individual resources (i.e., individual RMs) or on collections of resources.
-                                </para><para>
-                            </para>
+                                    <emphasis role="bold">incat</emphasis> allows reporter selection and configuration to be performed on
+                                    individual resources (i.e., individual Reporter Managers) or on collections of resources.
+                                </para>
                             </listItem>
                         </itemizedList>
                     </para>
@@ -74,30 +101,68 @@
     <section id="admin-arch">
         <title>Architecture</title>
         <para>
-            The I3 provides to the Inca administrator a client interface to an RA.  All
-            information about the configuration of an Inca installation is kept with the
-            RA and retrieved by the I3 as needed.
+            <emphasis role="bold">incat</emphasis> is the client interface to a Reporter Agent.  All
+            information required to configure an Inca installation is stored on the
+            Reporter Agent and is retrieved by <emphasis role="bold">incat</emphasis> as needed.
         </para>
         <para>
-            The I3 allows the Inca administrator to specify a list of RRs that serve as the
-            source of reporters for the installation.  The I3 forwards this list to the RA,
-            which retrieves catalog information from each RR, merges the catalogs, and
-            returns the complete list of available reporters to the I3.  The administrator
-            selects a set of reporters to run on installation resources, specifying run
-            attributes for each. This information is returned to the RA, which uses it to
-            download reporters from the RRs and construct schedules for transmission to RMs.
+            The Inca administrator uses <emphasis role="bold">incat</emphasis> to specify which Reporter
+            Repositories serve as the source of the installation's reporters.  <emphasis role="bold">incat</emphasis>
+            forwards this Reporter Repository list to the Reporter Agent,
+            where catalog information is retrieved from each Reporter Repository, merged, and
+            returned to <emphasis role="bold">incat</emphasis> as a complete list of available reporters.  With
+            <emphasis role="bold">incat</emphasis>, the administrator selects a set of reporters to run on
+            installation resources, specifying run
+            attributes for each. This information is returned to the Reporter Agent, which uses it to
+            download reporters from the Reporter Repositories and construct schedules
+            for transmission to the Reporter Managers.
         </para>
         <para>
-            The attributes of a particular reporter run include: the name and version of
-            the reporter; the resource on which it is to be run (i.e., the RM name), any
-            command-line arguments to be passed; the initial run time; how often the
-            reporter should be run; the Depot(s) to which the results should be sent;
-            optionally, the maximum CPU and/or wall clock time that a single reporter run
-            will be allowed to consume; a list of expected output values.  For convenience,
-            the version of a reporter may be specified as "current", in which case the
-            RA will automatically update the reporter as new versions become available.
+            The attributes of a particular reporter's execution include:
         </para>
+        <itemizedList>
+            <listItem>
+                <para>
+                    the name and version of the reporter (For convenience,
+                    the version of a reporter may be specified as "current", in which case the
+                    Reporter Agent will automatically update the reporter as new versions become available)
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    the resource on which it is to be run (i.e., the Reporter Manager name)
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    any command-line arguments to be passed
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    the initial run time
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    how often the reporter should be run
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    the Depot(s) to which the results should be sent
+                </para>
+            </listItem>
+            <listItem>
+                <para>
+                    optionally, the maximum CPU and/or wall clock time that a single reporter run
+                    will be allowed to consume; a list of expected output values.
+                </para>
+            </listItem>
+        </itemizedList>
     </section>
 
 
 </section>
+
+
