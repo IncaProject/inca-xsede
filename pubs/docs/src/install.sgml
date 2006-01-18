@@ -1,0 +1,164 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+
+<book>
+    <bookinfo>
+        <title>Inca Installation Guide</title>
+    </bookinfo>
+
+    <chapter id="incat">
+        <title>The Inca Administration Tool (incat)</title>
+
+
+        <section id="incat-intro">
+            <title>Introduction</title>
+            <para>
+                The Inca Administration Tool, or <emphasis role="bold">incat</emphasis>,
+                is designed to make the installation, setup, data collection, and maintenance
+                of the Inca deployment straightforward and configurable.
+                An administrator can use <emphasis role="bold">incat</emphasis> to:
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            select reporter repositories
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            configure resource information
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            configure reporter execution
+                        </para>
+                    </listItem>
+                </itemizedList>
+            </para>
+            <para>
+                <emphasis role="bold">incat</emphasis> is the client interface to a reporter agent.  All
+                information required to configure an Inca installation is stored on the
+                reporter agent and is retrieved by <emphasis role="bold">incat</emphasis> as needed.
+            </para>
+            <para>
+                The Inca administrator uses <emphasis role="bold">incat</emphasis> to specify which reporter
+                repositories serve as the source of an installation's reporters.  <emphasis role="bold">incat</emphasis>
+                forwards this reporter repository list to the reporter agent,
+                where catalog information is retrieved from each reporter repository, merged, and
+                returned to <emphasis role="bold">incat</emphasis> as a complete list of available reporters.  With
+                <emphasis role="bold">incat</emphasis>, the administrator selects a set of reporters to run on
+                an installation's resources, specifying execution
+                attributes for each. This information is returned to the reporter agent, which uses it to
+                download reporters from the reporter repositories and construct schedules
+                for transmission to the reporter managers.
+            </para>
+        </section>
+
+
+        <section id="incat-RR">
+            <title>Selecting Reporter Repositories</title>
+            <para>
+                def reporter repositories
+            </para>
+            <para>
+                Via <emphasis role="bold">incat</emphasis>, the Inca administrator tells
+                the reporter agent which set of repositories to retrieve reporters from.
+                The reporter agent stores knowledge of reporter repository contents
+                and reporter package formats.
+            </para>
+            <para>
+                Although <emphasis role="bold">incat</emphasis> is preconfigured to use a
+                standard reporter repository (http://inca.sdsc.edu/2.0/repository),
+                Inca also offers a convenience tool
+                (called <emphasis role="bold">incpack</emphasis>) for producing or
+                updating a catalog for an Inca reporter repository.
+                <emphasis role="bold">incpack</emphasis> creates local
+                Reporter repositories which may be specified to the
+                reporter agent as sources for reporter packages.
+            </para>
+            <figure id="repository.fig">
+                <title>Selecting Reporter Repositories</title>
+                <graphic fileref="figures/incat_repositories.jpg" align="center"></graphic>
+            </figure>
+        </section>
+
+
+        <section id="incat-resources">
+            <title>Configuring Resources</title>
+            <para>
+                - mention how to include macros within macros  (@MACRO@)
+                - describe how resource macros override global macros
+                - regex for hostnames (a|b|c).sdsc.edu -- spaces are also replaced by |
+            </para>
+            <figure id="resources.fig">
+                <title>Configuring Resources</title>
+                <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
+            </figure>
+        </section>
+
+
+        <section id="incat-suites">
+            <title>Configuring Reporter Execution</title>
+            <para>
+                on a resource and which input parameters each reporter takes on each resource
+                <emphasis role="bold">incat</emphasis> provides the Inca administrator with the option of automatically
+                (i.e., without administrator intervention) updating and executing new reporter versions
+                as they become available.
+            </para>
+            <para>
+                <emphasis role="bold">incat</emphasis> allows reporter selection and configuration to be performed on
+                individual resources (i.e., individual Reporter Managers) or on collections of resources.
+            </para>
+
+            <figure id="suites.fig">
+                <title>Configuring Reporter Execution</title>
+                <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
+            </figure>
+            <para>
+                The attributes of a particular reporter's execution include:
+            </para>
+            <itemizedList>
+                <listItem>
+                    <para>
+                        the name and version of the reporter (For convenience,
+                        the version of a reporter may be specified as "current", in which case the
+                        reporter agent will automatically update the reporter as new versions become available)
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        the resource on which it is to be run (i.e., the Reporter Manager name)
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        any command-line arguments to be passed
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        the initial run time
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        how often the reporter should be run
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        the Depot(s) to which the results should be sent
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        optionally, the maximum CPU and/or wall clock time that a single reporter run
+                        will be allowed to consume; a list of expected output values.
+                    </para>
+                </listItem>
+            </itemizedList>
+        </section>
+
+    </chapter>
+
+
+</book>
