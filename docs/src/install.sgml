@@ -1,21 +1,202 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
 
 <article>
-    <title>
-        Inca Installation Guide
+    <title id="top">
+        Inca 2.0 Installation Guide
     </title>
 
-    <section id="incat">
-        <title>The Inca Administration Tool (incat)</title>
+    <section id="intro-overview">
+        <title>Introduction</title>
+        <para>
+            The Inca Test Harness and Reporting Framework (Inca) is a generic
+            framework for the automated testing, benchmarking and monitoring of Grid resources.
+            Inca provides the scheduled execution of information gathering scripts (reporters)
+            and collects, archives, and publishes the data resulting from these scripts.
+        </para>
+        <para>
+            Inca is composed of five main components:
+            <orderedlist>
+                <listitem>
+                    <para>
+                        <emphasis>Reporter</emphasis> - script or executable that performs
+                        a test, benchmark, or query and formats its results in Inca compliant XML.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>Reporter Repository</emphasis> - a trusted authority that hosts
+                        a directory of reporters and reporter libraries that can be fetched
+                        from a reporter agent and used in an Inca deployment to collect data from
+                        resources.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>Reporter Manager</emphasis> - a thin client of the control
+                        framework of Inca which executes on the monitored resources.  It handles
+                        scheduled and local-execution of reporters and stores the resulting data
+                        into a depot.  A reporter manager trusts one and only one reporter agent who
+                        it registers with and accepts control changes from.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>Reporter Agent</emphasis> - services requests for the
+                        collection of specified data sets at various intervals and
+                        configures data storage requirements.  The data set is collected by
+                        delegating the execution of a corresponding reporter suite to a
+                        set of reporter managers.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>Depot</emphasis> - stores reporter data collected by
+                        the reporter managers and handles all data queries.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>
+            Inca's data is displayed by data consumers -- the CGI scripts,
+            Web pages, interactive Java GUIs, or command-line scripts that
+            query the depot for data.
+        </para>
+        <figure id="arch.fig">
+            <title>Inca architecture</title>
+            <graphic fileref="figures/arch.jpg" align="center">
+            </graphic>
+        </figure>
+        <para>[ <link linkend="top">top of page</link> ]</para>
+    </section>
 
 
-        <section id="incat-intro">
-            <title>Introduction to incat</title>
+    <section id="install">
+        <title>Get Inca</title>
+        <para>
+            This section describes how to install Inca....
+        </para>
+
+        <section id="prereq">
+            <title>Prerequisites</title>
             <para>
-                The Inca Administration Tool, or <emphasis role="bold">incat</emphasis>,
+                <orderedlist>
+                    <listitem>
+                        <para>
+                            JDK 1.4.2 or later
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Perl 5.8.6 or later
+                        </para></listitem>
+                </orderedlist>
+            </para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="recommend">
+            <title>Recommendations</title>
+            <para>
+                We recommend that Inca be run under a regular user account and not as root for the following reasons:
+            </para>
+            <itemizedList>
+                <listItem>
+                    <para>
+                        To best detect user-level problems, it is best that Inca run as a regular
+                        use account with the default environment setup.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        Inca does not require any special privileges to run.
+                    </para>
+                </listItem>
+            </itemizedList>
+            <para>
+                Furthermore, we recommend that a valid GSI credential be obtained for this regular user
+                account so that Grid tests requiring proxy certificates can be executed. Please request a
+                GSI credential from your virtual organization's Certificate Authority (CA) and consult your
+                organization's security policy regarding GSI credential use.  Note that because Inca is
+                an automated system, it will need continual access to valid proxy
+                credentials on each resource for certain tests.
+            </para>
+            <note>
+                <para>
+                    <emphasis> The following sections assume that you are installing
+                        Inca under a regular user account called inca. </emphasis>
+                </para>
+            </note>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="install-source">
+            <title>Build and Install Source Code</title>
+            <para>
+                Download a tarball distribution of Inca, e.g., inca-x.x.tar.gz, from
+                <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>
+                and unpack the code, as follows:
+            </para>
+            <para>
+                <userInput>
+                    tar zxvf inca-x.x.tar.gz
+                </userInput>
+            </para>
+            <para>
+                The code will be available in a directory called inca-x.x.
+            </para>
+            <para>
+                Change to the top level directory of your local copy of the Inca
+                source code.
+            </para>
+            <para>
+                <userInput>
+                    cd inca-x.x
+                </userInput>
+            </para>
+            <para>
+                To build and install Inca, type
+            </para>
+            <para>
+                <userInput>
+                    ./install.sh
+                </userInput>
+            </para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+    </section>
+
+
+    <section id="start-inca">
+        <title>Start Inca Components</title>
+        <para>
+            A component startup script is located in the bin directory under your installation
+            directory.  Add this bin directory to your $PATH and then:
+        </para>
+        <orderedList>
+            <listItem>
+                <para>start the depot</para>
+                <screen>% inca depot &</screen>
+            </listItem>
+            <listItem>
+                <para>start the reporter agent</para>
+                <screen>% inca agent &</screen>
+            </listItem>
+            <listItem>
+                <para>start incat</para>
+                <screen>% inca incat &</screen>
+            </listItem>
+        </orderedList>
+        <para>[ <link linkend="top">top of page</link> ]</para>
+    </section>
+
+
+    <section id="incat">
+        <title>Configure Inca Components</title>
+        <section id="incat-intro">
+            <title>The Inca Administration Tool</title>
+            <para>
+                The Inca Administration Tool, or <emphasis role="strong">incat</emphasis>,
                 is designed to make the installation, setup, data collection, and maintenance
                 of the Inca deployment straightforward and configurable.
-                An administrator can use <emphasis role="bold">incat</emphasis> to:
+                An administrator can use <emphasis role="strong">incat</emphasis> to:
                 <itemizedList>
                     <listItem>
                         <para>
@@ -35,129 +216,174 @@
                 </itemizedList>
             </para>
             <para>
-                <emphasis role="bold">incat</emphasis> is the client interface to a reporter agent.  All
+                <emphasis role="strong">incat</emphasis> is the client interface to a reporter agent.  All
                 information required to configure an Inca installation is stored on the
-                reporter agent and is retrieved by <emphasis role="bold">incat</emphasis> as needed.
+                reporter agent and is retrieved by <emphasis role="strong">incat</emphasis> as needed.
             </para>
             <para>
-                The Inca administrator uses <emphasis role="bold">incat</emphasis> to specify which reporter
-                repositories serve as the source of an installation's reporters.  <emphasis role="bold">incat</emphasis>
+                The Inca administrator first uses <emphasis role="strong">incat</emphasis> to specify which reporter
+                repositories serve as the source of an installation's reporters.  <emphasis role="strong">incat</emphasis>
                 forwards this reporter repository list to the reporter agent,
-                where catalog information is retrieved from each reporter repository, merged, and
-                returned to <emphasis role="bold">incat</emphasis> as a complete list of available reporters.  With
-                <emphasis role="bold">incat</emphasis>, the administrator selects a set of reporters to run on
-                an installation's resources, specifying execution
-                attributes for each. This information is returned to the reporter agent, which uses it to
+                where the agent retrieves and merges catalog information from each reporter repository and
+                returns it to <emphasis role="strong">incat</emphasis> as a complete list of available reporters.
+                The administrator then selects a set of reporters to run on
+                an installation's resources, specifying execution attributes for each reporter on each resource.
+                <emphasis role="strong">incat</emphasis> returns this information to the reporter agent, which uses it to
                 download reporters from the reporter repositories and construct schedules
                 for transmission to the reporter managers.
             </para>
+            <section id="incat-RR">
+                <title>Select Reporter Repositories</title>
+                <para>
+                    A <emphasis>reporter repository</emphasis> is a trusted authority that hosts
+                    a directory of reporters and reporter libraries that can be fetched
+                    from a reporter agent and used in an Inca deployment to collect data from resources.
+                </para>
+                <para>
+                    Although <emphasis role="strong">incat</emphasis> is preconfigured to use a
+                    standard reporter repository (http://inca.sdsc.edu/2.0/repository),
+                    Inca also offers a convenience tool
+                    (called <emphasis role="strong">incpack</emphasis>) for producing or
+                    updating a catalog for an Inca reporter repository.
+                    <emphasis role="strong">incpack</emphasis> creates local
+                    reporter repositories which may be specified to the
+                    reporter agent as sources for reporter packages.
+                </para>
+                <screen>% incpack example</screen>
+                <para>
+                    Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
+                    the reporter agent which set of repositories to retrieve reporters from.
+                </para>
+
+                <figure id="repository.fig">
+                    <title>Select Reporter Repositories</title>
+                    <graphic fileref="figures/incat_repositories.jpg" align="center"></graphic>
+                </figure>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
+            <section id="incat-resources">
+                <title>Configure Resources</title>
+                <para>
+                    - mention how to include macros within macros  (@MACRO@)
+                    - describe how resource macros override global macros
+                    - regex for hostnames (a|b|c).sdsc.edu -- spaces are also replaced by |
+                </para>
+                <figure id="resources.fig">
+                    <title>Configure Resources</title>
+                    <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
+                </figure>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
+            <section id="incat-suites">
+                <title>Configure Reporter Execution</title>
+                <para>
+                    on a resource and which input parameters each reporter takes on each resource
+                    <emphasis role="strong">incat</emphasis> provides the Inca administrator with the option of automatically
+                    (i.e., without administrator intervention) updating and executing new reporter versions
+                    as they become available.
+                </para>
+                <para>
+                    <emphasis role="strong">incat</emphasis> allows reporter selection and configuration to be performed on
+                    individual resources (i.e., individual Reporter Managers) or on collections of resources.
+                </para>
+                <figure id="suites.fig">
+                    <title>Configure Reporter Execution</title>
+                    <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
+                </figure>
+                <para>
+                    The attributes of a particular reporter's execution include:
+                </para>
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            the name and version of the reporter (For convenience,
+                            the version of a reporter may be specified as "current", in which case the
+                            reporter agent will automatically update the reporter as new versions become available)
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            the resource on which it is to be run (i.e., the Reporter Manager name)
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            any command-line arguments to be passed
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            the initial run time
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            how often the reporter should be run
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            the Depot(s) to which the results should be sent
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            optionally, the maximum CPU and/or wall clock time that a single reporter run
+                            will be allowed to consume; a list of expected output values.
+                        </para>
+                    </listItem>
+                </itemizedList>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
         </section>
+    </section>
 
 
-        <section id="incat-RR">
-            <title>Selecting Reporter Repositories</title>
+    <section id="verify">
+        <title>Verify Inca Components</title>
+        <para>
+            This section describes how to verify that an installation of Inca is
+            working...
+        </para>
+        <para>[ <link linkend="top">top of page</link> ]</para>
+    </section>
+
+
+    <section id="data-consumer">
+        <title>Display Data</title>
+        <para>
+            The data collected by Inca can be displayed by data consumers -- CGI scripts, Web pages, interactive Java GUIs,
+            or command-line scripts that query the server for data.  A data consumer for displaying software
+            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
+            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>
+            located ????. Replace the <emphasis role="strong">emphasized text</emphasis> below with values
+            for your Inca installation.
+        </para>
+        <section id="setup-web">
+            <title>Setup Web Environment</title>
             <para>
-                def reporter repositories
+                something about env
             </para>
-            <para>
-                Via <emphasis role="bold">incat</emphasis>, the Inca administrator tells
-                the reporter agent which set of repositories to retrieve reporters from.
-                The reporter agent stores knowledge of reporter repository contents
-                and reporter package formats.
-            </para>
-            <para>
-                Although <emphasis role="bold">incat</emphasis> is preconfigured to use a
-                standard reporter repository (http://inca.sdsc.edu/2.0/repository),
-                Inca also offers a convenience tool
-                (called <emphasis role="bold">incpack</emphasis>) for producing or
-                updating a catalog for an Inca reporter repository.
-                <emphasis role="bold">incpack</emphasis> creates local
-                Reporter repositories which may be specified to the
-                reporter agent as sources for reporter packages.
-            </para>
-            <figure id="repository.fig">
-                <title>Selecting Reporter Repositories</title>
-                <graphic fileref="figures/incat_repositories.jpg" align="center"></graphic>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="run-stack">
+            <title>Run Software Stack Data Consumer</title>
+            <figure id="stack.fig">
+                <title>Software Stack Status Page</title>
+                <graphic fileref="figures/stack-status.jpg" align="center">
+                </graphic>
             </figure>
+            <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
+    </section>
 
 
-        <section id="incat-resources">
-            <title>Configuring Resources</title>
-            <para>
-                - mention how to include macros within macros  (@MACRO@)
-                - describe how resource macros override global macros
-                - regex for hostnames (a|b|c).sdsc.edu -- spaces are also replaced by |
-            </para>
-            <figure id="resources.fig">
-                <title>Configuring Resources</title>
-                <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
-            </figure>
-        </section>
-
-
-        <section id="incat-suites">
-            <title>Configuring Reporter Execution</title>
-            <para>
-                on a resource and which input parameters each reporter takes on each resource
-                <emphasis role="bold">incat</emphasis> provides the Inca administrator with the option of automatically
-                (i.e., without administrator intervention) updating and executing new reporter versions
-                as they become available.
-            </para>
-            <para>
-                <emphasis role="bold">incat</emphasis> allows reporter selection and configuration to be performed on
-                individual resources (i.e., individual Reporter Managers) or on collections of resources.
-            </para>
-
-            <figure id="suites.fig">
-                <title>Configuring Reporter Execution</title>
-                <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
-            </figure>
-            <para>
-                The attributes of a particular reporter's execution include:
-            </para>
-            <itemizedList>
-                <listItem>
-                    <para>
-                        the name and version of the reporter (For convenience,
-                        the version of a reporter may be specified as "current", in which case the
-                        reporter agent will automatically update the reporter as new versions become available)
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        the resource on which it is to be run (i.e., the Reporter Manager name)
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        any command-line arguments to be passed
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        the initial run time
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        how often the reporter should be run
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        the Depot(s) to which the results should be sent
-                    </para>
-                </listItem>
-                <listItem>
-                    <para>
-                        optionally, the maximum CPU and/or wall clock time that a single reporter run
-                        will be allowed to consume; a list of expected output values.
-                    </para>
-                </listItem>
-            </itemizedList>
-        </section>
-
+    <section id="contact-us">
+        <title>Troubleshoot</title>
+        <para>
+            Please email <email>inca@sdsc.edu</email> with any questions or problems using Inca software.
+        </para>
+        <para>[ <link linkend="top">top of page</link> ]</para>
     </section>
 
 
