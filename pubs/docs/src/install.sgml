@@ -18,13 +18,13 @@
             <orderedlist>
                 <listitem>
                     <para>
-                        <emphasis>Reporter</emphasis> - script or executable that performs
+                        <emphasis role="strong">Reporter</emphasis> - script or executable that performs
                         a test, benchmark, or query and formats its results in Inca compliant XML.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>Reporter Repository</emphasis> - a trusted authority that hosts
+                        <emphasis role="strong">Reporter Repository</emphasis> - a trusted authority that hosts
                         a directory of reporters and reporter libraries that can be fetched
                         from a reporter agent and used in an Inca deployment to collect data from
                         resources.
@@ -32,7 +32,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>Reporter Manager</emphasis> - a thin client of the control
+                        <emphasis role="strong">Reporter Manager</emphasis> - a thin client of the control
                         framework of Inca which executes on the monitored resources.  It handles
                         scheduled and local-execution of reporters and stores the resulting data
                         into a depot.  A reporter manager trusts one and only one reporter agent who
@@ -41,7 +41,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>Reporter Agent</emphasis> - services requests for the
+                        <emphasis role="strong">Reporter Agent</emphasis> - services requests for the
                         collection of specified data sets at various intervals and
                         configures data storage requirements.  The data set is collected by
                         delegating the execution of a corresponding reporter suite to a
@@ -50,7 +50,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>Depot</emphasis> - stores reporter data collected by
+                        <emphasis role="strong">Depot</emphasis> - stores reporter data collected by
                         the reporter managers and handles all data queries.
                     </para>
                 </listitem>
@@ -59,7 +59,8 @@
         <para>
             Inca's data is displayed by data consumers -- the CGI scripts,
             Web pages, interactive Java GUIs, or command-line scripts that
-            query the depot for data.
+            query the depot for data.  The Inca software is administered via the 
+	    Inca Administration Tool (incat) -- a Java GUI.
         </para>
         <figure id="arch.fig">
             <title>Inca architecture</title>
@@ -232,6 +233,12 @@
                 download reporters from the reporter repositories and construct schedules
                 for transmission to the reporter managers.
             </para>
+            <note>
+                <para>
+                    <emphasis>Remember to commit your changes before quitting <emphasis role="strong">incat</emphasis> 
+			so that they are stored on the agent. </emphasis>
+                </para>
+            </note>
             <section id="incat-RR">
                 <title>Select Reporter Repositories</title>
                 <para>
@@ -252,7 +259,7 @@
                 <screen>% incpack example</screen>
                 <para>
                     Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
-                    the reporter agent which set of repositories to retrieve reporters from.
+                    the reporter agent which repositories to retrieve reporters from.
                 </para>
 
                 <figure id="repository.fig">
@@ -272,6 +279,18 @@
                     <title>Configure Resources</title>
                     <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
                 </figure>
+                <figure id="rg1.fig">
+                    <title>Add Resource Group (with subgroups)</title>
+                    <graphic fileref="figures/incat_add_rg1.jpg" align="center"></graphic>
+                </figure>
+                <figure id="rg2.fig">
+                    <title>Add Resource Group (with round robin cluster)</title>
+                    <graphic fileref="figures/incat_add_rg2.jpg" align="center"></graphic>
+                </figure>
+                <figure id="macro.fig">
+                    <title>Add Macro</title>
+                    <graphic fileref="figures/incat_add_macro.jpg" align="center"></graphic>
+                </figure>
                 <para>[ <link linkend="top">top of page</link> ]</para>
             </section>
             <section id="incat-suites">
@@ -287,8 +306,12 @@
                     individual resources (i.e., individual Reporter Managers) or on collections of resources.
                 </para>
                 <figure id="suites.fig">
-                    <title>Configure Reporter Execution</title>
+                    <title>Configure Reporter Execution (suites)</title>
                     <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
+                </figure>
+                <figure id="series.fig">
+                    <title>Configure Reporter Execution (series)</title>
+                    <graphic fileref="figures/incat_add_series.jpg" align="center"></graphic>
                 </figure>
                 <para>
                     The attributes of a particular reporter's execution include:
@@ -368,9 +391,20 @@
         </section>
         <section id="run-stack">
             <title>Run Software Stack Data Consumer</title>
-            <figure id="stack.fig">
-                <title>Software Stack Status Page</title>
-                <graphic fileref="figures/stack-status.jpg" align="center">
+            <para>
+		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&resourceID=grid&suiteGUID=test
+		</para>
+		<figure id="summary.fig">
+                <title>Software Stack Summary Page</title>
+                <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
+                </graphic>
+            </figure>
+            <para>
+		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&instanceID=24&configID=1
+		</para>
+            <figure id="details.fig">
+                <title>Software Stack Details Page</title>
+                <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
                 </graphic>
             </figure>
             <para>[ <link linkend="top">top of page</link> ]</para>
