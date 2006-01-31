@@ -197,21 +197,21 @@
                 The Inca Administration Tool, or <emphasis role="strong">incat</emphasis>,
                 is designed to make the installation, setup, data collection, and maintenance
                 of the Inca deployment straightforward and configurable.
-                An administrator can use <emphasis role="strong">incat</emphasis> to:
+                An administrator can use <emphasis role="strong">incat</emphasis> to configure:
                 <itemizedList>
                     <listItem>
                         <para>
-                            select reporter repositories
+                            reporter repositories
                         </para>
                     </listItem>
                     <listItem>
                         <para>
-                            configure resource information
+                            resource information
                         </para>
                     </listItem>
                     <listItem>
                         <para>
-                            configure reporter execution
+                            reporter execution
                         </para>
                     </listItem>
                 </itemizedList>
@@ -240,7 +240,7 @@
                 </para>
             </note>
             <section id="incat-RR">
-                <title>Select Reporter Repositories</title>
+                <title>Configure Reporter Repositories</title>
                 <para>
                     A <emphasis>reporter repository</emphasis> is a trusted authority that hosts
                     a directory of reporters and reporter libraries that can be fetched
@@ -255,11 +255,31 @@
                     <emphasis role="strong">incpack</emphasis> creates local
                     reporter repositories which may be specified to the
                     reporter agent as sources for reporter packages.
-                </para>
-                <screen>% incpack example</screen>
+		</para>
+		<para>
+            		The <emphasis role="strong">incpack</emphasis> script is 
+			located in the bin directory under your installation
+            		directory.  Add this bin directory to your $PATH and then:
+        	</para>
+                <screen>% cd /path/to/repository; incpack /path/to/repository/*</screen>
                 <para>
-                    Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
-                    the reporter agent which repositories to retrieve reporters from.
+			There should now be a file called "Packages.gz" in the repository directory 
+			with information about the reporters in your new repository.
+                </para>
+                <para>
+			Once a repository has been created, <emphasis role="strong">incpack</emphasis> needs to 
+			be rerun if any of its reporters are changed, added or deleted.  
+			Remove "Packages.gz" before rerunning <emphasis role="strong">incpack</emphasis>:
+                </para>
+                <screen>% cd /path/to/repository; rm Packages.gz; incpack /path/to/repository/*</screen>
+                <para>
+                    	Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
+                    	the reporter agent which repositories to retrieve reporters from by entering
+			the location of the "Packages.gz" file. If the repository
+		  	is located in a Web accessible directory, its location can be entered as
+			"http://webserver/path/to/repository" (see <xref linkend="repository.fig">).  
+			If the repository is local, it can be entered
+			as "file:///path/to/repository".	
                 </para>
 
                 <figure id="repository.fig">
@@ -271,22 +291,60 @@
             <section id="incat-resources">
                 <title>Configure Resources</title>
                 <para>
-                    - mention how to include macros within macros  (@MACRO@)
-                    - describe how resource macros override global macros
-                    - regex for hostnames (a|b|c).sdsc.edu -- spaces are also replaced by |
+                    	Grid nodes are grouped into virtual resource groups and the groups are assigned macros 
+			(variables that have one or more values).  Groups/macros are then used to configure 
+			how reporters will run on the nodes.  
+                </para>
+                <para>
+			<xref linkend="resources.fig"> illustrates the resource configuration screen in 
+                    	<emphasis role="strong">incat</emphasis>.  The first window shows the resource group
+			name(s), the second window shows the members that belong to the resource group 
+			selected in the first window, and the third window shows the macros that are assigned
+			to the resource group selected in the first window.
                 </para>
                 <figure id="resources.fig">
                     <title>Configure Resources</title>
                     <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
                 </figure>
+                <para>
+			When adding a new resource group, members can be either hostnames or
+			other resource group names and are entered as a regular expression.  For example, in 
+			<xref linkend="rg1.fig"> a new group called "teragrid" is being added that contains groups 
+			called "ncsa-ia64", "sdsc-ia64", and "anl-viz".  The regular expression for those three groups is
+			"(ncsa|sdsc)-ia64|anl-viz".
+		</para>
+		<para>
+			In <xref linkend="rg1.fig">, the access method 
+			(gram and gridftp servers) is defined with macros. The gram server for the "teragrid" group is @GRAM_SERVER@, which 
+			means that it will look for the GRAM_SERVER macro value to be defined in 
+			each of its subgroups (sdsc-ia64, etc.) and will use the subgroup value for the subgroup nodes.  The 
+			the Inca reporter manager will then be started to execute reporters on the gram server.  Reporters will be 
+			transferred to the reporter manager via the gridftp server.
+                </para>
                 <figure id="rg1.fig">
                     <title>Add Resource Group (with subgroups)</title>
                     <graphic fileref="figures/incat_add_rg1.jpg" align="center"></graphic>
                 </figure>
+                <para>
+			The Inca reporter manager runs on one login node of a cluster.  In the case where login nodes round robin, 
+			a resource group should be created for the cluster and the "Round Robin" box should be checked (see 
+			<xref linkend="rg2.fig">).
+                </para>
                 <figure id="rg2.fig">
                     <title>Add Resource Group (with round robin cluster)</title>
                     <graphic fileref="figures/incat_add_rg2.jpg" align="center"></graphic>
                 </figure>
+		<para>
+                    	A node gets its macros from the group closest to it.  If a node, like tg-login.ncsa.teragrid.org, is listed 
+			in the ncsa-ia64 group, and the ncsa-ia64 group is listed in the teragrid group, then the ncsa-ia64 group is
+			closer to the tg-login.ncsa.teragrid.org node than the teragrid group.  
+		</para>
+		<para>
+			When adding macros with more than one value to a resource group (see <xref linkend="rg1.fig">), separate 
+			the values with spaces (e.g. value1 value2).  Macro values that have spaces in them should 
+			always be quoted (e.g. "value 1").  Macros can include other macros by surrounding them with the @ symbol (see 
+			the gram server macro in <xref linkend="rg1.fig">).  
+		</para>
                 <figure id="macro.fig">
                     <title>Add Macro</title>
                     <graphic fileref="figures/incat_add_macro.jpg" align="center"></graphic>
@@ -296,66 +354,27 @@
             <section id="incat-suites">
                 <title>Configure Reporter Execution</title>
                 <para>
-                    on a resource and which input parameters each reporter takes on each resource
-                    <emphasis role="strong">incat</emphasis> provides the Inca administrator with the option of automatically
-                    (i.e., without administrator intervention) updating and executing new reporter versions
-                    as they become available.
+                    	A reporter along with its arguments (input parameters), the resource group it runs on, and constraints (setup to be 
+			performed before executing the reporter, cleanup to be performed after executing the reporter,  
+			frequency of execution, maximum resource usage, and expected output) make up a <emphasis>reporter series</emphasis>. 
+			Reporter series are grouped into sets called <emphasis>reporter suites</emphasis>.
                 </para>
                 <para>
-                    <emphasis role="strong">incat</emphasis> allows reporter selection and configuration to be performed on
-                    individual resources (i.e., individual Reporter Managers) or on collections of resources.
+			<xref linkend="suites.fig"> shows <emphasis role="strong">incat</emphasis>'s suite configuration screen.  To configure
+			reporter execution, first create a new suite and then add reporter series to the suite.
                 </para>
                 <figure id="suites.fig">
                     <title>Configure Reporter Execution (suites)</title>
                     <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
                 </figure>
+                <para>
+			A new reporter series is being added in <xref linkend="series.fig">.  Note that the description field 
+			becomes the series name in the suite.
+                </para>
                 <figure id="series.fig">
                     <title>Configure Reporter Execution (series)</title>
                     <graphic fileref="figures/incat_add_series.jpg" align="center"></graphic>
                 </figure>
-                <para>
-                    The attributes of a particular reporter's execution include:
-                </para>
-                <itemizedList>
-                    <listItem>
-                        <para>
-                            the name and version of the reporter (For convenience,
-                            the version of a reporter may be specified as "current", in which case the
-                            reporter agent will automatically update the reporter as new versions become available)
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            the resource on which it is to be run (i.e., the Reporter Manager name)
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            any command-line arguments to be passed
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            the initial run time
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            how often the reporter should be run
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            the Depot(s) to which the results should be sent
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            optionally, the maximum CPU and/or wall clock time that a single reporter run
-                            will be allowed to consume; a list of expected output values.
-                        </para>
-                    </listItem>
-                </itemizedList>
                 <para>[ <link linkend="top">top of page</link> ]</para>
             </section>
         </section>
@@ -392,7 +411,7 @@
         <section id="run-stack">
             <title>Run Software Stack Data Consumer</title>
             <para>
-		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&resourceID=grid&suiteGUID=test
+		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&amp;resourceID=grid&amp;suiteGUID=test
 		</para>
 		<figure id="summary.fig">
                 <title>Software Stack Summary Page</title>
@@ -400,7 +419,7 @@
                 </graphic>
             </figure>
             <para>
-		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&instanceID=24&configID=1
+		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&amp;instanceID=24&amp;configID=1
 		</para>
             <figure id="details.fig">
                 <title>Software Stack Details Page</title>
