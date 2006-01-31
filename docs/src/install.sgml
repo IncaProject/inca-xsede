@@ -57,10 +57,9 @@
             </orderedlist>
         </para>
         <para>
-            Inca's data is displayed by data consumers -- the CGI scripts,
-            Web pages, interactive Java GUIs, or command-line scripts that
-            query the depot for data.  The Inca software is administered via the 
-	    Inca Administration Tool (incat) -- a Java GUI.
+            Inca's data is displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
+            that query the depot for data.  The Inca software is administered via a Java GUI called the 
+	    Inca Administration Tool (incat).
         </para>
         <figure id="arch.fig">
             <title>Inca architecture</title>
@@ -394,33 +393,85 @@
     <section id="data-consumer">
         <title>Display Data</title>
         <para>
-            The data collected by Inca can be displayed by data consumers -- CGI scripts, Web pages, interactive Java GUIs,
-            or command-line scripts that query the server for data.  A data consumer for displaying software
+            The data collected by Inca can be displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
+            that query the depot for data.  A data consumer for displaying software
             stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
-            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>
-            located ????. Replace the <emphasis role="strong">emphasized text</emphasis> below with values
-            for your Inca installation.
+            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>. 
         </para>
         <section id="setup-web">
-            <title>Setup Web Environment</title>
+            <title>Start Jetty</title>
             <para>
-                something about env
+                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by 
+		default, but can be configured to start on another port.  A separate Web server (like Apache)
+		is not required.  To start Jetty:
+            </para>
+                <screen>% ant war; whatever jetty commands we need</screen>
+            <para>
+		More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
             </para>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
         <section id="run-stack">
-            <title>Run Software Stack Data Consumer</title>
-            <para>
-		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&amp;resourceID=grid&amp;suiteGUID=test
+            <title>View Software Stack Data Consumer</title>
+            	<para>
+			The results from the sample suite that executed when the depot and agent were started should now be visible from 
+			the xslt.jsp page.  The jsp requires three input parameters to display either suite results or a series results.  	
 		</para>
+		<para> 
+		For a suite (see <xref linkend="summary.fig">) the jsp requires:
+		<orderedList>
+			<listItem>
+				<para> 
+				a suiteGUID: the name of the suite from <emphasis role="strong">incat</emphasis>
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+      				a resourceID (e.g. "teragrid"): the resource group name from <emphasis role="strong">incat</emphasis>
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+      				the path to the xsl to display the suite xml results (an example xsl file called 
+				swStack.xsl is provided)
+				</para> 
+			</listItem>
+		</orderedList>	
+		</para>
+		<para>
+			The URL to display the sample suite results is:
+		</para>
+		<screen>http://localhost:8080/xslt.jsp?xsl=swStack.xsl&amp;resourceID=your_resource_group&amp;suiteGUID=your_suite_name</screen>
 		<figure id="summary.fig">
                 <title>Software Stack Summary Page</title>
                 <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
                 </graphic>
             </figure>
-            <para>
-		http://localhost:8080/xslt.jsp?xsl=../webapps/inca-consumers/swStack.xsl&amp;instanceID=24&amp;configID=1
+		<para> 
+		For a series (see <xref linkend="details.fig">) the jsp requires:
+		<orderedList>
+			<listItem>
+				<para> 
+				an instanceID: the series instanceID 
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+      				a configID: the series configID
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+      				the path to the xsl to display the test xml results (an example xsl file called 
+				swStack.xsl is provided)
+				</para> 
+			</listItem>
+		</orderedList>	
 		</para>
+		<para>
+			Individual series results are linked from the suite results page with URLs like:
+		</para>
+            <screen>http://localhost:8080/xslt.jsp?xsl=swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
             <figure id="details.fig">
                 <title>Software Stack Details Page</title>
                 <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
