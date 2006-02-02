@@ -415,63 +415,60 @@
             <title>View Software Stack Data Consumer</title>
             	<para>
 			The results from the sample suite that executed when the depot and agent were started should now be visible from 
-			the xslt.jsp page.  The jsp requires three input parameters to display either suite results or a series results.  	
+			the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.  	
 		</para>
 		<para> 
-		For a suite (see <xref linkend="summary.fig">) the jsp requires:
+		To display suite results the jsp requires a:
 		<orderedList>
 			<listItem>
 				<para> 
-				a suiteGUID: the name of the suite from <emphasis role="strong">incat</emphasis>
-				</para> 
+				<emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
+				 and a </para> 
 			</listItem>
 			<listItem>
 				<para> 
-      				a resourceID (e.g. "teragrid"): the resource group name from <emphasis role="strong">incat</emphasis>
-				</para> 
-			</listItem>
-			<listItem>
-				<para> 
-      				the path to the xsl to display the suite xml results (an example xsl file called 
-				swStack.xsl is provided)
+      				<emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
 				</para> 
 			</listItem>
 		</orderedList>	
 		</para>
+				<para> 
+      				The jsp then gets an XML array of reportSummary results (one for each of the series in the suite) from the depot and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+				</para> 
 		<para>
-			The URL to display the sample suite results is:
+			
 		</para>
-		<screen>http://localhost:8080/xslt.jsp?xsl=swStack.xsl&amp;resourceID=your_resource_group&amp;suiteGUID=your_suite_name</screen>
+		<para>
+			The URL to display the sample suite results from the xslt.jsp page is:
+		</para>
+		<screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
 		<figure id="summary.fig">
                 <title>Software Stack Summary Page</title>
                 <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
                 </graphic>
             </figure>
 		<para> 
-		For a series (see <xref linkend="details.fig">) the jsp requires:
+		To display a series results the jsp requires a:
 		<orderedList>
 			<listItem>
 				<para> 
-				an instanceID: the series instanceID 
+      				<emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
 				</para> 
 			</listItem>
 			<listItem>
 				<para> 
-      				a configID: the series configID
-				</para> 
-			</listItem>
-			<listItem>
-				<para> 
-      				the path to the xsl to display the test xml results (an example xsl file called 
-				swStack.xsl is provided)
+				<emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
 				</para> 
 			</listItem>
 		</orderedList>	
 		</para>
+				<para> 
+      				The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
+				</para> 
 		<para>
 			Individual series results are linked from the suite results page with URLs like:
 		</para>
-            <screen>http://localhost:8080/xslt.jsp?xsl=swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
             <figure id="details.fig">
                 <title>Software Stack Details Page</title>
                 <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
