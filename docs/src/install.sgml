@@ -73,7 +73,7 @@
     <section id="install">
         <title>Get Inca</title>
         <para>
-            This section describes how to install Inca....
+            This section describes how to obtain, install and verify the Inca 2.0 software. 
         </para>
 
         <section id="prereq">
@@ -129,23 +129,99 @@
         </section>
         <section id="install-source">
             <title>Build and Install Source Code</title>
-            <para>
+            <orderedList>
+		<listItem>
+		<para>
                 Download the <filename>incaInstall.sh</filename> script from
                 <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>.
             </para>
+		</listItem>
+		<listItem>
             <para>
                 Execute the install script ($INCA_INSTALL is the location of the directory where you want to install Inca - either set the environment variable or replace $INCA_INSTALL with the install directory path in the commands below):
             </para>
             <screen>% ./incaInstall.sh $INCA_INSTALL all</screen>
             <para>
+                You should see something like:
+            <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+           => `inca-common-java-bin.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5,921,461 [application/x-tar]
+
+100%[======================>] 5,921,461      1.23M/s    ETA 00:00
+
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] ... 
+common-java installed ...
+agent installed ...
+consumers installed ...
+depot installed ...
+incat installed</screen>
+            </para>
+		</listItem>
+		<listItem>
+            <para>
                 Change to the top level directory of your Inca
                 installation:
             </para>
             <screen>% cd $INCA_INSTALL</screen>
+		</listItem>
+		<listItem>
             <para>
-                Start Inca Components (the following command will start all of the components, but you can also start them individually with "./bin/inca depot", etc.):
+                Create certificate for Inca components (enables secure component communication):
+            </para>
+            <screen>% ./bin/inca createauth</screen>
+		</listItem>
+		<listItem>
+            <para>
+                Start Inca components (the following command will start the agent, consumer and
+		depot components, but you can also start them individually with "./bin/inca agent", etc.):
             </para>
             <screen>% ./bin/inca default</screen>
+            <para>
+                You should see something like:
+            <screen>Preparing to deploy default Inca configuration...
+** Warning:  this will erase any previously collected reporter state 
+   on the Inca depot and configuration on the agent
+Do you wish to continue (y/n)? y
+Initializing depot...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@f60f20 ...
+Database Initialization Completed
+done
+Initializing agent
+done
+Started Inca agent
+Started Inca consumer
+Started Inca depot
+Sleeping for 20 seconds while the components come online
+Deploying default configuration
+Suite GUIDs are:
+  client.host.name:6323/TestSuiteLocal</screen>
+            </para>
+		</listItem>
+		<listItem>
+            <para>
+                Start the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
+            </para>
+            <screen>% ./bin/inca incat</screen>
+            <para>
+                You should see the Java GUI pop up with the following screen to indicate <emphasis role="strong">incat</emphasis> is getting information from the recently started agent:
+                <figure id="incat-retrieve.fig">
+                    <title>incat Agent Screen</title>
+                    <graphic fileref="figures/incat_retrieve_agent.jpg" align="center"></graphic>
+                </figure>
+            </para>
+            <para>
+                Once <emphasis role="strong">incat</emphasis> has information from the agent, the following screen will display:
+                <figure id="incat-default.fig">
+                    <title>Default incat Screen</title>
+                    <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
+                </figure>
+            </para>
+		</listItem>
+	</orderedList>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
     	<section id="verify">
