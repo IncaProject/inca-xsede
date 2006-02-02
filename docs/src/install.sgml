@@ -130,21 +130,11 @@
         <section id="install-source">
             <title>Build and Install Source Code</title>
             <para>
-                Download a tarball distribution of Inca, e.g., inca-x.x.tar.gz, from
-                <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>
-                and unpack the code, as follows:
-            </para>
-            <screen>% tar zxvf inca-x.x.tar.gz</screen>
-            <para>
-                The code will be available in a directory called inca-x.x.
+                Download the <filename>incaInstall.sh</filename> script from
+                <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>.
             </para>
             <para>
-                Change to the top level directory of your local copy of the Inca
-                source code:
-            </para>
-            <screen>% cd inca-x.x</screen>
-            <para>
-                Install Inca ($INCA_INSTALL is the location of the directory where you want to install Inca - either set the environment variable or replace $INCA_INSTALL with the install directory path in the commands below):
+                Execute the install script ($INCA_INSTALL is the location of the directory where you want to install Inca - either set the environment variable or replace $INCA_INSTALL with the install directory path in the commands below):
             </para>
             <screen>% ./incaInstall.sh $INCA_INSTALL all</screen>
             <para>
@@ -430,7 +420,28 @@
 		</orderedList>	
 		</para>
 				<para> 
-      				The jsp then gets an XML array of reportSummary results (one for each of the series in the suite) from the depot and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+      				The jsp then combines:
+		<itemizedList>
+			<listItem>
+				<para> 
+ an XML array of reportSummary results (one for each of the series in the suite) from the depot 
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+XML resource configuration information from <emphasis role="strong">incat</emphasis>
+				</para> 
+			</listItem>
+			<listItem>
+				<para> 
+software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+				</para> 
+			</listItem>
+		</itemizedList>
+
+				</para> 
+				<para> 
+and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
 				</para> 
 		<para>
 			
