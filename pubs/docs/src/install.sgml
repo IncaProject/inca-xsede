@@ -240,31 +240,39 @@ Suite GUIDs are:
                         </listItem>
                         <listItem>
                             <para>
-                                Copy the <emphasis role="strong">incat</emphasis> key and certificate from the original machine 
+                                Copy the <emphasis role="strong">incat</emphasis> key, certificate, and trusted directory from the original machine 
 				to your local machine:
                             </para>
                             <screen>% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
-  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;</screen>
+  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
+  scp -r orig.machine:$ORIG_INCA_INSTALL/etc/trusted $INCA_INSTALL/etc/;</screen>
                         </listItem>
                         <listItem>
                             <para>
-                                Change localhost in the <filename>$INCA_INSTALL/etc/common/inca.properties</filename> file to point to the agent and depot of the machine you started them on:
+                                Change localhost in the <filename>$INCA_INSTALL/etc/common/inca.properties</filename> file to point to the agent and depot of the machine you started them on and change the agent key/cert to the incat key/cert (replace ORIGHOST with the hostname of the machine where you originally started Inca):
                                 <screen>#---------------------------------------------------------------------------
+# agent
+#---------------------------------------------------------------------------
+
+inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem
+
+#---------------------------------------------------------------------------
 # Consumer
 #---------------------------------------------------------------------------
 
 # URI to the agent -- use incas:// if authentication is required and inca:// if not
-inca.consumer.agent=incas://YOURHOST:6323
+inca.consumer.agent=incas://ORIGHOST:6323
 
 # URI to the depot -- use incas:// if authentication is required and inca:// if not
-inca.consumer.depot=incas://YOURHOST:6324</screen>
+inca.consumer.depot=incas://ORIGHOST:6324</screen>
                             </para>
                         </listItem>
                         <listItem>
                             <para>
-                                Start the <emphasis role="strong">incat</emphasis> component on a local machine:
+                                Start the <emphasis role="strong">incat</emphasis> component on a local machine with the agent hostname from the original machine:
                             </para>
-                            <screen>% cd $INCA_INSTALL; ./bin/inca incat</screen>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca incat -S ORIGHOST:6323</screen>
                             <para>
                                 You should now see the Java GUI window appear on your local machine.
                             </para>
