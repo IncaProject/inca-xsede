@@ -582,7 +582,7 @@ CLASS="SCREEN"
 ><P
 >                                Copy the <STRONG
 >incat</STRONG
-> key and certificate from the original machine 
+> key, certificate, and trusted directory from the original machine 
 				to your local machine:
                             </P
 ><TABLE
@@ -596,7 +596,8 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
-  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;</PRE
+  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
+  scp -r orig.machine:$ORIG_INCA_INSTALL/etc/trusted $INCA_INSTALL/etc/;</PRE
 ></FONT
 ></TD
 ></TR
@@ -607,7 +608,7 @@ CLASS="SCREEN"
 >                                Change localhost in the <TT
 CLASS="FILENAME"
 >$INCA_INSTALL/etc/common/inca.properties</TT
-> file to point to the agent and depot of the machine you started them on:
+> file to point to the agent and depot of the machine you started them on and change the agent key/cert to the incat key/cert (replace ORIGHOST with the hostname of the machine where you originally started Inca):
                                 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -619,14 +620,21 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >#---------------------------------------------------------------------------
+# agent
+#---------------------------------------------------------------------------
+
+inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem
+
+#---------------------------------------------------------------------------
 # Consumer
 #---------------------------------------------------------------------------
 
 # URI to the agent -- use incas:// if authentication is required and inca:// if not
-inca.consumer.agent=incas://YOURHOST:6323
+inca.consumer.agent=incas://ORIGHOST:6323
 
 # URI to the depot -- use incas:// if authentication is required and inca:// if not
-inca.consumer.depot=incas://YOURHOST:6324</PRE
+inca.consumer.depot=incas://ORIGHOST:6324</PRE
 ></FONT
 ></TD
 ></TR
@@ -638,7 +646,7 @@ inca.consumer.depot=incas://YOURHOST:6324</PRE
 ><P
 >                                Start the <STRONG
 >incat</STRONG
-> component on a local machine:
+> component on a local machine with the agent hostname from the original machine:
                             </P
 ><TABLE
 BORDER="1"
@@ -650,7 +658,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_INSTALL; ./bin/inca incat</PRE
+>% cd $INCA_INSTALL; ./bin/inca incat -S ORIGHOST:6323</PRE
 ></FONT
 ></TD
 ></TR
