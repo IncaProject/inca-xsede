@@ -245,27 +245,20 @@ Suite GUIDs are:
                             </para>
                             <screen>% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
   scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
-  scp -r orig.machine:$ORIG_INCA_INSTALL/etc/trusted $INCA_INSTALL/etc/;</screen>
+  scp "orig.machine:$ORIG_INCA_INSTALL/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</screen>
                         </listItem>
                         <listItem>
-                            <para>
-                                Change localhost in the <filename>$INCA_INSTALL/etc/common/inca.properties</filename> file to point to the agent and depot of the machine you started them on and change the agent key/cert to the incat key/cert (replace ORIGHOST with the hostname of the machine where you originally started Inca):
+                            <para>Change the agent key/cert to incat key/cert in the 
+				<filename>$INCA_INSTALL/etc/common/inca.properties</filename> local file:
                                 <screen>#---------------------------------------------------------------------------
 # agent
 #---------------------------------------------------------------------------
 
+inca.agent.auth=true
+inca.agent.password=
 inca.agent.cert=incatcert.pem
 inca.agent.key=incatkey.pem
-
-#---------------------------------------------------------------------------
-# Consumer
-#---------------------------------------------------------------------------
-
-# URI to the agent -- use incas:// if authentication is required and inca:// if not
-inca.consumer.agent=incas://ORIGHOST:6323
-
-# URI to the depot -- use incas:// if authentication is required and inca:// if not
-inca.consumer.depot=incas://ORIGHOST:6324</screen>
+inca.agent.trusted=trusted</screen>
                             </para>
                         </listItem>
                         <listItem>
@@ -290,15 +283,121 @@ inca.consumer.depot=incas://ORIGHOST:6324</screen>
                         <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
                     </figure>
                 </listItem>
+                <listItem>
+		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
+			verify that your Inca installation is working correctly, point your browser to: 
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+		</para>
+                </listItem>
             </orderedList>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
-        <section id="verify">
-            <title>Verify Inca Components</title>
+    </section>
+        <section id="display">
+            <title>Display Data</title>
             <para>
-                This section describes how to verify that an installation of Inca is
-                working...
+                An installation of Inca is working if reporter results can be displayed by data consumers 
+		(e.g. Web scripts, command line scripts, or Java GUIs) that query the depot for data.  A data consumer for displaying software
+            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
+            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>.
+        </para>
+        <section id="setup-web">
+            <title>Start Jetty</title>
+            <para>
+                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
+                default, but can be configured to start on another port.  A separate Web server (like Apache)
+                is not required.  To start Jetty:
             </para>
+            <screen>% ant war; whatever jetty commands we need</screen>
+            <para>
+                More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
+            </para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="run-stack">
+            <title>View Software Stack Data Consumer</title>
+            <para>
+                The results from the sample suite that executed when the depot and agent were started should now be visible from
+                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
+            </para>
+            <para>
+                To display suite results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
+                            and a </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then combines:
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            XML resource configuration information from <emphasis role="strong">incat</emphasis>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+                        </para>
+                    </listItem>
+                </itemizedList>
+
+            </para>
+            <para>
+                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+            </para>
+            <para>
+
+            </para>
+            <para>
+                The URL to display the sample suite results from the xslt.jsp page is:
+            </para>
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <figure id="summary.fig">
+                <title>Software Stack Summary Page</title>
+                <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
+                </graphic>
+            </figure>
+            <para>
+                To display a series results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
+            </para>
+            <para>
+                Individual series results are linked from the suite results page with URLs like:
+            </para>
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
+            <figure id="details.fig">
+                <title>Software Stack Details Page</title>
+                <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
+                </graphic>
+            </figure>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
     </section>
@@ -498,114 +597,6 @@ inca.consumer.depot=incas://ORIGHOST:6324</screen>
     </section>
 
 
-    <section id="data-consumer">
-        <title>Display Data</title>
-        <para>
-            The data collected by Inca can be displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
-            that query the depot for data.  A data consumer for displaying software
-            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
-            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>.
-        </para>
-        <section id="setup-web">
-            <title>Start Jetty</title>
-            <para>
-                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
-                default, but can be configured to start on another port.  A separate Web server (like Apache)
-                is not required.  To start Jetty:
-            </para>
-            <screen>% ant war; whatever jetty commands we need</screen>
-            <para>
-                More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
-            </para>
-            <para>[ <link linkend="top">top of page</link> ]</para>
-        </section>
-        <section id="run-stack">
-            <title>View Software Stack Data Consumer</title>
-            <para>
-                The results from the sample suite that executed when the depot and agent were started should now be visible from
-                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
-            </para>
-            <para>
-                To display suite results the jsp requires a:
-                <orderedList>
-                    <listItem>
-                        <para>
-                            <emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
-                            and a </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            <emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
-                        </para>
-                    </listItem>
-                </orderedList>
-            </para>
-            <para>
-                The jsp then combines:
-                <itemizedList>
-                    <listItem>
-                        <para>
-                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            XML resource configuration information from <emphasis role="strong">incat</emphasis>
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
-                        </para>
-                    </listItem>
-                </itemizedList>
-
-            </para>
-            <para>
-                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
-            </para>
-            <para>
-
-            </para>
-            <para>
-                The URL to display the sample suite results from the xslt.jsp page is:
-            </para>
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
-            <figure id="summary.fig">
-                <title>Software Stack Summary Page</title>
-                <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
-                </graphic>
-            </figure>
-            <para>
-                To display a series results the jsp requires a:
-                <orderedList>
-                    <listItem>
-                        <para>
-                            <emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
-                        </para>
-                    </listItem>
-                    <listItem>
-                        <para>
-                            <emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
-                        </para>
-                    </listItem>
-                </orderedList>
-            </para>
-            <para>
-                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
-            </para>
-            <para>
-                Individual series results are linked from the suite results page with URLs like:
-            </para>
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
-            <figure id="details.fig">
-                <title>Software Stack Details Page</title>
-                <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
-                </graphic>
-            </figure>
-            <para>[ <link linkend="top">top of page</link> ]</para>
-        </section>
-    </section>
 
 
     <section id="contact-us">

@@ -62,43 +62,38 @@ HREF="#RECOMMEND"
 HREF="#INSTALL-SOURCE"
 >Build and Install Source Code</A
 ></DT
-><DT
->2.4. <A
-HREF="#VERIFY"
->Verify Inca Components</A
-></DT
 ></DL
 ></DD
 ><DT
 >3. <A
+HREF="#DISPLAY"
+>Display Data</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#SETUP-WEB"
+>Start Jetty</A
+></DT
+><DT
+>3.2. <A
+HREF="#RUN-STACK"
+>View Software Stack Data Consumer</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
 HREF="#INCAT"
 >Configure Inca Components</A
 ></DT
 ><DD
 ><DL
 ><DT
->3.1. <A
+>4.1. <A
 HREF="#INCAT-INTRO"
 >The Inca Administration Tool</A
-></DT
-></DL
-></DD
-><DT
->4. <A
-HREF="#DATA-CONSUMER"
->Display Data</A
-></DT
-><DD
-><DL
-><DT
->4.1. <A
-HREF="#SETUP-WEB"
->Start Jetty</A
-></DT
-><DT
->4.2. <A
-HREF="#RUN-STACK"
->View Software Stack Data Consumer</A
 ></DT
 ></DL
 ></DD
@@ -597,7 +592,7 @@ COLOR="#000000"
 CLASS="SCREEN"
 >% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
   scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
-  scp -r orig.machine:$ORIG_INCA_INSTALL/etc/trusted $INCA_INSTALL/etc/;</PRE
+  scp "orig.machine:$ORIG_INCA_INSTALL/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</PRE
 ></FONT
 ></TD
 ></TR
@@ -605,10 +600,11 @@ CLASS="SCREEN"
 ></LI
 ><LI
 ><P
->                                Change localhost in the <TT
+>Change the agent key/cert to incat key/cert in the 
+				<TT
 CLASS="FILENAME"
 >$INCA_INSTALL/etc/common/inca.properties</TT
-> file to point to the agent and depot of the machine you started them on and change the agent key/cert to the incat key/cert (replace ORIGHOST with the hostname of the machine where you originally started Inca):
+> local file:
                                 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -623,18 +619,11 @@ CLASS="SCREEN"
 # agent
 #---------------------------------------------------------------------------
 
+inca.agent.auth=true
+inca.agent.password=
 inca.agent.cert=incatcert.pem
 inca.agent.key=incatkey.pem
-
-#---------------------------------------------------------------------------
-# Consumer
-#---------------------------------------------------------------------------
-
-# URI to the agent -- use incas:// if authentication is required and inca:// if not
-inca.consumer.agent=incas://ORIGHOST:6323
-
-# URI to the depot -- use incas:// if authentication is required and inca:// if not
-inca.consumer.depot=incas://ORIGHOST:6324</PRE
+inca.agent.trusted=trusted</PRE
 ></FONT
 ></TD
 ></TR
@@ -703,7 +692,88 @@ SRC="figures/incat_default.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ></LI
+><LI
+><P
+>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
+			verify that your Inca installation is working correctly, point your browser to: 
+            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;resourceID=defaultvo&#38;suiteName=TestSuiteLocal</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+		</P
+></LI
 ></OL
+><P
+>[ <A
+HREF="#AEN1"
+>top of page</A
+> ]</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="DISPLAY"
+>3. Display Data</A
+></H2
+><P
+>                An installation of Inca is working if reporter results can be displayed by data consumers 
+		(e.g. Web scripts, command line scripts, or Java GUIs) that query the depot for data.  A data consumer for displaying software
+            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
+            configuration of the sample data consumer, a jsp script called <TT
+CLASS="FILENAME"
+>xslt.jsp</TT
+>.
+        </P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="SETUP-WEB"
+>3.1. Start Jetty</A
+></H3
+><P
+>                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
+                default, but can be configured to start on another port.  A separate Web server (like Apache)
+                is not required.  To start Jetty:
+            </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ant war; whatever jetty commands we need</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>                More information about Jetty is available at the <A
+HREF="http://jetty.mortbay.org/jetty/"
+TARGET="_top"
+>Jetty homepage</A
+>.
+            </P
 ><P
 >[ <A
 HREF="#AEN1"
@@ -715,13 +785,173 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="VERIFY"
->2.4. Verify Inca Components</A
+NAME="RUN-STACK"
+>3.2. View Software Stack Data Consumer</A
 ></H3
 ><P
->                This section describes how to verify that an installation of Inca is
-                working...
+>                The results from the sample suite that executed when the depot and agent were started should now be visible from
+                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
             </P
+><P
+>                To display suite results the jsp requires a:
+                <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>                            <EM
+>suiteName</EM
+>: the name of the suite from <STRONG
+>incat</STRONG
+> (e.g. "TestSuiteLocal")
+                            and a </P
+></LI
+><LI
+><P
+>                            <EM
+>resourceID</EM
+>: the resource group name from <STRONG
+>incat</STRONG
+> (e.g. "defaultvo")
+                        </P
+></LI
+></OL
+>
+            </P
+><P
+>                The jsp then combines:
+                <P
+></P
+><UL
+><LI
+><P
+>                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
+                        </P
+></LI
+><LI
+><P
+>                            XML resource configuration information from <STRONG
+>incat</STRONG
+>
+                        </P
+></LI
+><LI
+><P
+>                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+                        </P
+></LI
+></UL
+>
+
+            </P
+><P
+>                and then either displays the XML or displays formatted XML (see <A
+HREF="#SUMMARY.FIG"
+>Figure 4</A
+>).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+            </P
+><P
+>&#13;            </P
+><P
+>                The URL to display the sample suite results from the xslt.jsp page is:
+            </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;resourceID=defaultvo&#38;suiteName=TestSuiteLocal</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="FIGURE"
+><A
+NAME="SUMMARY.FIG"
+></A
+><P
+><B
+>Figure 4. Software Stack Summary Page</B
+></P
+><P
+><IMG
+SRC="figures/consumer_reporter_summary.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>                To display a series results the jsp requires a:
+                <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>                            <EM
+>configID</EM
+>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<TT
+CLASS="FILENAME"
+>xslt.jsp?suiteName=X&#38;resourceID=Y</TT
+>"  and an
+                        </P
+></LI
+><LI
+><P
+>                            <EM
+>instanceID</EM
+>: the reportSummary/instanceId of a series from the XML created by "<TT
+CLASS="FILENAME"
+>xslt.jsp?suiteName=X&#38;resourceID=Y</TT
+>"
+                        </P
+></LI
+></OL
+>
+            </P
+><P
+>                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <A
+HREF="#DETAILS.FIG"
+>Figure 5</A
+>).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
+            </P
+><P
+>                Individual series results are linked from the suite results page with URLs like:
+            </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;instanceID=24&#38;configID=1</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="FIGURE"
+><A
+NAME="DETAILS.FIG"
+></A
+><P
+><B
+>Figure 5. Software Stack Details Page</B
+></P
+><P
+><IMG
+SRC="figures/consumer_reporter_details.jpg"
+ALIGN="CENTER"></P
+></DIV
 ><P
 >[ <A
 HREF="#AEN1"
@@ -735,7 +965,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INCAT"
->3. Configure Inca Components</A
+>4. Configure Inca Components</A
 ></H2
 ><DIV
 CLASS="SECTION"
@@ -743,7 +973,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INCAT-INTRO"
->3.1. The Inca Administration Tool</A
+>4.1. The Inca Administration Tool</A
 ></H3
 ><P
 >                The Inca Administration Tool, or <STRONG
@@ -842,7 +1072,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INCAT-RR"
->3.1.1. Configure Reporter Repositories</A
+>4.1.1. Configure Reporter Repositories</A
 ></H4
 ><P
 >                    A <EM
@@ -926,7 +1156,7 @@ CLASS="SCREEN"
                     is located in a Web accessible directory, its location can be entered as
                     "http://webserver/path/to/repository" (see <A
 HREF="#REPOSITORY.FIG"
->Figure 4</A
+>Figure 6</A
 >).
                     If the repository is local, it can be entered
                     as "file:///path/to/repository".
@@ -938,7 +1168,7 @@ NAME="REPOSITORY.FIG"
 ></A
 ><P
 ><B
->Figure 4. Reporter Repositories Screen</B
+>Figure 6. Reporter Repositories Screen</B
 ></P
 ><P
 ><IMG
@@ -957,7 +1187,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INCAT-RESOURCES"
->3.1.2. Configure Resources</A
+>4.1.2. Configure Resources</A
 ></H4
 ><P
 >                    Grid nodes are grouped into virtual resource groups and the groups are assigned macros
@@ -967,7 +1197,7 @@ NAME="INCAT-RESOURCES"
 ><P
 >                    <A
 HREF="#RESOURCES.FIG"
->Figure 5</A
+>Figure 7</A
 > illustrates the resource configuration screen in
                     <STRONG
 >incat</STRONG
@@ -983,7 +1213,7 @@ NAME="RESOURCES.FIG"
 ></A
 ><P
 ><B
->Figure 5. Resource Configuration Screen</B
+>Figure 7. Resource Configuration Screen</B
 ></P
 ><P
 ><IMG
@@ -995,7 +1225,7 @@ ALIGN="CENTER"></P
                     other resource group names and are entered as a regular expression.  For example, in
                     <A
 HREF="#RG1.FIG"
->Figure 6</A
+>Figure 8</A
 > a new group called "teragrid" is being added that contains groups
                     called "ncsa-ia64", "sdsc-ia64", and "anl-viz".  The regular expression for those three groups is
                     "(ncsa|sdsc)-ia64|anl-viz".
@@ -1003,7 +1233,7 @@ HREF="#RG1.FIG"
 ><P
 >                    In <A
 HREF="#RG1.FIG"
->Figure 6</A
+>Figure 8</A
 >, the access method
                     (gram and gridftp servers) is defined with macros. The gram server for the "teragrid" group is @GRAM_SERVER@, which
                     means that it will look for the GRAM_SERVER macro value to be defined in
@@ -1018,7 +1248,7 @@ NAME="RG1.FIG"
 ></A
 ><P
 ><B
->Figure 6. Add Resource Group (with subgroups) Screen</B
+>Figure 8. Add Resource Group (with subgroups) Screen</B
 ></P
 ><P
 ><IMG
@@ -1030,7 +1260,7 @@ ALIGN="CENTER"></P
                     a resource group should be created for the cluster and the "Round Robin" box should be checked (see
                     <A
 HREF="#RG2.FIG"
->Figure 7</A
+>Figure 9</A
 >).
                 </P
 ><DIV
@@ -1040,7 +1270,7 @@ NAME="RG2.FIG"
 ></A
 ><P
 ><B
->Figure 7. Add Resource Group (with round robin cluster) Screen</B
+>Figure 9. Add Resource Group (with round robin cluster) Screen</B
 ></P
 ><P
 ><IMG
@@ -1055,13 +1285,13 @@ ALIGN="CENTER"></P
 ><P
 >                    When adding macros with more than one value to a resource group (see <A
 HREF="#RG1.FIG"
->Figure 6</A
+>Figure 8</A
 >), separate
                     the values with spaces (e.g. value1 value2).  Macro values that have spaces in them should
                     always be quoted (e.g. "value 1").  Macros can include other macros by surrounding them with the @ symbol (see
                     the gram server macro in <A
 HREF="#RG1.FIG"
->Figure 6</A
+>Figure 8</A
 >).
                 </P
 ><DIV
@@ -1071,7 +1301,7 @@ NAME="MACRO.FIG"
 ></A
 ><P
 ><B
->Figure 8. Add Macro Screen</B
+>Figure 10. Add Macro Screen</B
 ></P
 ><P
 ><IMG
@@ -1090,7 +1320,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INCAT-SUITES"
->3.1.3. Configure Reporter Execution</A
+>4.1.3. Configure Reporter Execution</A
 ></H4
 ><P
 >                    A reporter along with its arguments (input parameters), the resource group it runs on, and constraints (setup to be
@@ -1105,7 +1335,7 @@ NAME="INCAT-SUITES"
 ><P
 >                    <A
 HREF="#SUITES.FIG"
->Figure 9</A
+>Figure 11</A
 > shows <STRONG
 >incat</STRONG
 >'s suite configuration screen.  To configure
@@ -1118,7 +1348,7 @@ NAME="SUITES.FIG"
 ></A
 ><P
 ><B
->Figure 9. Suites Screen</B
+>Figure 11. Suites Screen</B
 ></P
 ><P
 ><IMG
@@ -1128,7 +1358,7 @@ ALIGN="CENTER"></P
 ><P
 >                    A new reporter series is being added in <A
 HREF="#SERIES.FIG"
->Figure 10</A
+>Figure 12</A
 >.  Note that the description field
                     becomes the series name in the suite.
                 </P
@@ -1139,7 +1369,7 @@ NAME="SERIES.FIG"
 ></A
 ><P
 ><B
->Figure 10. Add Series Screen</B
+>Figure 12. Add Series Screen</B
 ></P
 ><P
 ><IMG
@@ -1152,243 +1382,6 @@ HREF="#AEN1"
 >top of page</A
 > ]</P
 ></DIV
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="DATA-CONSUMER"
->4. Display Data</A
-></H2
-><P
->            The data collected by Inca can be displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
-            that query the depot for data.  A data consumer for displaying software
-            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
-            configuration of the sample data consumer, a jsp script called <TT
-CLASS="FILENAME"
->xslt.jsp</TT
->.
-        </P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="SETUP-WEB"
->4.1. Start Jetty</A
-></H3
-><P
->                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
-                default, but can be configured to start on another port.  A separate Web server (like Apache)
-                is not required.  To start Jetty:
-            </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% ant war; whatever jetty commands we need</PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->                More information about Jetty is available at the <A
-HREF="http://jetty.mortbay.org/jetty/"
-TARGET="_top"
->Jetty homepage</A
->.
-            </P
-><P
->[ <A
-HREF="#AEN1"
->top of page</A
-> ]</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="RUN-STACK"
->4.2. View Software Stack Data Consumer</A
-></H3
-><P
->                The results from the sample suite that executed when the depot and agent were started should now be visible from
-                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
-            </P
-><P
->                To display suite results the jsp requires a:
-                <P
-></P
-><OL
-TYPE="1"
-><LI
-><P
->                            <EM
->suiteName</EM
->: the name of the suite from <STRONG
->incat</STRONG
-> (e.g. "TestSuiteLocal")
-                            and a </P
-></LI
-><LI
-><P
->                            <EM
->resourceID</EM
->: the resource group name from <STRONG
->incat</STRONG
-> (e.g. "defaultvo")
-                        </P
-></LI
-></OL
->
-            </P
-><P
->                The jsp then combines:
-                <P
-></P
-><UL
-><LI
-><P
->                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
-                        </P
-></LI
-><LI
-><P
->                            XML resource configuration information from <STRONG
->incat</STRONG
->
-                        </P
-></LI
-><LI
-><P
->                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
-                        </P
-></LI
-></UL
->
-
-            </P
-><P
->                and then either displays the XML or displays formatted XML (see <A
-HREF="#SUMMARY.FIG"
->Figure 11</A
->).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
-            </P
-><P
->&#13;            </P
-><P
->                The URL to display the sample suite results from the xslt.jsp page is:
-            </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;resourceID=defaultvo&#38;suiteName=TestSuiteLocal</PRE
-></FONT
-></TD
-></TR
-></TABLE
-><DIV
-CLASS="FIGURE"
-><A
-NAME="SUMMARY.FIG"
-></A
-><P
-><B
->Figure 11. Software Stack Summary Page</B
-></P
-><P
-><IMG
-SRC="figures/consumer_reporter_summary.jpg"
-ALIGN="CENTER"></P
-></DIV
-><P
->                To display a series results the jsp requires a:
-                <P
-></P
-><OL
-TYPE="1"
-><LI
-><P
->                            <EM
->configID</EM
->: the reportSummary/reportSeriesConfigId of a series from the XML created by "<TT
-CLASS="FILENAME"
->xslt.jsp?suiteName=X&#38;resourceID=Y</TT
->"  and an
-                        </P
-></LI
-><LI
-><P
->                            <EM
->instanceID</EM
->: the reportSummary/instanceId of a series from the XML created by "<TT
-CLASS="FILENAME"
->xslt.jsp?suiteName=X&#38;resourceID=Y</TT
->"
-                        </P
-></LI
-></OL
->
-            </P
-><P
->                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <A
-HREF="#DETAILS.FIG"
->Figure 12</A
->).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
-            </P
-><P
->                Individual series results are linked from the suite results page with URLs like:
-            </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;instanceID=24&#38;configID=1</PRE
-></FONT
-></TD
-></TR
-></TABLE
-><DIV
-CLASS="FIGURE"
-><A
-NAME="DETAILS.FIG"
-></A
-><P
-><B
->Figure 12. Software Stack Details Page</B
-></P
-><P
-><IMG
-SRC="figures/consumer_reporter_details.jpg"
-ALIGN="CENTER"></P
-></DIV
-><P
->[ <A
-HREF="#AEN1"
->top of page</A
-> ]</P
 ></DIV
 ></DIV
 ><DIV
