@@ -58,8 +58,8 @@
         </para>
         <para>
             Inca's data is displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
-            that query the depot for data.  The Inca software is administered via a Java GUI called the 
-	    Inca Administration Tool (incat).
+            that query the depot for data.  The Inca software is administered via a Java GUI called the
+            Inca Administration Tool (incat).
         </para>
         <figure id="arch.fig">
             <title>Inca architecture</title>
@@ -73,7 +73,7 @@
     <section id="install">
         <title>Get Inca</title>
         <para>
-            This section describes how to obtain, install and verify the Inca 2.0 software. 
+            This section describes how to obtain, install and verify the Inca 2.0 software.
         </para>
 
         <section id="prereq">
@@ -130,22 +130,24 @@
         <section id="install-source">
             <title>Build and Install Source Code</title>
             <orderedList>
-		<listItem>
-		<para>
-                Download the <filename>incaInstall.sh</filename> script from
-                <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>.
-            </para>
-		</listItem>
-		<listItem>
-            <para>
-                Execute the install script ($INCA_INSTALL is the location of the directory where you want to install Inca - either set the environment variable or replace $INCA_INSTALL with the install directory path in the commands below):
-            </para>
-            <screen>% ./incaInstall.sh $INCA_INSTALL all</screen>
-            <para>
-                You should see something like:
-            <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+                <listItem>
+                    <para>
+                        Download the <filename>incaInstall.sh</filename> script from
+                        <ulink url="http://inca.sdsc.edu/downloads.html">the Inca download page</ulink>.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        Execute the install script. The install script requires the location of the directory where you want to install Inca
+                        (in the example below this is $INCA_INSTALL - either set the environment variable or replace $INCA_INSTALL
+                        with your own install directory path) and the Inca components you wish to install (options are "all", "server" and "incat"):
+                    </para>
+                    <screen>% ./incaInstall.sh $INCA_INSTALL all</screen>
+                    <para>
+                        You should see something like:
+                        <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
 --12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
-           => `inca-common-java-bin.tar.gz'
+=> `inca-common-java-bin.tar.gz'
 Resolving inca.sdsc.edu... 198.202.75.28
 Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
 HTTP request sent, awaiting response... 200 OK
@@ -153,38 +155,52 @@ Length: 5,921,461 [application/x-tar]
 
 100%[======================>] 5,921,461      1.23M/s    ETA 00:00
 
-12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] ... 
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] ...
 common-java installed ...
 agent installed ...
 consumers installed ...
 depot installed ...
 incat installed</screen>
-            </para>
-		</listItem>
-		<listItem>
-            <para>
-                Change to the top level directory of your Inca
-                installation:
-            </para>
-            <screen>% cd $INCA_INSTALL</screen>
-		</listItem>
-		<listItem>
-            <para>
-                Create certificate for Inca components (enables secure component communication):
-            </para>
-            <screen>% ./bin/inca createauth</screen>
-		</listItem>
-		<listItem>
-            <para>
-                Start Inca components (the following command will start the agent, consumer and
-		depot components, but you can also start them individually with "./bin/inca agent", etc.):
-            </para>
-            <screen>% ./bin/inca default</screen>
-            <para>
-                You should see something like:
-            <screen>Preparing to deploy default Inca configuration...
-** Warning:  this will erase any previously collected reporter state 
-   on the Inca depot and configuration on the agent
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        Change to the top level directory of your Inca
+                        installation:
+                    </para>
+                    <screen>% cd $INCA_INSTALL</screen>
+                </listItem>
+                <listItem>
+                    <para>
+                        Create certificates for the Inca components (enables secure component communication):
+                    </para>
+                    <screen>% ./bin/inca createauth</screen>
+                    <para>
+                        You should now see a certificate/key created for each of the four Inca components and stored in $INCA_INSTALL/etc:
+                    </para>
+                    <screen>Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'clientx.sdsc.edukey.pem'
+-----
+agent
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'agentkey.pem' ...
+writing new private key to 'consumerkey.pem' ...
+writing new private key to 'depotkey.pem' ...
+writing new private key to 'incatkey.pem' ...</screen>
+                </listItem>
+                <listItem>
+                    <para>
+                        Start Inca components (the following command will start all four Inca
+                        components, but you can also start them individually with "./bin/inca agent", etc.):
+                    </para>
+                    <screen>% ./bin/inca default</screen>
+                    <para>
+                        You should see something like:
+                        <screen>Preparing to deploy default Inca configuration...
+** Warning:  this will erase any previously collected reporter state
+on the Inca depot and configuration on the agent
 Do you wish to continue (y/n)? y
 Initializing depot...
 Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@f60f20 ...
@@ -199,39 +215,85 @@ Sleeping for 20 seconds while the components come online
 Deploying default configuration
 Suite GUIDs are:
   client.host.name:6323/TestSuiteLocal</screen>
-            </para>
-		</listItem>
-		<listItem>
-            <para>
-                Start the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
-            </para>
-            <screen>% ./bin/inca incat</screen>
-            <para>
-                You should see the Java GUI pop up with the following screen to indicate <emphasis role="strong">incat</emphasis> is getting information from the recently started agent:
-                <figure id="incat-retrieve.fig">
-                    <title>incat Agent Screen</title>
-                    <graphic fileref="figures/incat_retrieve_agent.jpg" align="center"></graphic>
-                </figure>
-            </para>
-            <para>
-                Once <emphasis role="strong">incat</emphasis> has information from the agent, the following screen will display:
-                <figure id="incat-default.fig">
-                    <title>Default incat Screen</title>
-                    <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
-                </figure>
-            </para>
-		</listItem>
-	</orderedList>
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        View the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
+                    </para>
+                    <para>
+                        If you did not see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
+                        after starting all components in the step above, it is probable that X-Window forwarding is not set up correctly between the 
+			machine where you installed Inca and your local machine.
+                        You can either configure X-Window forwarding, or you can start <emphasis role="strong">incat</emphasis> on a local machine:
+                    </para>
+                    <itemizedList>
+                        <listItem>
+                            <para>
+                                Copy the <filename>incaInstall.sh</filename> script to a local machine.
+                            </para>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Install the <emphasis role="strong">incat</emphasis> component on a local machine:
+                            </para>
+                            <screen>% ./incaInstall.sh $INCA_INSTALL incat</screen>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Copy the <emphasis role="strong">incat</emphasis> key and certificate from the original machine 
+				to your local machine:
+                            </para>
+                            <screen>% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
+  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;</screen>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Change localhost in the <filename>$INCA_INSTALL/etc/common/inca.properties</filename> file to point to the agent and depot of the machine you started them on:
+                                <screen>#---------------------------------------------------------------------------
+# Consumer
+#---------------------------------------------------------------------------
+
+# URI to the agent -- use incas:// if authentication is required and inca:// if not
+inca.consumer.agent=incas://YOURHOST:6323
+
+# URI to the depot -- use incas:// if authentication is required and inca:// if not
+inca.consumer.depot=incas://YOURHOST:6324</screen>
+                            </para>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Start the <emphasis role="strong">incat</emphasis> component on a local machine:
+                            </para>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca incat</screen>
+                            <para>
+                                You should now see the Java GUI window appear on your local machine.
+                            </para>
+                        </listItem>
+                    </itemizedList>
+                    <para>
+                        <figure id="retrieve.fig">
+                            <title>incat Agent Screen</title>
+                            <graphic fileref="figures/incat_retrieve_agent.jpg" align="center"></graphic>
+                        </figure>
+                        Once <emphasis role="strong">incat</emphasis> has information from the agent, the following screen will display:
+                    </para>
+                    <figure id="default.fig">
+                        <title>Default incat Screen</title>
+                        <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
+                    </figure>
+                </listItem>
+            </orderedList>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
-    	<section id="verify">
-        	<title>Verify Inca Components</title>
-        	<para>
-            This section describes how to verify that an installation of Inca is
-            working...
-        	</para>
-        	<para>[ <link linkend="top">top of page</link> ]</para>
-    	</section>
+        <section id="verify">
+            <title>Verify Inca Components</title>
+            <para>
+                This section describes how to verify that an installation of Inca is
+                working...
+            </para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
     </section>
 
 
@@ -283,8 +345,8 @@ Suite GUIDs are:
             </para>
             <note>
                 <para>
-                    <emphasis>Remember to commit your changes before quitting <emphasis role="strong">incat</emphasis> 
-			so that they are stored on the agent. </emphasis>
+                    <emphasis>Remember to commit your changes before quitting <emphasis role="strong">incat</emphasis>
+                        so that they are stored on the agent. </emphasis>
                 </para>
             </note>
             <section id="incat-RR">
@@ -303,31 +365,31 @@ Suite GUIDs are:
                     <emphasis role="strong">incpack</emphasis> creates local
                     reporter repositories which may be specified to the
                     reporter agent as sources for reporter packages.
-		</para>
-		<para>
-            		The <emphasis role="strong">incpack</emphasis> script is 
-			located in the bin directory under your installation
-            		directory.  Add this bin directory to your $PATH and then:
-        	</para>
-                <screen>% cd /path/to/repository; incpack /path/to/repository/*</screen>
-                <para>
-			There should now be a file called "Packages.gz" in the repository directory 
-			with information about the reporters in your new repository.
                 </para>
                 <para>
-			Once a repository has been created, <emphasis role="strong">incpack</emphasis> needs to 
-			be rerun if any of its reporters are changed, added or deleted.  
-			Remove "Packages.gz" before rerunning <emphasis role="strong">incpack</emphasis>:
+                    The <emphasis role="strong">incpack</emphasis> script is
+                    located in the bin directory under your installation
+                    directory.  Add this bin directory to your $PATH and then:
+                </para>
+                <screen>% cd /path/to/repository; incpack /path/to/repository/*</screen>
+                <para>
+                    There should now be a file called "Packages.gz" in the repository directory
+                    with information about the reporters in your new repository.
+                </para>
+                <para>
+                    Once a repository has been created, <emphasis role="strong">incpack</emphasis> needs to
+                    be rerun if any of its reporters are changed, added or deleted.
+                    Remove "Packages.gz" before rerunning <emphasis role="strong">incpack</emphasis>:
                 </para>
                 <screen>% cd /path/to/repository; rm Packages.gz; incpack /path/to/repository/*</screen>
                 <para>
-                    	Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
-                    	the reporter agent which repositories to retrieve reporters from by entering
-			the location of the "Packages.gz" file. If the repository
-		  	is located in a Web accessible directory, its location can be entered as
-			"http://webserver/path/to/repository" (see <xref linkend="repository.fig">).  
-			If the repository is local, it can be entered
-			as "file:///path/to/repository".	
+                    Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
+                    the reporter agent which repositories to retrieve reporters from by entering
+                    the location of the "Packages.gz" file. If the repository
+                    is located in a Web accessible directory, its location can be entered as
+                    "http://webserver/path/to/repository" (see <xref linkend="repository.fig">).
+                    If the repository is local, it can be entered
+                    as "file:///path/to/repository".
                 </para>
 
                 <figure id="repository.fig">
@@ -339,60 +401,60 @@ Suite GUIDs are:
             <section id="incat-resources">
                 <title>Configure Resources</title>
                 <para>
-                    	Grid nodes are grouped into virtual resource groups and the groups are assigned macros 
-			(variables that have one or more values).  Groups/macros are then used to configure 
-			how reporters will run on the nodes.  
+                    Grid nodes are grouped into virtual resource groups and the groups are assigned macros
+                    (variables that have one or more values).  Groups/macros are then used to configure
+                    how reporters will run on the nodes.
                 </para>
                 <para>
-			<xref linkend="resources.fig"> illustrates the resource configuration screen in 
-                    	<emphasis role="strong">incat</emphasis>.  The first window shows the resource group
-			name(s), the second window shows the members that belong to the resource group 
-			selected in the first window, and the third window shows the macros that are assigned
-			to the resource group selected in the first window.
+                    <xref linkend="resources.fig"> illustrates the resource configuration screen in
+                    <emphasis role="strong">incat</emphasis>.  The first window shows the resource group
+                    name(s), the second window shows the members that belong to the resource group
+                    selected in the first window, and the third window shows the macros that are assigned
+                    to the resource group selected in the first window.
                 </para>
                 <figure id="resources.fig">
                     <title>Resource Configuration Screen</title>
                     <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
                 </figure>
                 <para>
-			When adding a new resource group, members can be either hostnames or
-			other resource group names and are entered as a regular expression.  For example, in 
-			<xref linkend="rg1.fig"> a new group called "teragrid" is being added that contains groups 
-			called "ncsa-ia64", "sdsc-ia64", and "anl-viz".  The regular expression for those three groups is
-			"(ncsa|sdsc)-ia64|anl-viz".
-		</para>
-		<para>
-			In <xref linkend="rg1.fig">, the access method 
-			(gram and gridftp servers) is defined with macros. The gram server for the "teragrid" group is @GRAM_SERVER@, which 
-			means that it will look for the GRAM_SERVER macro value to be defined in 
-			each of its subgroups (sdsc-ia64, etc.) and will use the subgroup value for the subgroup nodes.  The 
-			the Inca reporter manager will then be started to execute reporters on the gram server.  Reporters will be 
-			transferred to the reporter manager via the gridftp server.
+                    When adding a new resource group, members can be either hostnames or
+                    other resource group names and are entered as a regular expression.  For example, in
+                    <xref linkend="rg1.fig"> a new group called "teragrid" is being added that contains groups
+                    called "ncsa-ia64", "sdsc-ia64", and "anl-viz".  The regular expression for those three groups is
+                    "(ncsa|sdsc)-ia64|anl-viz".
+                </para>
+                <para>
+                    In <xref linkend="rg1.fig">, the access method
+                    (gram and gridftp servers) is defined with macros. The gram server for the "teragrid" group is @GRAM_SERVER@, which
+                    means that it will look for the GRAM_SERVER macro value to be defined in
+                    each of its subgroups (sdsc-ia64, etc.) and will use the subgroup value for the subgroup nodes.  The
+                    the Inca reporter manager will then be started to execute reporters on the gram server.  Reporters will be
+                    transferred to the reporter manager via the gridftp server.
                 </para>
                 <figure id="rg1.fig">
                     <title>Add Resource Group (with subgroups) Screen</title>
                     <graphic fileref="figures/incat_add_rg1.jpg" align="center"></graphic>
                 </figure>
                 <para>
-			The Inca reporter manager runs on one login node of a cluster.  In the case where login nodes round robin, 
-			a resource group should be created for the cluster and the "Round Robin" box should be checked (see 
-			<xref linkend="rg2.fig">).
+                    The Inca reporter manager runs on one login node of a cluster.  In the case where login nodes round robin,
+                    a resource group should be created for the cluster and the "Round Robin" box should be checked (see
+                    <xref linkend="rg2.fig">).
                 </para>
                 <figure id="rg2.fig">
                     <title>Add Resource Group (with round robin cluster) Screen</title>
                     <graphic fileref="figures/incat_add_rg2.jpg" align="center"></graphic>
                 </figure>
-		<para>
-                    	A node gets its macros from the group closest to it.  If a node, like tg-login.ncsa.teragrid.org, is listed 
-			in the ncsa-ia64 group, and the ncsa-ia64 group is listed in the teragrid group, then the ncsa-ia64 group is
-			closer to the tg-login.ncsa.teragrid.org node than the teragrid group.  
-		</para>
-		<para>
-			When adding macros with more than one value to a resource group (see <xref linkend="rg1.fig">), separate 
-			the values with spaces (e.g. value1 value2).  Macro values that have spaces in them should 
-			always be quoted (e.g. "value 1").  Macros can include other macros by surrounding them with the @ symbol (see 
-			the gram server macro in <xref linkend="rg1.fig">).  
-		</para>
+                <para>
+                    A node gets its macros from the group closest to it.  If a node, like tg-login.ncsa.teragrid.org, is listed
+                    in the ncsa-ia64 group, and the ncsa-ia64 group is listed in the teragrid group, then the ncsa-ia64 group is
+                    closer to the tg-login.ncsa.teragrid.org node than the teragrid group.
+                </para>
+                <para>
+                    When adding macros with more than one value to a resource group (see <xref linkend="rg1.fig">), separate
+                    the values with spaces (e.g. value1 value2).  Macro values that have spaces in them should
+                    always be quoted (e.g. "value 1").  Macros can include other macros by surrounding them with the @ symbol (see
+                    the gram server macro in <xref linkend="rg1.fig">).
+                </para>
                 <figure id="macro.fig">
                     <title>Add Macro Screen</title>
                     <graphic fileref="figures/incat_add_macro.jpg" align="center"></graphic>
@@ -402,22 +464,22 @@ Suite GUIDs are:
             <section id="incat-suites">
                 <title>Configure Reporter Execution</title>
                 <para>
-                    	A reporter along with its arguments (input parameters), the resource group it runs on, and constraints (setup to be 
-			performed before executing the reporter, cleanup to be performed after executing the reporter,  
-			frequency of execution, maximum resource usage, and expected output) make up a <emphasis>reporter series</emphasis>. 
-			Reporter series are grouped into sets called <emphasis>reporter suites</emphasis>.
+                    A reporter along with its arguments (input parameters), the resource group it runs on, and constraints (setup to be
+                    performed before executing the reporter, cleanup to be performed after executing the reporter,
+                    frequency of execution, maximum resource usage, and expected output) make up a <emphasis>reporter series</emphasis>.
+                    Reporter series are grouped into sets called <emphasis>reporter suites</emphasis>.
                 </para>
                 <para>
-			<xref linkend="suites.fig"> shows <emphasis role="strong">incat</emphasis>'s suite configuration screen.  To configure
-			reporter execution, first create a new suite and then add reporter series to the suite.
+                    <xref linkend="suites.fig"> shows <emphasis role="strong">incat</emphasis>'s suite configuration screen.  To configure
+                    reporter execution, first create a new suite and then add reporter series to the suite.
                 </para>
                 <figure id="suites.fig">
                     <title>Suites Screen</title>
                     <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
                 </figure>
                 <para>
-			A new reporter series is being added in <xref linkend="series.fig">.  Note that the description field 
-			becomes the series name in the suite.
+                    A new reporter series is being added in <xref linkend="series.fig">.  Note that the description field
+                    becomes the series name in the suite.
                 </para>
                 <figure id="series.fig">
                     <title>Add Series Screen</title>
@@ -435,99 +497,99 @@ Suite GUIDs are:
             The data collected by Inca can be displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
             that query the depot for data.  A data consumer for displaying software
             stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
-            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>. 
+            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>.
         </para>
         <section id="setup-web">
             <title>Start Jetty</title>
             <para>
-                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by 
-		default, but can be configured to start on another port.  A separate Web server (like Apache)
-		is not required.  To start Jetty:
+                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
+                default, but can be configured to start on another port.  A separate Web server (like Apache)
+                is not required.  To start Jetty:
             </para>
-                <screen>% ant war; whatever jetty commands we need</screen>
+            <screen>% ant war; whatever jetty commands we need</screen>
             <para>
-		More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
+                More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
             </para>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
         <section id="run-stack">
             <title>View Software Stack Data Consumer</title>
-            	<para>
-			The results from the sample suite that executed when the depot and agent were started should now be visible from 
-			the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.  	
-		</para>
-		<para> 
-		To display suite results the jsp requires a:
-		<orderedList>
-			<listItem>
-				<para> 
-				<emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
-				 and a </para> 
-			</listItem>
-			<listItem>
-				<para> 
-      				<emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
-				</para> 
-			</listItem>
-		</orderedList>	
-		</para>
-				<para> 
-      				The jsp then combines:
-		<itemizedList>
-			<listItem>
-				<para> 
- an XML array of reportSummary results (one for each of the series in the suite) from the depot 
-				</para> 
-			</listItem>
-			<listItem>
-				<para> 
-XML resource configuration information from <emphasis role="strong">incat</emphasis>
-				</para> 
-			</listItem>
-			<listItem>
-				<para> 
-software package information from an XML file called swStack.xml (can be edited to change appearance of page)
-				</para> 
-			</listItem>
-		</itemizedList>
+            <para>
+                The results from the sample suite that executed when the depot and agent were started should now be visible from
+                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
+            </para>
+            <para>
+                To display suite results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
+                            and a </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then combines:
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            XML resource configuration information from <emphasis role="strong">incat</emphasis>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+                        </para>
+                    </listItem>
+                </itemizedList>
 
-				</para> 
-				<para> 
-and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
-				</para> 
-		<para>
-			
-		</para>
-		<para>
-			The URL to display the sample suite results from the xslt.jsp page is:
-		</para>
-		<screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
-		<figure id="summary.fig">
+            </para>
+            <para>
+                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+            </para>
+            <para>
+
+            </para>
+            <para>
+                The URL to display the sample suite results from the xslt.jsp page is:
+            </para>
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <figure id="summary.fig">
                 <title>Software Stack Summary Page</title>
                 <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
                 </graphic>
             </figure>
-		<para> 
-		To display a series results the jsp requires a:
-		<orderedList>
-			<listItem>
-				<para> 
-      				<emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
-				</para> 
-			</listItem>
-			<listItem>
-				<para> 
-				<emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
-				</para> 
-			</listItem>
-		</orderedList>	
-		</para>
-				<para> 
-      				The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
-				</para> 
-		<para>
-			Individual series results are linked from the suite results page with URLs like:
-		</para>
+            <para>
+                To display a series results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
+            </para>
+            <para>
+                Individual series results are linked from the suite results page with URLs like:
+            </para>
             <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
             <figure id="details.fig">
                 <title>Software Stack Details Page</title>
