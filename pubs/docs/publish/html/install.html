@@ -73,13 +73,8 @@ HREF="#DISPLAY"
 ><DL
 ><DT
 >3.1. <A
-HREF="#SETUP-WEB"
->Start Jetty</A
-></DT
-><DT
->3.2. <A
 HREF="#RUN-STACK"
->View Software Stack Data Consumer</A
+>Software Stack Data Consumer</A
 ></DT
 ></DL
 ></DD
@@ -522,6 +517,33 @@ Suite GUIDs are:
 ></LI
 ><LI
 ><P
+>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
+			verify that your Inca installation is working correctly, point your browser to: 
+            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;resourceID=defaultvo&#38;suiteName=TestSuiteLocal</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+		</P
+><P
+>There is more information about data display in <A
+HREF="#DISPLAY"
+>Section 3</A
+>.</P
+></LI
+><LI
+><P
 >                        View the Inca Administration Tool (<STRONG
 >incat</STRONG
 >):
@@ -692,28 +714,6 @@ SRC="figures/incat_default.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ></LI
-><LI
-><P
->A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
-			verify that your Inca installation is working correctly, point your browser to: 
-            <TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&#38;resourceID=defaultvo&#38;suiteName=TestSuiteLocal</PRE
-></FONT
-></TD
-></TR
-></TABLE
->
-		</P
-></LI
 ></OL
 ><P
 >[ <A
@@ -739,54 +739,22 @@ CLASS="FILENAME"
 >xslt.jsp</TT
 >.
         </P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="SETUP-WEB"
->3.1. Start Jetty</A
-></H3
 ><P
 >                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
                 default, but can be configured to start on another port.  A separate Web server (like Apache)
-                is not required.  To start Jetty:
-            </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% ant war; whatever jetty commands we need</PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->                More information about Jetty is available at the <A
+                is not required.  More information about Jetty is available at the <A
 HREF="http://jetty.mortbay.org/jetty/"
 TARGET="_top"
 >Jetty homepage</A
 >.
             </P
-><P
->[ <A
-HREF="#AEN1"
->top of page</A
-> ]</P
-></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
 NAME="RUN-STACK"
->3.2. View Software Stack Data Consumer</A
+>3.1. Software Stack Data Consumer</A
 ></H3
 ><P
 >                The results from the sample suite that executed when the depot and agent were started should now be visible from
@@ -838,7 +806,7 @@ TYPE="1"
 ></LI
 ><LI
 ><P
->                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+>                            software package information from an XML file called $INCA_INSTALL/etc/common/swStack.xml (can be edited to change appearance of page)
                         </P
 ></LI
 ></UL
@@ -849,7 +817,7 @@ TYPE="1"
 >                and then either displays the XML or displays formatted XML (see <A
 HREF="#SUMMARY.FIG"
 >Figure 4</A
->).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+>).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called $INCA_INSTALL/etc/common/swStack.xsl is provided).  The sample xsl file uses a cascading style sheet ($INCA_INSTALL/etc/common/inca.css) which can be changed along with the xsl to customize the appearance of the pages.
             </P
 ><P
 >&#13;            </P
