@@ -217,6 +217,13 @@ Suite GUIDs are:
                     </para>
                 </listItem>
                 <listItem>
+		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
+			verify that your Inca installation is working correctly, point your browser to: 
+            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+		</para>
+		<para>There is more information about data display in <xref linkend="display">.</para>
+                </listItem>
+                <listItem>
                     <para>
                         View the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
                     </para>
@@ -283,12 +290,6 @@ inca.agent.trusted=trusted</screen>
                         <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
                     </figure>
                 </listItem>
-                <listItem>
-		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
-			verify that your Inca installation is working correctly, point your browser to: 
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
-		</para>
-                </listItem>
             </orderedList>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
@@ -301,21 +302,13 @@ inca.agent.trusted=trusted</screen>
             stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
             configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>.
         </para>
-        <section id="setup-web">
-            <title>Start Jetty</title>
             <para>
                 Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
                 default, but can be configured to start on another port.  A separate Web server (like Apache)
-                is not required.  To start Jetty:
+                is not required.  More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
             </para>
-            <screen>% ant war; whatever jetty commands we need</screen>
-            <para>
-                More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
-            </para>
-            <para>[ <link linkend="top">top of page</link> ]</para>
-        </section>
         <section id="run-stack">
-            <title>View Software Stack Data Consumer</title>
+            <title>Software Stack Data Consumer</title>
             <para>
                 The results from the sample suite that executed when the depot and agent were started should now be visible from
                 the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
@@ -350,14 +343,14 @@ inca.agent.trusted=trusted</screen>
                     </listItem>
                     <listItem>
                         <para>
-                            software package information from an XML file called swStack.xml (can be edited to change appearance of page)
+                            software package information from an XML file called $INCA_INSTALL/etc/common/swStack.xml (can be edited to change appearance of page)
                         </para>
                     </listItem>
                 </itemizedList>
 
             </para>
             <para>
-                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called swStack.xsl is provided).  The sample xsl file uses a cascading style sheet (inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called $INCA_INSTALL/etc/common/swStack.xsl is provided).  The sample xsl file uses a cascading style sheet ($INCA_INSTALL/etc/common/inca.css) which can be changed along with the xsl to customize the appearance of the pages.
             </para>
             <para>
 
