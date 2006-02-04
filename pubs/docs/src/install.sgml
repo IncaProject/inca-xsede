@@ -205,12 +205,11 @@ writing new private key to 'incatkey.pem' ...</screen>
                     <screen>% ./bin/inca default</screen>
                     <para>
                         You should see something like:
-                        <screen>Preparing to deploy default Inca configuration...
-** Warning:  this will erase any previously collected reporter state
-on the Inca depot and configuration on the agent
+                        <screen>** Warning:  this will erase any previously collected reporter state 
+   on the Inca depot and configuration on the agent
 Do you wish to continue (y/n)? y
 Initializing depot...
-Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@f60f20 ...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxIdleTime -> 1800, maxPoolSize -> 10, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 3, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -> null, driverClass -> null, factoryClassLocation -> null, jdbcUrl -> jdbc:hsqldb:test, properties -> {user=******, password=******} ] , preferredTestQuery -> null, propertyCycle -> 300, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, usesTraditionalReflectiveProxies -> false ] , factoryClassLocation -> null, numHelperThreads -> 3, poolOwnerIdentityToken -> 904b13 ] 
 Database Initialization Completed
 done
 Initializing agent
@@ -226,17 +225,21 @@ Suite GUIDs are:
                 </listItem>
                 <listItem>
 		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
-			verify that your Inca installation is working correctly, point your browser to: 
+			verify that your Inca installation is working correctly, point your browser to (starting a Web server is not required): 
             <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
 		</para>
-		<para>There is more information about data display in <xref linkend="display">.</para>
+		<para>If you do not see a grid of results, check the .log files in $INCA_INSTALL/var.  There is more information about data display in <xref linkend="display">.</para>
                 </listItem>
                 <listItem>
                     <para>
                         View the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
                     </para>
                     <para>
-                        If you did not see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
+                        Use the following command to start <emphasis role="strong">incat</emphasis>:
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323</screen>
+                    </para>
+                    <para>
+			If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
                         after starting all components in the step above, it is probable that X-Window forwarding is not set up correctly between the 
 			machine where you installed Inca and your local machine.
                         You can either configure X-Window forwarding, or you can start <emphasis role="strong">incat</emphasis> on a local machine:
@@ -481,19 +484,36 @@ inca.agent.trusted=trusted</screen>
                 <para>
                     The <emphasis role="strong">incpack</emphasis> script is
                     located in the bin directory under your installation
-                    directory.  Add this bin directory to your $PATH and then:
+                    directory.  Add this bin directory to your $PATH.
+		</para>
+		<para>
+		To add non-reporters (e.g., perl libraries) to a repository, they need a companion file
+with the same name and a .attrib suffix.  For example, this is the
+contents of one such file (Reporter.pm.attrib):
+<screen>name: Inca::Reporter
+version: 1.0
+description: Inca reporter API base class
+url: http://inca.sdsc.edu
+dependencies:</screen>
+The .attrib file has one attribute per line, a name and value pair separated by a colon.  Multi-line
+values are permitted if lines after the first begin with a space (Debian apt format).
+</para>
+<para>
+	  The following is 
+		    an example of creating a repository with all the files starting with a-z in a directory and some 
+		    nearby reporter libs:
                 </para>
-                <screen>% cd /path/to/repository; incpack /path/to/repository/*</screen>
+                <screen>% cd /path/to/repository; incpack -I ../lib [a-z]* ../lib/Inca/*.pm ../lib/Inca/*/*.pm ../lib/Inca/*/*/*.pm</screen>
                 <para>
                     There should now be a file called "Packages.gz" in the repository directory
-                    with information about the reporters in your new repository.
+                    with information about the reporters and libraries in the new repository.
                 </para>
                 <para>
                     Once a repository has been created, <emphasis role="strong">incpack</emphasis> needs to
-                    be rerun if any of its reporters are changed, added or deleted.
-                    Remove "Packages.gz" before rerunning <emphasis role="strong">incpack</emphasis>:
+                    be rerun if any of its reporters or libraries are changed, added or deleted.
+		<emphasis role="strong">incpack</emphasis> takes a "-a" switch to indicate that it should append to an
+		existing Packages.gz; otherwise, it overwrites Packages.gz.
                 </para>
-                <screen>% cd /path/to/repository; rm Packages.gz; incpack /path/to/repository/*</screen>
                 <para>
                     Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
                     the reporter agent which repositories to retrieve reporters from by entering
