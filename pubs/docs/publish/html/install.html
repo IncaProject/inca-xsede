@@ -1173,9 +1173,7 @@ dependencies:</PRE
 The .attrib file has one attribute per line, a name and value pair separated by a colon.  Multi-line
 values are permitted if lines after the first begin with a space (Debian apt format).</P
 ><P
->	  The following is 
-		    an example of creating a repository with all the files starting with a-z in a directory and some 
-		    nearby reporter libs:
+>	  The following example creates the http://inca.sdsc.edu/2.0/repository default repository locally:
                 </P
 ><TABLE
 BORDER="1"
@@ -1187,13 +1185,13 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd /path/to/repository; incpack -I ../lib [a-z]* ../lib/Inca/*.pm ../lib/Inca/*/*.pm ../lib/Inca/*/*/*.pm</PRE
+>% cd $INCA_INSTALL/Inca-Reporter-*; sbin/incpack -I lib bin/[a-z]* lib/Inca/*.pm lib/Inca/*/*.pm lib/Inca/*/*/*.pm</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->                    There should now be a file called "Packages.gz" in the repository directory
+>                    There should now be a file called "Packages.gz" in the $INCA_INSTALL/Inca-Reporter-X  directory
                     with information about the reporters and libraries in the new repository.
                 </P
 ><P
@@ -1218,7 +1216,7 @@ HREF="#REPOSITORY.FIG"
 >Figure 6</A
 >).
                     If the repository is local, it can be entered
-                    as "file:///path/to/repository".
+                    as "file:///path/to/inca/install/Inca-Reporter-X/dir" (note the three slashes after file:/// - replace "Inca-Reporter-X" with the name of the Inca-Reporter dir under your installation, e.g. Inca-Reporter-1.2179).
                 </P
 ><DIV
 CLASS="FIGURE"
