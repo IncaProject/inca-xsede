@@ -526,12 +526,11 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->Preparing to deploy default Inca configuration...
-** Warning:  this will erase any previously collected reporter state
-on the Inca depot and configuration on the agent
+>** Warning:  this will erase any previously collected reporter state 
+   on the Inca depot and configuration on the agent
 Do you wish to continue (y/n)? y
 Initializing depot...
-Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@f60f20 ...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -&#62; com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -&#62; 1, acquireRetryAttempts -&#62; 30, acquireRetryDelay -&#62; 1000, autoCommitOnClose -&#62; false, automaticTestTable -&#62; null, breakAfterAcquireFailure -&#62; false, checkoutTimeout -&#62; 0, connectionTesterClassName -&#62; com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -&#62; null, forceIgnoreUnresolvedTransactions -&#62; false, idleConnectionTestPeriod -&#62; 0, initialPoolSize -&#62; 3, maxIdleTime -&#62; 1800, maxPoolSize -&#62; 10, maxStatements -&#62; 50, maxStatementsPerConnection -&#62; 0, minPoolSize -&#62; 3, nestedDataSource -&#62; com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -&#62; null, driverClass -&#62; null, factoryClassLocation -&#62; null, jdbcUrl -&#62; jdbc:hsqldb:test, properties -&#62; {user=******, password=******} ] , preferredTestQuery -&#62; null, propertyCycle -&#62; 300, testConnectionOnCheckin -&#62; false, testConnectionOnCheckout -&#62; false, usesTraditionalReflectiveProxies -&#62; false ] , factoryClassLocation -&#62; null, numHelperThreads -&#62; 3, poolOwnerIdentityToken -&#62; 904b13 ] 
 Database Initialization Completed
 done
 Initializing agent
@@ -553,7 +552,7 @@ Suite GUIDs are:
 ><LI
 ><P
 >A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
-			verify that your Inca installation is working correctly, point your browser to: 
+			verify that your Inca installation is working correctly, point your browser to (starting a Web server is not required): 
             <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -572,7 +571,7 @@ CLASS="SCREEN"
 >
 		</P
 ><P
->There is more information about data display in <A
+>If you do not see a grid of results, check the .log files in $INCA_INSTALL/var.  There is more information about data display in <A
 HREF="#DISPLAY"
 >Section 3</A
 >.</P
@@ -584,7 +583,28 @@ HREF="#DISPLAY"
 >):
                     </P
 ><P
->                        If you did not see Java GUI windows pop up like those in <A
+>                        Use the following command to start <STRONG
+>incat</STRONG
+>:
+                            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+                    </P
+><P
+>			If you don't see Java GUI windows pop up like those in <A
 HREF="#RETRIEVE.FIG"
 >Figure 2</A
 > and <A
@@ -1124,7 +1144,38 @@ NAME="INCAT-RR"
 >incpack</STRONG
 > script is
                     located in the bin directory under your installation
-                    directory.  Add this bin directory to your $PATH and then:
+                    directory.  Add this bin directory to your $PATH.
+		</P
+><P
+>		To add non-reporters (e.g., perl libraries) to a repository, they need a companion file
+with the same name and a .attrib suffix.  For example, this is the
+contents of one such file (Reporter.pm.attrib):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>name: Inca::Reporter
+version: 1.0
+description: Inca reporter API base class
+url: http://inca.sdsc.edu
+dependencies:</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+The .attrib file has one attribute per line, a name and value pair separated by a colon.  Multi-line
+values are permitted if lines after the first begin with a space (Debian apt format).</P
+><P
+>	  The following is 
+		    an example of creating a repository with all the files starting with a-z in a directory and some 
+		    nearby reporter libs:
                 </P
 ><TABLE
 BORDER="1"
@@ -1136,39 +1187,25 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd /path/to/repository; incpack /path/to/repository/*</PRE
+>% cd /path/to/repository; incpack -I ../lib [a-z]* ../lib/Inca/*.pm ../lib/Inca/*/*.pm ../lib/Inca/*/*/*.pm</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
 >                    There should now be a file called "Packages.gz" in the repository directory
-                    with information about the reporters in your new repository.
+                    with information about the reporters and libraries in the new repository.
                 </P
 ><P
 >                    Once a repository has been created, <STRONG
 >incpack</STRONG
 > needs to
-                    be rerun if any of its reporters are changed, added or deleted.
-                    Remove "Packages.gz" before rerunning <STRONG
+                    be rerun if any of its reporters or libraries are changed, added or deleted.
+		<STRONG
 >incpack</STRONG
->:
+> takes a "-a" switch to indicate that it should append to an
+		existing Packages.gz; otherwise, it overwrites Packages.gz.
                 </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd /path/to/repository; rm Packages.gz; incpack /path/to/repository/*</PRE
-></FONT
-></TD
-></TR
-></TABLE
 ><P
 >                    Via <STRONG
 >incat</STRONG
