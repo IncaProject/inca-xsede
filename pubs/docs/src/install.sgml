@@ -499,13 +499,11 @@ The .attrib file has one attribute per line, a name and value pair separated by 
 values are permitted if lines after the first begin with a space (Debian apt format).
 </para>
 <para>
-	  The following is 
-		    an example of creating a repository with all the files starting with a-z in a directory and some 
-		    nearby reporter libs:
+	  The following example creates the http://inca.sdsc.edu/2.0/repository default repository locally:
                 </para>
-                <screen>% cd /path/to/repository; incpack -I ../lib [a-z]* ../lib/Inca/*.pm ../lib/Inca/*/*.pm ../lib/Inca/*/*/*.pm</screen>
+                <screen>% cd $INCA_INSTALL/Inca-Reporter-*; sbin/incpack -I lib bin/[a-z]* lib/Inca/*.pm lib/Inca/*/*.pm lib/Inca/*/*/*.pm</screen>
                 <para>
-                    There should now be a file called "Packages.gz" in the repository directory
+                    There should now be a file called "Packages.gz" in the $INCA_INSTALL/Inca-Reporter-X  directory
                     with information about the reporters and libraries in the new repository.
                 </para>
                 <para>
@@ -521,7 +519,7 @@ values are permitted if lines after the first begin with a space (Debian apt for
                     is located in a Web accessible directory, its location can be entered as
                     "http://webserver/path/to/repository" (see <xref linkend="repository.fig">).
                     If the repository is local, it can be entered
-                    as "file:///path/to/repository".
+                    as "file:///path/to/inca/install/Inca-Reporter-X/dir" (note the three slashes after file:/// - replace "Inca-Reporter-X" with the name of the Inca-Reporter dir under your installation, e.g. Inca-Reporter-1.2179).
                 </para>
 
                 <figure id="repository.fig">
