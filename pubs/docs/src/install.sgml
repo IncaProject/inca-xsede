@@ -53,16 +53,10 @@
                         the reporter managers and handles all data queries.
                     </para>
                 </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="strong">Consumer</emphasis> -
-                        Retrieves reporter data from the Depot, formats, and displays it to users in a web page or some other other GUI.
-                    </para>
-                </listitem>
             </orderedlist>
         </para>
         <para>
-            Inca's data is displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
+            Inca's data is displayed by <emphasis role="strong">data consumers</emphasis> (e.g. Web scripts, command line scripts, or Java GUIs)
             that query the depot for data.  The Inca software is administered via a Java GUI called the
             Inca Administration Tool (<emphasis role="strong">incat</emphasis>).
         </para>
@@ -413,6 +407,18 @@ inca.agent.trusted=trusted</screen>
                 <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
                 </graphic>
             </figure>
+            <para>Note that the <filename>reporters.cgi</filename> script linked from the details page (by clicking on reporter name) will only be executed if 
+		libraries and permissions are set up correctly in the reporter repository location.  If the default repository 
+		(http://inca.sdsc.edu/2.0/repository) is used, the script will be configured by default.  If you create your own repository, 
+		it must be web accessible and you must make an <filename>.htaccess</filename> file with the location of reporter libraries and 
+		permission to execute CGI script like the following (replace $INCA_INSTALL/Inca-Reporter-* with the path 
+		to your reporter lib directory):</para>
+		<screen>SetEnv PERL5LIB /$INCA_INSTALL/Inca-Reporter-*/lib
+Options +ExecCGI
+		</screen>
+		<para>Your webmaster may have to edit <filename>httpd.conf</filename> or otherwise configure permissions if you are unable to set them 
+		in <filename>.htaccess</filename>.
+		</para>
             <para>[ <link linkend="top">top of page</link> ]</para>
         </section>
     </section>
@@ -486,11 +492,8 @@ inca.agent.trusted=trusted</screen>
                     <emphasis role="strong">incpack</emphasis> creates local
                     reporter repositories which may be specified to the
                     reporter agent as sources for reporter packages.
-                </para>
-                <para>
                     The <emphasis role="strong">incpack</emphasis> script is
-                    located in the bin directory under your installation
-                    directory.  Add this bin directory to your $PATH.
+                    located in $INCA_INSTALL/Inca-Reporter-*/sbin.
 		</para>
 		<para>
 		To add non-reporters (e.g., perl libraries) to a repository, they need a companion file
