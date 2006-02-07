@@ -170,7 +170,9 @@ TYPE="1"
 >
         </P
 ><P
->            Inca's data is displayed by data consumers (e.g. Web scripts, command line scripts, or Java GUIs)
+>            Inca's data is displayed by <STRONG
+>data consumers</STRONG
+> (e.g. Web scripts, command line scripts, or Java GUIs)
             that query the depot for data.  The Inca software is administered via a Java GUI called the
             Inca Administration Tool (<STRONG
 >incat</STRONG
@@ -465,7 +467,7 @@ writing new private key to 'incatkey.pem' ...</PRE
 ></LI
 ><LI
 ><P
->                        Start Inca components:
+>                        Start the Inca components: agent, depot, and consumer.  By default, they will be started on ports 6323, 6324, and 8080 respectively.  Please edit the inca.properties file in etc/common to change these defaults.
 		</P
 ><DIV
 CLASS="NOTE"
@@ -995,6 +997,46 @@ SRC="figures/consumer_reporter_details.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ><P
+>Note that the <TT
+CLASS="FILENAME"
+>reporters.cgi</TT
+> script linked from the details page (by clicking on reporter name) will only be executed if 
+		libraries and permissions are set up correctly in the reporter repository location.  If the default repository 
+		(http://inca.sdsc.edu/2.0/repository) is used, the script will be configured by default.  If you create your own repository, 
+		it must be web accessible and you must make an <TT
+CLASS="FILENAME"
+>.htaccess</TT
+> file with the location of reporter libraries and 
+		permission to execute CGI script like the following (replace $INCA_INSTALL/Inca-Reporter-* with the path 
+		to your reporter lib directory):</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>SetEnv PERL5LIB /$INCA_INSTALL/Inca-Reporter-*/lib
+Options +ExecCGI
+		</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Your webmaster may have to edit <TT
+CLASS="FILENAME"
+>httpd.conf</TT
+> or otherwise configure permissions if you are unable to set them 
+		in <TT
+CLASS="FILENAME"
+>.htaccess</TT
+>.
+		</P
+><P
 >[ <A
 HREF="#AEN1"
 >top of page</A
@@ -1138,13 +1180,10 @@ NAME="INCAT-RR"
 > creates local
                     reporter repositories which may be specified to the
                     reporter agent as sources for reporter packages.
-                </P
-><P
->                    The <STRONG
+                    The <STRONG
 >incpack</STRONG
 > script is
-                    located in the bin directory under your installation
-                    directory.  Add this bin directory to your $PATH.
+                    located in $INCA_INSTALL/Inca-Reporter-*/sbin.
 		</P
 ><P
 >		To add non-reporters (e.g., perl libraries) to a repository, they need a companion file
