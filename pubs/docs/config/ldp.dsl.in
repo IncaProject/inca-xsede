@@ -207,10 +207,16 @@
   2)
 
 (element emphasis
-  ;; make role=strong equate to bold for emphasis tag
+  ;; make role=red equate for emphasis tag
+  (if (equal? (attribute-string "role") "red")
+    (make element gi: "STRONG"
+    (make element gi: "FONT" attributes: '(("COLOR" "RED")) (process-children)))
   (if (equal? (attribute-string "role") "strong")
-     (make element gi: "STRONG" (process-children))
-     (make element gi: "EM" (process-children))))
+    (make element gi: "STRONG"
+    (make element gi: "FONT" (process-children)))
+    (make element gi: "EM"
+    (make element gi: "FONT" (process-children))))
+))
 
 (define (book-titlepage-recto-elements)
   (list (normalize "title")
