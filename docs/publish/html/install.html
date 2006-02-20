@@ -646,7 +646,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323</PRE
+>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://localhost:6323 &#38;</PRE
 ></FONT
 ></TD
 ></TR
@@ -654,7 +654,12 @@ CLASS="SCREEN"
 >
                     </P
 ><P
->			If you don't see Java GUI windows pop up like those in <A
+>			<STRONG
+><FONT
+COLOR="RED"
+>OPTIONAL:</FONT
+></STRONG
+>  If you don't see Java GUI windows pop up like those in <A
 HREF="#RETRIEVE.FIG"
 >Figure 2</A
 > and <A
@@ -679,6 +684,21 @@ CLASS="FILENAME"
 >incaInstall.sh</TT
 > script to a local machine.
                             </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
 ></LI
 ><LI
 ><P
@@ -723,9 +743,24 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
-  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
-  scp "orig.machine:$ORIG_INCA_INSTALL/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</PRE
+>% scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_INSTALL</FONT
+></STRONG
+>/etc/incatkey.pem $INCA_INSTALL/etc/; \
+  scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_INSTALL</FONT
+></STRONG
+>/etc/incatcert.pem $INCA_INSTALL/etc/;
+  scp "<STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_INSTALL</FONT
+></STRONG
+>/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</PRE
 ></FONT
 ></TD
 ></TR
@@ -754,8 +789,13 @@ CLASS="SCREEN"
 
 inca.agent.auth=true
 inca.agent.password=
-inca.agent.cert=incatcert.pem
-inca.agent.key=incatkey.pem
+<STRONG
+><FONT
+COLOR="RED"
+>inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem</FONT
+></STRONG
+>
 inca.agent.trusted=trusted</PRE
 ></FONT
 ></TD
@@ -782,7 +822,12 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_INSTALL; ./bin/inca start incat -S ORIGHOST:6323</PRE
+>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://<STRONG
+><FONT
+COLOR="RED"
+>ORIGHOST</FONT
+></STRONG
+>:6323 &#38;</PRE
 ></FONT
 ></TD
 ></TR
