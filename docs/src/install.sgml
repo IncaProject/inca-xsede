@@ -231,8 +231,10 @@ Suite GUIDs are:
                 </listItem>
                 <listItem>
 		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
-			verify that your Inca installation is working correctly, point your browser to (starting a Web server is not required): 
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+			verify that your Inca installation is working correctly, 
+			point your browser to (replace "your.host.name" with the name 
+			of the machine running the Inca consumers component - starting a Web server is not required): 
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
 		</para>
 		<para>If you do not see a grid of results, check the .log files in $INCA_INSTALL/var.  There is more information about data display in <xref linkend="display">.</para>
                 </listItem>
@@ -376,11 +378,11 @@ inca.agent.trusted=trusted</screen>
                 The URL to display the sample suite results from the xslt.jsp page is (replace "your.host.name" with the name of the machine running the 
 		Inca consumers component):
             </para>
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
             <para>
                 The URL to display the sample suite results with a local xsl file is (replace "your.host.name" as above and replace "/path/to/xsl/" with the directory your xsl file is in):
             </para>
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=/path/to/xsl/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=<emphasis role="red">/path/to/xsl</emphasis>/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
             <figure id="summary.fig">
                 <title>Software Stack Summary Page</title>
                 <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
@@ -407,7 +409,7 @@ inca.agent.trusted=trusted</screen>
             <para>
                 Individual series results are linked from the suite results page with URLs like:
             </para>
-            <screen>http://your.host.name:8080/xslt.jsp?xsl=http://your.host.name:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
             <figure id="details.fig">
                 <title>Software Stack Details Page</title>
                 <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
@@ -419,7 +421,7 @@ inca.agent.trusted=trusted</screen>
 		it must be web accessible and you must make an <filename>.htaccess</filename> file with the location of reporter libraries and 
 		permission to execute CGI script like the following (replace $INCA_INSTALL/Inca-Reporter-* with the path 
 		to your reporter lib directory):</para>
-		<screen>SetEnv PERL5LIB /$INCA_INSTALL/Inca-Reporter-*/lib
+		<screen>SetEnv PERL5LIB <emphasis role="red">/$INCA_INSTALL/Inca-Reporter-*</emphasis>/lib
 Options +ExecCGI
 		</screen>
 		<para>Your webmaster may have to edit <filename>httpd.conf</filename> or otherwise configure permissions if you are unable to set them 
