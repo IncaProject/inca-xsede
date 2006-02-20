@@ -244,10 +244,10 @@ Suite GUIDs are:
                     </para>
                     <para>
                         Use the following command to start <emphasis role="strong">incat</emphasis>:
-                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323</screen>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://localhost:6323 &amp;</screen>
                     </para>
                     <para>
-			If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
+			<emphasis role="red">OPTIONAL:</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
                         after starting all components in the step above, it is probable that X-Window forwarding is not set up correctly between the 
 			machine where you installed Inca and your local machine.
                         You can either configure X-Window forwarding, or you can start <emphasis role="strong">incat</emphasis> on a local machine:
@@ -257,6 +257,7 @@ Suite GUIDs are:
                             <para>
                                 Copy the <filename>incaInstall.sh</filename> script to a local machine.
                             </para>
+                    		<screen>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</screen>
                         </listItem>
                         <listItem>
                             <para>
@@ -269,9 +270,9 @@ Suite GUIDs are:
                                 Copy the <emphasis role="strong">incat</emphasis> key, certificate, and trusted directory from the original machine 
 				to your local machine:
                             </para>
-                            <screen>% scp orig.machine:$ORIG_INCA_INSTALL/etc/incatkey.pem $INCA_INSTALL/etc/; \
-  scp orig.machine:$ORIG_INCA_INSTALL/etc/incatcert.pem $INCA_INSTALL/etc/;
-  scp "orig.machine:$ORIG_INCA_INSTALL/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</screen>
+                            <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/incatkey.pem $INCA_INSTALL/etc/; \
+  scp <emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/incatcert.pem $INCA_INSTALL/etc/;
+  scp "<emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</screen>
                         </listItem>
                         <listItem>
                             <para>Change the agent key/cert to incat key/cert in the 
@@ -282,8 +283,8 @@ Suite GUIDs are:
 
 inca.agent.auth=true
 inca.agent.password=
-inca.agent.cert=incatcert.pem
-inca.agent.key=incatkey.pem
+<emphasis role="red">inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem</emphasis>
 inca.agent.trusted=trusted</screen>
                             </para>
                         </listItem>
@@ -291,7 +292,7 @@ inca.agent.trusted=trusted</screen>
                             <para>
                                 Start the <emphasis role="strong">incat</emphasis> component on a local machine with the agent hostname from the original machine:
                             </para>
-                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -S ORIGHOST:6323</screen>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://<emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
                             <para>
                                 You should now see the Java GUI window appear on your local machine.
                             </para>
