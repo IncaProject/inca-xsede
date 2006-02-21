@@ -582,6 +582,76 @@ Suite GUIDs are:
 ></TABLE
 >
                     </P
+><P
+>During this step:</P
+><P
+></P
+><UL
+><LI
+><P
+>the Depot is initialized</P
+></LI
+><LI
+><P
+>Reporter Agent, Depot, and Consumer servers are started</P
+></LI
+><LI
+><P
+>there is a 20 second wait to wait for servers to start up</P
+></LI
+><LI
+><P
+>a "TestSuiteLocal" suite is sent to the Reporter Agent requesting 
+					reporters to be started on localhost using the schedule:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>1-59/10 * * * * cluster.math.atlas.version
+2-59/10 * * * * cluster.compiler.gcc.version
+3-59/10 * * * * cluster.security.openssl.version
+4-59/10 * * * * cluster.interactive_access.openssh.version
+5-59/10 * * * * cluster.interactive_access.openssh.unit
+6-59/10 * * * * viz.lib.vtknvgl.version
+7-59/10 * * * * viz.lib.chromium.version
+8-59/10 * * * * cluster.compiler.any.unit</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>					the Reporter Agent receives "TestSuiteLocal" suite and installs a reporter manager 
+					on the localhost in <TT
+CLASS="FILENAME"
+>~/inca2install</TT
+> 
+					(takes 1-5 minutes - view progress of build in <TT
+CLASS="FILENAME"
+>~/inca2install/build.log</TT
+>)
+				</P
+></LI
+><LI
+><P
+>					after Reporter Manager is built, it registers itself with 
+					Reporter Agent.  Reporter Agent sends reporters, libraries, and schedule to Reporter Manager.
+				</P
+></LI
+><LI
+><P
+>					Reporter Manager executes reporters based on schedule.  Should see at least one 
+					box filled in the step below within 3 minutes.
+				</P
+></LI
+></UL
 ></LI
 ><LI
 ><P
@@ -646,7 +716,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_INSTALL; ./bin/inca start incat -A incas://localhost:6323 &#38;</PRE
+>% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323 &#38;</PRE
 ></FONT
 ></TD
 ></TR
@@ -822,7 +892,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_INSTALL; ./bin/inca start incat -A incas://<STRONG
+>% cd $INCA_INSTALL; ./bin/inca start incat -S <STRONG
 ><FONT
 COLOR="RED"
 >ORIGHOST</FONT

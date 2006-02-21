@@ -228,6 +228,36 @@ Deploying default configuration
 Suite GUIDs are:
   client.host.name:6323/TestSuiteLocal</screen>
                     </para>
+		    <para>During this step:</para>
+			<itemizedList>
+				<listItem><para>the Depot is initialized</para></listItem>
+				<listItem><para>Reporter Agent, Depot, and Consumer servers are started</para></listItem>
+				<listItem><para>there is a 20 second wait to wait for servers to start up</para></listItem>
+				<listItem><para>a "TestSuiteLocal" suite is sent to the Reporter Agent requesting 
+					reporters to be started on localhost using the schedule:</para>
+<screen>1-59/10 * * * * cluster.math.atlas.version
+2-59/10 * * * * cluster.compiler.gcc.version
+3-59/10 * * * * cluster.security.openssl.version
+4-59/10 * * * * cluster.interactive_access.openssh.version
+5-59/10 * * * * cluster.interactive_access.openssh.unit
+6-59/10 * * * * viz.lib.vtknvgl.version
+7-59/10 * * * * viz.lib.chromium.version
+8-59/10 * * * * cluster.compiler.any.unit</screen>
+				</listItem>
+				<listItem><para>
+					the Reporter Agent receives "TestSuiteLocal" suite and installs a reporter manager 
+					on the localhost in <filename>~/inca2install</filename> 
+					(takes 1-5 minutes - view progress of build in <filename>~/inca2install/build.log</filename>)
+				</para></listItem>
+				<listItem><para>
+					after Reporter Manager is built, it registers itself with 
+					Reporter Agent.  Reporter Agent sends reporters, libraries, and schedule to Reporter Manager.
+				</para></listItem>
+				<listItem><para>
+					Reporter Manager executes reporters based on schedule.  Should see at least one 
+					box filled in the step below within 3 minutes.
+				</para></listItem>
+			</itemizedList>
                 </listItem>
                 <listItem>
 		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
@@ -244,7 +274,7 @@ Suite GUIDs are:
                     </para>
                     <para>
                         Use the following command to start <emphasis role="strong">incat</emphasis>:
-                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://localhost:6323 &amp;</screen>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -S localhost:6323 &amp;</screen>
                     </para>
                     <para>
 			<emphasis role="red">OPTIONAL:</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
@@ -292,7 +322,7 @@ inca.agent.trusted=trusted</screen>
                             <para>
                                 Start the <emphasis role="strong">incat</emphasis> component on a local machine with the agent hostname from the original machine:
                             </para>
-                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A incas://<emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -S <emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
                             <para>
                                 You should now see the Java GUI window appear on your local machine.
                             </para>
