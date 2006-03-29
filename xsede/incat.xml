@@ -950,10 +950,6 @@
           <value>tg-login1.@siteName@.teragrid.org</value>
         </macro>
         <macro>
-          <name>post</name>
-          <value>'</value>
-        </macro>
-        <macro>
           <name>.regexp</name>
           <value>ORNL</value>
           <value>SDSC</value>
@@ -1009,10 +1005,6 @@
           <value>teragrid</value>
         </macro>
         <macro>
-          <name>pre</name>
-          <value>/bin/bash -l -c 'cd @.incaReporterManagerLocation@;export PERL5LIB=lib/perl;</value>
-        </macro>
-        <macro>
           <name>sshHosts</name>
           <value>tg-login.uc.teragrid.org</value>
           <value>tg-viz-login.uc.teragrid.org</value>
@@ -1032,6 +1024,34 @@
           <value>tg-login.sdsc.teragrid.org</value>
           <value>tg-login.tacc.teragrid.org</value>
           <value>tg-viz-login.tacc.teragrid.org</value>
+        </macro>
+        <macro>
+          <name>keyPost</name>
+          <value>`</value>
+        </macro>
+        <macro>
+          <name>keyPre</name>
+          <value>eval `soft-dec sh add +</value>
+        </macro>
+        <macro>
+          <name>pre</name>
+          <value>/bin/bash -l -c 'cd @.incaReporterManagerLocation@;export PERL5LIB=lib/perl;</value>
+        </macro>
+        <macro>
+          <name>post</name>
+          <value>';</value>
+        </macro>
+        <macro>
+          <name>keyGptGcc</name>
+          <value>@keyPre@gpt-gcc@keyPost@</value>
+        </macro>
+        <macro>
+          <name>keyTgcp</name>
+          <value>@keyPre@tgcp@keyPost@</value>
+        </macro>
+        <macro>
+          <name>keyGridshell</name>
+          <value>@keyPre@gridshell@keyPost@</value>
         </macro>
       </macros>
     </resource>
@@ -1267,7 +1287,7 @@
           </arg>
         </args>
         <timeout/>
-        <setup>@pre@</setup>
+        <setup>@pre@@keyGridshell@</setup>
         <cleanup>@post@</cleanup>
         <description>gridshell_version</description>
       </reportSeries>
@@ -1372,6 +1392,186 @@
         <cron>
           <min>38</min>
           <hour>18-23/24</hour>
+          <mday>*</mday>
+          <wday>*</wday>
+          <month>*</month>
+        </cron>
+      </schedule>
+      <action>none</action>
+    </reporterSetConfig>
+    <reporterSetConfig>
+      <reportSeries>
+        <name>grid.scheduling.condorg.version</name>
+        <args>
+          <arg>
+            <name>version</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>verbose</name>
+            <value>1</value>
+          </arg>
+          <arg>
+            <name>help</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>log</name>
+            <value>3</value>
+          </arg>
+        </args>
+        <timeout/>
+        <setup>@pre@@keyGptGcc@</setup>
+        <cleanup>@post@</cleanup>
+        <description>condor_version</description>
+      </reportSeries>
+      <resourceSetName>TEST</resourceSetName>
+      <schedule>
+        <cron>
+          <min>25</min>
+          <hour>19-23/24</hour>
+          <mday>*</mday>
+          <wday>*</wday>
+          <month>*</month>
+        </cron>
+      </schedule>
+      <action>none</action>
+    </reporterSetConfig>
+    <reporterSetConfig>
+      <reportSeries>
+        <name>grid.scheduling.condorg.unit</name>
+        <args>
+          <arg>
+            <name>version</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>verbose</name>
+            <value>1</value>
+          </arg>
+          <arg>
+            <name>help</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>log</name>
+            <value>3</value>
+          </arg>
+        </args>
+        <timeout/>
+        <setup>@pre@@keyGptGcc@</setup>
+        <cleanup>@post@</cleanup>
+        <description>condorq</description>
+      </reportSeries>
+      <resourceSetName>TEST</resourceSetName>
+      <schedule>
+        <cron>
+          <min>30</min>
+          <hour>19-23/24</hour>
+          <mday>*</mday>
+          <wday>*</wday>
+          <month>*</month>
+        </cron>
+      </schedule>
+      <action>none</action>
+    </reporterSetConfig>
+    <reporterSetConfig>
+      <reportSeries>
+        <name>grid.interactive_access.myproxy.unit</name>
+        <args>
+          <arg>
+            <name>server</name>
+            <value>myproxy.teragrid.org</value>
+          </arg>
+          <arg>
+            <name>verbose</name>
+            <value>1</value>
+          </arg>
+          <arg>
+            <name>log</name>
+            <value>3</value>
+          </arg>
+          <arg>
+            <name>help</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>user</name>
+            <value/>
+          </arg>
+          <arg>
+            <name>cert</name>
+            <value/>
+          </arg>
+          <arg>
+            <name>version</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>timeout</name>
+            <value>30</value>
+          </arg>
+          <arg>
+            <name>proxypw</name>
+            <value/>
+          </arg>
+          <arg>
+            <name>key</name>
+            <value/>
+          </arg>
+          <arg>
+            <name>certpw</name>
+            <value>MyProxy_test</value>
+          </arg>
+        </args>
+        <timeout/>
+        <setup>@pre@</setup>
+        <cleanup>@post@</cleanup>
+        <description>myproxy_client</description>
+      </reportSeries>
+      <resourceSetName>TEST</resourceSetName>
+      <schedule>
+        <cron>
+          <min>0</min>
+          <hour>20-23/24</hour>
+          <mday>*</mday>
+          <wday>*</wday>
+          <month>*</month>
+        </cron>
+      </schedule>
+      <action>none</action>
+    </reporterSetConfig>
+    <reporterSetConfig>
+      <reportSeries>
+        <name>grid.interactive_access.myproxy.version</name>
+        <args>
+          <arg>
+            <name>version</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>verbose</name>
+            <value>1</value>
+          </arg>
+          <arg>
+            <name>help</name>
+            <value>no</value>
+          </arg>
+          <arg>
+            <name>log</name>
+            <value>3</value>
+          </arg>
+        </args>
+        <timeout/>
+        <setup>@pre@</setup>
+        <cleanup>@post@</cleanup>
+        <description>myproxy_version</description>
+      </reportSeries>
+      <resourceSetName>TEST</resourceSetName>
+      <schedule>
+        <cron>
+          <min>40</min>
+          <hour>19-23/24</hour>
           <mday>*</mday>
           <wday>*</wday>
           <month>*</month>
