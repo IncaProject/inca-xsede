@@ -681,6 +681,255 @@ values are permitted if lines after the first begin with a space (Debian apt for
     </section>
 
 
+    <section id="advanced">
+        <title>Advanced Topics</title>
+        <section id="manual">
+            <title>Manual Access Method</title>
+            <para>
+            If a site in your VO desires to have local control (i.e.,
+            start/stop) over their reporter manager, you can use the access
+            method 'manual' to enable that.  Within incat, choose 'manual'
+            when defining the resource such as below:
+            </para>
+            <figure id="manual.fig">
+              <title>Add Resource Screen</title>
+              <graphic fileref="figures/incat-manual.png" align="center"></graphic>
+            </figure>
+            <para>
+            When you choose 'Commit' from the incat menu, the commands needed
+            to install the reporter manager on the remote machine will be
+            logged as warn messages in $INCA_INSTALL/var/agent.log and tagged
+            with the string '[your-machine-name - manual step]'.  For example, 
+            </para>
+            <screen>22:17:45,632  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash -l /home/inca/inca2install/buildRM.sh -u false /home/inca/inca2install Inca-ReporterManager.tar.gz '
+            </screen>
+            <para>
+            To get all of the commands to install the reporter manager on
+            the specified resource, grep the commands from the
+            $INCA_INSTALL/var/agent.log.  Follow the instructions below
+            to setup the reporter manager on your resource replacing the string
+            'your-machine-name' with the hostname for your resource and 
+            '/home/inca/inca2install' with the directory on the resource
+            where you want to the reporter manager installed.
+            </para>
+            <screenco>
+            <areaspec>
+            <area id="transferRM" coords="8 85">
+            <area id="transferRMBuild" coords="10 85">
+            <area id="transferTrusted1" coords="12 85">
+            <area id="transferTrusted2" coords="15 85">
+            <area id="transferCert" coords="18 85">
+            <area id="transferKey" coords="21 85">
+            <area id="build" coords="28 85">
+            <area id="run" coords="31 85">
+            <area id="subscription" coords="36 85">
+            </areaspec>
+            <screen>
+% grep "your-machine-name - manual" var/agent.log 
+14:09:12,023  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/testscript' to '/home/inca/inca2install'
+14:09:12,024  WARN Manual:71 - [your-machine-name - manual step] command 'cd
+/home/inca/inca2install;/bin/sh testscript inca '
+14:09:22,780  WARN Manual:71 - [your-machine-name - manual step] command '/bin/sh
+-c 'tail -1 /home/inca/inca2install/build.log' '
+14:09:24,751  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'lib/Inca-ReporterManager.tar.gz' to '/home/inca/inca2install'
+14:09:24,753  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'sbin/buildRM.sh' to '/home/inca/inca2install'
+14:09:24,754  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/trusted/trusted0.pem' to
+'/home/inca/inca2install'
+14:09:24,755  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/trusted/trusted1.pem' to
+'/home/inca/inca2install'
+14:09:24,762  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/rmcert.pem' to
+'/home/inca/inca2install'
+14:09:24,763  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/rmkey.pem' to
+'/home/inca/inca2install'
+14:09:24,765  WARN ReporterManager:813 - Skipping cleanup of authorization
+files for 'your-machine-name'
+14:09:24,777  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash
+-l -c echo '
+14:09:24,787  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash
+-l /home/inca/inca2install/buildRM.sh -u false
+/home/inca/inca2install Inca-ReporterManager.tar.gz '
+14:09:24,811  WARN Manual:92 - [your-machine-name - manual step] command 'cd
+/home/inca/inca2install;/bin/sh sbin/inca reporter-manager -d
+incas://localhost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e
+bin/inca-null-reporter -r . -R sbin/reporter-instance-manager -v var -w 1 -i
+your-machine-name -a incas://your-machine-name:6323 -l etc/log4j.properties -P '
+14:09:24,815  WARN ReporterManager:214 - [your-machine-name - manual step] Writing
+subscription to /private/tmp/incatest/var/rm/your-machine-name/subscription.xml
+</screen>
+             <calloutlist>
+             <callout arearefs="transferRM">
+             <para>
+             Transfer the reporter manager tarball distribution to the
+             resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferRMBuild">
+             <para>
+             Transfer the reporter manager build script to the
+             resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferTrusted1 transferTrusted2">
+             <para>
+             Transfer the certificates the reporter manager should trust to
+             the resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferCert">
+             <para>
+             Transfer the certificate for the reporter manager to the resource
+             and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferKey">
+             <para>
+             Transfer the key for the reporter manager to the resource
+             and place in the directory /home/inca/inca2install.  The
+             key will be encrypted with the password that was used to start
+             the agent.  If you wish to place a different passphrase on the
+             key, use the following openssl command:
+             <screen>
+openssl rsa -in etc/rmkey.pem -out etc/rmkey.pem2 -des
+read RSA key
+Enter PEM pass phrase: agent-passphrase
+writing RSA key
+Enter PEM pass phrase: new-passphrase
+Verifying password - Enter PEM pass phrase: new-passphrase
+             </screen>
+             </para>
+            </callout>
+             <callout arearefs="build">
+             <para>
+             At this point the directory on the remote machine should look
+             like this:
+             <screen>
+% ls
+Inca-ReporterManager.tar.gz  rmcert.pem  trusted0.pem
+buildRM.sh                   rmkey.pem   trusted1.pem
+</screen>
+             Execute the build script on the remote machine.  For example,
+             <screen>
+% /bin/bash -l /home/inca/inca2install/buildRM.sh -u false /home/inca/inca2install Inca-ReporterManager.tar.gz 
+SUCCEEDED
+</screen>
+             </para>
+            </callout>
+             <callout arearefs="run subscription">
+             <para>
+             The subscription that would have been sent to the reporter
+             manager is written to disk in the
+             $INCA_INSTALL/var/rm/your-machine-name directory as
+             subscription.xml.  Transfer over the subscription.xml file to the
+             resource under the directory /home/inca/inca2install.  
+             Furthermore, you will have to transfer the reporters and their
+             libraries over to the resource before starting the reporter
+             manager.  The reporters and libraries are cached on the agent
+             in the directory $INCA_INSTALL/var/repository.  The catalog 
+             of the cached reporters and libraries is stored under the
+             file $INCA_INSTALL/var/repository/repository.xml.  Currently,
+             there are 2 types of entries in the catalog: reporters and
+             perl libraries.  An example of a reporter entry in the catalog is
+             shown below:
+             <screen>
+  &lt;package&gt;
+    &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+    &lt;repository&gt;http://inca.sdsc.edu/2.0/repository&lt;/repository&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/bin/cluster.compiler.gcc.version&lt;/uri&gt;
+    &lt;version&gt;1.5&lt;/version&gt;
+    &lt;filename&gt;cluster.compiler.gcc.version&lt;/filename&gt;
+    &lt;installPath&gt;bin&lt;/installPath&gt;
+    &lt;permissions&gt;755&lt;/permissions&gt;
+    &lt;dependencies&gt;
+      &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
+      &lt;dependency&gt;Inca::Reporter::Version&lt;/dependency&gt;
+    &lt;/dependencies&gt;
+  &lt;/package&gt;
+</screen>
+             This indicates that the version 1.5 of the reporter
+             cluster.compiler.gcc.version was retrieved from the repository
+             http://inca.sdsc.edu/2.0/repository/repository.  It should be
+             installed under bin directory (the installPath tag) (e.g.,
+             /home/inca/inca2install/bin) with permissions 755.  It also shows
+             what reporter libraries it depends on.  An example of a reporter
+             library entry looks like the following:
+             <screen>
+  &lt;package&gt;
+    &lt;name&gt;Inca::Reporter&lt;/name&gt;
+    &lt;repository&gt;http://inca.sdsc.edu/2.0/repository&lt;/repository&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/lib/Inca/Reporter.pm&lt;/uri&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;filename&gt;Reporter.pm&lt;/filename&gt;
+    &lt;installPath&gt;lib/perl/Inca&lt;/installPath&gt;
+    &lt;permissions&gt;644&lt;/permissions&gt;
+    &lt;dependencies/&gt;
+  &lt;/package&gt;
+</screen>
+             This shows that version 1.0 of the Inca::Reporter perl reporter
+             library was retrieved from the repository
+             http://inca.sdsc.edu/2.0/repository/repository.  It should be
+             installed under the lib/perl/Inca directory (the installPath
+             tag) under the name Reporter.pm (the filename tag) (e.g.,
+             /home/inca/inca2install/lib/perl/Inca/Reporter.pm) with
+             permissions 644.
+             Install all of the reporters and libraries listed in the 
+             repository.xml file to the resource.  Then create a file on 
+             the resource under /home/inca/inca2install called repository.xml
+             which tells the
+             reporter manager the reporters and libraries that are available 
+             to it.  It is similar in structure to the repository.xml file
+             under $INCA_INSTALL/var/repository.  Each package has 3 tags:
+             uri, path, and version.  An example is show below listing 
+             one reporter and two reporter libraries.:
+             <screen>
+&lt;catalog&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/bin/cluster.compiler.gcc.version&lt;/uri&gt;
+    &lt;path&gt;bin/cluster.compiler.gcc.version&lt;/path&gt;
+    &lt;version&gt;1.5&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/testrepository/lib/Inca/Reporter.pm&lt;/uri&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter.pm&lt;/path&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/testrepository/lib/Inca/Reporter/Version.pm&lt;/uri&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter/Version.pm&lt;/path&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/package&gt;
+&lt;/catalog&gt;
+</screen>
+             Finally, you can start up
+             the reporter manager on the remote machine using the 
+             command shown in the agent.log except replace the '-a
+             incas://your-machine-name:6323' text with '-s subscription.xml'.
+             For example, 
+             <screen>
+% cd /home/inca/inca2install;/bin/sh sbin/inca reporter-manager -d \
+incas://your-depot-server:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t \
+etc/trusted -e bin/inca-null-reporter -r . -R sbin/reporter-instance-manager \
+-v var -w 1 -i your-machine-name  -s subscription.xml -l etc/log4j.properties -P
+password> your-passphrase
+</screen>
+             To stop the reporter manager at any time, type
+             <screen>
+% ./sbin/inca stop reporter-manager
+</screen>
+              You will need to restart the reporter manager every time you
+              need to make a change to the subscription.xml file.
+             </para>
+            </callout>
+             </calloutlist>
+            </screenco>
+            </section>
+   </section>
 
 
     <section id="contact-us">
