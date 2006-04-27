@@ -928,7 +928,48 @@ password> your-passphrase
             </callout>
              </calloutlist>
             </screenco>
-            </section>
+        </section>
+
+        <section id="decrypt-resource-file">
+            <title>Decrypting Resource File</title>
+            <para>
+            By default, the agent will encrypt the resource information it
+            receives from incat in case sensitive information like passwords
+            are stored in the macros.  For debugging purposes, you can
+            decrypt the resoure file using the following command:
+            </para>
+            <screen>
+% cd $INCA_INSTALL;  \
+java -classpath `/bin/echo lib/*.jar | tr ' ' ':'`:etc/common \
+edu.sdsc.inca.agent.ResourceConfigDAO -i var/resources.xml \
+-o var/resources.xml2 -type decode
+Please enter a password to decrypt the file: your-passphrase
+16:53:42,272  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Attempting
+read on encrypted resource config
+16:53:42,775  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Loaded
+resource configuration file 'var/resources.xml'
+16:53:42,780  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration file 'var/resources.xml2' not available...creating blank file
+16:53:42,797  WARN main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration stored to disk without encryption
+         </screen>
+         <para>
+         The '-i' argument is used to pass in the name of the resources
+         file and the -o argument is used to pass in the name of the 
+         output file.  To encrypt the resource file, type
+         </para>
+            <screen>
+% cd $INCA_INSTALL;  \
+java -classpath `/bin/echo lib/*.jar | tr ' ' ':'`:etc/common \
+edu.sdsc.inca.agent.ResourceConfigDAO -i var/resources.xml2 \
+-o var/resources.xml3 -type encode
+Please enter a password to encrypt the file: testit!
+16:58:46,565  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Loaded
+resource configuration file 'var/resources.xml2'
+16:58:47,653  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration file 'var/resources.xml3' not available...creating blank file
+</screen>
+         </section>
    </section>
 
 
