@@ -56,13 +56,13 @@
 		</sequence>
 	</complexType>
 
-  <!-- reportSeries is a generic definition of the same concept from the depot.
+  <!-- series is a generic definition of the same concept from the depot.
        it describes all the necessary information that will make a series
        unique in the database with one exception.  We leave out the url of the
        machine that it is being executed on.   or actually we make it optional.
        If a document arrives at the depot with this info missing there will be
        an error -->
-  <complexType name = "reportSeries">
+  <complexType name = "series">
     <sequence>
       <choice>
         <element name = "uri" type = "anyURI"/>
@@ -75,6 +75,25 @@
       <element name = "nice" type = "boolean" minOccurs = "0"/>
       <element name = "description" type = "string" minOccurs = "0"/>
       <element name = "hostname" type = "string" minOccurs = "0"/>
+    </sequence>
+  </complexType>
+
+  <!-- seriesConfig describes the configuration of a report series on a 
+       set of resources including the schedule information and acceptedOutput
+       (i.e., any comparisons the depot should run upon receipt of a report.
+       An action describes the addition or removal of the the series  -->
+  <complexType name = "seriesConfig">
+    <sequence>
+      <element name = "series" type = "inca:series"/>
+      <choice>
+        <element name = "resourceSetName" type = "string"/>
+        <element name = "resourceXpath" type = "string"/>
+        <element name = "resourceHostname" type = "inca:hostnames"/>
+      </choice>
+      <element name = "schedule" type = "inca:schedule"/>
+      <element name = "acceptedOutput" type = "inca:acceptedOutput" minOccurs
+= "0"/> 
+      <element name = "action" type = "inca:action"/>
     </sequence>
   </complexType>
   
