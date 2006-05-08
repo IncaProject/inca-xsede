@@ -73,8 +73,6 @@
       <element name = "setup" type = "string" minOccurs = "0"/>
       <element name = "cleanup" type = "string" minOccurs = "0"/>
       <element name = "nice" type = "boolean" minOccurs = "0"/>
-      <element name = "description" type = "string" minOccurs = "0"/>
-      <element name = "hostname" type = "string" minOccurs = "0"/>
     </sequence>
   </complexType>
 
@@ -85,10 +83,11 @@
   <complexType name = "seriesConfig">
     <sequence>
       <element name = "series" type = "inca:series"/>
+      <element name = "nickname" type = "string" minOccurs = "0"/>
       <choice>
         <element name = "resourceSetName" type = "string"/>
         <element name = "resourceXpath" type = "string"/>
-        <element name = "resourceHostname" type = "inca:hostnames"/>
+        <element name = "resourceHostname" type = "string"/>
       </choice>
       <element name = "schedule" type = "inca:schedule"/>
       <element name = "acceptedOutput" type = "inca:acceptedOutput" minOccurs
@@ -208,13 +207,6 @@
     <sequence>
       <element name = "name" type = "string"/>
       <element name = "value" type = "string" maxOccurs = "unbounded"/>
-    </sequence>
-  </complexType>
-
-  <!-- a list of hostnames in a suite -->
-  <complexType name = "hostnames">
-    <sequence>
-      <element name = "hostname" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
     </sequence>
   </complexType>
 
