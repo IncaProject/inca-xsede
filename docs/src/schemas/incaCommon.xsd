@@ -6,55 +6,45 @@
         xmlns:xsd = "http://www.w3.org/2001/XMLSchema"
         elementFormDefault = "unqualified">
 
-	<complexType name = "report">
-		<sequence>
-			<element name = "gmt" type = "dateTime"/>
-			<element name = "hostname" type = "string"/>
-			<element name = "name" type = "string"/>
-			<element name = "version" type = "string"/>
-			<element name = "args" type = "inca:args"/>
-			<element name = "log" minOccurs = "0">
-				<complexType>
-					<sequence>
-						<element name = "debug" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "error" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "info" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "system" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "warn" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-					</sequence>
-				</complexType>
-			</element>
-			<element name = "body" type = "inca:body"/>
-			<element name = "exitStatus" type = "inca:exitStatus"/>
-			<element name = "help" minOccurs = "0">
-				<complexType>
-					<sequence>
-						<element name = "name" type = "string"/>
-						<element name = "version" type = "string"/>
-						<element name = "description" type = "string"/>
-						<element name = "url" type = "string"/>
-						<element name = "argDescription" minOccurs = "0" maxOccurs = "unbounded">
-							<complexType>
-								<sequence>
-									<element name = "ID" type = "string"/>
-									<element name = "accepted" type = "string"/>
-									<element name = "description" type = "string"/>
-									<element name = "default" type = "string"/>
-								</sequence>
-							</complexType>
-						</element>
-						<element name = "dependency" minOccurs = "0" maxOccurs = "unbounded">
-							<complexType>
-								<sequence>
-									<element name = "ID" type = "string"/>
-								</sequence>
-							</complexType>
-						</element>
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
+  <complexType name = "report">
+    <sequence>
+      <element name = "gmt" type = "dateTime"/>
+      <element name = "hostname" type = "string"/>
+      <element name = "name" type = "string"/>
+      <element name = "version" type = "string"/>
+      <element name = "args" type = "inca:args"/>
+      <element name = "log" type = "inca:log" minOccurs="0"/>
+      <element name = "body" type = "inca:body"/>
+      <element name = "exitStatus" type = "inca:exitStatus"/>
+      <element name = "help" minOccurs = "0">
+        <complexType>
+          <sequence>
+            <element name = "name" type = "string"/>
+            <element name = "version" type = "string"/>
+            <element name = "description" type = "string"/>
+            <element name = "url" type = "string"/>
+            <element name = "argDescription" minOccurs = "0" maxOccurs = "unbounded">
+              <complexType>
+                <sequence>
+                  <element name = "ID" type = "string"/>
+                  <element name = "accepted" type = "string"/>
+                  <element name = "description" type = "string"/>
+                  <element name = "default" type = "string"/>
+                </sequence>
+              </complexType>
+            </element>
+            <element name = "dependency" minOccurs = "0" maxOccurs = "unbounded">
+              <complexType>
+                <sequence>
+                  <element name = "ID" type = "string"/>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
 
   <!-- series is a generic definition of the same concept from the depot.
        it describes all the necessary information that will make a series
@@ -119,14 +109,6 @@
     </sequence>
   </complexType>
   
-  <!-- logEntry type is used by the report -->
-  <complexType name = "logEntry">
-    <sequence>
-      <element name = "gmt" type = "dateTime"/>
-      <element name = "message" type = "string"/>
-    </sequence>
-  </complexType>
-  
   <!-- schedule describes to the RM how often to run a reporter.  Currently we
        only support cron scheduling; the absence of a cron indicates that a
        series should be run once, immediately. -->
@@ -162,6 +144,23 @@
     <sequence>
       <element name = "email" type = "string"/>
       <element name = "condition" type = "string"/>
+    </sequence>
+  </complexType>
+
+  <!-- report log -->
+  <complexType name = "log">
+    <sequence>
+      <element name = "debug" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
+      <element name = "error" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
+      <element name = "info" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
+      <element name = "system" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
+      <element name = "warn" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name = "logEntry">
+    <sequence>
+      <element name = "gmt" type = "dateTime"/>
+      <element name = "message" type = "string"/>
     </sequence>
   </complexType>
 
