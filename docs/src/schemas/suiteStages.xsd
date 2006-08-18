@@ -13,7 +13,7 @@
 				<element name = "multiResourceConfigs">
 					<complexType>
 						<sequence>
-              <element name = "multiResourceConfig" type = "ss:multiResourceConfig" minOccurs = "0" maxOccurs = "unbounded"/>
+							<element name = "multiResourceConfig" type = "ss:multiResourceConfig" minOccurs = "0" maxOccurs = "unbounded"/>
 						</sequence>
 					</complexType>
 				</element>
@@ -24,31 +24,16 @@
 			</sequence>
 		</complexType>
 	</element>
-
-  <complexType name = "multiResourceConfig"> 
+	<complexType name = "multiResourceConfig">
 		<sequence>
-      <element name = "config" type = "inca:seriesConfig"/>
+			<element name = "config" type = "inca:seriesConfig"/>
 			<element name = "perResourceConfigs">
-			  <complexType>
-			  	<sequence>
-            <element name = "perResourceConfig"  type = "ss:perResourceConfig" minOccurs = "0" maxOccurs = "unbounded"/>
-			  	</sequence>
-		  	</complexType>
-	  	</element>
+				<complexType>
+					<sequence>
+						<element name = "config" type = "inca:seriesConfig" minOccurs = "0" maxOccurs = "unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
 		</sequence>
 	</complexType>
-
-  <complexType name = "perResourceConfig"> 
-    <sequence>
-      <element name = "config" type = "inca:seriesConfig"/>
-      <element name = "perHostConfigs"> 
-        <complexType> 
-        <sequence>
-          <element name = "config" type = "inca:seriesConfig" minOccurs = "0" maxOccurs = "unbounded"/>
-        </sequence>
-        </complexType>
-      </element> 
-    </sequence>
-  </complexType>
-
 </schema>
