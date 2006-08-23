@@ -16,7 +16,7 @@
       <element name = "reporterPath" type = "string"/>
       <element name = "args" type = "inca:args"/>
       <element name = "log" type = "inca:log" minOccurs="0"/>
-      <element name = "body" type = "inca:body"/>
+      <element name = "body" type = "inca:anyXmlSequence"/>
       <element name = "exitStatus" type = "inca:exitStatus"/>
       <element name = "help" minOccurs = "0">
         <complexType>
@@ -136,17 +136,19 @@
        "correct" output from a reporter and what to do on mismatch -->
   <complexType name = "acceptedOutput">
     <sequence>
-      <element name = "comparitor" type = "string" minOccurs = "0"/>
-      <element name = "body" type = "inca:body" minOccurs = "0"/>
-      <element name = "errorMessage" type = "string" minOccurs = "0"/>
-      <element name = "completed" type = "boolean" minOccurs = "0"/>
-      <element name = "notification" type = "inca:notification" minOccurs = "0"/>
+      <element name = "comparitor" type = "string"/>
+      <element name = "comparison" type = "inca:anyXmlSequence"/>
+      <element name = "notifications" type = "inca:notifications" minOccurs = "0"/>
     </sequence>
   </complexType>
-  <complexType name = "notification">
+  <complexType name = "notifications">
     <sequence>
-      <element name = "email" type = "string"/>
-      <element name = "condition" type = "string"/>
+      <element name = "notification" minOccurs="0" maxOccurs="unbounded">
+        <sequence>
+          <element name = "notifier" type = "string"/>
+          <element name = "target" type = "string"/>
+        </sequence>
+      </complexType>
     </sequence>
   </complexType>
 
@@ -167,8 +169,8 @@
     </sequence>
   </complexType>
 
-  <!-- report body, flexible definition that allows any content -->
-  <complexType name = "body">
+  <!-- a flexible type that allows a sequence of any XML content -->
+  <complexType name = "anyXmlSequence">
     <sequence>
       <any namespace = "##any" processContents = "skip" minOccurs = "0" maxOccurs = "unbounded"/>
     </sequence>
