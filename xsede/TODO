@@ -7,8 +7,11 @@ names and description (with a link to the scripts) of each of the
 unit tests. This page should be regenerated after each INCA test  
 suite change. 
 
-  -- write perl script
-
+  a) Write getRepositoryXML in agentClient (Jim)
+  b) Write JSP tag getSuites for consumer (Shava)
+  c) Write JSP tag getRepository for consumer (Shava)
+  c) Write JSP page to combine result from getSuites and getRepository (Shava)
+  d) Write XSL stylesheet (Kate)
 
 ----------
 Due 11/2:
@@ -16,16 +19,43 @@ Due 11/2:
 1) Turn off inca1
 
   -- get inca2 working on DS
-  -- use env perl for reporters
-  -- figure out tungsten and bg bugs
-  -- compare inca1 and inca2 results
-  -- improve speed of xslt
-  -- show which results are out of date
+     -- wait to hear back from Eva
+
+  -- use env perl for reporters (Kate) ***
+     
+  -- figure out tungsten and bg bugs (Kate) ***
+  -- compare inca1 and inca2 results (Kate) ***
+  -- improve speed of xslt (Kate) (low priority)
+  -- show which results are out of date (Kate)
 
 2) Restart summary information and critical tests pages
+   (one category)
 
-  -- write java for cross-site tests
-  -- write xsl for summary style pages
+  Inputs: ctssv3.xml, reportSummaries, and JSP tag results
+
+  -- pass/fail percentage with xsl (Kate)
+     
+  -- write JSP tag for cross-site tests (Kate & Shava) ***
+
+       for each resource
+         openssh_to_<resource>
+         if all fail => universal failure
+       for each resource
+         openssh_to_<resource>
+           if all succeed == green
+           if all failures are also universal failures == yellow
+           if one or more non-universal failure == red
+
+     Inputs: list of cross-site tests (ctss3.xml), reportsummaries
+
+     Output:
+
+       <resource>
+         <cross-site-nickname>
+           <numSuccesses>
+           <numNonUniversalFailures>
+           <numFailures>
+           <numTotal>
 
 3) Split the globus4-cs tests into two (gatekeeper and gridftp) and  
 redefine the color coding for the cross site tests:  green = success  
@@ -33,5 +63,4 @@ at all targets which don't have universal failures, yellow (with
 number of successes) = success at 1 or more targets, red = failure on  
 all targets. 
 
-  -- write java for cross-site tests 
-  -- revise xsl to show green, yellow, red
+  -- revise xsl to show green, yellow, red (Kate)
