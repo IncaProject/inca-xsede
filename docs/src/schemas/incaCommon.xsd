@@ -6,6 +6,21 @@
         xmlns:xsd = "http://www.w3.org/2001/XMLSchema"
         elementFormDefault = "unqualified">
 
+  <!-- A description of the attempted invocation of a reporter, whether
+       successful or not.  Note that all the fields are required.  If the
+       execution failed, the component building the execution XML must generate
+       its own report that indicates reporter failure. -->
+  <complexType name = "reporterExecution">
+    <sequence>
+      <element name="resource" type = "string"/>
+      <element name="context" type = "string"/>
+      <element name="stdout" type = "inca:report"/>
+      <element name="stderr" type = "string"/>
+      <element name="sysusage" type = "inca:limits"/>
+    </sequence>
+  </complexType>
+
+  <!-- the stdout produced by an Inca reporter -->
   <complexType name = "report">
     <sequence>
       <element name = "gmt" type = "dateTime"/>
