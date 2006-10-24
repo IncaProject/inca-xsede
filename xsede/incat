@@ -246,6 +246,10 @@
             <name>chargeProject</name>
             <value/>
           </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>vendorcc64dbgpthr</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -372,6 +376,10 @@
             <name>__groupname__</name>
             <value>TACC</value>
           </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc32dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -477,6 +485,10 @@
           <macro>
             <name>__groupname__</name>
             <value>anl-viz</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc32dbg</value>
           </macro>
         </macros>
       </resource>
@@ -688,7 +700,7 @@
       </resource>
       <resource>
         <name>gxmap</name>
-        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana|ORNL|Purdue|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana|ORNL|TACC|Purdue)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -696,7 +708,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC NCSA ANL-login Indiana ORNL Purdue TACC</value>
+            <value>SDSC NCSA ANL-login Indiana ORNL TACC Purdue</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -883,6 +895,10 @@
           <macro>
             <name>gatekeeperHost</name>
             <value>tg-login-ia32.iu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc32dbg</value>
           </macro>
         </macros>
       </resource>
@@ -1244,6 +1260,10 @@
             <name>memory</name>
             <value>2gb</value>
           </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc64</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -1519,6 +1539,10 @@
           <macro>
             <name>mpich-p4-intel-version</name>
             <value>1.2.7</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc32dbg</value>
           </macro>
         </macros>
       </resource>
@@ -1903,6 +1927,10 @@
           <macro>
             <name>batchJobManager</name>
             <value>jobmanager-loadleveler</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>vendorcc32dbgpthr</value>
           </macro>
         </macros>
       </resource>
@@ -2462,6 +2490,22 @@
             <name>phdf5-key</name>
             <value>@keyPre@phdf5-1.6.5-mpich-gm-intel-r1 @keyPost@</value>
           </macro>
+          <macro>
+            <name>rm</name>
+            <value>/bin/rm</value>
+          </macro>
+          <macro>
+            <name>env</name>
+            <value>/usr/bin/env</value>
+          </macro>
+          <macro>
+            <name>date</name>
+            <value>/bin/date</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusFlavor</name>
+            <value>gcc64dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2872,43 +2916,6 @@
               <expr>hdf5=="1.6.5"</expr>
             </comparison>
           </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.format.phdf5.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <context>@pre@@phdf5-key@@@@post@</context>
-          </series>
-          <nickname>phdf5-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -5864,11 +5871,116 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.format.phdf5.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <context>@pre@@phdf5-key@@@@post@</context>
+          </series>
+          <nickname>phdf5-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.7step.unit</name>
+            <args>
+              <arg>
+                <name>extraEnv</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>date</name>
+                <value>@date@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>hostCount</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gatekeeperHost@/@batchJobManager@</value>
+              </arg>
+              <arg>
+                <name>env</name>
+                <value>@env@</value>
+              </arg>
+              <arg>
+                <name>extraRsl</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>rm</name>
+                <value>@rm@</value>
+              </arg>
+              <arg>
+                <name>flavor</name>
+                <value>@defaultGlobusFlavor@</value>
+              </arg>
+            </args>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gt4-seven-step</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctssv3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctssv3</guid>
       <description/>
-      <version>1</version>
+      <version>3</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -5958,7 +6070,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>3</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
