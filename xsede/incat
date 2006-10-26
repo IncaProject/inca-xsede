@@ -41,11 +41,11 @@
             <value>tg-mayor1.uc.teragrid.org</value>
           </macro>
           <macro>
-            <name>gatekeeperHost</name>
+            <name>rftHost</name>
             <value>tg-grid1.uc.teragrid.org</value>
           </macro>
           <macro>
-            <name>rftHost</name>
+            <name>gatekeeperHost</name>
             <value>tg-grid1.uc.teragrid.org</value>
           </macro>
         </macros>
@@ -231,10 +231,6 @@
             <value>PSC</value>
           </macro>
           <macro>
-            <name>compiler-gcc-version</name>
-            <value>3.4.0</value>
-          </macro>
-          <macro>
             <name>gatekeeperHost</name>
             <value>gt4-submit.psc.teragrid.org</value>
           </macro>
@@ -249,6 +245,14 @@
           <macro>
             <name>defaultGlobusFlavor</name>
             <value>vendorcc64dbgpthr</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc64dbgpthr</value>
+          </macro>
+          <macro>
+            <name>compiler-gcc-version</name>
+            <value>3.0</value>
           </macro>
         </macros>
       </resource>
@@ -380,6 +384,10 @@
             <name>defaultGlobusFlavor</name>
             <value>gcc32dbg</value>
           </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc32dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -489,6 +497,10 @@
           <macro>
             <name>defaultGlobusFlavor</name>
             <value>gcc32dbg</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc32dbg</value>
           </macro>
         </macros>
       </resource>
@@ -677,6 +689,28 @@
         </macros>
       </resource>
       <resource>
+        <name>gram</name>
+        <xpath>//resource[matches(name, '^(ANL-login)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>gram</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>ANL-login</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>gridshell</name>
         <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana|ORNL|Purdue|psc-lemieux|TACC)$')]</xpath>
         <macros>
@@ -834,6 +868,10 @@
             <name>compiler-gcc-version</name>
             <value>3.3.3</value>
           </macro>
+          <macro>
+            <name>nativeFortranCompiler</name>
+            <value>xlf</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -900,16 +938,20 @@
             <name>defaultGlobusFlavor</name>
             <value>gcc32dbg</value>
           </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc32dbg</value>
+          </macro>
+          <macro>
+            <name>gridftpHost</name>
+            <value>tg-login-ia32.iu.teragrid.org</value>
+          </macro>
         </macros>
       </resource>
       <resource>
         <name>mpich-g2-gcc</name>
         <xpath>//resource[matches(name, '^(ANL-login|ncsa-ia64|sdsc-ia64|indiana-avidd|psc-rachel|psc-lemieux|tacc-lonestar)$')]</xpath>
         <macros>
-          <macro>
-            <name>mpich-g2-gcc-key</name>
-            <value>@keyPre@mpich-g2-gcc @keyPost@</value>
-          </macro>
           <macro>
             <name>mpich-g2-gcc-version</name>
             <value>1.2.6</value>
@@ -941,6 +983,10 @@
           <macro>
             <name>__groupname__</name>
             <value>mpich-g2-gcc</value>
+          </macro>
+          <macro>
+            <name>mpich-g2-gcc-key</name>
+            <value>@keyPre@mpich-g2-gcc @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -1264,6 +1310,10 @@
             <name>defaultGlobusFlavor</name>
             <value>gcc64</value>
           </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc64</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -1543,6 +1593,10 @@
           <macro>
             <name>defaultGlobusFlavor</name>
             <value>gcc32dbg</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc32dbg</value>
           </macro>
         </macros>
       </resource>
@@ -1826,16 +1880,20 @@
             <name>gatekeeperHost</name>
             <value>bglogin.sdsc.edu</value>
           </macro>
+          <macro>
+            <name>bash</name>
+            <value>bash -l -c</value>
+          </macro>
+          <macro>
+            <name>pre</name>
+            <value><![CDATA[@bash@ 'set -a; source /usr/local/apps/softenv/etc/softenv-load.sh && source /usr/local/apps/softenv/etc/softenv-aliases.sh && cd @__incaReporterManagerLocation__@; cp ~/.soft.v3 ~/.soft.v3.$$ && soft-msc ~/.soft.v3.$$ && source ~/.soft.v3.$$.cache.sh && @perl5@]]></value>
+          </macro>
         </macros>
       </resource>
       <resource>
         <name>sdsc-datastar</name>
         <xpath>//resource[matches(name, '^(ds001\.sdsc\.edu)$')]</xpath>
         <macros>
-          <macro>
-            <name>compiler-gcc-version</name>
-            <value>3.4</value>
-          </macro>
           <macro>
             <name>__groupname__</name>
             <value>sdsc-datastar</value>
@@ -1897,14 +1955,6 @@
             <value>f77</value>
           </macro>
           <macro>
-            <name>bash</name>
-            <value>bash --login -c</value>
-          </macro>
-          <macro>
-            <name>perl5</name>
-            <value/>
-          </macro>
-          <macro>
             <name>gridftpHost</name>
             <value>ds-gridftp.sdsc.edu</value>
           </macro>
@@ -1931,6 +1981,26 @@
           <macro>
             <name>defaultGlobusFlavor</name>
             <value>vendorcc32dbgpthr</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc32dbgpthr</value>
+          </macro>
+          <macro>
+            <name>bash</name>
+            <value>bash --login -c</value>
+          </macro>
+          <macro>
+            <name>perl5</name>
+            <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+          </macro>
+          <macro>
+            <name>pre</name>
+            <value><![CDATA[@bash@ 'set -a; source /usr/local/apps/softenv/etc/softenv-load.sh && source /usr/local/apps/softenv/etc/softenv-aliases.sh && cd @__incaReporterManagerLocation__@; cp ~/.soft.v3 ~/.soft.v3.$$ && soft-msc ~/.soft.v3.$$ && source ~/.soft.v3.$$.cache.sh && @perl5@]]></value>
+          </macro>
+          <macro>
+            <name>compiler-gcc-version</name>
+            <value>3.4.1</value>
           </macro>
         </macros>
       </resource>
@@ -2427,10 +2497,6 @@
             <value>@keyPre@condor-g @keyPost@</value>
           </macro>
           <macro>
-            <name>ant-key</name>
-            <value>@keyPre@apache-ant @keyPost@</value>
-          </macro>
-          <macro>
             <name>gridftpHost</name>
             <value>tg-gridftp.@siteName@.teragrid.org</value>
           </macro>
@@ -2505,6 +2571,28 @@
           <macro>
             <name>defaultGlobusFlavor</name>
             <value>gcc64dbg</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc64dbg</value>
+          </macro>
+          <macro>
+            <name>mpich-g2-gcc-key</name>
+            <value>@keyPre@mpich-g2-gcc @keyPost@</value>
+          </macro>
+          <macro>
+            <name>gatekeepers</name>
+            <value>tg-grid1.uc.teragrid.org</value>
+            <value>grid-hg.ncsa.teragrid.org</value>
+            <value>tg-login1.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>ant-key</name>
+            <value>@keyPre@apache-ant @keyPost@</value>
+          </macro>
+          <macro>
+            <name>gt4-7step-key</name>
+            <value>@keyPre@mpich-g2-mpich-gm-gcc @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -2666,47 +2754,8 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>ant==@ant-version@</expr>
-            </comparison>
+            <comparison>ant==@ant-version@</comparison>
           </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.ant.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <context>@pre@@ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -2783,9 +2832,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>condor-g>=6.7.18</expr>
-            </comparison>
+            <comparison>condor-g>=6.7.18</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -2826,9 +2873,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>gridshell>=0.9.9-4</expr>
-            </comparison>
+            <comparison>gridshell>=0.9.9-4</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -2869,9 +2914,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>hdf4=="4.2 Release 1"</expr>
-            </comparison>
+            <comparison>hdf4=="4.2 Release 1"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -2912,9 +2955,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>hdf5=="1.6.5"</expr>
-            </comparison>
+            <comparison>hdf5=="1.6.5"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -2955,9 +2996,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>softenv=="1.4.2"</expr>
-            </comparison>
+            <comparison>softenv=="1.4.2"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3035,9 +3074,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>srb==3.4.1</expr>
-            </comparison>
+            <comparison>srb==3.4.1</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3078,9 +3115,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>openssh=~".*"</expr>
-            </comparison>
+            <comparison>openssh=~".*"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3121,9 +3156,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>tcl=~"8.*"</expr>
-            </comparison>
+            <comparison>tcl=~"8.*"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3205,9 +3238,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>tgcp==1.0.0</expr>
-            </comparison>
+            <comparison>tgcp==1.0.0</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3248,9 +3279,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>tgusage>=2.1</expr>
-            </comparison>
+            <comparison>tgusage>=2.1</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3291,9 +3320,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>uberftp>=1.18</expr>
-            </comparison>
+            <comparison>uberftp>=1.18</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3612,9 +3639,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>intel-compiler==@compiler-intel-version@</expr>
-            </comparison>
+            <comparison>intel-compiler==@compiler-intel-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3700,9 +3725,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>gcc==@compiler-gcc-version@</expr>
-            </comparison>
+            <comparison>gcc==@compiler-gcc-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3833,9 +3856,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>xlc=~".*"</expr>
-            </comparison>
+            <comparison>xlc=~".*"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3917,9 +3938,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>java=~"^1\.4\.2(.|\n|\s)*"</expr>
-            </comparison>
+            <comparison>java=~"^1\.4\.2(.|\n|\s)*"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3960,9 +3979,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>python>=2.2</expr>
-            </comparison>
+            <comparison>python>=2.2</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4093,9 +4110,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>tgwhatami==2.3.0  &amp;&amp; tgwhereami==1.0.0</expr>
-            </comparison>
+            <comparison>tgwhatami==2.3.0  &amp;&amp; tgwhereami==1.0.0</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4210,9 +4225,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>pacman>=3.14.1</expr>
-            </comparison>
+            <comparison>pacman>=3.14.1</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4339,9 +4352,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>tg-policy==@tgpolicy-version@</expr>
-            </comparison>
+            <comparison>tg-policy==@tgpolicy-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4382,9 +4393,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>gx-map>=0.4.5</expr>
-            </comparison>
+            <comparison>gx-map>=0.4.5</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4429,9 +4438,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-gm-intel==@mpich-gm-intel-version@</expr>
-            </comparison>
+            <comparison>mpich-gm-intel==@mpich-gm-intel-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4623,9 +4630,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-p4-intel==@mpich-p4-intel-version@</expr>
-            </comparison>
+            <comparison>mpich-p4-intel==@mpich-p4-intel-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4670,9 +4675,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-g2-intel==@mpich-g2-intel-version@</expr>
-            </comparison>
+            <comparison>mpich-g2-intel==@mpich-g2-intel-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4766,9 +4769,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-g2-gcc==@mpich-g2-gcc-version@</expr>
-            </comparison>
+            <comparison>mpich-g2-gcc==@mpich-g2-gcc-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4862,9 +4863,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-gm-gcc==@mpich-gm-gcc-version@</expr>
-            </comparison>
+            <comparison>mpich-gm-gcc==@mpich-gm-gcc-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -4958,9 +4957,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich-p4-gcc==@mpich-p4-gcc-version@</expr>
-            </comparison>
+            <comparison>mpich-p4-gcc==@mpich-p4-gcc-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -5054,9 +5051,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>mpich2-intel==@mpich2-intel-version@</expr>
-            </comparison>
+            <comparison>mpich2-intel==@mpich2-intel-version@</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -5138,9 +5133,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>
-              <expr>globus4==4.0.1</expr>
-            </comparison>
+            <comparison>globus4==4.0.1</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -5911,6 +5904,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.7step.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
             <args>
               <arg>
                 <name>extraEnv</name>
@@ -5958,13 +5952,91 @@
               </arg>
               <arg>
                 <name>flavor</name>
-                <value>@defaultGlobusFlavor@</value>
+                <value>@defaultGlobusMpiFlavor@</value>
+              </arg>
+            </args>
+            <context>@pre@@gt4-7step-key@@@@post@</context>
+          </series>
+          <nickname>gt4-seven-step</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.ant.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <context>@pre@@ant-key@@@@post@</context>
+          </series>
+          <nickname>ant-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gatekeeper</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gatekeeper</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gatekeepers@</value>
               </arg>
             </args>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gt4-seven-step</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
+          <nickname>all2all:gram_to_@gatekeepers@</nickname>
+          <resourceSetName>gram</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -5980,7 +6052,7 @@
       <name>ctssv3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctssv3</guid>
       <description/>
-      <version>3</version>
+      <version>19</version>
     </suite>
     <suite>
       <seriesConfigs>
