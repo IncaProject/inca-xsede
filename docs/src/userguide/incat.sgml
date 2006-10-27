@@ -17,72 +17,73 @@
   </para><para>
   As mentioned in the previous section, you can use the inca command line tool
   to install a default Inca configuration on a resource.  The discussion below
-  will describe how to use incat to set up the same configuration.
+  will describe how you would use incat to set up the same configuration.
   </para>
   </section>
 
   <section id="userguide-incat-repos">
   <title>Repositories</title>
-  <!-- TODO add graphic -->
+  <!-- TODO add graphic Repository panel -->
   <para>
   incat begins by showing the panel for Inca reporter repositories.  The three
-  panes in the panel display the list of repositiories you've specified, the
+  sections of the panel display the list of repositiories you've specified, the
   list of reporters contained within those repositories, and property
-  information for the currently-selected reporter.  Buttons underneath the
-  Repositories pane allow you to add and delete repositories from your list.
-  If your list contains multiple repositories, a checkbox underneath the
-  Reporters pane indicates whether the reporter list includes reporters from
-  all repositories or only from the selected one.  Finally, pressing the "Show"
-  button underneath the Reporters pane will open a text window that contains
-  the source code of the currently-selected reporter.
+  information for the currently-selected reporter.  Buttons in the Repositories
+  section allow you to add and delete repositories from your list.  If your
+  list contains multiple repositories, a checkbox in the Reporters section
+  indicates whether the reporter list shows reporters from all repositories or
+  only from the selected one.  Finally, pressing the "Show" button in the
+  Reporters section will open a text window that contains the source code of
+  the currently-selected reporter.
   </para>
   <para>
   The default Inca configuration retrieves reporters from the Inca project
   repository.  To add this repository to your list, press the "Add" button
-  underneath the Repositories pane, enter the URL
+  in the Repositories section, enter the URL
   "http://inca.sdsc.edu/2.0/repository" in the pop-up window that appears, then
   press the "OK" button.  Within a few seconds you should see the repository
-  URL appear in the Repositories pane, a list of reporters in the Reporters
-  pane, and properties for the first reporter in the Reporter Properties pane.
-  If you like, you can select reporters in the Reporters pane and display their
-  source code by pressing the "Show" button.  (Double-clicking the reporter
-  name in the reporter list does the same thing.)
+  URL appear in the Repositories list, a set of reporters in the Reporters
+  list, and properties for the first reporter in the Reporter Properties list.
+  If you like, you can select reporters in the Reporters list and display their
+  source code by pressing the "Show" button.  (Double-clicking the name in the
+  reporter list accomplishes the same thing.)
   </para>
   </section>
 
   <section id="userguide-incat-resources">
   <title>Resources</title>
-  <!-- TODO add graphic -->
+  <!-- TODO add graphic Resource panel -->
   <para>
   Pressing the "Resource Configuration" tab near the top of the incat window
   takes you to incat's resource specification panel.  Here you can enter and
   edit information about the hosts on which you want Inca to run reporters.
-  The panes on this panel show resource groups (sets of hosts) that you've
+  The sections of this panel show resource groups (sets of hosts) that you've
   defined, a set of macros that you can use when defining reporter series to
   run on a paticular resource, and a list of hosts that are included in the
-  selected resource.  A set of buttons underneath the Resource Group pane allow
-  you to add, edit, and delete resource groups, and a similar set underneath
-  the Macros pane allow you to add, edit, and delete macros associated with
-  the currently-selected resource group.
+  selected resource.  A set of buttons in the Resource Group section allow
+  you to add, edit, and delete resource groups, and a similar set in the Macros
+  section allow you to add, edit, and delete macros associated with the
+  currently-selected resource group.
   </para>
+  <!-- TODO add graphic Resource edit dialog -->
   <para>
   The default Inca configuration defines two resource groups--one that
-  specifies the host where the Inca agent is running and another container
-  group that can be extended to include both this host and any others that
-  you care to define.  To define these in incat, press the "Add" button
-  underneath the Resource Groups pane to open the resource edit window.
-  In the "Group Name" text box, enter the name "siteA".  (This name choice
-  is arbitrary; "agentHost" or "local" would work just as well.)  In the
-  "Members" text box, enter either "localhost" or the DNS name of the host
-  where the Inca agent is running, then select "local" on the "Access Method"
-  pull-down list.  This indicates that the Inca agent can access this host
-  directly without going through either Globus or ssh (i.e., it's the same
-  host where the agent is running).  The boxes for the installation directory
-  and proxy information can be left blank.  The agent will use a default
-  directory to install the Inca reporter manager, and proxy information isn't
-  needed for this installation.  Press "OK" to complete entry of this resource,
-  and incat will display siteA in the Resource Groups pane.
-  <!-- TODO add graphic -->
+  specifies the host where the Inca agent is running and a container group that
+  can be extended to include both this host and any others that you define.  To
+  define these in incat, press the "Add" button in the Resource Groups section
+  to open the resource edit dialog.  In the "Group Name" text box, enter the
+  name "siteA".  (This name choice is arbitrary; "agentHost" or "local" would
+  work just as well.)  In the "Members" text box, enter either "localhost" or
+  the DNS name of the host where the Inca agent is running.  Then select
+  "local" on the "Access Method" pull-down list.  This indicates that the Inca
+  agent can access this host directly without using through either Globus or
+  ssh (i.e., it's the same host where the agent is running).  If you enter a
+  path in the "Install Directory" text box, Inca will install the code for an
+  Inca Reporter Manager in that directory; otherwise, it will use a default
+  path.  Proxy information isn't needed for this resource, so leave the other
+  text boxes blank.  Press "OK" to complete entry of this resource.  incat
+  will close the resource edit dialog and will display siteA in the Resource
+  Groups section of the Resource Configuration panel.
   </para>
   <para>
   Press the "Add" button again to add a second resource group.  Give this one
@@ -98,12 +99,12 @@
 
   <section id="userguide-incat-suites">
   <title>Suites</title>
-  <!-- TODO add graphic -->
+  <!-- TODO add graphic Suites panel -->
   <para>
   Pressing the "Suites" tab near the top of the incat window takes you to
   incat's suite/series specification panel.  Here you specify the reporters
   you want to run, which resources to run them on, how frequently to run them,
-  and the parameters to use when running them.
+  and the arguments to use when running them.
   </para>
   <para>
   A suite groups a set of reporter series.  Suites are largely a convenience
@@ -116,13 +117,61 @@
   </para>
   <para>
   The default Inca configuration defines a single suite named "TestSuiteLocal"
-  that contains eight series.  Press the "Add" button underneath the "Suites"
-  pane, enter "TestSuiteLocal" in the pop-up window, then press the "OK"
-  button.  You're now ready to add series to this new suite.  Press the "Add"
-  button underneath the "Series" pane.
+  that contains eight series.  Press the "Add" button in the Suites
+  section of the panel, enter "TestSuiteLocal" in the pop-up window, then press
+  the "OK" button.  You're now ready to add series to this new suite.  Press
+  the "Add" button in the Series section to open the incat series dialog.
   </para>
   <!-- TODO add graphic -->
   <para>
+  The top half of the series dialog contains basic information about reporter
+  execution--the name and version of the reporter, the resource to run it on,
+  what values to pass in the command line arguments, and how often to run.  For
+  this first series, scroll down to select the reporter
+  "cluster.math.atlas.version" and leave the "Use latest version" radio button
+  selected.  (The other choice, "Use version 1.4 only", indicates that your
+  series would continue to run the same version of the reporter even if an
+  updated version became available.)  Because both defaultvo and siteA refer to
+  the host where the Inca agent is running, you can select either of them in
+  the Resource Group list.  In the Arguments section, leave the cc (compiler)
+  argument with its default value, "cc".  Leave the dir argument blank, which
+  will instruct the reporter to search a set of common directories for the
+  atlas installation.  Use the pull-down menu to set the log argument to 3;
+  this will cause any error, warning, and system-level log messages generated
+  by the reporter to be included in its report.  Finally, use the pull-down
+  menus in the frequency section to indicate that the reporter should run every
+  10 minutes.  When you do this, the contents in the text box to the right
+  changes to "*/10 * * * *".  This is crontab syntax (see the section 5 man
+  page) for once every 10 minutes.  If you're familiar with crontab, you can
+  enter values in the text box directly rather than using the pull-down menus.
+  </para>
+  <para>
+  The bottom half of the series dialog allows you to supply optional
+  customization information for your series.  You can supply a descriptive
+  name for your series in the Nickname text box, and the Inca consumer will
+  include it as part of its display.  The nickname defaults to the name of the
+  reporter; for this series, enter "atlas_version" as the value.  The context
+  string allows you to specify how the reporter should be run by entering sh
+  code either before or after "cluster.math.atlas.version -args" in the text
+  box.  For example, you could run this reporter niced by entering "nice -9 "
+  at the beginning of the box.  For this series, leave the text box as-is.
+  The limits section allows you to set CPU time, wall clock time, and memory
+  limits on the reporter.  If the reporter exceeds any limits you set, the Inca
+  Reporter Manager will terminate its execution and send an error report to the
+  Inca Depot.  The bottommost two text boxes in the series dialog allow you to
+  test the output of the reporter and send email if the test fails.  This is
+  covered in detail below; for this series leave these boxes blank.  Press the
+  "OK" button, and incat will close the series dialog box and add the series
+  to the Series list in the suite/series specification panel.
+  </para>
+  <para>
+  Press the "Add" button in the series section again to add a second series.
+  For this one, set the reporter to "cluster.compiler.gcc.version", the log
+  argument to "3", and the nickname to "gcc_version", then press "OK".
+  </para>
+  <para>
+  For the third series, set the reporter to "cluster.security.openssl.version",
+  the log argument to "3", and the nickname to "openssl_version".
   </para>
   </section>
 
