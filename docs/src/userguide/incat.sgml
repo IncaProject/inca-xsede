@@ -1,8 +1,6 @@
 <section id="userguide-incat">
 <title>Administering Inca with incat</title>
 
-  <para>TODO: description of components and architecture</para>
-
   <section id="userguide-incat-introduction">
   <title>Introduction</title>
   <para>
@@ -35,8 +33,7 @@
   only from the selected one.  Finally, pressing the Show button in the
   Reporters section will open a text window that contains the source code of
   the currently-selected reporter.
-  </para>
-  <para>
+  </para><para>
   The default Inca configuration retrieves reporters from the Inca project
   repository.  To add this repository to your list, press the Add button in the
   Repositories section, enter the URL "http://inca.sdsc.edu/2.0/repository" in
@@ -75,17 +72,25 @@
   In the Group Name text box, enter the name "siteA".  (This name choice is
   arbitrary; "agentHost" or "local" would work just as well.)  In the Members
   text box, enter either "localhost" or the DNS name of the host where the Inca
-  agent is running.  Select "local" in the Access Method pull-down list.  This
-  indicates that the Inca agent can access this host directly without using
-  through either Globus or ssh (i.e., it's the same host where the agent is
-  running).  If you enter a path in the Install Directory text box, Inca will
-  install the Reporter Manager code for in that directory; otherwise, it will
+  agent is running.  The Equivalent checkbox underneath the Members text box
+  indicates that Inca should treat the hosts in this group as a single
+  resource, only running reporters on one of them.  This is most often useful
+  when a single DNS name maps to multiple hosts (e.g., multiple login nodes for
+  a batch system).  In this case, leave the box unchecked.
+  </para><para>
+  Select "local" in the Access Method pull-down list.  This indicates that the
+  Inca agent can access this host directly without using through either Globus
+  or ssh (i.e., it's the same host where the agent is running).
+  </para><para>
+  If you enter a path in the Install Directory text box, Inca will install the
+  Reporter Manager code for the resource in that directory; otherwise, it will
   use a default path.  Proxy information isn't needed for this resource, so
-  leave the other text boxes blank.  Press OK to complete entry of this
-  resource.  incat will close the resource edit dialog and will display siteA
-  in the Resource Groups section of the Resource Configuration panel.
-  </para>
-  <para>
+  leave the other text boxes blank.
+  </para><para>
+  Press OK to complete entry of this resource.  incat will close the resource
+  edit dialog and will display siteA in the Resource Groups section of the
+  Resource Configuration panel.
+  </para><para>
   Press the Add button again to add a second resource group.  Give this one the
   the name "defaultvo" and enter "siteA" in the Members text box.  This tells
   incat that any hosts in the "siteA" group (localhost, in this case) are also
@@ -105,8 +110,7 @@
   suite/series specification panel.  Here you specify the reporters you want to
   run, the resources to run them on, how frequently to run them, and the
   arguments to use when running them.
-  </para>
-  <para>
+  </para><para>
   A suite groups a set of reporter series.  Suites are largely a convenience
   for organizing related series, and the decision as to whether to place all
   your series into a single suite or to divide them into multiple suites is up
@@ -114,8 +118,7 @@
   primary structure for organizing the display of reporter results, so
   organizing related series into suites may make the consumer web pages more
   readable.
-  </para>
-  <para>
+  </para><para>
   The default Inca configuration defines a single suite named TestSuiteLocal
   that contains eight series.  Press the Add button in the Suites section of
   the panel, enter "TestSuiteLocal" in the pop-up window, then press the OK
@@ -144,8 +147,7 @@
   changes to "*/10 * * * *".  This is crontab syntax (see the section 5 man
   page) for once every 10 minutes.  If you're familiar with crontab, you can
   enter values in the text box directly rather than using the pull-down menus.
-  </para>
-  <para>
+  </para><para>
   The bottom half of the series dialog allows you to supply optional
   customization information for your series.  You can supply a descriptive
   name for your series in the Nickname text box, and the Inca consumer will
@@ -163,8 +165,7 @@
   covered in detail below; for this series leave these boxes blank.  Press the
   OK button, and incat will close the series dialog box and add the series to
   the Series list in the suite/series specification panel.
-  </para>
-  <para>
+  </para><para>
   The other seven series in default Inca configuration are composed similarly
   to the first one.  Press the Add button in the series section for each of
   them, then set the values in the series dialog as specified in the table
@@ -220,9 +221,43 @@
 
   <section id="userguide-incat-commits">
   <title>Commiting/Saving</title>
+  <para>
+  Your Inca deployment configuration is now complete.  At this point, it's a
+  good idea to use the Save As option in incat's File menu to write the
+  configuration to a file.  That way, you have a local copy of the configuration
+  that you can later modify.  The file format is formatted XML; if you're
+  curious, you can read through it to see how incat represents the information
+  you've entered.
+  </para><para>
+  Although your configuration is complete, it's not yet active.  To tell Inca
+  to begin running reporters, you need to use incat to send your configuration
+  to your Inca Agent.  If you started incat with the --agent argument, then
+  you're already connected to your Agent.  Otherwise, use the Connect option in
+  incat's Agent menu to establish a connection.  Once you're connected, you can
+  use the Commit option in the Agent menu to send the configuration to the
+  Agent.  In response, the Agent will install the Inca Reporter Manager code on
+  its host and begin running the reporters you specified.
+  </para>
+  </section>
 
-  <para>Description of what happens when you commit.  Save to disk.</para>
+  <section id="userguide-incat-macros">
+  <title>Using Resource Macros</title>
+  <para>TODO</para>
+  </section>
 
+  <section id="userguide-incat-remote">
+  <title>Globus and SSH Resources</title>
+  <para>TODO</para>
+  </section>
+
+  <section id="userguide-incat-proxy">
+  <title>Using Proxies</title>
+  <para>TODO</para>
+  </section>
+
+  <section id="userguide-incat-comparison">
+  <title>Series Comparison and Notification</title>
+  <para>TODO</para>
   </section>
 
 </section>
