@@ -23,7 +23,7 @@
 
   <section id="userguide-incat-repos">
   <title>Repositories</title>
-  <!-- TODO add graphic Repository panel -->
+  <graphic fileref="figures/ug-incat-repositories.png" align="center"></graphic>
   <para>
   incat begins by showing the panel for Inca reporter repositories.  The three
   sections of this panel display the list of repositiories you've specified,
@@ -51,7 +51,7 @@
 
   <section id="userguide-incat-resources">
   <title>Resources</title>
-  <!-- TODO add graphic Resource panel -->
+  <graphic fileref="figures/ug-incat-resource-configuration.png" align="center"></graphic>
   <para>
   Pressing the Resource Configuration tab near the top of the incat window
   takes you to incat's resource specification panel.  Here you can enter and
@@ -63,26 +63,27 @@
   edit, and delete resource groups, and a similar set in the Macros section
   allow you to add, edit, and delete macros associated with the
   currently-selected resource group.
-  </para>
-  <!-- TODO add graphic Resource edit dialog -->
-  <para>
+  </para><para>
   The default Inca configuration defines two resource groups--one that
   specifies the host where the Inca agent is running and a container group that
   can be extended to include both this host and any others that you define.  To
   define these in incat, press the Add button in the Resource Groups section to
-  open the resource edit dialog.  In the Group Name text box, enter the name
-  "siteA".  (This name choice is arbitrary; "agentHost" or "local" would work
-  just as well.)  In the Members text box, enter either "localhost" or the DNS
-  name of the host where the Inca agent is running.  Select "local" in the
-  Access Method pull-down list.  This indicates that the Inca agent can access
-  this host directly without using through either Globus or ssh (i.e., it's the
-  same host where the agent is running).  If you enter a path in the Install
-  Directory text box, Inca will install the Reporter Manager code for in that
-  directory; otherwise, it will use a default path.  Proxy information isn't
-  needed for this resource, so leave the other text boxes blank.  Press OK to
-  complete entry of this resource.  incat will close the resource edit dialog
-  and will display siteA in the Resource Groups section of the Resource
-  Configuration panel.
+  open the resource edit dialog.
+  </para>
+  <graphic fileref="figures/ug-incat-resource-dialog.png" align="center"></graphic>
+  <para>
+  In the Group Name text box, enter the name "siteA".  (This name choice is
+  arbitrary; "agentHost" or "local" would work just as well.)  In the Members
+  text box, enter either "localhost" or the DNS name of the host where the Inca
+  agent is running.  Select "local" in the Access Method pull-down list.  This
+  indicates that the Inca agent can access this host directly without using
+  through either Globus or ssh (i.e., it's the same host where the agent is
+  running).  If you enter a path in the Install Directory text box, Inca will
+  install the Reporter Manager code for in that directory; otherwise, it will
+  use a default path.  Proxy information isn't needed for this resource, so
+  leave the other text boxes blank.  Press OK to complete entry of this
+  resource.  incat will close the resource edit dialog and will display siteA
+  in the Resource Groups section of the Resource Configuration panel.
   </para>
   <para>
   Press the Add button again to add a second resource group.  Give this one the
@@ -98,7 +99,7 @@
 
   <section id="userguide-incat-suites">
   <title>Suites</title>
-  <!-- TODO add graphic Suites panel -->
+  <graphic fileref="figures/ug-incat-suites.png" align="center"></graphic>
   <para>
   Pressing the Suites tab near the top of the incat window takes you to incat's
   suite/series specification panel.  Here you specify the reporters you want to
@@ -121,7 +122,7 @@
   button.  You're now ready to add series to this new suite.  Press the Add
   button in the Series section to open the incat series dialog.
   </para>
-  <!-- TODO add graphic series dialog -->
+  <graphic fileref="figures/ug-incat-series-dialog.png" align="center"></graphic>
   <para>
   The top half of the series dialog contains basic information about reporter
   execution--the name and version of the reporter, the resource to run it on,
@@ -170,30 +171,51 @@
   below.  Set the log argument for each series to 3 and the frequency to 10
   minutes.
   </para>
-  <!-- TODO tablify -->
-  <para>
-  Reporter:cluster.compiler.gcc.version; Nickname:gcc_version
-  </para>
-  <para>
-  Reporter:cluster.security.openssl.version; Nickname:openssl_version
-  </para>
-  <para>
-  Reporter:cluster.interactive_access.openssh.version; Nickname:openssh_version
-  </para>
-  <para>
-  Reporter:cluster.interactive_access.openssh.unit;
-  Nickname:openssh_to_localhost; host: localhost; login: inca
-  </para>
-  <para>
-  Reporter:viz.lib.vtk-nvgl.version; nickname:vtk-nvgl_version
-  </para>
-  <para>
-  Reporter:viz.lib.chromium.version; nickname:chromium_version
-  </para>
-  <para>
-  Reporter:cluster.compiler.any.unit; nickname:java_hello_world;
-  compiler:javac; lang:java
-  </para>
+
+  <table><title>Default Configuration Series</title>
+  <tgroup cols="3">
+  <thead>
+    <row>
+      <entry>Reporter</entry>
+      <entry>Nickname</entry>
+      <entry>Arguments</entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry>cluster.compiler.gcc.version</entry>
+      <entry>gcc_version</entry>
+    </row>
+    <row>
+      <entry>cluster.security.openssl.version</entry>
+      <entry>openssl_version</entry>
+    </row>
+    <row>
+      <entry>cluster.interactive_access.openssh.version</entry>
+      <entry>openssh_version</entry>
+    </row>
+    <row>
+      <entry>cluster.interactive_access.openssh.unit</entry>
+      <entry>openssh_to_localhost</entry>
+      <entry>host: localhost; login: inca</entry>
+    </row>
+    <row>
+      <entry>viz.lib.vtk-nvgl.version</entry>
+      <entry>vtk-nvgl_version</entry>
+    </row>
+    <row>
+      <entry>viz.lib.chromium.version</entry>
+      <entry>chromium_version</entry>
+    </row>
+    <row>
+      <entry>cluster.compiler.any.unit</entry>
+      <entry>java_hello_world</entry>
+      <entry>compiler: javac; lang: java</entry>
+    </row>
+  </tbody>
+  </tgroup>
+  </table>
+
   </section>
 
   <section id="userguide-incat-commits">
