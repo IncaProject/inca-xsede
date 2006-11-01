@@ -1402,7 +1402,11 @@
           </macro>
           <macro>
             <name>blasLink</name>
-            <value>-L${ATLAS_LOCATION}/../lib/AIX_UNKNOWN_32 -lf77blas -latlas</value>
+            <value>-L/usr/apps/math/atlas/atlas3.4.1_32/lib/AIX_UNKNOWN_32 -lf77blas -latlas</value>
+          </macro>
+          <macro>
+            <name>batchJobManager</name>
+            <value>jobmanager</value>
           </macro>
         </macros>
       </resource>
@@ -1657,10 +1661,6 @@
             <value>psc-bigben</value>
           </macro>
           <macro>
-            <name>compiler-gcc-version</name>
-            <value>3.3.1</value>
-          </macro>
-          <macro>
             <name>nativeFortranCompiler</name>
             <value>pgf77</value>
           </macro>
@@ -1671,6 +1671,10 @@
           <macro>
             <name>batchJobManager</name>
             <value>jobmanager-bigben-pbs</value>
+          </macro>
+          <macro>
+            <name>compiler-gcc-version</name>
+            <value>3.3.3</value>
           </macro>
         </macros>
       </resource>
@@ -5757,50 +5761,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.admin.tgpolicy.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tgpolicy-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tg-policy==@tgpolicy-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>user.search.output.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
@@ -6271,11 +6231,55 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgpolicy.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tgpolicy-version</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tg-policy>=0.2</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>1</version>
+      <version>6</version>
     </suite>
     <suite>
       <seriesConfigs>
