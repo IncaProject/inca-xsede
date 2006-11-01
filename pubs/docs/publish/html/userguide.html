@@ -1,0 +1,1511 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Inca 2.0 Users's Guide</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="ARTICLE"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1"
+>Inca 2.0 Users's Guide</A
+></H1
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="#USERGUIDE-INTRO"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="#USERGUIDE-REQUIREMENTS"
+>Requirements</A
+></DT
+><DT
+>3. <A
+HREF="#USERGUIDE-RECOMMENDATIONS"
+>Recommendations</A
+></DT
+><DT
+>4. <A
+HREF="#USERGUIDE-QUICKSTART"
+>Quick Start</A
+></DT
+><DT
+>5. <A
+HREF="#USERGUIDE-INSTALL"
+>Installing Inca</A
+></DT
+><DT
+>6. <A
+HREF="#USERGUIDE-INCAT"
+>Administering Inca with incat</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="#USERGUIDE-INCAT-INTRODUCTION"
+>Introduction</A
+></DT
+><DT
+>6.2. <A
+HREF="#USERGUIDE-INCAT-REPOS"
+>Repositories</A
+></DT
+><DT
+>6.3. <A
+HREF="#USERGUIDE-INCAT-RESOURCES"
+>Resources</A
+></DT
+><DT
+>6.4. <A
+HREF="#USERGUIDE-INCAT-SUITES"
+>Suites</A
+></DT
+><DT
+>6.5. <A
+HREF="#USERGUIDE-INCAT-COMMITS"
+>Commiting/Saving</A
+></DT
+><DT
+>6.6. <A
+HREF="#USERGUIDE-INCAT-REMOTE"
+>Other Resource Options</A
+></DT
+><DT
+>6.7. <A
+HREF="#USERGUIDE-INCAT-MACROS"
+>Using Resource Macros</A
+></DT
+><DT
+>6.8. <A
+HREF="#USERGUIDE-INCAT-COMPARISON"
+>Series Comparison and Notification</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="#USERGUIDE-CONSUMER"
+>Inca Web Data Consumer</A
+></DT
+><DT
+>8. <A
+HREF="#USERGUIDE-REPORTERS"
+>Reporters/Repositories</A
+></DT
+><DT
+>9. <A
+HREF="#USERGUIDE-WEBSERVICES"
+>Web Services and APIs</A
+></DT
+><DT
+>A. <A
+HREF="#USERGUIDE-APPENDIX"
+>Appendix</A
+></DT
+><DD
+><DL
+><DT
+>A.1. <A
+HREF="#USERGUIDE-APPENDIX-MANUAL"
+>Manual</A
+></DT
+></DL
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INTRO"
+>1. Introduction</A
+></H2
+><P
+> 
+The Inca Test Harness and Reporting Framework (Inca) is a generic
+framework for the automated testing, benchmarking and monitoring of Grid
+resources.  Inca provides the scheduled execution of information gathering
+scripts (reporters) and collects, archives, and publishes the data resulting
+from these scripts.</P
+><P
+>The architecture of Inca is shown in the below figure.</P
+><P
+>TODO: description of components and architecture</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="ARCH.FIG"
+></A
+><P
+><B
+>Figure 1. Inca architecture</B
+></P
+><P
+><IMG
+SRC="figures/arch.png"
+ALIGN="CENTER"></P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-REQUIREMENTS"
+>2. Requirements</A
+></H2
+><P
+>      The initial default installation of Inca has the following 
+      requirements:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>JDK or JRE 1.4.2_09 or greater</P
+></LI
+><LI
+><P
+>Perl 5.8.x or greater</P
+></LI
+><LI
+><P
+>OpenSSL-0.9.6[jkl] or OpenSSL-0.9.7b or greater</P
+></LI
+><LI
+><P
+>GNU tar (i.e., no limit on filename length)</P
+></LI
+></UL
+><P
+>      For each resource Inca will be monitoring, the following is
+      required:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>Perl 5.8.x or greater</P
+></LI
+><LI
+><P
+>OpenSSL-0.9.6[jkl] or OpenSSL-0.9.7b or greater</P
+></LI
+><LI
+><P
+>GNU tar (i.e., no limit on filename length)</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-RECOMMENDATIONS"
+>3. Recommendations</A
+></H2
+><P
+>We recommend that Inca be run under a regular user account and not as root for the following reasons:</P
+><P
+></P
+><UL
+><LI
+><P
+>    To best detect user-level problems, Inca should be run under a regular
+    user account with the default environment setup.
+    </P
+></LI
+><LI
+><P
+>    Inca does not require any special privileges to run.
+    </P
+></LI
+></UL
+><P
+>Furthermore, we recommend that a valid GSI credential be obtained for this
+regular user account so that tests of Grid software requiring proxy
+certificates can be executed. Please request a GSI credential from your
+virtual organization's Certificate Authority (CA) and consult your
+organization's security policy regarding GSI credential use.  Sections TODO
+describe how to setup proxy credentials in Inca.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-QUICKSTART"
+>4. Quick Start</A
+></H2
+><P
+>This section describes how to download, install and verify the Inca 2.0 beta
+binary release.  </P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP1"
+>1</A
+>: Download the installer script</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP2"
+>2</A
+>: Run the installer script</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP3"
+>3</A
+>: Change to the Inca installation directory</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP4"
+>4</A
+>: Create credentials for Inca components</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP5"
+>5</A
+>: Start up Inca components with a sample default configuration</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP6"
+>6</A
+>: View the Inca web server pages</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#QS-STEP7"
+>7</A
+>: View the sample default configuration using the Inca GUI tool</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><A
+NAME="QS-STEP1"
+></A
+><P
+>     Download the <TT
+CLASS="FILENAME"
+>incaInstall.sh</TT
+> script:
+    </P
+><P
+>    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.0beta/incaInstall.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    </P
+></LI
+><LI
+><A
+NAME="QS-STEP2"
+></A
+><P
+>    Execute the install script to download the binary distribution from our
+    website and unpack it into an installation directory.  
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sh incaInstall.sh $INCA_DIST all</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>$INCA_DIST is the location of the directory where you want to
+    install Inca.  You should see something like:
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+=&#62; `inca-common-java-bin.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5,921,461 [application/x-tar]
+
+100%[======================&#62;] 5,921,461    1.23M/s  ETA 00:00
+
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] 
+...
+common-java installed ...
+agent installed ...
+consumers installed ...
+depot installed ...
+incat installed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+      </P
+></LI
+><LI
+><A
+NAME="QS-STEP3"
+></A
+><P
+>    Change to the top level directory of your Inca installation:
+    </P
+><P
+>    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    </P
+></LI
+><LI
+><A
+NAME="QS-STEP4"
+></A
+><P
+>    Create certificates for the Inca components (enables secure component
+    communication): 
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca createauth</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>    The output will look similar to below and when it is completed, you should
+    see a certificate/key created for each of the four Inca components and
+    stored in $INCA_DIST/etc: 
+    </P
+><P
+>    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'clientx.sdsc.edukey.pem'
+-----
+agent
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'agentkey.pem' ...
+writing new private key to 'consumerkey.pem' ...
+writing new private key to 'depotkey.pem' ...
+writing new private key to 'incatkey.pem' ...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+></LI
+><LI
+><A
+NAME="QS-STEP5"
+></A
+><P
+>    Start the Inca server components and deploy the sample default
+    configuration.  The Inca server components are agent, depot, and consumer
+    and will be started on ports 6323, 6324, and 8080 respectively.  Please
+    edit the inca.properties file in etc/common to change these defaults.
+    More information can be found in Section TODO.
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca default</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>    You should see something like:
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>** Warning:  this will erase any previously collected reporter
+    state on the Inca depot and configuration on the agent 
+    Do you wish to continue (y/n)? y
+Initializing depot...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -&#62; com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -&#62; 1, acquireRetryAttempts -&#62; 30, acquireRetryDelay -&#62; 1000, autoCommitOnClose -&#62; false, automaticTestTable -&#62; null, breakAfterAcquireFailure -&#62; false, checkoutTimeout -&#62; 0, connectionTesterClassName -&#62; com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -&#62; null, forceIgnoreUnresolvedTransactions -&#62; false, idleConnectionTestPeriod -&#62; 0, initialPoolSize -&#62; 3, maxIdleTime -&#62; 1800, maxPoolSize -&#62; 10, maxStatements -&#62; 50, maxStatementsPerConnection -&#62; 0, minPoolSize -&#62; 3, nestedDataSource -&#62; com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -&#62; null, driverClass -&#62; null, factoryClassLocation -&#62; null, jdbcUrl -&#62; jdbc:hsqldb:test, properties -&#62; {user=******, password=******} ] , preferredTestQuery -&#62; null, propertyCycle -&#62; 300, testConnectionOnCheckin -&#62; false, testConnectionOnCheckout -&#62; false, usesTraditionalReflectiveProxies -&#62; false ] , factoryClassLocation -&#62; null, numHelperThreads -&#62; 3, poolOwnerIdentityToken -&#62; 904b13 ] 
+Database Initialization Completed
+done
+Initializing agent
+done
+Started Inca agent
+Started Inca consumer
+Started Inca depot
+Sleeping for 20 seconds while the components come online
+Deploying default configuration</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>During this step:</P
+><P
+></P
+><UL
+><LI
+><P
+>Inca is initialized</P
+></LI
+><LI
+><P
+>the Inca server components are started</P
+></LI
+><LI
+><P
+>there is a 20 second delay to wait for the servers to start up</P
+></LI
+><LI
+><P
+>a sample suite called <EM
+>TestSuiteLocal</EM
+> is sent to the
+        agent requesting reporters to be started on localhost using the
+        schedule:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>1-59/10 * * * * cluster.math.atlas.version
+2-59/10 * * * * cluster.compiler.gcc.version
+3-59/10 * * * * cluster.security.openssl.version
+4-59/10 * * * * cluster.interactive_access.openssh.version
+5-59/10 * * * * cluster.interactive_access.openssh.unit
+6-59/10 * * * * viz.lib.vtknvgl.version
+7-59/10 * * * * viz.lib.chromium.version
+8-59/10 * * * * cluster.compiler.any.unit</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>          the agent receives <EM
+>TestSuiteLocal</EM
+> suite and installs a reporter 
+          manager on the localhost in
+          <TT
+CLASS="FILENAME"
+>~/incaReporterManager</TT
+> (takes 1-5 minutes - view
+          progress of build in 
+          <TT
+CLASS="FILENAME"
+>~/incaReporterManager/build.log</TT
+>)
+        </P
+></LI
+><LI
+><P
+>          after the reporter manager is built, it registers itself with 
+          the agent.  The agent will send the reporter manager the set of
+          reporters, libraries, and execution schedule. 
+        </P
+></LI
+><LI
+><P
+>          The reporter manager executes reporters based on the execution
+          schedule and sends reports to the depot.  
+        </P
+></LI
+></UL
+></LI
+><LI
+><A
+NAME="QS-STEP6"
+></A
+><P
+>To view the results and verify that your Inca installation is
+    working correctly, point your browser to the Inca web server component
+    called the consumer (replace "your.host.name" with the name of your
+    machine - starting a web server is not required): 
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>http://<EM
+>your.host.name</EM
+>:8080</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    </P
+><P
+>    You should see a start up screen similar to the figure below initially
+    indicating an empty Inca configuration.  
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="INCA.STARTUP.EMPTY.FIG"
+></A
+><P
+><B
+>Figure 2. Default Inca start up page.</B
+></P
+><P
+><IMG
+SRC="figures/ug-consumer-startpage-empty.png"
+ALIGN="CENTER"></P
+></DIV
+>
+    </P
+><P
+>    After a few minutes (when the consumer cache is refreshed), reload the
+    page and you should see a start up screen similar to the figure below 
+    showing one suite called <EM
+>TestSuiteLocal</EM
+> 
+    (our default sample configuration), a resource group called
+    <EM
+>defaultvo</EM
+>, and one resource called
+    <EM
+>siteA</EM
+> which is a nickname for the machine you 
+    installed Inca on.
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="INCA.STARTUP.FIG"
+></A
+><P
+><B
+>Figure 3. Default Inca start up page with suite and resources.</B
+></P
+><P
+><IMG
+SRC="figures/ug-consumer-startpage.png"
+ALIGN="CENTER"></P
+></DIV
+>
+    </P
+><P
+>    Select <EM
+>TestSuiteLocal</EM
+> and
+    <EM
+>defaultvo</EM
+> and press the <EM
+>Submit</EM
+>
+    button.  You should see a results page similar to below showing 
+    7 software packages listed on the top and a table with the packages
+    divided into 4 categories (compilers, grid services, math libraries, and
+    scientific visualization).  Each package may contain the results of
+    a software package version query (e.g., gcc) and/or unit test (e.g., java --
+    unit test name is java_hello_world).  Almost all boxes should be empty
+    indicating that the reports have not yet been received. 
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="INCA.DEFAULT.RESULTS.EMPTY.FIG"
+></A
+><P
+><B
+>Figure 4. Default Inca results page without results.</B
+></P
+><P
+><IMG
+SRC="figures/ug-consumer-default-results-empty.png"
+ALIGN="CENTER"></P
+></DIV
+>
+    </P
+><P
+>    Refresh the page after a few minutes and you should begin to see more
+    boxes filled in until it looks like the below figure.  If you do not see a
+    results filled in, check the .log files in $INCA_DIST/var for
+    <TT
+CLASS="FILENAME"
+>ERROR</TT
+> or <TT
+CLASS="FILENAME"
+>Exception</TT
+>. See 
+    Section TODO for more help on debugging.  
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCA.DEFAULT.RESULTS.FIG"
+></A
+><P
+><B
+>Figure 5. Default Inca results page with results.</B
+></P
+><P
+><IMG
+SRC="figures/ug-consumer-default-results.png"
+ALIGN="CENTER"></P
+></DIV
+><P
+>Click on any red/green box to see the details of how the result was
+    collected.  The below figure shows the details of the 
+    <TT
+CLASS="FILENAME"
+>cluster.compiler.any.unit</TT
+> reporter that compiles
+    and executes a small hello world java program.  
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="INCA.JAVA.FIG"
+></A
+><P
+><B
+>Figure 6. Default Inca results page with results.</B
+></P
+><P
+><IMG
+SRC="figures/ug-consumer-java-details.png"
+ALIGN="CENTER"></P
+></DIV
+>
+    </P
+></LI
+><LI
+><A
+NAME="QS-STEP7"
+></A
+><P
+>        View the Inca sample default configuration using the Inca GUI tool, 
+        incat (Inca Administration Tool).
+      </P
+><P
+>        Use the following command to start incat:
+          <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca start incat -A localhost:6323 </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      <EM
+>OPTIONAL:</EM
+>  If you don't see Java GUI windows pop up like those in <A
+HREF="#RETRIEVE.FIG"
+>Figure 7</A
+> and <A
+HREF="#DEFAULT.FIG"
+>Figure 8</A
+>, it is probable that X-Window forwarding is not set up correctly between the 
+      machine where you installed Inca and your local machine.
+        You can either configure X-Window forwarding, or you can start <STRONG
+>incat</STRONG
+> on a local machine:
+      </P
+><P
+></P
+><UL
+><LI
+><P
+>            Copy the <TT
+CLASS="FILENAME"
+>incaInstall.sh</TT
+> script to a local machine.
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Install incat on a local machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./incaInstall.sh $INCA_DIST incat</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Copy the <STRONG
+>incat</STRONG
+> key, certificate, and trusted directory from the original machine 
+        to your local machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% scp <EM
+>orig.machine:$ORIG_INCA_DIST</EM
+>/etc/incatkey.pem $INCA_DIST/etc/; \
+scp <EM
+>orig.machine:$ORIG_INCA_DIST</EM
+>/etc/incatcert.pem $INCA_DIST/etc/;
+scp "<EM
+>orig.machine:$ORIG_INCA_DIST</EM
+>/etc/trusted/*" $INCA_DIST/etc/trusted/;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Change the agent key/cert to incat key/cert in the 
+        <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> local file:
+            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#---------------------------------------------------------------------------
+# agent
+#---------------------------------------------------------------------------
+
+inca.agent.auth=true
+inca.agent.password=
+<EM
+>inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem</EM
+>
+inca.agent.trusted=trusted</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+          </P
+></LI
+><LI
+><P
+>            Start the <STRONG
+>incat</STRONG
+> component on a local machine with the agent hostname from the original machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start incat -A <EM
+>ORIGHOST</EM
+>:6323 &#38;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>            You should now see the Java GUI window appear on your local machine.
+          </P
+></LI
+></UL
+><P
+>        <DIV
+CLASS="FIGURE"
+><A
+NAME="RETRIEVE.FIG"
+></A
+><P
+><B
+>Figure 7. incat Agent Screen</B
+></P
+><P
+><IMG
+SRC="figures/incat_retrieve_agent.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+        Once <STRONG
+>incat</STRONG
+> has information from the agent, the following screen will display:
+      </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="DEFAULT.FIG"
+></A
+><P
+><B
+>Figure 8. Default incat Screen</B
+></P
+><P
+><IMG
+SRC="figures/ug-incat-repositories.png"
+ALIGN="CENTER"></P
+></DIV
+><P
+>You may now make changes to the default configuration (e.g., add
+      a new resource to <EM
+>defaultvo</EM
+> or add new tests to
+      <EM
+>TestSuiteLocal</EM
+>).  See Section 
+      <A
+HREF="#USERGUIDE-INCAT"
+>Section 6</A
+> for more information about how to 
+      perform these actions using incat.</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INSTALL"
+>5. Installing Inca</A
+></H2
+><P
+>TODO: downloading and installing instructions.  Plus descriptions of
+where logs are stored and inca.properties and log4j.properties.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT"
+>6. Administering Inca with incat</A
+></H2
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-INTRODUCTION"
+>6.1. Introduction</A
+></H3
+><P
+>  Inca provides a graphical administration tool, named incat, that allows you
+  to configure your deployment.  Using incat, you can specify the repositories
+  from which Inca should retrieve reporters, the resources where you wish to
+  run reporters, and which reporters you wish to run on each resource.
+  </P
+><P
+>  The simplest way to run incat is via the inca command line tool: "inca
+  start incat".  You can connect incat to a running Inca agent via the
+  --agent option, e.g., "inca start incat --agent blue.ufo.edu:5678".
+  </P
+><P
+>  As mentioned in Section <A
+HREF="#USERGUIDE-QUICKSTART"
+>Section 4</A
+>, Step <A
+HREF="#QS-STEP5"
+>5</A
+>, you can use the inca command line tool to install a
+  default Inca configuration on a resource.  The discussion below describes
+  how to use incat to set up the same configuration.
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-REPOS"
+>6.2. Repositories</A
+></H3
+><P
+><IMG
+SRC="figures/ug-incat-repositories.png"
+ALIGN="CENTER"></P
+><P
+>  incat begins by showing the panel for Inca reporter repositories.  The three
+  sections of this panel display the list of repositiories you've specified,
+  the list of reporters contained within those repositories, and property
+  information for the currently-selected reporter.  Buttons in the Repositories
+  section allow you to add and delete repositories from your list.  If your
+  list contains multiple repositories, a checkbox in the Reporters section
+  determines whether the reporter list shows reporters from all repositories or
+  only from the selected one.  Finally, pressing the Show button in the
+  Reporters section will open a text window that contains the source code of
+  the currently-selected reporter.
+  </P
+><P
+>  The default Inca configuration retrieves reporters from the Inca project
+  repository.  To add this repository to your list, press the Add button in the
+  Repositories section, enter the URL "http://inca.sdsc.edu/repository/latest"
+  in the pop-up window that appears, then press the OK button.  Within a few
+  seconds you should see the repository URL appear in the Repositories list, a
+  set of reporters in the Reporters list, and properties for the first reporter
+  in the Reporter Properties list.  If you like, you can select reporters in
+  the Reporters list and display their source code by pressing the Show button.
+  (Double-clicking the name in the reporter list accomplishes the same thing.)
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-RESOURCES"
+>6.3. Resources</A
+></H3
+><P
+><IMG
+SRC="figures/ug-incat-resource-configuration.png"
+ALIGN="CENTER"></P
+><P
+>  Pressing the Resource Configuration tab near the top of the incat window
+  takes you to incat's resource specification panel.  Here you can enter and
+  edit information about the hosts on which you want Inca to run reporters.
+  The sections of this panel show resource groups (sets of hosts) that you've
+  defined, a set of macros that you can use when defining reporter series to
+  run on a paticular resource, and a list of hosts that are included in the
+  selected resource.  Buttons in the Resource Group section allow you to add,
+  edit, and delete resource groups, and a similar set in the Macros section
+  allow you to add, edit, and delete macros associated with the
+  currently-selected resource group.
+  </P
+><P
+>  The default Inca configuration defines two resource groups--one that
+  specifies the host where the Inca agent is running and a container group that
+  can be extended to include both this host and any others that you define.  To
+  define these in incat, press the Add button in the Resource Groups section to
+  open the resource edit dialog.
+  </P
+><P
+><IMG
+SRC="figures/ug-incat-resource-dialog.png"
+ALIGN="CENTER"></P
+><P
+>  In the Group Name text box, enter the name "siteA" (this name choice is
+  arbitrary; "agentHost" or "local" would work just as well).  In the Members
+  text box, enter either "localhost" or the DNS name of the host where the Inca
+  agent is running.  The Equivalent checkbox underneath the Members text box
+  indicates that Inca should treat the hosts in this group as a single
+  resource, only running reporters on one of them.  This is most often useful
+  when a single DNS name maps to multiple hosts (e.g., multiple login nodes for
+  a batch system).  In this case, leave the box unchecked.
+  </P
+><P
+>  Select "local" in the Access Method pull-down list.  This indicates that the
+  Inca agent can access this host directly without using through either Globus
+  or ssh (i.e., it's the same host where the agent is running).
+  </P
+><P
+>  If you enter a path in the Install Directory text box, Inca will install the
+  Reporter Manager code for the resource in that directory; otherwise, it will
+  use a default path.  Proxy information isn't needed for this resource, so
+  leave the other text boxes blank.
+  </P
+><P
+>  Press OK to complete entry of this resource.  incat will close the resource
+  edit dialog and will display siteA in the Resource Groups section of the
+  Resource Configuration panel.
+  </P
+><P
+>  Press the Add button again to add a second resource group.  Give this one the
+  the name "defaultvo" and enter "siteA" in the Members text box.  This tells
+  incat that any hosts in the "siteA" group (localhost, in this case) are also
+  part of the defaultvo group.  If you defined other groups, "siteB", "siteC",
+  etc., you could include these in defaultvo by listing them in the Members
+  text box, separated by spaces.  Press OK to complete entry of this resource.
+  Notice that the Members panel lists localhost as a member of both the
+  defaultvo and siteA resources.
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-SUITES"
+>6.4. Suites</A
+></H3
+><P
+><IMG
+SRC="figures/ug-incat-suites.png"
+ALIGN="CENTER"></P
+><P
+>  Pressing the Suites tab near the top of the incat window takes you to incat's
+  suite/series specification panel.  Here you specify the reporters you want to
+  run, the resources to run them on, how frequently to run them, and the
+  arguments to use when running them.
+  </P
+><P
+>  A suite groups a set of reporter series.  Suites are largely a convenience
+  for organizing related series, and the decision as to whether to place all
+  your series into a single suite or to divide them into multiple suites is up
+  to you.  One consideration is that the Inca consumer uses suites as its
+  primary structure for organizing the display of reporter results, so
+  organizing related series into suites may make the consumer web pages more
+  readable.
+  </P
+><P
+>  The default Inca configuration defines a single suite named TestSuiteLocal
+  that contains eight series.  Press the Add button in the Suites section of
+  the panel, enter "TestSuiteLocal" in the pop-up window, then press the OK
+  button.  You're now ready to add series to this new suite.  Press the Add
+  button in the Series section to open the incat series dialog.
+  </P
+><P
+><IMG
+SRC="figures/ug-incat-series-dialog.png"
+ALIGN="CENTER"></P
+><P
+>  The top half of the series dialog contains basic information about reporter
+  execution--the name and version of the reporter, the resource to run it on,
+  what values to pass in the command line arguments, and how often to run.  For
+  this first series, scroll down to select the reporter
+  "cluster.math.atlas.version" and leave the Use Latest Version radio button
+  selected.  (The other choice, Use Version 1.4 Only, indicates that your
+  series would continue to run the same version of the reporter even if an
+  updated version became available.)  Because both defaultvo and siteA refer to
+  the host where the Inca agent is running, you can select either of them in
+  the Resource Group list.  In the Arguments section, leave the cc (compiler)
+  argument with its default value, "cc", and leave the dir argument blank,
+  which will instruct the reporter to search a set of common directories for
+  the atlas installation.  Use the pull-down menu to set the log argument to 3;
+  this will cause any error, warning, and system-level log messages generated
+  by the reporter to be included in its report.  Finally, use the pull-down
+  menus in the frequency section to indicate that the reporter should run every
+  10 minutes.  When you do this, the contents in the text box to the right
+  changes to "*/10 * * * *".  This is crontab syntax (see the section 5 man
+  page) for once every 10 minutes.  If you're familiar with crontab, you can
+  enter values in the text box directly rather than using the pull-down menus.
+  </P
+><P
+>  The bottom half of the series dialog allows you to supply optional
+  customization information for your series.  You can supply a descriptive
+  name for your series in the Nickname text box, and the Inca consumer will
+  include it as part of its display.  The nickname defaults to the name of the
+  reporter; for this series, enter "atlas_version" as the value.  The context
+  string allows you to specify how the reporter should be run by entering sh
+  code either before or after "cluster.math.atlas.version -args" in the text
+  box.  For example, you could run this reporter niced by entering "nice -9 "
+  at the beginning of the box.  For this series, leave the text box unchanged.
+  The limits section allows you to set CPU time, wall clock time, and memory
+  limits on the reporter.  If the reporter exceeds any limits you set, the Inca
+  Reporter Manager will terminate its execution and send an error report to the
+  Inca Depot.  The bottommost two text boxes in the series dialog allow you to
+  test the output of the reporter and send email if the test fails.  This is
+  covered in detail below; for this series leave these boxes blank.  Press the
+  OK button, and incat will close the series dialog box and add the series to
+  the Series list in the suite/series specification panel.
+  </P
+><P
+>  The other seven series in default Inca configuration are composed similarly
+  to the first one.  Press the Add button in the series section for each of
+  them, then set the values in the series dialog as specified in the table
+  below.  Set the log argument for each series to 3 and the frequency to 10
+  minutes.
+  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN223"
+></A
+><P
+><B
+>Table 1. Default Configuration Series</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+>Reporter</TH
+><TH
+>Nickname</TH
+><TH
+>Arguments</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+>cluster.compiler.gcc.version</TD
+><TD
+>gcc_version</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>cluster.security.openssl.version</TD
+><TD
+>openssl_version</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>cluster.interactive_access.openssh.version</TD
+><TD
+>openssh_version</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>cluster.interactive_access.openssh.unit</TD
+><TD
+>openssh_to_localhost</TD
+><TD
+>host: localhost; login: inca</TD
+></TR
+><TR
+><TD
+>viz.lib.vtk-nvgl.version</TD
+><TD
+>vtk-nvgl_version</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>viz.lib.chromium.version</TD
+><TD
+>chromium_version</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>cluster.compiler.any.unit</TD
+><TD
+>java_hello_world</TD
+><TD
+>compiler: javac; lang: java</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-COMMITS"
+>6.5. Commiting/Saving</A
+></H3
+><P
+>  Your Inca deployment configuration is now complete.  At this point, it's a
+  good idea to use the Save As option in incat's File menu to write the
+  configuration to a file.  That way, you have a local copy of the configuration
+  that you can later modify.  The file format is formatted XML; if you're
+  curious, you can read through it to see how incat represents the information
+  you've entered.
+  </P
+><P
+>  Although your configuration is complete, it's not yet active.  To tell Inca
+  to begin running reporters, you need to use incat to send your configuration
+  to your Inca Agent.  If you started incat with the --agent argument, then
+  you're already connected to your Agent.  Otherwise, use the Connect option in
+  incat's Agent menu to establish a connection.  Once you're connected, you can
+  use the Commit option in the Agent menu to send the configuration to the
+  Agent.  In response, the Agent will install the Inca Reporter Manager code on
+  its host and begin running the reporters you specified.
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-REMOTE"
+>6.6. Other Resource Options</A
+></H3
+><P
+>  In addition to running on the Inca Agent's local host, you can define globus,
+  ssh, and manual resources using the incat resource dialog.
+  </P
+><P
+>  When you select Globus2 in the Access Method pull-down, incat provides text
+  boxes for you to enter contact information on the host for the Globus Gram
+  and GridFtp servers.  If you leave these boxes blank, Inca defaults to ports
+  2119 and 2811, respectively, on the first host in the resource's member list.
+  Access to Globus resources requires an active Globus proxy on the Agent's
+  host.  You can either create one before staring the Inca Agent, or you can
+  fill in the proxy information in the resource dialog (see below) so that the
+  Agent can obtain one as needed.
+  </P
+><P
+>  For ssh resources, incat provides text boxes for you to enter the login id,
+  path to the ssh key file, and password.  For security purposes, incat echoes
+  asterisks for the password and encrypts it when you save the configuration to
+  a file.
+  </P
+><P
+>  Entering a manual resource indicates that you want complete, direct control
+  over Inca execution on the resource.  On manual resources you must start the
+  Inca Reporter Manager on the command line and restart it any time you want
+  to change the reporter series configuration for the resource.
+  </P
+><P
+>TODO Proxy server/user id/password/lifetime</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-MACROS"
+>6.7. Using Resource Macros</A
+></H3
+><P
+>TODO</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-COMPARISON"
+>6.8. Series Comparison and Notification</A
+></H3
+><P
+>TODO</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-CONSUMER"
+>7. Inca Web Data Consumer</A
+></H2
+><P
+>TODO: description of the data consumers that Inca provides.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-REPORTERS"
+>8. Reporters/Repositories</A
+></H2
+><P
+>TODO: description of reporters and repositories </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-WEBSERVICES"
+>9. Web Services and APIs</A
+></H2
+><P
+>TODO: description of web services and perl and java client apis.</P
+></DIV
+><DIV
+CLASS="APPENDIX"
+><HR><H1
+CLASS="APPENDIX"
+><A
+NAME="USERGUIDE-APPENDIX"
+>A. Appendix</A
+></H1
+><P
+>TODO: "manpage" for each component, inca.properties, security (keys,
+certs, etc.). </P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-APPENDIX-MANUAL"
+>A.1. Manual</A
+></H2
+><P
+>TODO: description of manual resources</P
+></DIV
+></DIV
+></DIV
+></BODY
+></HTML
+>
