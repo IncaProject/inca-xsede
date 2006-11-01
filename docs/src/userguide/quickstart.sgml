@@ -1,6 +1,294 @@
 <section id="userguide-quickstart">
 <title>Quick Start</title>
 
-<para>TODO: quick start</para>
+<para>
+This section describes how to download, install and verify the Inca 2.0 beta
+binary release.  
+</para>
+
+<simplelist type=horiz columns=1>
+<member>Step <xref linkend="qs-step1">: Download the installer script</member> 
+<member>Step <xref linkend="qs-step2">: Run the installer script</member> 
+<member>Step <xref linkend="qs-step3">: Change to the Inca installation directory</member> 
+<member>Step <xref linkend="qs-step4">: Create credentials for Inca components</member> 
+<member>Step <xref linkend="qs-step5">: Start up Inca components with a sample default configuration</member> 
+<member>Step <xref linkend="qs-step6">: View the Inca web server pages</member> 
+<member>Step <xref linkend="qs-step7">: View the sample default configuration using the Inca GUI tool</member> 
+</simplelist>
+
+<orderedList>
+  <listItem id="qs-step1">
+    <para>
+     Download the <filename>incaInstall.sh</filename> script:
+    </para>
+    <para>
+    <screen>% wget http://inca.sdsc.edu/releases/2.0beta/incaInstall.sh</screen>
+    </para>
+  </listItem>
+  <listItem id="qs-step2">
+    <para>
+    Execute the install script to download the binary distribution from our
+    website and unpack it into an installation directory.  
+    </para>
+    <screen>% sh incaInstall.sh $INCA_DIST all</screen>
+    <para>$INCA_DIST is the location of the directory where you want to
+    install Inca.  You should see something like:
+    <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+=> `inca-common-java-bin.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5,921,461 [application/x-tar]
+
+100%[======================>] 5,921,461    1.23M/s  ETA 00:00
+
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] 
+...
+common-java installed ...
+agent installed ...
+consumers installed ...
+depot installed ...
+incat installed</screen>
+      </para>
+  </listItem>
+  <listItem id="qs-step3">
+    <para>
+    Change to the top level directory of your Inca installation:
+    </para>
+    <para>
+    <screen>% cd $INCA_DIST</screen>
+    </para>
+  </listItem>
+  <listItem id="qs-step4">
+    <para>
+    Create certificates for the Inca components (enables secure component
+    communication): 
+    </para>
+    <screen>% ./bin/inca createauth</screen>
+    <para>
+    The output will look similar to below and when it is completed, you should
+    see a certificate/key created for each of the four Inca components and
+    stored in $INCA_DIST/etc: 
+    </para>
+    <para>
+    <screen>Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'clientx.sdsc.edukey.pem'
+-----
+agent
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'agentkey.pem' ...
+writing new private key to 'consumerkey.pem' ...
+writing new private key to 'depotkey.pem' ...
+writing new private key to 'incatkey.pem' ...</screen>
+  </para>
+  </listItem>
+  <listItem id="qs-step5">
+    <para>
+    Start the Inca server components and deploy the sample default
+    configuration.  The Inca server components are agent, depot, and consumer
+    and will be started on ports 6323, 6324, and 8080 respectively.  Please
+    edit the inca.properties file in etc/common to change these defaults.
+    More information can be found in Section TODO.
+    </para>
+    <screen>% ./bin/inca default</screen>
+    <para>
+    You should see something like:
+    <screen>** Warning:  this will erase any previously collected reporter
+    state on the Inca depot and configuration on the agent 
+    Do you wish to continue (y/n)? y
+Initializing depot...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxIdleTime -> 1800, maxPoolSize -> 10, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 3, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -> null, driverClass -> null, factoryClassLocation -> null, jdbcUrl -> jdbc:hsqldb:test, properties -> {user=******, password=******} ] , preferredTestQuery -> null, propertyCycle -> 300, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, usesTraditionalReflectiveProxies -> false ] , factoryClassLocation -> null, numHelperThreads -> 3, poolOwnerIdentityToken -> 904b13 ] 
+Database Initialization Completed
+done
+Initializing agent
+done
+Started Inca agent
+Started Inca consumer
+Started Inca depot
+Sleeping for 20 seconds while the components come online
+Deploying default configuration
+</screen>
+      </para>
+      <para>During this step:</para>
+      <itemizedList>
+        <listItem><para>Inca is initialized</para></listItem>
+        <listItem><para>the Inca server components are started</para></listItem>
+        <listItem><para>there is a 20 second delay to wait for the servers to start up</para></listItem>
+        <listItem><para>a sample suite called <emphasis>TestSuiteLocal</emphasis> is sent to the
+        agent requesting reporters to be started on localhost using the
+        schedule:</para>
+<screen>1-59/10 * * * * cluster.math.atlas.version
+2-59/10 * * * * cluster.compiler.gcc.version
+3-59/10 * * * * cluster.security.openssl.version
+4-59/10 * * * * cluster.interactive_access.openssh.version
+5-59/10 * * * * cluster.interactive_access.openssh.unit
+6-59/10 * * * * viz.lib.vtknvgl.version
+7-59/10 * * * * viz.lib.chromium.version
+8-59/10 * * * * cluster.compiler.any.unit</screen>
+        </listItem>
+        <listItem><para>
+          the agent receives <emphasis>TestSuiteLocal</emphasis> suite and installs a reporter 
+          manager on the localhost in
+          <filename>~/incaReporterManager</filename> (takes 1-5 minutes - view
+          progress of build in 
+          <filename>~/incaReporterManager/build.log</filename>)
+        </para></listItem>
+        <listItem><para>
+          after the reporter manager is built, it registers itself with 
+          the agent.  The agent will send the reporter manager the set of
+          reporters, libraries, and execution schedule. 
+        </para></listItem>
+        <listItem><para>
+          The reporter manager executes reporters based on the execution
+          schedule and sends reports to the depot.  
+        </para></listItem>
+      </itemizedList>
+    </listItem>
+    <listItem id="qs-step6">
+    <para>To view the results and verify that your Inca installation is
+    working correctly, point your browser to the Inca web server component
+    called the consumer (replace "your.host.name" with the name of your
+    machine - starting a web server is not required): 
+    <screen>http://<emphasis role="red">your.host.name</emphasis>:8080</screen>
+    </para>
+    <para>
+    You should see a start up screen similar to the figure below initially
+    indicating an empty Inca configuration.  
+        <figure id="inca.startup.empty.fig">
+          <title>Default Inca start up page.</title>
+          <graphic fileref="figures/ug-consumer-startpage-empty.png" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    After a few minutes (when the consumer cache is refreshed), reload the
+    page and you should see a start up screen similar to the figure below 
+    showing one suite called <emphasis>TestSuiteLocal</emphasis> 
+    (our default sample configuration), a resource group called
+    <emphasis>defaultvo</emphasis>, and one resource called
+    <emphasis>siteA</emphasis> which is a nickname for the machine you 
+    installed Inca on.
+        <figure id="inca.startup.fig">
+          <title>Default Inca start up page with suite and resources.</title>
+          <graphic fileref="figures/ug-consumer-startpage.png" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    Select <emphasis>TestSuiteLocal</emphasis> and
+    <emphasis>defaultvo</emphasis> and press the <emphasis>Submit</emphasis>
+    button.  You should see a results page similar to below showing 
+    7 software packages listed on the top and a table with the packages
+    divided into 4 categories (compilers, grid services, math libraries, and
+    scientific visualization).  Each package may contain the results of
+    a software package version query (e.g., gcc) and/or unit test (e.g., java --
+    unit test name is java_hello_world).  Almost all boxes should be empty
+    indicating that the reports have not yet been received. 
+        <figure id="inca.default.results.empty.fig">
+          <title>Default Inca results page without results.</title>
+          <graphic fileref="figures/ug-consumer-default-results-empty.png" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    Refresh the page after a few minutes and you should begin to see more
+    boxes filled in until it looks like the below figure.  If you do not see a
+    results filled in, check the .log files in $INCA_DIST/var for
+    <filename>ERROR</filename> or <filename>Exception</filename>. See 
+    Section TODO for more help on debugging.  
+    </para> 
+        <figure id="inca.default.results.fig">
+          <title>Default Inca results page with results.</title>
+          <graphic fileref="figures/ug-consumer-default-results.png" align="center"></graphic>
+        </figure>
+    <para>Click on any red/green box to see the details of how the result was
+    collected.  The below figure shows the details of the 
+    <filename>cluster.compiler.any.unit</filename> reporter that compiles
+    and executes a small hello world java program.  
+        <figure id="inca.java.fig">
+          <title>Default Inca results page with results.</title>
+          <graphic fileref="figures/ug-consumer-java-details.png" align="center"></graphic>
+        </figure>
+    </para>
+    </listItem>
+    <listItem id="qs-step7">
+    <para>
+        View the Inca sample default configuration using the Inca GUI tool, 
+        incat (Inca Administration Tool).
+      </para>
+      <para>
+        Use the following command to start incat:
+          <screen>% ./bin/inca start incat -A localhost:6323 </screen>
+      </para>
+      <para>
+      <emphasis role="red">OPTIONAL:</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, it is probable that X-Window forwarding is not set up correctly between the 
+      machine where you installed Inca and your local machine.
+        You can either configure X-Window forwarding, or you can start <emphasis role="strong">incat</emphasis> on a local machine:
+      </para>
+      <itemizedList>
+        <listItem>
+          <para>
+            Copy the <filename>incaInstall.sh</filename> script to a local machine.
+          </para>
+          <screen>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Install incat on a local machine:
+          </para>
+          <screen>% ./incaInstall.sh $INCA_DIST incat</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Copy the <emphasis role="strong">incat</emphasis> key, certificate, and trusted directory from the original machine 
+        to your local machine:
+          </para>
+          <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatkey.pem $INCA_DIST/etc/; \
+scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatcert.pem $INCA_DIST/etc/;
+scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
+        </listItem>
+        <listItem>
+          <para>Change the agent key/cert to incat key/cert in the 
+        <filename>$INCA_DIST/etc/common/inca.properties</filename> local file:
+            <screen>#---------------------------------------------------------------------------
+# agent
+#---------------------------------------------------------------------------
+
+inca.agent.auth=true
+inca.agent.password=
+<emphasis role="red">inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem</emphasis>
+inca.agent.trusted=trusted</screen>
+          </para>
+        </listItem>
+        <listItem>
+          <para>
+            Start the <emphasis role="strong">incat</emphasis> component on a local machine with the agent hostname from the original machine:
+          </para>
+          <screen>% cd $INCA_DIST; ./bin/inca start incat -A <emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
+          <para>
+            You should now see the Java GUI window appear on your local machine.
+          </para>
+        </listItem>
+      </itemizedList>
+      <para>
+        <figure id="retrieve.fig">
+          <title>incat Agent Screen</title>
+          <graphic fileref="figures/incat_retrieve_agent.jpg" align="center"></graphic>
+        </figure>
+        Once <emphasis role="strong">incat</emphasis> has information from the agent, the following screen will display:
+      </para>
+      <figure id="default.fig">
+        <title>Default incat Screen</title>
+        <graphic fileref="figures/ug-incat-repositories.png" align="center"></graphic>
+      </figure>
+      <para>You may now make changes to the default configuration (e.g., add
+      a new resource to <emphasis>defaultvo</emphasis> or add new tests to
+      <emphasis>TestSuiteLocal</emphasis>).  See Section 
+      <xref linkend="userguide-incat"> for more information about how to 
+      perform these actions using incat.</para>
+    </listItem>
+  </orderedList>
 
 </section>
+
