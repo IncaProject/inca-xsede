@@ -169,13 +169,13 @@
 
   <!-- report log -->
   <complexType name = "log">
-    <sequence>
-      <element name = "debug" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-      <element name = "error" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-      <element name = "info" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-      <element name = "system" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-      <element name = "warn" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-    </sequence>
+    <choice minOccurs = "0" maxOccurs = "unbounded">
+      <element name = "debug" type = "inca:logEntry"/>
+      <element name = "error" type = "inca:logEntry"/>
+      <element name = "info" type = "inca:logEntry"/>
+      <element name = "system" type = "inca:logEntry"/>
+      <element name = "warn" type = "inca:logEntry"/>
+    </choice>
   </complexType>
   <complexType name = "logEntry">
     <sequence>
