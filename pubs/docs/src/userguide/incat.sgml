@@ -225,9 +225,9 @@
   Your Inca deployment configuration is now complete.  At this point, it's a
   good idea to use the Save As option in incat's File menu to write the
   configuration to a file.  That way, you have a local copy of the configuration
-  that you can later modify.  The file format is formatted XML; if you're
-  curious, you can read through it to see how incat represents the information
-  you've entered.
+  that you can later modify.  The file is formatted XML; if you're curious, you
+  can read through it to see how incat represents the information you've
+  entered.
   </para><para>
   Although your configuration is complete, it's not yet active.  To tell Inca
   to begin running reporters, you need to use incat to send your configuration
@@ -290,6 +290,28 @@
   </para>
   <graphic fileref="figures/ug-incat-macrodef.png" align="center"></graphic>
   <para>
+  To make use of the macro you've defined, click the Suites tab, then press the
+  Add button underneath the Series section to open the series edit dialog.  In
+  the dialog, set the reporter to grid.benchmark.performance.ping and the
+  resource to siteA.
+  </para><para>
+  In the host text box in the Arguments section of the dialog, enter
+  "@targets@.ufo.edu".  Macro references in incat are indicated by placing an
+  "@" before and after the macro name.  When the Inca agent encounters a macro
+  reference in a series, it makes one copy of the series for each value of the
+  macro.  Since the targets macro has three values--blue, green, and red--the
+  Inca agent will make three copies of this series, substituting a single value
+  for the macro reference in each.  In this case that means that you'll have
+  one series with a host argument of "blue.ufo.edu", one with a host argument
+  of "green.ufo.edu", and one with a host argument of "red.ufo.edu".
+  </para><para>
+  The inca web pages use the series nickname when displaying series results.
+  If you leave the series nickname with its default value, the name of the
+  reporter, then all three series will have the same nickname.  Instead, you
+  can enter "ping_to_@targets@" in the nickname text box.  The Inca agent will
+  expand this reference in parallel with the reference in the host argument, so
+  your three series will have the nicknames ping_to_blue, ping_to_green, and
+  ping_to_red, respectively.
   </para>
   <graphic fileref="figures/ug-incat-macrouse.png" align="center"></graphic>
   </section>
