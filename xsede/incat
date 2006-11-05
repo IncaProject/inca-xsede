@@ -741,6 +741,28 @@
         </macros>
       </resource>
       <resource>
+        <name>gt4-seven-step</name>
+        <xpath>//resource[matches(name, '^(sdsc-datastar|sdsc-ia64|NCSA|ANL-login|Indiana|ORNL|Purdue|psc-rachel|psc-lemieux|TACC)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>gt4-seven-step</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>sdsc-datastar sdsc-ia64 NCSA ANL-login Indiana ORNL Purdue psc-rachel psc-lemieux TACC</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>gxmap</name>
         <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana|ORNL|TACC|Purdue)$')]</xpath>
         <macros>
@@ -1854,36 +1876,8 @@
       </resource>
       <resource>
         <name>sdsc-bg</name>
-        <xpath>//resource[matches(name, 'bg-login1.sdsc.edu')]</xpath>
+        <xpath>//resource[matches(name, '^(bg-login1\.sdsc\.edu|bglogin\.sdsc\.edu)$')]</xpath>
         <macros>
-          <macro>
-            <name>__regexp__</name>
-            <value>bg-login1.sdsc.edu</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__incaComputeServer__</name>
-            <value>bg-login1.sdsc.edu</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
-            <name>__incaReporterManagerLocation__</name>
-            <value>/users/inca/inca2install</value>
-          </macro>
-          <macro>
-            <name>__groupname__</name>
-            <value>sdsc-bg</value>
-          </macro>
           <macro>
             <name>compiler-gcc-version</name>
             <value>3.3.3</value>
@@ -1911,6 +1905,30 @@
           <macro>
             <name>blasQueue</name>
             <value>yes</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>sdsc-bg</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>bg-login1.sdsc.edu bglogin.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__incaComputeServer__</name>
+            <value>bg-login1.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/users/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -2149,6 +2167,14 @@
           <macro>
             <name>blasLink</name>
             <value>-L/opt/intel/mkl-8.1.1/lib/em64t -lmkl_em64t -lmkl_lapack -lmkl_solver -lguide -lpthread</value>
+          </macro>
+          <macro>
+            <name>defaultGlobusMpiFlavor</name>
+            <value>mpicc64dbg</value>
+          </macro>
+          <macro>
+            <name>maxMem</name>
+            <value>1925</value>
           </macro>
         </macros>
       </resource>
@@ -2492,6 +2518,10 @@
             <name>perl5</name>
             <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &amp;&amp;</value>
           </macro>
+          <macro>
+            <name>maxMem</name>
+            <value>2048</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2548,6 +2578,9 @@
       </resource>
       <resource>
         <name>bg-login1.sdsc.edu</name>
+      </resource>
+      <resource>
+        <name>bglogin.sdsc.edu</name>
       </resource>
       <resource>
         <name>bigred.teragrid.iu.edu</name>
@@ -3970,7 +4003,7 @@
               </arg>
               <arg>
                 <name>maxMem</name>
-                <value>2048</value>
+                <value>@maxMem@</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -5921,6 +5954,202 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>data.format.phdf5.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@phdf5-key@@@@post@</context>
+          </series>
+          <nickname>phdf5-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.ant.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@ant-key@@@@post@</context>
+          </series>
+          <nickname>ant-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgpolicy.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tgpolicy-version</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tg-policy>=0.2</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.7step.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
+            <args>
+              <arg>
+                <name>extraEnv</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>date</name>
+                <value>@date@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>hostCount</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gatekeeperHost@/@batchJobManager@</value>
+              </arg>
+              <arg>
+                <name>env</name>
+                <value>@env@</value>
+              </arg>
+              <arg>
+                <name>extraRsl</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>rm</name>
+                <value>@rm@</value>
+              </arg>
+              <arg>
+                <name>flavor</name>
+                <value>@defaultGlobusMpiFlavor@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@gt4-7step-key@@@@post@</context>
+          </series>
+          <nickname>gt4-seven-step</nickname>
+          <resourceSetName>gt4-seven-step</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>cluster.math.blas.unit.level3</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level3</uri>
             <args>
@@ -5959,6 +6188,58 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>blas-level3</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.math.blas.unit.level2</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level2</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>compiler_opts</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@nativeFortranCompiler@</value>
+              </arg>
+              <arg>
+                <name>link</name>
+                <value>@blasLink@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>900.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>blas-level2</nickname>
           <resourceSetName>teragrid-login</resourceSetName>
           <schedule>
             <cron>
@@ -6027,259 +6308,11 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.format.phdf5.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@phdf5-key@@@@post@</context>
-          </series>
-          <nickname>phdf5-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.7step.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
-            <args>
-              <arg>
-                <name>extraEnv</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>date</name>
-                <value>@date@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>hostCount</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@gatekeeperHost@/@batchJobManager@</value>
-              </arg>
-              <arg>
-                <name>env</name>
-                <value>@env@</value>
-              </arg>
-              <arg>
-                <name>extraRsl</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>rm</name>
-                <value>@rm@</value>
-              </arg>
-              <arg>
-                <name>flavor</name>
-                <value>@defaultGlobusMpiFlavor@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@gt4-7step-key@@@@post@</context>
-          </series>
-          <nickname>gt4-seven-step</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.ant.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.math.blas.unit.level2</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level2</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>compiler_opts</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@nativeFortranCompiler@</value>
-              </arg>
-              <arg>
-                <name>link</name>
-                <value>@blasLink@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>900.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>blas-level2</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.tgpolicy.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tgpolicy-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tg-policy>=0.2</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>6</version>
+      <version>13</version>
     </suite>
     <suite>
       <seriesConfigs>
