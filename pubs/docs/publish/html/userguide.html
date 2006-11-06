@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
 >Inca 2.0 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -148,7 +148,197 @@ NAME="USERGUIDE-INTRO"
 >1. Introduction</A
 ></H2
 ><P
->TODO: description of components and architecture</P
+>Determining whether a Grid is up in the face of complex Grid software
+deployments can be difficult and depends on the types of applications and
+users that utilize it.  By detailing a set of software, services, and features
+that should be available on a Grid in a machine-readable format, a Grid can be
+tested periodically by an automated system to verify its health and usability
+to users.  To this end, we have developed Inca as a flexible framework to
+perform periodic, user-level functionality testing and performance measurement
+of Grid systems.  It includes mechanisms to schedule the execution of
+information gathering scripts, and to collect, archive, publish, and display
+data    </P
+><P
+>The architecture of Inca and a description of its components is shown in the
+below figures.  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="ARCH.FIG"
+></A
+><P
+><B
+>Figure 1. Inca architecture</B
+></P
+><P
+><IMG
+SRC="figures/arch.png"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN10"
+></A
+><TABLE
+BORDER="0"
+FRAME="void"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-reporter-icon.png"></P
+></TD
+><TD
+><P
+> 
+  A <EM
+>reporter</EM
+> is an executable program that tests or
+  measures some aspect of the system or installed software.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-report-icon.png"></P
+></TD
+><TD
+><P
+> 
+  A <EM
+>report</EM
+> is the output of a reporter and is a XML
+  document complying to the reporter schema in Section TODO in the appendix.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-suite-icon.png"></P
+></TD
+><TD
+><P
+> 
+  A <EM
+>suite</EM
+> specifies a set of reporters to execute on
+  selected resources, their configuration, and frequency of execution.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-repository-icon.png"></P
+></TD
+><TD
+><P
+>  A <EM
+>reporter repository</EM
+> contains a collection of reporters and is available
+  via an URL.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-manager-icon.png"></P
+></TD
+><TD
+><P
+>  A <EM
+>reporter manager</EM
+> is responsible for managing the
+  schedule and execution of reporters on a single resource.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-agent-icon.png"></P
+></TD
+><TD
+><P
+>  A <EM
+>agent</EM
+> is a server that implements the configuration
+  specified by the Inca Administrator.  
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-incat-icon.png"></P
+></TD
+><TD
+><P
+>  <EM
+>incat</EM
+> is a GUI used by the Inca administrator to
+  control and configure the Inca deployment on a set of resources.
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-depot-icon.png"></P
+></TD
+><TD
+><P
+>  A <EM
+>depot</EM
+> is a server that is responsible for storing the
+  data produced by reporters. 
+  </P
+></TD
+></TR
+><TR
+><TD
+ALIGN="CENTER"
+><P
+><IMG
+SRC="figures/ug-consumer-icon.png"></P
+></TD
+><TD
+><P
+>  A <EM
+>data consumer</EM
+> is typically a web page client that
+  queries a depot for data and displays it in a user-friendly format. 
+  </P
+></TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -656,7 +846,7 @@ NAME="INCA.STARTUP.EMPTY.FIG"
 ></A
 ><P
 ><B
->Figure 1. Default Inca start up page.</B
+>Figure 2. Default Inca start up page.</B
 ></P
 ><P
 ><IMG
@@ -686,7 +876,7 @@ NAME="INCA.STARTUP.FIG"
 ></A
 ><P
 ><B
->Figure 2. Default Inca start up page with suite and resources.</B
+>Figure 3. Default Inca start up page with suite and resources.</B
 ></P
 ><P
 ><IMG
@@ -718,7 +908,7 @@ NAME="INCA.DEFAULT.RESULTS.EMPTY.FIG"
 ></A
 ><P
 ><B
->Figure 3. Default Inca results page without results.</B
+>Figure 4. Default Inca results page without results.</B
 ></P
 ><P
 ><IMG
@@ -747,7 +937,7 @@ NAME="INCA.DEFAULT.RESULTS.FIG"
 ></A
 ><P
 ><B
->Figure 4. Default Inca results page with results.</B
+>Figure 5. Default Inca results page with results.</B
 ></P
 ><P
 ><IMG
@@ -769,7 +959,7 @@ NAME="INCA.JAVA.FIG"
 ></A
 ><P
 ><B
->Figure 5. Default Inca results page with results.</B
+>Figure 6. Default Inca results page with results.</B
 ></P
 ><P
 ><IMG
@@ -811,10 +1001,10 @@ CLASS="SCREEN"
 >OPTIONAL:</EM
 >  If you don't see Java GUI windows pop up like those in <A
 HREF="#RETRIEVE.FIG"
->Figure 6</A
+>Figure 7</A
 > and <A
 HREF="#DEFAULT.FIG"
->Figure 7</A
+>Figure 8</A
 >, it is probable that X-Window forwarding is not set up correctly between the 
       machine where you installed Inca and your local machine.
         You can either configure X-Window forwarding, or you can start <STRONG
@@ -969,7 +1159,7 @@ NAME="RETRIEVE.FIG"
 ></A
 ><P
 ><B
->Figure 6. incat Agent Screen</B
+>Figure 7. incat Agent Screen</B
 ></P
 ><P
 ><IMG
@@ -988,7 +1178,7 @@ NAME="DEFAULT.FIG"
 ></A
 ><P
 ><B
->Figure 7. Default incat Screen</B
+>Figure 8. Default incat Screen</B
 ></P
 ><P
 ><IMG
@@ -1263,7 +1453,7 @@ ALIGN="CENTER"></P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN218"
+NAME="AEN279"
 ></A
 ><P
 ><B
@@ -1513,7 +1703,8 @@ ALIGN="CENTER"></P
   your tests.  The Inca system uses the content of any subsequent tag as the
   symbol value.  For example, the body of the output of the gcc version
   reporter might be
-  <TABLE
+  </P
+><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
 WIDTH="100%"
@@ -1534,9 +1725,9 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
->
-  Here, Inca will use "3.1" as the value of the symbol "gcc".  With this
-  output, the comparison test "gcc &#62; 3.0" would succeed, while the
+><P
+>  Here, Inca will use "3.1" as the value of the symbol "gcc".  With this
+  output, the comparison test "gcc &#62;= 3.0" would succeed, while the
   comparison "gcc == 3.0" would fail.  If the report body contains an
   &#60;ID&#62; tag with no subsequent tag, the value of the symbol is defined
   to be "".
