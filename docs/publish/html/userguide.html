@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
 >Inca 2.0 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -148,30 +148,7 @@ NAME="USERGUIDE-INTRO"
 >1. Introduction</A
 ></H2
 ><P
-> 
-The Inca Test Harness and Reporting Framework (Inca) is a generic
-framework for the automated testing, benchmarking and monitoring of Grid
-resources.  Inca provides the scheduled execution of information gathering
-scripts (reporters) and collects, archives, and publishes the data resulting
-from these scripts.</P
-><P
->The architecture of Inca is shown in the below figure.</P
-><P
 >TODO: description of components and architecture</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="ARCH.FIG"
-></A
-><P
-><B
->Figure 1. Inca architecture</B
-></P
-><P
-><IMG
-SRC="figures/arch.png"
-ALIGN="CENTER"></P
-></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -679,7 +656,7 @@ NAME="INCA.STARTUP.EMPTY.FIG"
 ></A
 ><P
 ><B
->Figure 2. Default Inca start up page.</B
+>Figure 1. Default Inca start up page.</B
 ></P
 ><P
 ><IMG
@@ -709,7 +686,7 @@ NAME="INCA.STARTUP.FIG"
 ></A
 ><P
 ><B
->Figure 3. Default Inca start up page with suite and resources.</B
+>Figure 2. Default Inca start up page with suite and resources.</B
 ></P
 ><P
 ><IMG
@@ -741,7 +718,7 @@ NAME="INCA.DEFAULT.RESULTS.EMPTY.FIG"
 ></A
 ><P
 ><B
->Figure 4. Default Inca results page without results.</B
+>Figure 3. Default Inca results page without results.</B
 ></P
 ><P
 ><IMG
@@ -770,7 +747,7 @@ NAME="INCA.DEFAULT.RESULTS.FIG"
 ></A
 ><P
 ><B
->Figure 5. Default Inca results page with results.</B
+>Figure 4. Default Inca results page with results.</B
 ></P
 ><P
 ><IMG
@@ -792,7 +769,7 @@ NAME="INCA.JAVA.FIG"
 ></A
 ><P
 ><B
->Figure 6. Default Inca results page with results.</B
+>Figure 5. Default Inca results page with results.</B
 ></P
 ><P
 ><IMG
@@ -834,10 +811,10 @@ CLASS="SCREEN"
 >OPTIONAL:</EM
 >  If you don't see Java GUI windows pop up like those in <A
 HREF="#RETRIEVE.FIG"
->Figure 7</A
+>Figure 6</A
 > and <A
 HREF="#DEFAULT.FIG"
->Figure 8</A
+>Figure 7</A
 >, it is probable that X-Window forwarding is not set up correctly between the 
       machine where you installed Inca and your local machine.
         You can either configure X-Window forwarding, or you can start <STRONG
@@ -992,7 +969,7 @@ NAME="RETRIEVE.FIG"
 ></A
 ><P
 ><B
->Figure 7. incat Agent Screen</B
+>Figure 6. incat Agent Screen</B
 ></P
 ><P
 ><IMG
@@ -1011,7 +988,7 @@ NAME="DEFAULT.FIG"
 ></A
 ><P
 ><B
->Figure 8. Default incat Screen</B
+>Figure 7. Default incat Screen</B
 ></P
 ><P
 ><IMG
@@ -1065,8 +1042,8 @@ NAME="USERGUIDE-INCAT-INTRODUCTION"
 ><P
 >  Inca provides a graphical administration tool, named incat, that allows you
   to configure your deployment.  Using incat, you can specify the repositories
-  from which Inca should retrieve reporters, the resources where you wish to
-  run reporters, and which reporters you wish to run on each resource.
+  from which Inca should retrieve reporters, the hosts where you wish to
+  run reporters, and which reporters you wish to run on each host.
   </P
 ><P
 >  The simplest way to run incat is via the inca command line tool: "inca
@@ -1074,15 +1051,14 @@ NAME="USERGUIDE-INCAT-INTRODUCTION"
   --agent option, e.g., "inca start incat --agent blue.ufo.edu:5678".
   </P
 ><P
->  As mentioned in Section <A
-HREF="#USERGUIDE-QUICKSTART"
->Section 4</A
->, Step <A
+>  As mentioned in the <A
 HREF="#QS-STEP5"
->5</A
->, you can use the inca command line tool to install a
-  default Inca configuration on a resource.  The discussion below describes
-  how to use incat to set up the same configuration.
+>Quick Start guide</A
+>, you
+  can use the inca command line tool to install a default Inca configuration.
+  The discussion below describes how you would use incat to specify the same
+  configuration.  Before continuing, use the inca script to start both a Depot
+  and an Agent on your host.
   </P
 ></DIV
 ><DIV
@@ -1139,10 +1115,10 @@ ALIGN="CENTER"></P
   edit information about the hosts on which you want Inca to run reporters.
   The sections of this panel show resource groups (sets of hosts) that you've
   defined, a set of macros that you can use when defining reporter series to
-  run on a paticular resource, and a list of hosts that are included in the
-  selected resource.  Buttons in the Resource Group section allow you to add,
-  edit, and delete resource groups, and a similar set in the Macros section
-  allow you to add, edit, and delete macros associated with the
+  run on a paticular resource groiup, and a list of hosts that are included in
+  the selected resource group.  Buttons in the Resource Group section allow you
+  to add, edit, and delete resource groups, and a similar set in the Macros
+  section allow you to add, edit, and delete macros associated with the
   currently-selected resource group.
   </P
 ><P
@@ -1150,47 +1126,52 @@ ALIGN="CENTER"></P
   specifies the host where the Inca agent is running and a container group that
   can be extended to include both this host and any others that you define.  To
   define these in incat, press the Add button in the Resource Groups section to
-  open the resource edit dialog.
+  open the resource group edit dialog.
   </P
 ><P
 ><IMG
 SRC="figures/ug-incat-resource-dialog.png"
 ALIGN="CENTER"></P
 ><P
->  In the Group Name text box, enter the name "siteA" (this name choice is
-  arbitrary; "agentHost" or "local" would work just as well).  In the Members
-  text box, enter either "localhost" or the DNS name of the host where the Inca
+>  In the Group Name text box, enter the name "siteA".  (This name choice is
+  arbitrary; "agentHost" or "local" would work just as well.)  The Members text
+  box specifies the hosts that are in this resource group; for this group,
+  enter either "localhost" or the DNS name of the host where the Inca
   agent is running.  The Equivalent checkbox underneath the Members text box
-  indicates that Inca should treat the hosts in this group as a single
-  resource, only running reporters on one of them.  This is most often useful
-  when a single DNS name maps to multiple hosts (e.g., multiple login nodes for
-  a batch system).  In this case, leave the box unchecked.
+  indicates that Inca should treat the hosts in this group as a single host,
+  only running reporters on one of them.  This is most often useful when a
+  single DNS name maps to multiple hosts (e.g., multiple login nodes for a
+  batch system).  In this case, leave the box unchecked.
   </P
 ><P
 >  Select "local" in the Access Method pull-down list.  This indicates that the
-  Inca agent can access this host directly without using through either Globus
-  or ssh (i.e., it's the same host where the agent is running).
+  Inca agent can access this host directly without using either Globus or ssh
+  (i.e., it's the same host where the agent is running).
   </P
 ><P
 >  If you enter a path in the Install Directory text box, Inca will install the
-  Reporter Manager code for the resource in that directory; otherwise, it will
-  use a default path.  Proxy information isn't needed for this resource, so
-  leave the other text boxes blank.
+  Reporter Manager code in that directory; otherwise, it will use a default
+  path.  Proxy information isn't needed for this resource group, so leave the
+  other text boxes blank.
   </P
 ><P
->  Press OK to complete entry of this resource.  incat will close the resource
-  edit dialog and will display siteA in the Resource Groups section of the
-  Resource Configuration panel.
+>  Press OK to complete entry of this resource groiup.  incat will close the
+  resource group edit dialog and will display siteA in the Resource Groups
+  section of the Resource Configuration panel.
   </P
+><P
+><IMG
+SRC="figures/ug-incat-resource-dialog2.png"
+ALIGN="CENTER"></P
 ><P
 >  Press the Add button again to add a second resource group.  Give this one the
   the name "defaultvo" and enter "siteA" in the Members text box.  This tells
   incat that any hosts in the "siteA" group (localhost, in this case) are also
   part of the defaultvo group.  If you defined other groups, "siteB", "siteC",
   etc., you could include these in defaultvo by listing them in the Members
-  text box, separated by spaces.  Press OK to complete entry of this resource.
-  Notice that the Members panel lists localhost as a member of both the
-  defaultvo and siteA resources.
+  text box, separated by spaces.  Press OK to complete entry of this resource
+  group.  Select siteA, then defaultvo in the Resource Groups list and notice
+  that the Members panel lists localhost as a member of both.
   </P
 ></DIV
 ><DIV
@@ -1208,7 +1189,7 @@ ALIGN="CENTER"></P
 ><P
 >  Pressing the Suites tab near the top of the incat window takes you to incat's
   suite/series specification panel.  Here you specify the reporters you want to
-  run, the resources to run them on, how frequently to run them, and the
+  run, the resource groups to run them on, how frequently to run them, and the
   arguments to use when running them.
   </P
 ><P
@@ -1233,9 +1214,9 @@ SRC="figures/ug-incat-series-dialog.png"
 ALIGN="CENTER"></P
 ><P
 >  The top half of the series dialog contains basic information about reporter
-  execution--the name and version of the reporter, the resource to run it on,
-  what values to pass in the command line arguments, and how often to run.  For
-  this first series, scroll down to select the reporter
+  execution--the name and version of the reporter, the resource group to run it
+  on, what values to pass in the command line arguments, and how often to run.
+  For this first series, scroll down to select the reporter
   "cluster.math.atlas.version" and leave the Use Latest Version radio button
   selected.  (The other choice, Use Version 1.4 Only, indicates that your
   series would continue to run the same version of the reporter even if an
@@ -1282,7 +1263,7 @@ ALIGN="CENTER"></P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN223"
+NAME="AEN218"
 ></A
 ><P
 ><B
@@ -1374,9 +1355,9 @@ NAME="USERGUIDE-INCAT-COMMITS"
 >  Your Inca deployment configuration is now complete.  At this point, it's a
   good idea to use the Save As option in incat's File menu to write the
   configuration to a file.  That way, you have a local copy of the configuration
-  that you can later modify.  The file format is formatted XML; if you're
-  curious, you can read through it to see how incat represents the information
-  you've entered.
+  that you can later modify.  The file is formatted XML; if you're curious, you
+  can read through it to see how incat represents the information you've
+  entered.
   </P
 ><P
 >  Although your configuration is complete, it's not yet active.  To tell Inca
@@ -1399,29 +1380,29 @@ NAME="USERGUIDE-INCAT-REMOTE"
 ></H3
 ><P
 >  In addition to running on the Inca Agent's local host, you can define globus,
-  ssh, and manual resources using the incat resource dialog.
+  ssh, and manual resource groups using the incat resource group dialog.
   </P
 ><P
 >  When you select Globus2 in the Access Method pull-down, incat provides text
   boxes for you to enter contact information on the host for the Globus Gram
   and GridFtp servers.  If you leave these boxes blank, Inca defaults to ports
-  2119 and 2811, respectively, on the first host in the resource's member list.
-  Access to Globus resources requires an active Globus proxy on the Agent's
+  2119 and 2811, respectively, on the first host in the resource group's member
+  list.  Access to Globus hosts requires an active Globus proxy on the Agent's
   host.  You can either create one before staring the Inca Agent, or you can
-  fill in the proxy information in the resource dialog (see below) so that the
-  Agent can obtain one as needed.
+  fill in the proxy information in the resource group dialog (see below) so
+  that the Agent can obtain one as needed.
   </P
 ><P
->  For ssh resources, incat provides text boxes for you to enter the login id,
-  path to the ssh key file, and password.  For security purposes, incat echoes
-  asterisks for the password and encrypts it when you save the configuration to
-  a file.
+>  For ssh resource groups, incat provides text boxes for you to enter the login
+  id, path to the ssh key file, and password.  For security purposes, incat
+  echoes asterisks for the password and encrypts it when you save the
+  configuration to a file.
   </P
 ><P
->  Entering a manual resource indicates that you want complete, direct control
-  over Inca execution on the resource.  On manual resources you must start the
-  Inca Reporter Manager on the command line and restart it any time you want
-  to change the reporter series configuration for the resource.
+>  Entering a manual resource group indicates that you want complete, direct
+  control over Inca execution on the group.  On manual resource groups you must
+  start the Inca Reporter Manager on the command line and restart it any time
+  you want to change the reporter series configuration for the group.
   </P
 ><P
 >TODO Proxy server/user id/password/lifetime</P
@@ -1435,7 +1416,58 @@ NAME="USERGUIDE-INCAT-MACROS"
 >6.7. Using Resource Macros</A
 ></H3
 ><P
->TODO</P
+>  Resource macros provide a shorthand for defining multiple, similar series.
+  For example, suppose you wanted to add three series to the configuration
+  defined above to run the reporter grid.benchmark.performance.ping to
+  measure the ping time to three different hosts, named blue.ufo.edu,
+  green.ufo.edu, and red.ufo.edu.  One approach would be to define a series
+  for the blue, use the Make Copy button in the Series section of the Suites
+  panel to make two copies, then modify them to ping green and red.
+  </P
+><P
+>  A better approach is to use a macro for the host names and let Inca replicate
+  the series for you.  In the Resource Configuration panel, click on siteA in
+  the Resource Group section.  Next, press the Add button beneath the Macros
+  section.  This opens a dialog box that allows you to enter the name and
+  value(s) of a macro associated with the current resource group.  Enter
+  "targets" in the Macro Name text box and "blue green red" in the Macro
+  Value(s) text box, then press OK.  The definition of the targets macro now
+  appears in the Macros section of the Resource Configuration panel.
+  </P
+><P
+><IMG
+SRC="figures/ug-incat-macrodef.png"
+ALIGN="CENTER"></P
+><P
+>  To make use of the macro you've defined, click the Suites tab, then press the
+  Add button underneath the Series section to open the series edit dialog.  In
+  the dialog, set the reporter to grid.benchmark.performance.ping and the
+  resource group to siteA.
+  </P
+><P
+>  In the host text box in the Arguments section of the dialog, enter
+  "@targets@.ufo.edu".  Macro references in incat are indicated by placing an
+  "@" before and after the macro name.  When the Inca agent encounters a macro
+  reference in a series, it makes one copy of the series for each value of the
+  macro.  Since the targets macro has three values--blue, green, and red--the
+  Inca agent will make three copies of this series, substituting a single value
+  for the macro reference in each.  In this case that means that you'll have
+  one series with a host argument of "blue.ufo.edu", one with a host argument
+  of "green.ufo.edu", and one with a host argument of "red.ufo.edu".
+  </P
+><P
+>  The inca web pages use the series nickname when displaying series results.
+  If you leave the series nickname with its default value, the name of the
+  reporter, then all three series will have the same nickname.  Instead, you
+  can enter "ping_to_@targets@" in the nickname text box.  The Inca agent will
+  expand this reference in parallel with the reference in the host argument, so
+  your three series will have the nicknames ping_to_blue, ping_to_green, and
+  ping_to_red, respectively.
+  </P
+><P
+><IMG
+SRC="figures/ug-incat-macrouse.png"
+ALIGN="CENTER"></P
 ></DIV
 ><DIV
 CLASS="SECTION"

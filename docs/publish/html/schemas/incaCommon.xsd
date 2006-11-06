@@ -6,78 +6,101 @@
         xmlns:xsd = "http://www.w3.org/2001/XMLSchema"
         elementFormDefault = "unqualified">
 
-	<complexType name = "report">
-		<sequence>
-			<element name = "gmt" type = "dateTime"/>
-			<element name = "hostname" type = "string"/>
-			<element name = "name" type = "string"/>
-			<element name = "version" type = "string"/>
-			<element name = "args" type = "inca:args"/>
-			<element name = "log" minOccurs = "0">
-				<complexType>
-					<sequence>
-						<element name = "debug" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "error" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "info" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "system" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-						<element name = "warn" type = "inca:logEntry" minOccurs = "0" maxOccurs = "unbounded"/>
-					</sequence>
-				</complexType>
-			</element>
-			<element name = "body" type = "inca:body"/>
-			<element name = "exitStatus" type = "inca:exitStatus"/>
-			<element name = "help" minOccurs = "0">
-				<complexType>
-					<sequence>
-						<element name = "name" type = "string"/>
-						<element name = "version" type = "string"/>
-						<element name = "description" type = "string"/>
-						<element name = "url" type = "string"/>
-						<element name = "argDescription" minOccurs = "0" maxOccurs = "unbounded">
-							<complexType>
-								<sequence>
-									<element name = "ID" type = "string"/>
-									<element name = "accepted" type = "string"/>
-									<element name = "description" type = "string"/>
-									<element name = "default" type = "string"/>
-								</sequence>
-							</complexType>
-						</element>
-						<element name = "dependency" minOccurs = "0" maxOccurs = "unbounded">
-							<complexType>
-								<sequence>
-									<element name = "ID" type = "string"/>
-								</sequence>
-							</complexType>
-						</element>
-					</sequence>
-				</complexType>
-			</element>
-		</sequence>
-	</complexType>
+  <!-- A description of the attempted invocation of a reporter, whether
+       successful or not.  Note that all the fields are required.  If the
+       execution failed, the component building the execution XML must generate
+       its own report that indicates reporter failure. -->
+  <complexType name = "reporterExecution">
+    <sequence>
+      <element name="resource" type = "string"/>
+      <element name="context" type = "string"/>
+      <element name="report" type = "inca:report"/>
+      <element name="stderr" type = "string"/>
+      <element name="sysusage" type = "inca:limits"/>
+    </sequence>
+  </complexType>
 
-  <!-- reportSeries is a generic definition of the same concept from the depot.
+  <!-- the stdout produced by an Inca reporter -->
+  <complexType name = "report">
+    <sequence>
+      <element name = "gmt" type = "dateTime"/>
+      <element name = "hostname" type = "string"/>
+      <element name = "name" type = "string"/>
+      <element name = "version" type = "string"/>
+      <element name = "workingDir" type = "string"/>
+      <element name = "reporterPath" type = "string"/>
+      <element name = "args" type = "inca:args"/>
+      <element name = "log" type = "inca:log" minOccurs="0"/>
+      <element name = "body" type = "inca:anyXmlSequence"/>
+      <element name = "exitStatus" type = "inca:exitStatus"/>
+      <element name = "help" minOccurs = "0">
+        <complexType>
+          <sequence>
+            <element name = "reporter" type = "string"/>
+            <element name = "version" type = "string"/>
+            <element name = "description" type = "string"/>
+            <element name = "url" type = "string"/>
+            <element name = "argDescription" minOccurs = "0" maxOccurs = "unbounded">
+              <complexType>
+                <sequence>
+                  <element name = "ID" type = "string"/>
+                  <element name = "accepted" type = "string"/>
+                  <element name = "description" type = "string"/>
+                  <element name = "default" type = "string"/>
+                </sequence>
+              </complexType>
+            </element>
+            <element name = "dependency" minOccurs = "0" maxOccurs = "unbounded">
+              <complexType>
+                <sequence>
+                  <element name = "ID" type = "string"/>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <!-- series is a generic definition of the same concept from the depot.
        it describes all the necessary information that will make a series
        unique in the database with one exception.  We leave out the url of the
        machine that it is being executed on.   or actually we make it optional.
        If a document arrives at the depot with this info missing there will be
        an error -->
-  <complexType name = "reportSeries">
+  <complexType name = "series">
     <sequence>
-      <choice>
-        <element name = "uri" type = "anyURI"/>
-        <element name = "name" type = "string"/>
-      </choice>
+      <element name = "name" type = "string"/>
+      <element name = "version" type = "string" minOccurs="0"/>
+      <element name = "uri" type = "anyURI" minOccurs="0"/>
       <element name = "args" type = "inca:args" minOccurs = "0"/>
-      <element name = "timeout" type = "inca:timeout" minOccurs = "0"/>
-      <element name = "setup" type = "string" minOccurs = "0"/>
-      <element name = "cleanup" type = "string" minOccurs = "0"/>
+      <element name = "limits" type = "inca:limits" minOccurs = "0"/>
+      <element name = "context" type = "string"/>
       <element name = "nice" type = "boolean" minOccurs = "0"/>
-      <element name = "description" type = "string" minOccurs = "0"/>
-      <element name = "hostname" type = "string" minOccurs = "0"/>
     </sequence>
   </complexType>
-  
+
+  <!-- seriesConfig describes the configuration of a report series on a 
+       set of resources including the schedule information and acceptedOutput
+       (i.e., any comparisons the depot should run upon receipt of a report.
+       An action describes the addition or removal of the the series  -->
+  <complexType name = "seriesConfig">
+    <sequence>
+      <element name = "series" type = "inca:series"/>
+      <element name = "nickname" type = "string" minOccurs = "0"/>
+      <choice>
+        <element name = "resourceSetName" type = "string"/>
+        <element name = "resourceXpath" type = "string"/>
+        <element name = "resourceHostname" type = "string"/>
+      </choice>
+      <element name = "schedule" type = "inca:schedule"/>
+      <element name = "acceptedOutput" type = "inca:acceptedOutput" minOccurs
+= "0"/> 
+      <element name = "action" type = "inca:action"/>
+    </sequence>
+  </complexType>
+
   <!-- args describes the input parameters to a reporter -->
   <complexType name = "args">
     <sequence>
@@ -92,21 +115,13 @@
     </sequence>
   </complexType>
   
-  <!-- timeout is used to express the ways that the reporter manager monitors
+  <!-- limits is used to express the ways that the reporter manager monitors
        the reporters' resource usage -->
-  <complexType name = "timeout">
+  <complexType name = "limits">
     <sequence>
       <element name = "wallClockTime" type = "float" minOccurs = "0"/>
       <element name = "memory" type = "float" minOccurs = "0"/>
       <element name = "cpuTime" type = "float" minOccurs = "0"/>
-    </sequence>
-  </complexType>
-  
-  <!-- logEntry type is used by the report -->
-  <complexType name = "logEntry">
-    <sequence>
-      <element name = "gmt" type = "dateTime"/>
-      <element name = "message" type = "string"/>
     </sequence>
   </complexType>
   
@@ -134,22 +149,43 @@
        "correct" output from a reporter and what to do on mismatch -->
   <complexType name = "acceptedOutput">
     <sequence>
-      <element name = "comparitor" type = "string" minOccurs = "0"/>
-      <element name = "body" type = "inca:body" minOccurs = "0"/>
-      <element name = "errorMessage" type = "string" minOccurs = "0"/>
-      <element name = "completed" type = "boolean" minOccurs = "0"/>
-      <element name = "notification" type = "inca:notification" minOccurs = "0"/>
+      <element name = "comparitor" type = "string"/>
+      <element name = "comparison" type = "string"/>
+      <element name = "notifications" type = "inca:notifications" minOccurs = "0"/>
     </sequence>
   </complexType>
-  <complexType name = "notification">
+  <complexType name = "notifications">
     <sequence>
-      <element name = "email" type = "string"/>
-      <element name = "condition" type = "string"/>
+      <element name = "notification" minOccurs="0" maxOccurs="unbounded">
+        <complexType>
+          <sequence>
+            <element name = "notifier" type = "string"/>
+            <element name = "target" type = "string"/>
+          </sequence>
+        </complexType>
+      </element>
     </sequence>
   </complexType>
 
-  <!-- report body, flexible definition that allows any content -->
-  <complexType name = "body">
+  <!-- report log -->
+  <complexType name = "log">
+    <choice minOccurs = "0" maxOccurs = "unbounded">
+      <element name = "debug" type = "inca:logEntry"/>
+      <element name = "error" type = "inca:logEntry"/>
+      <element name = "info" type = "inca:logEntry"/>
+      <element name = "system" type = "inca:logEntry"/>
+      <element name = "warn" type = "inca:logEntry"/>
+    </choice>
+  </complexType>
+  <complexType name = "logEntry">
+    <sequence>
+      <element name = "gmt" type = "dateTime"/>
+      <element name = "message" type = "string"/>
+    </sequence>
+  </complexType>
+
+  <!-- a flexible type that allows a sequence of any XML content -->
+  <complexType name = "anyXmlSequence">
     <sequence>
       <any namespace = "##any" processContents = "skip" minOccurs = "0" maxOccurs = "unbounded"/>
     </sequence>
@@ -189,13 +225,6 @@
     <sequence>
       <element name = "name" type = "string"/>
       <element name = "value" type = "string" maxOccurs = "unbounded"/>
-    </sequence>
-  </complexType>
-
-  <!-- a list of hostnames in a suite -->
-  <complexType name = "hostnames">
-    <sequence>
-      <element name = "hostname" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
     </sequence>
   </complexType>
 
