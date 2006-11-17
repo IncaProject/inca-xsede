@@ -1,9 +1,8 @@
 <section id="userguide-reporters">
 <title>Reporters and Repositories</title>
 
-<section id="inca-reporters">
-<title>Inca Reporters</title>
-
+<section id="reporter-introduction">
+<title>Introduction</title>
 <para>
 Inca reporters are executable programs and scripts, generally small, that test
 and report the health and characteristics of a system.  Because they are
@@ -11,7 +10,12 @@ executables, Inca reporters are independent of the rest of the Inca system.
 Reporters can be run from the command line; their output analyzed by hand or by
 non-Inca tools.  Incorporating your own reporters into a running Inca system
 requires only writing the reporters and telling the Agent where to find them.
-</para><para>
+</para>
+</section>
+
+<section id="reporter-arguments">
+<title>Reporter Arguments</title>
+<para>
 All Inca reporters must support the command line arguments listed in the table
 below.  In addition, a reporter may support additional command line arguments
 specific to that reporter's task.
@@ -28,7 +32,7 @@ specific to that reporter's task.
 </thead>
 <tbody>
   <row>
-    <entry>-help</entry>
+    <entry>--help</entry>
     <entry>yes|no</entry>
     <entry>no</entry>
     <entry>
@@ -37,14 +41,19 @@ specific to that reporter's task.
     text; otherwise, it will be reporter XML.
     </entry>
   </row><row>
-    <entry>-log</entry>
+    <entry>--log</entry>
     <entry>0-5|debug|error|info|system|warn</entry>
     <entry>0</entry>
     <entry>
-    TODO
+    Include reporter log messages in the reporter output.  The named argument
+    values indicate specific types of log messages that should be included.  0
+    indicates no log messages should be included; the other numeric values
+    indicate error, warn, system, info, and debug messages, cumulatively.  For
+    example, --log=2 indicates both error and warn messages should be included,
+    while --log=4 includes error, warn, system, and info messages.
     </entry>
   </row><row>
-    <entry>-verbose</entry>
+    <entry>--verbose</entry>
     <entry>0-2</entry>
     <entry>1</entry>
     <entry>
@@ -55,7 +64,7 @@ specific to that reporter's task.
     instructions on running the reporter.
     </entry>
   </row><row>
-    <entry>-version</entry>
+    <entry>--version</entry>
     <entry>yes|no</entry>
     <entry>no</entry>
     <entry>
@@ -65,6 +74,160 @@ specific to that reporter's task.
 </tbody>
 </tgroup>
 </table>
+</section>
+
+<section id="reporter-schema">
+<title>Reporter XML Schema</title>
+<para>
+Here is the output from the successful run of a typical Inca reporter.  The
+content and meaning of the XML tags is described below.
+</para>
+<screen>
+&lt;?xml version='1.0'?&gt;
+&lt;inca:report xmlns:inca='http://inca.sdsc.edu/dataModel/report_2.1'&gt;
+  &lt;gmt&gt;2006-11-17T17:35:40Z&lt;/gmt&gt;
+  &lt;hostname&gt;jhayes-Computer.local&lt;/hostname&gt;
+  &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+  &lt;version&gt;2&lt;/version&gt;
+  &lt;workingDir&gt;/Users/jhayes/Inca/subversion/inca/trunk/devel/reporters/bin&lt;/workingDir&gt;
+  &lt;reporterPath&gt;cluster.compiler.gcc.version&lt;/reporterPath&gt;
+  &lt;args&gt;
+    &lt;arg&gt;
+      &lt;name&gt;help&lt;/name&gt;
+      &lt;value&gt;no&lt;/value&gt;
+    &lt;/arg&gt;
+    &lt;arg&gt;
+      &lt;name&gt;log&lt;/name&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/arg&gt;
+    &lt;arg&gt;
+      &lt;name&gt;verbose&lt;/name&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/arg&gt;
+    &lt;arg&gt;
+      &lt;name&gt;version&lt;/name&gt;
+      &lt;value&gt;no&lt;/value&gt;
+    &lt;/arg&gt;
+  &lt;/args&gt;
+  &lt;body&gt;
+    &lt;package&gt;
+      &lt;ID&gt;gcc&lt;/ID&gt;
+      &lt;version&gt;3.3&lt;/version&gt;
+    &lt;/package&gt;
+  &lt;/body&gt;
+  &lt;exitStatus&gt;
+    &lt;completed&gt;true&lt;/completed&gt;
+  &lt;/exitStatus&gt;
+&lt;/inca:report&gt;
+</screen>
+
+<para>
+After any XML preamble, a &lt;report&gt; tag surrounds the reporter output.
+You can include a prefix with the tag name that references
+http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
+the report schema.
+</para><para>
+The report header includes, in order, the time the reporter ran (&lt;gmt&gt;
+tag), the host where it ran (&lt;hostname&gt; tag), the name and version of the
+reporter (&lt;name&gt; and &lt;version&gt; tags) and the working directory and
+local path to the reporter for the run (&lt;workingDir&gt; and
+&lt;reporterPath&gt; tags).  The run time must be expressed in ISO 8601 format.
+</para><para>
+Following the report header is an &lt;args&gt; section that gives the name and
+value for reporter arguments.  This section must contain an entry for every
+argument the reporter supports, including those for which the reporter supplies
+a default value.
+</para><para>
+The &lt;body&gt; tag contains the results of the reporter testing.  The only
+requirement for the contents of this tag is that they must be well-formed
+XML--tags balanced and no extraneous &lt;, &gt;, and &amp; characters.  The
+example above shows the conventional body for version reporters.
+</para><para>
+The report concludes with the &lt;exitStatus&gt; section, which includes the
+boolean &lt;completed&gt; tag, indicating whether or not the reporter
+successfully completed its testing, and the optional &lt;errorMessage&gt; tag,
+which contains a string indicating why the reporter failed to complete.
+</para><para>
+Two optional report sections are not shown above.  Just before the &lt;body&gt;
+tag, the report can contain a &lt;log&gt; element that contains a set of log
+entries produced by the reporter.  The contents of this section is a series of
+&lt;debug&gt;, &lt;error&gt;, &lt;info&gt;, &lt;system&gt;, and/or &lt;warn&gt;
+tags, each of which gives the text of the message and the time it was produced.
+Here is a typical example of a log section:
+</para>
+<screen>
+  &lt;log&gt;
+    &lt;system&gt;
+      &lt;gmt&gt;2006-11-17T18:28:10Z&lt;/gmt&gt;
+      &lt;message&gt;grid-proxy-info 2&amp;gt;&amp;amp;1&lt;/message&gt;
+    &lt;/system&gt;
+    &lt;debug&gt;
+      &lt;gmt&gt;2006-11-17T18:28:10Z&lt;/gmt&gt;
+      &lt;message&gt;Checking for grid proxy:
+Result of command
+"grid-proxy-info":
+sh: line 1: grid-proxy-info: command not found
+      &lt;/message&gt;
+    &lt;/debug&gt;
+    &lt;error&gt;
+      &lt;gmt&gt;2006-11-17T18:28:10Z&lt;/gmt&gt;
+      &lt;message&gt;ERROR: Valid proxy needed for file transfer.&lt;/message&gt;
+    &lt;/error&gt;
+  &lt;/log&gt;
+</screen>
+<para>
+After the &lt;exitStatus&gt; section, a report may contain a &lt;help&gt;
+section that describes the reporter and how to run it.  The contents include
+the reporter name, version, description, and url, detailed descriptions of each
+argument, and an optional list of dependencies that the reporter has on other
+packages.  For example, here is the &lt;help&gt; section for the gcc version
+reporter:
+</para>
+<screen>
+  &lt;help&gt;
+    &lt;ID&gt;help&lt;/ID&gt;
+    &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+    &lt;version&gt;2&lt;/version&gt;
+    &lt;description&gt;Reports the version of gcc&lt;/description&gt;
+    &lt;url&gt;http://gcc.gnu.org&lt;/url&gt;
+    &lt;argDescription&gt;
+      &lt;ID&gt;help&lt;/ID&gt;
+      &lt;accepted&gt;no|yes&lt;/accepted&gt;
+      &lt;description&gt;display usage information (no|yes)&lt;/description&gt;
+      &lt;default&gt;no&lt;/default&gt;
+    &lt;/argDescription&gt;
+    &lt;argDescription&gt;
+      &lt;ID&gt;log&lt;/ID&gt;
+      &lt;accepted&gt;[012345]|debug|error|info|system|warn&lt;/accepted&gt;
+      &lt;description&gt;log message types included in report&lt;/description&gt;
+      &lt;default&gt;0&lt;/default&gt;
+    &lt;/argDescription&gt;
+    &lt;argDescription&gt;
+      &lt;ID&gt;verbose&lt;/ID&gt;
+      &lt;accepted&gt;[012]&lt;/accepted&gt;
+      &lt;description&gt;verbosity level (0|1|2)&lt;/description&gt;
+      &lt;default&gt;1&lt;/default&gt;
+    &lt;/argDescription&gt;
+    &lt;argDescription&gt;
+      &lt;ID&gt;version&lt;/ID&gt;
+      &lt;accepted&gt;no|yes&lt;/accepted&gt;
+      &lt;description&gt;show reporter version (no|yes)&lt;/description&gt;
+      &lt;default&gt;no&lt;/default&gt;
+    &lt;/argDescription&gt;
+    &lt;dependency&gt;
+      &lt;ID&gt;Inca::Reporter&lt;/ID&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;ID&gt;Inca::Reporter::Version&lt;/ID&gt;
+    &lt;/dependency&gt;
+  &lt;/help&gt;
+</screen>
+
+<para>
+The Inca release includes a set of perl modules that make it much easier to
+develop reporters.  For information on the APIs these modules provide, look
+over the module text or see the online documentation at TODO ref.
+</para>
 
 </section>
 
