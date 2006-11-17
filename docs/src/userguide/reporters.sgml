@@ -181,7 +181,7 @@ section that describes the reporter and how to run it.  The contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
 packages.  For example, here is the &lt;help&gt; section for the gcc version
-reporter:
+reporter.
 </para>
 <screen>
   &lt;help&gt;
@@ -234,10 +234,70 @@ over the module text or see the online documentation at TODO ref.
 <section id="reporter-repositories">
 <title>Reporter Repositories</title>
 <para>
-TODO
-</para><para>
-TODO The incpack tool
+The Inca system retrieves reporters from external collections called
+repositories.  A reporter repository is simply a file directory, accessed via a
+file: or http: URL, that contains a catalog file named Packages.gz.  This
+gzipped file includes a sequence of name:value attribute pairs for every
+reporter and support package in the repository; blank lines separate the
+attributes for different reporters.  For example, here is a portion of the
+Packages.gz file for the Inca standard reporter repository.
 </para>
+<screen>
+arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::Version
+description: Reports the version of tgusage
+file: cluster.accounting.tgusage.version
+name: cluster.accounting.tgusage.version
+url: http://www.teragrid.org
+version: 2
+
+arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::SimpleUnit
+description: ant hello world test
+file: cluster.admin.ant.unit
+name: cluster.admin.ant.unit
+version: 3
+
+arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::Version
+description: Reports the version of Apache Ant
+file: cluster.admin.ant.version
+name: cluster.admin.ant.version
+version: 2
+
+</screen>
+<para>
+Of the attributes shown, only file and name are required.  The file attribute
+gives the relative path to the reporter file, and the name attribute specifies
+the unique package name of the reporter.  If the reporter requires support
+packages to execute, it should include a dependencies attribute with a
+semicolon-separated list of package names.  The incat administration tool uses
+the arguments and description attributes as part of its series edit dialog.
+The value of the arguments attribute is a semicolon-separated list giving the
+name, value pattern, and default value, if any, for each supported command-line
+argument.
+</para><para>
+To create a local repository for your own reporters, you only need to collect
+them into a directory and create a Packages.gz in that directory.  The Inca
+distribution includes a perl script, incpack, that can create Packages.gz for
+you.  Simply run incpack with a list of reporters that you want to include in
+Packages.gz, e.g.,
+</para>
+<screen>
+perl incpack jade.version f77.unit vim.version
+</screen>
+<para>
+incpack runs each of the listed reporters with --help=yes --verbose=1 to
+extract a standard set of attributes.  If your reporters use the Inca reporter
+perl modules, you might need to run incpack with a -I switch to specify the
+location of the Inca perl library, like this.
+</para>
+<screen>
+perl incpack -I ${INCA_INSTALL}/lib jade.version f77.unit vim.version
+</screen>
 </section>
 
 </section>
