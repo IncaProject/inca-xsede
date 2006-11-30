@@ -464,6 +464,13 @@
             <name>__incaReporterManagerLocation__</name>
             <value>/home/inca/inca2install-ia64</value>
           </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -734,7 +741,7 @@
       </resource>
       <resource>
         <name>gt4-seven-step</name>
-        <xpath>//resource[matches(name, '^(sdsc-ia64|tacc-lonestar|ornl-login)$')]</xpath>
+        <xpath>//resource[matches(name, '^(anl-ia64|sdsc-ia64|tacc-lonestar)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -742,7 +749,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>sdsc-ia64 tacc-lonestar ornl-login</value>
+            <value>anl-ia64 sdsc-ia64 tacc-lonestar</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2178,6 +2185,13 @@
             <name>gatekeeperlog</name>
             <value>/usr/local/apps/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
           </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2263,6 +2277,11 @@
           <macro>
             <name>phdf5-key</name>
             <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mvapich-intel91</value>
+            <value>mpich-g2-1.2.6e-mvapich-intel91-dbg</value>
           </macro>
         </macros>
       </resource>
@@ -2625,6 +2644,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>keyPre2</name>
+            <value>eval \"`soft-dec sh add @</value>
           </macro>
         </macros>
       </resource>
@@ -6012,86 +6035,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.middleware.globus.7step.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
-            <args>
-              <arg>
-                <name>extraEnv</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>date</name>
-                <value>@date@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>hostCount</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>env</name>
-                <value>@env@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@gatekeeperHost@/@batchJobManager@</value>
-              </arg>
-              <arg>
-                <name>extraRsl</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>rm</name>
-                <value>@rm@</value>
-              </arg>
-              <arg>
-                <name>flavor</name>
-                <value>@defaultGlobusMpiFlavor@</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@mpich-g2-key@@@@post@</context>
-          </series>
-          <nickname>gt4-seven-step</nickname>
-          <resourceSetName>gt4-seven-step</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.parallel_tools.mpich.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.parallel_tools.mpich.version</uri>
             <args>
@@ -6426,11 +6369,91 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.7step.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
+            <args>
+              <arg>
+                <name>extraEnv</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>date</name>
+                <value>@date@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>hostCount</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>softenvKey</name>
+                <value>@mpichG2Keys@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>env</name>
+                <value>@env@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gatekeeperHost@/@batchJobManager@</value>
+              </arg>
+              <arg>
+                <name>extraRsl</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>rm</name>
+                <value>@rm@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@keyPre2@@mpichG2Keys@ @keyPost@@@@post@</context>
+          </series>
+          <nickname>gt4-seven-step_@mpichG2Keys@</nickname>
+          <resourceSetName>gt4-seven-step</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>37</version>
+      <version>40</version>
     </suite>
     <suite>
       <seriesConfigs>
