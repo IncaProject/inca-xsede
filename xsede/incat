@@ -471,6 +471,10 @@
             <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
             <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
           </macro>
+          <macro>
+            <name>hostCountSuffix</name>
+            <value>:ia64-compute</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -520,6 +524,10 @@
           <macro>
             <name>perl5</name>
             <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install-viz/lib/perl &amp;&amp;</value>
+          </macro>
+          <macro>
+            <name>hostCountSuffix</name>
+            <value>:ia32-compute</value>
           </macro>
         </macros>
       </resource>
@@ -741,7 +749,7 @@
       </resource>
       <resource>
         <name>gt4-seven-step</name>
-        <xpath>//resource[matches(name, '^(anl-ia64|sdsc-ia64|tacc-lonestar)$')]</xpath>
+        <xpath>//resource[matches(name, '^(anl-ia64|ncsa-cobalt|ncsa-ia64|sdsc-ia64|tacc-lonestar)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -749,7 +757,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>anl-ia64 sdsc-ia64 tacc-lonestar</value>
+            <value>anl-ia64 ncsa-cobalt ncsa-ia64 sdsc-ia64 tacc-lonestar</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1381,6 +1389,13 @@
             <name>defaultGlobusMpiFlavor</name>
             <value>mpicc64</value>
           </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpi12-intel81</value>
+            <value>mpich-g2-1.2.6e-mpi12-intel81-dbg</value>
+            <value>mpich-g2-1.2.6e-mpi12-gcc33</value>
+            <value>mpich-g2-1.2.6e-mpi12-gcc33-dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -1536,6 +1551,13 @@
           <macro>
             <name>rftHost</name>
             <value>grid-hg.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
           </macro>
         </macros>
       </resource>
@@ -2648,6 +2670,10 @@
           <macro>
             <name>keyPre2</name>
             <value>eval \"`soft-dec sh add @</value>
+          </macro>
+          <macro>
+            <name>hostCountSuffix</name>
+            <value/>
           </macro>
         </macros>
       </resource>
@@ -6388,7 +6414,7 @@
               </arg>
               <arg>
                 <name>hostCount</name>
-                <value>1</value>
+                <value>1@hostCountSuffix@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -6453,7 +6479,7 @@
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>40</version>
+      <version>42</version>
     </suite>
     <suite>
       <seriesConfigs>
