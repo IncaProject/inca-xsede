@@ -2550,28 +2550,6 @@
             <value>@keyPre@apache-ant @keyPost@</value>
           </macro>
           <macro>
-            <name>sshHosts</name>
-            <value>tg-login1.iu.teragrid.org</value>
-            <value>tg-login-ia32.iu.teragrid.org</value>
-            <value>bigred.teragrid.iu.edu</value>
-            <value>tg-login64.purdue.teragrid.org</value>
-            <value>tg-login.lonestar.tacc.teragrid.org</value>
-            <value>tg-viz-login.tacc.teragrid.org</value>
-            <value>tg-login.uc.teragrid.org</value>
-            <value>tg-viz-login.uc.teragrid.org</value>
-            <value>tg-login.ornl.teragrid.org</value>
-            <value>login-w.ncsa.teragrid.org</value>
-            <value>login-cu.ncsa.teragrid.org</value>
-            <value>login-co.ncsa.teragrid.org</value>
-            <value>login-hg.ncsa.teragrid.org</value>
-            <value>tg-login.bigben.psc.teragrid.org</value>
-            <value>tg-login1.lemieux.psc.teragrid.org</value>
-            <value>tg-login.rachel.psc.teragrid.org</value>
-            <value>tg-login.sdsc.teragrid.org</value>
-            <value>bglogin.sdsc.edu</value>
-            <value>dslogin.sdsc.edu</value>
-          </macro>
-          <macro>
             <name>gridftpHosts</name>
             <value>tg-gridftp.iu.teragrid.org</value>
             <value>gridftp.bigred.iu.teragrid.org</value>
@@ -2674,6 +2652,28 @@
             <value>tg-login.tacc.teragrid.org</value>
             <value>tg-viz-login.tacc.teragrid.org</value>
             <value>tg-grid1.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>sshHosts</name>
+            <value>tg-login1.iu.teragrid.org</value>
+            <value>tg-login-ia32.iu.teragrid.org</value>
+            <value>login.bigred.iu.teragrid.org</value>
+            <value>tg-login64.purdue.teragrid.org</value>
+            <value>tg-login.lonestar.tacc.teragrid.org</value>
+            <value>tg-viz-login.tacc.teragrid.org</value>
+            <value>tg-login.uc.teragrid.org</value>
+            <value>tg-viz-login.uc.teragrid.org</value>
+            <value>tg-login.ornl.teragrid.org</value>
+            <value>login-w.ncsa.teragrid.org</value>
+            <value>login-cu.ncsa.teragrid.org</value>
+            <value>login-co.ncsa.teragrid.org</value>
+            <value>login-hg.ncsa.teragrid.org</value>
+            <value>tg-login.bigben.psc.teragrid.org</value>
+            <value>tg-login1.lemieux.psc.teragrid.org</value>
+            <value>tg-login.rachel.psc.teragrid.org</value>
+            <value>tg-login.sdsc.teragrid.org</value>
+            <value>bglogin.sdsc.edu</value>
+            <value>dslogin.sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -5065,62 +5065,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>data.transfer.uberftp.unit.copy</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.unit.copy</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>dest</name>
-                <value>/tmp/uberdest.20197</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@gridftpHost@</value>
-              </arg>
-              <arg>
-                <name>source</name>
-                <value>/tmp/ubersource.20197</value>
-              </arg>
-              <arg>
-                <name>remote</name>
-                <value>/tmp/uberremote.20197</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>uberftp-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.admin.tgresid.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
             <args>
@@ -6475,11 +6419,71 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.uberftp.unit.copy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.unit.copy</uri>
+            <args>
+              <arg>
+                <name>source</name>
+                <value>/tmp/ubersource.20197</value>
+              </arg>
+              <arg>
+                <name>remote</name>
+                <value>/tmp/uberremote.20197</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>/tmp/uberdest.20197</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gridftpHost@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>uberftp-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>48</version>
+      <version>52</version>
     </suite>
     <suite>
       <seriesConfigs>
