@@ -2508,23 +2508,6 @@
             <value>@keyPre@apache-ant @keyPost@</value>
           </macro>
           <macro>
-            <name>gridftpHosts</name>
-            <value>tg-gridftp.iu.teragrid.org</value>
-            <value>gridftp.bigred.iu.teragrid.org</value>
-            <value>gridftp-co.ncsa.teragrid.org</value>
-            <value>gridftp-hg.ncsa.teragrid.org</value>
-            <value>gridftp-cu.ncsa.teragrid.org</value>
-            <value>gridftp-w.ncsa.teragrid.org</value>
-            <value>tg-gridftp.ornl.teragrid.org</value>
-            <value>tg-gridftp.bigben.psc.teragrid.org</value>
-            <value>tg-gridftp.purdue.teragrid.org</value>
-            <value>tg-gridftp.sdsc.teragrid.org</value>
-            <value>ds-gridftp.sdsc.edu</value>
-            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
-            <value>tg-viz-gridftp.tacc.teragrid.org</value>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>perl5</name>
             <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &amp;&amp;</value>
           </macro>
@@ -2632,6 +2615,23 @@
             <value>tg-login.sdsc.teragrid.org</value>
             <value>bglogin.sdsc.edu</value>
             <value>dslogin.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>gridftpHosts</name>
+            <value>tg-gridftp.iu.teragrid.org</value>
+            <value>gridftp.bigred.iu.teragrid.org</value>
+            <value>gridftp-co.ncsa.teragrid.org</value>
+            <value>gridftp-hg.ncsa.teragrid.org</value>
+            <value>gridftp-cu.ncsa.teragrid.org</value>
+            <value>gridftp-w.ncsa.teragrid.org</value>
+            <value>tg-gridftp.ornl.teragrid.org</value>
+            <value>tg-gridftp.bigben.psc.teragrid.org</value>
+            <value>tg-data.purdue.teragrid.org</value>
+            <value>tg-gridftp.sdsc.teragrid.org</value>
+            <value>ds-gridftp.sdsc.edu</value>
+            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
+            <value>tg-viz-gridftp.tacc.teragrid.org</value>
+            <value>tg-gridftp.uc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -5296,66 +5296,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.interactive_access.openssh.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
-            <args>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>batch</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>ssh</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>30</value>
-              </arg>
-              <arg>
-                <name>login</name>
-                <value>inca</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@sshHosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>900.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>all2all:ssh_to_@sshHosts@</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>data.format.phdf5.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
             <args>
@@ -6434,11 +6374,63 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>login</name>
+                <value>inca</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>ssh</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@sshHosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>900.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>all2all:ssh_to_@sshHosts@</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>52</version>
+      <version>55</version>
     </suite>
     <suite>
       <seriesConfigs>
