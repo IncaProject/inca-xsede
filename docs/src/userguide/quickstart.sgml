@@ -3,8 +3,12 @@
 
 <para>
 This section describes how to download, install and verify the Inca 2.0 beta
-binary release.  
+binary release. The figure below represents a typical installation. 
 </para>
+        <figure id="install-arch">
+          <title>Inca Installation</title>
+          <graphic fileref="figures/arch-install.jpg" align="center"></graphic>
+        </figure>
 
 <simplelist type=horiz columns=1>
 <member>Step <xref linkend="qs-step1">: Download the installer script</member> 
@@ -220,9 +224,17 @@ Deploying default configuration
     </para>
     </listItem>
     <listItem id="qs-step7">
-    <para>View the Inca sample default configuration using the Inca GUI tool, incat (Inca Administration Tool).</para>
+    <para>View the Inca sample default configuration using the Inca GUI tool, incat (Inca Administration Tool).
+      You can use incat to make changes to the default configuration (e.g., add
+      a new resource to <emphasis>defaultvo</emphasis> or add new tests to
+      <emphasis>TestSuiteLocal</emphasis>).  See <xref linkend="userguide-incat"> for more information about using incat.</para>
      <para> Use the following command to start incat: <screen>% ./bin/inca start incat -A localhost:6323 </screen> </para>
-      <para> You should now see the Java GUI window appear on your local machine.  </para>
+      <para> You should now see the Java GUI window appear on your local machine. 
+      If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, 
+      it is probable that X-Window forwarding is not set up correctly between the 
+      machine where you installed Inca and your local machine.
+        You can either configure X-Window forwarding, or you can start incat on a local machine as described in step <xref linkend="qs-step8">.
+      </para>
       <para>
         <figure id="retrieve.fig">
           <title>incat Agent Screen</title>
@@ -234,14 +246,6 @@ Deploying default configuration
         <title>Default incat Screen</title>
         <graphic fileref="figures/ug-incat-repositories.png" align="center"></graphic>
       </figure>
-      <para>
-      <emphasis role="red">NOTE:</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, it is probable that X-Window forwarding is not set up correctly between the 
-      machine where you installed Inca and your local machine.
-        You can either configure X-Window forwarding, or you can start incat on a local machine as described in step <xref linkend="qs-step8">.
-      </para>
-      <para>Once incat is working, you can use it to make changes to the default configuration (e.g., add
-      a new resource to <emphasis>defaultvo</emphasis> or add new tests to
-      <emphasis>TestSuiteLocal</emphasis>).  See <xref linkend="userguide-incat"> for more information about using incat.</para>
     </listItem>
     <listItem id="qs-step8">
       <para><emphasis role="red">THIS STEP IS OPTIONAL.</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, you can use this step to install incat on a local machine. </para>
