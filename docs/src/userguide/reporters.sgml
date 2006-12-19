@@ -84,6 +84,31 @@ specific to that reporter's task.
 <section id="reporter-schema">
 <title>Reporter XML Schema</title>
 <para>
+In order to promote interoperability between reporters, we define a
+specification for how reporter output should be formatted.  Given the
+wide acceptance and availability of tools for XML, the specification
+requires that reporter output should be formatted using XML.  Furthermore, we
+specify a basic <emphasis>schema</emphasis> that the XML should follow so
+that we can handle the output in a general manner.   The goal of this schema
+is to be flexible enough to express a wide variety of data.
+</para>
+<para>
+Our approach is to require a number of XML fields which provide metadata about
+the output and define one of the fields, body, to be abstract.  The body
+field is a placeholder for the formatted output and can be replaced by any XML
+<emphasis>substitution group</emphasis>
+thereby allowing this schema to accomodate a large variety of output.  In
+other words, the basic schema is like an abstract class and the substitution
+groups provide for subclassing.  
+</para>
+<para>The reporter schema is visualized in <xref linkend="reporter-schema-fig">.
+<figure id="reporter-schema-fig">
+  <title>Inca Reporter Schema</title>
+  <graphic fileref="figures/reporter-schema.jpg" align="center">
+  </graphic>
+</figure>
+</para>
+<para>
 Here is the output from the successful run of a typical Inca reporter.  The
 content and meaning of the XML tags is described below.
 </para>
