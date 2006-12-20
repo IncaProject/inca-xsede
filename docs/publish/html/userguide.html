@@ -1896,29 +1896,7 @@ NAME="USERGUIDE-REPORTERS"
 ></H2
 ><P
 >Inca reporters are executable programs and scripts, generally small, that test
-and report the health and characteristics of a system.  Reporters can be written in any language as long as 
-they output XML according to the schema described in <A
-HREF="#REPORTER-SCHEMA"
->Section 8.2.1</A
->.  
-New reporter developers may choose to write reporters in Perl since 
-the Inca distribution includes sample Perl reporters and API modules for printing XML according to our schema.</P
-><P
->Because they are executables, Inca reporters are independent of the rest of the Inca system.
-Reporters can be run from the command line; their output analyzed by hand or by
-non-Inca tools.  Incorporating your own reporters into a running Inca installation
-requires only writing the reporters (<A
-HREF="#REPORTER-WRITING"
->Section 8.2</A
->), 
-including them in a repository (<A
-HREF="#REPORTER-REPOSITORIES"
->Section 8.3</A
->), 
-and configuring the repository's series using incat (<A
-HREF="#USERGUIDE-INCAT"
->Section 6</A
->).  The figure below 
+and report the health and characteristics of a system.  The figure below 
 illustrates a typical Inca installation where reporters are retrieved from a repository and sent to Reporter 
 Managers on Grid resources by the Agent.  The Reporter Managers then execute the reporters based on series configuration from the 
 Agent and send the XML reports to the Depot for storage.
@@ -1946,15 +1924,44 @@ NAME="REPORTER-CMDLINE"
 >8.1. Executing Reporters</A
 ></H3
 ><P
->Reporters can be executed manually from a command line or automatically as part of an Inca installation.  </P
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="REPORTER-ARGUMENTS"
->8.1.1. Reporter Arguments</A
-></H4
+>Because they are executables, Inca reporters are independent of the rest of the Inca system.
+Reporters can be executed manually from a command line or automatically as part of an Inca installation.  
+Incorporating your own reporters into a running Inca installation requires only writing the reporters (<A
+HREF="#REPORTER-WRITING"
+>Section 8.2</A
+>), 
+including them in a repository (<A
+HREF="#REPORTER-REPOSITORIES"
+>Section 8.3</A
+>), 
+and configuring the repository's series using incat (<A
+HREF="#USERGUIDE-INCAT"
+>Section 6</A
+>).  Most developers will execute reporters from the 
+command line before adding them to their Inca installation.   After installing Inca, you can try executing some of the reporters that come
+with the distribution:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd Inca-Reporter-*/bin
+% setenv PERL5LIB ../lib
+% ./cluster.compiler.gcc.version </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You should now see XML output like that in <A
+HREF="#REPORTER-OUTPUT"
+>Section 8.2.2</A
+>.</P
 ><P
 >All Inca reporters must support the command line arguments listed in the table
 below.  In addition, a reporter may support additional command line arguments
@@ -1962,7 +1969,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN368"
+NAME="AEN366"
 ></A
 ><P
 ><B
@@ -1986,7 +1993,7 @@ CLASS="CALSTABLE"
 ><TBODY
 ><TR
 ><TD
->--help</TD
+>-help</TD
 ><TD
 >yes|no</TD
 ><TD
@@ -1999,7 +2006,7 @@ CLASS="CALSTABLE"
 ></TR
 ><TR
 ><TD
->--log</TD
+>-log</TD
 ><TD
 >0-5|debug|error|info|system|warn</TD
 ><TD
@@ -2015,7 +2022,7 @@ CLASS="CALSTABLE"
 ></TR
 ><TR
 ><TD
->--verbose</TD
+>-verbose</TD
 ><TD
 >0-2</TD
 ><TD
@@ -2030,7 +2037,7 @@ CLASS="CALSTABLE"
 ></TR
 ><TR
 ><TD
->--version</TD
+>-version</TD
 ><TD
 >yes|no</TD
 ><TD
@@ -2042,7 +2049,28 @@ CLASS="CALSTABLE"
 ></TBODY
 ></TABLE
 ></DIV
-></DIV
+><P
+>You can also experiment with executing reporters using different arguments:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd Inca-Reporter-*/bin
+% setenv PERL5LIB ../lib
+% ./cluster.compiler.gcc.version -log=3 
+% ./cluster.compiler.gcc.version -help=yes -verbose=0
+% ./cluster.compiler.gcc.version -version=yes</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2053,7 +2081,17 @@ NAME="REPORTER-WRITING"
 >8.2. Writing Reporters</A
 ></H3
 ><P
-> somthing about how to writing must know schema</P
+>Reporters can be written in any language as long as 
+they output XML according to the schema described in <A
+HREF="#REPORTER-SCHEMA"
+>Section 8.2.1</A
+>.  
+New reporter developers may choose to write reporters in Perl since 
+the Inca distribution includes sample Perl reporters and API modules (<A
+HREF="#REPORTER-API"
+>Section 8.2.3</A
+>) 
+for printing XML according to our schema.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
@@ -2420,7 +2458,7 @@ NAME="REPORTER-API"
 >8.2.3. Reporter APIs</A
 ></H4
 ><P
->The Inca release includes a set of Perl modules that make it much easier to
+>The Inca release includes a set of Perl modules that make it easier to
 develop reporters that produce output as shown in <A
 HREF="#REPORTER-OUTPUT"
 >Section 8.2.2</A
