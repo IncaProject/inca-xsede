@@ -2143,23 +2143,14 @@ NAME="REPORTER-SCHEMA"
 specification for how reporter output should be formatted.  Given the
 wide acceptance and availability of tools for XML, the specification
 requires that reporter output should be formatted using XML.  Furthermore, we
-specify a basic <EM
-><FONT
->schema</FONT
-></EM
-> that the XML should follow so
+specify a basic schema that the XML should follow so
 that we can handle the output in a general manner.   The goal of this schema
 is to be flexible enough to express a wide variety of data.</P
 ><P
 >Our approach is to require a number of XML fields which provide metadata about
 the output and define one of the fields, body, to be abstract.  The body
 field is a placeholder for the formatted output and can be replaced by any XML
-<EM
-><FONT
->substitution group</FONT
-></EM
->
-thereby allowing this schema to accomodate a large variety of output.  In
+ substitution group thereby allowing this schema to accommodate a large variety of output.  In
 other words, the basic schema is like an abstract class and the substitution
 groups provide for subclassing.  </P
 ><P
@@ -2992,6 +2983,45 @@ parameters (name/value) and statistics (name/value/units).</P
 ></UL
 ></LI
 ></OL
+><P
+>The following is the Perl code for a reporter that produces output like <A
+HREF="#SAMPLE-REPORT"
+>Figure 12</A
+>.  This reporter 
+uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
+located in $INCA_DIST/Inca-Reporter-*/bin.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Version;
+
+my $reporter = new Inca::Reporter::Version(
+  name =&#62; 'cluster.compiler.gcc.version',
+  version =&#62; 2,
+  description =&#62; 'Reports the version of gcc',
+  url =&#62; 'http://gcc.gnu.org',
+  package_name =&#62; 'gcc'
+);
+$reporter-&#62;processArgv(@ARGV);
+
+$reporter-&#62;setVersionByExecutable('gcc -dumpversion');
+$reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
 ></DIV
 ></DIV
 ><DIV
