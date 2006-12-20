@@ -1939,7 +1939,7 @@ HREF="#USERGUIDE-INCAT"
 >Section 6</A
 >).  Most developers will execute reporters from the 
 command line before adding them to their Inca installation.   After installing Inca, you can try executing some of the reporters that come
-with the distribution:
+with the distribution from the command line:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -1950,7 +1950,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd Inca-Reporter-*/bin
+>% cd $INCA_DIST/Inca-Reporter-*/bin
 % setenv PERL5LIB ../lib
 % ./cluster.compiler.gcc.version </PRE
 ></FONT
@@ -1981,76 +1981,116 @@ CLASS="CALSTABLE"
 ><COL><COL><COL><COL><THEAD
 ><TR
 ><TH
->Argument</TH
+><P
+>Argument</P
+></TH
 ><TH
->Valid Values</TH
+><P
+>Valid Values</P
+></TH
 ><TH
->Default Value</TH
+><P
+>Default Value</P
+></TH
 ><TH
->Description</TH
+><P
+>Description</P
+></TH
 ></TR
 ></THEAD
 ><TBODY
 ><TR
 ><TD
->-help</TD
+><P
+>-help</P
+></TD
 ><TD
->yes|no</TD
+><P
+>yes|no</P
+></TD
 ><TD
->no</TD
+><P
+>no</P
+></TD
 ><TD
+><P
 >    Do not run the reporter; instead, print information on running it.  If
     the value of the verbose argument is 0, this information will be readable
     text; otherwise, it will be reporter XML.
-    </TD
+    </P
+></TD
 ></TR
 ><TR
 ><TD
->-log</TD
+><P
+>-log</P
+></TD
 ><TD
->0-5|debug|error|info|system|warn</TD
+><P
+>0-5|debug|error|info|system|warn</P
+></TD
 ><TD
->0</TD
+><P
+>0</P
+></TD
 ><TD
+><P
 >    Include reporter log messages in the reporter output.  The named argument
     values indicate specific types of log messages that should be included.  0
     indicates no log messages should be included; the other numeric values
     indicate error, warn, system, info, and debug messages, cumulatively.  For
     example, --log=2 indicates both error and warn messages should be included,
     while --log=4 includes error, warn, system, and info messages.
-    </TD
+    </P
+></TD
 ></TR
 ><TR
 ><TD
->-verbose</TD
+><P
+>-verbose</P
+></TD
 ><TD
->0-2</TD
+><P
+>0-2</P
+></TD
 ><TD
->1</TD
+><P
+>1</P
+></TD
 ><TD
+><P
 >    Determine what the reporter prints.  A verbose level of 0 indicates that
     the reporter prints only 'completed' or 'failed', depending on the outcome
     of its testing.  Verbose level 1 produces XML that reports the testing
     result, and verbose level 2 adds additional tags to this XML to give
     instructions on running the reporter.
-    </TD
+    </P
+></TD
 ></TR
 ><TR
 ><TD
->-version</TD
+><P
+>-version</P
+></TD
 ><TD
->yes|no</TD
+><P
+>yes|no</P
+></TD
 ><TD
->no</TD
+><P
+>no</P
+></TD
 ><TD
+><P
 >    Do not run the reporter; instead, print its version number.
-    </TD
+    </P
+></TD
 ></TR
 ></TBODY
 ></TABLE
 ></DIV
 ><P
->You can also experiment with executing reporters using different arguments:
+>Executing a reporter using different arguments:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -2061,9 +2101,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd Inca-Reporter-*/bin
-% setenv PERL5LIB ../lib
-% ./cluster.compiler.gcc.version -log=3 
+>% ./cluster.compiler.gcc.version -log=3 
 % ./cluster.compiler.gcc.version -help=yes -verbose=0
 % ./cluster.compiler.gcc.version -version=yes</PRE
 ></FONT
