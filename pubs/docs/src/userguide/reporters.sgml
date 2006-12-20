@@ -342,83 +342,171 @@ The following are a list of modules and their methods:</para>
 <orderedList>
 <listItem>
   <para>Inca::Reporter</para>
+  <para>This module is the general reporter API and is the base class for all types of reporters.
+Inca::Reporter automates determination of hostname, gmt, reporter name, etc.,  handles command-line parsing, 
+provides an interface for log messages, and handles XML generation.
+</para>
  <itemizedList>
-  <listItem><para>addArg</para></listItem>
-  <listItem><para>addDependency:  record package dependencies</para></listItem>
-  <listItem><para>argValue</para></listItem>
-  <listItem><para>argValues:  support for multiple command-line argument values</para></listItem>
-  <listItem><para>compiledProgramOutput</para></listItem> 
-  <listItem><para>failPrintAndExit</para></listItem> 
-  <listItem><para>getBody</para></listItem> 
-  <listItem><para>getCompleted</para></listItem> 
-  <listItem><para>getDescription</para></listItem> 
-  <listItem><para>getFailMessage</para></listItem> 
-  <listItem><para>getUrl</para></listItem> 
-  <listItem><para>getVersion</para></listItem> 
-  <listItem><para>log</para></listItem> 
-  <listItem><para>loggedCommand</para></listItem> 
-  <listItem><para>print:  $verbose parameter</para></listItem>
-  <listItem><para>processArgv</para></listItem> 
-  <listItem><para>report:  returns report XML</para></listItem> 
-  <listItem><para>reportBody:  constructs the contents of the report body</para></listItem> 
-  <listItem><para>setBody</para></listItem> 
-  <listItem><para>setCompleted</para></listItem> 
-  <listItem><para>setDescription</para></listItem> 
-  <listItem><para>setFailMessage</para></listItem> 
-  <listItem><para>setUrl</para></listItem> 
-  <listItem><para>setVersion</para></listItem> 
-  <listItem><para>tempFile:  register files for auto deletion</para></listItem> 
-  <listItem><para>xmlElement:  create pretty-printed XML tags</para></listItem> 
+  <listItem><para>new( [body => $str] [, completed => $bool] [, description => $str] [, fail_message => $str] [, url => $str] [, version => $str] ) </para>    
+    <para><emphasis>Constructor</emphasis></para>
+  </listItem>
+  <listItem><para>addArg( $name, $description [, $default [, $pattern]] )</para>
+    <para><emphasis>Add a reporter-specific command-line argument to those recognized</emphasis></para>
+  </listItem>
+  <listItem><para>addDependency($package [, $package ...])</para>
+    <para><emphasis>Register reporter package dependencies</emphasis></para>
+  </listItem>
+  <listItem><para>argValue($name [, $position])</para>
+    <para><emphasis>Retrieve a single command-line argument value</emphasis></para>
+  </listItem>
+  <listItem><para>argValues($name)</para>
+    <para><emphasis>Retrieve an array of command-line argument values</emphasis></para>
+  </listItem>
+  <listItem><para>compiledProgramOutput(code => $str [, compiler => $str] [, language => $str] [, out_switch => $str]  [, switches => $str] [, timeout => $int])</para>
+    <para><emphasis>Compile and run a program; return stdout</emphasis></para>
+  </listItem> 
+  <listItem><para>failPrintAndExit($message)</para>
+    <para><emphasis>Exit after printing reporter failure XML</emphasis></para>
+  </listItem> 
+  <listItem><para>getBody()</para></listItem> 
+  <listItem><para>getCompleted()</para></listItem> 
+  <listItem><para>getDescription()</para></listItem> 
+  <listItem><para>getFailMessage()</para></listItem> 
+  <listItem><para>getUrl()</para></listItem> 
+  <listItem><para>getVersion()</para></listItem> 
+  <listItem><para>setBody($body)</para></listItem> 
+  <listItem><para>setCompleted($completed)</para></listItem> 
+  <listItem><para>setDescription($description)</para></listItem> 
+  <listItem><para>setFailMessage($message)</para></listItem> 
+  <listItem><para>setUrl($url)</para></listItem> 
+  <listItem><para>setVersion($version)</para></listItem> 
+  <listItem><para>log($type, $message [, $message ...])</para>
+    <para><emphasis>Add messages to the reporter log</emphasis></para>
+  </listItem> 
+  <listItem><para>loggedCommand($command [, $timeout])</para>
+    <para><emphasis>Log and run a command; return stdout</emphasis></para>
+  </listItem> 
+  <listItem><para>print([$verbose])</para>
+    <para><emphasis>Print the reporter XML</emphasis></para>
+  </listItem>
+  <listItem><para>processArgv(@ARGV)</para>
+    <para><emphasis>Parse command-line arguments; handle -help and -version</emphasis></para>
+  </listItem> 
+  <listItem><para>report([$verbose])</para>
+    <para><emphasis>Construct and return reporter XML</emphasis></para>
+  </listItem> 
+  <listItem><para>reportBody()</para>
+    <para><emphasis>Abstract method for derived classes; constructs and returns the body XML</emphasis></para>
+  </listItem> 
+  <listItem><para>setResult($completed [, $message])</para>
+    <para><emphasis>Combines setCompleted & setFailMessage</emphasis></para>
+  </listItem> 
+  <listItem><para>tempFile($path [, $path ...])</para>
+    <para><emphasis>Register files to be deleted on exit</emphasis></para>
+  </listItem> 
+  <listItem><para>xmlElement($name, $escape, $content [, $content ...] )</para>
+    <para><emphasis>Return a formatted XML tag and contents</emphasis></para>
+  </listItem> 
+ </itemizedList>
+</listItem>
+
+<listItem>
+  <para>Inca::Reporter::Version</para>
+  <para>The Inca::Reporter::Version module is used for reporting software versions.  This package 
+defines a common &lt;body&gt; schema for version reporters,  
+offers support for subpackage versions, and provides convenience methods for common ways of 
+determining version.</para>
+ <itemizedList>
+  <listItem><para>new([package_name => $str] [, package_version => $str])</para>
+    <para><emphasis>Constructor</emphasis></para>
+  </listItem> 
+  <listItem><para>getPackageName()</para> </listItem> 
+  <listItem><para>getPackageVersion()</para></listItem> 
+  <listItem><para>getSubpackageNames()</para></listItem> 
+  <listItem><para>getSubpackageVersion($name)</para></listItem> 
+  <listItem><para>setPackageName($name)</para></listItem> 
+  <listItem><para>setPackageVersion($version)</para></listItem> 
+  <listItem><para>setSubpackageVersion($name, $version)</para></listItem> 
+  <listItem><para>reportBody()</para>
+    <para><emphasis>Construct and return XML for the body of the report</emphasis></para>
+  </listItem> 
+  <listItem><para>setVersionByCompiledProgramOutput( code => $str [, compiler => $str] [, language => $str] [, out_switch => $str] [, pattern => $str] [, switches => $str] [, timeout => $int] )</para>
+    <para><emphasis>Compile and run a program; obtain version from a pattern in its stdout</emphasis></para>
+  </listItem> 
+  <listItem><para>setVersionByExecutable($command [, $pattern] [, $timeout])</para>
+    <para><emphasis>Run a program; obtain version from a pattern in its stdout</emphasis></para>
+  </listItem> 
+  <listItem><para>setVersionByFileContents($path [, $pattern])</para>
+    <para><emphasis>Obtain version by looking for a pattern in a file</emphasis></para>
+  </listItem> 
+  <listItem><para>setVersionByGptQuery($prefix [, $prefix])</para>
+    <para><emphasis>Obtain subpackage versions by looking for gpt packages that begin with certain prefixes</emphasis></para>
+  </listItem> 
+  <listItem><para>setVersionByRpmQuery($pattern)</para>
+    <para><emphasis>Obtain subpackage versions by looking for rpm packages matching a given pattern</emphasis></para>
+  </listItem> 
+ </itemizedList>
+</listItem>
+
+<listItem>
+  <para>Inca::Reporter::SimpleUnit</para>
+  <para>The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
+defines a common &lt;body&gt; schema for unit test reporters and provides methods for recording results of unit tests.</para>
+ <itemizedList>
+  <listItem><para>new([unit_name => $str])</para>
+    <para><emphasis>Constructor</emphasis></para>
+  </listItem> 
+  <listItem><para>getUnitName()</para></listItem> 
+  <listItem><para>setUnitName($name)</para></listItem> 
+  <listItem><para>reportBody()</para>
+    <para><emphasis>Construct and return XML for the body of the report</emphasis></para>
+  </listItem> 
+  <listItem><para>unitFailure($message)</para>
+    <para><emphasis>Indicate failure of the unit test</emphasis></para>
+  </listItem> 
+  <listItem><para>unitSuccessi($name)</para>
+    <para><emphasis>Indicate success of the unit test</emphasis></para>
+  </listItem> 
  </itemizedList>
 </listItem>
 
 <listItem>
   <para>Inca::Reporter::GlobusUnit</para>
+  <para>The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
+provides methods for running Globus jobs.</para>
  <itemizedList>
-  <listItem><para>submitCSource:  all named parameters, program parameter</para></listItem> 
-  <listItem><para>submitJob:  all named parameters, program parameter</para></listItem> 
+  <listItem><para>new()</para>
+    <para><emphasis>Constructor</emphasis></para>
+  </listItem> 
+  <listItem><para>submitCSource( code => $str [, arguments => $str] [, check => $int] [, cleanup => $bool] [, count => $int] [, debug => $bool] [, duroc => $bool] [, env => $str] [, host => $str] [, mpi => $bool] [, service => $str] [, timeout => $int] )</para>
+    <para><emphasis>Compile and submit a C program; return a two-element array of [stdout, stderr]</emphasis></para>
+  </listItem> 
+  <listItem><para>submitJob( executable => $str [, arguments => $str] [, check => $int] [, cleanup => $bool] [, count => $int] [, debug => $bool] [, duroc => $bool] [, env => $str] [, host => $str] [, mpi => $bool] [, remote => $bool] [, service => $str] [, timeout => $int] )</para>
+    <para><emphasis>Submit a job; return a two-element array of [stdout, stderr]</emphasis></para>
+  </listItem> 
  </itemizedList>
 </listItem>
  
 <listItem>
   <para>Inca::Reporter::Performance</para>
+  <para>The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
+defines a common &lt;body&gt; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
+parameters (name/value) and statistics (name/value/units).</para>
  <itemizedList>
-  <listItem><para>addBenchmark:  takes benchmark name as parameter</para></listItem> 
-  <listItem><para>getTestName:  accessor method</para></listItem> 
-  <listItem><para>reportBody:  overrides parent method</para></listItem> 
-  <listItem><para>setTestName:  accessor method</para></listItem> 
+  <listItem><para>new([test_name => $str])</para>
+    <para><emphasis>Constructor</emphasis></para>
+  </listItem> 
+  <listItem><para>addBenchmark($name, $benchmark)</para>
+    <para><emphasis>Add a benchmark to the list of those generated by the reporter</emphasis></para>
+  </listItem> 
+  <listItem><para>getTestName()</para></listItem> 
+  <listItem><para>setTestName($name)</para></listItem> 
+  <listItem><para>reportBody()</para>
+    <para><emphasis>Construct and return XML for the body of the report</emphasis></para>
+  </listItem> 
  </itemizedList>
 </listItem>
  
-<listItem>
-  <para>Inca::Reporter::SimpleUnit</para>
- <itemizedList>
-  <listItem><para>getUnitName:  accessor method</para></listItem> 
-  <listItem><para>reportBody:  overrides parent method</para></listItem> 
-  <listItem><para>setUnitName</para></listItem> 
-  <listItem><para>unitFailure</para></listItem> 
-  <listItem><para>unitSuccess</para></listItem> 
- </itemizedList>
-</listItem>
- 
-<listItem>
-  <para>Inca::Reporter::Version</para>
- <itemizedList>
-  <listItem><para>getPackageName:  accessor method</para></listItem> 
-  <listItem><para>getPackageVersion:  accessor method</para></listItem> 
-  <listItem><para>getSubpackageNames:  accessor method</para></listItem> 
-  <listItem><para>getSubpackageVersion:  accessor method</para></listItem> 
-  <listItem><para>reportBody:  overrides parent method</para></listItem> 
-  <listItem><para>setSubpackageVersion</para></listItem> 
-  <listItem><para>setVersionByCompiledProgramOutput</para></listItem> 
-  <listItem><para>setVersionByFileContents</para></listItem> 
-  <listItem><para>setPackageName</para></listItem> 
-  <listItem><para>setPackageVersion</para></listItem> 
-  <listItem><para>setVersionByExecutable:  $timeout parameter</para></listItem> 
-  <listItem><para>setVersionByGptQuery:  allows multiple prefixes</para></listItem> 
-  <listItem><para>setVersionByRpmQuery</para></listItem> 
- </itemizedList>
-</listItem>
 </orderedList>
 </section>
 </section>
