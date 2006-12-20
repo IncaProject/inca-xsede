@@ -2514,179 +2514,219 @@ TYPE="1"
 ><P
 >Inca::Reporter</P
 ><P
-></P
-><UL
-><LI
-><P
->addArg</P
-></LI
-><LI
-><P
->addDependency:  record package dependencies</P
-></LI
-><LI
-><P
->argValue</P
-></LI
-><LI
-><P
->argValues:  support for multiple command-line argument values</P
-></LI
-><LI
-><P
->compiledProgramOutput</P
-></LI
-><LI
-><P
->failPrintAndExit</P
-></LI
-><LI
-><P
->getBody</P
-></LI
-><LI
-><P
->getCompleted</P
-></LI
-><LI
-><P
->getDescription</P
-></LI
-><LI
-><P
->getFailMessage</P
-></LI
-><LI
-><P
->getUrl</P
-></LI
-><LI
-><P
->getVersion</P
-></LI
-><LI
-><P
->log</P
-></LI
-><LI
-><P
->loggedCommand</P
-></LI
-><LI
-><P
->print:  $verbose parameter</P
-></LI
-><LI
-><P
->processArgv</P
-></LI
-><LI
-><P
->report:  returns report XML</P
-></LI
-><LI
-><P
->reportBody:  constructs the contents of the report body</P
-></LI
-><LI
-><P
->setBody</P
-></LI
-><LI
-><P
->setCompleted</P
-></LI
-><LI
-><P
->setDescription</P
-></LI
-><LI
-><P
->setFailMessage</P
-></LI
-><LI
-><P
->setUrl</P
-></LI
-><LI
-><P
->setVersion</P
-></LI
-><LI
-><P
->tempFile:  register files for auto deletion</P
-></LI
-><LI
-><P
->xmlElement:  create pretty-printed XML tags</P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::GlobusUnit</P
+>This module is the general reporter API and is the base class for all types of reporters.
+Inca::Reporter automates determination of hostname, gmt, reporter name, etc.,  handles command-line parsing, 
+provides an interface for log messages, and handles XML generation.</P
 ><P
 ></P
 ><UL
 ><LI
 ><P
->submitCSource:  all named parameters, program parameter</P
-></LI
-><LI
+>new( [body =&#62; $str] [, completed =&#62; $bool] [, description =&#62; $str] [, fail_message =&#62; $str] [, url =&#62; $str] [, version =&#62; $str] ) </P
 ><P
->submitJob:  all named parameters, program parameter</P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::Performance</P
-><P
+><EM
+><FONT
+>Constructor</FONT
+></EM
 ></P
-><UL
-><LI
-><P
->addBenchmark:  takes benchmark name as parameter</P
 ></LI
 ><LI
 ><P
->getTestName:  accessor method</P
-></LI
-><LI
+>addArg( $name, $description [, $default [, $pattern]] )</P
 ><P
->reportBody:  overrides parent method</P
-></LI
-><LI
-><P
->setTestName:  accessor method</P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::SimpleUnit</P
-><P
+><EM
+><FONT
+>Add a reporter-specific command-line argument to those recognized</FONT
+></EM
 ></P
-><UL
-><LI
-><P
->getUnitName:  accessor method</P
 ></LI
 ><LI
 ><P
->reportBody:  overrides parent method</P
+>addDependency($package [, $package ...])</P
+><P
+><EM
+><FONT
+>Register reporter package dependencies</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->setUnitName</P
+>argValue($name [, $position])</P
+><P
+><EM
+><FONT
+>Retrieve a single command-line argument value</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->unitFailure</P
+>argValues($name)</P
+><P
+><EM
+><FONT
+>Retrieve an array of command-line argument values</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->unitSuccess</P
+>compiledProgramOutput(code =&#62; $str [, compiler =&#62; $str] [, language =&#62; $str] [, out_switch =&#62; $str]  [, switches =&#62; $str] [, timeout =&#62; $int])</P
+><P
+><EM
+><FONT
+>Compile and run a program; return stdout</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>failPrintAndExit($message)</P
+><P
+><EM
+><FONT
+>Exit after printing reporter failure XML</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>getBody()</P
+></LI
+><LI
+><P
+>getCompleted()</P
+></LI
+><LI
+><P
+>getDescription()</P
+></LI
+><LI
+><P
+>getFailMessage()</P
+></LI
+><LI
+><P
+>getUrl()</P
+></LI
+><LI
+><P
+>getVersion()</P
+></LI
+><LI
+><P
+>setBody($body)</P
+></LI
+><LI
+><P
+>setCompleted($completed)</P
+></LI
+><LI
+><P
+>setDescription($description)</P
+></LI
+><LI
+><P
+>setFailMessage($message)</P
+></LI
+><LI
+><P
+>setUrl($url)</P
+></LI
+><LI
+><P
+>setVersion($version)</P
+></LI
+><LI
+><P
+>log($type, $message [, $message ...])</P
+><P
+><EM
+><FONT
+>Add messages to the reporter log</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>loggedCommand($command [, $timeout])</P
+><P
+><EM
+><FONT
+>Log and run a command; return stdout</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>print([$verbose])</P
+><P
+><EM
+><FONT
+>Print the reporter XML</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>processArgv(@ARGV)</P
+><P
+><EM
+><FONT
+>Parse command-line arguments; handle -help and -version</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>report([$verbose])</P
+><P
+><EM
+><FONT
+>Construct and return reporter XML</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>reportBody()</P
+><P
+><EM
+><FONT
+>Abstract method for derived classes; constructs and returns the body XML</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>setResult($completed [, $message])</P
+><P
+><EM
+><FONT
+>Combines setCompleted &#38; setFailMessage</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>tempFile($path [, $path ...])</P
+><P
+><EM
+><FONT
+>Register files to be deleted on exit</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>xmlElement($name, $escape, $content [, $content ...] )</P
+><P
+><EM
+><FONT
+>Return a formatted XML tag and contents</FONT
+></EM
+></P
 ></LI
 ></UL
 ></LI
@@ -2694,59 +2734,260 @@ TYPE="1"
 ><P
 >Inca::Reporter::Version</P
 ><P
+>The Inca::Reporter::Version module is used for reporting software versions.  This package 
+defines a common &#60;body&#62; schema for version reporters,  
+offers support for subpackage versions, and provides convenience methods for common ways of 
+determining version.</P
+><P
 ></P
 ><UL
 ><LI
 ><P
->getPackageName:  accessor method</P
+>new([package_name =&#62; $str] [, package_version =&#62; $str])</P
+><P
+><EM
+><FONT
+>Constructor</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->getPackageVersion:  accessor method</P
+>getPackageName()</P
 ></LI
 ><LI
 ><P
->getSubpackageNames:  accessor method</P
+>getPackageVersion()</P
 ></LI
 ><LI
 ><P
->getSubpackageVersion:  accessor method</P
+>getSubpackageNames()</P
 ></LI
 ><LI
 ><P
->reportBody:  overrides parent method</P
+>getSubpackageVersion($name)</P
 ></LI
 ><LI
 ><P
->setSubpackageVersion</P
+>setPackageName($name)</P
 ></LI
 ><LI
 ><P
->setVersionByCompiledProgramOutput</P
+>setPackageVersion($version)</P
 ></LI
 ><LI
 ><P
->setVersionByFileContents</P
+>setSubpackageVersion($name, $version)</P
 ></LI
 ><LI
 ><P
->setPackageName</P
+>reportBody()</P
+><P
+><EM
+><FONT
+>Construct and return XML for the body of the report</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->setPackageVersion</P
+>setVersionByCompiledProgramOutput( code =&#62; $str [, compiler =&#62; $str] [, language =&#62; $str] [, out_switch =&#62; $str] [, pattern =&#62; $str] [, switches =&#62; $str] [, timeout =&#62; $int] )</P
+><P
+><EM
+><FONT
+>Compile and run a program; obtain version from a pattern in its stdout</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->setVersionByExecutable:  $timeout parameter</P
+>setVersionByExecutable($command [, $pattern] [, $timeout])</P
+><P
+><EM
+><FONT
+>Run a program; obtain version from a pattern in its stdout</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->setVersionByGptQuery:  allows multiple prefixes</P
+>setVersionByFileContents($path [, $pattern])</P
+><P
+><EM
+><FONT
+>Obtain version by looking for a pattern in a file</FONT
+></EM
+></P
 ></LI
 ><LI
 ><P
->setVersionByRpmQuery</P
+>setVersionByGptQuery($prefix [, $prefix])</P
+><P
+><EM
+><FONT
+>Obtain subpackage versions by looking for gpt packages that begin with certain prefixes</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>setVersionByRpmQuery($pattern)</P
+><P
+><EM
+><FONT
+>Obtain subpackage versions by looking for rpm packages matching a given pattern</FONT
+></EM
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::SimpleUnit</P
+><P
+>The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
+defines a common &#60;body&#62; schema for unit test reporters and provides methods for recording results of unit tests.</P
+><P
+></P
+><UL
+><LI
+><P
+>new([unit_name =&#62; $str])</P
+><P
+><EM
+><FONT
+>Constructor</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>getUnitName()</P
+></LI
+><LI
+><P
+>setUnitName($name)</P
+></LI
+><LI
+><P
+>reportBody()</P
+><P
+><EM
+><FONT
+>Construct and return XML for the body of the report</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>unitFailure($message)</P
+><P
+><EM
+><FONT
+>Indicate failure of the unit test</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>unitSuccessi($name)</P
+><P
+><EM
+><FONT
+>Indicate success of the unit test</FONT
+></EM
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::GlobusUnit</P
+><P
+>The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
+provides methods for running Globus jobs.</P
+><P
+></P
+><UL
+><LI
+><P
+>new()</P
+><P
+><EM
+><FONT
+>Constructor</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>submitCSource( code =&#62; $str [, arguments =&#62; $str] [, check =&#62; $int] [, cleanup =&#62; $bool] [, count =&#62; $int] [, debug =&#62; $bool] [, duroc =&#62; $bool] [, env =&#62; $str] [, host =&#62; $str] [, mpi =&#62; $bool] [, service =&#62; $str] [, timeout =&#62; $int] )</P
+><P
+><EM
+><FONT
+>Compile and submit a C program; return a two-element array of [stdout, stderr]</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>submitJob( executable =&#62; $str [, arguments =&#62; $str] [, check =&#62; $int] [, cleanup =&#62; $bool] [, count =&#62; $int] [, debug =&#62; $bool] [, duroc =&#62; $bool] [, env =&#62; $str] [, host =&#62; $str] [, mpi =&#62; $bool] [, remote =&#62; $bool] [, service =&#62; $str] [, timeout =&#62; $int] )</P
+><P
+><EM
+><FONT
+>Submit a job; return a two-element array of [stdout, stderr]</FONT
+></EM
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::Performance</P
+><P
+>The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
+defines a common &#60;body&#62; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
+parameters (name/value) and statistics (name/value/units).</P
+><P
+></P
+><UL
+><LI
+><P
+>new([test_name =&#62; $str])</P
+><P
+><EM
+><FONT
+>Constructor</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>addBenchmark($name, $benchmark)</P
+><P
+><EM
+><FONT
+>Add a benchmark to the list of those generated by the reporter</FONT
+></EM
+></P
+></LI
+><LI
+><P
+>getTestName()</P
+></LI
+><LI
+><P
+>setTestName($name)</P
+></LI
+><LI
+><P
+>reportBody()</P
+><P
+><EM
+><FONT
+>Construct and return XML for the body of the report</FONT
+></EM
+></P
 ></LI
 ></UL
 ></LI
