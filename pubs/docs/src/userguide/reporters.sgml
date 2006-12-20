@@ -23,9 +23,9 @@ Incorporating your own reporters into a running Inca installation requires only 
 including them in a repository (<xref linkend="reporter-repositories">), 
 and configuring the repository's series using incat (<xref linkend="userguide-incat">).  Most developers will execute reporters from the 
 command line before adding them to their Inca installation.   After installing Inca, you can try executing some of the reporters that come
-with the distribution:
+with the distribution from the command line:
 <screen>
-% cd Inca-Reporter-*/bin
+% cd $INCA_DIST/Inca-Reporter-*/bin
 % setenv PERL5LIB ../lib
 % ./cluster.compiler.gcc.version 
 </screen>
@@ -40,60 +40,58 @@ specific to that reporter's task.
 <tgroup cols="4">
 <thead>
   <row>
-    <entry>Argument</entry>
-    <entry>Valid Values</entry>
-    <entry>Default Value</entry>
-    <entry>Description</entry>
+    <entry><para>Argument</para></entry>
+    <entry><para>Valid Values</para></entry>
+    <entry><para>Default Value</para></entry>
+    <entry><para>Description</para></entry>
   </row>
 </thead>
 <tbody>
   <row>
-    <entry>-help</entry>
-    <entry>yes|no</entry>
-    <entry>no</entry>
-    <entry>
+    <entry><para>-help</para></entry>
+	    <entry><para>yes|no</para></entry>
+	    <entry><para>no</para></entry>
+    <entry><para>
     Do not run the reporter; instead, print information on running it.  If
     the value of the verbose argument is 0, this information will be readable
     text; otherwise, it will be reporter XML.
-    </entry>
+    </para></entry>
   </row><row>
-    <entry>-log</entry>
-    <entry>0-5|debug|error|info|system|warn</entry>
-    <entry>0</entry>
-    <entry>
+    <entry><para>-log</para></entry>
+    <entry><para>0-5|debug|error|info|system|warn</para></entry>
+    <entry><para>0</para></entry>
+    <entry><para>
     Include reporter log messages in the reporter output.  The named argument
     values indicate specific types of log messages that should be included.  0
     indicates no log messages should be included; the other numeric values
     indicate error, warn, system, info, and debug messages, cumulatively.  For
     example, --log=2 indicates both error and warn messages should be included,
     while --log=4 includes error, warn, system, and info messages.
-    </entry>
+    </para></entry>
   </row><row>
-    <entry>-verbose</entry>
-    <entry>0-2</entry>
-    <entry>1</entry>
-    <entry>
+    <entry><para>-verbose</para></entry>
+    <entry><para>0-2</para></entry>
+    <entry><para>1</para></entry>
+    <entry><para>
     Determine what the reporter prints.  A verbose level of 0 indicates that
     the reporter prints only 'completed' or 'failed', depending on the outcome
     of its testing.  Verbose level 1 produces XML that reports the testing
     result, and verbose level 2 adds additional tags to this XML to give
     instructions on running the reporter.
-    </entry>
+    </para></entry>
   </row><row>
-    <entry>-version</entry>
-    <entry>yes|no</entry>
-    <entry>no</entry>
-    <entry>
+    <entry><para>-version</para></entry>
+    <entry><para>yes|no</para></entry>
+    <entry><para>no</para></entry>
+    <entry><para>
     Do not run the reporter; instead, print its version number.
-    </entry>
+    </para></entry>
   </row>
 </tbody>
 </tgroup>
 </table>
-<para>You can also experiment with executing reporters using different arguments:
+<para>Executing a reporter using different arguments:
 <screen>
-% cd Inca-Reporter-*/bin
-% setenv PERL5LIB ../lib
 % ./cluster.compiler.gcc.version -log=3 
 % ./cluster.compiler.gcc.version -help=yes -verbose=0
 % ./cluster.compiler.gcc.version -version=yes
