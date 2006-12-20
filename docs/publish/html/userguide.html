@@ -2106,6 +2106,15 @@ SRC="figures/reporter-schema.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ></P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="REPORTER-OUTPUT"
+>8.2.2. Reporter XML Output</A
+></H4
 ><P
 >Here is the output from the successful run of a typical Inca reporter.  The
 content and meaning of the XML tags is described below.</P
@@ -2408,11 +2417,264 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-API"
->8.2.2. Reporter APIs</A
+>8.2.3. Reporter APIs</A
 ></H4
 ><P
->The Inca release includes a set of perl modules that make it much easier to
-develop reporters.  </P
+>The Inca release includes a set of Perl modules that make it much easier to
+develop reporters that produce output as shown in <A
+HREF="#REPORTER-OUTPUT"
+>Section 8.2.2</A
+>
+ and conform to the schema described in <A
+HREF="#REPORTER-SCHEMA"
+>Section 8.2.1</A
+>.  
+The following are a list of modules and their methods:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Inca::Reporter</P
+><P
+></P
+><UL
+><LI
+><P
+>addArg</P
+></LI
+><LI
+><P
+>addDependency:  record package dependencies</P
+></LI
+><LI
+><P
+>argValue</P
+></LI
+><LI
+><P
+>argValues:  support for multiple command-line argument values</P
+></LI
+><LI
+><P
+>compiledProgramOutput</P
+></LI
+><LI
+><P
+>failPrintAndExit</P
+></LI
+><LI
+><P
+>getBody</P
+></LI
+><LI
+><P
+>getCompleted</P
+></LI
+><LI
+><P
+>getDescription</P
+></LI
+><LI
+><P
+>getFailMessage</P
+></LI
+><LI
+><P
+>getUrl</P
+></LI
+><LI
+><P
+>getVersion</P
+></LI
+><LI
+><P
+>log</P
+></LI
+><LI
+><P
+>loggedCommand</P
+></LI
+><LI
+><P
+>print:  $verbose parameter</P
+></LI
+><LI
+><P
+>processArgv</P
+></LI
+><LI
+><P
+>report:  returns report XML</P
+></LI
+><LI
+><P
+>reportBody:  constructs the contents of the report body</P
+></LI
+><LI
+><P
+>setBody</P
+></LI
+><LI
+><P
+>setCompleted</P
+></LI
+><LI
+><P
+>setDescription</P
+></LI
+><LI
+><P
+>setFailMessage</P
+></LI
+><LI
+><P
+>setUrl</P
+></LI
+><LI
+><P
+>setVersion</P
+></LI
+><LI
+><P
+>tempFile:  register files for auto deletion</P
+></LI
+><LI
+><P
+>xmlElement:  create pretty-printed XML tags</P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::GlobusUnit</P
+><P
+></P
+><UL
+><LI
+><P
+>submitCSource:  all named parameters, program parameter</P
+></LI
+><LI
+><P
+>submitJob:  all named parameters, program parameter</P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::Performance</P
+><P
+></P
+><UL
+><LI
+><P
+>addBenchmark:  takes benchmark name as parameter</P
+></LI
+><LI
+><P
+>getTestName:  accessor method</P
+></LI
+><LI
+><P
+>reportBody:  overrides parent method</P
+></LI
+><LI
+><P
+>setTestName:  accessor method</P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::SimpleUnit</P
+><P
+></P
+><UL
+><LI
+><P
+>getUnitName:  accessor method</P
+></LI
+><LI
+><P
+>reportBody:  overrides parent method</P
+></LI
+><LI
+><P
+>setUnitName</P
+></LI
+><LI
+><P
+>unitFailure</P
+></LI
+><LI
+><P
+>unitSuccess</P
+></LI
+></UL
+></LI
+><LI
+><P
+>Inca::Reporter::Version</P
+><P
+></P
+><UL
+><LI
+><P
+>getPackageName:  accessor method</P
+></LI
+><LI
+><P
+>getPackageVersion:  accessor method</P
+></LI
+><LI
+><P
+>getSubpackageNames:  accessor method</P
+></LI
+><LI
+><P
+>getSubpackageVersion:  accessor method</P
+></LI
+><LI
+><P
+>reportBody:  overrides parent method</P
+></LI
+><LI
+><P
+>setSubpackageVersion</P
+></LI
+><LI
+><P
+>setVersionByCompiledProgramOutput</P
+></LI
+><LI
+><P
+>setVersionByFileContents</P
+></LI
+><LI
+><P
+>setPackageName</P
+></LI
+><LI
+><P
+>setPackageVersion</P
+></LI
+><LI
+><P
+>setVersionByExecutable:  $timeout parameter</P
+></LI
+><LI
+><P
+>setVersionByGptQuery:  allows multiple prefixes</P
+></LI
+><LI
+><P
+>setVersionByRpmQuery</P
+></LI
+></UL
+></LI
+></OL
 ></DIV
 ></DIV
 ><DIV
