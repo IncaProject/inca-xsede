@@ -1,22 +1,34 @@
 <section id="userguide-reporters">
 <title>Reporters and Repositories</title>
 
-<section id="reporter-introduction">
-<title>Introduction</title>
 <para>
 Inca reporters are executable programs and scripts, generally small, that test
-and report the health and characteristics of a system.  Because they are
-executables, Inca reporters are independent of the rest of the Inca system.
+and report the health and characteristics of a system.  Reporters can be written in any language as long as 
+they output XML according to the schema described in <xref linkend="reporter-schema">.  
+New reporter developers may choose to write reporters in Perl since 
+the Inca distribution includes sample Perl reporters and API modules for printing XML according to our schema.
+</para>
+<para>Because they are executables, Inca reporters are independent of the rest of the Inca system.
 Reporters can be run from the command line; their output analyzed by hand or by
-non-Inca tools.  Incorporating your own reporters into a running Inca system
-requires only writing the reporters and telling the Agent where to find them.
+non-Inca tools.  Incorporating your own reporters into a running Inca installation
+requires only writing the reporters (<xref linkend="reporter-writing">), 
+including them in a repository (<xref linkend="reporter-repositories">), 
+and configuring the repository's series using incat (<xref linkend="userguide-incat">).  The figure below 
+illustrates a typical Inca installation where reporters are retrieved from a repository and sent to Reporter 
+Managers on Grid resources by the Agent.  The Reporter Managers then execute the reporters based on series configuration from the 
+Agent and send the XML reports to the Depot for storage.
 <figure id="archi-reporters">
-  <title>Default Reporter Repository</title>
+  <title>Inca Reporters</title>
   <graphic fileref="figures/arch-reporters.jpg" align="center">
   </graphic>
 </figure>
 </para>
-</section>
+
+<section id="reporter-cmdline">
+<title>Executing Reporters</title>
+<para>
+Reporters can be executed manually from a command line or automatically as part of an Inca installation.  
+</para>
 
 <section id="reporter-arguments">
 <title>Reporter Arguments</title>
@@ -80,7 +92,11 @@ specific to that reporter's task.
 </tgroup>
 </table>
 </section>
+</section>
 
+<section id="reporter-writing">
+<title>Writing Reporters</title>
+<para> somthing about how to writing must know schema</para>
 <section id="reporter-schema">
 <title>Reporter XML Schema</title>
 <para>
@@ -112,6 +128,8 @@ groups provide for subclassing.
 Here is the output from the successful run of a typical Inca reporter.  The
 content and meaning of the XML tags is described below.
 </para>
+<figure id="sample-report">
+  <title>Example of Reporter Output</title>
 <screen>
 &lt;?xml version='1.0'?&gt;
 &lt;inca:report xmlns:inca='http://inca.sdsc.edu/dataModel/report_2.1'&gt;
@@ -150,41 +168,66 @@ content and meaning of the XML tags is described below.
   &lt;/exitStatus&gt;
 &lt;/inca:report&gt;
 </screen>
-
+</figure>
 <para>
-After any XML preamble, a &lt;report&gt; tag surrounds the reporter output.
-You can include a prefix with the tag name that references
+As shown in <xref linkend="sample-report">, reporter output begins with an XML preamble and it surrounded by &lt;report&gt; tags.
+A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
-the report schema.
+the report schema, can also be used.
 </para><para>
-The report header includes, in order, the time the reporter ran (&lt;gmt&gt;
-tag), the host where it ran (&lt;hostname&gt; tag), the name and version of the
-reporter (&lt;name&gt; and &lt;version&gt; tags) and the working directory and
-local path to the reporter for the run (&lt;workingDir&gt; and
-&lt;reporterPath&gt; tags).  The run time must be expressed in ISO 8601 format.
-</para><para>
-Following the report header is an &lt;args&gt; section that gives the name and
-value for reporter arguments.  This section must contain an entry for every
-argument the reporter supports, including those for which the reporter supplies
-a default value.
-</para><para>
-The &lt;body&gt; tag contains the results of the reporter testing.  The only
-requirement for the contents of this tag is that they must be well-formed
-XML--tags balanced and no extraneous &lt;, &gt;, and &amp; characters.  The
-example above shows the conventional body for version reporters.
-</para><para>
-The report concludes with the &lt;exitStatus&gt; section, which includes the
-boolean &lt;completed&gt; tag, indicating whether or not the reporter
-successfully completed its testing, and the optional &lt;errorMessage&gt; tag,
-which contains a string indicating why the reporter failed to complete.
-</para><para>
-Two optional report sections are not shown above.  Just before the &lt;body&gt;
-tag, the report can contain a &lt;log&gt; element that contains a set of log
-entries produced by the reporter.  The contents of this section is a series of
+The following tags are defined within a &lt;report&gt;:
+</para>
+
+<variablelist>
+  <varlistentry><term><filename>gmt</filename></term>
+  <listitem><para>
+  the time the reporter ran (ISO 8601 format)
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>hostname</filename></term>
+  <listitem><para>
+  host where reporter ran
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>name</filename></term>  
+  <listitem><para>
+  reporter name
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>version</filename></term>  
+  <listitem><para>
+  reporter version number
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>workingDir</filename></term>  
+  <listitem><para>
+  directory where reporter execution begins
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>reporterPath</filename></term>  
+  <listitem><para>
+  local path to reporter file
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>args</filename></term>
+  <listitem><para>
+	args must contain an arg name/value entry for every argument the reporter supports, 
+	including those for which the reporter supplies a default value (help, log, verbose, version)
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>log</filename></term>
+  <listitem><para>
+    OPTIONAL TAG (not shown in <xref linkend="sample-report"> report). Log entries produced by the reporter.  This tag contains one or more
 &lt;debug&gt;, &lt;error&gt;, &lt;info&gt;, &lt;system&gt;, and/or &lt;warn&gt;
 tags, each of which gives the text of the message and the time it was produced.
 Here is a typical example of a log section:
-</para>
 <screen>
   &lt;log&gt;
     &lt;system&gt;
@@ -193,10 +236,8 @@ Here is a typical example of a log section:
     &lt;/system&gt;
     &lt;debug&gt;
       &lt;gmt&gt;2006-11-17T18:28:10Z&lt;/gmt&gt;
-      &lt;message&gt;Checking for grid proxy:
-Result of command
-"grid-proxy-info":
-sh: line 1: grid-proxy-info: command not found
+      &lt;message&gt;Checking for grid proxy: Result of command "grid-proxy-info":
+         sh: line 1: grid-proxy-info: command not found
       &lt;/message&gt;
     &lt;/debug&gt;
     &lt;error&gt;
@@ -205,14 +246,33 @@ sh: line 1: grid-proxy-info: command not found
     &lt;/error&gt;
   &lt;/log&gt;
 </screen>
-<para>
-After the &lt;exitStatus&gt; section, a report may contain a &lt;help&gt;
-section that describes the reporter and how to run it.  The contents include
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>body</filename></term>
+  <listitem><para>
+    The body tag contains the results of the reporter testing.  The only
+requirement for the contents of this tag is that they must be well-formed
+XML--tags balanced and no extraneous &lt;, &gt;, and &amp; characters.  <xref linkend="sample-report">
+shows the conventional body for version reporters.
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>exitStatus</filename></term>
+  <listitem><para>
+Includes the boolean &lt;completed&gt; tag, indicating whether or not the reporter
+successfully completed its testing, and the optional &lt;errorMessage&gt; tag,
+which contains a string indicating why the reporter failed to complete.
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>help</filename></term>
+  <listitem><para>
+    OPTIONAL TAG (not shown in <xref linkend="sample-report"> report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
 packages.  For example, here is the &lt;help&gt; section for the gcc version
 reporter.
-</para>
 <screen>
   &lt;help&gt;
     &lt;ID&gt;help&lt;/ID&gt;
@@ -252,13 +312,18 @@ reporter.
     &lt;/dependency&gt;
   &lt;/help&gt;
 </screen>
+  </para> </listitem>
+  </varlistentry>
+</variablelist>
 
+</section>
+<section id="reporter-api">
+<title>Reporter APIs</title>
 <para>
 The Inca release includes a set of perl modules that make it much easier to
-develop reporters.  For information on the APIs these modules provide, look
-over the module text or see the online documentation at TODO ref.
+develop reporters.  
 </para>
-
+</section>
 </section>
 
 <section id="reporter-repositories">
