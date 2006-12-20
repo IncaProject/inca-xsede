@@ -122,21 +122,16 @@ HREF="#USERGUIDE-REPORTERS"
 ><DL
 ><DT
 >8.1. <A
-HREF="#REPORTER-INTRODUCTION"
->Introduction</A
+HREF="#REPORTER-CMDLINE"
+>Executing Reporters</A
 ></DT
 ><DT
 >8.2. <A
-HREF="#REPORTER-ARGUMENTS"
->Reporter Arguments</A
+HREF="#REPORTER-WRITING"
+>Writing Reporters</A
 ></DT
 ><DT
 >8.3. <A
-HREF="#REPORTER-SCHEMA"
->Reporter XML Schema</A
-></DT
-><DT
->8.4. <A
 HREF="#REPORTER-REPOSITORIES"
 >Reporter Repositories</A
 ></DT
@@ -238,7 +233,7 @@ SRC="figures/ug-report-icon.png"></P
 > is the output of a reporter and is a XML
   document complying to the reporter schema in <A
 HREF="#REPORTER-SCHEMA"
->Section 8.3</A
+>Section 8.2.1</A
 >.
   </P
 ></TD
@@ -1899,21 +1894,34 @@ CLASS="SECTION"
 NAME="USERGUIDE-REPORTERS"
 >8. Reporters and Repositories</A
 ></H2
-><DIV
-CLASS="SECTION"
-><H3
-CLASS="SECTION"
-><A
-NAME="REPORTER-INTRODUCTION"
->8.1. Introduction</A
-></H3
 ><P
 >Inca reporters are executable programs and scripts, generally small, that test
-and report the health and characteristics of a system.  Because they are
-executables, Inca reporters are independent of the rest of the Inca system.
+and report the health and characteristics of a system.  Reporters can be written in any language as long as 
+they output XML according to the schema described in <A
+HREF="#REPORTER-SCHEMA"
+>Section 8.2.1</A
+>.  
+New reporter developers may choose to write reporters in Perl since 
+the Inca distribution includes sample Perl reporters and API modules for printing XML according to our schema.</P
+><P
+>Because they are executables, Inca reporters are independent of the rest of the Inca system.
 Reporters can be run from the command line; their output analyzed by hand or by
-non-Inca tools.  Incorporating your own reporters into a running Inca system
-requires only writing the reporters and telling the Agent where to find them.
+non-Inca tools.  Incorporating your own reporters into a running Inca installation
+requires only writing the reporters (<A
+HREF="#REPORTER-WRITING"
+>Section 8.2</A
+>), 
+including them in a repository (<A
+HREF="#REPORTER-REPOSITORIES"
+>Section 8.3</A
+>), 
+and configuring the repository's series using incat (<A
+HREF="#USERGUIDE-INCAT"
+>Section 6</A
+>).  The figure below 
+illustrates a typical Inca installation where reporters are retrieved from a repository and sent to Reporter 
+Managers on Grid resources by the Agent.  The Reporter Managers then execute the reporters based on series configuration from the 
+Agent and send the XML reports to the Depot for storage.
 <DIV
 CLASS="FIGURE"
 ><A
@@ -1921,7 +1929,7 @@ NAME="ARCHI-REPORTERS"
 ></A
 ><P
 ><B
->Figure 10. Default Reporter Repository</B
+>Figure 10. Inca Reporters</B
 ></P
 ><P
 ><IMG
@@ -1929,15 +1937,24 @@ SRC="figures/arch-reporters.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ></P
-></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="REPORTER-ARGUMENTS"
->8.2. Reporter Arguments</A
+NAME="REPORTER-CMDLINE"
+>8.1. Executing Reporters</A
 ></H3
+><P
+>Reporters can be executed manually from a command line or automatically as part of an Inca installation.  </P
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="REPORTER-ARGUMENTS"
+>8.1.1. Reporter Arguments</A
+></H4
 ><P
 >All Inca reporters must support the command line arguments listed in the table
 below.  In addition, a reporter may support additional command line arguments
@@ -1945,7 +1962,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN362"
+NAME="AEN368"
 ></A
 ><P
 ><B
@@ -2026,14 +2043,25 @@ CLASS="CALSTABLE"
 ></TABLE
 ></DIV
 ></DIV
+></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="REPORTER-SCHEMA"
->8.3. Reporter XML Schema</A
+NAME="REPORTER-WRITING"
+>8.2. Writing Reporters</A
 ></H3
+><P
+> somthing about how to writing must know schema</P
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="REPORTER-SCHEMA"
+>8.2.1. Reporter XML Schema</A
+></H4
 ><P
 >In order to promote interoperability between reporters, we define a
 specification for how reporter output should be formatted.  Given the
@@ -2081,6 +2109,15 @@ ALIGN="CENTER"></P
 ><P
 >Here is the output from the successful run of a typical Inca reporter.  The
 content and meaning of the XML tags is described below.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="SAMPLE-REPORT"
+></A
+><P
+><B
+>Figure 12. Example of Reporter Output</B
+></P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -2131,43 +2168,111 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+></DIV
 ><P
->After any XML preamble, a &#60;report&#62; tag surrounds the reporter output.
-You can include a prefix with the tag name that references
+>As shown in <A
+HREF="#SAMPLE-REPORT"
+>Figure 12</A
+>, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
+A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
-the report schema.</P
+the report schema, can also be used.</P
 ><P
->The report header includes, in order, the time the reporter ran (&#60;gmt&#62;
-tag), the host where it ran (&#60;hostname&#62; tag), the name and version of the
-reporter (&#60;name&#62; and &#60;version&#62; tags) and the working directory and
-local path to the reporter for the run (&#60;workingDir&#62; and
-&#60;reporterPath&#62; tags).  The run time must be expressed in ISO 8601 format.</P
+>The following tags are defined within a &#60;report&#62;:</P
 ><P
->Following the report header is an &#60;args&#62; section that gives the name and
-value for reporter arguments.  This section must contain an entry for every
-argument the reporter supports, including those for which the reporter supplies
-a default value.</P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>gmt</TT
+></DT
+><DD
 ><P
->The &#60;body&#62; tag contains the results of the reporter testing.  The only
-requirement for the contents of this tag is that they must be well-formed
-XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  The
-example above shows the conventional body for version reporters.</P
+>  the time the reporter ran (ISO 8601 format)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>hostname</TT
+></DT
+><DD
 ><P
->The report concludes with the &#60;exitStatus&#62; section, which includes the
-boolean &#60;completed&#62; tag, indicating whether or not the reporter
-successfully completed its testing, and the optional &#60;errorMessage&#62; tag,
-which contains a string indicating why the reporter failed to complete.</P
+>  host where reporter ran
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>name</TT
+></DT
+><DD
 ><P
->Two optional report sections are not shown above.  Just before the &#60;body&#62;
-tag, the report can contain a &#60;log&#62; element that contains a set of log
-entries produced by the reporter.  The contents of this section is a series of
+>  reporter name
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>version</TT
+></DT
+><DD
+><P
+>  reporter version number
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>workingDir</TT
+></DT
+><DD
+><P
+>  directory where reporter execution begins
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>reporterPath</TT
+></DT
+><DD
+><P
+>  local path to reporter file
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>args</TT
+></DT
+><DD
+><P
+>	args must contain an arg name/value entry for every argument the reporter supports, 
+	including those for which the reporter supplies a default value (help, log, verbose, version)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>log</TT
+></DT
+><DD
+><P
+>    OPTIONAL TAG (not shown in <A
+HREF="#SAMPLE-REPORT"
+>Figure 12</A
+> report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
-Here is a typical example of a log section:</P
-><TABLE
+Here is a typical example of a log section:
+<TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -2181,10 +2286,8 @@ CLASS="SCREEN"
     &#60;/system&#62;
     &#60;debug&#62;
       &#60;gmt&#62;2006-11-17T18:28:10Z&#60;/gmt&#62;
-      &#60;message&#62;Checking for grid proxy:
-Result of command
-"grid-proxy-info":
-sh: line 1: grid-proxy-info: command not found
+      &#60;message&#62;Checking for grid proxy: Result of command "grid-proxy-info":
+         sh: line 1: grid-proxy-info: command not found
       &#60;/message&#62;
     &#60;/debug&#62;
     &#60;error&#62;
@@ -2196,17 +2299,56 @@ sh: line 1: grid-proxy-info: command not found
 ></TD
 ></TR
 ></TABLE
+>
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>body</TT
+></DT
+><DD
 ><P
->After the &#60;exitStatus&#62; section, a report may contain a &#60;help&#62;
-section that describes the reporter and how to run it.  The contents include
+>    The body tag contains the results of the reporter testing.  The only
+requirement for the contents of this tag is that they must be well-formed
+XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
+HREF="#SAMPLE-REPORT"
+>Figure 12</A
+>
+shows the conventional body for version reporters.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>exitStatus</TT
+></DT
+><DD
+><P
+>Includes the boolean &#60;completed&#62; tag, indicating whether or not the reporter
+successfully completed its testing, and the optional &#60;errorMessage&#62; tag,
+which contains a string indicating why the reporter failed to complete.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>help</TT
+></DT
+><DD
+><P
+>    OPTIONAL TAG (not shown in <A
+HREF="#SAMPLE-REPORT"
+>Figure 12</A
+> report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
 packages.  For example, here is the &#60;help&#62; section for the gcc version
-reporter.</P
-><TABLE
+reporter.
+<TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -2254,10 +2396,24 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+>
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="REPORTER-API"
+>8.2.2. Reporter APIs</A
+></H4
 ><P
 >The Inca release includes a set of perl modules that make it much easier to
-develop reporters.  For information on the APIs these modules provide, look
-over the module text or see the online documentation at TODO ref.</P
+develop reporters.  </P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2265,7 +2421,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-REPOSITORIES"
->8.4. Reporter Repositories</A
+>8.3. Reporter Repositories</A
 ></H3
 ><P
 >The Inca system retrieves reporters from external collections called
