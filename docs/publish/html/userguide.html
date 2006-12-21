@@ -1362,6 +1362,11 @@ NAME="USERGUIDE-INCAT-INTRODUCTION"
   to configure your deployment.  Using incat, you can specify the repositories
   from which Inca should retrieve reporters, the hosts where you wish to
   run reporters, and which reporters you wish to run on each host.
+  <P
+><IMG
+SRC="figures/arch-incat.jpg"
+ALIGN="CENTER"></P
+>
   </P
 ><P
 >  The simplest way to run incat is via the inca command line tool: "inca
@@ -1583,7 +1588,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN286"
+NAME="AEN287"
 ></A
 ><P
 ><B
@@ -1595,69 +1600,107 @@ CLASS="CALSTABLE"
 ><COL><COL><COL><THEAD
 ><TR
 ><TH
->Reporter</TH
+><P
+>Reporter</P
+></TH
 ><TH
->Nickname</TH
+><P
+>Nickname</P
+></TH
 ><TH
->Arguments</TH
+><P
+>Arguments</P
+></TH
 ></TR
 ></THEAD
 ><TBODY
 ><TR
 ><TD
->cluster.compiler.gcc.version</TD
+><P
+>cluster.compiler.gcc.version</P
+></TD
 ><TD
->gcc_version</TD
-><TD
->&nbsp;</TD
-></TR
-><TR
-><TD
->cluster.security.openssl.version</TD
-><TD
->openssl_version</TD
+><P
+>gcc_version</P
+></TD
 ><TD
 >&nbsp;</TD
 ></TR
 ><TR
 ><TD
->cluster.interactive_access.openssh.version</TD
+><P
+>cluster.security.openssl.version</P
+></TD
 ><TD
->openssh_version</TD
-><TD
->&nbsp;</TD
-></TR
-><TR
-><TD
->cluster.interactive_access.openssh.unit</TD
-><TD
->openssh_to_localhost</TD
-><TD
->host: localhost; login: inca</TD
-></TR
-><TR
-><TD
->viz.lib.vtk-nvgl.version</TD
-><TD
->vtk-nvgl_version</TD
+><P
+>openssl_version</P
+></TD
 ><TD
 >&nbsp;</TD
 ></TR
 ><TR
 ><TD
->viz.lib.chromium.version</TD
+><P
+>cluster.interactive_access.openssh.version</P
+></TD
 ><TD
->chromium_version</TD
+><P
+>openssh_version</P
+></TD
 ><TD
 >&nbsp;</TD
 ></TR
 ><TR
 ><TD
->cluster.compiler.any.unit</TD
+><P
+>cluster.interactive_access.openssh.unit</P
+></TD
 ><TD
->java_hello_world</TD
+><P
+>openssh_to_localhost</P
+></TD
 ><TD
->compiler: javac; lang: java</TD
+><P
+>host: localhost; login: inca</P
+></TD
+></TR
+><TR
+><TD
+><P
+>viz.lib.vtk-nvgl.version</P
+></TD
+><TD
+><P
+>vtk-nvgl_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>viz.lib.chromium.version</P
+></TD
+><TD
+><P
+>chromium_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>cluster.compiler.any.unit</P
+></TD
+><TD
+><P
+>java_hello_world</P
+></TD
+><TD
+><P
+>compiler: javac; lang: java</P
+></TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1884,7 +1927,12 @@ NAME="USERGUIDE-CONSUMER"
 >7. Inca Web Data Consumer</A
 ></H2
 ><P
->TODO: description of the data consumers that Inca provides.</P
+>TODO: description of the data consumers that Inca provides.
+<P
+><IMG
+SRC="figures/arch-consumer.jpg"
+ALIGN="CENTER"></P
+></P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1900,20 +1948,10 @@ and report the health and characteristics of a system.  The figure below
 illustrates a typical Inca installation where reporters are retrieved from a repository and sent to Reporter 
 Managers on Grid resources by the Agent.  The Reporter Managers then execute the reporters based on series configuration from the 
 Agent and send the XML reports to the Depot for storage.
-<DIV
-CLASS="FIGURE"
-><A
-NAME="ARCHI-REPORTERS"
-></A
-><P
-><B
->Figure 10. Inca Reporters</B
-></P
-><P
+  <P
 ><IMG
 SRC="figures/arch-reporters.jpg"
 ALIGN="CENTER"></P
-></DIV
 ></P
 ><DIV
 CLASS="SECTION"
@@ -1969,7 +2007,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN366"
+NAME="AEN385"
 ></A
 ><P
 ><B
@@ -2156,7 +2194,7 @@ groups provide for subclassing.  </P
 ><P
 >The reporter schema is visualized in <A
 HREF="#REPORTER-SCHEMA-FIG"
->Figure 11</A
+>Figure 10</A
 >.
 <DIV
 CLASS="FIGURE"
@@ -2165,7 +2203,7 @@ NAME="REPORTER-SCHEMA-FIG"
 ></A
 ><P
 ><B
->Figure 11. Inca Reporter Schema</B
+>Figure 10. Inca Reporter Schema</B
 ></P
 ><P
 ><IMG
@@ -2192,7 +2230,7 @@ NAME="SAMPLE-REPORT"
 ></A
 ><P
 ><B
->Figure 12. Example of Reporter Output</B
+>Figure 11. Example of Reporter Output</B
 ></P
 ><TABLE
 BORDER="1"
@@ -2248,7 +2286,7 @@ CLASS="SCREEN"
 ><P
 >As shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 12</A
+>Figure 11</A
 >, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
 A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
@@ -2340,7 +2378,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 12</A
+>Figure 11</A
 > report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
@@ -2389,7 +2427,7 @@ CLASS="FILENAME"
 requirement for the contents of this tag is that they must be well-formed
 XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
 HREF="#SAMPLE-REPORT"
->Figure 12</A
+>Figure 11</A
 >
 shows the conventional body for version reporters.
   </P
@@ -2415,7 +2453,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 12</A
+>Figure 11</A
 > report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
@@ -2487,7 +2525,11 @@ NAME="REPORTER-API"
 >8.2.3. Reporter APIs</A
 ></H4
 ><P
->The Inca release includes a set of Perl modules that make it easier to
+>The Inca release includes a set of <A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/"
+TARGET="_top"
+>Perl modules</A
+> that make it easier to
 develop reporters that produce output as shown in <A
 HREF="#REPORTER-OUTPUT"
 >Section 8.2.2</A
@@ -2496,497 +2538,99 @@ HREF="#REPORTER-OUTPUT"
 HREF="#REPORTER-SCHEMA"
 >Section 8.2.1</A
 >.  
-The following are a list of modules and their methods:</P
+The following are a list of modules and their purpose (click on module names for manpages):</P
 ><P
 ></P
 ><OL
 TYPE="1"
 ><LI
 ><P
->Inca::Reporter</P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter.html"
+TARGET="_top"
+>Inca::Reporter</A
+></P
 ><P
 >This module is the general reporter API and is the base class for all types of reporters.
 Inca::Reporter automates determination of hostname, gmt, reporter name, etc.,  handles command-line parsing, 
 provides an interface for log messages, and handles XML generation.</P
+></LI
+><LI
 ><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/GlobusUnit.html"
+TARGET="_top"
+>Inca::Reporter::GlobusUnit</A
 ></P
-><UL
+><P
+>The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
+provides methods for running Globus jobs.</P
+></LI
 ><LI
 ><P
->new( [body =&#62; $str] [, completed =&#62; $bool] [, description =&#62; $str] [, fail_message =&#62; $str] [, url =&#62; $str] [, version =&#62; $str] ) </P
-><P
-><EM
-><FONT
->Constructor</FONT
-></EM
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/GridProxy.html"
+TARGET="_top"
+>Inca::Reporter::GridProxy</A
 ></P
+><P
+>The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.</P
 ></LI
 ><LI
 ><P
->addArg( $name, $description [, $default [, $pattern]] )</P
-><P
-><EM
-><FONT
->Add a reporter-specific command-line argument to those recognized</FONT
-></EM
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Performance.html"
+TARGET="_top"
+>Inca::Reporter::Performance</A
 ></P
+><P
+>The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
+defines a common &#60;body&#62; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
+parameters (name/value) and statistics (name/value/units). For a single benchmark, the <A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Performance/Benchmark.html"
+TARGET="_top"
+>Inca::Test::Reporter::Performance::Benchmark</A
+> module is also available.</P
 ></LI
 ><LI
 ><P
->addDependency($package [, $package ...])</P
-><P
-><EM
-><FONT
->Register reporter package dependencies</FONT
-></EM
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/SimpleUnit.html"
+TARGET="_top"
+>Inca::Reporter::SimpleUnit</A
 ></P
+><P
+>The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
+defines a common &#60;body&#62; schema for unit test reporters and provides methods for recording results of unit tests.</P
 ></LI
 ><LI
 ><P
->argValue($name [, $position])</P
-><P
-><EM
-><FONT
->Retrieve a single command-line argument value</FONT
-></EM
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Usage.html"
+TARGET="_top"
+>Inca::Reporter::Usage</A
 ></P
+><P
+>The Inca::Reporter::Usage module is used for creating simple usage reports.</P
 ></LI
 ><LI
 ><P
->argValues($name)</P
-><P
-><EM
-><FONT
->Retrieve an array of command-line argument values</FONT
-></EM
+><A
+HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Version.html"
+TARGET="_top"
+>Inca::Reporter::Version</A
 ></P
-></LI
-><LI
-><P
->compiledProgramOutput(code =&#62; $str [, compiler =&#62; $str] [, language =&#62; $str] [, out_switch =&#62; $str]  [, switches =&#62; $str] [, timeout =&#62; $int])</P
-><P
-><EM
-><FONT
->Compile and run a program; return stdout</FONT
-></EM
-></P
-></LI
-><LI
-><P
->failPrintAndExit($message)</P
-><P
-><EM
-><FONT
->Exit after printing reporter failure XML</FONT
-></EM
-></P
-></LI
-><LI
-><P
->getBody()</P
-></LI
-><LI
-><P
->getCompleted()</P
-></LI
-><LI
-><P
->getDescription()</P
-></LI
-><LI
-><P
->getFailMessage()</P
-></LI
-><LI
-><P
->getUrl()</P
-></LI
-><LI
-><P
->getVersion()</P
-></LI
-><LI
-><P
->setBody($body)</P
-></LI
-><LI
-><P
->setCompleted($completed)</P
-></LI
-><LI
-><P
->setDescription($description)</P
-></LI
-><LI
-><P
->setFailMessage($message)</P
-></LI
-><LI
-><P
->setUrl($url)</P
-></LI
-><LI
-><P
->setVersion($version)</P
-></LI
-><LI
-><P
->log($type, $message [, $message ...])</P
-><P
-><EM
-><FONT
->Add messages to the reporter log</FONT
-></EM
-></P
-></LI
-><LI
-><P
->loggedCommand($command [, $timeout])</P
-><P
-><EM
-><FONT
->Log and run a command; return stdout</FONT
-></EM
-></P
-></LI
-><LI
-><P
->print([$verbose])</P
-><P
-><EM
-><FONT
->Print the reporter XML</FONT
-></EM
-></P
-></LI
-><LI
-><P
->processArgv(@ARGV)</P
-><P
-><EM
-><FONT
->Parse command-line arguments; handle -help and -version</FONT
-></EM
-></P
-></LI
-><LI
-><P
->report([$verbose])</P
-><P
-><EM
-><FONT
->Construct and return reporter XML</FONT
-></EM
-></P
-></LI
-><LI
-><P
->reportBody()</P
-><P
-><EM
-><FONT
->Abstract method for derived classes; constructs and returns the body XML</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setResult($completed [, $message])</P
-><P
-><EM
-><FONT
->Combines setCompleted &#38; setFailMessage</FONT
-></EM
-></P
-></LI
-><LI
-><P
->tempFile($path [, $path ...])</P
-><P
-><EM
-><FONT
->Register files to be deleted on exit</FONT
-></EM
-></P
-></LI
-><LI
-><P
->xmlElement($name, $escape, $content [, $content ...] )</P
-><P
-><EM
-><FONT
->Return a formatted XML tag and contents</FONT
-></EM
-></P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::Version</P
 ><P
 >The Inca::Reporter::Version module is used for reporting software versions.  This package 
 defines a common &#60;body&#62; schema for version reporters,  
 offers support for subpackage versions, and provides convenience methods for common ways of 
 determining version.</P
-><P
-></P
-><UL
-><LI
-><P
->new([package_name =&#62; $str] [, package_version =&#62; $str])</P
-><P
-><EM
-><FONT
->Constructor</FONT
-></EM
-></P
-></LI
-><LI
-><P
->getPackageName()</P
-></LI
-><LI
-><P
->getPackageVersion()</P
-></LI
-><LI
-><P
->getSubpackageNames()</P
-></LI
-><LI
-><P
->getSubpackageVersion($name)</P
-></LI
-><LI
-><P
->setPackageName($name)</P
-></LI
-><LI
-><P
->setPackageVersion($version)</P
-></LI
-><LI
-><P
->setSubpackageVersion($name, $version)</P
-></LI
-><LI
-><P
->reportBody()</P
-><P
-><EM
-><FONT
->Construct and return XML for the body of the report</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setVersionByCompiledProgramOutput( code =&#62; $str [, compiler =&#62; $str] [, language =&#62; $str] [, out_switch =&#62; $str] [, pattern =&#62; $str] [, switches =&#62; $str] [, timeout =&#62; $int] )</P
-><P
-><EM
-><FONT
->Compile and run a program; obtain version from a pattern in its stdout</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setVersionByExecutable($command [, $pattern] [, $timeout])</P
-><P
-><EM
-><FONT
->Run a program; obtain version from a pattern in its stdout</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setVersionByFileContents($path [, $pattern])</P
-><P
-><EM
-><FONT
->Obtain version by looking for a pattern in a file</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setVersionByGptQuery($prefix [, $prefix])</P
-><P
-><EM
-><FONT
->Obtain subpackage versions by looking for gpt packages that begin with certain prefixes</FONT
-></EM
-></P
-></LI
-><LI
-><P
->setVersionByRpmQuery($pattern)</P
-><P
-><EM
-><FONT
->Obtain subpackage versions by looking for rpm packages matching a given pattern</FONT
-></EM
-></P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::SimpleUnit</P
-><P
->The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
-defines a common &#60;body&#62; schema for unit test reporters and provides methods for recording results of unit tests.</P
-><P
-></P
-><UL
-><LI
-><P
->new([unit_name =&#62; $str])</P
-><P
-><EM
-><FONT
->Constructor</FONT
-></EM
-></P
-></LI
-><LI
-><P
->getUnitName()</P
-></LI
-><LI
-><P
->setUnitName($name)</P
-></LI
-><LI
-><P
->reportBody()</P
-><P
-><EM
-><FONT
->Construct and return XML for the body of the report</FONT
-></EM
-></P
-></LI
-><LI
-><P
->unitFailure($message)</P
-><P
-><EM
-><FONT
->Indicate failure of the unit test</FONT
-></EM
-></P
-></LI
-><LI
-><P
->unitSuccessi($name)</P
-><P
-><EM
-><FONT
->Indicate success of the unit test</FONT
-></EM
-></P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::GlobusUnit</P
-><P
->The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
-provides methods for running Globus jobs.</P
-><P
-></P
-><UL
-><LI
-><P
->new()</P
-><P
-><EM
-><FONT
->Constructor</FONT
-></EM
-></P
-></LI
-><LI
-><P
->submitCSource( code =&#62; $str [, arguments =&#62; $str] [, check =&#62; $int] [, cleanup =&#62; $bool] [, count =&#62; $int] [, debug =&#62; $bool] [, duroc =&#62; $bool] [, env =&#62; $str] [, host =&#62; $str] [, mpi =&#62; $bool] [, service =&#62; $str] [, timeout =&#62; $int] )</P
-><P
-><EM
-><FONT
->Compile and submit a C program; return a two-element array of [stdout, stderr]</FONT
-></EM
-></P
-></LI
-><LI
-><P
->submitJob( executable =&#62; $str [, arguments =&#62; $str] [, check =&#62; $int] [, cleanup =&#62; $bool] [, count =&#62; $int] [, debug =&#62; $bool] [, duroc =&#62; $bool] [, env =&#62; $str] [, host =&#62; $str] [, mpi =&#62; $bool] [, remote =&#62; $bool] [, service =&#62; $str] [, timeout =&#62; $int] )</P
-><P
-><EM
-><FONT
->Submit a job; return a two-element array of [stdout, stderr]</FONT
-></EM
-></P
-></LI
-></UL
-></LI
-><LI
-><P
->Inca::Reporter::Performance</P
-><P
->The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
-defines a common &#60;body&#62; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
-parameters (name/value) and statistics (name/value/units).</P
-><P
-></P
-><UL
-><LI
-><P
->new([test_name =&#62; $str])</P
-><P
-><EM
-><FONT
->Constructor</FONT
-></EM
-></P
-></LI
-><LI
-><P
->addBenchmark($name, $benchmark)</P
-><P
-><EM
-><FONT
->Add a benchmark to the list of those generated by the reporter</FONT
-></EM
-></P
-></LI
-><LI
-><P
->getTestName()</P
-></LI
-><LI
-><P
->setTestName($name)</P
-></LI
-><LI
-><P
->reportBody()</P
-><P
-><EM
-><FONT
->Construct and return XML for the body of the report</FONT
-></EM
-></P
-></LI
-></UL
 ></LI
 ></OL
 ><P
 >The following is the Perl code for a reporter that produces output like <A
 HREF="#SAMPLE-REPORT"
->Figure 12</A
+>Figure 11</A
 >.  This reporter 
 uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
