@@ -694,7 +694,8 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->Generating a 512 bit RSA private key
+>password&#62; (choose a password for the administration of your Inca installation)
+Generating a 512 bit RSA private key
 .++++++++++++
 writing new private key to 'clientx.sdsc.edukey.pem'
 -----
@@ -718,7 +719,14 @@ NAME="QS-STEP5"
 ></A
 ><P
 >    Start the Inca server components and deploy the sample default
-    configuration.  The Inca server components are agent, depot, and consumer
+    configuration (<STRONG
+><FONT
+COLOR="RED"
+>NOTE:</FONT
+></STRONG
+> this command only needs to 
+be executed ONCE.  The components started in this step can later be stopped with "./bin/inca stop all" and started with 
+"./bin/inca start all").  The Inca server components are agent, depot, and consumer
     and will be started on ports 6323, 6324, and 8080 respectively.  Please
     edit the inca.properties file in etc/common to change these defaults.
     More information can be found in <A
@@ -753,7 +761,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->password&#62; (choose a password for the administration of your Inca installation)
+>password&#62; (enter password from the last step)
 Preparing to deploy default Inca configuration...
 Initializing Inca configuration...
 ** Warning:  this will erase any previously collected reporter
@@ -794,7 +802,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ps x | grep java
+>% ps | grep java
  3527  p1  S      0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l /inca-dist/./bin/../var/agent.log
  3560  p1  S      0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l /inca-dist/./bin/../var/depot.log
  3593  p1  S      0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer -l /inca-dist/./bin/../var/consumer.log</PRE
@@ -848,7 +856,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ps x | grep Manager
+>% ps | grep Manager
  5382  p1  S      0:02.14 /usr/bin/perl /home/incaReporterManager/sbin/../sbin/reporter-manager -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.</PRE
 ></FONT
 ></TD
@@ -1574,7 +1582,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN285"
+NAME="AEN286"
 ></A
 ><P
 ><B
@@ -1979,7 +1987,7 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >&#60;reportSummary&#62;
-  &#60;hostname&#62;Kate-Ericsons-Computer.local&#60;/hostname&#62;
+  &#60;hostname&#62;Computer.local&#60;/hostname&#62;
   &#60;uri&#62;http://repository/compiler.any.unit&#60;/uri&#62;
   &#60;nickname&#62;java_hello_world&#60;/nickname&#62;
   &#60;seriesConfigId&#62;5&#60;/seriesConfigId&#62;
@@ -2002,7 +2010,27 @@ CLASS="SCREEN"
 ></LI
 ></OL
 ></P
-><TABLE
+><P
+>The default data consumer (<A
+HREF="http://localhost:8080/index.jsp"
+TARGET="_top"
+>http://localhost:8080/index.jsp</A
+>) is a JSP page that allows its user to 
+choose "suiteName" and "resourceID" parameters for a 
+second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it 
+with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
+HREF="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl"
+TARGET="_top"
+>http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl</A
+>).</P
+><P
+>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <A
+HREF="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml"
+TARGET="_top"
+>http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml</A
+> would produce something similar to: 
+
+<TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
 WIDTH="100%"
@@ -2012,21 +2040,141 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->&#60;resources&#62;
-  &#60;resource&#62;    
-    &#60;name&#62;siteA&#60;/name&#62;    
-    &#60;macros&#62;      
-      &#60;macro&#62;
-        &#60;name&#62;__regexp__&#60;/name&#62;
-        &#60;value&#62;Kate-Ericsons-Computer.local&#60;/value&#62;
-      &#60;/macro&#62;    
-    &#60;/macros&#62;
-  &#60;/resource&#62;
-&#60;/resources&#62;</PRE
+>&#60;combo&#62;
+
+&#60;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&#62;
+  &#60;resources xmlns=""&#62;
+    &#60;resource&#62;
+      &#60;name&#62;siteA&#60;/name&#62;
+      &#60;testSummaries&#62;
+        &#60;testSummary&#62;
+          &#60;name&#62;gridftp&#60;/name&#62;
+          &#60;numSuccesses&#62;15&#60;/numSuccesses&#62;
+          &#60;numAtFaultFailures&#62;0&#60;/numAtFaultFailures&#62;
+          &#60;numNotAtFaultFailures&#62;1&#60;/numNotAtFaultFailures&#62;
+          &#60;failures/&#62;
+        &#60;/testSummary&#62;
+        &#60;testSummary&#62;
+          &#60;name&#62;gram&#60;/name&#62;
+          &#60;numSuccesses&#62;13&#60;/numSuccesses&#62;
+          &#60;numAtFaultFailures&#62;1&#60;/numAtFaultFailures&#62;
+          &#60;numNotAtFaultFailures&#62;0&#60;/numNotAtFaultFailures&#62;
+          &#60;failures&#62;
+            &#60;failure&#62;
+              &#60;nickname&#62;all2all:gram_to_siteA&#60;/nickname&#62;
+              &#60;instanceId&#62;239352&#60;/instanceId&#62;
+              &#60;seriesConfigId&#62;172057&#60;/seriesConfigId&#62;
+            &#60;/failure&#62;
+          &#60;/failures&#62;
+        &#60;/testSummary&#62;
+      &#60;/testSummaries&#62;
+    &#60;/resource&#62;
+  &#60;/resources&#62;
+&#60;/all2allSummaries&#62;
+
+&#60;suite&#62;
+ &#60;reportSummary&#62;
+  &#60;hostname&#62;host1.name&#60;/hostname&#62;
+  &#60;uri&#62;http://repository/globus.unit.xio&#60;/uri&#62;
+  &#60;nickname&#62;gt4-xio&#60;/nickname&#62;
+  &#60;seriesConfigId&#62;115446&#60;/seriesConfigId&#62;
+  &#60;instanceId&#62;118115&#60;/instanceId&#62;
+  &#60;gmt&#62;2006-11-16T23:49:49.000-08:00&#60;/gmt&#62;
+  &#60;body/&#62;
+ &#60;/reportSummary&#62;
+ &#60;reportSummary&#62;
+  &#60;hostname&#62;host2.name&#60;/hostname&#62;
+  &#60;uri&#62;http://repository/globus.unit.xio&#60;/uri&#62;
+  &#60;nickname&#62;gt4-xio&#60;/nickname&#62;
+  &#60;seriesConfigId&#62;115466&#60;/seriesConfigId&#62;
+  &#60;instanceId&#62;219103&#60;/instanceId&#62;
+  &#60;gmt&#62;2006-12-15T01:31:53.000-08:00&#60;/gmt&#62;
+  &#60;body&#62;
+    &#60;unitTest&#62;
+      &#60;ID&#62;xioTest&#60;/ID&#62;
+    &#60;/unitTest&#62;
+  &#60;/body&#62;
+ &#60;/reportSummary&#62;
+&#60;/suite&#62;
+
+&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+      &#60;name&#62;anl-ia64&#60;/name&#62;
+      &#60;macros&#62;
+        &#60;macro&#62;
+          &#60;name&#62;__regexp__&#60;/name&#62;
+          &#60;value&#62;host.sitea.org&#60;/value&#62;
+        &#60;/macro&#62;
+      &#60;/macros&#62;
+    &#60;/resource&#62;
+  &#60;/resources&#62;
+&#60;/resourceConfig&#62;
+
+&#60;stack&#62;
+    &#60;id&#62;Software and Services&#60;/id&#62;
+    &#60;category&#62;
+        &#60;id&#62;Math Libraries&#60;/id&#62;
+        &#60;package&#62;
+            &#60;id&#62;globus&#60;/id&#62;
+            &#60;version&#62;4.0.1&#60;/version&#62;
+            &#60;tests&#62;
+                &#60;version&#62;
+			     &#60;id&#62;gt4-version&#60;/id&#62;
+		       &#60;/version&#62;
+                &#60;unitalias&#62;
+			     &#60;id&#62;gt4-xio&#60;/id&#62;
+		       &#60;/unitalias&#62;
+                &#60;unitalias&#62;
+			     &#60;id&#62;all2all:gram_to_siteA&#60;/id&#62;
+		       &#60;/unitalias&#62;
+            &#60;/tests&#62;
+        &#60;/package&#62;
+    &#60;/category&#62;
+&#60;/stack&#62;
+
+&#60;/combo&#62;</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
+></P
+><P
+>The XML above can be broken down into the following sections:
+<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>all2allSummaries: </P
+><P
+>cross-site test result summaries by resource as calculated by the consumer. The default installation doesn't include cross-site tests.  A cross-site test is generally one where all resources in a Grid try to reach all other resources in a Grid (e.g. gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).</P
+></LI
+><LI
+><P
+>suite:</P
+><P
+>array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined query that takes a suite name (from the 
+xslt.jsp suiteName parameter) and returns summaries 
+for the latest series instance in that suite.</P
+></LI
+><LI
+><P
+>resourceConfig:</P
+><P
+>a list of resource groups in a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
+This part of the XML is retrieved from the agent.</P
+></LI
+><LI
+><P
+>extra xml:</P
+><P
+>XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml.</P
+></LI
+></OL
+></P
 ><P
 ><IMG
 SRC="figures/consumer-editxml.jpg"
@@ -2105,7 +2253,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN393"
+NAME="AEN413"
 ></A
 ><P
 ><B
