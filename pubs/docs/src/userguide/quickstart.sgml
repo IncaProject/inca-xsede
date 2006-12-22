@@ -77,7 +77,8 @@ incat installed</screen>
     stored in $INCA_DIST/etc: 
     </para>
     <para>
-    <screen>Generating a 512 bit RSA private key
+    <screen>password> (choose a password for the administration of your Inca installation)
+Generating a 512 bit RSA private key
 .++++++++++++
 writing new private key to 'clientx.sdsc.edukey.pem'
 -----
@@ -93,7 +94,9 @@ writing new private key to 'incatkey.pem' ...</screen>
   <listItem id="qs-step5">
     <para>
     Start the Inca server components and deploy the sample default
-    configuration.  The Inca server components are agent, depot, and consumer
+    configuration (<emphasis role="red">NOTE:</emphasis> this command only needs to 
+be executed ONCE.  The components started in this step can later be stopped with "./bin/inca stop all" and started with 
+"./bin/inca start all").  The Inca server components are agent, depot, and consumer
     and will be started on ports 6323, 6324, and 8080 respectively.  Please
     edit the inca.properties file in etc/common to change these defaults.
     More information can be found in <xref linkend="userguide-troubleshoot">.
@@ -101,7 +104,7 @@ writing new private key to 'incatkey.pem' ...</screen>
     <screen>% ./bin/inca default</screen>
     <para>
     You should see something like:
-    <screen>password> (choose a password for the administration of your Inca installation)
+    <screen>password> (enter password from the last step)
 Preparing to deploy default Inca configuration...
 Initializing Inca configuration...
 ** Warning:  this will erase any previously collected reporter
@@ -123,7 +126,7 @@ Deploying default configuration
       <para>During this step:</para>
       <itemizedList>
         <listItem><para>three server components are started on localhost:</para>
-<screen>% ps x | grep java
+<screen>% ps | grep java
  3527  p1  S      0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l /inca-dist/./bin/../var/agent.log
  3560  p1  S      0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l /inca-dist/./bin/../var/depot.log
  3593  p1  S      0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer -l /inca-dist/./bin/../var/consumer.log</screen></listItem>
@@ -140,7 +143,7 @@ Deploying default configuration
 8-59/10 * * * * cluster.compiler.any.unit</screen>
         </listItem>
         <listItem><para>a client component is started on localhost:</para>
-	<screen>% ps x | grep Manager
+	<screen>% ps | grep Manager
  5382  p1  S      0:02.14 /usr/bin/perl /home/incaReporterManager/sbin/../sbin/reporter-manager -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.</screen>
 	<itemizedList>
 	<listItem><para>the agent receives <emphasis>TestSuiteLocal</emphasis> suite and installs a reporter 

@@ -35,7 +35,7 @@ a reporter at a particular point in time)
 <listItem>
 <para>given a suite name, returns XML like the following (the latest report summaries for all of the series in the particular suite)
 <screen>&lt;reportSummary&gt;
-  &lt;hostname&gt;Kate-Ericsons-Computer.local&lt;/hostname&gt;
+  &lt;hostname&gt;Computer.local&lt;/hostname&gt;
   &lt;uri&gt;http://repository/compiler.any.unit&lt;/uri&gt;
   &lt;nickname&gt;java_hello_world&lt;/nickname&gt;
   &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
@@ -54,17 +54,149 @@ a reporter at a particular point in time)
 </listItem>
 </orderedList>
 </para>
-<screen>&lt;resources&gt;
-  &lt;resource&gt;    
-    &lt;name&gt;siteA&lt;/name&gt;    
-    &lt;macros&gt;      
-      &lt;macro&gt;
-        &lt;name&gt;__regexp__&lt;/name&gt;
-        &lt;value&gt;Kate-Ericsons-Computer.local&lt;/value&gt;
-      &lt;/macro&gt;    
-    &lt;/macros&gt;
-  &lt;/resource&gt;
-&lt;/resources&gt;</screen>
+<para>
+The default data consumer (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) is a JSP page that allows its user to 
+choose "suiteName" and "resourceID" parameters for a 
+second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it 
+with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl</ulink>).</para>
+<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
+
+<screen>&lt;combo&gt;
+
+&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
+  &lt;resources xmlns=""&gt;
+    &lt;resource&gt;
+      &lt;name&gt;siteA&lt;/name&gt;
+      &lt;testSummaries&gt;
+        &lt;testSummary&gt;
+          &lt;name&gt;gridftp&lt;/name&gt;
+          &lt;numSuccesses&gt;15&lt;/numSuccesses&gt;
+          &lt;numAtFaultFailures&gt;0&lt;/numAtFaultFailures&gt;
+          &lt;numNotAtFaultFailures&gt;1&lt;/numNotAtFaultFailures&gt;
+          &lt;failures/&gt;
+        &lt;/testSummary&gt;
+        &lt;testSummary&gt;
+          &lt;name&gt;gram&lt;/name&gt;
+          &lt;numSuccesses&gt;13&lt;/numSuccesses&gt;
+          &lt;numAtFaultFailures&gt;1&lt;/numAtFaultFailures&gt;
+          &lt;numNotAtFaultFailures&gt;0&lt;/numNotAtFaultFailures&gt;
+          &lt;failures&gt;
+            &lt;failure&gt;
+              &lt;nickname&gt;all2all:gram_to_siteA&lt;/nickname&gt;
+              &lt;instanceId&gt;239352&lt;/instanceId&gt;
+              &lt;seriesConfigId&gt;172057&lt;/seriesConfigId&gt;
+            &lt;/failure&gt;
+          &lt;/failures&gt;
+        &lt;/testSummary&gt;
+      &lt;/testSummaries&gt;
+    &lt;/resource&gt;
+  &lt;/resources&gt;
+&lt;/all2allSummaries&gt;
+
+&lt;suite&gt;
+ &lt;reportSummary&gt;
+  &lt;hostname&gt;host1.name&lt;/hostname&gt;
+  &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
+  &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
+  &lt;seriesConfigId&gt;115446&lt;/seriesConfigId&gt;
+  &lt;instanceId&gt;118115&lt;/instanceId&gt;
+  &lt;gmt&gt;2006-11-16T23:49:49.000-08:00&lt;/gmt&gt;
+  &lt;body/&gt;
+ &lt;/reportSummary&gt;
+ &lt;reportSummary&gt;
+  &lt;hostname&gt;host2.name&lt;/hostname&gt;
+  &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
+  &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
+  &lt;seriesConfigId&gt;115466&lt;/seriesConfigId&gt;
+  &lt;instanceId&gt;219103&lt;/instanceId&gt;
+  &lt;gmt&gt;2006-12-15T01:31:53.000-08:00&lt;/gmt&gt;
+  &lt;body&gt;
+    &lt;unitTest&gt;
+      &lt;ID&gt;xioTest&lt;/ID&gt;
+    &lt;/unitTest&gt;
+  &lt;/body&gt;
+ &lt;/reportSummary&gt;
+&lt;/suite&gt;
+
+&lt;resourceConfig&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+      &lt;name&gt;anl-ia64&lt;/name&gt;
+      &lt;macros&gt;
+        &lt;macro&gt;
+          &lt;name&gt;__regexp__&lt;/name&gt;
+          &lt;value&gt;host.sitea.org&lt;/value&gt;
+        &lt;/macro&gt;
+      &lt;/macros&gt;
+    &lt;/resource&gt;
+  &lt;/resources&gt;
+&lt;/resourceConfig&gt;
+
+&lt;stack&gt;
+    &lt;id&gt;Software and Services&lt;/id&gt;
+    &lt;category&gt;
+        &lt;id&gt;Math Libraries&lt;/id&gt;
+        &lt;package&gt;
+            &lt;id&gt;globus&lt;/id&gt;
+            &lt;version&gt;4.0.1&lt;/version&gt;
+            &lt;tests&gt;
+                &lt;version&gt;
+			     &lt;id&gt;gt4-version&lt;/id&gt;
+		       &lt;/version&gt;
+                &lt;unitalias&gt;
+			     &lt;id&gt;gt4-xio&lt;/id&gt;
+		       &lt;/unitalias&gt;
+                &lt;unitalias&gt;
+			     &lt;id&gt;all2all:gram_to_siteA&lt;/id&gt;
+		       &lt;/unitalias&gt;
+            &lt;/tests&gt;
+        &lt;/package&gt;
+    &lt;/category&gt;
+&lt;/stack&gt;
+
+&lt;/combo&gt;</screen>
+</para>
+<para>
+The XML above can be broken down into the following sections:
+<orderedList>
+<listItem>
+<para>
+all2allSummaries: 
+</para>
+<para>
+cross-site test result summaries by resource as calculated by the consumer. The default installation doesn't include cross-site tests.  A cross-site test is generally one where all resources in a Grid try to reach all other resources in a Grid (e.g. gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).
+</para>
+</listItem>
+<listItem>
+<para>
+suite:
+</para>
+<para>
+array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined query that takes a suite name (from the 
+xslt.jsp suiteName parameter) and returns summaries 
+for the latest series instance in that suite.
+</para>
+</listItem>
+<listItem>
+<para>
+resourceConfig:
+</para>
+<para>
+a list of resource groups in a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
+This part of the XML is retrieved from the agent.
+</para>
+</listItem>
+<listItem>
+<para>
+extra xml:
+</para>
+<para>
+XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml.
+</para>
+</listItem>
+</orderedList>
+</para>
 <graphic fileref="figures/consumer-editxml.jpg" align="center"></graphic>
 
 
