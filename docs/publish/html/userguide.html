@@ -2011,11 +2011,15 @@ CLASS="SCREEN"
 ></OL
 ></P
 ><P
->The default data consumer (<A
+>The default data consumer is a <A
+HREF="http://www.mortbay.org/"
+TARGET="_top"
+>Jetty</A
+> served JSP page (<A
 HREF="http://localhost:8080/index.jsp"
 TARGET="_top"
 >http://localhost:8080/index.jsp</A
->) is a JSP page that allows its user to 
+>) that allows its user to 
 choose "suiteName" and "resourceID" parameters for a 
 second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it 
 with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
@@ -2100,7 +2104,7 @@ CLASS="SCREEN"
 &#60;resourceConfig&#62;
   &#60;resources&#62;
     &#60;resource&#62;
-      &#60;name&#62;anl-ia64&#60;/name&#62;
+      &#60;name&#62;siteA&#60;/name&#62;
       &#60;macros&#62;
         &#60;macro&#62;
           &#60;name&#62;__regexp__&#60;/name&#62;
@@ -2147,38 +2151,52 @@ CLASS="SCREEN"
 TYPE="1"
 ><LI
 ><P
->all2allSummaries: </P
+>all2allSummaries (cross-site test results calculated by the consumer): </P
 ><P
->cross-site test result summaries by resource as calculated by the consumer. The default installation doesn't include cross-site tests.  A cross-site test is generally one where all resources in a Grid try to reach all other resources in a Grid (e.g. gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+>The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
 be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).</P
 ></LI
 ><LI
 ><P
->suite:</P
+>suite (xslt.jsp "suiteName" parameter):</P
 ><P
->array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined query that takes a suite name (from the 
+>array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name (from the 
 xslt.jsp suiteName parameter) and returns summaries 
 for the latest series instance in that suite.</P
 ></LI
 ><LI
 ><P
->resourceConfig:</P
+>resourceConfig (xslt.jsp "resourceID" parameter):</P
 ><P
->a list of resource groups in a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
+>array of all resources within a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
 This part of the XML is retrieved from the agent.</P
 ></LI
 ><LI
 ><P
->extra xml:</P
+>extra xml (xslt.jsp "xmlFile" parameter):</P
 ><P
->XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml.</P
+>XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+When new series are added in incat, add the new series nicknames to the swStack.xml file as in the figure below to add the series to the default page.
+<P
+><IMG
+SRC="figures/consumer-editxml.jpg"
+ALIGN="CENTER"></P
+></P
 ></LI
 ></OL
 ></P
 ><P
-><IMG
-SRC="figures/consumer-editxml.jpg"
-ALIGN="CENTER"></P
+>To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/swStack.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter.  [ <A
+HREF="http://www.w3schools.com/xsl/"
+TARGET="_top"
+>xsl tutorial</A
+> ] </P
+><P
+>Change default CSS (Cascading Style Sheet) properties such as colors and fonts by editing the $INCA_DIST/var/jetty/webapp/css/inca.css file. [ <A
+HREF="http://www.w3schools.com/css/"
+TARGET="_top"
+>css tutorial</A
+> ]</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2253,7 +2271,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN413"
+NAME="AEN418"
 ></A
 ><P
 ><B
