@@ -1736,33 +1736,77 @@ NAME="USERGUIDE-INCAT-REMOTE"
 >6.5. Other Resource Options</A
 ></H3
 ><P
->  In addition to running a Reporter Manager client on localhost, you can define globus,
-  ssh, and manual resource groups using the incat resource group dialog.
+>  By default, the Agent starts a Reporter Manager client on localhost (the resource group with localhost will have 
+ the "local" access method selected in incat).  Reporter Managers can be started with the following 
+ access methods:
   </P
 ><P
->  When you select Globus2 in the Access Method pull-down, incat provides text
-  boxes for you to enter contact information on the host for the Globus Gram
-  and GridFtp servers.  If you leave these boxes blank, Inca defaults to ports
-  2119 and 2811, respectively, on the first host in the resource group's member
-  list.  Access to Globus hosts requires an active Globus proxy on the Agent's
-  host.  You can either create one before staring the Inca Agent, or you can
-  fill in the proxy information in the resource group dialog (see below) so
-  that the Agent can obtain one as needed.
-  </P
+></P
+><UL
+><LI
 ><P
->  For ssh resource groups, incat provides text boxes for you to enter the login
-  id, path to the ssh key file, and password.  For security purposes, incat
+>manual:</P
+><P
+>  Entering a manual resource group indicates that you want complete, direct
+  control over Inca execution on the group.  For a manual resource group you must
+  start the Reporter Manager on the command line and restart it any time
+  you want to change the reporter series configuration for the group.  The Agent will NOT automatically start a 
+ Reporter Manager for a manual resource as it will for local, ssh, or globus2 resources.
+  </P
+></LI
+><LI
+><P
+>local:</P
+><P
+>  The Agent starts a Reporter Manager on the same machine where the Agent is already running (localhost).  
+  </P
+></LI
+><LI
+><P
+>ssh:</P
+><P
+>  The Agent starts a Reporter Manager on a remote machine using ssh to access the remote machine. 
+  Reporter Manager files are copied from the Agent to the remote machine using sftp.
+  For ssh resource groups, incat provides text boxes for you to enter the login
+  id, password, and path to the ssh key file on the Agent machine.  For security purposes, incat
   echoes asterisks for the password and encrypts it when you save the
   configuration to a file.
   </P
+></LI
+><LI
 ><P
->  Entering a manual resource group indicates that you want complete, direct
-  control over Inca execution on the group.  On manual resource groups you must
-  start the Inca Reporter Manager on the command line and restart it any time
-  you want to change the reporter series configuration for the group.
+>globus2:</P
+><P
+>  The Agent starts a Reporter Manager on a remote machine using globus to access the remote machine. 
+  Reporter Manager files are copied from the Agent to the remote machine using GridFtp.
+  When you select globus2 in the Access Method pull-down, incat provides text
+  boxes for you to enter contact information for the resource's Globus Gram
+  and GridFtp servers.  If you leave these boxes blank, Inca defaults to ports
+  2119 and 2811, respectively, for the first host in the resource group's member
+  list.  Access to Globus hosts requires an active Globus proxy on the Agent's
+  host.  You can either create a manual proxy on the Agent machine before starting, or you can
+  store a proxy on a myproxy server and complete the four incat proxy dialog boxes (see below) so
+  that the Agent can obtain one as needed.
   </P
+></LI
+></UL
 ><P
->TODO Proxy server/user id/password/lifetime</P
+>For convenience, the Inca framework can be used to retrieve a proxy for the globus2 access method or 
+for resources that will run reporters than require an active proxy.  A proxy must first be stored on a myproxy server.  For information 
+about setting up a myproxy server or storing proxies on a server, please see <A
+HREF="http://grid.ncsa.uiuc.edu/myproxy/"
+TARGET="_top"
+>the official myproxy documentation</A
+>.</P
+><P
+>The Agent can automatically 
+retrieve a proxy from a myproxy server if the proxy information is defined in incat as follows:</P
+><P
+><IMG
+SRC="figures/incat-proxy.jpg"
+ALIGN="CENTER"></P
+><P
+>The dialog boxes are the hostname of the myproxy server, the username and password used to store the proxy, and the lifetime in hours that the agent should retrieve a proxy for (the default is 12 hours).</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2271,7 +2315,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN418"
+NAME="AEN432"
 ></A
 ><P
 ><B
