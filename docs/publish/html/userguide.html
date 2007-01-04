@@ -1812,8 +1812,55 @@ NAME="PROXIES"
 ></H4
 ><P
 >For convenience, the Inca framework can be used to retrieve a proxy for the globus2 access method or 
-for resources that will run reporters than require an active proxy.  A proxy must first be stored on a myproxy server.  For information 
-about setting up a myproxy server or storing proxies on a server, please see <A
+for reporters than require an active proxy.  Reporters that require a proxy should use the Inca::Reporter::GridProxy 
+module described in <A
+HREF="#REPORTER-API"
+>Section 8.2.3</A
+>.  The following is an example of a reporter that requires a proxy:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name =&#62; 'grid.middleware.globus.unit.proxy',
+  version =&#62; 2,
+  description =&#62; 'Verifies that user has valid proxy',
+  url =&#62; 'http://www.globus.org/security/proxy.html',
+  unit_name =&#62; 'validproxy'
+);
+$reporter-&#62;addDependency( "Inca::Reporter::GridProxy" );
+$reporter-&#62;processArgv(@ARGV);
+
+# check to see if proxy has enough time left
+$reporter-&#62;log( 'info', "X509_USER_PROXY=$ENV{X509_USER_PROXY}" );
+my $output = $reporter-&#62;loggedCommand('grid-proxy-info -exists -hours 4 2&#62;&#38;1');
+if( $? != 0 ) {
+  $reporter-&#62;unitFailure("grid-proxy-info failed: $! $output");
+} else {
+  $reporter-&#62;unitSuccess();
+}
+$reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
+><P
+>Before configuring Inca to retrieve proxies, first store a proxy on a myproxy server.  For information 
+about setting up a myproxy server or storing proxies on a server, please see 
+<A
 HREF="http://grid.ncsa.uiuc.edu/myproxy/"
 TARGET="_top"
 >the official myproxy documentation</A
@@ -2336,7 +2383,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN437"
+NAME="AEN440"
 ></A
 ><P
 ><B
