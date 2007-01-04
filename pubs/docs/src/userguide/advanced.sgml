@@ -1,8 +1,97 @@
 <section id="userguide-advanced-config">
 <title>Advanced Configuration</title>
 
-<para>This section will describe advanced configuration options (e.g. using a 
-database other than the Hibernate default database to store reporter output, installing components in non-default 
+<para>This section will describe advanced configuration options (e.g. 
+installing components in non-default 
 locations, changing inca.properties and other defaults).</para>
+
+<section id="postgres">
+<title>Using Postgres as DB Backend</title>
+<itemizedList>
+<listItem>
+<para>Stop the depot 
+<screen>% cd $INCA_DIST; ./bin/inca stop depot</screen>
+</para>
+</listItem>
+
+<listItem>
+<para>Edit $INCA_DIST/etc/hibernate.properties</para>
+<itemizedList>
+<listItem>
+<para>
+Comment out the first 5 lines which specifies for hibernate to use 
+hsql as its backend database: 
+<screen>#hibernate.dialect=org.hibernate.dialect.HSQLDialect 
+#hibernate.connection.driver_class=org.hsqldb.jdbcDriver 
+#hibernate.connection.url=jdbc:hsqldb:test 
+#hibernate.connection.username=sa 
+#hibernate.connection.password=
+</screen>
+</para>
+</listItem>
+<listItem>
+<para>
+Uncomment the second block of lines 8-13 which specifies for 
+hibernate to use postgres:
+<screen># Settings for a local PostgreSQL database. 
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect 
+hibernate.query.substitutions=yes 'Y', no 'N' 
+hibernate.connection.driver_class=org.postgresql.Driver 
+hibernate.connection.url=jdbc:postgresql:test 
+hibernate.connection.username=test 
+hibernate.connection.password=
+</screen>
+</para>
+</listItem>
+<listItem>
+<para>
+Replace the value "jdbc:postgresql:test" for property 
+"hibernate.connection.url" on line 11 with the following (where "hostname" is 
+the FQDN of the host where postgres is installed and "username" is the username to 
+connect to the postgres DB):
+<screen>hibernate.connection.url=jdbc:postgresql://hostname/username</screen>
+</para>
+</listItem>
+<listItem>
+<para>
+Replace the value "test" for property 
+"hibernate.connection.username" on line 12 with the postgres 
+username:
+<screen>hibernate.connection.username=username</screen>
+</para>
+</listItem>
+</itemizedList>
+</listItem>
+
+<listItem>
+<para>
+Download the postgres jdbc jar file pg74.216.jdbc3.jar 
+to your $INCA_DIST/lib directory:
+<screen>% cd $INCA_DIST/lib 
+% wget http://inca.sdsc.edu/workshop/pg74.216.jdbc3.jar 
+</screen>
+</para>
+</listItem>
+
+<listItem>
+<para>
+Initialize the depot (set up the Inca tables):
+<screen>% cd $INCA_DIST; ./bin/inca depot -d</screen>
+You should see something like:
+<screen>Initializing c3p0 pool... 
+... 
+Database Initialization Completed</screen>
+</para>
+</listItem>
+
+<listItem>
+<para>Start the depot 
+<screen>% ./bin/inca start depot</screen>
+</para>
+</listItem>
+</itemizedList>
+
+
+</section>
 
 </section>

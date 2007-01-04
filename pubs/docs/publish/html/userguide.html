@@ -59,6 +59,15 @@ HREF="#USERGUIDE-QUICKSTART"
 HREF="#USERGUIDE-ADVANCED-CONFIG"
 >Advanced Configuration</A
 ></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="#POSTGRES"
+>Using Postgres as DB Backend</A
+></DT
+></DL
+></DD
 ><DT
 >6. <A
 HREF="#USERGUIDE-INCAT"
@@ -1343,9 +1352,228 @@ NAME="USERGUIDE-ADVANCED-CONFIG"
 >5. Advanced Configuration</A
 ></H2
 ><P
->This section will describe advanced configuration options (e.g. using a 
-database other than the Hibernate default database to store reporter output, installing components in non-default 
+>This section will describe advanced configuration options (e.g. 
+installing components in non-default 
 locations, changing inca.properties and other defaults).</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="POSTGRES"
+>5.1. Using Postgres as DB Backend</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>Stop the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca stop depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Edit $INCA_DIST/etc/hibernate.properties</P
+><P
+></P
+><UL
+><LI
+><P
+>Comment out the first 5 lines which specifies for hibernate to use 
+hsql as its backend database: 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#hibernate.dialect=org.hibernate.dialect.HSQLDialect 
+#hibernate.connection.driver_class=org.hsqldb.jdbcDriver 
+#hibernate.connection.url=jdbc:hsqldb:test 
+#hibernate.connection.username=sa 
+#hibernate.connection.password=</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Uncomment the second block of lines 8-13 which specifies for 
+hibernate to use postgres:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+># Settings for a local PostgreSQL database. 
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect 
+hibernate.query.substitutions=yes 'Y', no 'N' 
+hibernate.connection.driver_class=org.postgresql.Driver 
+hibernate.connection.url=jdbc:postgresql:test 
+hibernate.connection.username=test 
+hibernate.connection.password=</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Replace the value "jdbc:postgresql:test" for property 
+"hibernate.connection.url" on line 11 with the following (where "hostname" is 
+the FQDN of the host where postgres is installed and "username" is the username to 
+connect to the postgres DB):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hibernate.connection.url=jdbc:postgresql://hostname/username</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Replace the value "test" for property 
+"hibernate.connection.username" on line 12 with the postgres 
+username:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hibernate.connection.username=username</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Download the postgres jdbc jar file pg74.216.jdbc3.jar 
+to your $INCA_DIST/lib directory:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/lib 
+% wget http://inca.sdsc.edu/workshop/pg74.216.jdbc3.jar </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Initialize the depot (set up the Inca tables):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca depot -d</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You should see something like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Initializing c3p0 pool... 
+... 
+Database Initialization Completed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Start the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca start depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></UL
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1585,7 +1813,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN287"
+NAME="AEN318"
 ></A
 ><P
 ><B
@@ -1816,47 +2044,7 @@ for reporters than require an active proxy.  Reporters that require a proxy shou
 module described in <A
 HREF="#REPORTER-API"
 >Section 8.2.3</A
->.  The following is an example of a reporter that requires a proxy:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->#!/usr/bin/env perl
-
-use strict;
-use warnings;
-use Inca::Reporter::SimpleUnit;
-
-my $reporter = new Inca::Reporter::SimpleUnit(
-  name =&#62; 'grid.middleware.globus.unit.proxy',
-  version =&#62; 2,
-  description =&#62; 'Verifies that user has valid proxy',
-  url =&#62; 'http://www.globus.org/security/proxy.html',
-  unit_name =&#62; 'validproxy'
-);
-$reporter-&#62;addDependency( "Inca::Reporter::GridProxy" );
-$reporter-&#62;processArgv(@ARGV);
-
-# check to see if proxy has enough time left
-$reporter-&#62;log( 'info', "X509_USER_PROXY=$ENV{X509_USER_PROXY}" );
-my $output = $reporter-&#62;loggedCommand('grid-proxy-info -exists -hours 4 2&#62;&#38;1');
-if( $? != 0 ) {
-  $reporter-&#62;unitFailure("grid-proxy-info failed: $! $output");
-} else {
-  $reporter-&#62;unitSuccess();
-}
-$reporter-&#62;print();</PRE
-></FONT
-></TD
-></TR
-></TABLE
-> </P
+>.  </P
 ><P
 >Before configuring Inca to retrieve proxies, first store a proxy on a myproxy server.  For information 
 about setting up a myproxy server or storing proxies on a server, please see 
@@ -2383,7 +2571,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN440"
+NAME="AEN470"
 ></A
 ><P
 ><B
@@ -2950,7 +3138,47 @@ TARGET="_top"
 >Inca::Reporter::GridProxy</A
 ></P
 ><P
->The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.</P
+>The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a reporter that requires a proxy:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name =&#62; 'grid.middleware.globus.unit.proxy',
+  version =&#62; 2,
+  description =&#62; 'Verifies that user has valid proxy',
+  url =&#62; 'http://www.globus.org/security/proxy.html',
+  unit_name =&#62; 'validproxy'
+);
+$reporter-&#62;addDependency( "Inca::Reporter::GridProxy" );
+$reporter-&#62;processArgv(@ARGV);
+
+# check to see if proxy has enough time left
+$reporter-&#62;log( 'info', "X509_USER_PROXY=$ENV{X509_USER_PROXY}" );
+my $output = $reporter-&#62;loggedCommand('grid-proxy-info -exists -hours 4 2&#62;&#38;1');
+if( $? != 0 ) {
+  $reporter-&#62;unitFailure("grid-proxy-info failed: $! $output");
+} else {
+  $reporter-&#62;unitSuccess();
+}
+$reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
 ></LI
 ><LI
 ><P
