@@ -309,6 +309,19 @@ about setting up a myproxy server or storing proxies on a server, please see
 retrieve a proxy from a myproxy server if the proxy information is defined in incat as follows:</para>
   <graphic fileref="figures/incat-proxy.jpg" align="center"></graphic>
   <para>The dialog boxes are the hostname of the myproxy server, the username and password used to store the proxy, and the lifetime in hours that the agent should retrieve a proxy for (the default is 12 hours).</para>
+  <para>Once proxy information is committed to the agent, it can be retrieved by reporter managers. Each time a reporter manager is ready to run a reporter that needs a proxy it:
+<itemizedList>
+<listItem><para>requests the MyProxy passphrase from the agent</para></listItem>
+<listItem><para>uses the MyProxy command-line client to retrieve proxy credentials from a MyProxy server</para></listItem>
+<listItem><para>clears the MyProxy passphrase from memory</para></listItem>
+</itemizedList>
+</para>
+<para>
+The MyProxy passphrase is stored on the agent in the $INCA_DIST/var/resources.xml file and is 
+encrypted with the same passphrase as the agent's private key.  The MyProxy passphrase passes between the 
+reporter manager and agent over their SSL connection.
+  <graphic fileref="figures/arch-proxy.jpg" align="center"></graphic>
+  </para>
 </section>
 </section>
 
