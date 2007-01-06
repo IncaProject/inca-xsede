@@ -2062,6 +2062,35 @@ SRC="figures/incat-proxy.jpg"
 ALIGN="CENTER"></P
 ><P
 >The dialog boxes are the hostname of the myproxy server, the username and password used to store the proxy, and the lifetime in hours that the agent should retrieve a proxy for (the default is 12 hours).</P
+><P
+>Once proxy information is committed to the agent, it can be retrieved by reporter managers. Each time a reporter manager is ready to run a reporter that needs a proxy it:
+<P
+></P
+><UL
+><LI
+><P
+>requests the MyProxy passphrase from the agent</P
+></LI
+><LI
+><P
+>uses the MyProxy command-line client to retrieve proxy credentials from a MyProxy server</P
+></LI
+><LI
+><P
+>clears the MyProxy passphrase from memory</P
+></LI
+></UL
+></P
+><P
+>The MyProxy passphrase is stored on the agent in the $INCA_DIST/var/resources.xml file and is 
+encrypted with the same passphrase as the agent's private key.  The MyProxy passphrase passes between the 
+reporter manager and agent over their SSL connection.
+  <P
+><IMG
+SRC="figures/arch-proxy.jpg"
+ALIGN="CENTER"></P
+>
+  </P
 ></DIV
 ></DIV
 ><DIV
@@ -2571,7 +2600,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN470"
+NAME="AEN480"
 ></A
 ><P
 ><B
