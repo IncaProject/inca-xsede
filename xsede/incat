@@ -998,6 +998,10 @@
             <name>gatekeeperlog</name>
             <value>/N/soft/linux-sles9-ppc64/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
           </macro>
+          <macro>
+            <name>blasLink</name>
+            <value>-L/N/soft/linux-sles9-ppc64/blas/lib32 -lfblas</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3215,50 +3219,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.compiler.gcc.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@compiler-gcc-key@@@@post@</context>
-          </series>
-          <nickname>compiler-gcc-version</nickname>
-          <resourceSetName>compiler-gcc</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gcc==@compiler-gcc-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
@@ -4039,50 +3999,6 @@
               <month>*</month>
             </cron>
           </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.java.sun.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>java-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>java=~"^1\.4\.2(.|\n|\s)*"</comparison>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -5680,7 +5596,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>900.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -5732,7 +5648,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>900.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -5788,7 +5704,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>900.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -6143,114 +6059,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>data.transfer.gridftp.unit.copy</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>dest</name>
-                <value>gsiftp://@gridftpHosts@/~/inca.gridftp.test</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>source</name>
-                <value>file:///tmp/testin.$$</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>1800.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>all2all:gridftp_to_@gridftpHosts@</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.transfer.uberftp.unit.copy</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.unit.copy</uri>
-            <args>
-              <arg>
-                <name>source</name>
-                <value>/tmp/ubersource.20197</value>
-              </arg>
-              <arg>
-                <name>remote</name>
-                <value>/tmp/uberremote.20197</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-              <arg>
-                <name>dest</name>
-                <value>/tmp/uberdest.20197</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@gridftpHost@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>uberftp-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.interactive_access.openssh.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
             <args>
@@ -6549,11 +6357,207 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.gcc.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@compiler-gcc-key@@@@post@</context>
+          </series>
+          <nickname>compiler-gcc-version</nickname>
+          <resourceSetName>compiler-gcc</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gcc=~".*"</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.java.sun.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-version</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>java>=1.4.2_11</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.gridftp.unit.copy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>gsiftp://@gridftpHosts@/~/inca.gridftp.test</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>source</name>
+                <value>file:///tmp/testin.$$</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1800.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>all2all:gridftp_to_@gridftpHosts@</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.uberftp.unit.copy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.unit.copy</uri>
+            <args>
+              <arg>
+                <name>source</name>
+                <value>/tmp/ubersource.20197</value>
+              </arg>
+              <arg>
+                <name>remote</name>
+                <value>/tmp/uberremote.20197</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>/tmp/uberdest.20197</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gridftpHost@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>uberftp-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>69</version>
+      <version>77</version>
     </suite>
     <suite>
       <seriesConfigs>
