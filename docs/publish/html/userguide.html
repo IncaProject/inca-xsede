@@ -122,6 +122,15 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 HREF="#USERGUIDE-CONSUMER"
 >Data Display (Data Consumers)</A
 ></DT
+><DD
+><DL
+><DT
+>7.1. <A
+HREF="#DEFAULT-CONSUMER"
+>Default Data Consumer</A
+></DT
+></DL
+></DD
 ><DT
 >8. <A
 HREF="#USERGUIDE-REPORTERS"
@@ -2358,19 +2367,24 @@ CLASS="SCREEN"
 ></LI
 ></OL
 ></P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="DEFAULT-CONSUMER"
+>7.1. Default Data Consumer</A
+></H3
 ><P
 >The default data consumer is a <A
 HREF="http://www.mortbay.org/"
 TARGET="_top"
 >Jetty</A
-> served JSP page (<A
+> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<A
 HREF="http://localhost:8080/index.jsp"
 TARGET="_top"
 >http://localhost:8080/index.jsp</A
->) that allows its user to 
-choose "suiteName" and "resourceID" parameters for a 
-second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it 
-with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
+>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
 HREF="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl"
 TARGET="_top"
 >http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl</A
@@ -2546,6 +2560,7 @@ TARGET="_top"
 >css tutorial</A
 > ]</P
 ></DIV
+></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
@@ -2619,7 +2634,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN480"
+NAME="AEN482"
 ></A
 ><P
 ><B

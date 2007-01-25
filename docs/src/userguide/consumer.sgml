@@ -54,11 +54,11 @@ a reporter at a particular point in time)
 </listItem>
 </orderedList>
 </para>
+<section id="default-consumer">
+<title>Default Data Consumer</title>
 <para>
-The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> served JSP page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) that allows its user to 
-choose "suiteName" and "resourceID" parameters for a 
-second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it 
-with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl</ulink>).</para>
+The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl</ulink>).</para> 
+
 <para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
 
 <screen>&lt;combo&gt;
@@ -206,6 +206,6 @@ To change the XML to HTML transformation, either edit the default XSL stylesheet
 <para>
 Change default CSS (Cascading Style Sheet) properties such as colors and fonts by editing the $INCA_DIST/var/jetty/webapp/css/inca.css file. [ <ulink url="http://www.w3schools.com/css/">css tutorial</ulink> ]
 </para>
-
+</section>
 
 </section>
