@@ -97,16 +97,21 @@ HREF="#USERGUIDE-INCAT-COMMITS"
 ></DT
 ><DT
 >6.5. <A
-HREF="#USERGUIDE-INCAT-REMOTE"
->Other Resource Options</A
+HREF="#ACCESS-METHODS"
+>Resource Access Methods</A
 ></DT
 ><DT
 >6.6. <A
+HREF="#PROXIES"
+>Proxies</A
+></DT
+><DT
+>6.7. <A
 HREF="#USERGUIDE-INCAT-MACROS"
 >Using Resource Macros</A
 ></DT
 ><DT
->6.7. <A
+>6.8. <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
 >Series Comparison and Notification</A
 ></DT
@@ -148,23 +153,19 @@ HREF="#USERGUIDE-WEBSERVICES"
 ></DT
 ><DT
 >10. <A
-HREF="#USERGUIDE-TROUBLESHOOT"
->Troubleshooting</A
+HREF="#USERGUIDE-SECURITY"
+>Security</A
 ></DT
-><DD
-><DL
 ><DT
->10.1. <A
-HREF="#LOGS"
+>11. <A
+HREF="#USERGUIDE-LOGGING"
 >Log Files</A
 ></DT
 ><DT
->10.2. <A
-HREF="#COMPONENT-MANPAGES"
+>12. <A
+HREF="#USERGUIDE-MAN"
 >Component Man Pages</A
 ></DT
-></DL
-></DD
 ></DL
 ></DIV
 ><DIV
@@ -475,7 +476,7 @@ virtual organization's Certificate Authority (CA) and consult your
 organization's security policy regarding GSI credential use.  
 <A
 HREF="#PROXIES"
->Section 6.5.2</A
+>Section 6.6</A
 > describes using proxy credentials in the Inca framework.</P
 ></DIV
 ><DIV
@@ -756,8 +757,8 @@ be executed ONCE.  The components started in this step can later be stopped with
     and will be started on ports 6323, 6324, and 8080 respectively.  Please
     edit the inca.properties file in etc/common to change these defaults.
     More information can be found in <A
-HREF="#USERGUIDE-TROUBLESHOOT"
->Section 10</A
+HREF="#USERGUIDE-ADVANCED-CONFIG"
+>Section 5</A
 >.
     </P
 ><TABLE
@@ -1061,9 +1062,9 @@ CLASS="FILENAME"
 >Exception</TT
 >. See 
     <A
-HREF="#USERGUIDE-TROUBLESHOOT"
->Section 10</A
-> for more help on debugging.  
+HREF="#USERGUIDE-LOGGING"
+>Section 11</A
+> for more information about logging.  
     </P
 ><DIV
 CLASS="FIGURE"
@@ -1820,7 +1821,7 @@ ALIGN="CENTER"></P
   allow you to test the output of the reporter and send email if the test
   fails.  This is covered in <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
->Section 6.7</A
+>Section 6.8</A
 > below;
   for this series leave these boxes blank.  Press the OK button, and incat will
   close the series dialog box and add the series to the Series list in the
@@ -1986,17 +1987,9 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="USERGUIDE-INCAT-REMOTE"
->6.5. Other Resource Options</A
-></H3
-><DIV
-CLASS="SECTION"
-><H4
-CLASS="SECTION"
-><A
 NAME="ACCESS-METHODS"
->6.5.1. Resource Access Methods</A
-></H4
+>6.5. Resource Access Methods</A
+></H3
 ><P
 >  The Inca Agent can use the following access methods to stage and start
   Reporter Managers on resources:
@@ -2057,12 +2050,12 @@ NAME="ACCESS-METHODS"
 ></DIV
 ><DIV
 CLASS="SECTION"
-><HR><H4
+><HR><H3
 CLASS="SECTION"
 ><A
 NAME="PROXIES"
->6.5.2. Proxies</A
-></H4
+>6.6. Proxies</A
+></H3
 ><P
 >For convenience, the Inca framework can be used to retrieve a proxy for the
 globus2 access method or for reporters that require an active proxy.
@@ -2119,14 +2112,13 @@ ALIGN="CENTER"></P
 >
   </P
 ></DIV
-></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-MACROS"
->6.6. Using Resource Macros</A
+>6.7. Using Resource Macros</A
 ></H3
 ><P
 >  Resource macros provide a shorthand for defining multiple, similar series.
@@ -2188,7 +2180,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-COMPARISON"
->6.7. Series Comparison and Notification</A
+>6.8. Series Comparison and Notification</A
 ></H3
 ><P
 >  For a particular series, the Inca system by default reports only whether or
@@ -2627,7 +2619,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN482"
+NAME="AEN480"
 ></A
 ><P
 ><B
@@ -3451,33 +3443,36 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="USERGUIDE-TROUBLESHOOT"
->10. Troubleshooting</A
+NAME="USERGUIDE-SECURITY"
+>10. Security</A
 ></H2
 ><P
->This section will include debugging information about logging, the default inca.properties file, security (keys,
-certs, etc.), "manpages" for each component and descriptions of manual resources. </P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="LOGS"
->10.1. Log Files</A
-></H3
-><P
->The agent, depot and consumer logs are located in the $INCA_DIST/var directory.  Reporter manager logs are located in each manager's install directory under the var directory (e.g. ~/incaReporterManager/var). </P
-><P
->Logging is informational by default, but can be adjusted to be more verbose ('info' to 'debug') or less verbose ('info' to 'error') by editing the $INCA_DIST/etc/common/log4j.properties file and then restarting inca components.  For example, to log the most verbose globus error messages change line 33 in log4j.properties from "log4j.logger.org.globus=error" to "log4j.logger.org.globus=debug".</P
+>By default, inca components use ssl to communicate with each other.  Credentials are automatically generated with the "bin/inca createauth" command described in step <A
+HREF="#QS-STEP4"
+>4</A
+> of the quickstart guide.  The createauth command creates keys and certificates for each inca component (the agent, depot, consumer and incat) and stores them in the $INCA_DIST/etc directory.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
-><HR><H3
+><HR><H2
 CLASS="SECTION"
 ><A
-NAME="COMPONENT-MANPAGES"
->10.2. Component Man Pages</A
-></H3
+NAME="USERGUIDE-LOGGING"
+>11. Log Files</A
+></H2
+><P
+>The agent, depot and consumer logs are located in the $INCA_DIST/var directory.  Reporter manager logs are located in each manager's install directory under the var directory (e.g. ~/incaReporterManager/var). </P
+><P
+>Logging is informational by default, but can be adjusted to be more verbose ('info' to 'debug') or less verbose ('info' to 'error') by editing the $INCA_DIST/etc/common/log4j.properties file and then restarting inca components.  Note that passwords are logged when 'debug' logging is turned on.  Logging for the inca components can be adjusted by editing lines 26 and 27 ("log4j.rootLogger=info, stdout" and "log4j.logger.edu.sdsc.inca=info").  To log the most verbose globus error messages change line 33 in log4j.properties from "log4j.logger.org.globus=error" to "log4j.logger.org.globus=debug". </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-MAN"
+>12. Component Man Pages</A
+></H2
 ><P
 >All of the inca components have a help option:
 <TABLE
@@ -3515,7 +3510,40 @@ Available subcommands:
 ></TABLE
 ></P
 ><P
->For example, here is the help output for the agent, depot, consumer and incat components:</P
+>For example, here is the help output for the depot, agent, reporter-manager, consumer and incat components:</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help depot
+java edu.sdsc.inca.Depot
+  P|password   str     Specify how to obtain encryption password
+  V|version    null    Display program version
+  a|auth       boolean Authenticated (secure) connection?
+  c|cert       path    Path to the authentication certificate
+  d|dbinit     null    init depot DB tables
+  h|help       null    Print help/usage
+  h|hostname   str     Hostname the server should provide to clients
+  i|init       path    Path to properties file
+  k|key        path    Path to the authentication key
+  l|logfile    str     Route log messages to a file
+  n|numthreads int     # threads in worker pool
+  p|port       int     Server listening port
+  r|remove     null    remove depot DB tables
+  t|trusted    path    Path to authentication trusted certificate dir
+  v|var        path    Absolute path to server temp dir</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
 ><P
 ><TABLE
 BORDER="1"
@@ -3568,52 +3596,81 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% bin/inca help depot
-java edu.sdsc.inca.Depot
-  P|password   str     Specify how to obtain encryption password
-  V|version    null    Display program version
-  a|auth       boolean Authenticated (secure) connection?
-  c|cert       path    Path to the authentication certificate
-  d|dbinit     null    init depot DB tables
-  h|help       null    Print help/usage
-  h|hostname   str     Hostname the server should provide to clients
-  i|init       path    Path to properties file
-  k|key        path    Path to the authentication key
-  l|logfile    str     Route log messages to a file
-  n|numthreads int     # threads in worker pool
-  p|port       int     Server listening port
-  r|remove     null    remove depot DB tables
-  t|trusted    path    Path to authentication trusted certificate dir
-  v|var        path    Absolute path to server temp dir</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-><P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% bin/inca help incat
-java incat
-  A|agent    str     Agent specification; host:port
-  P|password str     Specify how to obtain encryption password
-  V|version  null    Display program version
-  a|auth     boolean Authenticated (secure) connection?
-  c|cert     path    Path to the authentication certificate
-  f|file     path    Inca installation configuration file path
-  h|help     null    Print help/usage
-  i|init     path    Path to properties file
-  k|key      path    Path to the authentication key
-  l|logfile  str     Route log messages to a file
-  t|trusted  path    Path to authentication trusted certificate dir</PRE
+>% sbin/inca help reporter-manager
+Usage:
+    reporter-manager [-a|-s] [options]
+
+Options:
+    a|--agent
+         A string containing the URI to the Reporter Agent process that will
+         be responsible for the reporter manager. Either this option or -s
+         must be specified. Currently accepted URIs include:
+
+         incas://host:port inca://host:port
+
+    -c|--cert
+         A path to a valid certificate file [default: none]
+
+    -d|--depot
+         A string containing the URI of a depot to send its reporter data
+         to. Currently accepted URIs include:
+
+         incas://host:port inca://host:port file://path
+
+         This option can be specified more than once. The report will be
+         sent to the first specified depot. If the first depot is
+         unreacheable, the next depots in the list will be tried.
+
+    -e|--error-reporter
+         A string containing a path to the error reporter. E.g.,
+         inca-null-reporter
+
+    -h|--help
+         Print help/usage information
+
+    -i|-id
+         The resource identifier supplied by the reporter agent that the
+         reporter manager will use to identify itself back to the reporter
+         agent.
+
+    -k|--key
+         A path to a valid key file [default: none]
+
+    -l|--logfile
+         A string containing a path to the file where the log messages can
+         be stored. If not specified, log messages will be printed to the
+         console.
+
+    -L|--level
+         A string containing the log message level (i.e., print statements
+         of this level and higher). [default: INFO]
+
+    -P|--passphrase
+         Read a passphrase for key from stdin
+
+    -r|--reporter-cache
+         A string containing the path to the local cache of reporters.
+
+    -R|--rim
+         A string containing a path to the reporter-instance-manager script.
+         If not specified, this script will look into the directory where
+         itself is located.
+
+    -s|--suite
+         A string containing a path to the Inca suite file containing the
+         reporters to be executed.
+
+    -t|--trusted
+         A path to either a directory or file of trusted certificates
+         [default: none]
+
+    -v|--var
+         A string containing a path to a temporary file space that Inca can
+         use while executing reporters
+
+    -w|--wait
+         A positive integer indicating the period in seconds of which to
+         check the reporter for a timeout [default: 2]</PRE
 ></FONT
 ></TD
 ></TR
@@ -3653,7 +3710,35 @@ java edu.sdsc.inca.Consumer
 ></TR
 ></TABLE
 > </P
-></DIV
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help incat
+java incat
+  A|agent    str     Agent specification; host:port
+  P|password str     Specify how to obtain encryption password
+  V|version  null    Display program version
+  a|auth     boolean Authenticated (secure) connection?
+  c|cert     path    Path to the authentication certificate
+  f|file     path    Inca installation configuration file path
+  h|help     null    Print help/usage
+  i|init     path    Path to properties file
+  k|key      path    Path to the authentication key
+  l|logfile  str     Route log messages to a file
+  t|trusted  path    Path to authentication trusted certificate dir</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
 ></DIV
 ></DIV
 ></BODY
