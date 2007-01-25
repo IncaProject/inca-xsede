@@ -3466,6 +3466,75 @@ NAME="USERGUIDE-SECURITY"
 HREF="#QS-STEP4"
 >4</A
 > of the quickstart guide.  The createauth command creates keys and certificates for each inca component (the agent, depot, consumer and incat) and stores them in the $INCA_DIST/etc directory.</P
+><P
+>Inca can also be run without ssl communication (credentials then do not need to be created with the "createauth" command).  To turn of ssl communication, edit the $INCA_DIST/etc/common/inca.properties file as follows:
+<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>replace all instances of "incas" with "inca"</P
+></LI
+><LI
+><P
+>change these lines to turn authentication off:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> 16 ## authentication options:
+ 17 # To turn authentication off, use the below option
+ 18 inca.agent.auth=false
+ 19 
+ 20 # To turn authentication on, use the below options.  File paths are relative
+ 21 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
+ 22 # CLASSPATH must include /some/file/etc
+ 23 #inca.agent.auth=true
+ 24 #inca.agent.password=stdin:password&#62;
+ 25 #inca.agent.cert=agentcert.pem
+ 26 #inca.agent.key=agentkey.pem
+ 27 #inca.agent.trusted=trusted
+...
+ 48 ## authentication options:
+ 49 # To turn authentication off, use the below option
+ 50 inca.depot.auth=false
+ 51 
+ 52 # To turn authentication on, use the below options.  File paths are relative
+ 53 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
+ 54 # CLASSPATH must include /some/file/etc
+ 55 #inca.depot.auth=true
+ 56 #inca.depot.password=stdin:password&#62;
+ 57 #inca.depot.cert=depotcert.pem
+ 58 #inca.depot.key=depotkey.pem
+ 59 #inca.depot.trusted=trusted
+...
+ 85 ## authentication options:
+ 86 # To turn authentication off, use the below option
+ 87 inca.consumer.auth=false
+ 88 
+ 89 # To turn authentication on, use the below options.  File paths are relative
+ 90 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
+ 91 # CLASSPATH must include /some/file/etc
+ 92 #inca.consumer.auth=true
+ 93 #inca.consumer.password=stdin:password&#62;
+ 94 #inca.consumer.cert=consumercert.pem
+ 95 #inca.consumer.key=consumerkey.pem
+ 96 #inca.consumer.trusted=trusted</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+></P
 ></DIV
 ><DIV
 CLASS="SECTION"
