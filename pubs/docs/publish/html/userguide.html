@@ -63,6 +63,11 @@ HREF="#USERGUIDE-ADVANCED-CONFIG"
 ><DL
 ><DT
 >5.1. <A
+HREF="#COMP-OPTIONS"
+>Inca Component Options</A
+></DT
+><DT
+>5.2. <A
 HREF="#POSTGRES"
 >Using Postgres as DB Backend</A
 ></DT
@@ -175,6 +180,35 @@ HREF="#USERGUIDE-LOGGING"
 HREF="#USERGUIDE-MAN"
 >Component Man Pages</A
 ></DT
+><DD
+><DL
+><DT
+>12.1. <A
+HREF="#MAN-DEPOT"
+>Depot</A
+></DT
+><DT
+>12.2. <A
+HREF="#MAN-AGENT"
+>Agent</A
+></DT
+><DT
+>12.3. <A
+HREF="#MAN-RM"
+>Reporter Manager</A
+></DT
+><DT
+>12.4. <A
+HREF="#MAN-CONSUMER"
+>Consumer</A
+></DT
+><DT
+>12.5. <A
+HREF="#MAN-INCAT"
+>Incat</A
+></DT
+></DL
+></DD
 ></DL
 ></DIV
 ><DIV
@@ -1384,8 +1418,80 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
+NAME="COMP-OPTIONS"
+>5.1. Inca Component Options</A
+></H3
+><P
+>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>edit $INCA_DIST/etc/common/inca.properties and replace:</P
+><P
+></P
+><UL
+><LI
+><P
+>"#inca.consumer.port=8080" with "inca.consumer.port=8082"</P
+></LI
+><LI
+><P
+>"inca.consumer.password=stdin:password&#62;" with "inca.consumer.password=pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+>" (where &#60;password&#62; is the password set with the createauth command)</P
+></LI
+></UL
+></LI
+><LI
+><P
+><STRONG
+><FONT
+COLOR="RED"
+>OR</FONT
+></STRONG
+> execute the following command:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer -p 8082 -P pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>Man pages with component options are described in <A
+HREF="#USERGUIDE-MAN"
+>Section 12</A
+>.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
 NAME="POSTGRES"
->5.1. Using Postgres as DB Backend</A
+>5.2. Using Postgres as DB Backend</A
 ></H3
 ><P
 ></P
@@ -1846,7 +1952,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN320"
+NAME="AEN339"
 ></A
 ><P
 ><B
@@ -2634,7 +2740,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN482"
+NAME="AEN501"
 ></A
 ><P
 ><B
@@ -3558,7 +3664,10 @@ NAME="USERGUIDE-MAN"
 >12. Component Man Pages</A
 ></H2
 ><P
->All of the inca components have a help option:
+>Each of the inca components has options that can be set in either the inca.properties file or on the command line as described in <A
+HREF="#COMP-OPTIONS"
+>Section 5.1</A
+>.  To see a list components use the bin/inca help command:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3594,7 +3703,15 @@ Available subcommands:
 ></TABLE
 ></P
 ><P
->For example, here is the help output for the depot, agent, reporter-manager, consumer and incat components:</P
+>For example, here are the options for the depot, agent, reporter-manager, consumer and incat components:</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="MAN-DEPOT"
+>12.1. Depot</A
+></H3
 ><P
 ><TABLE
 BORDER="1"
@@ -3628,6 +3745,15 @@ java edu.sdsc.inca.Depot
 ></TR
 ></TABLE
 ></P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="MAN-AGENT"
+>12.2. Agent</A
+></H3
 ><P
 ><TABLE
 BORDER="1"
@@ -3669,6 +3795,15 @@ java edu.sdsc.inca.Agent
 ></TR
 ></TABLE
 ></P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="MAN-RM"
+>12.3. Reporter Manager</A
+></H3
 ><P
 ><TABLE
 BORDER="1"
@@ -3760,6 +3895,15 @@ Options:
 ></TR
 ></TABLE
 > </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="MAN-CONSUMER"
+>12.4. Consumer</A
+></H3
 ><P
 ><TABLE
 BORDER="1"
@@ -3794,6 +3938,15 @@ java edu.sdsc.inca.Consumer
 ></TR
 ></TABLE
 > </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="MAN-INCAT"
+>12.5. Incat</A
+></H3
 ><P
 ><TABLE
 BORDER="1"
@@ -3823,6 +3976,7 @@ java incat
 ></TR
 ></TABLE
 > </P
+></DIV
 ></DIV
 ></DIV
 ></BODY

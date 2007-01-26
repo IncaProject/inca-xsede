@@ -5,6 +5,30 @@
 installing components in non-default 
 locations, changing inca.properties and other defaults).</para>
 
+<section id="comp-options">
+<title>Inca Component Options</title>
+<para>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </para>
+<orderedList>
+<listItem>
+<para>edit $INCA_DIST/etc/common/inca.properties and replace:</para>
+<itemizedList>
+<listItem>
+<para>"#inca.consumer.port=8080" with "inca.consumer.port=8082"</para>
+</listItem>
+<listItem><para>"inca.consumer.password=stdin:password>" with "inca.consumer.password=pass:<emphasis role="red">&lt;password&gt;</emphasis>" (where &lt;password&gt; is the password set with the createauth command)</para> 
+</listItem>
+</itemizedList>
+</listItem>
+<listItem>
+<para><emphasis role="red">OR</emphasis> execute the following command:
+<screen>% cd $INCA_DIST; ./bin/inca start consumer -p 8082 -P pass:<emphasis role="red">&lt;password&gt;</emphasis></screen>
+</para>
+</listItem>
+</orderedList>
+
+<para>Man pages with component options are described in <xref linkend="userguide-man">.</para> 
+</section>
+
 <section id="postgres">
 <title>Using Postgres as DB Backend</title>
 <itemizedList>
