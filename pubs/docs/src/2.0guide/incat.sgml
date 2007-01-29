@@ -40,45 +40,30 @@
   <section id="userguide-incat-resources">
   <title>Resource Configuration</title>
   <para>
-  Pressing the Resource Configuration tab near the top of the incat window
-  takes you to incat's resource specification panel (shown in <xref linkend="incat.res.fig">).  Here you can enter and
-  edit information about the hosts on which you want Inca to run reporters.
+  The default Inca configuration defines two resource groups--one that
+  specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
+  can be extended to include both localhost and any other hosts running Reporter Managers (defaultvo).  The default resource configuration 
+  is shown is <xref linkend="incat.res.fig">.  
   </para>
   <figure id="incat.res.fig">
           <title>Incat Resource Configuration Tab</title>
           <graphic fileref="figures/incat/incat-annotated-resource.jpg" align="center"></graphic>
  </figure>
 <para>
-  The default Inca configuration defines two resource groups--one that
-  specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
-  can be extended to include both localhost and any others that you define (e.g. other hosts running Reporter Managers).  To
-  define these in incat, press the Add button in the Resource Groups section to
-  open the resource group edit dialog.
+  This configuration above can be duplicated in an empty Inca installation by 
+  pressing the Resource Configuration tab near the top of the incat window and then entering
+  information about the hosts on which you want Inca to run reporters.
+  To define the default groups above in incat, press the Add button in the Resource Groups section to
+  open the resource group edit dialog shown in <xref linkend="incat.res.add.fig">.
   </para>
-  <anchor id="userguide-incat-resource-editor">
-  <!-- JJH: This graphic needs updating -->
-  <graphic fileref="figures/ug-incat-resource-dialog.png" align="center"></graphic>
+  <figure id="incat.res.add.fig">
+          <title>Incat Add Resource Dialog</title>
+  	  <graphic fileref="figures/incat/incat-annotated-resource-add.jpg" align="center"></graphic>
+ </figure>
   <para>
-  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on (this name choice is
-  arbitrary; "agentHost" or "local" would also work).  The Members text
-  box specifies the hosts that are in this resource group; for this group,
-  enter either "localhost" or the DNS name of the host where the Reporter
-  Manager client will run.  The Equivalent checkbox underneath the Members text
-  box indicates that Inca should treat the hosts in this group as a single host,
-  only running reporters on one of them.  This is most often useful when a
-  single DNS name maps to multiple hosts (e.g., multiple login nodes for a
-  batch system).  In this case, leave the box unchecked.
-  </para><para>
-  Select "local" in the Access Method pull-down list.  This indicates that the
-  Inca Agent can access this host directly without using either Globus or ssh
-  (i.e., it's the same host where the Agent is running).
-  </para><para>
-  If you enter a path in the Install Directory text box, Inca will install the
-  Reporter Manager code in that directory; otherwise, it will use a default
-  path, ~/incaReporterManager.  Proxy information isn't needed for this
-  resource group, so leave the other text boxes blank.
-  </para><para>
-  Press OK to complete entry of this resource group.  incat will close the
+  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on. 
+  Enter "localhost" in the Members text box and select "local" as the access method.
+  Press OK to complete entry of this resource group.  Incat will close the
   resource group edit dialog and will display siteA in the Resource Groups
   section of the Resource Configuration panel.
   </para>
@@ -96,31 +81,30 @@
 
   <section id="userguide-incat-suites">
   <title>Suites</title>
-  <!-- JJH: This graphic needs updating -->
-  <graphic fileref="figures/ug-incat-suites.png" align="center"></graphic>
   <para>
   Pressing the Suites tab near the top of the incat window takes you to incat's
   suite/series specification panel.  Here you specify the reporters you want to
   run, the resource groups to run them on, how frequently to run them, and the
   arguments to use when running them.
-  </para><para>
-  A suite groups a set of reporter series.  Suites are largely a convenience
-  for organizing related series, and the decision as to whether to place all
-  your series into a single suite or to divide them into multiple suites is up
-  to you.  One consideration is that the Inca Consumer uses suites as its
-  primary structure for organizing the display of reporter results, so
-  organizing related series into suites may make the Consumer web pages more
-  readable.
-  </para><para>
-  The default Inca configuration defines a single suite named TestSuiteLocal
-  that contains eight series.  Press the Add button in the Suites section of
-  the panel, enter "TestSuiteLocal" in the pop-up window, then press the OK
-  button.  You're now ready to add series to this new suite.  Press the Add
-  button in the Series section to open the incat series dialog.
   </para>
-  <!-- JJH: This graphic needs updating -->
-  <anchor id="userguide-incat-series-editor">
-  <graphic fileref="figures/ug-incat-series-dialog.png" align="center"></graphic>
+  <para>
+  The default Inca configuration defines a single suite named TestSuiteLocal
+  that contains eight series as shown in <xref linkend="incat.suite.fig">.  
+  <figure id="incat.suite.fig">
+          <title>Incat Suite Tab</title>
+          <graphic fileref="figures/incat/incat-annotated-suite.jpg" align="center"></graphic>
+ </figure>
+  </para>
+  <para>
+  In a new Inca installation, you can add the default suite above by pressing Add button in the Suites section of
+  the panel, entering "TestSuiteLocal" in the pop-up window, then pressing the OK
+  button.  To add series to the new suite, press the Add
+  button in the Series section to open the incat series dialog and configure each like the series in <xref linkend="incat.series.fig">.
+  <figure id="incat.series.fig">
+          <title>Incat Series Configuration</title>
+          <graphic fileref="figures/incat/incat-annotated-suite.jpg" align="center"></graphic>
+ </figure>
+  </para>
   <para>
   The top half of the series dialog contains basic information about reporter
   execution--the name and version of the reporter, the resource group to run it
