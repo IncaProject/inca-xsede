@@ -20,46 +20,35 @@
 
   <section id="userguide-incat-repos">
   <title>Repositories</title>
-  <graphic fileref="figures/ug-incat-repositories.png" align="center"></graphic>
   <para>
-  incat begins by showing the panel for Inca reporter repositories.  The three
-  sections of this panel display the list of repositories you've specified,
-  the list of reporters contained within those repositories, and property
-  information for the currently-selected reporter.  Buttons in the Repositories
-  section allow you to add and delete repositories from your list.  If your
-  list contains multiple repositories, a checkbox in the Reporters section
-  determines whether the reporter list shows reporters from all repositories or
-  only from the selected one.  Finally, pressing the Show button in the
-  Reporters section will open a text window that contains the source code of
-  the currently-selected reporter.
-  </para><para>
-  The default Inca configuration retrieves reporters from the Inca project
-  repository.  To add this repository to your list, press the Add button in the
-  Repositories section, enter the URL "http://inca.sdsc.edu/repository/latest"
+  Incat begins by showing the panel for Inca reporter repositories (as shown in <xref linkend="incat.rep.fig">).  
+  The default Inca configuration retrieves reporters from the 
+  $INCA_DIST/Inca-Reporter-* repository on the agent machine.  To add this repository to your list, press the Add button in the
+  Repositories section, enter the file:/ location of the Packages.gz file
   in the pop-up window that appears, then press the OK button.  Within a few
-  seconds you should see the repository URL appear in the Repositories list, a
+  seconds you should see the repository appear in the Repositories list, a
   set of reporters in the Reporters list, and properties for the first reporter
-  in the Reporter Properties list.  If you like, you can select reporters in
-  the Reporters list and display their source code by pressing the Show button.
-  (Double-clicking the name in the reporter list accomplishes the same thing.)
+  in the Reporter Properties list.  Reporter source code is viewable by double clicking on a reporter name or by selecting 
+  the reporter name and pressing the "Show" button.
   </para>
+  <figure id="incat.rep.fig">
+          <title>Incat Repositories Tab</title>
+          <graphic fileref="figures/incat/incat-annotated-repository.jpg" align="center"></graphic>
+ </figure>
   </section>
 
   <section id="userguide-incat-resources">
-  <title>Resources</title>
-  <graphic fileref="figures/ug-incat-resource-configuration.png" align="center"></graphic>
+  <title>Resource Configuration</title>
   <para>
   Pressing the Resource Configuration tab near the top of the incat window
-  takes you to incat's resource specification panel.  Here you can enter and
+  takes you to incat's resource specification panel (shown in <xref linkend="incat.res.fig">).  Here you can enter and
   edit information about the hosts on which you want Inca to run reporters.
-  The sections of this panel show resource groups (sets of hosts) that you've
-  defined, a set of macros that you can use when defining reporter series to
-  run on a particular resource group, and a list of hosts that are included in
-  the selected resource group.  Buttons in the Resource Group section allow you
-  to add, edit, and delete resource groups, and a similar set in the Macros
-  section allow you to add, edit, and delete macros associated with the
-  currently-selected resource group.
-  </para><para>
+  </para>
+  <figure id="incat.res.fig">
+          <title>Incat Resource Configuration Tab</title>
+          <graphic fileref="figures/incat/incat-annotated-resource.jpg" align="center"></graphic>
+ </figure>
+<para>
   The default Inca configuration defines two resource groups--one that
   specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
   can be extended to include both localhost and any others that you define (e.g. other hosts running Reporter Managers).  To
@@ -235,20 +224,29 @@
   <title>Committing/Saving</title>
   <para>
   Your Inca deployment configuration is now complete.  At this point, it's a
-  good idea to use the Save As option in incat's File menu to write the
-  configuration to a file.  That way, you have a local copy of the configuration
+  good idea to use the "Save" option in incat's File menu to write the
+  configuration to a file (<xref linkend="incat.save.fig">).  That way, you have a local copy of the configuration
   that you can later modify.  The file is formatted XML; if you're curious, you
   can read through it to see how incat represents the information you've
   entered.
-  </para><para>
+  <figure id="incat.save.fig">
+          <title>Incat Save Configuration to File</title>
+          <graphic fileref="figures/incat/save.jpg" align="center"></graphic>
+ </figure>
+  </para>
+  <para>
   Although your configuration is complete, it's not yet active.  To tell Inca
   to begin running reporters, you need to have incat send your configuration to
   your Inca Agent.  If you started incat with the -A argument, then you're
-  already connected to your Agent.  Otherwise, use the Connect option in
+  already connected to your Agent.  Otherwise, use the "Connect" option in
   incat's Agent menu to establish a connection.  Once you're connected, you can
-  use the Commit option in the Agent menu to send the configuration to the
-  Agent.  In response, the Agent will install the Inca Reporter Manager code on
+  use the "Commit" option in the Agent menu to send the configuration to the
+  Agent (<xref linkend="incat.commit.fig">).  In response, the Agent will install the Inca Reporter Manager code on
   the host specified in incat's "Resource Configuration" panel and begin running the reporters you specified in the "Suite Series" panel.
+  <figure id="incat.commit.fig">
+          <title>Incat Save Configuration to Agent</title>
+          <graphic fileref="figures/incat/commit.jpg" align="center"></graphic>
+ </figure>
   </para>
   </section>
 
