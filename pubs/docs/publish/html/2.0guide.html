@@ -88,7 +88,7 @@ HREF="#USERGUIDE-INCAT-REPOS"
 ><DT
 >6.2. <A
 HREF="#USERGUIDE-INCAT-RESOURCES"
->Resources</A
+>Resource Configuration</A
 ></DT
 ><DT
 >6.3. <A
@@ -1445,6 +1445,23 @@ COLOR="RED"
 >" (where &#60;password&#62; is the password set with the createauth command)</P
 ></LI
 ></UL
+><P
+>execute:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
 ></LI
 ><LI
 ><P
@@ -1745,32 +1762,33 @@ NAME="USERGUIDE-INCAT-REPOS"
 >6.1. Repositories</A
 ></H3
 ><P
-><IMG
-SRC="figures/ug-incat-repositories.png"
-ALIGN="CENTER"></P
-><P
->  incat begins by showing the panel for Inca reporter repositories.  The three
-  sections of this panel display the list of repositories you've specified,
-  the list of reporters contained within those repositories, and property
-  information for the currently-selected reporter.  Buttons in the Repositories
-  section allow you to add and delete repositories from your list.  If your
-  list contains multiple repositories, a checkbox in the Reporters section
-  determines whether the reporter list shows reporters from all repositories or
-  only from the selected one.  Finally, pressing the Show button in the
-  Reporters section will open a text window that contains the source code of
-  the currently-selected reporter.
-  </P
-><P
->  The default Inca configuration retrieves reporters from the Inca project
-  repository.  To add this repository to your list, press the Add button in the
-  Repositories section, enter the URL "http://inca.sdsc.edu/repository/latest"
+>  Incat begins by showing the panel for Inca reporter repositories (as shown in <A
+HREF="#INCAT.REP.FIG"
+>Figure 10</A
+>).  
+  The default Inca configuration retrieves reporters from the 
+  $INCA_DIST/Inca-Reporter-* repository on the agent machine.  To add this repository to your list, press the Add button in the
+  Repositories section, enter the file:/ location of the Packages.gz file
   in the pop-up window that appears, then press the OK button.  Within a few
-  seconds you should see the repository URL appear in the Repositories list, a
+  seconds you should see the repository appear in the Repositories list, a
   set of reporters in the Reporters list, and properties for the first reporter
-  in the Reporter Properties list.  If you like, you can select reporters in
-  the Reporters list and display their source code by pressing the Show button.
-  (Double-clicking the name in the reporter list accomplishes the same thing.)
+  in the Reporter Properties list.  Reporter source code is viewable by double clicking on a reporter name or by selecting 
+  the reporter name and pressing the "Show" button.
   </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.REP.FIG"
+></A
+><P
+><B
+>Figure 10. Incat Repositories Tab</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-repository.jpg"
+ALIGN="CENTER"></P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1778,24 +1796,30 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-RESOURCES"
->6.2. Resources</A
+>6.2. Resource Configuration</A
 ></H3
 ><P
-><IMG
-SRC="figures/ug-incat-resource-configuration.png"
-ALIGN="CENTER"></P
-><P
 >  Pressing the Resource Configuration tab near the top of the incat window
-  takes you to incat's resource specification panel.  Here you can enter and
+  takes you to incat's resource specification panel (shown in <A
+HREF="#INCAT.RES.FIG"
+>Figure 11</A
+>).  Here you can enter and
   edit information about the hosts on which you want Inca to run reporters.
-  The sections of this panel show resource groups (sets of hosts) that you've
-  defined, a set of macros that you can use when defining reporter series to
-  run on a particular resource group, and a list of hosts that are included in
-  the selected resource group.  Buttons in the Resource Group section allow you
-  to add, edit, and delete resource groups, and a similar set in the Macros
-  section allow you to add, edit, and delete macros associated with the
-  currently-selected resource group.
   </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.RES.FIG"
+></A
+><P
+><B
+>Figure 11. Incat Resource Configuration Tab</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-resource.jpg"
+ALIGN="CENTER"></P
+></DIV
 ><P
 >  The default Inca configuration defines two resource groups--one that
   specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
@@ -1949,7 +1973,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN339"
+NAME="AEN346"
 ></A
 ><P
 ><B
@@ -2077,21 +2101,57 @@ NAME="USERGUIDE-INCAT-COMMITS"
 ></H3
 ><P
 >  Your Inca deployment configuration is now complete.  At this point, it's a
-  good idea to use the Save As option in incat's File menu to write the
-  configuration to a file.  That way, you have a local copy of the configuration
+  good idea to use the "Save" option in incat's File menu to write the
+  configuration to a file (<A
+HREF="#INCAT.SAVE.FIG"
+>Figure 12</A
+>).  That way, you have a local copy of the configuration
   that you can later modify.  The file is formatted XML; if you're curious, you
   can read through it to see how incat represents the information you've
   entered.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.SAVE.FIG"
+></A
+><P
+><B
+>Figure 12. Incat Save Configuration to File</B
+></P
+><P
+><IMG
+SRC="figures/incat/save.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
   </P
 ><P
 >  Although your configuration is complete, it's not yet active.  To tell Inca
   to begin running reporters, you need to have incat send your configuration to
   your Inca Agent.  If you started incat with the -A argument, then you're
-  already connected to your Agent.  Otherwise, use the Connect option in
+  already connected to your Agent.  Otherwise, use the "Connect" option in
   incat's Agent menu to establish a connection.  Once you're connected, you can
-  use the Commit option in the Agent menu to send the configuration to the
-  Agent.  In response, the Agent will install the Inca Reporter Manager code on
+  use the "Commit" option in the Agent menu to send the configuration to the
+  Agent (<A
+HREF="#INCAT.COMMIT.FIG"
+>Figure 13</A
+>).  In response, the Agent will install the Inca Reporter Manager code on
   the host specified in incat's "Resource Configuration" panel and begin running the reporters you specified in the "Suite Series" panel.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.COMMIT.FIG"
+></A
+><P
+><B
+>Figure 13. Incat Save Configuration to Agent</B
+></P
+><P
+><IMG
+SRC="figures/incat/commit.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
   </P
 ></DIV
 ><DIV
@@ -2737,7 +2797,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN501"
+NAME="AEN516"
 ></A
 ><P
 ><B
@@ -2924,7 +2984,7 @@ groups provide for subclassing.  </P
 ><P
 >The reporter schema is visualized in <A
 HREF="#REPORTER-SCHEMA-FIG"
->Figure 10</A
+>Figure 14</A
 >.
 <DIV
 CLASS="FIGURE"
@@ -2933,7 +2993,7 @@ NAME="REPORTER-SCHEMA-FIG"
 ></A
 ><P
 ><B
->Figure 10. Inca Reporter Schema</B
+>Figure 14. Inca Reporter Schema</B
 ></P
 ><P
 ><IMG
@@ -2960,7 +3020,7 @@ NAME="SAMPLE-REPORT"
 ></A
 ><P
 ><B
->Figure 11. Example of Reporter Output</B
+>Figure 15. Example of Reporter Output</B
 ></P
 ><TABLE
 BORDER="1"
@@ -3016,7 +3076,7 @@ CLASS="SCREEN"
 ><P
 >As shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 11</A
+>Figure 15</A
 >, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
 A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
@@ -3108,7 +3168,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 11</A
+>Figure 15</A
 > report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
@@ -3157,7 +3217,7 @@ CLASS="FILENAME"
 requirement for the contents of this tag is that they must be well-formed
 XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
 HREF="#SAMPLE-REPORT"
->Figure 11</A
+>Figure 15</A
 >
 shows the conventional body for version reporters.
   </P
@@ -3183,7 +3243,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 11</A
+>Figure 15</A
 > report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
@@ -3400,7 +3460,7 @@ determining version.</P
 ><P
 >The following is the Perl code for a reporter that produces output like <A
 HREF="#SAMPLE-REPORT"
->Figure 11</A
+>Figure 15</A
 >.  This reporter 
 uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
