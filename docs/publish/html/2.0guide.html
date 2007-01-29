@@ -1799,12 +1799,13 @@ NAME="USERGUIDE-INCAT-RESOURCES"
 >6.2. Resource Configuration</A
 ></H3
 ><P
->  Pressing the Resource Configuration tab near the top of the incat window
-  takes you to incat's resource specification panel (shown in <A
+>  The default Inca configuration defines two resource groups--one that
+  specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
+  can be extended to include both localhost and any other hosts running Reporter Managers (defaultvo).  The default resource configuration 
+  is shown is <A
 HREF="#INCAT.RES.FIG"
 >Figure 11</A
->).  Here you can enter and
-  edit information about the hosts on which you want Inca to run reporters.
+>.  
   </P
 ><DIV
 CLASS="FIGURE"
@@ -1821,43 +1822,33 @@ SRC="figures/incat/incat-annotated-resource.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ><P
->  The default Inca configuration defines two resource groups--one that
-  specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
-  can be extended to include both localhost and any others that you define (e.g. other hosts running Reporter Managers).  To
-  define these in incat, press the Add button in the Resource Groups section to
-  open the resource group edit dialog.
+>  This configuration above can be duplicated in an empty Inca installation by 
+  pressing the Resource Configuration tab near the top of the incat window and then entering
+  information about the hosts on which you want Inca to run reporters.
+  To define the default groups above in incat, press the Add button in the Resource Groups section to
+  open the resource group edit dialog shown in <A
+HREF="#INCAT.RES.ADD.FIG"
+>Figure 12</A
+>.
   </P
+><DIV
+CLASS="FIGURE"
 ><A
-NAME="USERGUIDE-INCAT-RESOURCE-EDITOR"
+NAME="INCAT.RES.ADD.FIG"
 ></A
 ><P
+><B
+>Figure 12. Incat Add Resource Dialog</B
+></P
+><P
 ><IMG
-SRC="figures/ug-incat-resource-dialog.png"
+SRC="figures/incat/incat-annotated-resource-add.jpg"
 ALIGN="CENTER"></P
+></DIV
 ><P
->  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on (this name choice is
-  arbitrary; "agentHost" or "local" would also work).  The Members text
-  box specifies the hosts that are in this resource group; for this group,
-  enter either "localhost" or the DNS name of the host where the Reporter
-  Manager client will run.  The Equivalent checkbox underneath the Members text
-  box indicates that Inca should treat the hosts in this group as a single host,
-  only running reporters on one of them.  This is most often useful when a
-  single DNS name maps to multiple hosts (e.g., multiple login nodes for a
-  batch system).  In this case, leave the box unchecked.
-  </P
-><P
->  Select "local" in the Access Method pull-down list.  This indicates that the
-  Inca Agent can access this host directly without using either Globus or ssh
-  (i.e., it's the same host where the Agent is running).
-  </P
-><P
->  If you enter a path in the Install Directory text box, Inca will install the
-  Reporter Manager code in that directory; otherwise, it will use a default
-  path, ~/incaReporterManager.  Proxy information isn't needed for this
-  resource group, so leave the other text boxes blank.
-  </P
-><P
->  Press OK to complete entry of this resource group.  incat will close the
+>  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on. 
+  Enter "localhost" in the Members text box and select "local" as the access method.
+  Press OK to complete entry of this resource group.  Incat will close the
   resource group edit dialog and will display siteA in the Resource Groups
   section of the Resource Configuration panel.
   </P
@@ -1881,38 +1872,57 @@ NAME="USERGUIDE-INCAT-SUITES"
 >6.3. Suites</A
 ></H3
 ><P
-><IMG
-SRC="figures/ug-incat-suites.png"
-ALIGN="CENTER"></P
-><P
 >  Pressing the Suites tab near the top of the incat window takes you to incat's
   suite/series specification panel.  Here you specify the reporters you want to
   run, the resource groups to run them on, how frequently to run them, and the
   arguments to use when running them.
   </P
 ><P
->  A suite groups a set of reporter series.  Suites are largely a convenience
-  for organizing related series, and the decision as to whether to place all
-  your series into a single suite or to divide them into multiple suites is up
-  to you.  One consideration is that the Inca Consumer uses suites as its
-  primary structure for organizing the display of reporter results, so
-  organizing related series into suites may make the Consumer web pages more
-  readable.
-  </P
-><P
 >  The default Inca configuration defines a single suite named TestSuiteLocal
-  that contains eight series.  Press the Add button in the Suites section of
-  the panel, enter "TestSuiteLocal" in the pop-up window, then press the OK
-  button.  You're now ready to add series to this new suite.  Press the Add
-  button in the Series section to open the incat series dialog.
-  </P
+  that contains eight series as shown in <A
+HREF="#INCAT.SUITE.FIG"
+>Figure 13</A
+>.  
+  <DIV
+CLASS="FIGURE"
 ><A
-NAME="USERGUIDE-INCAT-SERIES-EDITOR"
+NAME="INCAT.SUITE.FIG"
 ></A
 ><P
+><B
+>Figure 13. Incat Suite Tab</B
+></P
+><P
 ><IMG
-SRC="figures/ug-incat-series-dialog.png"
+SRC="figures/incat/incat-annotated-suite.jpg"
 ALIGN="CENTER"></P
+></DIV
+>
+  </P
+><P
+>  In a new Inca installation, you can add the default suite above by pressing Add button in the Suites section of
+  the panel, entering "TestSuiteLocal" in the pop-up window, then pressing the OK
+  button.  To add series to the new suite, press the Add
+  button in the Series section to open the incat series dialog and configure each like the series in <A
+HREF="#INCAT.SERIES.FIG"
+>Figure 14</A
+>.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.SERIES.FIG"
+></A
+><P
+><B
+>Figure 14. Incat Series Configuration</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-suite.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
 ><P
 >  The top half of the series dialog contains basic information about reporter
   execution--the name and version of the reporter, the resource group to run it
@@ -1973,7 +1983,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN346"
+NAME="AEN350"
 ></A
 ><P
 ><B
@@ -2104,7 +2114,7 @@ NAME="USERGUIDE-INCAT-COMMITS"
   good idea to use the "Save" option in incat's File menu to write the
   configuration to a file (<A
 HREF="#INCAT.SAVE.FIG"
->Figure 12</A
+>Figure 15</A
 >).  That way, you have a local copy of the configuration
   that you can later modify.  The file is formatted XML; if you're curious, you
   can read through it to see how incat represents the information you've
@@ -2116,7 +2126,7 @@ NAME="INCAT.SAVE.FIG"
 ></A
 ><P
 ><B
->Figure 12. Incat Save Configuration to File</B
+>Figure 15. Incat Save Configuration to File</B
 ></P
 ><P
 ><IMG
@@ -2134,7 +2144,7 @@ ALIGN="CENTER"></P
   use the "Commit" option in the Agent menu to send the configuration to the
   Agent (<A
 HREF="#INCAT.COMMIT.FIG"
->Figure 13</A
+>Figure 16</A
 >).  In response, the Agent will install the Inca Reporter Manager code on
   the host specified in incat's "Resource Configuration" panel and begin running the reporters you specified in the "Suite Series" panel.
   <DIV
@@ -2144,7 +2154,7 @@ NAME="INCAT.COMMIT.FIG"
 ></A
 ><P
 ><B
->Figure 13. Incat Save Configuration to Agent</B
+>Figure 16. Incat Save Configuration to Agent</B
 ></P
 ><P
 ><IMG
@@ -2797,7 +2807,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN516"
+NAME="AEN520"
 ></A
 ><P
 ><B
@@ -2984,7 +2994,7 @@ groups provide for subclassing.  </P
 ><P
 >The reporter schema is visualized in <A
 HREF="#REPORTER-SCHEMA-FIG"
->Figure 14</A
+>Figure 17</A
 >.
 <DIV
 CLASS="FIGURE"
@@ -2993,7 +3003,7 @@ NAME="REPORTER-SCHEMA-FIG"
 ></A
 ><P
 ><B
->Figure 14. Inca Reporter Schema</B
+>Figure 17. Inca Reporter Schema</B
 ></P
 ><P
 ><IMG
@@ -3020,7 +3030,7 @@ NAME="SAMPLE-REPORT"
 ></A
 ><P
 ><B
->Figure 15. Example of Reporter Output</B
+>Figure 18. Example of Reporter Output</B
 ></P
 ><TABLE
 BORDER="1"
@@ -3076,7 +3086,7 @@ CLASS="SCREEN"
 ><P
 >As shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 15</A
+>Figure 18</A
 >, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
 A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
@@ -3168,7 +3178,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 15</A
+>Figure 18</A
 > report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
@@ -3217,7 +3227,7 @@ CLASS="FILENAME"
 requirement for the contents of this tag is that they must be well-formed
 XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
 HREF="#SAMPLE-REPORT"
->Figure 15</A
+>Figure 18</A
 >
 shows the conventional body for version reporters.
   </P
@@ -3243,7 +3253,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 15</A
+>Figure 18</A
 > report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
@@ -3460,7 +3470,7 @@ determining version.</P
 ><P
 >The following is the Perl code for a reporter that produces output like <A
 HREF="#SAMPLE-REPORT"
->Figure 15</A
+>Figure 18</A
 >.  This reporter 
 uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
