@@ -57,13 +57,20 @@ a reporter at a particular point in time)
 <section id="default-consumer">
 <title>Default Data Consumer</title>
 <para>
-The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=swStack.xsl</ulink>).</para> 
+The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=default.xsl</ulink>).</para> 
 
-<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml">http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
-
-<screen>&lt;combo&gt;
-
-&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
+<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml">http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
+</para>
+<orderedList>
+<listItem>
+<para>
+&lt;all2allSummaries&gt;  
+(cross-site test results calculated by the consumer): 
+</para>
+<para>
+The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).
+<screen>&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
   &lt;resources xmlns=""&gt;
     &lt;resource&gt;
       &lt;name&gt;siteA&lt;/name&gt;
@@ -92,8 +99,17 @@ The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink
     &lt;/resource&gt;
   &lt;/resources&gt;
 &lt;/all2allSummaries&gt;
-
-&lt;suite&gt;
+</screen></para>
+</listItem>
+<listItem>
+<para>
+&lt;suite&gt; 
+(from xslt.jsp "suiteName" parameter):
+</para>
+<para>
+Array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name 
+and returns summaries for the latest series instance in that suite.
+<screen>&lt;suite&gt;
  &lt;reportSummary&gt;
   &lt;hostname&gt;host1.name&lt;/hostname&gt;
   &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
@@ -117,8 +133,17 @@ The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink
   &lt;/body&gt;
  &lt;/reportSummary&gt;
 &lt;/suite&gt;
-
-&lt;resourceConfig&gt;
+</screen></para>
+</listItem>
+<listItem>
+<para>
+&lt;resourceConfig&gt; 
+(from xslt.jsp "resourceID" parameter):
+</para>
+<para>
+Array of all resources within a given resource group and their macros. 
+This part of the XML is retrieved from the agent.
+<screen>&lt;resourceConfig&gt;
   &lt;resources&gt;
     &lt;resource&gt;
       &lt;name&gt;siteA&lt;/name&gt;
@@ -131,8 +156,16 @@ The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink
     &lt;/resource&gt;
   &lt;/resources&gt;
 &lt;/resourceConfig&gt;
-
-&lt;stack&gt;
+</screen></para>
+</listItem>
+<listItem>
+<para>
+extra xml 
+(from xslt.jsp "xmlFile" parameter):
+</para>
+<para>
+XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+<screen>&lt;stack&gt;
     &lt;id&gt;Software and Services&lt;/id&gt;
     &lt;category&gt;
         &lt;id&gt;Math Libraries&lt;/id&gt;
@@ -153,55 +186,12 @@ The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink
         &lt;/package&gt;
     &lt;/category&gt;
 &lt;/stack&gt;
-
-&lt;/combo&gt;</screen>
-</para>
-<para>
-The XML above can be broken down into the following sections:
-<orderedList>
-<listItem>
-<para>
-all2allSummaries (cross-site test results calculated by the consumer): 
-</para>
-<para>
-The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
-be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).
-</para>
-</listItem>
-<listItem>
-<para>
-suite (xslt.jsp "suiteName" parameter):
-</para>
-<para>
-array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name (from the 
-xslt.jsp suiteName parameter) and returns summaries 
-for the latest series instance in that suite.
-</para>
-</listItem>
-<listItem>
-<para>
-resourceConfig (xslt.jsp "resourceID" parameter):
-</para>
-<para>
-array of all resources within a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
-This part of the XML is retrieved from the agent.
-</para>
-</listItem>
-<listItem>
-<para>
-extra xml (xslt.jsp "xmlFile" parameter):
-</para>
-<para>
-XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
-When new series are added in incat, add the new series nicknames to the swStack.xml file as in the figure below to add the series to the default page.
-<graphic fileref="figures/consumer-editxml.jpg" align="center"></graphic>
-</para>
+</screen></para>
 </listItem>
 </orderedList>
-</para>
 
 <para>
-To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/swStack.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter.  [ <ulink url="http://www.w3schools.com/xsl/">xsl tutorial</ulink> ] 
+To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/default.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter (e.g. $INCA_DIST/etc/swStack.xsl).  [ <ulink url="http://www.w3schools.com/xsl/">xsl tutorial</ulink> ] 
 </para>
 <para>
 Change default CSS (Cascading Style Sheet) properties such as colors and fonts by editing the $INCA_DIST/var/jetty/webapp/css/inca.css file. [ <ulink url="http://www.w3schools.com/css/">css tutorial</ulink> ]

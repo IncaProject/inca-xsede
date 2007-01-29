@@ -2221,7 +2221,7 @@ official myproxy documentation</A
 information is defined in incat as follows:</P
 ><P
 ><IMG
-SRC="figures/incat-proxy.jpg"
+SRC="figures/incat/incat-proxy.jpg"
 ALIGN="CENTER"></P
 ><P
 >The dialog boxes are the hostname of the myproxy server, the username and password used to store the proxy, and the lifetime in hours that the agent should retrieve a proxy for (the default is 12 hours).</P
@@ -2284,7 +2284,7 @@ NAME="USERGUIDE-INCAT-MACROS"
   </P
 ><P
 ><IMG
-SRC="figures/ug-incat-macrodef.png"
+SRC="figures/incat/macro1.jpg"
 ALIGN="CENTER"></P
 ><P
 >  To make use of the macro you've defined, click the Suites tab, then press the
@@ -2314,7 +2314,7 @@ ALIGN="CENTER"></P
   </P
 ><P
 ><IMG
-SRC="figures/ug-incat-macrouse.png"
+SRC="figures/incat/macro2.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ><DIV
@@ -2337,7 +2337,7 @@ NAME="USERGUIDE-INCAT-COMPARISON"
   </P
 ><P
 ><IMG
-SRC="figures/ug-incat-comparison.png"
+SRC="figures/incat/comparison.jpg"
 ALIGN="CENTER"></P
 ><P
 >  In the Comparison text box, you can enter a boolean expression that Inca will
@@ -2519,30 +2519,38 @@ HREF="http://localhost:8080/index.jsp"
 TARGET="_top"
 >http://localhost:8080/index.jsp</A
 >) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
-HREF="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl"
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=default.xsl"
 TARGET="_top"
->http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=swStack.xsl</A
+>http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=default.xsl</A
 >).</P
 ><P
 >To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <A
-HREF="http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml"
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml"
 TARGET="_top"
->http://localhost:8080/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml</A
-> would produce something similar to: 
-
+>http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml</A
+> would produce something similar to: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>&#60;all2allSummaries&#62;  
+(cross-site test results calculated by the consumer): </P
+><P
+>The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->&#60;combo&#62;
-
-&#60;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&#62;
+>&#60;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&#62;
   &#60;resources xmlns=""&#62;
     &#60;resource&#62;
       &#60;name&#62;siteA&#60;/name&#62;
@@ -2570,9 +2578,31 @@ CLASS="SCREEN"
       &#60;/testSummaries&#62;
     &#60;/resource&#62;
   &#60;/resources&#62;
-&#60;/all2allSummaries&#62;
-
-&#60;suite&#62;
+&#60;/all2allSummaries&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>&#60;suite&#62; 
+(from xslt.jsp "suiteName" parameter):</P
+><P
+>Array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name 
+and returns summaries for the latest series instance in that suite.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;suite&#62;
  &#60;reportSummary&#62;
   &#60;hostname&#62;host1.name&#60;/hostname&#62;
   &#60;uri&#62;http://repository/globus.unit.xio&#60;/uri&#62;
@@ -2595,9 +2625,31 @@ CLASS="SCREEN"
     &#60;/unitTest&#62;
   &#60;/body&#62;
  &#60;/reportSummary&#62;
-&#60;/suite&#62;
-
-&#60;resourceConfig&#62;
+&#60;/suite&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>&#60;resourceConfig&#62; 
+(from xslt.jsp "resourceID" parameter):</P
+><P
+>Array of all resources within a given resource group and their macros. 
+This part of the XML is retrieved from the agent.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;resourceConfig&#62;
   &#60;resources&#62;
     &#60;resource&#62;
       &#60;name&#62;siteA&#60;/name&#62;
@@ -2609,9 +2661,30 @@ CLASS="SCREEN"
       &#60;/macros&#62;
     &#60;/resource&#62;
   &#60;/resources&#62;
-&#60;/resourceConfig&#62;
-
-&#60;stack&#62;
+&#60;/resourceConfig&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>extra xml 
+(from xslt.jsp "xmlFile" parameter):</P
+><P
+>XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;stack&#62;
     &#60;id&#62;Software and Services&#60;/id&#62;
     &#60;category&#62;
         &#60;id&#62;Math Libraries&#60;/id&#62;
@@ -2631,58 +2704,16 @@ CLASS="SCREEN"
             &#60;/tests&#62;
         &#60;/package&#62;
     &#60;/category&#62;
-&#60;/stack&#62;
-
-&#60;/combo&#62;</PRE
+&#60;/stack&#62;</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ></P
-><P
->The XML above can be broken down into the following sections:
-<P
-></P
-><OL
-TYPE="1"
-><LI
-><P
->all2allSummaries (cross-site test results calculated by the consumer): </P
-><P
->The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
-be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).</P
-></LI
-><LI
-><P
->suite (xslt.jsp "suiteName" parameter):</P
-><P
->array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name (from the 
-xslt.jsp suiteName parameter) and returns summaries 
-for the latest series instance in that suite.</P
-></LI
-><LI
-><P
->resourceConfig (xslt.jsp "resourceID" parameter):</P
-><P
->array of all resources within a given resource group (from the xslt.jsp resourceID parameter) and their macros. 
-This part of the XML is retrieved from the agent.</P
-></LI
-><LI
-><P
->extra xml (xslt.jsp "xmlFile" parameter):</P
-><P
->XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
-When new series are added in incat, add the new series nicknames to the swStack.xml file as in the figure below to add the series to the default page.
-<P
-><IMG
-SRC="figures/consumer-editxml.jpg"
-ALIGN="CENTER"></P
-></P
 ></LI
 ></OL
-></P
 ><P
->To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/swStack.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter.  [ <A
+>To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/default.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter (e.g. $INCA_DIST/etc/swStack.xsl).  [ <A
 HREF="http://www.w3schools.com/xsl/"
 TARGET="_top"
 >xsl tutorial</A
@@ -2768,7 +2799,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN518"
+NAME="AEN519"
 ></A
 ><P
 ><B
