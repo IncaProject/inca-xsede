@@ -130,7 +130,7 @@ Deploying default configuration
  3527  p1  S      0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l /inca-dist/./bin/../var/agent.log
  3560  p1  S      0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l /inca-dist/./bin/../var/depot.log
  3593  p1  S      0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer -l /inca-dist/./bin/../var/consumer.log</screen></listItem>
-        <listItem><para>a sample suite called <emphasis>TestSuiteLocal</emphasis> is sent to the
+        <listItem><para>a sample suite called <emphasis>sampleSuite</emphasis> is sent to the
         agent requesting reporters to be started on a localhost client using the
         schedule:</para>
 <screen>1-59/10 * * * * cluster.math.atlas.version
@@ -146,7 +146,7 @@ Deploying default configuration
 	<screen>% ps | grep Manager
  5382  p1  S      0:02.14 /usr/bin/perl /home/incaReporterManager/sbin/../sbin/reporter-manager -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.</screen>
 	<itemizedList>
-	<listItem><para>the agent receives <emphasis>TestSuiteLocal</emphasis> suite and installs a reporter 
+	<listItem><para>the agent receives <emphasis>sampleSuite</emphasis> suite and installs a reporter 
           manager on the localhost in <filename>~/incaReporterManager</filename> (takes 1-5 minutes - view progress of build in 
           <filename>~/incaReporterManager/build.log</filename>)
         </para></listItem>
@@ -180,10 +180,10 @@ Deploying default configuration
     <para>
     After a few minutes (when the consumer cache is refreshed), reload the
     page and you should see a start up screen similar to the figure below 
-    showing one suite called <emphasis>TestSuiteLocal</emphasis> 
+    showing one suite called <emphasis>sampleSuite</emphasis> 
     (our default sample configuration), a resource group called
-    <emphasis>defaultvo</emphasis>, and one resource called
-    <emphasis>siteA</emphasis> which is a nickname for the machine you 
+    <emphasis>defaultGrid</emphasis>, and one resource called
+    <emphasis>localResource</emphasis> which is a nickname for the machine you 
     installed Inca on.
         <figure id="inca.startup.fig">
           <title>Default Inca start up page with suite and resources.</title>
@@ -191,8 +191,8 @@ Deploying default configuration
         </figure>
     </para>
     <para>
-    Select <emphasis>TestSuiteLocal</emphasis> and
-    <emphasis>defaultvo</emphasis> and press the <emphasis>Submit</emphasis>
+    Select <emphasis>sampleSuite</emphasis> and
+    <emphasis>defaultGrid</emphasis> and press the <emphasis>Submit</emphasis>
     button.  You should see a page similar to the figure below with
     the reporter series scheduled to execute on localhost.  The reporters test a small set of compiler, 
     grid services, math library and
@@ -229,8 +229,8 @@ Deploying default configuration
     <listItem id="qs-step7">
     <para>View the Inca sample default configuration using the Inca GUI tool, incat (Inca Administration Tool).
       You can use incat to make changes to the default configuration (e.g., add
-      a new resource to <emphasis>defaultvo</emphasis> or add new tests to
-      <emphasis>TestSuiteLocal</emphasis>).  See <xref linkend="userguide-incat"> for more information about using incat.</para>
+      a new resource to <emphasis>defaultGrid</emphasis> or add new tests to
+      <emphasis>sampleSuite</emphasis>).  See <xref linkend="userguide-incat"> for more information about using incat.</para>
      <para> Use the following command to start incat: <screen>% ./bin/inca start incat -A localhost:6323 </screen> </para>
       <para> You should now see the Java GUI window appear on your local machine. 
       If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, 

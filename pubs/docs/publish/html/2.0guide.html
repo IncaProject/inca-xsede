@@ -890,7 +890,7 @@ CLASS="SCREEN"
 ><P
 >a sample suite called <EM
 ><FONT
->TestSuiteLocal</FONT
+>sampleSuite</FONT
 ></EM
 > is sent to the
         agent requesting reporters to be started on a localhost client using the
@@ -944,7 +944,7 @@ CLASS="SCREEN"
 ><P
 >the agent receives <EM
 ><FONT
->TestSuiteLocal</FONT
+>sampleSuite</FONT
 ></EM
 > suite and installs a reporter 
           manager on the localhost in <TT
@@ -1029,18 +1029,18 @@ ALIGN="CENTER"></P
     page and you should see a start up screen similar to the figure below 
     showing one suite called <EM
 ><FONT
->TestSuiteLocal</FONT
+>sampleSuite</FONT
 ></EM
 > 
     (our default sample configuration), a resource group called
     <EM
 ><FONT
->defaultvo</FONT
+>defaultGrid</FONT
 ></EM
 >, and one resource called
     <EM
 ><FONT
->siteA</FONT
+>localResource</FONT
 ></EM
 > which is a nickname for the machine you 
     installed Inca on.
@@ -1063,12 +1063,12 @@ ALIGN="CENTER"></P
 ><P
 >    Select <EM
 ><FONT
->TestSuiteLocal</FONT
+>sampleSuite</FONT
 ></EM
 > and
     <EM
 ><FONT
->defaultvo</FONT
+>defaultGrid</FONT
 ></EM
 > and press the <EM
 ><FONT
@@ -1161,12 +1161,12 @@ NAME="QS-STEP7"
       You can use incat to make changes to the default configuration (e.g., add
       a new resource to <EM
 ><FONT
->defaultvo</FONT
+>defaultGrid</FONT
 ></EM
 > or add new tests to
       <EM
 ><FONT
->TestSuiteLocal</FONT
+>sampleSuite</FONT
 ></EM
 >).  See <A
 HREF="#USERGUIDE-INCAT"
@@ -1474,7 +1474,7 @@ NAME="USERGUIDE-INCAT-RESOURCES"
 ><P
 >  The default Inca configuration defines two resource groups--one that
   specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
-  can be extended to include both localhost and any other hosts running Reporter Managers (defaultvo).  The default resource configuration 
+  can be extended to include both localhost and any other hosts running Reporter Managers (defaultGrid).  The default resource configuration 
   is shown is <A
 HREF="#INCAT.RES.FIG"
 >Figure 11</A
@@ -1519,20 +1519,20 @@ SRC="figures/incat/incat-annotated-resource-add.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ><P
->  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on. 
+>  In the Group Name text box, enter the name "localResource" as a nickname for the machine the Reporter Manager client runs on. 
   Enter "localhost" in the Members text box and select "local" as the access method.
   Press OK to complete entry of this resource group.  Incat will close the
-  resource group edit dialog and will display siteA in the Resource Groups
+  resource group edit dialog and will display localResource in the Resource Groups
   section of the Resource Configuration panel.
   </P
 ><P
 >  Press the Add button again to add a second resource group.  Give this one
-  the name "defaultvo" and enter "siteA" in the Members text box.  This tells
-  incat that any hosts in the "siteA" group (localhost, in this case) are also
-  part of the defaultvo group.  If you defined other groups, "siteB", "siteC",
-  etc., you could include these in defaultvo by listing them in the Members
+  the name "defaultGrid" and enter "localResource" in the Members text box.  This tells
+  incat that any hosts in the "localResource" group (localhost, in this case) are also
+  part of the defaultGrid group.  If you defined other groups, "siteB", "siteC",
+  etc., you could include these in defaultGrid by listing them in the Members
   text box, separated by spaces.  Press OK to complete entry of this resource
-  group.  In the Resource Groups list, Select siteA, then defaultvo and notice
+  group.  In the Resource Groups list, Select localResource, then defaultGrid and notice
   that the Members panel lists localhost as a member of each group.
   </P
 ></DIV
@@ -1551,7 +1551,7 @@ NAME="USERGUIDE-INCAT-SUITES"
   arguments to use when running them.
   </P
 ><P
->  The default Inca configuration defines a single suite named TestSuiteLocal
+>  The default Inca configuration defines a single suite named sampleSuite
   that contains eight series as shown in <A
 HREF="#INCAT.SUITE.FIG"
 >Figure 13</A
@@ -1574,7 +1574,7 @@ ALIGN="CENTER"></P
   </P
 ><P
 >  In a new Inca installation, you can add the default suite above by pressing Add button in the Suites section of
-  the panel, entering "TestSuiteLocal" in the pop-up window, then pressing the OK
+  the panel, entering "sampleSuite" in the pop-up window, then pressing the OK
   button.  To add series to the new suite, press the Add
   button in the Series section to open the incat series dialog and configure each like the atlas series in <A
 HREF="#INCAT.SERIES.FIG"
@@ -1822,7 +1822,9 @@ NAME="ACCESS-METHODS"
   must start the Reporter Manager on the command line and restart it any time
   you want to change the reporter series configuration for the group.  The
   Agent will NOT automatically start a Reporter Manager for a manual resource
-  as it will for local, ssh, or globus2 resources.
+  as it will for local, ssh, or globus2 resources.  For a manual resource group, 
+  incat provides a text box for you to enter an email that should be notified 
+  when the Inca configuration on the resource needs to be updated.
   </P
 ></LI
 ><LI
@@ -1947,7 +1949,7 @@ NAME="USERGUIDE-INCAT-MACROS"
   </P
 ><P
 >  A better approach is to use a macro for the host names and let Inca replicate
-  the series for you.  In the Resource Configuration panel, click on siteA in
+  the series for you.  In the Resource Configuration panel, click on localResource in
   the Resource Group section.  Next, press the Add button beneath the Macros
   section.  This opens a dialog box that allows you to enter the name and
   value(s) of a macro associated with the current resource group.  Enter
@@ -1963,7 +1965,7 @@ ALIGN="CENTER"></P
 >  To make use of the macro you've defined, click the Suites tab, then press the
   Add button underneath the Series section to open the series edit dialog.  In
   the dialog, set the reporter to grid.benchmark.performance.ping and the
-  resource group to siteA.
+  resource group to localResource.
   </P
 ><P
 >  In the host text box in the Arguments section of the dialog, enter
@@ -2221,15 +2223,15 @@ HREF="http://localhost:8080/index.jsp"
 TARGET="_top"
 >http://localhost:8080/index.jsp</A
 >) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
-HREF="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=default.xsl"
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml&#38;xsl=default.xsl"
 TARGET="_top"
->http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml&#38;xsl=default.xsl</A
+>http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml&#38;xsl=default.xsl</A
 >).</P
 ><P
 >To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <A
-HREF="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml"
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml"
 TARGET="_top"
->http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&#38;resourceID=defaultvo&#38;xmlFile=swStack.xml</A
+>http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml</A
 > would produce something similar to: </P
 ><P
 ></P
@@ -2258,7 +2260,7 @@ CLASS="SCREEN"
 >&#60;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&#62;
   &#60;resources xmlns=""&#62;
     &#60;resource&#62;
-      &#60;name&#62;siteA&#60;/name&#62;
+      &#60;name&#62;localResource&#60;/name&#62;
       &#60;testSummaries&#62;
         &#60;testSummary&#62;
           &#60;name&#62;gridftp&#60;/name&#62;
@@ -2274,7 +2276,7 @@ CLASS="SCREEN"
           &#60;numNotAtFaultFailures&#62;0&#60;/numNotAtFaultFailures&#62;
           &#60;failures&#62;
             &#60;failure&#62;
-              &#60;nickname&#62;all2all:gram_to_siteA&#60;/nickname&#62;
+              &#60;nickname&#62;all2all:gram_to_localResource&#60;/nickname&#62;
               &#60;instanceId&#62;239352&#60;/instanceId&#62;
               &#60;seriesConfigId&#62;172057&#60;/seriesConfigId&#62;
             &#60;/failure&#62;
@@ -2357,7 +2359,7 @@ CLASS="SCREEN"
 >&#60;resourceConfig&#62;
   &#60;resources&#62;
     &#60;resource&#62;
-      &#60;name&#62;siteA&#60;/name&#62;
+      &#60;name&#62;localResource&#60;/name&#62;
       &#60;macros&#62;
         &#60;macro&#62;
           &#60;name&#62;__regexp__&#60;/name&#62;
@@ -2404,7 +2406,7 @@ CLASS="SCREEN"
 			     &#60;id&#62;gt4-xio&#60;/id&#62;
 		       &#60;/unitalias&#62;
                 &#60;unitalias&#62;
-			     &#60;id&#62;all2all:gram_to_siteA&#60;/id&#62;
+			     &#60;id&#62;all2all:gram_to_localResource&#60;/id&#62;
 		       &#60;/unitalias&#62;
             &#60;/tests&#62;
         &#60;/package&#62;

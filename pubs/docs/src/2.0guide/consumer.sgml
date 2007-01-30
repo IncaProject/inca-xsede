@@ -57,9 +57,9 @@ a reporter at a particular point in time)
 <section id="default-consumer">
 <title>Default Data Consumer</title>
 <para>
-The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml&amp;xsl=default.xsl</ulink>).</para> 
+The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml&amp;xsl=default.xsl</ulink>).</para> 
 
-<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml">http://localhost:8080/inca/xslt.jsp?suiteName=TestSuiteLocal&amp;resourceID=defaultvo&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
+<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
 </para>
 <orderedList>
 <listItem>
@@ -73,7 +73,7 @@ be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are 
 <screen>&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
   &lt;resources xmlns=""&gt;
     &lt;resource&gt;
-      &lt;name&gt;siteA&lt;/name&gt;
+      &lt;name&gt;localResource&lt;/name&gt;
       &lt;testSummaries&gt;
         &lt;testSummary&gt;
           &lt;name&gt;gridftp&lt;/name&gt;
@@ -89,7 +89,7 @@ be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are 
           &lt;numNotAtFaultFailures&gt;0&lt;/numNotAtFaultFailures&gt;
           &lt;failures&gt;
             &lt;failure&gt;
-              &lt;nickname&gt;all2all:gram_to_siteA&lt;/nickname&gt;
+              &lt;nickname&gt;all2all:gram_to_localResource&lt;/nickname&gt;
               &lt;instanceId&gt;239352&lt;/instanceId&gt;
               &lt;seriesConfigId&gt;172057&lt;/seriesConfigId&gt;
             &lt;/failure&gt;
@@ -146,7 +146,7 @@ This part of the XML is retrieved from the agent.
 <screen>&lt;resourceConfig&gt;
   &lt;resources&gt;
     &lt;resource&gt;
-      &lt;name&gt;siteA&lt;/name&gt;
+      &lt;name&gt;localResource&lt;/name&gt;
       &lt;macros&gt;
         &lt;macro&gt;
           &lt;name&gt;__regexp__&lt;/name&gt;
@@ -180,7 +180,7 @@ XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is
 			     &lt;id&gt;gt4-xio&lt;/id&gt;
 		       &lt;/unitalias&gt;
                 &lt;unitalias&gt;
-			     &lt;id&gt;all2all:gram_to_siteA&lt;/id&gt;
+			     &lt;id&gt;all2all:gram_to_localResource&lt;/id&gt;
 		       &lt;/unitalias&gt;
             &lt;/tests&gt;
         &lt;/package&gt;
