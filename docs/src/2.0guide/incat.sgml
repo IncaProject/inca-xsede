@@ -42,7 +42,7 @@
   <para>
   The default Inca configuration defines two resource groups--one that
   specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and a container group that
-  can be extended to include both localhost and any other hosts running Reporter Managers (defaultvo).  The default resource configuration 
+  can be extended to include both localhost and any other hosts running Reporter Managers (defaultGrid).  The default resource configuration 
   is shown is <xref linkend="incat.res.fig">.  
   </para>
   <figure id="incat.res.fig">
@@ -61,20 +61,20 @@
   	  <graphic fileref="figures/incat/incat-annotated-resource-add.jpg" align="center"></graphic>
  </figure>
   <para>
-  In the Group Name text box, enter the name "siteA" as a nickname for the machine the Reporter Manager client runs on. 
+  In the Group Name text box, enter the name "localResource" as a nickname for the machine the Reporter Manager client runs on. 
   Enter "localhost" in the Members text box and select "local" as the access method.
   Press OK to complete entry of this resource group.  Incat will close the
-  resource group edit dialog and will display siteA in the Resource Groups
+  resource group edit dialog and will display localResource in the Resource Groups
   section of the Resource Configuration panel.
   </para>
   <para>
   Press the Add button again to add a second resource group.  Give this one
-  the name "defaultvo" and enter "siteA" in the Members text box.  This tells
-  incat that any hosts in the "siteA" group (localhost, in this case) are also
-  part of the defaultvo group.  If you defined other groups, "siteB", "siteC",
-  etc., you could include these in defaultvo by listing them in the Members
+  the name "defaultGrid" and enter "localResource" in the Members text box.  This tells
+  incat that any hosts in the "localResource" group (localhost, in this case) are also
+  part of the defaultGrid group.  If you defined other groups, "siteB", "siteC",
+  etc., you could include these in defaultGrid by listing them in the Members
   text box, separated by spaces.  Press OK to complete entry of this resource
-  group.  In the Resource Groups list, Select siteA, then defaultvo and notice
+  group.  In the Resource Groups list, Select localResource, then defaultGrid and notice
   that the Members panel lists localhost as a member of each group.
   </para>
   </section>
@@ -88,7 +88,7 @@
   arguments to use when running them.
   </para>
   <para>
-  The default Inca configuration defines a single suite named TestSuiteLocal
+  The default Inca configuration defines a single suite named sampleSuite
   that contains eight series as shown in <xref linkend="incat.suite.fig">.  
   <figure id="incat.suite.fig">
           <title>Incat Suite Tab</title>
@@ -97,7 +97,7 @@
   </para>
   <para>
   In a new Inca installation, you can add the default suite above by pressing Add button in the Suites section of
-  the panel, entering "TestSuiteLocal" in the pop-up window, then pressing the OK
+  the panel, entering "sampleSuite" in the pop-up window, then pressing the OK
   button.  To add series to the new suite, press the Add
   button in the Series section to open the incat series dialog and configure each like the atlas series in <xref linkend="incat.series.fig">.
   <figure id="incat.series.fig">
@@ -211,7 +211,9 @@
   must start the Reporter Manager on the command line and restart it any time
   you want to change the reporter series configuration for the group.  The
   Agent will NOT automatically start a Reporter Manager for a manual resource
-  as it will for local, ssh, or globus2 resources.
+  as it will for local, ssh, or globus2 resources.  For a manual resource group, 
+  incat provides a text box for you to enter an email that should be notified 
+  when the Inca configuration on the resource needs to be updated.
   </para>
 </listItem>
 <listItem>
@@ -298,7 +300,7 @@ reporter manager and agent over their SSL connection.
   red.
   </para><para>
   A better approach is to use a macro for the host names and let Inca replicate
-  the series for you.  In the Resource Configuration panel, click on siteA in
+  the series for you.  In the Resource Configuration panel, click on localResource in
   the Resource Group section.  Next, press the Add button beneath the Macros
   section.  This opens a dialog box that allows you to enter the name and
   value(s) of a macro associated with the current resource group.  Enter
@@ -311,7 +313,7 @@ reporter manager and agent over their SSL connection.
   To make use of the macro you've defined, click the Suites tab, then press the
   Add button underneath the Series section to open the series edit dialog.  In
   the dialog, set the reporter to grid.benchmark.performance.ping and the
-  resource group to siteA.
+  resource group to localResource.
   </para><para>
   In the host text box in the Arguments section of the dialog, enter
   "@targets@.ufo.edu".  Macro references in incat are indicated by placing a
