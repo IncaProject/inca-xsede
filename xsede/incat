@@ -399,6 +399,32 @@
         </macros>
       </resource>
       <resource>
+        <name>aix</name>
+        <xpath>//resource[matches(name, '^(sdsc-datastar|ncsa-copper)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>aix</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>sdsc-datastar ncsa-copper</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>java-version</name>
+            <value>1.4.2_SR5</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>anl-grid</name>
         <xpath>//resource[matches(name, '^(tg-grid1.uc.teragrid.org)$')]</xpath>
         <macros>
@@ -1983,6 +2009,10 @@
             <name>batchJobManager</name>
             <value>jobmanager-loadleveler</value>
           </macro>
+          <macro>
+            <name>blasTimeout</name>
+            <value>86400</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2646,6 +2676,10 @@
           <macro>
             <name>java-version</name>
             <value>1.4.2_11</value>
+          </macro>
+          <macro>
+            <name>blasTimeout</name>
+            <value>3600</value>
           </macro>
         </macros>
       </resource>
@@ -5363,50 +5397,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.middleware.globus.unit.xio</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.xio</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>45</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gt4-xio</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>?/7</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.unit.rls</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.rls</uri>
             <args>
@@ -6252,7 +6242,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>3600.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -6304,67 +6294,11 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>3600.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
           <nickname>blas-level2</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.math.blas.unit.level1</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level1</uri>
-            <args>
-              <arg>
-                <name>queue</name>
-                <value>@blasQueue@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>compiler_opts</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@nativeFortranCompiler@</value>
-              </arg>
-              <arg>
-                <name>link</name>
-                <value>@blasLink@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>86400.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>blas-level1</nickname>
           <resourceSetName>teragrid-login</resourceSetName>
           <schedule>
             <cron>
@@ -6521,11 +6455,111 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.xio</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.xio</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>45</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gt4-xio</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>?/7</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.math.blas.unit.level1</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level1</uri>
+            <args>
+              <arg>
+                <name>queue</name>
+                <value>@blasQueue@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>compiler_opts</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@nativeFortranCompiler@</value>
+              </arg>
+              <arg>
+                <name>link</name>
+                <value>@blasLink@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>86400.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>blas-level1</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>89</version>
+      <version>91</version>
     </suite>
     <suite>
       <seriesConfigs>
