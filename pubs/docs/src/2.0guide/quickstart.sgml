@@ -275,17 +275,10 @@ scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatcert.p
 scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
         </listItem>
         <listItem>
-          <para>Change the agent key/cert to incat key/cert in the 
-        <filename>$INCA_DIST/etc/common/inca.properties</filename> local file:
-            <screen>#---------------------------------------------------------------------------
-# agent
-#---------------------------------------------------------------------------
-
-inca.agent.auth=true
-inca.agent.password=
-<emphasis role="red">inca.agent.cert=incatcert.pem
-inca.agent.key=incatkey.pem</emphasis>
-inca.agent.trusted=trusted</screen>
+          <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and change the agent key/cert to the incat key/cert:
+            <screen>17 inca.agent.cert=agentcert.pem
+...
+29 inca.agent.key=agentkey.pem</screen>
           </para>
         </listItem>
         <listItem> <para> Start the incat component on a local machine with the agent hostname from the original machine: </para>

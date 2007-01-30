@@ -56,130 +56,130 @@ HREF="#USERGUIDE-QUICKSTART"
 ></DT
 ><DT
 >5. <A
-HREF="#USERGUIDE-ADVANCED-CONFIG"
->Advanced Configuration</A
-></DT
-><DD
-><DL
-><DT
->5.1. <A
-HREF="#COMP-OPTIONS"
->Inca Component Options</A
-></DT
-><DT
->5.2. <A
-HREF="#POSTGRES"
->Using Postgres as DB Backend</A
-></DT
-></DL
-></DD
-><DT
->6. <A
 HREF="#USERGUIDE-INCAT"
 >Administering Inca with incat</A
 ></DT
 ><DD
 ><DL
 ><DT
->6.1. <A
+>5.1. <A
 HREF="#USERGUIDE-INCAT-REPOS"
 >Repositories</A
 ></DT
 ><DT
->6.2. <A
+>5.2. <A
 HREF="#USERGUIDE-INCAT-RESOURCES"
 >Resource Configuration</A
 ></DT
 ><DT
->6.3. <A
+>5.3. <A
 HREF="#USERGUIDE-INCAT-SUITES"
 >Suites</A
 ></DT
 ><DT
->6.4. <A
+>5.4. <A
 HREF="#USERGUIDE-INCAT-COMMITS"
 >Committing/Saving</A
 ></DT
 ><DT
->6.5. <A
+>5.5. <A
 HREF="#ACCESS-METHODS"
 >Resource Access Methods</A
 ></DT
 ><DT
->6.6. <A
+>5.6. <A
 HREF="#PROXIES"
 >Proxies</A
 ></DT
 ><DT
->6.7. <A
+>5.7. <A
 HREF="#USERGUIDE-INCAT-MACROS"
 >Using Resource Macros</A
 ></DT
 ><DT
->6.8. <A
+>5.8. <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
 >Series Comparison and Notification</A
 ></DT
 ></DL
 ></DD
 ><DT
->7. <A
+>6. <A
 HREF="#USERGUIDE-CONSUMER"
 >Data Display (Data Consumers)</A
 ></DT
 ><DD
 ><DL
 ><DT
->7.1. <A
+>6.1. <A
 HREF="#DEFAULT-CONSUMER"
 >Default Data Consumer</A
 ></DT
 ></DL
 ></DD
 ><DT
->8. <A
+>7. <A
 HREF="#USERGUIDE-REPORTERS"
 >Reporters and Repositories</A
 ></DT
 ><DD
 ><DL
 ><DT
->8.1. <A
+>7.1. <A
 HREF="#REPORTER-CMDLINE"
 >Executing Reporters</A
 ></DT
 ><DT
->8.2. <A
+>7.2. <A
 HREF="#REPORTER-WRITING"
 >Writing Reporters</A
 ></DT
 ><DT
->8.3. <A
+>7.3. <A
 HREF="#REPORTER-REPOSITORIES"
 >Reporter Repositories</A
 ></DT
 ></DL
 ></DD
 ><DT
->9. <A
+>8. <A
 HREF="#USERGUIDE-APIS"
 >Inca Client APIs</A
 ></DT
 ><DT
->10. <A
+>9. <A
 HREF="#USERGUIDE-WEBSERVICES"
 >Web Services</A
 ></DT
 ><DT
->11. <A
+>10. <A
 HREF="#USERGUIDE-SECURITY"
 >Security</A
 ></DT
 ><DT
->12. <A
+>11. <A
 HREF="#USERGUIDE-LOGGING"
 >Log Files</A
 ></DT
+><DT
+>12. <A
+HREF="#USERGUIDE-ADVANCED-CONFIG"
+>Advanced Configuration</A
+></DT
+><DD
+><DL
+><DT
+>12.1. <A
+HREF="#COMP-OPTIONS"
+>Inca Component Options</A
+></DT
+><DT
+>12.2. <A
+HREF="#POSTGRES"
+>Using Postgres as DB Backend</A
+></DT
+></DL
+></DD
 ><DT
 >13. <A
 HREF="#USERGUIDE-MAN"
@@ -300,7 +300,7 @@ SRC="figures/ug-report-icon.png"></P
 > is the output of a reporter and is a XML
   document complying to the reporter schema in <A
 HREF="#REPORTER-SCHEMA"
->Section 8.2.1</A
+>Section 7.2.1</A
 >.
   </P
 ></TD
@@ -524,7 +524,7 @@ virtual organization's Certificate Authority (CA) and consult your
 organization's security policy regarding GSI credential use.  
 <A
 HREF="#PROXIES"
->Section 6.6</A
+>Section 5.6</A
 > describes using proxy credentials in the Inca framework.</P
 ></DIV
 ><DIV
@@ -806,7 +806,7 @@ be executed ONCE.  The components started in this step can later be stopped with
     edit the inca.properties file in etc/common to change these defaults.
     More information can be found in <A
 HREF="#USERGUIDE-ADVANCED-CONFIG"
->Section 5</A
+>Section 12</A
 >.
     </P
 ><TABLE
@@ -1111,7 +1111,7 @@ CLASS="FILENAME"
 >. See 
     <A
 HREF="#USERGUIDE-LOGGING"
->Section 12</A
+>Section 11</A
 > for more information about logging.  
     </P
 ><DIV
@@ -1170,7 +1170,7 @@ NAME="QS-STEP7"
 ></EM
 >).  See <A
 HREF="#USERGUIDE-INCAT"
->Section 6</A
+>Section 5</A
 > for more information about using incat.</P
 ><P
 > Use the following command to start incat: <TABLE
@@ -1341,11 +1341,10 @@ COLOR="RED"
 ></LI
 ><LI
 ><P
->Change the agent key/cert to incat key/cert in the 
-        <TT
+>Edit the <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/common/inca.properties</TT
-> local file:
+> local file and change the agent key/cert to the incat key/cert:
             <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -1356,20 +1355,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->#---------------------------------------------------------------------------
-# agent
-#---------------------------------------------------------------------------
-
-inca.agent.auth=true
-inca.agent.password=
-<STRONG
-><FONT
-COLOR="RED"
->inca.agent.cert=incatcert.pem
-inca.agent.key=incatkey.pem</FONT
-></STRONG
->
-inca.agent.trusted=trusted</PRE
+>17 inca.agent.cert=agentcert.pem
+...
+29 inca.agent.key=agentkey.pem</PRE
 ></FONT
 ></TD
 ></TR
@@ -1410,328 +1398,8 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="USERGUIDE-ADVANCED-CONFIG"
->5. Advanced Configuration</A
-></H2
-><P
->This section describes advanced configuration options such as
-installing components in non-default locations and changing other default properties.</P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="COMP-OPTIONS"
->5.1. Inca Component Options</A
-></H3
-><P
->Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </P
-><P
-></P
-><OL
-TYPE="1"
-><LI
-><P
->edit $INCA_DIST/etc/common/inca.properties and replace:</P
-><P
-></P
-><UL
-><LI
-><P
->"#inca.consumer.port=8080" with "inca.consumer.port=8082"</P
-></LI
-><LI
-><P
->"inca.consumer.password=stdin:password&#62;" with "inca.consumer.password=pass:<STRONG
-><FONT
-COLOR="RED"
->&#60;password&#62;</FONT
-></STRONG
->" (where &#60;password&#62; is the password set with the createauth command)</P
-></LI
-></UL
-><P
->execute:</P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST; ./bin/inca start consumer</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></LI
-><LI
-><P
-><STRONG
-><FONT
-COLOR="RED"
->OR</FONT
-></STRONG
-> execute the following command:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST; ./bin/inca start consumer -p 8082 -P pass:<STRONG
-><FONT
-COLOR="RED"
->&#60;password&#62;</FONT
-></STRONG
-></PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-></OL
-><P
->Man pages with component options are described in <A
-HREF="#USERGUIDE-MAN"
->Section 13</A
->.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="POSTGRES"
->5.2. Using Postgres as DB Backend</A
-></H3
-><P
-></P
-><UL
-><LI
-><P
->Stop the depot 
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST; ./bin/inca stop depot</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Edit $INCA_DIST/etc/hibernate.properties</P
-><P
-></P
-><UL
-><LI
-><P
->Comment out the first 5 lines which specifies for hibernate to use 
-hsql as its backend database: 
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->#hibernate.dialect=org.hibernate.dialect.HSQLDialect 
-#hibernate.connection.driver_class=org.hsqldb.jdbcDriver 
-#hibernate.connection.url=jdbc:hsqldb:test 
-#hibernate.connection.username=sa 
-#hibernate.connection.password=</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Uncomment the second block of lines 8-13 which specifies for 
-hibernate to use postgres:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
-># Settings for a local PostgreSQL database. 
-hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect 
-hibernate.query.substitutions=yes 'Y', no 'N' 
-hibernate.connection.driver_class=org.postgresql.Driver 
-hibernate.connection.url=jdbc:postgresql:test 
-hibernate.connection.username=test 
-hibernate.connection.password=</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Replace the value "jdbc:postgresql:test" for property 
-"hibernate.connection.url" on line 11 with the following (where "hostname" is 
-the FQDN of the host where postgres is installed and "username" is the username to 
-connect to the postgres DB):
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->hibernate.connection.url=jdbc:postgresql://hostname/username</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Replace the value "test" for property 
-"hibernate.connection.username" on line 12 with the postgres 
-username:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->hibernate.connection.username=username</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-></UL
-></LI
-><LI
-><P
->Download the postgres jdbc jar file pg74.216.jdbc3.jar 
-to your $INCA_DIST/lib directory:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST/lib 
-% wget http://inca.sdsc.edu/workshop/pg74.216.jdbc3.jar </PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Initialize the depot (set up the Inca tables):
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST; ./bin/inca depot -d</PRE
-></FONT
-></TD
-></TR
-></TABLE
->
-You should see something like:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->Initializing c3p0 pool... 
-... 
-Database Initialization Completed</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Start the depot 
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% ./bin/inca start depot</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-></UL
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
 NAME="USERGUIDE-INCAT"
->6. Administering Inca with incat</A
+>5. Administering Inca with incat</A
 ></H2
 ><P
 >  Inca provides a graphical administration tool, named incat, that allows you
@@ -1764,7 +1432,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-REPOS"
->6.1. Repositories</A
+>5.1. Repositories</A
 ></H3
 ><P
 >  Incat begins by showing the panel for Inca reporter repositories (as shown in <A
@@ -1801,7 +1469,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-RESOURCES"
->6.2. Resource Configuration</A
+>5.2. Resource Configuration</A
 ></H3
 ><P
 >  The default Inca configuration defines two resource groups--one that
@@ -1874,7 +1542,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-SUITES"
->6.3. Suites</A
+>5.3. Suites</A
 ></H3
 ><P
 >  Pressing the Suites tab near the top of the incat window takes you to incat's
@@ -1933,7 +1601,7 @@ ALIGN="CENTER"></P
   allow you to test the output of the reporter and send email if the test
   fails.  This is covered in <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
->Section 6.8</A
+>Section 5.8</A
 > below;
   for this series leave these boxes blank.  Press the OK button, and incat will
   close the series dialog box and add the series to the Series list in the
@@ -1949,7 +1617,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN348"
+NAME="AEN292"
 ></A
 ><P
 ><B
@@ -2073,7 +1741,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-COMMITS"
->6.4. Committing/Saving</A
+>5.4. Committing/Saving</A
 ></H3
 ><P
 >  Your Inca deployment configuration is now complete.  At this point, it's a
@@ -2136,7 +1804,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="ACCESS-METHODS"
->6.5. Resource Access Methods</A
+>5.5. Resource Access Methods</A
 ></H3
 ><P
 >  The Inca Agent can use the following access methods to stage and start
@@ -2202,7 +1870,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PROXIES"
->6.6. Proxies</A
+>5.6. Proxies</A
 ></H3
 ><P
 >For convenience, the Inca framework can be used to retrieve a proxy for the
@@ -2210,7 +1878,7 @@ globus2 access method or for reporters that require an active proxy.
 Reporters that require a proxy should use the Inca::Reporter::GridProxy 
 module described in <A
 HREF="#REPORTER-API"
->Section 8.2.3</A
+>Section 7.2.3</A
 >.  </P
 ><P
 >Before configuring Inca to retrieve proxies, first store a proxy on a myproxy
@@ -2266,7 +1934,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-MACROS"
->6.7. Using Resource Macros</A
+>5.7. Using Resource Macros</A
 ></H3
 ><P
 >  Resource macros provide a shorthand for defining multiple, similar series.
@@ -2327,12 +1995,12 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-ALL2ALL"
->6.7.1. Configuring "all2all" Series Using Macros</A
+>5.7.1. Configuring "all2all" Series Using Macros</A
 ></H4
 ><P
 >As described in <A
 HREF="#DEFAULT-CONSUMER"
->Section 7.1</A
+>Section 6.1</A
 >, "all2all" test results are calculated by the consumer.  The image below 
   illustrates how an "all2all" series would be configured. 
   <P
@@ -2349,7 +2017,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-COMPARISON"
->6.8. Series Comparison and Notification</A
+>5.8. Series Comparison and Notification</A
 ></H3
 ><P
 >  For a particular series, the Inca system by default reports only whether or
@@ -2443,7 +2111,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-CONSUMER"
->7. Data Display (Data Consumers)</A
+>6. Data Display (Data Consumers)</A
 ></H2
 ><P
 >The data that the Inca depot stores, as with all database data, can be displayed in many ways.  A data consumer is anything that 
@@ -2541,7 +2209,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="DEFAULT-CONSUMER"
->7.1. Default Data Consumer</A
+>6.1. Default Data Consumer</A
 ></H3
 ><P
 >The default data consumer is a <A
@@ -2575,7 +2243,7 @@ TYPE="1"
 >The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
 be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).  <A
 HREF="#USERGUIDE-INCAT-ALL2ALL"
->Section 6.7.1</A
+>Section 5.7.1</A
 > describes how to configure all2all tests in incat.
 <TABLE
 BORDER="1"
@@ -2769,7 +2437,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-REPORTERS"
->8. Reporters and Repositories</A
+>7. Reporters and Repositories</A
 ></H2
 ><P
 >Inca reporters are executable programs and scripts, generally small, that test
@@ -2788,22 +2456,22 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-CMDLINE"
->8.1. Executing Reporters</A
+>7.1. Executing Reporters</A
 ></H3
 ><P
 >Because they are executables, Inca reporters are independent of the rest of the Inca system.
 Reporters can be executed manually from a command line or automatically as part of an Inca installation.  
 Incorporating your own reporters into a running Inca installation requires only writing the reporters (<A
 HREF="#REPORTER-WRITING"
->Section 8.2</A
+>Section 7.2</A
 >), 
 including them in a repository (<A
 HREF="#REPORTER-REPOSITORIES"
->Section 8.3</A
+>Section 7.3</A
 >), 
 and configuring the repository's series using incat (<A
 HREF="#USERGUIDE-INCAT"
->Section 6</A
+>Section 5</A
 >).  Most developers will execute reporters from the 
 command line before adding them to their Inca installation.   After installing Inca, you can try executing some of the reporters that come
 with the distribution from the command line:
@@ -2827,7 +2495,7 @@ CLASS="SCREEN"
 >
 You should now see XML output like that in <A
 HREF="#REPORTER-OUTPUT"
->Section 8.2.2</A
+>Section 7.2.2</A
 >.</P
 ><P
 >All Inca reporters must support the command line arguments listed in the table
@@ -2836,7 +2504,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN527"
+NAME="AEN471"
 ></A
 ><P
 ><B
@@ -2983,18 +2651,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-WRITING"
->8.2. Writing Reporters</A
+>7.2. Writing Reporters</A
 ></H3
 ><P
 >Reporters can be written in any language as long as 
 they output XML according to the schema described in <A
 HREF="#REPORTER-SCHEMA"
->Section 8.2.1</A
+>Section 7.2.1</A
 >.  
 New reporter developers may choose to write reporters in Perl since 
 the Inca distribution includes sample Perl reporters and API modules (<A
 HREF="#REPORTER-API"
->Section 8.2.3</A
+>Section 7.2.3</A
 >) 
 for printing XML according to our schema.</P
 ><DIV
@@ -3003,7 +2671,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-SCHEMA"
->8.2.1. Reporter XML Schema</A
+>7.2.1. Reporter XML Schema</A
 ></H4
 ><P
 >In order to promote interoperability between reporters, we define a
@@ -3047,7 +2715,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-OUTPUT"
->8.2.2. Reporter XML Output</A
+>7.2.2. Reporter XML Output</A
 ></H4
 ><P
 >Here is the output from the successful run of a typical Inca reporter.  The
@@ -3351,21 +3019,21 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-API"
->8.2.3. Reporter APIs</A
+>7.2.3. Reporter APIs</A
 ></H4
 ><P
 >The Inca release includes a set of <A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/"
 TARGET="_top"
 >Perl modules</A
 > that make it easier to
 develop reporters that produce output as shown in <A
 HREF="#REPORTER-OUTPUT"
->Section 8.2.2</A
+>Section 7.2.2</A
 >
  and conform to the schema described in <A
 HREF="#REPORTER-SCHEMA"
->Section 8.2.1</A
+>Section 7.2.1</A
 >.  
 The following are a list of modules and their purpose (click on module names for manpages):</P
 ><P
@@ -3375,7 +3043,7 @@ TYPE="1"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter.html"
 TARGET="_top"
 >Inca::Reporter</A
 ></P
@@ -3387,7 +3055,7 @@ provides an interface for log messages, and handles XML generation.</P
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/GlobusUnit.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/GlobusUnit.html"
 TARGET="_top"
 >Inca::Reporter::GlobusUnit</A
 ></P
@@ -3398,7 +3066,7 @@ provides methods for running Globus jobs.</P
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/GridProxy.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/GridProxy.html"
 TARGET="_top"
 >Inca::Reporter::GridProxy</A
 ></P
@@ -3448,7 +3116,7 @@ $reporter-&#62;print();</PRE
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Performance.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/Performance.html"
 TARGET="_top"
 >Inca::Reporter::Performance</A
 ></P
@@ -3456,7 +3124,7 @@ TARGET="_top"
 >The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
 defines a common &#60;body&#62; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
 parameters (name/value) and statistics (name/value/units). For a single benchmark, the <A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Performance/Benchmark.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/Performance/Benchmark.html"
 TARGET="_top"
 >Inca::Test::Reporter::Performance::Benchmark</A
 > module is also available.</P
@@ -3464,7 +3132,7 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/SimpleUnit.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/SimpleUnit.html"
 TARGET="_top"
 >Inca::Reporter::SimpleUnit</A
 ></P
@@ -3475,7 +3143,7 @@ defines a common &#60;body&#62; schema for unit test reporters and provides meth
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Usage.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/Usage.html"
 TARGET="_top"
 >Inca::Reporter::Usage</A
 ></P
@@ -3485,7 +3153,7 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.0betalatest/html/Inca/Reporter/Version.html"
+HREF="http://inca.sdsc.edu/releases/2.0/perldocs/Inca/Reporter/Version.html"
 TARGET="_top"
 >Inca::Reporter::Version</A
 ></P
@@ -3543,7 +3211,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-REPOSITORIES"
->8.3. Reporter Repositories</A
+>7.3. Reporter Repositories</A
 ></H3
 ><P
 >The Inca system retrieves reporters from external collections called
@@ -3650,7 +3318,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-APIS"
->9. Inca Client APIs</A
+>8. Inca Client APIs</A
 ></H2
 ><P
 >TODO: description of perl and java client apis.</P
@@ -3661,7 +3329,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-WEBSERVICES"
->10. Web Services</A
+>9. Web Services</A
 ></H2
 ><P
 >TODO: description of web services.</P
@@ -3672,7 +3340,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-SECURITY"
->11. Security</A
+>10. Security</A
 ></H2
 ><P
 >By default, inca components use ssl to communicate with each other.  Credentials are automatically generated with the "bin/inca createauth" command described in step <A
@@ -3702,44 +3370,17 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
-> 16 ## authentication options:
- 17 # To turn authentication off, use the below option
- 18 inca.agent.auth=false
- 19 
- 20 # To turn authentication on, use the below options.  File paths are relative
- 21 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
- 22 # CLASSPATH must include /some/file/etc
- 23 #inca.agent.auth=true
- 24 #inca.agent.password=stdin:password&#62;
- 25 #inca.agent.cert=agentcert.pem
- 26 #inca.agent.key=agentkey.pem
- 27 #inca.agent.trusted=trusted
+>9 # To turn authentication (i.e., SSL communication) off and on
+10 inca.agent.auth=false
+11 #inca.agent.auth=true
 ...
- 48 ## authentication options:
- 49 # To turn authentication off, use the below option
- 50 inca.depot.auth=false
- 51 
- 52 # To turn authentication on, use the below options.  File paths are relative
- 53 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
- 54 # CLASSPATH must include /some/file/etc
- 55 #inca.depot.auth=true
- 56 #inca.depot.password=stdin:password&#62;
- 57 #inca.depot.cert=depotcert.pem
- 58 #inca.depot.key=depotkey.pem
- 59 #inca.depot.trusted=trusted
+67 # To turn authentication (i.e., SSL communication) off and on
+68 inca.depot.auth=false
+69 #inca.depot.auth=true
 ...
- 85 ## authentication options:
- 86 # To turn authentication off, use the below option
- 87 inca.consumer.auth=false
- 88 
- 89 # To turn authentication on, use the below options.  File paths are relative
- 90 # to the classpath.  E.g., if files is at /some/file/etc/servercert.pem,
- 91 # CLASSPATH must include /some/file/etc
- 92 #inca.consumer.auth=true
- 93 #inca.consumer.password=stdin:password&#62;
- 94 #inca.consumer.cert=consumercert.pem
- 95 #inca.consumer.key=consumerkey.pem
- 96 #inca.consumer.trusted=trusted</PRE
+110 # To turn authentication (i.e., SSL communication) off and on
+111 inca.consumer.auth=false
+112 #inca.consumer.auth=true</PRE
 ></FONT
 ></TD
 ></TR
@@ -3755,12 +3396,332 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-LOGGING"
->12. Log Files</A
+>11. Log Files</A
 ></H2
 ><P
 >The agent, depot and consumer logs are located in the $INCA_DIST/var directory.  Reporter manager logs are located in each manager's install directory under the var directory (e.g. ~/incaReporterManager/var). </P
 ><P
 >Logging is informational by default, but can be adjusted to be more verbose ('info' to 'debug') or less verbose ('info' to 'error') by editing the $INCA_DIST/etc/common/log4j.properties file and then restarting inca components.  Note that passwords are logged when 'debug' logging is turned on.  Logging for the inca components can be adjusted by editing lines 26 and 27 ("log4j.rootLogger=info, stdout" and "log4j.logger.edu.sdsc.inca=info").  To log the most verbose globus error messages change line 33 in log4j.properties from "log4j.logger.org.globus=error" to "log4j.logger.org.globus=debug". </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-CONFIG"
+>12. Advanced Configuration</A
+></H2
+><P
+>This section describes advanced configuration options such as
+installing components in non-default locations and changing other default properties.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="COMP-OPTIONS"
+>12.1. Inca Component Options</A
+></H3
+><P
+>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>edit $INCA_DIST/etc/common/inca.properties and replace:</P
+><P
+></P
+><UL
+><LI
+><P
+>"#inca.consumer.port=8080" with "inca.consumer.port=8082"</P
+></LI
+><LI
+><P
+>"inca.consumer.password=stdin:password&#62;" with "inca.consumer.password=pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+>" (where &#60;password&#62; is the password set with the createauth command)</P
+></LI
+></UL
+><P
+>execute:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+><STRONG
+><FONT
+COLOR="RED"
+>OR</FONT
+></STRONG
+> execute the following command:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer -p 8082 -P pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>Man pages with component options are described in <A
+HREF="#USERGUIDE-MAN"
+>Section 13</A
+>.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="POSTGRES"
+>12.2. Using Postgres as DB Backend</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>Stop the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca stop depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Edit $INCA_DIST/etc/hibernate.properties</P
+><P
+></P
+><UL
+><LI
+><P
+>Comment out the first 5 lines which specifies for hibernate to use 
+hsql as its backend database: 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#hibernate.dialect=org.hibernate.dialect.HSQLDialect 
+#hibernate.connection.driver_class=org.hsqldb.jdbcDriver 
+#hibernate.connection.url=jdbc:hsqldb:test 
+#hibernate.connection.username=sa 
+#hibernate.connection.password=</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Uncomment the second block of lines 8-13 which specifies for 
+hibernate to use postgres:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+># Settings for a local PostgreSQL database. 
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect 
+hibernate.query.substitutions=yes 'Y', no 'N' 
+hibernate.connection.driver_class=org.postgresql.Driver 
+hibernate.connection.url=jdbc:postgresql:test 
+hibernate.connection.username=test 
+hibernate.connection.password=</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Replace the value "jdbc:postgresql:test" for property 
+"hibernate.connection.url" on line 11 with the following (where "hostname" is 
+the FQDN of the host where postgres is installed and "username" is the username to 
+connect to the postgres DB):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hibernate.connection.url=jdbc:postgresql://hostname/username</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Replace the value "test" for property 
+"hibernate.connection.username" on line 12 with the postgres 
+username:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hibernate.connection.username=username</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Download the postgres jdbc jar file pg74.216.jdbc3.jar 
+to your $INCA_DIST/lib directory:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/lib 
+% wget http://inca.sdsc.edu/workshop/pg74.216.jdbc3.jar </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Initialize the depot (set up the Inca tables):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca depot -d</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You should see something like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Initializing c3p0 pool... 
+... 
+Database Initialization Completed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Start the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca start depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></UL
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3773,7 +3734,7 @@ NAME="USERGUIDE-MAN"
 ><P
 >Each of the inca components has options that can be set in either the inca.properties file or on the command line as described in <A
 HREF="#COMP-OPTIONS"
->Section 5.1</A
+>Section 12.1</A
 >.  To see a list components use the bin/inca help command:
 <TABLE
 BORDER="1"
