@@ -178,6 +178,11 @@ HREF="#COMP-OPTIONS"
 HREF="#POSTGRES"
 >Using Postgres as DB Backend</A
 ></DT
+><DT
+>12.3. <A
+HREF="#USERGUIDE-ADVANCED-MANUAL"
+>Manual Access Method</A
+></DT
 ></DL
 ></DD
 ><DT
@@ -3760,6 +3765,437 @@ CLASS="SCREEN"
 ></P
 ></LI
 ></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-MANUAL"
+>12.3. Manual Access Method</A
+></H3
+><P
+>A resource administrator may prefer to have local control of the
+reporter manager running on their resources rather than be controlled
+centrally by the Inca agent (similar to Inca 1).  In this case, an Inca
+administrator can add the resource using the access method 'manual' and 
+changes to the configuration will be emailed to the resource administrator.
+The following steps will need to be taken by the Inca administrator and
+resource administrator:</P
+><P
+>Inca Administrator</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>Step <A
+HREF="#MAN-STEP1"
+>1</A
+>: Add resource in incat with access method 'manual'</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+>Resource Administrator</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>Step <A
+HREF="#MAN-STEP2"
+>2</A
+>: Install reporter manager</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="#MAN-STEP3"
+>3</A
+>: Start and manually manage reporter manager</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><A
+NAME="MAN-STEP1"
+></A
+><P
+>The Inca administrator will add the specified resource within incat
+    and choose 'manual' as below:
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="MANUAL.FIG"
+></A
+><P
+><B
+>Figure 19. Add Resource Screen</B
+></P
+><P
+><IMG
+SRC="figures/incat/manual.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>The "Resource Admin Email" field should be filled with the email
+    address of the resource administrator of the manual resource.  When suite
+    changes are committed in incat, the agent will email the suite changes to
+    the resource administrator.  Select "Agent-&#62;Commit" from the menu to
+    commit the changes.  A set of credentials (e.g., rmcert.pem, rmkey.pem,
+    trusted) will be generated in $INCA_DIST/var/rm/&#60;resource name&#62;/
+    such as below:
+      <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls var/rm/manualResource/        
+      catalog.xml  rmcert.pem  rmkey.pem  trusted
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    These credentials will need to be given to the resource administrator in
+    order to send reports to the depot.  The rmkey.pem will be encrypted with
+    the same password as the agent's private key.  It is recommended that you
+    change the password before giving them to the resource system
+    administrator using the following commands:
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% openssl rsa -in rmkey.pem -out rmkey.pem2 -des
+read RSA key
+Enter PEM pass phrase: agent-passphrase
+writing RSA key
+Enter PEM pass phrase: new-passphrase
+Verifying password - Enter PEM pass phrase: new-passphrase
+% mv rmkey.pem2 rmkey.pem
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Give the reporter manager credentials to the resource system
+    administrator and instruct them to follow steps <A
+HREF="#MAN-STEP2"
+>2</A
+> and <A
+HREF="#MAN-STEP3"
+>3</A
+>.
+    </P
+></LI
+><LI
+><A
+NAME="MAN-STEP2"
+></A
+><P
+>The resource administrator will install the reporter manager distribution on their resource using the following steps:</P
+><P
+></P
+><OL
+TYPE="a"
+><LI
+><P
+>Create an installation directory for the reporter
+      manager (e.g., $RM_INSTALL_DIR) and change to that
+      directory.</P
+></LI
+><LI
+><P
+>Download
+      <A
+HREF="http://inca.sdsc.edu/releases/2.0/Inca-ReporterManager.tar.gz"
+TARGET="_top"
+>reporter manager tarball</A
+></P
+></LI
+><LI
+><P
+>Download
+      <A
+HREF="http://inca.sdsc.edu/releases/2.0/buildRM.sh"
+TARGET="_top"
+>reporter manager build script</A
+></P
+></LI
+><LI
+><P
+>Contact your Inca administrator for a set of
+      credentials.  You should receive files called rmcert.pem, rmkey.pem,
+      and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
+      the directory on the remote machine should look something like this:
+      <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls         
+buildRM.sh                   rmcert.pem  trusted0.pem
+Inca-ReporterManager.tar.gz  rmkey.pem   trusted1.pem
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+      </P
+></LI
+><LI
+><P
+>Run 'bash buildRM.sh -u false $RM_INSTALL_DIR  Inca-ReporterManager.tar.gz'.  When completed, the installation directory should looks something like this:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls $RM_INSTALL_DIR 
+bin        buildRM.sh  Inca-ReporterManager-8.6184  lib  sbin   var
+build.log  etc         Inca-ReporterManager.tar     man  share
+% ls $RM_INSTALL_DIR/etc/
+common  log4j.properties  rmcert.pem  rmkey.pem  trusted
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Next, install the initial set of reporters and their
+      libraries.  Download <A
+HREF="http://inca.sdsc.edu/releases/2.0/Inca-Reporter.tar.gz"
+TARGET="_top"
+>Inca reporters tarball</A
+>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR/var
+% tar xzvf ../Inca-Reporter.tar.gz
+% cd Inca-Reporter-*
+% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+% make
+% make install
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></OL
+></LI
+><LI
+><A
+NAME="MAN-STEP3"
+></A
+><P
+>The suite and any changes to that suite are emailed to the resource
+    administrator specified by the Inca administrator in Step <A
+HREF="#MAN-STEP1"
+>1</A
+>.  For example, </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> % mail
+ Mail version 8.1 6/6/93.  Type ? for help.
+ "/var/mail/ssmallen": 1 message 1 new
+ &#62;N  1 inca@sdsc.edu  Tue Jan 30 15:01 118/3642  "[inca notification] change"
+ &#38; t 1
+ Message 1:
+ From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
+ To: inca@sdsc.edu
+ Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'localResource'
+ Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
+
+ &#60;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&#62;
+   &#60;seriesConfigs&#62;
+       &#60;seriesConfig&#62;
+...
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Save the message to a file called <TT
+CLASS="FILENAME"
+>suite.xml</TT
+> and
+    edit out the email headers until just the xml remains.  E.g.,</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> &#60;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&#62;
+   &#60;seriesConfigs&#62;
+       &#60;seriesConfig&#62;
+...
+ &#60;/st:suite&#62; 
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Next, create a repository catalog file called 
+    <TT
+CLASS="FILENAME"
+>repository.xml</TT
+> file to tell the reporter manager
+    where the reporters are installed.  The
+    <TT
+CLASS="FILENAME"
+>repository.xml</TT
+>  will need to contain every reporter
+    that is listed in suite.xml.  Currently, there are 2 types of entries in
+    the catalog: reporters and perl libraries.  Each package has 4 tags:
+    dependency, name, path, and version.  An example is show below listing one
+    reporter and two reporter libraries: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;catalog&#62;
+  &#60;package&#62;
+    &#60;dependency&#62;Inca::Reporter&#60;/dependency&#62;
+    &#60;dependency&#62;Inca::Reporter::Version&#60;/dependency&#62;
+    &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
+    &#60;path&#62;bin/cluster.compiler.gcc.version&#60;/path&#62;
+    &#60;version&#62;1.5&#60;/version&#62;
+  &#60;/package&#62;
+  &#60;package&#62;
+    &#60;name&#62;Inca::Reporter&#60;/uri&#62;
+    &#60;path&#62;lib/perl/Inca/Reporter.pm&#60;/path&#62;
+    &#60;version&#62;1.1&#60;/version&#62;
+  &#60;/package&#62;
+  &#60;package&#62;
+    &#60;dependency&#62;Inca::Reporter&#60;/dependency&#62;
+    &#60;name&#62;Inca::Reporter::Version&#60;/name&#62;
+    &#60;path&#62;lib/perl/Inca/Reporter/Version.pm&#60;/path&#62;
+    &#60;version&#62;1.0&#60;/version&#62;
+  &#60;/package&#62;
+&#60;/catalog&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> Finally, you can start up the reporter manager using the
+       following command-line: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sbin/inca reporter-manager -d incas://your-machine-name:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i localResource -a incas://your-machine-name:6323 -L DEBUG -P true
+password&#62; your-passphrase</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>To stop the reporter manager at any time, type </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./sbin/inca stop reporter-manager</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The resource administrator will need to edit the 
+        <TT
+CLASS="FILENAME"
+>suite.xml</TT
+> with any changes that are received by
+        email, edit the <TT
+CLASS="FILENAME"
+>repository.xml</TT
+> with any new
+        reporters, and then restart the reporter manager.
+        </P
+></LI
+></OL
 ></DIV
 ></DIV
 ><DIV
