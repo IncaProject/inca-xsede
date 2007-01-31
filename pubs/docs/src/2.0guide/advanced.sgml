@@ -128,4 +128,185 @@ Database Initialization Completed</screen>
 
 </section>
 
+<section id="userguide-advanced-manual">
+<title>Manual Access Method</title>
+
+<para>A resource administrator may prefer to have local control of the
+reporter manager running on their resources rather than be controlled
+centrally by the Inca agent (similar to Inca 1).  In this case, an Inca
+administrator can add the resource using the access method 'manual' and 
+changes to the configuration will be emailed to the resource administrator.
+The following steps will need to be taken by the Inca administrator and
+resource administrator:
+</para>
+
+<para>Inca Administrator</para>
+<simplelist type=horiz columns=1>
+<member>Step <xref linkend="man-step1">: Add resource in incat with access method 'manual'</member>
+</simpleList>
+<para>Resource Administrator</para>
+<simplelist type=horiz columns=1>
+<member>Step <xref linkend="man-step2">: Install reporter manager</member>
+<member>Step <xref linkend="man-step3">: Start and manually manage reporter manager</member>
+</simpleList>
+
+<orderedList>
+  <listItem id="man-step1">
+    <para>The Inca administrator will add the specified resource within incat
+    and choose 'manual' as below:
+    </para>
+    <figure id="manual.fig">
+      <title>Add Resource Screen</title>
+      <graphic fileref="figures/incat-manual.png" align="center"></graphic>
+    </figure>
+    <para>The "Resource Admin Email" field should be filled with the email
+    address of the resource administrator of the manual resource.  When suite
+    changes are committed in incat, the agent will email the suite changes to
+    the resource administrator.  Select "Agent->Commit" from the menu to
+    commit the changes.  A set of credentials (e.g., rmcert.pem, rmkey.pem,
+    trusted) will be generated in $INCA_INSTALL/var/rm/&lt;resource name&gt;/
+    such as below:
+      <screen>
+% ls var/rm/localResource/        
+      catalog.xml  rmcert.pem  rmkey.pem  trusted
+      </screen>
+    These credentials will need to be given to the resource administrator in
+    order to send reports to the depot.  The rmkey.pem will be encrypted with
+    the same password as the agent's private key.  It is recommended that you
+    change the password before giving them to the resource system
+    administrator using the following commands:
+    </para>
+    <screen>
+% openssl rsa -in rmkey.pem -out rmkey.pem2 -des
+read RSA key
+Enter PEM pass phrase: agent-passphrase
+writing RSA key
+Enter PEM pass phrase: new-passphrase
+Verifying password - Enter PEM pass phrase: new-passphrase
+% mv rmkey.pem2 rmkey.pem
+    </screen>
+    <para>Give the reporter manager credentials to the resource system
+    administrator and instruct them to follow steps <xref linkend="man-step2"> and <xref linkend="man-step3">.
+    </para>
+  </listItem>
+  <listItem id="man-step2">
+    <para>The resource administrator will install the reporter manager distribution on their resource using the following steps:</para>
+    <orderedList>
+      <listItem><para>Create an installation directory for the reporter
+      manager (e.g., $RM_INSTALL_DIR) and change to that
+      directory.</para></listItem> 
+      <listItem><para>Download
+      <ulink url="http://inca.sdsc.edu/releases/2.0/Inca-ReporterManager.tar.gz">reporter manager tarball</ulink></para></listItem>
+      <listItem><para>Download
+      <ulink url="http://inca.sdsc.edu/releases/2.0/buildRM.sh">reporter manager build script</ulink></para></listItem>
+      <listItem><para>Contact your Inca administrator for a set of
+      credentials.  You should receive files called rmcert.pem, rmkey.pem,
+      and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
+      the directory on the remote machine should look something like this:
+      <screen>
+% ls         
+buildRM.sh                   rmcert.pem  trusted0.pem
+Inca-ReporterManager.tar.gz  rmkey.pem   trusted1.pem
+      </screen>
+      </para></listItem>
+      <listItem><para>Run 'bash buildRM.sh -u false $RM_INSTALL_DIR  Inca-ReporterManager.tar.gz'.  When completed, the installation directory should looks something like this:</para>
+      <screen>
+% ls $RM_INSTALL_DIR 
+bin        buildRM.sh  Inca-ReporterManager-8.6184  lib  sbin   var
+build.log  etc         Inca-ReporterManager.tar     man  share
+% ls $RM_INSTALL_DIR/etc/
+common  log4j.properties  rmcert.pem  rmkey.pem  trusted
+      </screen>
+      <para>Next, install the initial set of reporters and their
+      libraries.  Download <ulink url="http://inca.sdsc.edu/releases/2.0/Inca-Reporter.tar.gz">Inca reporters tarball</ulink>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</para>
+      <screen>
+% cd $RM_INSTALL_DIR/var
+% tar xzvf ../Inca-Reporter.tar.gz
+% cd Inca-Reporter-*
+% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+% make
+% make install
+      </screen>
+      </listItem>
+    </orderedList>
+  </listItem>
+  <listItem id="man-step3">
+    <para>The suite and any changes to that suite are emailed to the resource
+    administrator specified by the Inca administrator in Step <xref linkend="man-step1">.  For example, </para>
+    <screen>
+ % mail
+ Mail version 8.1 6/6/93.  Type ? for help.
+ "/var/mail/ssmallen": 1 message 1 new
+ >N  1 inca@sdsc.edu  Tue Jan 30 15:01 118/3642  "[inca notification] change"
+ & t 1
+ Message 1:
+ From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
+ To: inca@sdsc.edu
+ Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'localResource'
+ Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
+
+ &lt;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+   &lt;seriesConfigs&gt;
+       &lt;seriesConfig&gt;
+...
+    </screen>
+    <para>Save the message to a file called <filename>suite.xml</filename> and
+    edit out the email headers until just the xml remains.  E.g.,</para>
+    <screen>
+ &lt;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+   &lt;seriesConfigs&gt;
+       &lt;seriesConfig&gt;
+...
+ &lt;/st:suite&gt; 
+    </screen>
+    <para>Next, create a repository catalog file called 
+    <filename>repository.xml</filename> file to tell the reporter manager
+    where the reporters are installed.  The
+    <filename>repository.xml</filename>  will need to contain every reporter
+    that is listed in suite.xml.  Currently, there are 2 types of entries in
+    the catalog: reporters and perl libraries.  Each package has 4 tags:
+    dependency, name, path, and version.  An example is show below listing one
+    reporter and two reporter libraries: </para>
+    <screen>
+&lt;catalog&gt;
+  &lt;package&gt;
+    &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
+    &lt;dependency&gt;Inca::Reporter::Version&lt;/dependency&gt;
+    &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+    &lt;path&gt;bin/cluster.compiler.gcc.version&lt;/path&gt;
+    &lt;version&gt;1.5&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;name&gt;Inca::Reporter&lt;/uri&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter.pm&lt;/path&gt;
+    &lt;version&gt;1.1&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
+    &lt;name&gt;Inca::Reporter::Version&lt;/name&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter/Version.pm&lt;/path&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/package&gt;
+&lt;/catalog&gt;
+</screen>
+       <para> Finally, you can start up the reporter manager using the
+       following command-line: </para>
+       <screen>
+% sbin/inca reporter-manager -d incas://your-machine-name:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i localResource -a incas://your-machine-name:6323 -L DEBUG -P true
+password> your-passphrase
+</screen>
+        <para>To stop the reporter manager at any time, type </para>
+             <screen>
+% ./sbin/inca stop reporter-manager
+</screen>
+        <para>The resource administrator will need to edit the 
+        <filename>suite.xml<filename> with any changes that are received by
+        email, edit the <filename>repository.xml<filename> with any new
+        reporters, and then restart the reporter manager.
+        </para>
+  </listItem>
+</orderedList>
+
+</section>
+
 </section>
