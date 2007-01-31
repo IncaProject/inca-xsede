@@ -183,6 +183,11 @@ HREF="#POSTGRES"
 HREF="#USERGUIDE-ADVANCED-MANUAL"
 >Manual Access Method</A
 ></DT
+><DT
+>12.4. <A
+HREF="#USERGUIDE-ADVANCED-SRCDIST"
+>Source Distributions</A
+></DT
 ></DL
 ></DD
 ><DT
@@ -3423,6 +3428,17 @@ NAME="USERGUIDE-LOGGING"
 >The agent, depot and consumer logs are located in the $INCA_DIST/var directory.  Reporter manager logs are located in each manager's install directory under the var directory (e.g. ~/incaReporterManager/var). </P
 ><P
 >Logging is informational by default, but can be adjusted to be more verbose ('info' to 'debug') or less verbose ('info' to 'error') by editing the $INCA_DIST/etc/common/log4j.properties file and then restarting inca components.  Note that passwords are logged when 'debug' logging is turned on.  Logging for the inca components can be adjusted by editing lines 26 and 27 ("log4j.rootLogger=info, stdout" and "log4j.logger.edu.sdsc.inca=info").  To log the most verbose globus error messages change line 33 in log4j.properties from "log4j.logger.org.globus=error" to "log4j.logger.org.globus=debug". </P
+><P
+>If a reporter manager is not started on a resource after you have
+scheduled reporters to run there, it is likely the build on that resource
+failed.  You can confirm by looking for "Unable to stage reporter manager to "
+in $INCA_DIST/var/agent.log.  If found, look for errors on the resource in the
+2 build log files from the reporter manager build attempt:
+~/incaReporterManager/build.log and
+~/incaReporterManager/Inca-ReporterManager-*/build.log.  The most common
+build failure is a bad build of the dependency Net::SSLeay which is
+required for secure communication; the build for Net::SSLeay will fail if it
+is unable to find OpenSSL on the resource.  </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3968,9 +3984,8 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% ls         
-buildRM.sh                   rmcert.pem  trusted0.pem
-Inca-ReporterManager.tar.gz  rmkey.pem   trusted1.pem
-      </PRE
+Inca-ReporterManager.tar.gz    rmcert.pem    trusted0.pem
+buildRM.sh                     rmkey.pem     trusted1.pem</PRE
 ></FONT
 ></TD
 ></TR
@@ -3992,8 +4007,9 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% ls $RM_INSTALL_DIR 
-bin        buildRM.sh  Inca-ReporterManager-8.6184  lib  sbin   var
-build.log  etc         Inca-ReporterManager.tar     man  share
+Inca-ReporterManager-8.6279    build.log    lib    var
+Inca-ReporterManager.tar       buildRM.sh   man
+bin                            etc          sbin
 
 % ls $RM_INSTALL_DIR/etc/
 common  log4j.properties  rmcert.pem  rmkey.pem  trusted
@@ -4104,7 +4120,7 @@ CLASS="SCREEN"
     <TT
 CLASS="FILENAME"
 >$RM_INSTALL_DIR/var/reporter-packages/repository.xml</TT
-> file to tell the reporter manager
+> to tell the reporter manager
     where the reporters are installed.  The
     <TT
 CLASS="FILENAME"
@@ -4112,9 +4128,9 @@ CLASS="FILENAME"
 >  will need to contain every reporter
     that is listed in suite.xml.  Currently, there are 2 types of entries in
     the catalog: reporters and perl libraries.  Each package has 4 tags:
-    dependency, name, path, and version.  An example is show below listing one
-    reporter and two reporter libraries: </P
-><TABLE
+    dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
+   it with any non-default reporters configured in the suite.xml file:
+    <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
 WIDTH="90%"
@@ -4124,30 +4140,13 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->&#60;catalog&#62;
-  &#60;package&#62;
-    &#60;dependency&#62;Inca::Reporter&#60;/dependency&#62;
-    &#60;dependency&#62;Inca::Reporter::Version&#60;/dependency&#62;
-    &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
-    &#60;path&#62;bin/cluster.compiler.gcc.version&#60;/path&#62;
-    &#60;version&#62;1.5&#60;/version&#62;
-  &#60;/package&#62;
-  &#60;package&#62;
-    &#60;name&#62;Inca::Reporter&#60;/uri&#62;
-    &#60;path&#62;lib/perl/Inca/Reporter.pm&#60;/path&#62;
-    &#60;version&#62;1.1&#60;/version&#62;
-  &#60;/package&#62;
-  &#60;package&#62;
-    &#60;dependency&#62;Inca::Reporter&#60;/dependency&#62;
-    &#60;name&#62;Inca::Reporter::Version&#60;/name&#62;
-    &#60;path&#62;lib/perl/Inca/Reporter/Version.pm&#60;/path&#62;
-    &#60;version&#62;1.0&#60;/version&#62;
-  &#60;/package&#62;
-&#60;/catalog&#62;</PRE
+>% cp $RM_INSTALL_DIR/var/Inca-ReporterManager-*/etc/common/sampleRepository.xml $RM_INSTALL_DIR/var/reporter-packages/repository.xml</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
+>
+   </P
 ><P
 > Finally, you can start up the reporter manager using the
        following command-line (replace "depotHost" and "agentHost" with the hostnames where the depot and agent are running): </P
@@ -4161,8 +4160,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password&#62;"
-password&#62; your-passphrase</PRE
+>% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password&#62;"</PRE
 ></FONT
 ></TD
 ></TR
@@ -4200,6 +4198,164 @@ CLASS="FILENAME"
         </P
 ></LI
 ></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-SRCDIST"
+>12.4. Source Distributions</A
+></H3
+><P
+>  Source distributions of the Inca components are also available.  The 
+  following table lists the Inca component source distributions and shows how
+  to build each of them.  Note, that <A
+HREF="http://ant.apache.org"
+TARGET="_top"
+>Apache
+  Ant</A
+> is needed for the Inca components implemented in Java.  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN806"
+></A
+><P
+><B
+>Table 3. Inca component source distributions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Component</P
+></TH
+><TH
+><P
+>Build</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/inca-agent-src.tar.gz"
+TARGET="_top"
+>agent</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/inca-common-java-src.tar.gz"
+TARGET="_top"
+>common</A
+> (used by all Inca Java components)</P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/inca-consumers-src.tar.gz"
+TARGET="_top"
+>consumer</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/inca-depot-src.tar.gz"
+TARGET="_top"
+>depot</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/incat-src.tar.gz"
+TARGET="_top"
+>incat</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/Inca-Reporter.tar.gz"
+TARGET="_top"
+>reporters</A
+></P
+></TD
+><TD
+><P
+>perl Makefile.PL &#60;options&#62;</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/Inca-ReporterManager.tar.gz"
+TARGET="_top"
+>reporter manager</A
+></P
+></TD
+><TD
+><P
+>perl Makefile.PL &#60;options&#62;</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.0/Inca-WS.tar.gz"
+TARGET="_top"
+>web services</A
+></P
+></TD
+><TD
+><P
+>perl Makefile.PL &#60;options&#62;</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV

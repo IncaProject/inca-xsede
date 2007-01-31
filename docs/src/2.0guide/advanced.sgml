@@ -204,17 +204,16 @@ Verifying password - Enter PEM pass phrase: new-passphrase
       credentials.  You should receive files called rmcert.pem, rmkey.pem,
       and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
       the directory on the remote machine should look something like this:
-      <screen>
-% ls         
-buildRM.sh                   rmcert.pem  trusted0.pem
-Inca-ReporterManager.tar.gz  rmkey.pem   trusted1.pem
-      </screen>
+      <screen>% ls         
+Inca-ReporterManager.tar.gz    rmcert.pem    trusted0.pem
+buildRM.sh                     rmkey.pem     trusted1.pem
+</screen>
       </para></listItem>
       <listItem><para>Run 'bash buildRM.sh -u false $RM_INSTALL_DIR  Inca-ReporterManager.tar.gz'.  When completed, the installation directory should looks something like this:</para>
-      <screen>
-% ls $RM_INSTALL_DIR 
-bin        buildRM.sh  Inca-ReporterManager-8.6184  lib  sbin   var
-build.log  etc         Inca-ReporterManager.tar     man  share
+      <screen>% ls $RM_INSTALL_DIR 
+Inca-ReporterManager-8.6279    build.log    lib    var
+Inca-ReporterManager.tar       buildRM.sh   man
+bin                            etc          sbin
 
 % ls $RM_INSTALL_DIR/etc/
 common  log4j.properties  rmcert.pem  rmkey.pem  trusted
@@ -262,40 +261,20 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
  &lt;/st:suite&gt; 
     </screen>
     <para>Next, create a repository catalog file called 
-    <filename>$RM_INSTALL_DIR/var/reporter-packages/repository.xml</filename> file to tell the reporter manager
+    <filename>$RM_INSTALL_DIR/var/reporter-packages/repository.xml</filename> to tell the reporter manager
     where the reporters are installed.  The
     <filename>repository.xml</filename>  will need to contain every reporter
     that is listed in suite.xml.  Currently, there are 2 types of entries in
     the catalog: reporters and perl libraries.  Each package has 4 tags:
-    dependency, name, path, and version.  An example is show below listing one
-    reporter and two reporter libraries: </para>
-    <screen>
-&lt;catalog&gt;
-  &lt;package&gt;
-    &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
-    &lt;dependency&gt;Inca::Reporter::Version&lt;/dependency&gt;
-    &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
-    &lt;path&gt;bin/cluster.compiler.gcc.version&lt;/path&gt;
-    &lt;version&gt;1.5&lt;/version&gt;
-  &lt;/package&gt;
-  &lt;package&gt;
-    &lt;name&gt;Inca::Reporter&lt;/uri&gt;
-    &lt;path&gt;lib/perl/Inca/Reporter.pm&lt;/path&gt;
-    &lt;version&gt;1.1&lt;/version&gt;
-  &lt;/package&gt;
-  &lt;package&gt;
-    &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
-    &lt;name&gt;Inca::Reporter::Version&lt;/name&gt;
-    &lt;path&gt;lib/perl/Inca/Reporter/Version.pm&lt;/path&gt;
-    &lt;version&gt;1.0&lt;/version&gt;
-  &lt;/package&gt;
-&lt;/catalog&gt;
-</screen>
-       <para> Finally, you can start up the reporter manager using the
+    dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
+   it with any non-default reporters configured in the suite.xml file:
+    <screen>% cp $RM_INSTALL_DIR/var/Inca-ReporterManager-*/etc/common/sampleRepository.xml $RM_INSTALL_DIR/var/reporter-packages/repository.xml</screen>
+   </para>
+    
+   <para> Finally, you can start up the reporter manager using the
        following command-line (replace "depotHost" and "agentHost" with the hostnames where the depot and agent are running): </para>
        <screen>
-% sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password>"
-password> your-passphrase
+% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password>"
 </screen>
 <para>Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
