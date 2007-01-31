@@ -183,6 +183,7 @@ Enter PEM pass phrase: agent-passphrase
 writing RSA key
 Enter PEM pass phrase: new-passphrase
 Verifying password - Enter PEM pass phrase: new-passphrase
+
 % mv rmkey.pem2 rmkey.pem
     </screen>
     <para>Give the reporter manager credentials to the resource system
@@ -214,6 +215,7 @@ Inca-ReporterManager.tar.gz  rmkey.pem   trusted1.pem
 % ls $RM_INSTALL_DIR 
 bin        buildRM.sh  Inca-ReporterManager-8.6184  lib  sbin   var
 build.log  etc         Inca-ReporterManager.tar     man  share
+
 % ls $RM_INSTALL_DIR/etc/
 common  log4j.properties  rmcert.pem  rmkey.pem  trusted
       </screen>
@@ -221,8 +223,8 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
       libraries.  Download <ulink url="http://inca.sdsc.edu/releases/2.0/Inca-Reporter.tar.gz">Inca reporters tarball</ulink>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</para>
       <screen>
 % cd $RM_INSTALL_DIR/var
-% tar xzvf ../Inca-Reporter.tar.gz
-% cd Inca-Reporter-*
+% tar xvf ../Inca-ReporterManager.tar
+% cd Inca-ReporterManager-*
 % perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
 % make install
@@ -242,7 +244,7 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
  Message 1:
  From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
  To: inca@sdsc.edu
- Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'localResource'
+ Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'manualResource'
  Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
 
  &lt;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
@@ -250,7 +252,7 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
        &lt;seriesConfig&gt;
 ...
     </screen>
-    <para>Save the message to a file called <filename>suite.xml</filename> and
+    <para>Save the message to a file called <filename>$RM_INSTALL_DIR/suite.xml</filename> and
     edit out the email headers until just the xml remains.  E.g.,</para>
     <screen>
  &lt;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
@@ -260,7 +262,7 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
  &lt;/st:suite&gt; 
     </screen>
     <para>Next, create a repository catalog file called 
-    <filename>repository.xml</filename> file to tell the reporter manager
+    <filename>$RM_INSTALL_DIR/var/reporter-packages/repository.xml</filename> file to tell the reporter manager
     where the reporters are installed.  The
     <filename>repository.xml</filename>  will need to contain every reporter
     that is listed in suite.xml.  Currently, there are 2 types of entries in
@@ -290,11 +292,12 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
 &lt;/catalog&gt;
 </screen>
        <para> Finally, you can start up the reporter manager using the
-       following command-line: </para>
+       following command-line (replace "depotHost" and "agentHost" with the hostnames where the depot and agent are running): </para>
        <screen>
-% sbin/inca reporter-manager -d incas://your-machine-name:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i localResource -a incas://your-machine-name:6323 -L DEBUG -P true
+% sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password>"
 password> your-passphrase
 </screen>
+<para>Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
              <screen>
 % ./sbin/inca stop reporter-manager
