@@ -399,32 +399,6 @@
         </macros>
       </resource>
       <resource>
-        <name>aix</name>
-        <xpath>//resource[matches(name, '^(sdsc-datastar|ncsa-copper)$')]</xpath>
-        <macros>
-          <macro>
-            <name>__groupname__</name>
-            <value>aix</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>sdsc-datastar ncsa-copper</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>globus2</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
-            <name>java-version</name>
-            <value>1.4.2_SR5</value>
-          </macro>
-        </macros>
-      </resource>
-      <resource>
         <name>anl-grid</name>
         <xpath>//resource[matches(name, '^(tg-grid1.uc.teragrid.org)$')]</xpath>
         <macros>
@@ -1495,6 +1469,10 @@
             <name>batchJobManager</name>
             <value>jobmanager</value>
           </macro>
+          <macro>
+            <name>java-version</name>
+            <value>1.4.2_SR5</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2130,6 +2108,10 @@
           <macro>
             <name>gatekeeperlog</name>
             <value>/opt/gram/var/globus-gatekeeper.log</value>
+          </macro>
+          <macro>
+            <name>java-version</name>
+            <value>1.4.2_SR5</value>
           </macro>
         </macros>
       </resource>
@@ -6313,50 +6295,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.java.sun.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>java-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>java>=@java-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>data.transfer.uberftp.unit.copy</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.unit.copy</uri>
             <args>
@@ -6555,11 +6493,55 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.java.sun.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-version</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>java>=@java-version@</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>91</version>
+      <version>95</version>
     </suite>
     <suite>
       <seriesConfigs>
