@@ -1,6 +1,188 @@
 <section id="userguide-webservices">
 <title>Web Services</title>
 
-<para>TODO: description of web services.</para>
+<para>To access Inca from a Web services API, you will need to install the
+Inca web services component, <filename>incaws</filename>. </para>
+
+<screen>% sh incaInstall.sh $INCA_DIST incaws</screen>
+
+<para>The results should look similar to above.</para>
+
+<screen>
+Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+--12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+           => `Inca-WS.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1,226,347 (1.2M) [application/x-tar]
+
+100%[====================================>] 1,226,347     --.--K/s             
+
+12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
+
+Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+Inca-WS-1.6421/
+Inca-WS-1.6421/lib/
+...
+Inca-WS-1.6421/etc/IncaWS.wsdl
+Inca-WS-1.6421/version.svn
+Will install Inca prerequisite Net::SSLeay
+Will install Inca prerequisite IO::Socket::SSL
+Will install Inca prerequisite Expat
+Will install Inca prerequisite LWP::UserAgent
+Will install Inca prerequisite MIME::Base64
+Will install Inca prerequisite SOAP::Lite
+Writing Makefile.perl.inc for Inca-WS
+Inca-WS installed
+</screen>
+
+<para>To start incaws, specify the port, credentials, and hostname/port for
+the Inca agent and depot as below.  </para>
+
+<screen>%./bin/inca incaws --auth=yes --cert=etc/agentcert.pem --key=etc/agentkey.pem --trusted=etc/trusted/<emphasis role="red">HOST</emphasis>cert.pem --port 8001 --password=yes localhost:6324 localhost:6323
+</screen> 
+
+<para>The WSDL file for the incaws component is in <filename>etc/IncaWS.wsdl</filename>.  The following table summarizes the available functions. </para>
+
+  <table><title>Web services functions</title>
+  <tgroup cols="2">
+  <thead>
+    <row>
+      <entry><para>Function</para></entry>
+      <entry><para>Description</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para>getCatalog( [$url] )</para></entry>
+      <entry><para>Asks the agent to retrieve and return the package catalog
+      from the reporter repository accessed via $url.  An undefined $url
+      indicates that the agent should return a merged catalog for all known
+      repositories.</para></entry>
+    </row>
+    <row>
+      <entry><para>getConfig()</para></entry>
+      <entry><para>Asks the agent to return XML for the Inca deployment
+      configuration.  </para></entry>
+    </row>
+    <row>
+      <entry><para>pingAgent()</para></entry>
+      <entry><para>Check that the Inca agent is accessible. </para></entry>
+    </row>
+    <row>
+      <entry><para>pingDepot()</para></entry>
+      <entry><para>Check that the Inca depot is accessible. </para></entry>
+    </row>
+    <row>
+      <entry><para>queryGuids()</para></entry>
+      <entry><para>Asks the depot to return a space-separated list of known suite guids.  </para></entry>
+    </row>
+    <row>
+      <entry><para>queryHql($hql)</para></entry>
+      <entry><para>Asks the depot use the HQL select statement $hql to extract
+      and return information from the DB.  On success, returns a reference to
+      an array that contains the objects selected by the select
+      statement.</para></entry>
+    </row>
+    <row>
+      <entry><para>queryInstance($instanceId, $configId)</para></entry>
+      <entry><para>Asks the depot to report details about one particular
+      invocation of a reporter.  $instanceId is the DB id of the instance for
+      the invocation; $configId the related series configuration DB id.  On
+      success, returns a reference to a single-element array that contains a
+      ReportDetails document describing the instance.  </para></entry>
+    </row>
+    <row>
+      <entry><para>querySeries($configId)</para></entry>
+      <entry><para>Asks the depot to retrieve information about all instances
+      related to the series configuration identified by $configId.  On
+      success, returns a reference to an array that contains a set of
+      ReportDetail documents related to the series.
+      </para></entry>
+    </row>
+    <row>
+      <entry><para>querySuite($guid)</para></entry>
+      <entry><para>Asks the depot to retrieve information about all the series
+      of the suite identified by $guid.  On success, returns a reference to an
+      array that contains a set of ReportSummary documents related to the
+      series configurations of the suite.  </para></entry>
+    </row>
+  </tbody>
+  </tgroup>  
+</table>
+
+<para>Below shows an example of how to access the Inca web services from Perl
+using SOAP::Lite.</para>
+
+<screen>
+use SOAP::Lite;
+use Cwd;
+
+my $cwd = getcwd();
+my $ws = SOAP::Lite->service("file:$cwd/etc/IncaWS.wsdl");
+
+# check agent and depot are available
+print $ws->pingAgent('hello agent'), "\n";
+print $ws->pingDepot('hello depot'), "\n";
+
+# get the Inca configuration
+print $ws->getConfig(), "\n";
+my $guid = $ws->queryGuids();
+
+# get the latest instances of a suite
+my $results = $ws->querySuite( $guid );
+for my $result ( @{$results} ) {
+  print $result;
+}
+</screen>
+
+<para>Place the above code in a file called <filename>sampleWS.pl</filename>
+and set the environment variable PERL5LIB to
+<filename>$INSTALL_DIR/lib/perl</filename>.  Then type, </para>
+
+<screen>perl sampleWS.pl</screen>
+
+<para>When run against the default installation, the results should look
+similar to below.</para>
+
+<screen>
+hello agent
+hello depot
+&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;&lt;repositories&gt;&lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;&lt;/repositories&gt;&lt;resourceConfig&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+        &lt;name&gt;defaultGrid&lt;/name&gt;
+        &lt;xpath&gt;//resource[matches(name, "localSite")]&lt;/xpath&gt;
+      &lt;macros&gt;
+ ...
+  &lt;/resources&gt;
+  &lt;/resourceConfig&gt;&lt;suites&gt;&lt;suite&gt;&lt;seriesConfigs&gt;&lt;seriesConfig&gt;
+              &lt;series&gt;
+                  &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
+                  &lt;uri&gt;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&lt;/uri&gt;&lt;args&gt;
+                      &lt;arg&gt;&lt;name&gt;cc&lt;/name&gt;&lt;value&gt;cc&lt;/value&gt;&lt;/arg&gt;
+                      &lt;arg&gt;&lt;name&gt;dir&lt;/name&gt;&lt;value/&gt;&lt;/arg&gt;
+                      &lt;arg&gt;&lt;name&gt;help&lt;/name&gt;&lt;value&gt;no&lt;/value&gt;&lt;/arg&gt;
+                      &lt;arg&gt;&lt;name&gt;log&lt;/name&gt;&lt;value&gt;3&lt;/value&gt;&lt;/arg&gt;
+                      &lt;arg&gt;&lt;name&gt;verbose&lt;/name&gt;&lt;value&gt;1&lt;/value&gt;&lt;/arg&gt;
+             &lt;/cron&gt;&lt;/schedule&gt;
+              &lt;action&gt;add&lt;/action&gt;
+          &lt;/seriesConfig&gt;&lt;/seriesConfigs&gt;&lt;name&gt;sampleSuite&lt;/name&gt;&lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;&lt;description/&gt;&lt;version&gt;1&lt;/version&gt;&lt;/suite&gt;&lt;/suites&gt;&lt;/inca:inca&gt;
+
+&lt;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
+  &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+  &lt;uri
+xmlns=""&gt;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&lt;/uri&gt;
+  &lt;nickname xmlns=""&gt;atlas_version&lt;/nickname&gt;
+  &lt;seriesConfigId xmlns=""&gt;1&lt;/seriesConfigId&gt;
+  &lt;instanceId xmlns=""&gt;24&lt;/instanceId&gt;
+  &lt;gmt xmlns=""&gt;2007-02-01T13:21:01.000-08:00&lt;/gmt&gt;
+  &lt;body xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1" xmlns=""/&gt;
+  &lt;errorMessage xmlns=""&gt;Cannot locate ATLAS installation; use
+-dir&lt;/errorMessage&gt;                    
+&lt;/reportSummary&gt;
+...
+</screen> 
 
 </section>
