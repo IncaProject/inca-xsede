@@ -175,8 +175,8 @@ HREF="#COMP-OPTIONS"
 ></DT
 ><DT
 >12.2. <A
-HREF="#POSTGRES"
->Using Postgres as DB Backend</A
+HREF="#DB-CONFIG"
+>Depot Database Configuration</A
 ></DT
 ><DT
 >12.3. <A
@@ -3568,12 +3568,18 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="POSTGRES"
->12.2. Using Postgres as DB Backend</A
+NAME="DB-CONFIG"
+>12.2. Depot Database Configuration</A
 ></H3
 ><P
+>By default the Inca depot uses Hibernate's HSQL database.  Any Hibernate supported database can replace
+HSQL as the depot's backend.  PostgreSQL and Oracle are tested Inca depot databases.  </P
+><P
+>Steps for using a depot database other than HSQL are as follows: </P
+><P
 ></P
-><UL
+><OL
+TYPE="1"
 ><LI
 ><P
 >Stop the depot 
@@ -3614,11 +3620,11 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->#hibernate.dialect=org.hibernate.dialect.HSQLDialect 
-#hibernate.connection.driver_class=org.hsqldb.jdbcDriver 
-#hibernate.connection.url=jdbc:hsqldb:test 
-#hibernate.connection.username=sa 
-#hibernate.connection.password=</PRE
+>1 #hibernate.dialect=org.hibernate.dialect.HSQLDialect
+2 #hibernate.connection.driver_class=org.hsqldb.jdbcDriver
+3 #hibernate.connection.url=jdbc:hsqldb:test
+4 #hibernate.connection.username=sa
+5 #hibernate.connection.password=</PRE
 ></FONT
 ></TD
 ></TR
@@ -3627,98 +3633,33 @@ CLASS="SCREEN"
 ></LI
 ><LI
 ><P
->Uncomment the second block of lines 8-13 which specifies for 
-hibernate to use postgres:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
-># Settings for a local PostgreSQL database. 
-hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect 
-hibernate.query.substitutions=yes 'Y', no 'N' 
-hibernate.connection.driver_class=org.postgresql.Driver 
-hibernate.connection.url=jdbc:postgresql:test 
-hibernate.connection.username=test 
-hibernate.connection.password=</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
+>Uncomment the block which specifies for hibernate to use your database (i.e., for PostgreSQL uncomment 8-13, 
+for MySQL uncomment 17-21, for Oracle uncomment 24-28). </P
 ></LI
 ><LI
 ><P
->Replace the value "jdbc:postgresql:test" for property 
-"hibernate.connection.url" on line 11 with the following (where "hostname" is 
-the FQDN of the host where postgres is installed and "username" is the username to 
-connect to the postgres DB):
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->hibernate.connection.url=jdbc:postgresql://hostname/username</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->Replace the value "test" for property 
-"hibernate.connection.username" on line 12 with the postgres 
-username:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->hibernate.connection.username=username</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
+>Change the uncommented hibernate.connection.url, hibernate.connection.username and hibernate.connection.password 
+property values to be the host/db name, login username and password for your database.  </P
 ></LI
 ></UL
 ></LI
 ><LI
 ><P
->Download the postgres jdbc jar file pg74.216.jdbc3.jar 
-to your $INCA_DIST/lib directory:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST/lib 
-% wget http://inca.sdsc.edu/workshop/pg74.216.jdbc3.jar </PRE
-></FONT
-></TD
-></TR
-></TABLE
+>Put JDBC drivers for your database in the $INCA_DIST/lib directory.  Driver download locations:
+<A
+HREF="http://jdbc.postgresql.org/download.html"
+TARGET="_top"
+>PostgreSQL</A
+>, 
+<A
+HREF="http://www.mysql.com/products/connector/j/"
+TARGET="_top"
+>MySQL</A
+>,
+<A
+HREF="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/"
+TARGET="_top"
+>Oracle</A
 ></P
 ></LI
 ><LI
@@ -3780,7 +3721,7 @@ CLASS="SCREEN"
 ></TABLE
 ></P
 ></LI
-></UL
+></OL
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -4219,7 +4160,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN806"
+NAME="AEN805"
 ></A
 ><P
 ><B
