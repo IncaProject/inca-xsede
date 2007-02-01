@@ -38,12 +38,19 @@ Inca-WS installed
 </screen>
 
 <para>To start incaws, specify the port, credentials, and hostname/port for
-the Inca agent and depot as below.  </para>
+the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</para>
 
-<screen>%./bin/inca incaws --auth=yes --cert=etc/agentcert.pem --key=etc/agentkey.pem --trusted=etc/trusted/<emphasis role="red">HOST</emphasis>cert.pem --port 8001 --password=yes localhost:6324 localhost:6323
+<screen>% cd $INCA_DIST; ./bin/inca incaws --auth=yes --cert=etc/agentcert.pem --key=etc/agentkey.pem --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem --port=8001 --password=yes <emphasis role="red">depotHost</emphasis>:6324 <emphasis role="red">agentHost</emphasis>:6323
+<emphasis role="red">enter password (no prompt displayed)</emphasis>
 </screen> 
 
-<para>The WSDL file for the incaws component is in <filename>etc/IncaWS.wsdl</filename>.  The following table summarizes the available functions. </para>
+<para>Check to make sure the incaws is running on port 8001:
+<screen>% netstat -an | grep 8001
+tcp4       0      0  *.8001                 *.*                    LISTEN
+</screen>
+Error logs are in $INCA_DIST/var.</para>
+
+<para>The WSDL file for the incaws component is in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  The following table summarizes the available functions. </para>
 
   <table><title>Web services functions</title>
   <tgroup cols="2">
@@ -137,9 +144,9 @@ for my $result ( @{$results} ) {
 }
 </screen>
 
-<para>Place the above code in a file called <filename>sampleWS.pl</filename>
+<para>Place the above code in a file called <filename>$INCA_DIST/sampleWS.pl</filename>
 and set the environment variable PERL5LIB to
-<filename>$INSTALL_DIR/lib/perl</filename>.  Then type, </para>
+<filename>$INCA_DIST/lib/perl</filename>.  Then type, </para>
 
 <screen>perl sampleWS.pl</screen>
 
