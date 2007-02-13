@@ -4485,7 +4485,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv=="1.4.2"</comparison>
+            <comparison>softenv=~"1.4.2|1.6.1"</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -6509,7 +6509,135 @@
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>99</version>
+      <version>100</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.proxy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.proxy</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>grid.middleware.globus.unit.proxy</nickname>
+          <resourceSetName>teragrid</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.proxy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.proxy</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context><![CDATA[@bash@ 'export TMP_PROXY=$X509_USER_PROXY; set -a; cd @__incaReporterManagerLocation__@; cp ~/.soft.v3 ~/.soft.v3.$$ && soft-msc ~/.soft.v3.$$ && source ~/.soft.v3.$$.cache.sh && @perl5@ export X509_USER_PROXY=$TMP_PROXY && @@@post@]]></context>
+          </series>
+          <nickname>proxy_add_bash_unsetvar</nickname>
+          <resourceSetName>teragrid</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.proxy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.proxy</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>proxy_add_bash</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>proxy</name>
+      <guid>incas://sapa.sdsc.edu:6323/proxy</guid>
+      <description>proxy</description>
+      <version>11</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -6609,7 +6737,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>17</version>
+      <version>22</version>
     </suite>
     <suite>
       <seriesConfigs>
