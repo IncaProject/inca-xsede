@@ -1,7 +1,7 @@
 
 DOC=paper
 DVIPS=dvips
-PS2PDF=ps2pdf
+PS2PDF=pstopdf
 ALLTEX=$(wildcard *.tex)
 REDUCE=psnup -n 2
 
@@ -15,8 +15,8 @@ clean:
 	$(DOC).ps $(DOC).pdf \
 	$(DOC).lot $(DOC).lof $(DOC).toc
 	
-view: $(DOC).ps
-	gv $(DOC).ps &
+view: $(DOC).pdf
+	open -a Preview $(DOC).pdf 
 
 update:
 	rm -f $(DOC).ps $(DOC).pdf
