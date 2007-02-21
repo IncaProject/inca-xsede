@@ -101,77 +101,89 @@ infrastructure, such as incompatible software versions.
 % What user-level monitoring provides and why we think it is good
 User-level Grid monitoring approaches testing and performance measurement of
 the Grid infrastructure from the user perspective.  The goal is to act as an
-impartial test user of the Grid and detect problems with the Grid
-infrastructure so they can be fixed before users notice them -- user
-complaints should not be the first indication of Grid failures.  User-level
-Grid monitoring has the following characteristics:
+impartial test user of the Grid and detect problems with the infrastructure so
+they can be fixed before users notice them -- user complaints should not be
+the first indication of Grid failures.  We refer to an executable program that
+tests or measures some aspect of a system or installed software from the
+user-perspective as a reporter.  User-level Grid monitoring has the following
+characteristics:
 
 \begin{itemize}
 
-\item Tests or performance measurements of the Grid infrastructure should be
-done from a standard user account.  Tests executed by system administrators may
-not reflect regular user experiences because they run under privileged
-accounts that often have custom shell initialization files.
-System administrators may also configure tests using undocumented information
-(e.g., they know GridFTP server hostnames not in the user guide).  
+\item In order to reflect regular user experiences, tests or performance
+measurements of the Grid infrastructure should be done from a standard user
+account.  In fact, it is important to not execute under a system
+administrator's account because they may be privileged and often have custom
+shell initialization files.
 
-\item Because the Grid infrastructure is dynamic, Tests or performance
-measurements should be executed periodically and automated.
+\item Also in order to reflect regular user experiences, tests should be
+written and configured using information directly from user documentation
+(e.g., hostnames, ports, pathnames, etc.).  This may not always be possible
+when documentation and testing are done in parallel in a pre-production
+environment but they should be closely coordinated activities. 
 
-\item A user GSI credential should be issued and
-used by the monitoring system to test services that require authentication.  
+\item Since Grids are dynamic, user-level tests or performance measurements
+should be automated and executed periodically.
 
-\item Tests should be executed locally on all Grid resources when appropriate
-so that all Grid access points available to users are tested.  
+\item Tests or performance measurements that interact with Grid services
+require authentication and should be executed using a standard user GSI
+credential that is mapped to the standard user account.  
 
-\item Also important to test some services from site to site.
+\item Tests or performance measurements should be executed locally on all Grid
+resources when appropriate so that all Grid access points available to users
+are verified.  Similarly, it is important to executed some tests all-to-all
+in order to detect site-to-site configuration errors such as authentication
+problems.
+
 \end{itemize}
-Amount of testing can vary and is oftentimes limited by the amount of
-reosurces that can be addressed to it.  A good approach is to test all the
-commands that exist in the user documentation or have at least one basic test
-for each software component of the Grid infrastructure.  
-commands that users use and tests to see if they operate as expected. Execute
-commands published in user
-documentation, detect problems otherwise reported by users.
 
-so called user-level Grid monitoring is bIn our view, what was
-needed was a separate
-monitoring system to perform automated, periodic user-level Grid testing with
-the following features:
-User-level Grid monitoring is x and is valuable.  
-At that
-time, the only available user-level Grid monitoring tools were the NCSA
-TestGrid script [9] and GITS [10], scripts that run a fixed number of Grid
-tests and output results in HTML.  Although these tools were easy to install
-and produced useful information, they showed only the view of the Grid from a
-single resource, lacked automation, and were not easily extensible.  
+\noindent In our experience, writing and maintaining user-level tests and
+performance measurements is an iterative refinement process since Grids are
+dynamic and the software environment changes over time as packages are
+upgraded.  It is also difficult to write and deploy a test perfectly the first
+time because of portability issues and sometimes incomplete user
+documentation.  For example, it may take a few iterations to determine whether
+detected failures are the result of a faulty test, fault user documentation,
+or a faulty system.  Realistically, this is a labor-intensive activity and
+thus the amount of user-level Grid monitoring is often limited by the amount
+of people resources that can be assiged to it.  However, A good goal is to
+test all the commands that exist in the user documentation and/or have at
+least one basic test for each software component of the Grid infrastructure.  
 
 % Inca 1~\cite{inca1} first addressed user-level Grid monitoring but had
 % limitations.  We learned lessons from our TeraGrid deployment.  
-In 2003, SDSC, in partnership with TeraGrid, began developing the Inca
-monitoring tool to implement a user-level monitoring system with the above
-features and started using it to validate and verify that CTSS was deployed
-consistently across all TeraGrid resources and to monitor its status.  
-The initial version of Inca was implemented as a client-server architecture.
-It provided data collection, data storage (with limited archiving
-capabilities) that was accessible from a Web services interface, and data
-display though Web status pages.  Inca was first deployed to TeraGrid in mid
-2003 and released in late 2003. After running Inca 1 for a year and a half on
-TeraGrid, we learned some valuable lessons and designed Inca version 2, our
-current release.  Inca 2 contains a number of substantial improvements over
-Inca 1 with respect to security, installation and maintenance, and storage
-capabilities.  A pre-release of Inca 2 was provided in February 2006 and a
-beta release in November 2006.  A production version of Inca 2 was released in
-January 2007.  Currently, seven other Grids in the U.S., Europe, and Australia
-use Inca.  
+In 2003, SDSC, in partnership with TeraGrid, began developing Inca
+1~\cite{inca1} to implement a user-level monitoring system with the above
+features and started using it to validate and
+verify that CTSS was deployed consistently across all TeraGrid resources and
+to monitor its status.  At that time, the only available user-level Grid
+monitoring tools were the NCSA TestGrid script~\cite{ncsa-test} and
+GITS~\cite{gits}, scripts that run a fixed number of Grid tests and output
+results in HTML.  Although these tools were easy to install and produced
+useful information, they showed only the view of the Grid from a single
+resource, lacked automation, and were not easily extensible.  The initial
+version of Inca was implemented as a client-server architecture.  It provided
+data collection, data storage (with limited archiving capabilities) that was
+accessible from a Web services interface, and data display though Web status
+pages.  Inca was first deployed to TeraGrid in mid 2003 and released in late
+2003. After running Inca 1 for a year and a half on TeraGrid, we learned some
+valuable lessons and designed Inca 2, our current release.  Inca 2
+contains a number of substantial improvements over Inca 1 with respect to
+security, installation and maintenance, and storage capabilities.  A
+production release of Inca 2 was provided in February 2007 and has been
+running on TeraGrid since November 2006.  Currently, seven other Grids in the
+U.S., Europe, and Australia use Inca.  
 
 % This motivated our development of a new version of Inca.
-In the next section, we describe our experiences with deploying Inca 1 to
-TeraGrid and the lessons learned.  We then describe the Inca 2 architecture
-and the benefits it provides.  Use cases illustrate that Inca 2 is being used
-today and has great results.
+In the next section, we describe the features of Inca 2 and note which
+are new features based on our experiences with deploying Inca 1 on TeraGrid.
+We then describe the Inca 2 architecture and how it can be used to provide
+user-level Grid monitoring.  In Section~\ref{usecases}, we describe two 
+uses of Inca 2 for Grid software environment verification and benchmarking.  
+Finally, we describe some future work and summarize the paper.
 
-\Section{Features}
+%------------------------------------------------------------------------- 
+\Section{Inca 2 Features}
   
 % Philosophy of user-level testing
 % Practical byproducts
@@ -203,7 +215,6 @@ it measures and should be secure.
 
 ~\newpage
 
-%------------------------------------------------------------------------- 
 %------------------------------------------------------------------------- 
 \Section{Architecture}
 
@@ -326,6 +337,7 @@ data (returned as XML) and a set of XSL stylesheets format the data as HTML.
 %------------------------------------------------------------------------- 
 
 \Section{Use Cases}
+\label{usecases}
 
 \SubSection{TeraGrid}
 
