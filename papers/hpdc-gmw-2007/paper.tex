@@ -69,32 +69,24 @@ can transfer a terabyte of data in under 10 minutes.
 % stakeholders.   Monitoring is needed.
 Providing and maintaining a stable infrastructure for these complex 
 Grid systems poses challenges for both administrators who build and
-maintain Grid resources and scientists who use them.  
-% Why?  
-% 1. Administration is distributed across multiple admins
-Administration of the Grid infrastructure is typically coordinated by a group 
-of Grid operators who decide when software should be deployed to resources and
-how it should be configured.  Each site's system administrators are then
-responsible for providing the required software components and services for
-their resource.  Grid operators need to take into account local site policies
-and heterogenous architectures when requiring software.  System administrators
-need to learn enough Grid knowledge to deploy software and debug problems.  In
-this distributed model, good communication of the requirements is required in
-order for Grid resources to interoperate with one another.  Otherwise
-inconsistencies between the resources arise that can either inconvenience the
-user or prevent them from using particular resources together.
-% 2. Grid software failures
-distributed system, components will fail over time.  As with any distributed
-systems, the probability of failure increases as the number of elements 
-increase.  Failures can occur due to system downtimes, misconfiguration in the 
-software, bugs in the software, high load.  
-which means miscommunications can occur.  
-% 3. Changes 
-Third it is challenging due to the
-activeness in Grids, packages and updates can occur frequently.
+maintain Grid resources and scientists who use them.  First, system
+administration is distributed across multiple administrative domains which
+requires a significant amount of coordination.  This is typically performed by
+a group of Grid operators who take into account local site policies 
+and decide when software (including updates and patches) should be deployed to
+resources and how it should be configured for the set of heterogenous
+resources.  Each site's system administrators, who are oftentimes not Grid
+experts, are then responsible for providing the required Grid software
+components and services for their resource and debugging any problems that
+arise.  Well-defined requirements and good communication are required in this
+model.  Otherwise inconsistencies between the resources arise that can either
+inconvenience the user or prevent them from using particular resources
+together.  Second, as a large distributed system, failures will occur over
+time in the Grid services due to network or system failures, software
+misconfiguration, or software bugs.  In order to detect such problems, 
+monitoring of the resources is required.  
 
-% What types of Grid monitoring are around?  What user-level monitoring
-% provides and why we think it is good
+% What types of Grid monitoring are around and what the limitations are
 One approach to monitoring Grids, used by tools such as
 MonALISA~\cite{monalisa} and GridICE~\cite{gridice}, is to aggregate and
 display data from existing cluster or system administrator monitoring tools
@@ -104,9 +96,42 @@ resources where low-level host statistics and queue information can be
 examined.  This type of monitoring information is useful for showing the
 utilization of Grid resources, however, it does not provide the type of
 high-level monitoring needed to detect user problems within the Grid
-infrastructure, such as incompatible software versions.  User-level
-Grid monitoring approaches testing is important because it run commands that users use and tests
-to see if they operate as expected. Execute commands published in user
+infrastructure, such as incompatible software versions.  
+
+% What user-level monitoring provides and why we think it is good
+User-level Grid monitoring approaches testing and performance measurement of
+the Grid infrastructure from the user perspective.  The goal is to act as an
+impartial test user of the Grid and detect problems with the Grid
+infrastructure so they can be fixed before users notice them -- user
+complaints should not be the first indication of Grid failures.  User-level
+Grid monitoring has the following characteristics:
+
+\begin{itemize}
+
+\item Tests or performance measurements of the Grid infrastructure should be
+done from a standard user account.  Tests executed by system administrators may
+not reflect regular user experiences because they run under privileged
+accounts that often have custom shell initialization files.
+System administrators may also configure tests using undocumented information
+(e.g., they know GridFTP server hostnames not in the user guide).  
+
+\item Because the Grid infrastructure is dynamic, Tests or performance
+measurements should be executed periodically and automated.
+
+\item A user GSI credential should be issued and
+used by the monitoring system to test services that require authentication.  
+
+\item Tests should be executed locally on all Grid resources when appropriate
+so that all Grid access points available to users are tested.  
+
+\item Also important to test some services from site to site.
+\end{itemize}
+Amount of testing can vary and is oftentimes limited by the amount of
+reosurces that can be addressed to it.  A good approach is to test all the
+commands that exist in the user documentation or have at least one basic test
+for each software component of the Grid infrastructure.  
+commands that users use and tests to see if they operate as expected. Execute
+commands published in user
 documentation, detect problems otherwise reported by users.
 
 so called user-level Grid monitoring is bIn our view, what was
