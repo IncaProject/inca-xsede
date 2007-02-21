@@ -7,7 +7,7 @@
 %  $Revision: 1.4 $
 %
 
-\documentclass[times, 10pt,twocolumn]{article} 
+\documentclass[times,10pt,twocolumn]{article} 
 \usepackage{epsfig}
 \usepackage{latex8}
 \usepackage{times}
@@ -55,7 +55,7 @@ results.  Finally, we discuss our future work.
 Grid systems provide unified and coherent access to distributed computing,
 data storage and analysis, instruments, and other resources.  These systems
 require the careful coordination of software packages, services, and
-configurations across multiple, heterogenous resources.  The TeraGrid
+configurations across multiple, heterogeneous resources.  The TeraGrid
 project~\cite{teragrid}, for example, manages the coordination of software and
 services by deploying and monitoring a common user environment across
 distributed, heterogeneous resources. The organization of TeraGrid software
@@ -74,7 +74,7 @@ administration is distributed across multiple administrative domains which
 requires a significant amount of coordination.  This is typically performed by
 a group of Grid operators who take into account local site policies 
 and decide when software (including updates and patches) should be deployed to
-resources and how it should be configured for the set of heterogenous
+resources and how it should be configured for the set of heterogeneous
 resources.  Each site's system administrators, who are oftentimes not Grid
 experts, are then responsible for providing the required Grid software
 components and services for their resource and debugging any problems that
@@ -131,7 +131,7 @@ credential that is mapped to the standard user account.
 
 \item Tests or performance measurements should be executed locally on all Grid
 resources when appropriate so that all Grid access points available to users
-are verified.  Similarly, it is important to executed some tests all-to-all
+are verified.  Similarly, it is important to execute some tests all-to-all
 in order to detect site-to-site configuration errors such as authentication
 problems.
 
@@ -146,12 +146,13 @@ documentation.  For example, it may take a few iterations to determine whether
 detected failures are the result of a faulty test, fault user documentation,
 or a faulty system.  Realistically, this is a labor-intensive activity and
 thus the amount of user-level Grid monitoring is often limited by the amount
-of people resources that can be assiged to it.  However, A good goal is to
+of people resources that can be assigned to it.  However, A good goal is to
 test all the commands that exist in the user documentation and/or have at
 least one basic test for each software component of the Grid infrastructure.  
 
 % Inca 1~\cite{inca1} first addressed user-level Grid monitoring but had
-% limitations.  We learned lessons from our TeraGrid deployment.  
+% limitations.  We learned lessons from our TeraGrid deployment and
+% developed Inca 2.
 In 2003, SDSC, in partnership with TeraGrid, began developing Inca
 1~\cite{inca1} to implement a user-level monitoring system with the above
 features and started using it to validate and
@@ -187,6 +188,7 @@ Finally, we describe some future work and summarize the paper.
   
 % Philosophy of user-level testing
 % Practical byproducts
+The goal of the Inca 2 design was to 
 
 1.  Periodic tests executed by the monitoring system should be automated and
 run from a standard user account.  A user GSI credential should be issued and
@@ -213,32 +215,50 @@ history should be available through a flexible querying interface.
 7.  A running monitoring system should have a limited impact on the resources
 it measures and should be secure.
 
-~\newpage
-
 %------------------------------------------------------------------------- 
 \Section{Architecture}
 
-\SubSection{Overview}
-% may not need to leave in here -- intro is assumed to be overview
-% Overview of all architecture components -- arch picture
-% move text to here I think
-1) The user creates a suite using incat and submits it to the agent
-
-2) The agent 
-    a) fetches reporters from the reporter repository
-    b) creates a reporter manager on each resource
-    c) sends the suite and reporters to each reporter manager.
-
-3) Each reporter manager executes reporters according to its schedule and
-sends results (reports) to the depot
-
-4) Data consumers display collected data (reports) by querying the depot
-
-\begin{figure*}[Htb]
+\begin{figure*}[htb]
   \centering
   \mbox{\epsfig{file=arch.eps, width=.8\textwidth}}
   \caption{\label{arch_fig} Inca architecture.}
 \end{figure*}
+
+% overview description of components
+Figure~\ref{arch_fig} shows the architecture of Inca 2 designed to implement
+the features described in the previous section.  Inca 2 is composed of 3 core
+components (in highlighted box):  the agent, depot, and reporter manager.
+The \textit{agent} and \textit{reporter managers} coordinate the execution of
+tests and performance measurements on the Grid resources and the
+\textit{depot} stores and archives the results.  The inputs to Inca 2 are one
+or more \textit{reporter repositories} that contain user-level tests and
+benchmarks called \textit{reporters} and a configuration file describing how
+to execute them on the Grid resources created using an administration GUI tool
+called \textit{incat} (Inca Administration Tool).  The output or results
+collected from the resources are queried by the \textit{data consumer} and
+displayed to users.  The following steps describe how an Inca administrator
+would deploy user-level test and/or performance measurements to their
+resources.
+
+\begin{enumerate}
+\item The Inca administrator creates a deployment configuration file using
+incat and submits it to the agent.
+
+\item The agent
+  \begin{enumerate}
+    \item fetches reporters from the reporter repository
+    \item creates a reporter manager on each resource
+    \item sends the reporters and instruction for executed them to each reporter manager.
+  \end{enumerate}
+
+\item Each reporter manager executes reporters according to its schedule and
+sends results (reports) to the depot
+
+\item Data consumers display collected data (reports) by querying the depot
+\end{enumerate}
+
+\noindent The following subsections describe the Inca components in more
+detail in the order of the steps above.
 
 \SubSection{Inca administration GUI tool (incat)}
 
