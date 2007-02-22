@@ -10,6 +10,8 @@
 \documentclass[times,10pt,twocolumn]{article} 
 \usepackage{epsfig}
 \usepackage{latex8}
+\usepackage{listings}
+\usepackage{subfigure}
 \usepackage{times}
 \usepackage{url}
 
@@ -105,8 +107,8 @@ impartial test user of the Grid and detect problems with the infrastructure so
 they can be fixed before users notice them -- user complaints should not be
 the first indication of Grid failures.  We refer to an executable program that
 tests or measures some aspect of a system or installed software from the
-user-perspective as a reporter.  User-level Grid monitoring has the following
-characteristics:
+user-perspective as a reporter.  In our view, the following guidelines 
+define user-level Grid monitoring: 
 
 \begin{itemize}
 
@@ -190,33 +192,41 @@ Finally, we describe some future work and summarize the paper.
 % Practical byproducts
 The goal of the Inca 2 design was to 
 
-1.  Periodic tests executed by the monitoring system should be automated and
+\begin{enumerate}
+\item A reporter 
+\item logging in reporters
+\item Given the challenges of writing portable tests and benchmarks, Inca 2 
+includes a set of Perl APIs that provide convenience functions to simplify
+this process.
+
+\item Periodic tests executed by the monitoring system should be automated and
 run from a standard user account.  A user GSI credential should be issued and
 used by the monitoring system to test services that require authentication.  
 %myproxy stuff
-2.  Tests should be executed locally on all Grid resources when appropriate so
+\item Tests should be executed locally on all Grid resources when appropriate so
 that all Grid access points available to users are tested.  
-3.  The configuration of tests should be managed centrally in order to ensure
+\item The configuration of tests should be managed centrally in order to ensure
 consistent testing of the resources, rather than by system administrators who
 may not use the same information that is available to users.
-4.  The testing system should easily adapt to new resources and testing
+\item The testing system should easily adapt to new resources and testing
 requirements.  In our experience, testing has an iterative refinement process
 because Grids are dynamic and the software environment changes over time as
 packages are upgraded.  Furthermore, it is often difficult to write and deploy
 a test perfectly the first time because of portability issues and incomplete
 user documentation.   
-5.  System administrators should not need to know the details of the
+\item System administrators should not need to know the details of the
 monitoring system in order to troubleshoot problems.  When a problem is
 detected the monitoring system should provide system administrators with
 sufficient information to locate the problem easily and test repairs.
-6.  A history of test results (especially any error messages) should be
+\item A history of test results (especially any error messages) should be
 retained in order to understand the behavior of their Grid over time. This
 history should be available through a flexible querying interface.
-7.  A running monitoring system should have a limited impact on the resources
+\item A running monitoring system should have a limited impact on the resources
 it measures and should be secure.
+\end{enumerate}
 
 %------------------------------------------------------------------------- 
-\Section{Architecture}
+\Section{Inca 2 Architecture}
 
 \begin{figure*}[htb]
   \centering
@@ -241,8 +251,14 @@ would deploy user-level test and/or performance measurements to their
 resources.
 
 \begin{enumerate}
-\item The Inca administrator creates a deployment configuration file using
-incat and submits it to the agent.
+
+\item Using the guidelines described in the introduction, the Inca
+administrator either writes reporters to monitor their Grid or uses existing
+reporters in a published repository.
+
+\item The Inca administrator creates a deployment configuration file that
+describes the user-level monitoring for their Grid using incat and submits it
+to the agent.
 
 \item The agent
   \begin{enumerate}
@@ -258,10 +274,104 @@ sends results (reports) to the depot
 \end{enumerate}
 
 \noindent The following subsections describe the Inca components in more
-detail in the order of the steps above.
+detail using the order of the steps above.
+
+\SubSection{Reporters}
+
+\lstset{
+  basicstyle=\scriptsize\ttfamily, 
+  frame=single,
+  keywordstyle=\textbf, 
+  identifierstyle=, 
+  commentstyle=\scriptsize\ttfamily, 
+  stringstyle=\ttfamily, 
+  numbers=left, 
+  numberstyle=\scriptsize,
+  stepnumber=2,
+  firstnumber=1,
+  showstringspaces=false} 
+\begin{figure}
+\lstset{language=Perl} 
+\subfigure[]{\lstinputlisting{grid.globus.gramPing}}
+\lstset{language=XML,keywordstyle={}} 
+\subfigure[]{\lstinputlisting{grid.globus.gramPing.out}}
+\caption{\label{pingReporter}(a) An Inca reporter that tests the user-level
+availability of a Globus GRAM server and (b) its sample output.}
+\end{figure}
+
+An Inca reporter is an executable program that tests or measures some aspect
+of a system or installed software.   Reporter executables are designed to be
+easy to produce and can be run outside of the Inca system (e.g., by a system
+administrator).  A reporter should be written following the user-level
+monitoring guidelines described in the introduction and could be a simple
+Globus~\cite{globus} GRAM gatekeeper ping test (see Figure~\ref{pingReporter})
+or a more complex Grid application benchmark~\cite{grasp}.  Reporters must
+support certain command line options and produce an XML report according to
+the Inca reporter schema.  The goal of the reporter schema is to accomodate
+multiple types of data and to capture information about the the reporter
+execution to diagnose any detected failures.  The reporter schema consists of
+the following elements: 
+
+\begin{itemize}
+\item a set of header tags describing the context of the reporter
+execution:  GMT timestamp, hostname, reporter name, reporter version, working
+directory, reporter path, and arguments;
+\item an optional set of debug or information log tags similar to log4j~\cite{log4j} output;
+\item a body containing the results expressed as any XML sequence; and
+\item an exit status tag
+indicating whether the reporter was able to complete its test or measurement
+and an optional error message.  
+\end{itemize} 
+\noindent Because the body of the report can be any XML sequence, it enables
+reporters to express a wide variety of information.  Today, we have four
+standard body schemas to express software version information, software
+functionality or service tests results, usage information, and performance
+results.  
+
+We provide an extensible set of Perl APIs to handle much of the effort of
+writing reporters.  Figure~\ref{pingReporter} shows (a) an Inca reporter that
+pings a pre-WS Globus GRAM server and (b) its corresponding output when
+executed on a local machine.  The reporter uses two of the Perl APIs:
+Inca::Reporter::SimpleUnit (which is a subclass of Inca::Reporter) and
+Inca::Reporter::GridProxy.  The Inca::Reporter API provides convenience
+functions for handling the required input arguments
+(lines~\ref{pingReporter}(a) 12-14 $\rightarrow$ lines \ref{pingReporter}(b)
+10-31) and printing the Inca-compliant header and exit status XML tags
+(lines\ref{pingReporter}(a) 4-11, 24 $\rightarrow$ \ref{pingReporter}(b)
+1-9,43-46).  It also includes some informational and debug logging functions
+again similar to log4j; the log output has been very useful to system
+administrators who can view a summary of the test or benchmark that the
+reporter performed without reading the reporter source code.  Line
+\ref{pingReporter}(a) 15 shows a special log function, loggedCommand, that
+executes a system command (using a 30 second timeout) and logs to the 'system'
+level of the log XML output (lines \ref{pingReporter}(b) 32-36).  The subclass
+Inca::Reporter::SimpleUnit is the API responsible for printing the simplist
+standard reporter body schema -- reporting software functionality or service
+tests results; it handles the printing of the small body XML
+(lines~\ref{pingReporter}(b) 39-41) using the functions unitSuccesss
+(line~\ref{pingReporter}(a) 22) or unitFailure (lines~\ref{pingReporter}(a)
+18, 20) depending on the output of system command.  And finally, the
+Inca::Reporter::GridProxy API (line~\ref{pingReporter}(a) 3) adds a proxy
+dependency to the reporter which tells the Inca system to download a
+short-term proxy before running this reporter (this is discussed further in
+Section~\ref{proxy}).  Most current reporters use the Perl APIs and consist of
+fewer than 30 lines of code.
+
+\SubSection{Reporter Repositories}
+
+The Inca agent retrieves reporters from collections called reporter
+repositories, that consist of reporters, required packages and libraries,
+and a catalog file. Repository contents are accessible using a URL and can
+be shared across multiple Inca deployments. The Inca team publishes a
+reporter repository that contains reporters developed for TeraGrid.  
 
 \SubSection{Inca administration GUI tool (incat)}
 
+The Inca administrative GUI tool (incat) is the main interface by which an
+Inca administrator interacts with the Inca system.  Incat allows the Inca
+administrator to view the choose which resources to monitor and which tests or 
+benchmarks to deploy to those resources.  The following subsections
+describe the Inca components that are configurable via incat.  
 To configure reporter execution, an Inca administrator launches a GUI tool,
 called incat.  Incat allows the administrator to choose which resources to
 monitor and which reporters to deploy to those resources.  For each
@@ -271,33 +381,6 @@ and resource limits. The Inca administrator may also group related reporters
 into suites that can be shared across different Inca deployments.  This can
 be useful to determine interoperability among Grids or to determine whether
 an application's requirements are being fulfilled on a Grid.
-
-\subsubsection{Reporters}
-
-Each Inca reporter is an executable program that tests or measures some
-aspect of a system or installed software.   Reporter executables are
-designed to be easy to produce and can be run outside of the Inca system
-(e.g., by a system administrator).  A reporter could be a simple Globus
-gatekeeper ping test (see Figure 2) or a more complex Grid application
-benchmark.  Reporters must support certain command line options and produce
-XML according to the Inca reporter schema.  The reporter schema requires a
-header describing the context of the reporter execution (e.g., reporter
-name, arguments, working directory, timestamp) and a body containing the
-results expressed as any XML sequence. This flexible body schema enables
-reporters to express a wide variety of information.  Today, we have three
-standard body schemas to express software version information, software
-functionality or service tests results, and usage information.  We provide
-Perl APIs to handle much of the effort of writing reporters.  Most current
-reporters use these APIs and consist of fewer than 30 lines of code.  
-% capture context of execution
-
-\subsubsection{Reporter Repositories}
-
-The Inca agent retrieves reporters from collections called reporter
-repositories, that consist of reporters, required packages and libraries,
-and a catalog file. Repository contents are accessible using a URL and can
-be shared across multiple Inca deployments. The Inca team publishes a
-reporter repository that contains reporters developed for TeraGrid.  
 
 \subsubsection{Suites}
 %\subsubsection{Series}
