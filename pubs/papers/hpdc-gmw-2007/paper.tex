@@ -81,7 +81,7 @@ resources.  Each site's system administrators, who are oftentimes not Grid
 experts, are then responsible for providing the required Grid software
 components and services for their resource and debugging any problems that
 arise.  Well-defined requirements and good communication are required in this
-model.  Otherwise inconsistencies between the resources arise that can either
+model.  Otherwise inconsistencies between the resources arise that either
 inconvenience the user or prevent them from using particular resources
 together.  Second, as a large distributed system, failures will occur over
 time in the Grid services due to network or system failures, software
@@ -190,14 +190,25 @@ Finally, we describe some future work and summarize the paper.
   
 % Philosophy of user-level testing
 % Practical byproducts
-The goal of the Inca 2 design was to 
+The main goal of the Inca 2 design was to XXX (general, flexible, easy to
+install, deploy, and
+maintain, scalable, secure).
+The following lists the key features of Inca 2 noting which are new features
+to Inca 1 versus improved.
 
 \begin{enumerate}
-\item A reporter 
-\item logging in reporters
-\item Given the challenges of writing portable tests and benchmarks, Inca 2 
-includes a set of Perl APIs that provide convenience functions to simplify
-this process.
+
+\item Collects a wide variety of user-level monitoring results (e.g., simple
+test data to more complex performance benchmark output).  (improved) 
+
+\item Captures the context of a test or benchmark as it executes (e.g.,
+executable name, inputs, source host, etc.) so that system administrators have
+enough information to understand the result and can troubleshoot system
+problems without having to know the internals of Inca 2. (improved)
+
+\item Provides facilities to ease the process of writing test or benchmarks,
+deploying them into Inca 2 installations, and sharing them with other Inca 2
+users.  
 
 \item Periodic tests executed by the monitoring system should be automated and
 run from a standard user account.  A user GSI credential should be issued and
@@ -306,11 +317,11 @@ administrator).  A reporter should be written following the user-level
 monitoring guidelines described in the introduction and could be a simple
 Globus~\cite{globus} GRAM gatekeeper ping test (see Figure~\ref{pingReporter})
 or a more complex Grid application benchmark~\cite{grasp}.  Reporters must
-support certain command line options and produce an XML report according to
-the Inca reporter schema.  The goal of the reporter schema is to accommodate
-multiple types of data and to capture information about the reporter
-execution to diagnose any detected failures.  The reporter schema consists of
-the following elements: 
+support certain command line options and produce an XML document or report
+according to the Inca reporter schema.  The goal of the reporter schema is to
+accommodate multiple types of data and to capture information about the
+reporter execution to diagnose any detected failures.  The reporter schema
+consists of the following elements: 
 
 \begin{itemize}
 \item a set of header tags describing the context of the reporter
