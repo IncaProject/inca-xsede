@@ -4,47 +4,21 @@
 %%
 %% The original source files were:
 %%
-%% listings.dtx  (with options: `kernel')
+%% listings-1.3.dtx  (with options: `kernel')
 %% 
-%% Please read the software license in listings.dtx or listings.dvi.
+%% Please read the software license in listings-1.3.dtx or listings-1.3.pdf.
 %%
-%% (w)(c) 1996 -- 2002 Carsten Heinz and/or any other author
-%% listed elsewhere in this file.
-%%
-%% This file is distributed under the terms of the LaTeX Project Public
-%% License from CTAN archives in directory  macros/latex/base/lppl.txt.
-%% Either version 1.0 or, at your option, any later version.
-%%
-%% Permission is granted to modify the listings package as well as
-%% lstdrvrs.dtx. You are not allowed to distribute a modified version
-%% of the package or lstdrvrs.dtx unless you change the file names and
-%% provide the original files. In any case it is better to contact the
-%% address below; other users will welcome removed bugs, new features,
-%% and additional programming languages.
-%%
-%% The listings package is free software.
-%%
-%% However, if you distribute the package as part of a commercial
-%% product or if you use the package to prepare a commercial document
-%% (books, journals, and so on), I'd like to encourage you to make a
-%% donation to the LaTeX3 fund. The size of this `license fee' should
-%% depend on the value of the package for your product. For more
-%% information about LaTeX see http://www.latex-project.org
-%%
-%% No matter whether you use the package for a commercial or
-%% non-commercial document, please send me a copy of the document (.dvi,
-%% .ps, .pdf, hardcopy, etc.) to support further development---it is
-%% easier to introduce new features or simplify things if I see how the
-%% package is used by other people.
+%% (w)(c) 1996--2004 Carsten Heinz and/or any other author listed
+%% elsewhere in this file.
 %%
 %% Send comments and ideas on the package, error reports and additional
 %% programming languages to <cheinz@gmx.de>.
 %%
-\def\filedate{2002/04/01}
-\def\fileversion{1.0}
+\def\filedate{2004/09/07}
+\def\fileversion{1.3}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{listings}
-             [\filedate\space\fileversion\space(Carsten Heinz)]
+\AtEndOfPackage{\ProvidesPackage{listings}
+             [\filedate\space\fileversion\space(Carsten Heinz)]}
 \def\lst@CheckVersion#1{\edef\reserved@a{#1}%
     \ifx\lst@version\reserved@a \expandafter\@gobble
                           \else \expandafter\@firstofone \fi}
@@ -190,7 +164,19 @@
     \begingroup \def#1{#2}\escapechar\m@ne \expandafter\endgroup
     \expandafter\lst@DefOther@\meaning#1\relax#1}
 \def\lst@DefOther@#1>#2\relax#3{\edef#3{\zap@space#2 \@empty}}
-\def\lst@InsideConvert#1{\lst@InsideConvert@#1 \@empty}
+\def\lst@InsideConvert#1{%
+   \lst@ifmathescape
+      \lst@InsideConvert@e#1$\@nil
+      \lst@if
+         \lst@InsideConvert@ey#1\@nil
+      \else
+         \lst@InsideConvert@#1 \@empty
+         \expandafter\@gobbletwo
+      \fi
+      \expandafter\lst@next
+   \else
+      \lst@InsideConvert@#1 \@empty
+   \fi}
 \begingroup \lccode`\~=`\ \relax \lowercase{%
 \gdef\lst@InsideConvert@#1 #2{%
     \lst@MakeActive{#1}%
@@ -201,6 +187,20 @@
         \expandafter\lst@InsideConvert@
     \fi #2}
 }\endgroup
+\def\lst@InsideConvert@e#1$#2\@nil{%
+   \ifx\@empty#2\@empty \lst@false \else \lst@true \fi}
+\def\lst@InsideConvert@ey#1$#2$#3\@nil{%
+   \lst@InsideConvert@#1 \@empty
+   \lst@lAddTo\lst@arg{%
+      \lst@ifdropinput\else
+         \lst@TrackNewLines\lst@OutputLostSpace \lst@XPrintToken
+         \setbox\@tempboxa=\hbox\bgroup$\lst@escapebegin
+         #2%
+         \lst@escapeend$\egroup \lst@CalcLostSpaceAndOutput
+         \lst@whitespacefalse
+      \fi}%
+   \def\lst@next{\lst@InsideConvert{#3}}%
+}
 \def\lst@XConvert{\@ifnextchar\bgroup \lst@XConvertArg\lst@XConvert@}
 \def\lst@XConvertArg#1{%
     {\lst@false \let\lst@arg\@empty
@@ -394,7 +394,7 @@
     \lst@temp\\#2\\#1&\\\@empty\@nil}
 \lst@UserCommand\lstset{\begingroup \lst@setcatcodes \lstset@}
 \def\lstset@#1{\endgroup \ifx\@empty#1\@empty\else\setkeys{lst}{#1}\fi}
-\def\lst@setcatcodes{\makeatletter \catcode`\"=12\relax}
+\def\lst@setcatcodes{\makeatletter \catcode`\==12\relax}
 \def\lst@NewMode#1{%
     \ifx\@undefined#1%
         \lst@mode\lst@newmode\relax \advance\lst@mode\@ne
@@ -415,6 +415,7 @@
     \lst@FontAdjust
     \lst@lAddTo\lst@entermodes{\lst@EnterMode{#1}{#2}}}
 \lst@AddToHook{InitVars}{\let\lst@entermodes\@empty}
+\let\lst@entermodes\@empty % init
 \def\lst@LeaveMode{%
     \ifnum\lst@mode=\lst@nomode\else
         \egroup \expandafter\lsthk@EndGroup
@@ -487,10 +488,25 @@
     \lst@Append}
 \def\lst@SaveToken{%
     \global\let\lst@gthestyle\lst@thestyle
+    \global\let\lst@glastother\lst@lastother
     \xdef\lst@RestoreToken{\noexpand\lst@token{\the\lst@token}%
                            \noexpand\lst@length\the\lst@length\relax
                            \noexpand\let\noexpand\lst@thestyle
-                                        \noexpand\lst@gthestyle}}
+                                        \noexpand\lst@gthestyle
+                           \noexpand\let\noexpand\lst@lastother
+                                        \noexpand\lst@glastother}}
+\def\lst@IfLastOtherOneOf#1{\lst@IfLastOtherOneOf@ #1\relax}
+\def\lst@IfLastOtherOneOf@#1{%
+    \ifx #1\relax
+        \expandafter\@secondoftwo
+    \else
+        \ifx\lst@lastother#1%
+            \lst@IfLastOtherOneOf@t
+        \else
+            \expandafter\expandafter\expandafter\lst@IfLastOtherOneOf@
+        \fi
+    \fi}
+\def\lst@IfLastOtherOneOf@t#1\fi\fi#2\relax{\fi\fi\@firstoftwo}
 \newdimen\lst@currlwidth % \global
 \newcount\lst@column \newcount\lst@pos % \global
 \lst@AddToHook{InitVarsBOL}
@@ -548,6 +564,10 @@
 \lst@AddToHook{PostOutput}{}% init
 \def\lst@OutputToken{%
     \lst@TrackNewLines \lst@OutputLostSpace
+    \lst@ifgobbledws
+        \lst@gobbledwhitespacefalse
+        \lst@@discretionary
+    \fi
     \lst@CheckMerge
     {\lst@thestyle{\lst@FontAdjust
      \setbox\@tempboxa\lst@hbox
@@ -558,6 +578,9 @@
      \lst@CalcLostSpaceAndOutput}}%
     \lst@ResetToken}
 \lst@AddToHook{OutputBox}{}% init
+\def\lst@gobbledwhitespacetrue{\global\let\lst@ifgobbledws\iftrue}
+\def\lst@gobbledwhitespacefalse{\global\let\lst@ifgobbledws\iffalse}
+\lst@AddToHookExe{InitBOL}{\lst@gobbledwhitespacefalse}% init
 \def\lst@Delay#1{%
     \lst@CheckDelay
     #1%
@@ -796,24 +819,31 @@
 \def\lst@keepspacestrue{\let\lst@ifkeepspaces\iftrue}
 \def\lst@ProcessSpace{%
     \lst@ifkeepspaces
+        \lst@whitespacetrue
+        \lst@PrintToken
         \lst@AppendOther\lst@outputspace
+        \lst@PrintToken
     \else \ifnum\lst@newlines=\z@
         \lst@AppendSpecialSpace
     \else \ifnum\lst@length=\z@
             \global\advance\lst@lostspace\lst@width
             \global\advance\lst@pos\m@ne
+            \lst@whitespacetrue
         \else
             \lst@AppendSpecialSpace
         \fi
-    \fi \fi
-    \lst@whitespacetrue}
+    \fi \fi}
 \def\lst@AppendSpecialSpace{%
     \lst@ifwhitespace
         \lst@PrintToken
         \global\advance\lst@lostspace\lst@width
         \global\advance\lst@pos\m@ne
+        \lst@gobbledwhitespacetrue
     \else
+        \lst@whitespacetrue
+        \lst@PrintToken
         \lst@AppendOther\lst@outputspace
+        \lst@PrintToken
     \fi}
 \lst@Key{formfeed}{\bigbreak}{\def\lst@formfeed{#1}}
 \def\lst@ProcessFormFeed{%
@@ -839,8 +869,8 @@
     \lst@CCPut#1}
 \def\lst@CCPut@#1#2{\lst@lAddTo\lst@SelectStdCharTable{\def#1{#2}}}
 \lst@CCPut \lst@ProcessOther
-    {"21}{"22}{"27}{"28}{"29}{"2B}{"2C}{"2E}{"2F}
-    {"3A}{"3B}{"3D}{"3F}{"5B}{"5D}{"60}
+    {"21}{"22}{"28}{"29}{"2B}{"2C}{"2E}{"2F}
+    {"3A}{"3B}{"3D}{"3F}{"5B}{"5D}
     \z@
 \lst@CCPut \lst@ProcessDigit
     {"30}{"31}{"32}{"33}{"34}{"35}{"36}{"37}{"38}{"39}
@@ -873,6 +903,8 @@
     \lst@ProcessLetter{"24}\textdollar
     \lst@ProcessOther {"25}\%
     \lst@ProcessOther {"26}\&
+    \lst@ProcessOther {"27}{\lst@ifupquote \textquotesingle
+                                     \else \char39\relax \fi}
     \lst@ProcessOther {"2A}{\lst@ttfamily*\textasteriskcentered}
     \lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{$-$}}
     \lst@ProcessOther {"3C}{\lst@ttfamily<\textless}
@@ -880,6 +912,8 @@
     \lst@ProcessOther {"5C}{\lst@ttfamily{\char92}\textbackslash}
     \lst@ProcessOther {"5E}\textasciicircum
     \lst@ProcessLetter{"5F}{\lst@ttfamily{\char95}\textunderscore}
+    \lst@ProcessOther {"60}{\lst@ifupquote \textasciigrave
+                                     \else \char96\relax \fi}
     \lst@ProcessOther {"7B}{\lst@ttfamily{\char123}\textbraceleft}
     \lst@ProcessOther {"7C}{\lst@ttfamily|\textbar}
     \lst@ProcessOther {"7D}{\lst@ttfamily{\char125}\textbraceright}
@@ -888,6 +922,20 @@
     \@empty\z@\@empty
 \def\lst@ttfamily#1#2{\ifx\f@family\ttdefault#1\relax\else#2\fi}
 \lst@AddToHook{Init}{\edef\ttdefault{\ttdefault}}
+\lst@Key{upquote}{false}[t]{\lstKV@SetIf{#1}\lst@ifupquote
+    \lst@ifupquote
+       \@ifundefined{textasciigrave}%
+          {\let\KV@lst@upquote\@gobble
+           \lstKV@SetIf f\lst@ifupquote \@gobble\fi
+           \PackageError{Listings}{Option `upquote' requires `textcomp'
+            package.\MessageBreak The option has been disabled}%
+          {Add \string\usepackage{textcomp} to your preamble.}}%
+          {}%
+    \fi}
+\AtBeginDocument{%
+  \@ifpackageloaded{upquote}{\RequirePackage{textcomp}%
+                             \lstset{upquote}}{}%
+  \@ifpackageloaded{upquote2}{\lstset{upquote}}{}}
 \def\lst@activecharstrue{\let\lst@ifactivechars\iftrue}
 \def\lst@activecharsfalse{\let\lst@ifactivechars\iffalse}
 \lst@activecharstrue
@@ -900,9 +948,10 @@
             {\catcode\@tempcnta\active\advance\@tempcnta\@ne}%
     \fi
     \lst@ifec \lst@DefEC \fi
-    \let\do@noligs\lst@do@noligs \verbatim@nolig@list
+    \let\do\lst@do@noligs \verbatim@nolig@list
     \lsthk@SelectCharTable
     \lst@DeveloperSCT
+\lst@DefRange
     \ifx\lst@Backslash\relax\else
         \lst@LetSaveDef{"5C}\lsts@backslash\lst@Backslash
     \fi}
@@ -912,7 +961,7 @@
 \def\lst@do@noligs#1{%
     \begingroup \lccode`\~=`#1\lowercase{\endgroup
     \lst@do@noligs@~}}
-\def\lst@do@noligs#1#2{%
+\def\lst@do@noligs@#1{%
     \expandafter\expandafter\expandafter\def
     \expandafter\expandafter\expandafter#1%
     \expandafter\expandafter\expandafter{\expandafter\lst@NoLig#1}}
@@ -925,7 +974,7 @@
         \global\expandafter\let\expandafter#2\@gobble##2\relax}%
     \expandafter\lst@temp\lst@SelectStdCharTable\relax}
 \lst@SaveOutputDef{"5C}\lstum@backslash
-\lst@Key{extendedchars}{false}[t]{\lstKV@SetIf{#1}\lst@ifec}
+\lst@Key{extendedchars}{true}[t]{\lstKV@SetIf{#1}\lst@ifec}
 \def\lst@DefEC{%
     \lst@CCECUse \lst@ProcessLetter
       ^^80^^81^^82^^83^^84^^85^^86^^87^^88^^89^^8a^^8b^^8c^^8d^^8e^^8f%
@@ -960,13 +1009,17 @@
 \def\lst@nfss@catcodes{%
     \lst@makeletter
         ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\relax
+    \@makeother (\@makeother )\@makeother ,\@makeother :\@makeother\&%
     \@makeother 0\@makeother 1\@makeother 2\@makeother 3\@makeother 4%
     \@makeother 5\@makeother 6\@makeother 7\@makeother 8\@makeother 9%
     \@makeother =\lsts@nfss@catcodes}
 \def\lst@makeletter#1{%
     \ifx\relax#1\else\catcode`#111\relax \expandafter\lst@makeletter\fi}
+\lst@Key{useoutput}{2}{\edef\lst@useoutput{\ifcase#10 0\or 1\else 2\fi}}
 \lst@AddToHook{Init}
 {\edef\lst@OrgOutput{\the\output}%
+\ifcase\lst@useoutput\relax
+\or
  \output{\global\setbox\lst@gtempboxa\box\@cclv
          \expandafter\egroup
          \lst@SaveToken
@@ -975,7 +1028,32 @@
      \bgroup\lst@OrgOutput\egroup
      \bgroup
      \aftergroup\pagegoal\aftergroup\vsize
-     \aftergroup\lst@ReenterModes\aftergroup\lst@RestoreToken}}
+     \aftergroup\lst@ReenterModes\aftergroup\lst@RestoreToken}%
+\else
+ \output{\lst@RestoreOrigCatcodes
+         \lst@ifec \lst@RestoreOrigExtendedCatcodes \fi
+         \lst@OrgOutput}%
+\fi}
+\def\lst@GetChars#1#2#3{%
+    \let#1\@empty
+    \@tempcnta#2\relax \@tempcntb#3\relax
+    \loop \ifnum\@tempcnta<\@tempcntb\relax
+        \lst@lExtend#1{\expandafter\catcode\the\@tempcnta=}%
+        \lst@lExtend#1{\the\catcode\@tempcnta\relax}%
+        \ifnum\the\catcode\@tempcnta=\active
+            \begingroup\lccode`\~=\@tempcnta
+            \lowercase{\endgroup
+            \lst@lExtend#1{\expandafter\let\expandafter~\csname
+                                    lstecs@\the\@tempcnta\endcsname}%
+            \expandafter\let\csname lstecs@\the\@tempcnta\endcsname~}%
+        \fi
+        \advance\@tempcnta\@ne
+    \repeat}
+\def\lst@ScanChars{%
+    \lst@GetChars\lst@RestoreOrigCatcodes\@ne {128}%
+    \lst@GetChars\lst@RestoreOrigExtendedCatcodes{128}{256}}
+\lst@Key{rescanchars}\relax{\lst@ScanChars}
+\AtBeginDocument{\lst@ScanChars}
 \lst@Key{alsoletter}\relax{%
     \lst@DoAlso{#1}\lst@alsoletter\lst@ProcessLetter}
 \lst@Key{alsodigit}\relax{%
@@ -1088,7 +1166,7 @@
     \fi
     \@ifnextchar[\lst@Delim@option
                  \lst@Delim@delim}
-\def\lst@Delim@option[#1]{\def\lst@arg{#1}\lst@Delim@delim}
+\def\lst@Delim@option[#1]{\def\lst@arg{[#1]}\lst@Delim@delim}
 \def\lst@Delim@sty@#1#2\@nil{%
     \if\relax\noexpand#1\else
         \edef\lst@delimstyle{\expandafter\noexpand
@@ -1234,22 +1312,39 @@
     \lst@CArg #2\relax\lst@DefDelimB{}{}{}#4{#1}{#6}%
     \lst@CArg #3\relax\lst@DefDelimE{}{}{}#5{#1}}
 \def\lst@ReplaceInput#1{\lst@CArgX #1\relax\lst@CDefX{}{}}
-\lst@Key{literate}{}{\def\lst@literate{#1}}
+\def\lst@Literatekey#1\@nil@{\let\lst@ifxliterate\lst@if
+                             \def\lst@literate{#1}}
+\lst@Key{literate}{}{\@ifstar{\lst@true \lst@Literatekey}
+                             {\lst@false\lst@Literatekey}#1\@nil@}
 \lst@AddToHook{SelectCharTable}
     {\ifx\lst@literate\@empty\else
          \expandafter\lst@Literate\lst@literate{}\relax\z@
      \fi}
 \def\lst@Literate#1#2#3{%
     \ifx\relax#2\@empty\else
-        \lst@ReplaceInput{#1}%
-            {\lst@XPrintToken \lst@letterfalse
-             \lst@token{#2}\lst@length#3\relax
-             \lst@XPrintToken}%
+        \lst@CArgX #1\relax\lst@CDef
+            {}
+            {\let\lst@next\@empty
+             \lst@ifxliterate
+                \lst@ifmode \let\lst@next\lst@CArgEmpty \fi
+             \fi
+             \ifx\lst@next\@empty
+                 \ifx\lst@OutputBox\@gobble\else
+                   \lst@XPrintToken \let\lst@scanmode\lst@scan@m
+                   \lst@token{#2}\lst@length#3\relax
+                   \lst@XPrintToken
+                 \fi
+                 \let\lst@next\lst@CArgEmptyGobble
+             \fi
+             \lst@next}%
+            \@empty
         \expandafter\lst@Literate
     \fi}
+\def\lst@CArgEmptyGobble#1\@empty{}
 \def\lst@BeginDropInput#1{%
     \lst@EnterMode{#1}%
     {\lst@modetrue
+     \let\lst@OutputBox\@gobble
      \let\lst@ifdropinput\iftrue
      \let\lst@ProcessLetter\@gobble
      \let\lst@ProcessDigit\@gobble
@@ -1279,6 +1374,32 @@
 \lst@Key{lastline}\relax{\def\lst@lastline{#1\relax}}
 \lst@AddToHook{PreSet}
     {\let\lst@firstline\@ne \def\lst@lastline{9999999\relax}}
+\lst@Key{linerange}\relax{\lstKV@OptArg[]{#1}{%
+    \def\lst@interrange{##1}\def\lst@linerange{##2,}}}
+\lst@AddToHook{PreSet}{\def\lst@firstline{1\relax}%
+                       \let\lst@linerange\@empty}
+\lst@AddToHook{Init}
+{\ifx\lst@linerange\@empty
+     \edef\lst@linerange{{\lst@firstline}-{\lst@lastline},}%
+ \fi
+ \lst@GetLineInterval}%
+\def\lst@GetLineInterval{\expandafter\lst@GLI\lst@linerange\@nil}
+\def\lst@GLI#1,#2\@nil{\def\lst@linerange{#2}\lst@GLI@#1--\@nil}
+\def\lst@GLI@#1-#2-#3\@nil{%
+    \ifx\@empty#1\@empty
+        \let\lst@firstline\@ne
+    \else
+        \def\lst@firstline{#1\relax}%
+    \fi
+    \ifx\@empty#2\@empty
+        \def\lst@lastline{9999999\relax}%
+    \else
+        \ifx -#2%
+            \let\lst@lastline\lst@firstline
+        \else
+            \def\lst@lastline{#2\relax}%
+        \fi
+    \fi}
 \lst@Key{nolol}{false}[t]{\lstKV@SetIf{#1}\lst@ifnolol}
 \def\lst@nololtrue{\let\lst@ifnolol\iftrue}
 \let\lst@ifnolol\iffalse % init
@@ -1302,8 +1423,9 @@
 \lst@UserCommand\lstlistingname{Listing}
 \@ifundefined{abovecaptionskip}
 {\newskip\abovecaptionskip
- \newskip\belowcaptionskip
- \long\def\@makecaption#1#2{%
+ \newskip\belowcaptionskip}{}
+\@ifundefined{@makecaption}
+{\long\def\@makecaption#1#2{%
    \vskip\abovecaptionskip
    \sbox\@tempboxa{#1: #2}%
    \ifdim \wd\@tempboxa >\hsize
@@ -1314,42 +1436,57 @@
    \fi
    \vskip\belowcaptionskip}%
 }{}
+\def\fnum@lstlisting{%
+  \lstlistingname
+  \ifx\lst@@caption\@empty\else~\thelstlisting\fi}%
 \def\lst@MakeCaption#1{%
+  \lst@ifdisplaystyle
     \ifx #1t%
         \ifx\lst@@caption\@empty\expandafter\lst@HRefStepCounter \else
                                 \expandafter\refstepcounter
         \fi {lstlisting}%
         \ifx\lst@label\@empty\else \label{\lst@label}\fi
-    \fi
+        \let\lst@arg\lst@intname \lst@ReplaceIn\lst@arg\lst@filenamerpl
+        \global\let\lst@name\lst@arg \global\let\lstname\lst@name
+        \lst@ifnolol\else
+            \ifx\lst@@caption\@empty
+                \ifx\lst@caption\@empty
+                    \ifx\lst@intname\@empty \else \def\lst@temp{ }%
+                    \ifx\lst@intname\lst@temp \else
+                        \addcontentsline{lol}{lstlisting}\lst@name
+                    \fi\fi
+                \fi
+            \else
+                \addcontentsline{lol}{lstlisting}%
+                    {\protect\numberline{\thelstlisting}\lst@@caption}%
+            \fi
+         \fi
+     \fi
     \ifx\lst@caption\@empty\else
         \lst@IfSubstring #1\lst@captionpos
             {\begingroup \let\@@vskip\vskip
              \def\vskip{\afterassignment\lst@vskip \@tempskipa}%
              \def\lst@vskip{\nobreak\@@vskip\@tempskipa\nobreak}%
-             \par\normalsize\normalfont
+             \par\@parboxrestore\normalsize\normalfont % \noindent (AS)
              \ifx #1t\allowbreak \fi
              \ifx\lst@title\@empty
-                 \expandafter\@makecaption
+                 \lst@makecaption\fnum@lstlisting\lst@caption % (AS)
              \else
-                 \expandafter\lst@maketitle
+                 \lst@maketitle\lst@title % (AS)
              \fi
-                {\noindent\lstlistingname
-                 \ifx\lst@@caption\@empty\else~\thelstlisting\fi}%
-                \lst@caption
              \ifx #1b\allowbreak \fi
              \endgroup}{}%
-    \fi}
-\def\lst@maketitle#1#2{\@makecaption\lst@title@dropdelim\lst@title}
+    \fi
+  \fi}
+\def\lst@makecaption{\@makecaption}
+\def\lst@maketitle{\@makecaption\lst@title@dropdelim}
 \def\lst@title@dropdelim#1{\ignorespaces}
 \AtBeginDocument{%
-\@ifundefined{caption@make}{}{%
-\def\lst@maketitle#1#2{%
-    \begingroup
-    \captionstyle{lsttitle}\@makecaption{}\lst@title
-    \endgroup}
-\newcaptionstyle{lsttitle}{\caption@make{lsttitle}}%
-\def\caption@@@lsttitle{\captiontext\par}%
-}}
+\@ifundefined{captionlabelfalse}{}{%
+  \def\lst@maketitle{\captionlabelfalse\@makecaption\@empty}}%
+\@ifundefined{caption@startrue}{}{%
+  \def\lst@maketitle{\caption@startrue\@makecaption\@empty}}%
+}
 \def\lst@HRefStepCounter#1{%
     \begingroup
     \c@lstlisting\lst@neglisting
@@ -1363,14 +1500,19 @@
 \def\lst@boxtrue{\let\lst@ifbox\iftrue}
 \let\lst@ifbox\iffalse
 \lst@Key{float}\relax[\lst@floatplacement]{%
-    \def\lst@next{\@ifstar{\let\lst@beginfloat\@dblfloat
-                           \let\lst@endfloat\end@dblfloat
-                           \lst@KFloat}%
-                          {\let\lst@beginfloat\@float
-                           \let\lst@endfloat\end@float
-                           \lst@KFloat}}
-    \edef\lst@float{#1}%
-    \expandafter\lst@next\lst@float\relax}
+    \lstKV@SwitchCases{#1}%
+    {true&\let\lst@floatdefault\lst@floatplacement
+          \let\lst@float\lst@floatdefault\\%
+     false&\let\lst@floatdefault\relax
+           \let\lst@float\lst@floatdefault
+    }{\def\lst@next{\@ifstar{\let\lst@beginfloat\@dblfloat
+                             \let\lst@endfloat\end@dblfloat
+                             \lst@KFloat}%
+                            {\let\lst@beginfloat\@float
+                             \let\lst@endfloat\end@float
+                             \lst@KFloat}}
+      \edef\lst@float{#1}%
+      \expandafter\lst@next\lst@float\relax}}
 \def\lst@KFloat#1\relax{%
     \ifx\@empty#1\@empty
         \let\lst@float\lst@floatplacement
@@ -1378,8 +1520,15 @@
         \def\lst@float{#1}%
     \fi}
 \lst@Key{floatplacement}{tbp}{\def\lst@floatplacement{#1}}
-\lst@AddToHook{PreSet}{\let\lst@float\relax}
+\lst@AddToHook{PreSet}{\let\lst@float\lst@floatdefault}
 \lst@AddToHook{TextStyle}{\let\lst@float\relax}
+\let\lst@floatdefault\relax % init
+\lst@AddToHook{DeInit}{%
+    \ifx\lst@float\relax
+        \global\let\lst@doendpe\@doendpe
+    \else
+        \global\let\lst@doendpe\@empty
+    \fi}
 \AtBeginDocument{%
 \@ifundefined{c@float@type}%
     {\edef\ftype@lstlisting{\ifx\c@figure\@undefined 1\else 4\fi}}
@@ -1440,8 +1589,10 @@
     \lsthk@InitVars \lsthk@InitVarsBOL
     \lst@Let{13}\lst@MProcessListing
     \let\lst@Backslash#1%
-    \lst@EnterMode{\lst@Pmode}{\lst@SelectCharTable}}
-\lst@AddToHook{InitVars}
+    \lst@EnterMode{\lst@Pmode}{\lst@SelectCharTable}%
+    \lst@InitFinalize}
+\let\lst@InitFinalize\@empty % init
+\lst@AddToHook{PreInit}
     {\rightskip\z@ \leftskip\z@ \parfillskip=\z@ plus 1fil
      \let\par\@@par}
 \lst@AddToHook{EveryLine}{}% init
@@ -1456,7 +1607,7 @@
         \setbox\@tempboxa\vbox{\lst@DoNewLines}%
     \fi
     \lst@ifdisplaystyle \par\removelastskip \fi
-    \everypar{}\lsthk@ExitVars \lsthk@DeInit
+    \lsthk@ExitVars\everypar{}\lsthk@DeInit\normalbaselines\normalcolor
     \lst@MakeCaption b%
     \lst@ifbox
         \egroup $\hss \egroup
@@ -1481,7 +1632,14 @@
     \lst@XPrintToken \lst@EOLUpdate \lsthk@InitVarsBOL
     \global\advance\lst@lineno\@ne
     \ifnum \lst@lineno>\lst@lastline
-        \expandafter\lst@EndProcessListing
+        \lst@ifdropinput \lst@LeaveMode \fi
+        \ifx\lst@linerange\@empty
+            \expandafter\expandafter\expandafter\lst@EndProcessListing
+        \else
+            \lst@interrange
+            \lst@GetLineInterval
+            \expandafter\expandafter\expandafter\lst@SkipToFirst
+        \fi
     \else
         \expandafter\lst@BOLGobble
     \fi}
@@ -1503,12 +1661,12 @@
     \let\lst@next#1%
     \ifx \lst@next\relax\else
     \ifx \lst@next\lst@MProcessListing\else
-    \ifx \lst@next\lst@ProcessFormFeed\else
+    \ifx \lst@next\lst@processformfeed\else
     \ifx \lst@next\lstenv@backslash
         \let\lst@next\lstenv@BOLGobble@@
     \else
         \let\lst@next\lst@BOLGobble@@
-        \ifx #1\lst@ProcessTabulator
+        \ifx #1\lst@processtabulator
             \advance\@tempcnta-\lst@tabsize\relax
             \ifnum\@tempcnta<\z@
                 \lst@length-\@tempcnta \lst@PreGotoTabStop
@@ -1518,6 +1676,8 @@
         \fi
     \fi \fi \fi \fi
     \lst@next}
+\def\lst@processformfeed{\lst@ProcessFormFeed}
+\def\lst@processtabulator{\lst@ProcessTabulator}
 \lst@Key{name}\relax{\def\lst@intname{#1}}
 \lst@AddToHookExe{PreSet}{\global\let\lst@intname\@empty}
 \lst@AddToHook{PreInit}{%
@@ -1525,25 +1685,26 @@
     \global\let\lst@name\lst@arg \global\let\lstname\lst@name}
 \def\lst@filenamerpl{_\textunderscore $\textdollar -\textendash}
 \def\l@lstlisting#1#2{\@dottedtocline{1}{1.5em}{2.3em}{#1}{#2}}
-\lst@AddToHook{Init}
-    {\lst@ifnolol\else
-         \ifx\lst@@caption\@empty
-             \ifx\lst@caption\@empty
-                 \ifx\lst@intname\@empty \else \def\lst@temp{ }%
-                 \ifx\lst@intname\lst@temp \else
-                     \addcontentsline{lol}{lstlisting}\lst@name
-                 \fi\fi
-             \fi
-        \else
-             \addcontentsline{lol}{lstlisting}%
-                 {\protect\numberline{\thelstlisting}\lst@@caption}%
-        \fi
-     \fi}
 \lst@UserCommand\lstlistlistingname{Listings}
 \lst@UserCommand\lstlistoflistings{\bgroup
     \let\contentsname\lstlistlistingname
     \let\lst@temp\@starttoc \def\@starttoc##1{\lst@temp{lol}}%
     \tableofcontents \egroup}
+\@ifpackageloaded{scrlfile}
+{\newcommand*\lol@heading{\float@listhead{\lstlistlistingname}}
+ \renewcommand*\lstlistoflistings{%
+   \begingroup%
+     \if@twocolumn
+       \@restonecoltrue\onecolumn
+     \else
+       \@restonecolfalse
+     \fi
+     \lol@heading%
+     \@parskipfalse\@parskip@indent%
+     \@starttoc{lol}%
+     \if@restonecol\twocolumn\fi
+   \endgroup}%
+}{}
 \newcommand\lstinline[1][]{%
     \leavevmode\bgroup % \hbox\bgroup --> \bgroup
       \def\lst@boxpos{b}%
@@ -1591,19 +1752,29 @@
 \def\lst@InlineGJReadSp#1{%
     \lccode`\~=`\ \lowercase{\lst@lAddTo\lst@arg~}%
     \lst@InlineGJ#1}
-\newcommand\lstinputlisting[2][]{%
+\def\lst@MakePath#1{\ifx\@empty#1\@empty\else\lst@MakePath@#1/\@nil/\fi}
+\def\lst@MakePath@#1/{#1/\lst@MakePath@@}
+\def\lst@MakePath@@#1/{%
+    \ifx\@nil#1\expandafter\@gobble
+         \else \ifx\@empty#1\else #1/\fi \fi
+    \lst@MakePath@@}
+\lst@Key{inputpath}{}{\edef\lst@inputpath{\lst@MakePath{#1}}}
+\def\lstinputlisting{%
+    \begingroup \lst@setcatcodes \lst@inputlisting}
+\newcommand\lst@inputlisting[2][]{%
+    \endgroup
     \def\lst@set{#1}%
-    \IfFileExists{#2}%
-        {\lst@InputListing{#2}}%
-        {\filename@parse{#2}%
+    \IfFileExists{\lst@inputpath#2}%
+        {\expandafter\lst@InputListing\expandafter{\lst@inputpath#2}}%
+        {\filename@parse{\lst@inputpath#2}%
          \edef\reserved@a{\noexpand\lst@MissingFileError
              {\filename@area\filename@base}%
              {\ifx\filename@ext\relax tex\else\filename@ext\fi}}%
          \reserved@a}%
-    \@doendpe \@newlistfalse \ignorespaces}
+    \lst@doendpe \@newlistfalse \ignorespaces}
 \def\lst@MissingFileError#1#2{%
-    \typeout{^^J! Package Listings Error: File `#1.#2' not found.^^J^^J%
-        Type X to quit or <RETURN> to proceed,^^J%
+    \typeout{^^J! Package Listings Error: File `#1(.#2)' not found.^^J%
+        ^^JType X to quit or <RETURN> to proceed,^^J%
         or enter new name. (Default extension: #2)^^J}%
     \message{Enter file name: }%
     {\endlinechar\m@ne \global\read\m@ne to\@gtempa}%
@@ -1623,6 +1794,7 @@
     \fi}
 \let\lst@ifdraft\iffalse
 \DeclareOption{draft}{\let\lst@ifdraft\iftrue}
+\DeclareOption{final}{\let\lst@ifdraft\iffalse}
 \lst@AddToHook{PreSet}
     {\lst@ifdraft
          \let\lst@ifprint\iffalse
@@ -1633,6 +1805,7 @@
       \lsthk@PreSet \gdef\lst@intname{#1}%
       \expandafter\lstset\expandafter{\lst@set}%
       \lsthk@DisplayStyle
+      \catcode\active=\active
       \lst@Init\relax \let\lst@gobble\z@
       \lst@SkipToFirst
       \lst@ifprint \def\lst@next{\input{#1}}%
@@ -1719,7 +1892,8 @@
     \begingroup
     \global\@namedef{end##2}{\lstenv@Error{##2}}%
     \global\@namedef{##2}{\def\lstenv@name{##2}%
-        \begingroup \catcode\active=\active \csname##2@\endcsname}%
+        \begingroup \lst@setcatcodes \catcode\active=\active
+        \csname##2@\endcsname}%
     \let\l@ngrel@x\global
     \let\@xargdef\lstenv@xargdef
     \expandafter\new@command\csname##2@\endcsname##3%
@@ -1730,10 +1904,10 @@
              \def\lstenv@endstring{#1##1}%
          \fi
          \@namedef{end##2}{\lst@DeInit ##5\endgroup
-                          \@doendpe \@ignoretrue}%
+                          \lst@doendpe \@ignoretrue}%
          \lsthk@DisplayStyle
-         \lst@Init\lstenv@backslash
          \let\lst@EndProcessListing\lstenv@SkipToEnd
+         \lst@Init\lstenv@backslash
          \lst@ifprint
              \expandafter\expandafter\expandafter\lstenv@Process
          \else
