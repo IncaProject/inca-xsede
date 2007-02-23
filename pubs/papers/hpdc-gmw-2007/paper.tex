@@ -457,15 +457,47 @@ data (returned as XML) and a set of XSL stylesheets format the data as HTML.
 
 \subsubsection{Description and Requirements}
 
-% Describe CTSS 
+% Describe CTSS
+
+TeraGrid's Coordinated TeraGrid Software and Services (CTSS) was designed to
+allow users to more easily run Grid jobs across its distributed, heterogeneous
+resources.  CTSS is available from all TeraGrid compute resources and is
+comprised of approximately 30 software packages for Grid services (gridftp, ws
+gram), Grid jobs (gridshell, myproxy, globus), cluster tools (pacman, tgusage),
+data management (srb, hdf5) and user applications (mpich, gcc).
+
+In order to validate and verify CTSS functionality from a user perspective,
+TeraGrid and SDSC developed and deployed Inca 1 on TeraGrid in 2003. TeraGrid
+transitioned to Inca 2 in 2006 and, in addition to CTSS monitoring, began using
+Inca to collect job usage information from Globus 2 GRAM logs and to detect
+expired host and CA certificates and CA CRLs to its Inca deployment.
 
 \subsubsection{Usage of Inca}
 
 % Describe reporters, configuration, and deployment.  Figure.
 
+TeraGrid's Inca 2 agent, depot and consumer components are hosted at SDSC on 
+sapa.sdsc.edu, a XX machine.  A reporter repository for TeraGrid is also hosted
+at SDSC on login-linux.sdsc.edu, a XX machine.  TeraGrid's 20 compute resources
+each run a reporter manager and regularly execute an average of 109 reporters
+to perform 48 cross-site, 20 grid, 28 cluster, 9 data, 2 user tool, and 2
+security tests. 
+
 \subsubsection{Results}
 
 % Consumer view of CTSS, security, etc.
+
+TeraGrid currently has six status pages: a summary of software stack test
+failures, a detailed grid of software test results, a page showing grid job
+usage, results for security tests, results for secure mds tests, and a list of
+all running reporters.
+
+\begin{figure}[hbt]
+  \centering
+  \includegraphics[scale=0.5]{status-page.eps}
+  \caption{TeraGrid CTSS status page.}
+  \label{status_page_fig}
+\end{figure}
 
 ~\newpage
 
