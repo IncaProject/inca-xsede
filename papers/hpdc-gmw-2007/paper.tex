@@ -15,10 +15,13 @@
 \usepackage{times}
 \usepackage{url}
 
-%\documentstyle[times,art10,twocolumn,latex8]{article}
+% Uncomment to check text length -- moves figures to end of paper -- no more
+% than 10 % pages w/o figures
+%\usepackage{endfloat}
 
 %------------------------------------------------------------------------- 
 % take the % away on next line to produce the final camera-ready version 
+% takes away page numbers
 \pagestyle{empty}
 
 %------------------------------------------------------------------------- 
@@ -137,6 +140,11 @@ are verified.  Similarly, it is important to execute some tests all-to-all
 in order to detect site-to-site configuration errors such as authentication
 problems.
 
+\item The configuration of tests or performance measurements should be managed
+centrally in order to ensure consistent testing of the resources, rather than
+by system administrators who may not use the same information that is
+available to users.
+
 \end{itemize}
 
 \noindent In our experience, writing and maintaining user-level tests and
@@ -148,7 +156,7 @@ documentation.  For example, it may take a few iterations to determine whether
 detected failures are the result of a faulty test, fault user documentation,
 or a faulty system.  Realistically, this is a labor-intensive activity and
 thus the amount of user-level Grid monitoring is often limited by the amount
-of people resources that can be assigned to it.  However, A good goal is to
+of people resources that can be assigned to it.  However, a good goal is to
 test all the commands that exist in the user documentation and/or have at
 least one basic test for each software component of the Grid infrastructure.  
 
@@ -206,32 +214,20 @@ executable name, inputs, source host, etc.) so that system administrators have
 enough information to understand the result and can troubleshoot system
 problems without having to know the internals of Inca 2. (improved)
 
-\item Provides facilities to ease the process of writing test or benchmarks,
-deploying them into Inca 2 installations, and sharing them with other Inca 2
-users.  
+\item Provides facilities to ease the process of writing tests or benchmarks
+and deploying them into Inca 2 installations. (improved)
 
-\item Periodic tests executed by the monitoring system should be automated and
-run from a standard user account.  A user GSI credential should be issued and
-used by the monitoring system to test services that require authentication.  
+\item Provides facilities for sharing tests or benchmarks with other Inca 2
+users in order to promote sharing of each other's expertise (new)
+
+\item Easily adapts to new resources and monitoring requirements in order to
+facilitate maintenance of a running Inca 2 deployment. (improved)
+
+\item Stores and archives monitoring results (especially any error messages) 
+in order to understand the behavior of a Grid over time. The results
+are available through a flexible querying interface. (improved)
+
 %myproxy stuff
-\item Tests should be executed locally on all Grid resources when appropriate so
-that all Grid access points available to users are tested.  
-\item The configuration of tests should be managed centrally in order to ensure
-consistent testing of the resources, rather than by system administrators who
-may not use the same information that is available to users.
-\item The testing system should easily adapt to new resources and testing
-requirements.  In our experience, testing has an iterative refinement process
-because Grids are dynamic and the software environment changes over time as
-packages are upgraded.  Furthermore, it is often difficult to write and deploy
-a test perfectly the first time because of portability issues and incomplete
-user documentation.   
-\item System administrators should not need to know the details of the
-monitoring system in order to troubleshoot problems.  When a problem is
-detected the monitoring system should provide system administrators with
-sufficient information to locate the problem easily and test repairs.
-\item A history of test results (especially any error messages) should be
-retained in order to understand the behavior of their Grid over time. This
-history should be available through a flexible querying interface.
 \item A running monitoring system should have a limited impact on the resources
 it measures and should be secure.
 \end{enumerate}
@@ -307,7 +303,7 @@ detail using the order of the steps above.
 \lstset{language=XML,keywordstyle={}} 
 \subfigure[]{\lstinputlisting{grid.globus.gramPing.out}}
 \caption{\label{pingReporter}(a) An Inca reporter that tests the user-level
-availability of a Globus GRAM server and (b) its sample output.}
+availability of a Globus GRAM server and (b) an output sample.}
 \end{figure}
 
 An Inca reporter is an executable program that tests or measures some aspect
@@ -370,11 +366,32 @@ fewer than 30 lines of code.
 
 \SubSection{Reporter Repositories}
 
-The Inca agent retrieves reporters from collections called reporter
-repositories that consist of reporters, required packages and libraries,
-and a catalog file. Repository contents are accessible using a URL and can
-be shared across multiple Inca deployments. The Inca team publishes a
-reporter repository that contains reporters developed for TeraGrid.  
+% What are repositories and their key features
+Reporter repositories are collections that consist of reporters, required
+packages and libraries (including the Perl APIs described in the previous
+section), and a catalog file.  Repository contents are accessible using a URL
+and designed to be shared across multiple Inca deployments.  The catalog file
+follows APT's Packages.gz~\cite{apt} format and thus tar.gz dependencies such
+as non-standard Perl APIs or source code can be added to reporter catalog
+entries.  Inca will then automatically deploy tar.gz dependencies into a
+subdirectory of its installation (more in Section~\ref{agent}).  This enables
+reporters to be deployed to resources with a miniumum of effort.  Furthermore,
+each package specified in the catalog is versioned.  This allows Inca to
+automatically distribute reporter code updates such as bug fixes.  As such,
+Inca administrators maintaining repositories need to be careful to ensure
+their updates are tested and work.
+% XXX Check with Jim on that 
+
+% We have a lot of reporters ready to be picked 
+The Inca team publishes a reporter repository that contains 143 reporters
+developed and tested for TeraGrid.  Most reporters are either version
+reporters that collect version information from a softare package and
+serve as a most basic unit test, unit test reporters that run a more involved
+unit test, or performance benchmark reporters.  The unit and version
+reporters cover software such as Grid middleware, compilers, math libraries,
+data tools, and visualization tools.  The performance reporters available
+currently measure data transfer and execute Grid benchmarks as described in
+Section~\ref{grasp}.
 
 \SubSection{Inca administration GUI tool (incat)}
 
