@@ -15,10 +15,6 @@
 \usepackage{times}
 \usepackage{url}
 
-% Uncomment to check text length -- moves figures to end of paper -- no more
-% than 10 % pages w/o figures
-%\usepackage{endfloat}
-
 %------------------------------------------------------------------------- 
 % take the % away on next line to produce the final camera-ready version 
 % takes away page numbers
@@ -391,77 +387,148 @@ data tools, and visualization tools.  The performance reporters available
 currently measure data transfer and execute Grid benchmarks as described in
 Section~\ref{grasp}.
 
-\SubSection{Inca administration GUI tool (incat)}
+\SubSection{Inca administration tool (incat)}
+%\begin{figure}[htb]
+%  \centering
+%  \mbox{\epsfig{file=incat.eps, width=\columnwidth}}
+%  \caption{\label{arch_fig} Incat .}
+%\end{figure}
 
-The Inca administrative GUI tool (incat) is the main interface by which an
-Inca administrator interacts with the Inca system.  Incat allows the Inca
-administrator to view the choose which resources to monitor and which tests or 
-benchmarks to deploy to those resources.  The following subsections
-describe the Inca components that are configurable via incat.  
-To configure reporter execution, an Inca administrator launches a GUI tool,
-called incat.  Incat allows the administrator to choose which resources to
-monitor and which reporters to deploy to those resources.  For each
-reporter, the administrator can specify the resources to run on,
-command-line arguments, the runtime environment, the frequency of execution,
-and resource limits. The Inca administrator may also group related reporters
-into suites that can be shared across different Inca deployments.  This can
-be useful to determine interoperability among Grids or to determine whether
-an application's requirements are being fulfilled on a Grid.
+% Incat is interface Inca admin uses to configure reporters to resources
+% introduce series here; why suites are important It is designed to make the
+% effort of configuring and maintaining 100s series on resources easilty
+The Inca administrative tool (incat) is a GUI implemented in Java Swing an
+Inca administrator uses to configure user-level Grid monitoring on their
+resources.  Incat allows an Inca administrator to choose which resources to
+monitor and which reporters to deploy to those resources.  The configuration
+is stored in a XML file and sent to the agent which handles the implementation
+(as described in the next section).  The Inca administrator can reload the
+configuration at any point and make updates.  Incat provides a number of
+conveniences that enable a large number of results to be managed and collected
+with a minimum effort.  
 
-\subsubsection{Suites}
-%\subsubsection{Series}
+Once an Inca administrator enters the location of one more reporter
+repositories, incat will load and display the reporters available from them.
+For each reporter, the Inca administrator can specify the resources to run on,
+input arguments, the runtime environment, the frequency of execution, resource
+limits, and email notifications.  The reports that a reporter produces on a
+resource when executed with specific set of input arguments and runtime
+environment are known as a \emph{report series} (or \emph{series} for short).
+Thus, the grid.globus.gramPing reporter in Figure~\ref{pingReporter} would
+produce one report series when executed with host tg-login.sdsc.edu and
+another report series when executed with dslogin.sdsc.edu.  A set of related
+series can be grouped into \emph{suites} and shared across other Inca
+deployments.  For example, there could be a Globus suite or a data transfer
+performance suite.  Suites can also be useful to determine interoperability
+among Grids or to determine whether an application's requirements are being
+fulfilled on a Grid.
 
-\subsubsection{Resource Macros}
+% Resource information organized to make it easier to maintain
+For each monitored resource, an Inca administrator selects an access method
+(SSH or Globus) to access the resource and start monitoring there (described
+in Sections~\ref{agent} and ~\ref{rm}).  Resources can also be grouped
+together and referenced in the series configuration.  This facilitates the
+process of executing the same series on multiple resources.  Furthermore,
+attributes called \emph{macros} can be attached to resources and resource
+groups and similarly be referenced in the series configuration (i.e., inputs
+and runtime environment).  For example, it is useful to have a macro called
+'jobmanager' since the batch system is likely to differ from one machine to
+the next.  A resource macro can also have multiple values in which case the
+series will be executed on the resource once for each macro value.  The
+benefit of resource groups and macros is that when a reporter is executed on a
+resource multiple times with different input arguments, it can be represented
+succintly.  Similarly, when a resource attribute is changed, it only has to be
+changed in one place and then every series that references it will be updated
+as well.  This makes the initial configuration and maintenance easier on the
+Inca administrator and less error prone.
 
 \SubSection{Agent}
 
 The Inca agent is a server that implements the configuration specified by the
-Inca administrator.  After determining which Inca tests should be executed on
-each resource, the agent stores this configuration information in the depot.
-It then stages and launches a dependent component, called a reporter manager,
-on each resource using either SSH or Globus [13].  Once a reporter manager
-contacts its agent, the agent transmits Inca tests to execute, along with
-their dependencies, configuration and schedule of execution. 
-  
+Inca administrator.  When it receives a configuration file from the Inca
+administrator, it will determine which reporters should be executed on each
+resource by expanding the resource macros and groups; it then stores the
+expanded configuration information in the depot.  The agent stages and
+launches an Inca component, called a reporter manager (described in the
+following subsection), on each resource using either SSH or Globus.  Once a
+reporter manager contacts its agent, the agent transmits the reporters to
+execute along with their dependencies and a suite that contains their series
+configuration and schedule of execution.  As an Inca administrator makes
+updates to the configuration, the agent will push out new reporters and/or
+suite changes to each of the effected resources.
+
+To maintain the Inca deployment, the agent regularly pings the reporter
+managers on each resource in order to detect when a reporter manager has
+failed so it can be restarted.  For example, if a resource goes down for a
+planned maintenance, the agent will attempt to restart the reporter manager
+(by default every hour) until it succeeds.  The agent also maintains a local
+cache of reporters and their dependencies; it periodically checks the
+repositories for updates every 4 hours by default and automatically
+distributes them to the reporter managers (if the latest version is desired).  
+The agent is implemented in Java. 
+
+% myproxy
 
 \SubSection{Reporter Manager}
 
 The Inca reporter manager is a lightweight process responsible for managing
-the schedule and execution of Inca tests, called reporters, on a single
-resource. The reporter manager receives reporter updates and dependencies
-(e.g., Inca Perl APIs or source code) from the agent along with requests for
-reporter scheduling changes.  Running under a regular user account, the
-reporter manager executes reporters on-demand or using an internal cron
-scheduler, and sends reports to the depot for archiving. The reporter
-manager monitors reporter system usage and enforces limits (e.g., wall clock
-time, CPU time, memory).  System usage information is sent to the depot with
-each report. 
+the schedule and execution of Inca reporters on a single resource. The
+reporter manager receives reporter updates and dependencies from the agent
+along with requests for reporter scheduling changes.  Running under a regular
+user account, the reporter manager executes reporters on-demand or using an
+internal cron scheduler, and sends reports to the depot for archiving. The
+reporter manager monitors reporter system usage using the system command
+\texttt{ps} and enforces limits (e.g., wall clock time, CPU time, memory).
+System usage information is sent to the depot with each report. 
 
-
+The reporter manager is implemented in Perl since it is available by default
+on UNIX machines.  The cron scheduling is implemented using the CPAN perl
+module Schedule::Cron.  
 
 \SubSection{Depot}
 
-The Inca depot server is responsible for storing configuration information
-and the data produced by reporters. The depot maintains a relational
-database via Hibernate [14] so that it can use a variety of databases.  The
+The Inca depot server is responsible for storing configuration information and
+the data produced by reporters. The depot uses a relational database via
+Hibernate~\cite{hibernate} so that it can use a variety of databases.  The
 depot provides full archiving of reporter output and structures its schema
-to reduce redundant data.  Data can be queried using SQL queries. Predefined
-queries exist to return the latest report instances of a suite, a single
-report instance, or a report history.  A Web services interface is also
-available to provide unauthenticated query access to data.  
+around series and the minimization of redundant data, i.e., only stores
+changes from one report to another in a report series.  The depot also
+supports comparisons which are executed on a newly received report; 
+currently regular expression matching and version comparisons are 
+supported.  Optionally, an Inca administrator can select to receive
+email notification when the result of the comparison changes.
 
+Data can be queried using SQL queries. Predefined queries exist to return the
+latest report instances of a suite, a single report instance, or a report
+history.  A Web services interface is also available to provide
+unauthenticated query access to data.  The depot is implemented in Java.
 
 \SubSection{Data Consumer}
 
 The Inca data consumer is a Web application that queries the Inca depot for
-data and displays it in a user-friendly format.  The data consumer is
-packaged with Jetty [15] so that pages can be served immediately without
-deploying Tomcat [16].  A set of JSP tags and pages query the Inca depot for
-data (returned as XML) and a set of XSL stylesheets format the data as HTML.
+data and displays it in a user-friendly format.  The data consumer is packaged
+with Jetty~\cite{jetty} so that pages can be served out of the box.  A set of
+extensible JSP tags and pages query the Inca depot for data (returned as XML)
+and a set of XSL stylesheets format the data as HTML.  An Inca administrator
+can customize the data display by either modifying the XSL stylesheets or
+writing their own JSP tags and pages.
 
-~\newpage
-~\newpage
-~\newpage
+\SubSection{Security}
+
+To reduce the security risk of Inca, all Inca components communicate with each
+other using SSL by default.  Also, sensitive information such as passwords are
+encrypted before being stored to disk on the agent.  To handle reporters that
+require a valid proxy credential to execute, the reporter manager will fetch a
+short-term proxy from a MyProxy~\cite{myproxy} server (as specified by an Inca
+administrator) and then destroys the proxy once the reporter has completed.
+The goal is to only have short-term proxies on the machine for the times at
+which they are neeed; this is more secure than maintaining a long-term
+credential on the resource and easier to manage.  Furthermore, the MyProxy
+authentication information is fetched from the agent each time a proxy
+credential is needed and then cleared from memory.
+
+\SubSection{Scalability}
+
 ~\newpage
 %------------------------------------------------------------------------- 
 
@@ -493,7 +560,7 @@ expired host and CA certificates and CA CRLs to its Inca deployment.
 
 TeraGrid's Inca 2 agent, depot and consumer components are hosted at SDSC on 
 sapa.sdsc.edu.  A reporter repository for TeraGrid is also hosted
-at SDSC on login-linux.sdsc.edu.  TeraGrid's 19 compute resources
+at SDSC on inca.sdsc.edu.  TeraGrid's 19 compute resources
 each run a reporter manager and regularly execute an average of 109 reporters
 to perform 48 cross-site, 20 grid, 28 cluster, 9 data, 2 user tool, and 2
 security tests.  Figure~\ref{tg_deploy_fig} illustrates TeraGrid's Inca 2 
@@ -526,8 +593,6 @@ resource are shown in the table body rows.
   \caption{TeraGrid CTSS status page.}
   \label{status_page_fig}
 \end{figure}
-
-~\newpage
 
 \SubSection{GrASP}
 
