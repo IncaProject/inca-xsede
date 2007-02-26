@@ -537,34 +537,33 @@ credential is needed and then cleared from memory.
 
 \SubSection{TeraGrid}
 
-\subsubsection{Description and Requirements}
-
-% Describe CTSS
-
-TeraGrid's Coordinated TeraGrid Software and Services (CTSS) was designed to
+% Description and Requirements - Describe CTSS
+Requirements for user-level Grid monitoring on TeraGrid initially included the
+validation and verification of CTSS on each resource.  As described in the
+introduction, CTSS was designed to
 allow users to more easily run Grid jobs across its distributed, heterogeneous
-resources.  CTSS is available from all TeraGrid compute resources and is
-comprised of approximately 30 software packages for Grid services (gridftp, ws
-gram), Grid jobs (gridshell, myproxy, globus), cluster tools (pacman, tgusage),
-data management (srb, hdf5) and user applications (mpich, gcc).
+resources.  CTSS version 3 (CTSSv3) is available from all TeraGrid compute
+resources and is comprised of approximately 30 software packages that provide
+Grid tools and services (e.g., Globus, GSI-SSH, MyProxy), data management
+tools (e.g., SRB, HDF5), and applications tools (e.g., MPICH, GCC).
+Inca was originally
+deployed on TeraGrid in 2003 using Inca 1 and was transitioned to Inca 2 in
+November 2006.  In addition to CTSSv3 monitoring, Inca is now also being used
+to collect job usage information from Globus 2 GRAM logs and to detect expired
+host and CA certificates and CA CRLs. 
 
-In order to validate and verify CTSS functionality from a user perspective,
-TeraGrid and SDSC developed and deployed Inca 1 on TeraGrid in 2003. TeraGrid
-transitioned to Inca 2 in 2006 and, in addition to CTSS monitoring, began using
-Inca to collect job usage information from Globus 2 GRAM logs and to detect
-expired host and CA certificates and CA CRLs to its Inca deployment.
-
-\subsubsection{Usage of Inca}
-
-% Describe reporters, configuration, and deployment.  Figure.
-
-TeraGrid's Inca 2 agent, depot and consumer components are hosted at SDSC on 
+% Usage of Inca - Describe reporters, configuration, and deployment.  Figure.
+To provide user-level monitoring of CTSSv3, a number of version and unit
+test reporters were developed to test the software packages in CTSS.
+Currently, there are 56 such reporters executing an average of 109 series on
+each of TeraGrid's 18 resources.  They include 48 all-to-all tests (GSI-SSH,
+GRAM, and GridFTP), 20 Grid-related tests, 28 data-related tests, 30
+application tool-related tests, and 2 security-related tests.  
+Figure~\ref{tg_deploy_fig} illustrates TeraGrid's Inca 2 deployment
+configuration.  The
+agent, depot and consumer components are hosted at SDSC on 
 sapa.sdsc.edu.  A reporter repository for TeraGrid is also hosted
-at SDSC on inca.sdsc.edu.  TeraGrid's 19 compute resources
-each run a reporter manager and regularly execute an average of 109 reporters
-to perform 48 cross-site, 20 grid, 28 cluster, 9 data, 2 user tool, and 2
-security tests.  Figure~\ref{tg_deploy_fig} illustrates TeraGrid's Inca 2 
-deployment configuration.
+at SDSC on inca.sdsc.edu.  
 
 \begin{figure}[hbt]
   \centering
@@ -573,24 +572,24 @@ deployment configuration.
   \label{tg_deploy_fig}
 \end{figure}
 
-\subsubsection{Results}
-
-% Consumer view of CTSS, security, etc.
-
-TeraGrid currently has six status pages: a summary of CTSS test
-failures, a detailed grid of CTSS test results, a page showing grid job
+% Results - Consumer view of CTSS, security, etc.
+TeraGrid currently has six status pages to display the Inca monitoring
+information: a summary of CTSSv3 test failures, a detailed grid of CTSSv3 test
+results, a page showing grid job
 usage, results for security tests, results for secure mds tests, and a list of
 all running reporters.
 
-Figure~\ref{status_page_fig} shows a portion of the TeraGrid detailed CTSS test result
-page.  CTSS software packages are listed along the column and TeraGrid
+Figure~\ref{status_page_fig} shows a portion of the TeraGrid detailed CTSSv3 
+test result
+page.  CTSSv3 software packages are listed along the column and TeraGrid
 resources (anonymized) in the header rows.  Test results for each package and
 resource are shown in the table body rows.
 
 \begin{figure}[hbt]
   \centering
   \includegraphics[scale=0.4]{status-page.eps}
-  \caption{TeraGrid CTSS status page.}
+  \caption{Portion of the TeraGrid CTSSv3 detailed status page with the
+  resources anonymized.}
   \label{status_page_fig}
 \end{figure}
 
