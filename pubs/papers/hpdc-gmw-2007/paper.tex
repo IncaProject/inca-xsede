@@ -622,16 +622,44 @@ resource are shown in the table body rows.
 \subsubsection{Description and Requirements}
 
 % Describe GrASP probes
+The Grid Assessment Probes (GrASP)~\cite{grasp} are designed to 
+serve as simple grid application kernel exemplars as well as a 
+set of diagnostic tools. They test and measure performance of 
+basic grid functions including file transfers, remote execution, 
+and Grid Information Services response.  There are two basic probes: i.  The
+circle probe takes a 100 MB file and passes it in a ring through a given set
+of grid nodes, measuring transfer time at each step.  ii.  The gather probe
+transfers a 100 MB file from some number of source nodes to a compute node,
+runs a computation through the job queue on the compute resource and then
+transfers a 100 MB file to a single destination node.  The transfer of the
+first set of files is executed in parallel.  Once again all tranfers times, as
+well as compute and queue times are recorded.
+
+The GrASP probes yield useful data on the performance and reliability of the
+grid infrastructure that they are run on, but in order to gather a large
+amount of data over time we found it necessary to run them on a schedule and
+gather any error messages that took place during the execution.  In order to
+fulfill the last 2 requirements we deployed the GrASP probes as reporters
+within the Inca framework.
 
 \subsubsection{Usage of Inca}
 
-% Used to deploy GrASP probes to Grids.  Probes wrapped as reporters (maybe
-% right in future as though we already included GrASP as a dependency cause
-% it should be done by June.
+The GrASP probes have been written to follow the specifications of an Inca
+reporter.  Porting the original code to follow the specifications proved to be
+trivial.  Inca was also used to store all of the GrASP data and related error
+messages. 
+
 
 \subsubsection{Results}
 
-% A paper.  Interesting that error messages were important.  Predictions?
+Using Inca GrASP was deployed on TeraGrid and Geon for a period of over 6
+months.  The data gathered during that period yielded a paper, Measuring the
+Performance and Reliability of Production Computational Grids ~\cite{grasp2}.
+Through the running of the GrASP probes over such an extended period of time
+we were able to identify a recurring Globus 2 bug and were able to predict the
+execution time of Preco, a Grid application run on the TeraGrid within 12\%
+excluding setup and cleanup time.
+
 
 ~\newpage
 
