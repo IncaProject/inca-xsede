@@ -61,7 +61,7 @@ configurations across multiple, heterogeneous resources.  The TeraGrid
 project~\cite{teragrid}, for example, manages the coordination of software and
 services by deploying and monitoring a common user environment across
 distributed, heterogeneous resources. The organization of TeraGrid software
-and services is referred to as the Common TeraGrid Software and Services
+and services is referred to as the Coordinated TeraGrid Software and Services
 (CTSS).  TeraGrid's software and services uniformity simplifies access to its
 resources, which consist of more than 102 teraflops of compute capability and
 more than 15 petabytes of online storage, all interconnected by a network that
@@ -484,8 +484,6 @@ repositories for updates every 4 hours by default and automatically
 distributes them to the reporter managers (if the latest version is desired).  
 The agent is implemented in Java. 
 
-% myproxy
-
 \SubSection{Reporter Manager}
 \label{rm}
 
@@ -549,6 +547,9 @@ credential is needed and then cleared from memory.
 
 \SubSection{Scalability}
 
+% depot designed to support mirror depot or hierchical support
+% coordinating Inca deployments
+
 ~\newpage
 %------------------------------------------------------------------------- 
 
@@ -590,7 +591,7 @@ at SDSC on inca.sdsc.edu.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[scale=0.6]{tg-deploy.eps}
+  \includegraphics[width=\columnwidth]{tg-deploy.eps}
   \caption{TeraGrid's Inca 2 Deployment.}
   \label{tg_deploy_fig}
 \end{figure}
@@ -610,7 +611,7 @@ resource are shown in the table body rows.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[scale=0.4]{status-page.eps}
+  \includegraphics[width=\columnwidth]{status-page.eps}
   \caption{Portion of the TeraGrid CTSSv3 detailed status page with the
   resources anonymized.}
   \label{status_page_fig}
@@ -649,11 +650,11 @@ reporter.  Porting the original code to follow the specifications proved to be
 trivial.  Inca was also used to store all of the GrASP data and related error
 messages. 
 
-\begin{figure*}[tbp]
+\begin{figure}[tbp]
   \centering
-  \mbox{\epsfig{file=errorHistogramTG.eps, width=.7\textwidth}}
+  \mbox{\epsfig{file=errorHistogramTG.eps, width=\columnwidth}}
   \caption{\label{errorHist_fig} Histogram of Error Messages Encountered.}
-\end{figure*}
+\end{figure}
 
 \subsubsection{Results}
 
@@ -667,10 +668,25 @@ error was number 9, Assertion GLOBUS FALSE, which was the result of a bug in
 the Globus 2 GRAM server.  We were also able to predict the
 execution time of Preco, a Grid application run on the TeraGrid within 12\% (excluding setup and cleanup time).
 
-~\newpage
+\SubSection{Other Uses}
 
-\SubSection{Other uses}
-~\newpage
+Other Inca users include the European DEISA Grid and the UK National Grid
+Service (NGS).  Similar to TeraGrid, DEISA uses Inca to verify their Common
+Production Environment (DCPE) across their 11 heterogenous resources.  They
+currently have 40 version reporters to verify each of the packages included in
+DCPE.  In addition, they have unit reporters for the DEISA Applications Test
+Suite (DATS) to check basic operation of the C/C++/Fortran compilers, the MPI
+library, some numerical libraries, OpenMP jobs, CORBA middleware, and a third
+party application.  DEISA is currently using Inca 1 and will transition to
+Inca 2 in the next few months.
+
+NGS currently has Inca 2 deployed on 8 resources to verify their Grid services 
+and compilers.  They have wrapped the GITS~\cite{gits} tests using a new
+API developed by the GITS developer.  The GITS reporters include 17 tests 
+that verify Globus and GSI-SSH functionality such as executing small job
+submissions and data transfers.  NGS also has 12 tests for their compilers and
+utilize 2 security reporters from the Inca repository.
+
 %------------------------------------------------------------------------- 
 \Section{Future Work}
 
