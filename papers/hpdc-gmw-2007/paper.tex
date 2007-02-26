@@ -547,10 +547,30 @@ credential is needed and then cleared from memory.
 
 \SubSection{Scalability}
 
-% depot designed to support mirror depot or hierchical support
-% coordinating Inca deployments
+% Should illustrate that we've thought about how Inca can scale
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\columnwidth]{vo.eps}
+  \caption{TeraGrid's Inca 2 Deployment.}
+  \label{tg_coord_fig}
+\end{figure}
 
-~\newpage
+Inca was designed to distribute the control and storage workload among
+multiple Inca components if needed.  For example, one depot could forward
+storage requests and queries to another depot to distribute its workload or to
+maintain a mirror for fault tolerance.  Figure~\ref{tg_coord_fig} shows a more
+complex scenario where two Inca deployments coordinate with each other.  For
+example, application communities like GEON have their own Grid but also have
+access to resources on TeraGrid.   Two separate Inca deployments can result in
+duplicate testing. Instead, one Inca deployment can coordinate the execution
+of a suite with another deployment as shown in Figure~\ref{tg_coord_fig}.
+Grid B that has its own resources but also has access to resources in Grid A.
+When an Inca administrator submits a suite to Grid B, the Inca agent running
+on Grid B will determine which reporters run from Grid A resources and forward
+them as a suite request to Grid A's agent.  If Grid B has permission to submit
+suites, Grid A's agent will execute the suite and configure its depot to
+forwards results back to Grid B's depot.  
+
 %------------------------------------------------------------------------- 
 
 \Section{Use Cases}
@@ -672,7 +692,7 @@ execution time of Preco, a Grid application run on the TeraGrid within 12\% (exc
 
 Other Inca users include the European DEISA Grid and the UK National Grid
 Service (NGS).  Similar to TeraGrid, DEISA uses Inca to verify their Common
-Production Environment (DCPE) across their 11 heterogenous resources.  They
+Production Environment (DCPE) across their 11 heterogeneous resources.  They
 currently have 40 version reporters to verify each of the packages included in
 DCPE.  In addition, they have unit reporters for the DEISA Applications Test
 Suite (DATS) to check basic operation of the C/C++/Fortran compilers, the MPI
