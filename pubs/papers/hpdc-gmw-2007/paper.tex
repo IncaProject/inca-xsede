@@ -192,53 +192,57 @@ Finally, we describe some future work and summarize the paper.
 %------------------------------------------------------------------------- 
 \Section{Inca 2 Features}
   
-% Philosophy of user-level testing
-% Practical byproducts
-The main goal of the Inca 2 design was to XXX (general, flexible, easy to
-install, deploy, and
-maintain, scalable, secure).
-Inca benefits ...
-The following lists the key features of Inca 2 noting which are new features
-to Inca 1 versus improved.
+% Implements user-level Grid monitoring and who it benefits
+Inca 2 is a system that provides user-level monitoring of Grid functionality
+and performance described in the previous section.  It was designed to be
+general, flexible, scalable, and secure in addition to being easy to deploy
+and maintain.  Inca benefits Grid operators who oversee the day-to-day
+operation of a Grid; system administrators who provide and manage resources;
+and users who run applications on a Grid.  The key features of Inca 2 are
+listed below.  The '*' after the feature description indicates it is a new
+feature of Inca 2 while no '*' indicates an improvement to an Inca 1 feature.
 
 \begin{enumerate}
 
 \item Collects a wide variety of user-level monitoring results (e.g., simple
-test data to more complex performance benchmark output).  (improved) 
+test data to more complex performance benchmark output).  
 
 \item Captures the context of a test or benchmark as it executes (e.g.,
 executable name, inputs, source host, etc.) so that system administrators have
 enough information to understand the result and can troubleshoot system
-problems without having to know the internals of Inca. (improved)
+problems without having to know the internals of Inca. 
 
 \item Eases the process of writing tests or benchmarks and deploying them into
-Inca installations. (improved)
+Inca installations. 
 
 \item Provides means for sharing tests or benchmarks with other Inca 
-users in order to promote sharing of each other's expertise (new)
+users in order to promote sharing of each other's expertise. * 
 
 \item Easily adapts to new resources and monitoring requirements in order to
-facilitate maintenance of a running Inca deployment. (improved)
+facilitate maintenance of a running Inca deployment. 
 
 \item Stores and archives monitoring results (especially any error messages) 
 in order to understand the behavior of a Grid over time. The results
-are available through a flexible querying interface. (improved)
+are available through a flexible querying interface.
 
 \item Securely manages short-term proxies for testing of Grid services using
-MyProxy~\cite{myproxy}.
+MyProxy~\cite{myproxy}. *
 
 \item Measures the system impact of tests and benchmarks executing on
 the monitored resources in order to tune their execution frequency to
-reduce the impact on the resources.
+reduce the impact on the resources. *
 
 \end{enumerate}
+
+\noindent The following section describes how the above features are
+implemented.
 
 %------------------------------------------------------------------------- 
 \Section{Inca 2 Architecture}
 
 \begin{figure*}[htb]
   \centering
-  \mbox{\epsfig{file=arch.eps, width=.8\textwidth}}
+  \mbox{\epsfig{file=arch.eps, width=.7\textwidth}}
   \caption{\label{arch_fig} Inca architecture.}
 \end{figure*}
 
@@ -399,7 +403,7 @@ Section~\ref{grasp}.
 \begin{figure*}[htb]
   \centering
   \mbox{\epsfig{file=incat.eps, width=\textwidth}}
-  \caption{\label{arch_fig} Screenshot of incat that shows the reporters
+  \caption{\label{incat_fig} Screenshot of incat that shows the reporters
   and their attributes available from the provided reporter repository.}
 \end{figure*}
 
@@ -418,7 +422,7 @@ with a minimum effort.
 
 To begin reporter configuration, the Inca administrator enters the location of
 one more reporter repositories and incat will load and display the reporters
-available from them.
+available from them as shown in Figure~\ref{incat_fig}.
 For each reporter, the Inca administrator can specify the resources to run on,
 input arguments, the runtime environment, the frequency of execution, resource
 limits, and email notifications.  The reports that a reporter produces on a
