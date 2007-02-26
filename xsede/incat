@@ -915,10 +915,6 @@
             <value>gatekeeper.bigred.iu.teragrid.org</value>
           </macro>
           <macro>
-            <name>gridScheduler</name>
-            <value>loadleveler</value>
-          </macro>
-          <macro>
             <name>gridServicesNode</name>
             <value>gatekeeper.bigred.iu.teragrid.org</value>
           </macro>
@@ -957,6 +953,10 @@
           <macro>
             <name>blasLink</name>
             <value>-L/N/soft/linux-sles9-ppc64/blas/lib32 -lfblas</value>
+          </macro>
+          <macro>
+            <name>gridScheduler</name>
+            <value>Loadleveler</value>
           </macro>
         </macros>
       </resource>
@@ -1833,6 +1833,10 @@
             <name>java-version</name>
             <value>1.4.2-6</value>
           </macro>
+          <macro>
+            <name>mpich_scratch</name>
+            <value>$HOME</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2691,23 +2695,6 @@
             <value>tg-grid1.uc.teragrid.org</value>
           </macro>
           <macro>
-            <name>gridftpHosts</name>
-            <value>tg-gridftp.iu.teragrid.org</value>
-            <value>gridftp.bigred.iu.teragrid.org</value>
-            <value>gridftp-co.ncsa.teragrid.org</value>
-            <value>gridftp-hg.ncsa.teragrid.org</value>
-            <value>gridftp-cu.ncsa.teragrid.org</value>
-            <value>gridftp-w.ncsa.teragrid.org</value>
-            <value>tg-gridftp.ornl.teragrid.org</value>
-            <value>tg-gridftp.bigben.psc.teragrid.org</value>
-            <value>tg-data.purdue.teragrid.org</value>
-            <value>tg-gridftp.sdsc.teragrid.org</value>
-            <value>ds-gridftp.sdsc.edu</value>
-            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
-            <value>tg-viz-gridftp.tacc.teragrid.org</value>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>mpiGLibKeys</name>
             <value>globus-mpicc64pthr-4.0.1-mpich-gm-intel81</value>
             <value>globus-mpicc64dbgpthr-4.0.1-mpich-gm-intel81</value>
@@ -2750,6 +2737,26 @@
           <macro>
             <name>post</name>
             <value>; rm -f ~/.soft.v3.$$*';</value>
+          </macro>
+          <macro>
+            <name>gridftpHosts</name>
+            <value>gridftp.bigred.iu.teragrid.org</value>
+            <value>gridftp-co.ncsa.teragrid.org</value>
+            <value>gridftp-hg.ncsa.teragrid.org</value>
+            <value>gridftp-cu.ncsa.teragrid.org</value>
+            <value>gridftp-w.ncsa.teragrid.org</value>
+            <value>tg-gridftp.ornl.teragrid.org</value>
+            <value>tg-gridftp.bigben.psc.teragrid.org</value>
+            <value>tg-data.purdue.teragrid.org</value>
+            <value>tg-gridftp.sdsc.teragrid.org</value>
+            <value>ds-gridftp.sdsc.edu</value>
+            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
+            <value>tg-viz-gridftp.tacc.teragrid.org</value>
+            <value>tg-gridftp.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>mpich_scratch</name>
+            <value>$TG_CLUSTER_SCRATCH</value>
           </macro>
         </macros>
       </resource>
@@ -3779,7 +3786,7 @@
               </arg>
               <arg>
                 <name>scratch</name>
-                <value>$TG_CLUSTER_SCRATCH</value>
+                <value>@mpich_scratch@</value>
               </arg>
             </args>
             <limits>
@@ -5642,50 +5649,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.java.sun.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>java-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>java>=@java-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.admin.softenv.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
             <args>
@@ -6588,11 +6551,55 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.java.sun.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-version</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>java>=@java-version@</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>119</version>
+      <version>121</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -7103,7 +7110,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>tg-wide-securemds</nickname>
+          <nickname>mds.teragrid.org:8448</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
             <cron>
@@ -7130,7 +7137,7 @@
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>gig</description>
-      <version>11</version>
+      <version>14</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -7398,7 +7405,7 @@
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>kericson@sdsc.edu</target>
+                <target>inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -7408,7 +7415,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>27</version>
+      <version>37</version>
     </suite>
     <suite>
       <seriesConfigs>
