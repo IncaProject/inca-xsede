@@ -13,7 +13,7 @@ spelling:
 
 clean:
 	rm -f $(DOC).dvi $(DOC).aux *.aux $(DOC).log $(DOC).bbl $(DOC).blg \
-	$(DOC).ps $(DOC).pdf \
+	$(DOC).ps $(DOC).pdf $(DOC).rtf $(DOC).fff \
 	$(DOC).lot $(DOC).lof $(DOC).toc
 	
 view: $(DOC).pdf
