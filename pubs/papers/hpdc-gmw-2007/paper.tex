@@ -61,6 +61,7 @@ Inca 2 deployments in production environments.
 
 %------------------------------------------------------------------------- 
 \Section{Introduction}
+\label{intro}
 
 % Standard "Grids are good" intro paragraph.  But are complex.  
 Grid systems provide unified and coherent access to distributed computing,
@@ -112,18 +113,17 @@ high-level monitoring needed to detect user problems, such as incompatible
 software versions, within the Grid infrastructure.
 
 % What user-level monitoring provides and why we think it is good
-User-level Grid monitoring approaches testing and performance measurement of
-the Grid infrastructure from the user perspective.  The goal is to act as an
-impartial test user of the Grid and detect problems with the infrastructure so
-they can be fixed before users notice them -- user complaints should not be
-the first indication of Grid failures.  In our view, the following guidelines 
-define user-level Grid monitoring: 
+User-level Grid monitoring is Grid infrastructure testing and performance measurement 
+from a generic, impartial user's perspective.  The goal of user-level monitoring is 
+to detect and fix Grid infrastructure problems before users notice them -- 
+user complaints should not be the first indication of Grid failures.  
+In our view, the following guidelines define user-level Grid monitoring: 
 
 \begin{itemize}
 
 \item In order to reflect regular user experiences, tests or performance
 measurements of the Grid infrastructure should be done from a standard user
-account.  It is important to not execute from a system administrator's account,
+account.  It is important not to execute from a system administrator's account,
 since it may have special privileges and use custom shell initialization files.
 
 \item Also in order to reflect regular user experiences, tests should be
@@ -134,6 +134,21 @@ environment, but they should be closely coordinated activities.
 
 \item Since Grids are dynamic, user-level tests or performance measurements
 should be automated and executed periodically.
+
+\item User-level tests and performance measurements should be written and
+maintained within an iterative refinement process.  An iterative process is
+required since Grids are dynamic and software environments change over time as
+packages are upgraded.  It is also difficult to write and deploy a test
+correctly the first time because of portability issues and incomplete user
+documentation.  For example, it may take some iterations to determine whether a
+detected failure is the result of a faulty test, user document, or Grid
+resource.  
+
+\item In order to determine overall Grid health, monitoring must be flexible
+enough to include many types of user-level tests and performance measurements.
+Typically all of the commands listed in the user documentation and/or at least
+one basic test for each software component of the Grid infrastructure is
+required.
 
 \item Tests or performance measurements that interact with Grid services
 require authentication and should be executed using a standard user GSI
@@ -152,35 +167,25 @@ available to users.
 
 \end{itemize}
 
-\noindent In our experience, writing and maintaining user-level tests and
-performance measurements is an iterative refinement process, since Grids are
-dynamic and the software environment changes over time as packages are
-upgraded.  It is also difficult to write and deploy a test perfectly the first
-time because of portability issues and incomplete user
-documentation.  For example, it may take a few iterations to determine whether
-detected failures are the result of a faulty test, fault user documentation,
-or a faulty system.  As such, this can be a labor-intensive activity, making it
-difficult to achieve full test coverage.  In practice, testing all the commands
-listed in the user documentation and/or having at least one basic test for each
-software component of the Grid infrastructure typically yields a representative
-set of tests.
-
 % Inca 1~\cite{inca1} first addressed user-level Grid monitoring but had
 % limitations.  We learned lessons from our TeraGrid deployment and
 % developed Inca 2.
-In 2003 SDSC, in partnership with TeraGrid, began developing Inca
+
+\noindent In 2003 SDSC, in partnership with TeraGrid, began developing Inca
 1~\cite{inca1} to implement a user-level Grid monitoring system with the above
 features and started using it to
 verify that CTSS was deployed consistently across all TeraGrid resources and
 to monitor its status.  At that time, the only available user-level Grid
 monitoring tools were the NCSA TestGrid script~\cite{ncsa-test} and
-GITS~\cite{gits}, scripts that ran a fixed number of Grid tests and formatted
+Grid Integration Test Script~\cite{gits}, both of which ran a fixed number of Grid tests and formatted
 results in HTML.  Although these tools were easy to install and produced
 useful information, they showed the view of the Grid from a single
-resource, lacked automation, and were not easily extensible.  The initial
+resource, lacked automation, and were not easily extensible.  
+
+The initial
 version of Inca was implemented as a client-server architecture.  It provided
-data collection, data storage (with limited archiving capabilities) that was
-accessible from a Web services interface, and data display though Web status
+data collection, data storage (accessible from a Web services interface and with 
+limited archiving capabilities), and data display though Web status
 pages.  Inca 1 was first deployed to TeraGrid in mid 2003 and released in late
 2003. After running Inca 1 for a year and a half on TeraGrid, we learned some
 valuable lessons and designed Inca 2, our current release.  Inca 2
@@ -202,13 +207,15 @@ Finally, we describe some future work and summarize the paper.
   
 % Implements user-level Grid monitoring and who it benefits
 Inca 2 is a system that provides user-level monitoring of Grid functionality
-and performance described in the previous section.  It was designed to be
+and performance.  It was designed to be
 general, flexible, scalable, and secure, in addition to being easy to deploy
 and maintain.  Inca benefits Grid operators who oversee the day-to-day
 operation of a Grid; system administrators who provide and manage resources;
-and users who run applications on a Grid.  The key features of Inca 2 are
+and users who run applications on a Grid.  Besides meeting the guidelines 
+described in Section~\ref{intro}, Inca 2 has additional features
 listed below.  A '*' after the feature description indicates it is a new
-feature of Inca 2; other items note improvements to Inca 1 features.
+feature of Inca 2; other items note improvements to Inca 1 features.  The 
+Inca system:
 
 \begin{enumerate}
 
@@ -316,7 +323,8 @@ detail, using the order of the steps above.
 \lstset{language=XML,keywordstyle={}} 
 \subfigure[]{\lstinputlisting{grid.globus.gramPing.out}}
 \caption{\label{pingReporter}(a) An Inca reporter that tests the user-level
-availability of a Globus GRAM server and (b) an output sample.}
+availability of a Globus GRAM server and (b) sample output from a Globus GRAM 
+reporter.}
 \end{figure}
 
 An Inca reporter is an executable program that tests or measures some aspect
@@ -343,7 +351,7 @@ directory, reporter path, and arguments;
 indicating whether the reporter was able to complete its test or measurement,
 and an optional error message.  
 \end{itemize} 
-\noindent Because the body of the report can be any XML sequence, it enables
+\noindent Because the body of a report can be any XML sequence, it enables
 reporters to express a wide variety of information.  Today, we have four
 standard body schemas to express software version information, software
 functionality or service tests results, usage information, and performance
@@ -353,26 +361,24 @@ An extensible set of Perl APIs is provided to handle much of the effort of
 writing reporters.  Figure~\ref{pingReporter} shows (a) an Inca reporter that
 pings a pre-WS Globus GRAM server and (b) its corresponding output when
 executed on a local machine.  The reporter uses two of the Perl APIs:
-Inca::Reporter::SimpleUnit (a subclass of Inca::Reporter) and
-Inca::Reporter::GridProxy.  The Inca::Reporter API provides convenience
+Inca::Reporter::SimpleUnit and
+Inca::Reporter::GridProxy (both subclasses of Inca::Reporter).  The Inca::Reporter API provides convenience
 functions for handling the required input arguments
-(lines~\ref{pingReporter}(a) 12-14 $\rightarrow$ lines \ref{pingReporter}(b)
+(lines~\ref{pingReporter}(a) 12-14 produces lines \ref{pingReporter}(b)
 10-31) and printing the Inca-compliant header and exit status XML tags
-(lines\ref{pingReporter}(a) 4-11, 24 $\rightarrow$ \ref{pingReporter}(b)
-1-9, 43-46).  It also includes some informational and debug logging functions,
-again similar to log4j.  The log output has been very useful to system
+(lines~\ref{pingReporter}(a) 3-10, 24 produces \ref{pingReporter}(b)
+1-9, 43-46).  It also includes some informational and debug logging functions
+similar to log4j.  The log output has been very useful to system
 administrators, who can view a summary of the test or benchmark that the
 reporter performed without reading the reporter source code.  Line
 \ref{pingReporter}(a) 15 shows a special log function, loggedCommand, that
 executes a system command (using a 30 second timeout) and logs to the 'system'
-level of the log XML output (lines \ref{pingReporter}(b) 32-36).  The subclass
+level of the log XML output (producing lines \ref{pingReporter}(b) 32-36).  The subclass
 Inca::Reporter::SimpleUnit is the API responsible for printing the simplest
-standard reporter body schema -- reporting software functionality or service
+standard reporter body schema to report software functionality or service
 tests results; it handles the printing of the small body XML
-(lines~\ref{pingReporter}(b) 39-41) using the functions unitSuccesss
-(line~\ref{pingReporter}(a) 22) or unitFailure (lines~\ref{pingReporter}(a)
-18, 20) depending on the output of system command.  Finally, the
-Inca::Reporter::GridProxy API (line~\ref{pingReporter}(a) 3) adds a proxy
+(lines~\ref{pingReporter}(b) 39-41).  Finally, the
+Inca::Reporter::GridProxy dependency (line~\ref{pingReporter}(a) 11) adds a proxy
 dependency to the reporter, telling the Inca system to download a
 short-term proxy before running this reporter (this is discussed further in
 Section~\ref{security}).  Most current reporters use the Perl APIs and consist
@@ -383,7 +389,7 @@ of fewer than 30 lines of code.
 % What are repositories and their key features
 Reporter repositories are collections that consist of reporters, required
 packages and libraries (including the Perl APIs described in the previous
-section), and a catalog file.  Repository contents are accessible using a URL
+section), and a catalog file.  Repository contents are usually accessible using a URL
 and designed to be shared across multiple Inca deployments.  The catalog file,
 patterned after APT's Packages.gz~\cite{apt}, allows the user to indicate
 reporter dependencies on CPAN modules, tar.gz packages, and other external
@@ -399,11 +405,11 @@ that updates to reporters work properly before committing them to a repository.
 The Inca team publishes a reporter repository that contains 143 reporters
 developed and tested for TeraGrid.  Most reporters are either version
 reporters that collect version information from a software package and
-serve as a most basic unit test, unit test reporters that run a more involved
-unit test, or performance benchmark reporters.  The unit and version
+serve as a most basic functionality test, unit test reporters that run a more involved
+functionality test, or performance benchmark reporters.  The unit and version
 reporters cover software such as Grid middleware, compilers, math libraries,
-data tools, and visualization tools.  The performance reporters available
-currently measure data transfer and execute Grid benchmarks as described in
+data tools, and visualization tools.  Current performance reporters
+measure data transfer and execute Grid benchmarks as described in
 Section~\ref{grasp}.
 
 \SubSection{Inca administration tool (incat)}
@@ -441,8 +447,8 @@ produce one report series when executed with host 'tg-login.sdsc.edu' and
 another report series when executed with 'dslogin.sdsc.edu'.  A set of related
 series can be grouped into \emph{suites} and shared across other Inca
 deployments, e.g.,  a Globus suite or a data transfer
-performance suite.  Suites can also be useful to determine interoperability
-among Grids or to determine whether an application's requirements are being
+performance suite.  Suites can also be useful in determining interoperability
+among Grids or whether an application's requirements are being
 fulfilled on a Grid.
 
 % Resource information organized to make it easier to maintain
@@ -460,10 +466,9 @@ have multiple values in which case the series will be executed on the resource
 once for each macro value.  The
 benefit of resource groups and macros is that when a reporter is executed on a
 resource multiple times with different input arguments, it can be represented
-succinctly.  Similarly, when a resource attribute is changed, it only has to be
-changed in one place and then every series that references it will be updated
-as well.  This makes the initial configuration and maintenance easier on the
-Inca administrator and less error prone.
+succinctly.  Similarly, when a resource attribute is changed it only has to be
+changed in one place for every series that references it to be updated.
+Inca's initial configuration and maintenance is therefore easier and less error prone.  
 
 \SubSection{Agent}
 \label{agent}
@@ -487,8 +492,8 @@ failed so it can be restarted.  For example, if a resource goes down for a
 planned maintenance, the agent will attempt to restart the reporter manager
 (by default every hour) until it succeeds.  The agent also maintains a local
 cache of reporters and their dependencies; it periodically checks the
-repositories for updates every 4 hours by default and automatically
-distributes them to the reporter managers (if the latest version is desired).  
+repositories for updates (every 4 hours by default) and automatically
+distributes them to the reporter managers if the latest version is desired.  
 The agent is implemented in Java. 
 
 \SubSection{Reporter Manager}
@@ -517,7 +522,8 @@ depot provides full archiving of reporter output and structures its schema
 around series and the minimization of redundant data, i.e., only stores
 changes from one report to another in a report series.  The depot also
 supports comparisons that are executed on a newly received report; 
-currently regular expression matching and version comparisons are 
+% need Jim's help with this sentence
+currently regular expression matching and greater than/less than comparisons are 
 supported.  Optionally, an Inca administrator can select to receive
 email notification when the result of the comparison changes.
 
@@ -541,16 +547,15 @@ writing their own JSP tags and pages.
 \label{security}
 
 To reduce the security risk of Inca, all Inca components communicate with each
-other using SSL by default.  Also, sensitive information such as passwords is
+other using SSL by default.  Sensitive information such as passwords is
 encrypted before being stored to disk on the agent.  To handle reporters that
-require a valid proxy credential to execute, the reporter manager will fetch a
+require a valid proxy credential to execute, the reporter manager fetches a
 short-term proxy from a MyProxy~\cite{myproxy} server (as specified by an Inca
 administrator) and then destroys the proxy once the reporter has completed.
-The goal is to only have short-term proxies on the machine for the times at
-which they are needed; this is more secure than maintaining a long-term
-credential on the resource and easier to manage.  Furthermore, the MyProxy
-authentication information is fetched from the agent each time a proxy
-credential is needed and then cleared from memory.
+MyProxy authentication information is fetched from the agent each time a proxy
+credential is needed and then cleared from memory.  Generating short-term 
+proxies only when needed is more secure than maintaining long-term
+credentials and is easier to manage.
 
 \SubSection{Scalability}
 
@@ -558,11 +563,11 @@ credential is needed and then cleared from memory.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\columnwidth]{vo.eps}
-  \caption{TeraGrid's Inca 2 Deployment.}
+  \caption{Coordinated Inca Deployments.}
   \label{tg_coord_fig}
 \end{figure}
 
-Inca was designed to distribute the control and storage workload among
+Inca was designed to distribute control and storage workload among
 multiple Inca components if needed.  For example, one depot could forward
 storage requests and queries to another depot to distribute its workload or to
 maintain a mirror for fault tolerance.  Figure~\ref{tg_coord_fig} shows a more
@@ -570,10 +575,11 @@ complex scenario where two Inca deployments coordinate with each other.  For
 example, application communities like GEON have their own Grid but also have
 access to resources on TeraGrid.   Two separate Inca deployments can result in
 duplicate testing. Instead, one Inca deployment can coordinate the execution
-of a suite with another deployment as shown in Figure~\ref{tg_coord_fig}.
-Grid B that has its own resources but also has access to resources in Grid A.
+of a suite with another deployment.
+Figure~\ref{tg_coord_fig} shows this type of coordinated deployment, where Grid B 
+has its own resources but also has access to resources in Grid A.
 When an Inca administrator submits a suite to Grid B, the Inca agent running
-on Grid B will determine which reporters run from Grid A resources and forward
+on Grid B will determine which reporters run on Grid A resources and forward
 them as a suite request to Grid A's agent.  If Grid B has permission to submit
 suites, Grid A's agent will execute the suite and configure its depot to
 forwards results back to Grid B's depot.  
@@ -594,21 +600,23 @@ resources.  CTSS version 3 (CTSSv3) is available from all TeraGrid compute
 resources and contains approximately 30 software packages that provide
 Grid tools and services (e.g., Globus, GSI-SSH, MyProxy), data management
 tools (e.g., SRB, HDF5), and applications tools (e.g., MPICH, GCC).
-Inca was originally
+
+To provide user-level monitoring of CTSSv3, Inca was originally
 deployed on TeraGrid in 2003 using Inca 1 and was transitioned to Inca 2 in
 November 2006.  In addition to CTSSv3 monitoring, Inca is now also being used
 to collect job usage information from Globus 2 GRAM logs and to detect expired
 host and CA certificates and CA CRLs. 
 
 % Usage of Inca - Describe reporters, configuration, and deployment.  Figure.
-To provide user-level monitoring of CTSSv3, a number of version and unit
-test reporters were developed to test the software packages in CTSS.
+A number of version and unit test reporters were developed to test the software packages in CTSS.
 Currently, there are 56 such reporters executing an average of 109 series on
 each of TeraGrid's 18 resources.  They include 48 all-to-all tests (GSI-SSH,
 GRAM, and GridFTP), 20 Grid-related tests, 28 data-related tests, 30
-application tool-related tests, and 2 security-related tests.  The TeraGrid
+application tool-related tests, and 2 security-related tests.  
+
+The TeraGrid
 Inca configuration makes extensive use of macros and resource groups and
-currently uses 80 series and 82 resource macros to manage the total of 1928
+currently uses 80 series and 82 resource macros to manage the total of 1,928
 series executing on TeraGrid resources.
 Figure~\ref{tg_deploy_fig} illustrates TeraGrid's Inca 2 deployment
 configuration.  The
@@ -659,16 +667,15 @@ Grid nodes and measures the transfer time at each step.  The gather probe
 transfers a 100 MB file from some number of source nodes to a compute node,
 runs a computation through the job queue on the compute resource, and then
 transfers a 100 MB file to a single destination node.  The transfer of the
-first set of files is executed in parallel.  Once again all transfers times, as
-well as compute and queue times are recorded.
+first set of files is executed in parallel.  Transfer, compute, and queue times are recorded.
 
-The GrASP probes yield useful data on the performance and reliability of the
-Grid infrastructure that they are run on.  As such, data must be gathered 
+The GrASP probes yield data about Grid infrastructure performance and reliability.
+In order to be most useful, probe data must be gathered 
 repeatedly over time and archived.
 In addition to storing the performance measurements,
 any error messages encountered must be stored as well.    
 In order to
-fulfill the last two requirements, the GrASP probes were modified
+gather historical data, the GrASP probes were modified
 to follow the reporter specifications and deployed using Inca.
 Porting the original code to follow the reporter specifications proved to be
 trivial.  A number of scripts were then written to graph and analyze the GrASP
@@ -682,16 +689,19 @@ data and related error messages stored in the Inca depot.
 \end{figure}
 
 Using Inca, GrASP was deployed on TeraGrid and GEON for a period of over 6
-months.  The data gathered during that period yielded a paper~\cite{grasp2}.
-One result was that a recurring Globus 2 bug was identified as shown in Figure ~\ref{errorHist_fig}.  The figure shows the types (shortened) and number of system errors that were detected while executing 
+months~\cite{grasp2}.  During this deployment, the execution time of Preco, 
+a Grid application run on the TeraGrid, was predicted within 12\% (excluding setup and cleanup time).
+A recurring Globus 2 bug was also identified as shown in Figure ~\ref{errorHist_fig}.  The figure shows the frequency and types (shortened) of 
+system errors that were detected while executing 
 GrASP on TeraGrid in 2005. The highest occurring
 error was number 9, Assertion GLOBUS FALSE, which was the result of a bug in
-the Globus 2 GRAM server.  Furthermore, the execution time of Preco, a Grid application run on the TeraGrid, was predicted within 12\% (excluding setup and cleanup time).
+the Globus 2 GRAM server.  
 
 \SubSection{Other Uses}
 
 Other Inca users include the European DEISA Grid and the UK National Grid
-Service (NGS).  Similar to TeraGrid, DEISA uses Inca to verify their Common
+Service (NGS).  DEISA and NGS began using Inca in late 2004 and early 2005 respectively.  
+Similar to TeraGrid, DEISA uses Inca to verify their Common
 Production Environment (DCPE) across their 11 heterogeneous resources.  They
 currently have 40 version reporters to verify each of the packages included in
 DCPE.  In addition, they have unit reporters for the DEISA Applications Test
@@ -702,17 +712,17 @@ Inca 2 in the next few months.
 
 NGS currently has Inca 2 deployed on 8 resources to verify their Grid services 
 and compilers.  They have wrapped the GITS~\cite{gits} tests using a new
-API developed by the GITS developer.  The GITS reporters include 17 tests 
-that verify Globus and GSI-SSH functionality such as executing small job
-submissions and data transfers.  NGS also has 12 tests for their compilers and
+API developed by the GITS developer.  The GITS reporters include 17 tests, 
+such as small job submissions and data transfers, that verify Globus and GSI-SSH functionality.
+NGS also has 12 tests for their compilers and
 utilize 2 security reporters from the Inca repository.
 
 %------------------------------------------------------------------------- 
 \Section{Future Work}
 
 In order to improve problem detection and diagnosis for system administrators,
-we plan to enhance the data consumer with graph rendering and statistical
-analysis capabilities.  This will improve troubleshooting capabilities by
+we plan to add graph rendering and statistical
+analysis capabilities to the Inca data consumer.  This will improve troubleshooting capabilities by
 allowing errors to be understood in a historical context.  It will also enable
 summary displays analogous to those generated by Web page statistics packages
 like Webalizer~\cite{webalizer} that provide a number of useful "Top"
@@ -721,14 +731,14 @@ exact types of statistics and graphs that will prove to be most useful.  Our
 goal is to offer a default set of statistics and graphs that can be used out
 of the box and provide the capability to add others.
 
-Also in order to make it easier for system administrators to troubleshoot
-problems, we plan to enhance Inca with a knowledge base that can be used to
+Also to aid system administrator troubleshooting,
+we plan to enhance Inca with a knowledge base that can be used to
 suggest solutions to problems (or point to known bugs if there is no solution
 available).  The knowledge base would be populated by solutions provided by
-system administrators, and the content would be self-moderated in order to
+system administrators -- the content would be self-moderated in order to
 improve its quality (by voting or adding comments to each other's
-contributions).  This knowledge base represents a potentially vital resource
-for system administrators and provides a forum to share each other's
+contributions).  A knowledge base could provide a potentially vital resource
+for system administrators and offer a forum for sharing
 invaluable experience and skills.   
 
 Finally, we plan to improve the fault tolerance of Inca by enhancing the
