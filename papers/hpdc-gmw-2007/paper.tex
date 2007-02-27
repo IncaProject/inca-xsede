@@ -113,7 +113,7 @@ high-level monitoring needed to detect user problems, such as incompatible
 software versions, within the Grid infrastructure.
 
 % What user-level monitoring provides and why we think it is good
-User-level Grid monitoring is Grid infrastructure testing and performance measurement 
+User-level Grid monitoring provides Grid infrastructure testing and performance measurement 
 from a generic, impartial user's perspective.  The goal of user-level monitoring is 
 to detect and fix Grid infrastructure problems before users notice them -- 
 user complaints should not be the first indication of Grid failures.  
@@ -177,7 +177,7 @@ features and started using it to
 verify that CTSS was deployed consistently across all TeraGrid resources and
 to monitor its status.  At that time, the only available user-level Grid
 monitoring tools were the NCSA TestGrid script~\cite{ncsa-test} and
-Grid Integration Test Script~\cite{gits}, both of which ran a fixed number of Grid tests and formatted
+Grid Integration Test Script (GITS)~\cite{gits}, both of which ran a fixed number of Grid tests and formatted
 results in HTML.  Although these tools were easy to install and produced
 useful information, they showed the view of the Grid from a single
 resource, lacked automation, and were not easily extensible.  
@@ -361,8 +361,8 @@ An extensible set of Perl APIs is provided to handle much of the effort of
 writing reporters.  Figure~\ref{pingReporter} shows (a) an Inca reporter that
 pings a pre-WS Globus GRAM server and (b) its corresponding output when
 executed on a local machine.  The reporter uses two of the Perl APIs:
-Inca::Reporter::SimpleUnit and
-Inca::Reporter::GridProxy (both subclasses of Inca::Reporter).  The Inca::Reporter API provides convenience
+Inca::Reporter::SimpleUnit (a subclass of Inca::Reporter) and
+Inca::Reporter::GridProxy.  The Inca::Reporter API provides convenience
 functions for handling the required input arguments
 (lines~\ref{pingReporter}(a) 12-14 produces lines \ref{pingReporter}(b)
 10-31) and printing the Inca-compliant header and exit status XML tags
@@ -379,7 +379,7 @@ standard reporter body schema to report software functionality or service
 tests results; it handles the printing of the small body XML
 (lines~\ref{pingReporter}(b) 39-41).  Finally, the
 Inca::Reporter::GridProxy dependency (line~\ref{pingReporter}(a) 11) adds a proxy
-dependency to the reporter, telling the Inca system to download a
+dependency to the reporter, telling Inca to download a
 short-term proxy before running this reporter (this is discussed further in
 Section~\ref{security}).  Most current reporters use the Perl APIs and consist
 of fewer than 30 lines of code.
@@ -389,7 +389,7 @@ of fewer than 30 lines of code.
 % What are repositories and their key features
 Reporter repositories are collections that consist of reporters, required
 packages and libraries (including the Perl APIs described in the previous
-section), and a catalog file.  Repository contents are usually accessible using a URL
+section), and a catalog file.  Repository contents are accessible using a URL
 and designed to be shared across multiple Inca deployments.  The catalog file,
 patterned after APT's Packages.gz~\cite{apt}, allows the user to indicate
 reporter dependencies on CPAN modules, tar.gz packages, and other external
@@ -468,7 +468,7 @@ benefit of resource groups and macros is that when a reporter is executed on a
 resource multiple times with different input arguments, it can be represented
 succinctly.  Similarly, when a resource attribute is changed it only has to be
 changed in one place for every series that references it to be updated.
-Inca's initial configuration and maintenance is therefore easier and less error prone.  
+Initial Inca configuration and maintenance is therefore easier and less error prone.  
 
 \SubSection{Agent}
 \label{agent}
