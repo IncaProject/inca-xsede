@@ -582,7 +582,8 @@ When an Inca administrator submits a suite to Grid B, the Inca agent running
 on Grid B will determine which reporters run on Grid A resources and forward
 them as a suite request to Grid A's agent.  If Grid B has permission to submit
 suites, Grid A's agent will execute the suite and configure its depot to
-forwards results back to Grid B's depot.  
+forwards results back to Grid B's depot.  Forwarding is not yet implemented 
+in Inca 2.
 
 %------------------------------------------------------------------------- 
 
@@ -710,8 +711,7 @@ library, some numerical libraries, OpenMP jobs, CORBA middleware, and a third
 party application.  DEISA is currently using Inca 1 and will transition to
 Inca 2 in the next few months.
 
-NGS currently has Inca 2 deployed on 8 resources to verify their Grid services 
-and compilers.  They have wrapped the GITS~\cite{gits} tests using a new
+NGS currently has Inca 2 deployed on four resources to verify their Grid services (on eight sites) and compilers.  They have wrapped the GITS~\cite{gits} tests using a new
 API developed by the GITS developer.  The GITS reporters include 17 tests, 
 such as small job submissions and data transfers, that verify Globus and GSI-SSH functionality.
 NGS also has 12 tests for their compilers and
@@ -751,7 +751,33 @@ failure.
 %------------------------------------------------------------------------- 
 \Section{Summary}
 
-~\newpage
+%1.  Motivate and differentiate the Grid monitoring Inca does 2. Describe Inca
+%2 design and its benefits 3. Illustrate that Inca 2 design is mature and
+%being used in production by several Grids 4. Be different from Inca 1 paper
+The goal of user-level Grid monitoring is to test and measure the Grid
+infrastructure from an impartial user perspective and detect problems before
+users notice them.  Inca 2 implements such a user-level Grid monitoring system
+and provides a number of new and improved features over our first version,
+Inca 1.  The architecture and features of Inca 2 enable an Inca administrator
+to easily write and deploy tests and performance measurements to Grid
+resources and maintain them in a changing Grid environment.  The storage,
+archiving, and querying capabilities also enable in-depth analysis of Grid
+errors and performance now in a historical context, which will benefit Grid
+operators and system administrators.  Inca 2 also provides a number of
+security features such as short-term proxy management and supports
+scalability.  A production version of Inca 2 was released in February 2007 and
+has been used in production environments to verify the common user environment
+of TeraGrid and to execute and collect data for a set of Grid benchmarks on
+both TeraGrid and GEON.  Future enhancements of Inca 2 will improve its fault
+tolerance and enable more in-depth analysis of the overall Grid health and
+behavior.  They should also make it easier to resolve, in addition to detect
+errors and understand them in a historical context.  The features that Inca
+provides and its proposed enhancements should improve the stability of the
+Grid infrastructure it monitors, ultimately improving the productivity of
+scientists who conduct research on a Grid. 
+
+%------------------------------------------------------------------------- 
+\Section{Acknowledgements}
 
 %------------------------------------------------------------------------- 
 \bibliographystyle{latex8}
