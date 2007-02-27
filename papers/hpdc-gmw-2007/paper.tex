@@ -637,6 +637,7 @@ resource are shown in the table body rows.
   \label{status_page_fig}
 \end{figure}
 
+
 \SubSection{GrASP}
 \label{grasp}
 
@@ -645,48 +646,42 @@ resource are shown in the table body rows.
 % Describe GrASP probes
 The Grid Assessment Probes (GrASP)~\cite{grasp} are designed to 
 serve as simple grid application kernel exemplars as well as a 
-set of diagnostic tools. They test and measure performance of 
-basic grid functions including file transfers, remote execution, 
-and Grid Information Services response.  There are two basic probes: i.  The
-circle probe takes a 100 MB file and passes it in a ring through a given set
-of grid nodes, measuring transfer time at each step.  ii.  The gather probe
+set of diagnostic tools. They test and measure the performance of 
+basic Grid functions including file transfers, remote execution, 
+and information services queries.  There are two basic probes: circle and 
+gather.  The circle probe transfers a 100 MB file around a ring of
+Grid nodes and measures the transfer time at each step.  The gather probe
 transfers a 100 MB file from some number of source nodes to a compute node,
-runs a computation through the job queue on the compute resource and then
+runs a computation through the job queue on the compute resource, and then
 transfers a 100 MB file to a single destination node.  The transfer of the
 first set of files is executed in parallel.  Once again all tranfers times, as
 well as compute and queue times are recorded.
 
 The GrASP probes yield useful data on the performance and reliability of the
-grid infrastructure that they are run on.  In order for the data gathered to
-be useful, it must gathered repeatedly over time and stored in a manner
-appropriate for querying.  In addition to storing the measurements available
-we also required that any error messages encountered be stored as well.    
+Grid infrastructure that they are run on.  As such, data must be gathered 
+repeatedly over time and archived.
+In addition to storing the performance measurements,
+any error messages encountered must be stored as well.    
 In order to
-fulfill the last 2 requirements we deployed the GrASP probes as reporters
-within the Inca framework.
-
-The GrASP probes have been written to follow the specifications of an Inca
-reporter.  Porting the original code to follow the specifications proved to be
-trivial.  Inca was also used to store all of the GrASP data and related error
-messages. 
+fulfill the last two requirements, the GrASP probes were modified
+to follow the reporter specifications and deployed using Inca.
+Porting the original code to follow the reporter specifications proved to be
+trivial.  A number of scripts were then written to graph and analyze the GrASP
+data and related error messages stored in the Inca depot.  
 
 \begin{figure}[tbp]
   \centering
   \mbox{\epsfig{file=errorHistogramTG.eps, width=\columnwidth}}
-  \caption{\label{errorHist_fig} Histogram of Error Messages Encountered.}
+  \caption{\label{errorHist_fig} Number and types of errors collected by
+  GrASP benchmark execution over a six-month period on TeraGrid.}
 \end{figure}
 
-\subsubsection{Results}
-
-GrASP, using Inca, was deployed on TeraGrid and Geon for a period of over 6
-months.  The data gathered during that period yielded a paper, Measuring the
-Performance and Reliability of Production Computational Grids ~\cite{grasp2}.
-By the running of the GrASP probes over such an extended period of time
-we were able to identify a recurring Globus 2 bug.  Figure ~\ref{errorHist_fig} shows the types (shortened) and number of system errors that were detected while executing the
-benchmark during the GrASP deployment on TeraGrid in 2005. The highest occurring
+Using Inca, GrASP was deployed on TeraGrid and GEON for a period of over 6
+months.  The data gathered during that period yielded a paper~\cite{grasp2}.
+One result was that a recurring Globus 2 bug was identified as shown in Figure ~\ref{errorHist_fig}.  The figure shows the types (shortened) and number of system errors that were detected while executing 
+GrASP on TeraGrid in 2005. The highest occurring
 error was number 9, Assertion GLOBUS FALSE, which was the result of a bug in
-the Globus 2 GRAM server.  We were also able to predict the
-execution time of Preco, a Grid application run on the TeraGrid within 12\% (excluding setup and cleanup time).
+the Globus 2 GRAM server.  Furthermore, the execution time of Preco, a Grid application run on the TeraGrid, was predicted within 12\% (excluding setup and cleanup time).
 
 \SubSection{Other Uses}
 
