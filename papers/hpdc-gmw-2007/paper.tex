@@ -67,7 +67,7 @@ Inca 2 deployments in production environments.
 Grid systems provide unified and coherent access to distributed computing,
 data storage and analysis, instruments, and other resources.  These systems
 require the careful coordination of software packages, services, and
-configurations across multiple, heterogeneous resources.  The TeraGrid
+configurations across multiple, potentially heterogeneous, resources.  The TeraGrid
 project~\cite{teragrid}, for example, manages the coordination of software and
 services by deploying and monitoring a common user environment across
 distributed, heterogeneous resources. The organization of TeraGrid software
@@ -96,7 +96,7 @@ model.  Otherwise, inconsistencies between the resources arise that either
 inconvenience the user or prevent them from using a particular resource
 altogether.  A second challenge is that failures will occur over
 time in the Grid services due to network or system failures, software
-misconfiguration, or software bugs.  In order to address these challenges,
+misconfiguration, or software bugs. 
 Grid monitoring can be used to detect such problems, leading to a more
 stable and dependable Grid infrastructure.
 
@@ -124,7 +124,7 @@ In our view, the following guidelines define user-level Grid monitoring:
 \item In order to reflect regular user experiences, tests or performance
 measurements of the Grid infrastructure should be done from a standard user
 account.  It is important not to execute from a system administrator's account,
-since it may have special privileges and use custom shell initialization files.
+because it may have special privileges and use custom shell initialization files.
 
 \item Also in order to reflect regular user experiences, tests should be
 written and configured using information directly from user documentation
@@ -137,7 +137,7 @@ should be automated and executed periodically.
 
 \item User-level tests and performance measurements should be written and
 maintained within an iterative refinement process.  An iterative process is
-required since Grids are dynamic and software environments change over time as
+required because Grids are dynamic and software environments change over time as
 packages are upgraded.  It is also difficult to write and deploy a test
 correctly the first time because of portability issues and incomplete user
 documentation.  For example, it may take some iterations to determine whether a
@@ -424,7 +424,7 @@ Section~\ref{grasp}.
 % Incat is interface Inca admin uses to configure reporters to resources
 % introduce series here; why suites are important It is designed to make the
 % effort of configuring and maintaining 100s series on resources easilty
-The Inca administrative tool (incat) is a GUI implemented in Java Swing that an
+The Inca administrative tool (incat) is a GUI, implemented using Java Swing, which an
 Inca administrator uses to configure user-level Grid monitoring on their
 resources.  Incat allows an Inca administrator to choose which resources to
 monitor and which reporters to deploy to those resources.  The configuration
@@ -460,7 +460,7 @@ process of executing the same series on multiple resources.  Furthermore,
 attributes called \emph{macros} can be attached to resource groups for
 reference in series configuration (i.e., inputs
 and runtime environment).  For example, it is useful to have a macro called
-'jobmanager' since the batch system is likely to differ from one machine to
+'jobmanager' because the batch system is likely to differ from one machine to
 the next and multiple tests will require its value.  A resource macro can also
 have multiple values in which case the series will be executed on the resource
 once for each macro value.  The
@@ -494,7 +494,7 @@ planned maintenance, the agent will attempt to restart the reporter manager
 cache of reporters and their dependencies; it periodically checks the
 repositories for updates (every 4 hours by default) and automatically
 distributes them to the reporter managers if the latest version is desired.  
-The agent is implemented in Java. 
+The agent is implemented using Java. 
 
 \SubSection{Reporter Manager}
 \label{rm}
@@ -509,7 +509,7 @@ reporter manager monitors reporter system usage using the system command
 \texttt{ps} and enforces limits (e.g., wall clock time, CPU time, memory).
 System usage information is sent to the depot with each report. 
 
-The reporter manager is implemented in Perl since Perl is available by default
+The reporter manager is implemented using Perl because Perl is available by default
 on UNIX machines.  The cron scheduling is implemented using the CPAN Perl
 module Schedule::Cron.  
 
@@ -517,8 +517,7 @@ module Schedule::Cron.
 
 The Inca depot server is responsible for storing configuration information and
 the data produced by reporters. The depot uses a relational database via
-Hibernate~\cite{hibernate} so that it can use a variety of databases.  The
-depot provides full archiving of reporter output and structures its schema
+Hibernate~\cite{hibernate} enabling the use of a variety of database backends.  The depot provides full archiving of reporter output and structures its schema
 around series and the minimization of redundant data, i.e., only stores
 changes from one report to another in a report series.  The depot also
 supports comparisons that are executed on a newly received report; 
@@ -530,7 +529,7 @@ email notification when the result of the comparison changes.
 Data can be queried using SQL queries. Predefined queries exist to return the
 latest report instances of a suite, a single report instance, or a report
 history.  A Web services interface is also available to provide
-unauthenticated query access to data.  The depot is implemented in Java.
+unauthenticated query access to data.  The depot is implemented using Java.
 
 \SubSection{Data Consumer}
 
