@@ -21,6 +21,16 @@
 % takes away page numbers
 \pagestyle{empty}
 
+% some unnecessary whitespace still -- these suggestions from
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
+\renewcommand\dblfloatpagefraction{.95}
+\renewcommand\dbltopfraction{.95}
+\renewcommand\bottomfraction{.95}
+\renewcommand\textfraction{.05}   
+\setcounter{totalnumber}{50}
+\setcounter{dbltopnumber}{50}
+\setcounter{bottomnumber}{50}
+
 %------------------------------------------------------------------------- 
 \begin{document}
 
@@ -204,6 +214,12 @@ Finally, we describe some future work and summarize the paper.
 %------------------------------------------------------------------------- 
 \Section{Inca 2 Features}
   
+\begin{figure*}[tbp]
+  \centering
+  \includegraphics[width=.6\textwidth]{arch.eps}
+  \caption{\label{arch_fig} Inca architecture.}
+\end{figure*}
+
 % Implements user-level Grid monitoring and who it benefits
 Inca 2 is a system that provides user-level monitoring of Grid functionality
 and performance.  It was designed to be
@@ -252,12 +268,6 @@ these features.
 
 %------------------------------------------------------------------------- 
 \Section{Inca 2 Architecture}
-
-\begin{figure*}[tbp]
-  \centering
-  \mbox{\epsfig{file=arch.eps, width=.7\textwidth}}
-  \caption{\label{arch_fig} Inca architecture.}
-\end{figure*}
 
 % overview description of components
 Figure~\ref{arch_fig} shows the architecture of Inca 2.
@@ -415,7 +425,7 @@ Section~\ref{grasp}.
 
 \begin{figure*}[tbp]
   \centering
-  \mbox{\epsfig{file=incat.eps, width=\textwidth}}
+  \mbox{\epsfig{file=incat.eps, width=.9\textwidth}}
   \caption{\label{incat_fig} Screenshot of incat that shows the reporters
   and their attributes available from the provided reporter repository.}
 \end{figure*}
@@ -558,12 +568,11 @@ credentials and is easier to manage.
 \SubSection{Scalability}
 
 % Should illustrate that we've thought about how Inca can scale
-\begin{figure}[tbp]
+\begin{figure*}[tbp]
   \centering
-  \includegraphics[width=\columnwidth]{vo.eps}
-  \caption{Coordinated Inca Deployments.}
-  \label{tg_coord_fig}
-\end{figure}
+  \includegraphics[width=.6\textwidth]{vo.eps}
+  \caption{\label{tg_coord_fig} Coordinated Inca deployments.}
+\end{figure*}
 
 Inca was designed to distribute control and storage workload among
 multiple Inca components if needed.  For example, one depot could forward
@@ -589,6 +598,25 @@ in Inca 2.
 \label{usecases}
 
 \SubSection{TeraGrid}
+
+%\begin{figure}[tbp]
+%  \centering
+%  \includegraphics[width=.8\columnwidth]{tg-deploy.eps}
+%  \caption{\label{tg_deploy_fig} TeraGrid's Inca 2 Deployment.}
+%\end{figure}
+%\begin{figure}[tbp]
+%  \centering
+%  \includegraphics[width=.4\textwidth]{status-page.eps}
+%  \caption{\label{status_page_fig} Portion of the TeraGrid CTSSv3 detailed status page with the resources anonymized.}
+%\end{figure}
+
+\begin{figure*}[tbp]
+\subfigure[]{\includegraphics[width=.8\columnwidth]{tg-deploy.eps}}
+\subfigure[]{\includegraphics[width=.6\textwidth]{status-page.eps}}
+  \caption{\label{tg_deploy_fig}\label{status_page_fig} (a) TeraGrid's Inca 2
+  deployment and (b) portion of the TeraGrid CTSSv3 detailed status page with
+  the resources anonymized.}
+\end{figure*}
 
 % Description and Requirements - Describe CTSS
 Requirements for user-level Grid monitoring on TeraGrid initially included the
@@ -623,13 +651,6 @@ agent, depot and consumer components are hosted at SDSC on
 sapa.sdsc.edu.  A reporter repository for TeraGrid is also hosted
 at SDSC on inca.sdsc.edu.  
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\columnwidth]{tg-deploy.eps}
-  \caption{TeraGrid's Inca 2 Deployment.}
-  \label{tg_deploy_fig}
-\end{figure}
-
 % Results - Consumer view of CTSS, security, etc.
 TeraGrid currently has six status pages to display the Inca monitoring
 information: a summary of CTSSv3 test failures, a detailed grid of CTSSv3 test
@@ -642,15 +663,6 @@ CTSSv3 test results
 page.  CTSSv3 software packages are listed along the column and TeraGrid
 resources (anonymized) in the header rows.  Test results for each package and
 resource are shown in the table body rows.
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=\columnwidth]{status-page.eps}
-  \caption{Portion of the TeraGrid CTSSv3 detailed status page with the
-  resources anonymized.}
-  \label{status_page_fig}
-\end{figure}
-
 
 \SubSection{GrASP}
 \label{grasp}
@@ -680,12 +692,12 @@ Porting the original code to follow the reporter specifications proved to be
 trivial.  A number of scripts were then written to graph and analyze the GrASP
 data and related error messages stored in the Inca depot.  
 
-\begin{figure}[tbp]
+\begin{figure*}[tbp]
   \centering
-  \mbox{\epsfig{file=errorHistogramTG.eps, width=\columnwidth}}
+  \mbox{\epsfig{file=errorHistogramTG.eps, width=.6\textwidth}}
   \caption{\label{errorHist_fig} Number and types of errors collected by
   GrASP benchmark execution over a six-month period on TeraGrid.}
-\end{figure}
+\end{figure*}
 
 Using Inca, GrASP was deployed on TeraGrid and GEON for a period of over 6
 months~\cite{grasp2}.  During this deployment, the execution time of Preco, 
