@@ -90,7 +90,7 @@ can transfer a terabyte of data in under 10 minutes.
 % stakeholders.   Monitoring is needed.
 Providing and maintaining a stable infrastructure for these complex 
 Grid systems poses challenges for both administrators who build and
-maintain Grid resources and scientists who use them.  First, system
+maintain Grid resources and scientists who use them.  System
 administration is distributed across multiple administrative domains 
 requiring a significant amount of coordination.  This is typically performed by
 a group of Grid administrators or operators who consider local site policies and
@@ -126,23 +126,30 @@ User-level Grid monitoring provides Grid infrastructure testing and performance 
 from a generic, impartial user's perspective.  The goal of user-level monitoring is 
 to detect and fix Grid infrastructure problems before users notice them -- 
 user complaints should not be the first indication of Grid failures.  
-In our view, the following guidelines define user-level Grid monitoring: 
+In our view, the following guidelines define user-level Grid monitoring:
 
 \begin{itemize}
 
-\item In order to reflect regular user experiences, tests or performance
-measurements of the Grid infrastructure should be done from a standard user
-account.  It is important not to execute from a system administrator's account,
+\item User-level tests or performance measurements of the Grid infrastructure
+should be run from a standard user
+account in order to reflect regular user experiences.  It is important not to execute from a system administrator's account,
 because it may have special privileges and use custom shell initialization files.
 
-\item Also in order to reflect regular user experiences, tests should be
+\item User-level tests or performance measurements that interact with Grid services
+require authentication and should be executed using a standard user GSI
+credential that is mapped to the standard user account.  
+
+\item User-level tests should be
 written and configured using information directly from user documentation
-(e.g., hostnames, ports, pathnames, etc.).  This may not always be possible
+(e.g., hostnames, ports, pathnames, etc.) to emulate a regular user.  
+This may not always be possible
 when documentation and testing are done in parallel in a pre-production
 environment, but they should be closely coordinated activities. 
 
-\item Since Grids are dynamic, user-level tests or performance measurements
-should be automated and executed periodically.
+\item The configuration of user-level tests or performance measurements should be managed
+centrally in order to ensure consistent testing of the resources, rather than
+by system administrators who may not use the same information that is
+available to users.
 
 \item User-level tests and performance measurements should be easy to update
 and maintain as they are often revised due to Grid infrastructure upgrades.
@@ -155,20 +162,14 @@ from a faulty test, user documentation, or Grid resource.
 Grid infrastructure.  Testing documented user commands and individual Grid
 software components provides a representative indication of Grid status.  
 
-\item Tests or performance measurements that interact with Grid services
-require authentication and should be executed using a standard user GSI
-credential that is mapped to the standard user account.  
+\item Since Grids are dynamic, user-level tests or performance measurements
+should be automated and executed periodically.
 
-\item Tests or performance measurements should be executed locally on all Grid
+\item User-level tests or performance measurements should be executed locally on all Grid
 resources when appropriate so that all Grid access points available to users
 are verified.  Similarly, it is important to execute some tests all-to-all
 in order to detect site-to-site configuration errors such as authentication
 problems.
-
-\item The configuration of tests or performance measurements should be managed
-centrally in order to ensure consistent testing of the resources, rather than
-by system administrators who may not use the same information that is
-available to users.
 
 \end{itemize}
 
@@ -178,14 +179,14 @@ available to users.
 
 \noindent In 2003 SDSC, in partnership with TeraGrid, began developing Inca
 1~\cite{inca1} to implement a user-level Grid monitoring system that followed
-the above guidelines.  At that time, the only available user-level Grid
+the defined guidelines.  At that time, the only available user-level Grid
 monitoring tools were the NCSA TestGrid script~\cite{ncsa-test} and
 Grid Integration Test Script (GITS)~\cite{gits}, both of which ran a fixed number of Grid tests and formatted
 results in HTML.  Although these tools were easy to install and produced
 useful information, they showed the view of the Grid from a single
 resource, lacked automation, and were not easily extensible.  Inca 1 provided
-the means to verify that CTSS was deployed consistently across all TeraGrid
-resources and to monitor its status.
+the means to verify the common user environment was deployed consistently across all TeraGrid
+resources and monitored its status.
 
 The initial
 version of Inca was implemented as a client-server architecture.  It provided
@@ -197,8 +198,8 @@ valuable lessons that have been incorporated into the design of Inca 2, our
 current release.  Inca 2
 contains a number of substantial improvements over Inca 1 with respect to
 security, installation and maintenance, and storage capabilities.  Inca 2 has
-been running on TeraGrid since November 2006, and in February 2007 a production
-version of the software was released.  Currently, seven other Grids in the
+been running on TeraGrid since November 2006 and a production
+version of the software was released in February 2007.  Currently, seven other Grids in the
 U.S., Europe, and Australia use Inca 2.  
 
 % This motivated our development of a new version of Inca.
@@ -382,7 +383,7 @@ tests results; it handles the printing of the small body XML
 (lines~\ref{pingReporter}(b) 39-41).  Finally, the
 Inca::Reporter::GridProxy dependency (line~\ref{pingReporter}(a) 11) adds a proxy
 dependency to the reporter, telling Inca to download a
-short-term proxy before running this reporter. (As discussed in
+short-term proxy before running this reporter (as discussed in
 Section~\ref{security}).  Most current reporters use the Perl APIs and consist
 of fewer than 30 lines of code.
 
@@ -508,7 +509,7 @@ a wide variety of UNIX systems.
 The Inca depot server is responsible for storing configuration information and
 the data produced by reporters. The depot uses a relational database via
 Hibernate~\cite{hibernate}, enabling the use of a variety of database backends.
-The depot provides full archiving of reporter output, and the DB schema is
+The depot provides full archiving of reporter output, and the database schema is
 tuned to minimize redundant data.  Inca administrators can specify comparison
 tests to run on reports as they are received, and the depot will send email
 when the results of these comparisons change.  This provides the administrator
@@ -769,9 +770,13 @@ scientists who conduct research on a Grid.
 %------------------------------------------------------------------------- 
 \Section{Acknowledgements}
 
+This work was supported by the following NSF grants:  Cooperative Agreement
+Award \#0503944 SCI: TeraGrid Resource Partners,
+
 %------------------------------------------------------------------------- 
 \bibliographystyle{latex8}
 \bibliography{paper}
 
 \end{document}
+
 
