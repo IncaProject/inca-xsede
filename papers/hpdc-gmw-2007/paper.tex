@@ -469,27 +469,24 @@ multiple similar series.
 \label{agent}
 
 The Inca agent is a server that implements the configuration specified by the
-Inca administrator.  When it receives a configuration file from the Inca
-administrator, it will determine which reporters should be executed on each
-resource by expanding the resource macros and groups; it then stores the
-expanded configuration information in the depot.  The agent stages and
+Inca administrator.  When the agent receives a configuration from incat,
+it expands any resource group and macro references to determine
+the series to execute on each resource and stores this
+information in the depot.  The agent stages and
 launches an Inca component, called a reporter manager (described in the
-following subsection), on each resource using either SSH or Globus.  Once a
+following subsection), on each resource, using either SSH or Globus.  After a
 reporter manager contacts its agent, the agent transmits the reporters to
-execute along with their dependencies and a suite that contains their series
-configuration and schedule of execution.  As an Inca administrator makes
+execute, any dependencies, and a suite that contains series
+configuration and an execution schedule.  As an Inca administrator makes
 updates to the configuration, the agent will push out new reporters and/or
 suite changes to each of the affected resources.
 
-To further manage the Inca deployment, the agent regularly pings the reporter
-managers on each resource in order to detect when a reporter manager has
-failed so it can be restarted.  For example, if a resource goes down for a
-planned maintenance, the agent will attempt to restart the reporter manager
-(by default every hour) until it succeeds.  The agent also maintains a local
-cache of reporters and their dependencies; it periodically checks the
-repositories for updates (every 4 hours by default) and automatically
-distributes them to the reporter managers if the latest version is desired.  
-The agent is implemented using Java. 
+The agent regularly pings its reporter managers in order to detect when one has
+failed (for example, when a system is taken down for maintenance) and so must
+be restarted.  The agent also maintains a local cache of reporters and their
+dependencies; it periodically checks repositories (every 4 hours by default)
+and automatically distributes reporter updates to the reporter managers as
+needed.  The agent is implemented using Java. 
 
 \SubSection{Reporter Manager}
 \label{rm}
@@ -499,27 +496,24 @@ the schedule and execution of Inca reporters on a single resource. The
 reporter manager receives reporter updates and dependencies from the agent
 along with requests for reporter scheduling changes.  Running under a regular
 user account, the reporter manager executes reporters on-demand or using an
-internal cron scheduler, and sends reports to the depot for archiving. The
-reporter manager monitors reporter system usage using the system command
-\texttt{ps} and enforces limits (e.g., wall clock time, CPU time, memory).
+internal cron scheduler and sends reports to the depot for archiving. The
+reporter manager monitors reporter system usage 
+and enforces limits (e.g., wall clock time, CPU time, memory).
 System usage information is sent to the depot with each report. 
-
-The reporter manager is implemented using Perl because Perl is available by default
-on UNIX machines.  The cron scheduling is implemented using the CPAN Perl
-module Schedule::Cron.  
+The reporter manager is implemented using Perl to make it easy to install on
+a wide variety of UNIX systems.
 
 \SubSection{Depot}
 
 The Inca depot server is responsible for storing configuration information and
 the data produced by reporters. The depot uses a relational database via
-Hibernate~\cite{hibernate} enabling the use of a variety of database backends.  The depot provides full archiving of reporter output and structures its schema
-around series and the minimization of redundant data, i.e., only stores
-changes from one report to another in a report series.  The depot also
-supports comparisons that are executed on a newly received report; 
-% need Jim's help with this sentence
-currently regular expression matching and greater than/less than comparisons are 
-supported.  Optionally, an Inca administrator can select to receive
-email notification when the result of the comparison changes.
+Hibernate~\cite{hibernate}, enabling the use of a variety of database backends.
+The depot provides full archiving of reporter output, and the DB schema is
+tuned to minimize redundant data.  Inca administrators can specify comparison
+tests to run on reports as they are received, and the depot will send email
+when the results of these comparisons change.  This provides the administrator
+with quick notification of problems as they appear and of the results of
+repairs.
 
 Data can be queried using SQL queries. Predefined queries exist to return the
 latest report instances of a suite, a single report instance, or a report
