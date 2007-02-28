@@ -126,46 +126,43 @@ User-level Grid monitoring provides Grid infrastructure testing and performance 
 from a generic, impartial user's perspective.  The goal of user-level monitoring is 
 to detect and fix Grid infrastructure problems before users notice them -- 
 user complaints should not be the first indication of Grid failures.  
-In our view, the following guidelines define user-level Grid monitoring:
+In our view, the following are features of user-level Grid monitoring:
 
 \begin{itemize}
 
-\item User-level tests or performance measurements of the Grid infrastructure
-should be run from a standard user
+\item Runs from a standard user
 account in order to reflect regular user experiences.  It is important not to execute from a system administrator's account,
 because it may have special privileges and use custom shell initialization files.
 
-\item User-level tests or performance measurements that interact with Grid services
-require authentication and should be executed using a standard user GSI
-credential that is mapped to the standard user account.  
+\item Executes with a standard user GSI
+credential, which is mapped to the standard user account, when tests or performance measurements require authentication to Grid services.
 
-\item User-level tests should be
-written and configured using information directly from user documentation
-(e.g., hostnames, ports, pathnames, etc.) to emulate a regular user.  
+\item Emulates a regular user using tests and performance
+measurements that are written and configured using information directly from user documentation
+(e.g., hostnames, ports, pathnames, etc.). 
 This may not always be possible
 when documentation and testing are done in parallel in a pre-production
 environment, but they should be closely coordinated activities. 
 
-\item The configuration of user-level tests or performance measurements should be managed
-centrally in order to ensure consistent testing of the resources, rather than
+\item Centrally manages the configuration of user-level tests or performance measurements in order to ensure consistent testing of the resources, rather than
 by system administrators who may not use the same information that is
 available to users.
 
-\item User-level tests and performance measurements should be easy to update
-and maintain as they are often revised due to Grid infrastructure upgrades.
+\item Is easy to update
+and maintain as user-level tests and performance measurements often need
+to be updated when the Grid infrastructure is upgraded.
 It is also difficult to write and deploy a test correctly the first time
 because of portability issues and incomplete user documentation.  Multiple
 iterations are usually required to determine whether a detected failure stems
 from a faulty test, user documentation, or Grid resource.  
 
-\item Many types of user-level tests and benchmarks can be used to monitor 
-Grid infrastructure.  Testing documented user commands and individual Grid
-software components provides a representative indication of Grid status.  
+\item Provides a representative indication of Grid status by testing
+documented user commands and individual Grid software components.  
 
-\item Since Grids are dynamic, user-level tests or performance measurements
-should be automated and executed periodically.
+\item Automates the execution of user-level tests or performance measurements
+periodically since Grids are dynamic.
 
-\item User-level tests or performance measurements should be executed locally on all Grid
+\item Executes locally on all Grid
 resources when appropriate so that all Grid access points available to users
 are verified.  Similarly, it is important to execute some tests all-to-all
 in order to detect site-to-site configuration errors such as authentication
@@ -178,8 +175,8 @@ problems.
 % developed Inca 2.
 
 \noindent In 2003 SDSC, in partnership with TeraGrid, began developing Inca
-1~\cite{inca1} to implement a user-level Grid monitoring system that followed
-the defined guidelines.  At that time, the only available user-level Grid
+1~\cite{inca1} to implement a user-level Grid monitoring system that provided
+these features.  At that time, the only available user-level Grid
 monitoring tools were the NCSA TestGrid script~\cite{ncsa-test} and
 Grid Integration Test Script (GITS)~\cite{gits}, both of which ran a fixed number of Grid tests and formatted
 results in HTML.  Although these tools were easy to install and produced
@@ -224,7 +221,7 @@ and performance.  It was designed to be
 general, flexible, scalable, and secure, in addition to being easy to deploy
 and maintain.  Inca benefits Grid operators who oversee the day-to-day
 operation of a Grid; system administrators who provide and manage resources;
-and users who run applications on a Grid.  Besides following the guidelines 
+and users who run applications on a Grid.  Besides implementing the features
 described in Section~\ref{intro}, Inca 2 has additional features
 listed below.  A '*' after the feature description indicates it is a new
 feature of Inca 2; other items note improvements to Inca 1 features.  The 
@@ -286,8 +283,9 @@ resources.
 
 \begin{enumerate}
 
-\item Using the guidelines described in the introduction, the Inca
-administrator either writes reporters to monitor their Grid or uses existing
+\item The Inca
+administrator either writes reporters to monitor the user-level functionality
+and performance of their Grid or uses existing
 reporters in a published repository.
 
 \item The Inca administrator creates a deployment configuration file that
