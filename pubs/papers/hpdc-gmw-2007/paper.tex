@@ -132,41 +132,38 @@ In our view, the following are features of user-level Grid monitoring:
 
 \item Runs from a standard user
 account in order to reflect regular user experiences.  It is important not to execute from a system administrator's account,
-because it may have special privileges and use custom shell initialization files.
+which may have special privileges and use custom shell initialization files.
 
-\item Executes with a standard user GSI
-credential, which is mapped to the standard user account, when tests or performance measurements require authentication to Grid services.
+\item Executes with a standard user GSI credential mapped to a standard user
+account when tests or performance measurements require authentication to Grid
+services.
 
-\item Emulates a regular user using tests and performance
-measurements that are written and configured using information directly from user documentation
-(e.g., hostnames, ports, pathnames, etc.). 
-This may not always be possible
-when documentation and testing are done in parallel in a pre-production
-environment, but they should be closely coordinated activities. 
+\item Creates and configures tests and performance measurements based on user
+documentation rather than on system administrator knowledge (of hostnames,
+ports, pathnames, etc.).  This may not always be possible when documentation
+and tests are developed simultaneously during pre-production, but they should
+be closely coordinated activities.  
 
-\item Centrally manages the configuration of user-level tests or performance measurements in order to ensure consistent testing of the resources, rather than
-by system administrators who may not use the same information that is
-available to users.
+\item Centrally manages the configuration of user-level tests or performance
+measurements in order to ensure consistent testing across resources.
 
-\item Is easy to update
-and maintain as user-level tests and performance measurements often need
-to be updated when the Grid infrastructure is upgraded.
-It is also difficult to write and deploy a test correctly the first time
-because of portability issues and incomplete user documentation.  Multiple
-iterations are usually required to determine whether a detected failure stems
-from a faulty test, user documentation, or Grid resource.  
+\item Easily updates and maintains user-level tests and performance
+measurements.  This is important because tests and measurements are often
+updated when Grid infrastructure is upgraded.  Also, it is difficult to write
+and deploy a test correctly the first time due to portability issues and
+incomplete user documentation.  Multiple iterations are usually required to
+determine whether a detected failure stems from a faulty test, user
+documentation, or Grid resource.  
 
-\item Provides a representative indication of Grid status by testing
+\item Represents overall Grid status by testing a variety of 
 documented user commands and individual Grid software components.  
 
-\item Automates the execution of user-level tests or performance measurements
-periodically since Grids are dynamic.
+\item Automates the periodic execution of user-level tests or performance
+measurements to capture dynamic Grid status.
 
-\item Executes locally on all Grid
-resources when appropriate so that all Grid access points available to users
-are verified.  Similarly, it is important to execute some tests all-to-all
-in order to detect site-to-site configuration errors such as authentication
-problems.
+\item Executes locally on Grid resources to verify user accessible Grid access
+points.  Executes from each resource to every other resource (all-to-all) to
+detect site-to-site configuration errors such as authentication problems.
 
 \end{itemize}
 
