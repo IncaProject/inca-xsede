@@ -138,7 +138,7 @@ which may have special privileges and use custom shell initialization files.
 account when tests or performance measurements require authentication to Grid
 services.
 
-\item Creates and configures tests and performance measurements based on user
+\item Emulates a regular user by using tests and performance measurements created and configured based on user
 documentation rather than on system administrator knowledge (of hostnames,
 ports, pathnames, etc.).  This may not always be possible when documentation
 and tests are developed simultaneously during pre-production, but they should
@@ -155,11 +155,11 @@ incomplete user documentation.  Multiple iterations are usually required to
 determine whether a detected failure stems from a faulty test, user
 documentation, or Grid resource.  
 
-\item Represents overall Grid status by testing a variety of 
+\item Provides a representative indication of Grid status by testing
 documented user commands and individual Grid software components.  
 
 \item Automates the periodic execution of user-level tests or performance
-measurements to capture dynamic Grid status.
+measurements to understand Grid behavior over time.
 
 \item Executes locally on Grid resources to verify user accessible Grid access
 points.  Executes from each resource to every other resource (all-to-all) to
@@ -250,8 +250,8 @@ are available through a flexible querying interface.
 MyProxy~\cite{myproxy}. *
 
 \item Measures the system impact of tests and benchmarks executing on
-the monitored resources in order to tune their execution frequency to
-reduce the impact on the resources. *
+the monitored resources in order to tune their execution frequency and
+reduce the impact on resources if needed. *
 
 \end{enumerate}
 
@@ -262,8 +262,8 @@ these features.
 \Section{Inca 2 Architecture}
 
 % overview description of components
-Figure~\ref{arch_fig} shows the architecture of Inca 2.
-Inca 2 incorporates three core
+Figure~\ref{arch_fig} shows the architecture of Inca 2, which
+incorporates three core
 components (highlighted box):  the agent, depot, and reporter manager.
 The \textit{agent} and \textit{reporter managers} coordinate the execution of
 tests and performance measurements on the Grid resources and the
@@ -371,9 +371,9 @@ administrators, who can view a summary of the test or benchmark that the
 reporter performed without reading the reporter source code.  Line
 \ref{pingReporter}(a) 15 shows a special log function, loggedCommand, that
 executes a system command (using a 30 second timeout) after logging it to the
-'system' level of the log XML (producing lines \ref{pingReporter}(b) 32-36).  The subclass
+'system' level of the log XML (producing lines \ref{pingReporter}(b) 32-37).  The subclass
 Inca::Reporter::SimpleUnit is the API responsible for printing the simplest
-standard reporter body schema to report software functionality or service
+standard reporter body schema that reports software functionality or service
 tests results; it handles the printing of the small body XML
 (lines~\ref{pingReporter}(b) 39-41).  Finally, the
 Inca::Reporter::GridProxy dependency (line~\ref{pingReporter}(a) 11) adds a proxy
@@ -405,7 +405,7 @@ developed and tested for TeraGrid.  Most reporters are either version
 reporters that collect version information from a software package,
 unit test reporters that run a more involved
 functionality test, or performance benchmark reporters.  The unit and version
-reporters cover software such as Grid middleware, compilers, math libraries,
+reporters cover software such as Grid middleware and tools, compilers, math libraries,
 data tools, and visualization tools.  Current performance reporters
 measure data transfer and execute Grid benchmarks as described in
 Section~\ref{grasp}.
@@ -555,7 +555,7 @@ multiple Inca components if needed.  For example, one depot could forward
 storage requests and queries to another depot to distribute its workload or to
 maintain a mirror for fault tolerance.  Figure~\ref{tg_coord_fig} shows a more
 complex scenario where two Inca deployments coordinate with each other.  For
-example, application communities like GEON have their own Grid but also have
+example, application communities like GEON~\cite{geon} have their own Grid but also have
 access to resources on TeraGrid.   Two separate Inca deployments can result in
 duplicate testing. Instead, one Inca deployment can coordinate the execution
 of a suite with another deployment.
@@ -604,7 +604,7 @@ resources and contains approximately 30 software packages that provide
 Grid tools and services (e.g., Globus, GSI-SSH, MyProxy), data management
 tools (e.g., SRB, HDF5), and applications tools (e.g., MPICH, GCC).
 
-To provide user-level monitoring of CTSSv3, Inca was originally
+To provide user-level monitoring of CTSS, Inca was originally
 deployed on TeraGrid in 2003 using Inca 1 and was transitioned to Inca 2 in
 November 2006.  In addition to CTSSv3 monitoring, Inca is now also being used
 to collect job usage information from Globus 2 GRAM logs and to detect expired
@@ -686,8 +686,8 @@ the Globus 2 GRAM server.
 
 \SubSection{Other Uses}
 
-Other Inca users include the European DEISA Grid and the UK National Grid
-Service (NGS).  DEISA and NGS began using Inca in late 2004 and early 2005 respectively.  
+Other Inca users include the European DEISA Grid~\cite{deisa} and the UK National Grid
+Service (NGS)~\cite{ngs}.  DEISA and NGS began using Inca in late 2004 and early 2005 respectively.  
 Similar to TeraGrid, DEISA uses Inca to verify their Common
 Production Environment (DCPE) across their 11 heterogeneous resources.  They
 currently have 40 version reporters to verify each of the packages included in
