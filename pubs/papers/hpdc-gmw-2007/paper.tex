@@ -523,21 +523,21 @@ with Jetty~\cite{jetty} so that Web pages can be served out of the box.  A set
 of extensible JSP tags and pages query the Inca depot for data (returned as
 XML)
 and a set of XSL stylesheets format the data as HTML.  An Inca administrator
-can customize the data display by either modifying the XSL stylesheets or
+can customize the data display, either by modifying the XSL stylesheets or by
 writing their own JSP tags and pages.
 
 \SubSection{Security}
 \label{security}
 
-To reduce the security risk of Inca, all Inca components communicate with each
-other using SSL by default.  Sensitive information such as passwords is
-encrypted before being stored to disk on the agent.  To handle reporters that
-require a valid proxy credential to execute, the reporter manager fetches a
+To provide for security, all Inca components communicate with each other using
+SSL, and sensitive information is encrypted before being stored to disk.  To
+handle reporters that
+require a proxy credential to execute, the reporter manager fetches a
 short-term proxy from a MyProxy~\cite{myproxy} server (as specified by an Inca
-administrator) and then destroys the proxy once the reporter has completed.
+administrator), then destroys the proxy once the reporter has completed.
 MyProxy authentication information is fetched from the agent each time a proxy
 credential is needed and then cleared from memory.  Generating short-term 
-proxies only when needed is more secure than maintaining long-term
+proxies as needed is more secure than maintaining long-term
 credentials and is easier to manage.
 
 \SubSection{Scalability}
@@ -549,23 +549,21 @@ credentials and is easier to manage.
   \caption{\label{tg_coord_fig} Coordinated Inca deployments.}
 \end{figure*}
 
-Inca was designed to distribute control and storage workload among
-multiple Inca components if needed.  For example, one depot could forward
-storage requests and queries to another depot to distribute its workload or to
-maintain a mirror for fault tolerance.  Figure~\ref{tg_coord_fig} shows a more
-complex scenario where two Inca deployments coordinate with each other.  For
-example, application communities like GEON~\cite{geon} have their own Grid but also have
-access to resources on TeraGrid.   Two separate Inca deployments can result in
-duplicate testing. Instead, one Inca deployment can coordinate the execution
-of a suite with another deployment.
+A planned extension to Inca 2 supports the distribution of control and storage
+workload among multiple Inca components.  Figure~\ref{tg_coord_fig} shows a
+scenario where two Inca deployments coordinate with each other.  This could
+occur in application communities like GEON~\cite{geon}, which maintains its
+own Grid but also has access to TeraGrid resources.   Running two Inca
+deployments independently could result in duplicate testing.  Instead, we plan
+to eliminate redundancy by allowing multiple deployments to coordinate suite
+execution.
 Figure~\ref{tg_coord_fig} shows this type of coordinated deployment, where Grid B 
 has its own resources but also has access to resources in Grid A.
 When an Inca administrator submits a suite to Grid B, the Inca agent running
 on Grid B will determine which reporters run on Grid A resources and forward
 them as a suite request to Grid A's agent.  If Grid B has permission to submit
 suites, Grid A's agent will execute the suite and configure its depot to
-forwards results back to Grid B's depot.  Forwarding is not yet implemented 
-in Inca 2.
+forwards results back to Grid B's depot.
 
 %------------------------------------------------------------------------- 
 
@@ -597,14 +595,14 @@ in Inca 2.
 Requirements for user-level Grid monitoring on TeraGrid initially included the
 validation and verification of Coordinated TeraGrid Software and Services (CTSS) 
 on each TeraGrid resource.  As described in the introduction, CTSS was designed to
-allow users to more easily run Grid jobs across its distributed, heterogeneous
-resources.  CTSS version 3 (CTSSv3) is available from all TeraGrid compute
+allow users to run Grid jobs more easily across its distributed, heterogeneous
+resources.  CTSS version 3 (CTSSv3) is available on all TeraGrid compute
 resources and contains approximately 30 software packages that provide
 Grid tools and services (e.g., Globus, GSI-SSH, MyProxy), data management
 tools (e.g., SRB, HDF5), and applications tools (e.g., MPICH, GCC).
 
-To provide user-level monitoring of CTSS, Inca was originally
-deployed on TeraGrid in 2003 using Inca 1 and was transitioned to Inca 2 in
+To provide user-level monitoring of CTSS, Inca 1 was deployed on TeraGrid in
+2003 using Inca 1; TeraGrid transition to Inca 2 completed in
 November 2006.  In addition to CTSSv3 monitoring, Inca is now also being used
 to collect job usage information from Globus 2 GRAM logs and to detect expired
 host and CA certificates and CA CRLs. 
@@ -662,7 +660,7 @@ In addition to storing the performance measurements,
 any error messages encountered must be stored as well.    
 In order to
 gather historical data, the GrASP probes were modified
-to follow the reporter specifications and deployed using Inca.
+to follow the Inca reporter specifications and deployed using Inca.
 Porting the original code to follow the reporter specifications proved to be
 trivial.  A number of scripts were then written to graph and analyze the GrASP
 data and related error messages stored in the Inca depot.  
@@ -711,10 +709,10 @@ analysis capabilities to the Inca data consumer.  This will improve troubleshoot
 allowing errors to be understood in a historical context.  It will also enable
 summary displays analogous to those generated by Web page statistics packages
 like Webalizer~\cite{webalizer} that provide a number of useful "Top"
-statistics.  We expect feedback from TeraGrid and other Inca users on the
-exact types of statistics and graphs that will prove to be most useful.  Our
-goal is to offer a default set of statistics and graphs that can be used out
-of the box and provide the capability to add others.
+statistics.  We expect to follow recommendations from TeraGrid and other Inca
+users on the types of statistics and graphs that will prove to be most useful.
+Our plan is to offer a default set of statistics and graphs that can be used
+directly and to provide the capability to add others.
 
 Also to aid system administrator troubleshooting,
 we plan to enhance Inca with a knowledge base that can be used to
