@@ -804,7 +804,7 @@
       </resource>
       <resource>
         <name>hdf4</name>
-        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|indiana-avidd|indiana-ia32|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|indiana-avidd|indiana-ia32|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -812,7 +812,29 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC NCSA ANL-login indiana-avidd indiana-ia32 ORNL Purdue-login PSC TACC</value>
+            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login indiana-avidd indiana-ia32 ORNL Purdue-login PSC TACC</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>hdf5</name>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>hdf5</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login PSC TACC</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1997,13 +2019,14 @@
           </macro>
           <macro>
             <name>mdsHosts</name>
+            <value>ds001.sdsc.edu</value>
             <value>tg-login3.ncsa.teragrid.org</value>
             <value>cu12.ncsa.uiuc.edu</value>
             <value>co-login1.ncsa.uiuc.edu</value>
             <value>h6.bigred.teragrid.iu.edu</value>
             <value>tund.ncsa.uiuc.edu</value>
             <value>tg-login1.ornl.teragrid.org</value>
-            <value>fred002.psc.teragrid.org</value>
+            <value>tg-login8.bigben.psc.teragrid.org</value>
             <value>gt4-submit.psc.teragrid.org</value>
             <value>tg-gatekeeper.rcac.purdue.edu</value>
             <value>tg-login64.rcac.purdue.edu</value>
@@ -3646,7 +3669,7 @@
             <context>@pre@@hdf5-key@@@@post@</context>
           </series>
           <nickname>hdf5-version</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
+          <resourceSetName>hdf5</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
