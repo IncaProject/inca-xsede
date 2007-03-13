@@ -124,21 +124,34 @@
 
     <xsl:template name="printResultsTable">
       <table class="subheader">
-      <xsl:for-each select="distinct-values(combo/suite/reportSummary/nickname)">
-        <xsl:sort/>
-        <xsl:if test="position() mod 4 = 1">
+      <xsl:for-each select="distinct-values(combo/suite/reportSummary/nickname[.='mds.teragrid.org:8448'])">
         <tr>
             <td class="subheader"/>
-            <xsl:for-each select="$voResources">
-                <xsl:sort/>
-                <td class="subheader">
-                    <xsl:value-of select="name" />
-                </td>
-            </xsl:for-each>
+            <td class="subheader"> <xsl:value-of select="'gig mds host'" /> </td>
+        </tr>
+        <xsl:call-template name="printResultsRow">
+            <xsl:with-param name="testname" select="."/>
+        </xsl:call-template>
+      </xsl:for-each>
+      </table>
+      <br/><table class="subheader">
+      <xsl:for-each select="distinct-values(combo/suite/reportSummary/nickname[.!='mds.teragrid.org:8448'])">
+        <xsl:sort/>
+        <xsl:if test="position() mod 24 = 1">
+        <tr>
+            <td class="subheader"/>
+            <td class="subheader"> <xsl:value-of select="'rp mds host'" /> </td>
         </tr>
         </xsl:if>
+        <xsl:call-template name="printResultsRow">
+            <xsl:with-param name="testname" select="."/>
+        </xsl:call-template>
+      </xsl:for-each>
+      </table>
+    </xsl:template>
+    <xsl:template name="printResultsRow">
+        <xsl:param name="testname" />        
         <!-- print row with series name and result for each resource -->
-        <xsl:variable name="testname" select="." />
         <tr>
             <td class="clear">
                 <xsl:element name="a">
@@ -160,7 +173,7 @@
                 <xsl:variable name="conf" select="$result/seriesConfigId" />
 		<xsl:variable name="comparitor" select="$result/comparisonResult" />
 		<xsl:variable name="foundVersion" select="$result/body/package/version" />
-		<xsl:variable name="depth" select="$result/body/performance/benchmark/statistics/statistic[matches(., 'depth')]/value" />
+		<xsl:variable name="mdshost" select="$result/body/performance/benchmark/statistics/statistic[matches(., 'hostname')]/value" />
                 <xsl:variable name="completed" select="string($result/body)" />
                 <xsl:choose>
                     <xsl:when test="count($result)>0">
@@ -189,8 +202,8 @@
                                 <td class="{$exit}">
                                     <a href="{$href}">
 					<xsl:choose>
-                                          <xsl:when test="string($depth)!=''">
-                                            <xsl:value-of select="$depth"/>
+                                          <xsl:when test="string($mdshost)!=''">
+                                            <xsl:value-of select="$mdshost"/>
                                           </xsl:when>
                                           <xsl:when test="string($foundVersion)=''">
                                             <xsl:value-of select="$exit"/>
@@ -222,8 +235,6 @@
                 </xsl:choose>
             </xsl:for-each>
         </tr>
-      </xsl:for-each>
-      </table>
     </xsl:template>
 
     <xsl:template name="markOldData">   
