@@ -189,7 +189,7 @@
                                 <xsl:when test="string($instance)=''">
                                     <xsl:value-of select="''" />
                                 </xsl:when>
-                                <xsl:when test="$completed!='' or $comparitor='Success'">
+                                <xsl:when test="$completed!='' and ($comparitor='Success' or count($comparitor)=0)">
                                     <xsl:value-of select="'pass'" />
                                 </xsl:when>
                                 <xsl:otherwise>
