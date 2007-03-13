@@ -508,4 +508,53 @@ perl incpack -I ${INCA_INSTALL}/lib jade.version f77.unit vim.version
 </screen>
 </section>
 
+<section id="update-repository">
+<title>Updating Reporter Repositories</title>
+<para>The Inca agent will detect changes to your reporter repository and
+automatically send changes to the appropriate reporter managers if you:
+</para>
+<orderedList>
+<listItem><para>
+update the reporter version number (ie. change a line like "version =>
+1" to "version => 2" in the body of the reporter)
+</para></listItem>
+
+<listItem><para>
+make sure the reporter permissions are set so the agent can fetch the
+reporter (755 is the standard reporter permission)
+</para></listItem>
+
+<listItem><para>update your Packages.gz file using incpack.  The command will
+be something like:
+<screen>% cd $INCA_DIST/Inca-Reporter-*; ./sbin/incpack -I lib bin/&lt;reportername&gt;</screen>
+</para></listItem>
+
+<listItem><para>
+wait for the agent to deploy the new reporter automatically (it looks
+for new reporters every four hours by default),
+</para> <para>
+*OR*
+</para> <para>
+restart the agent,
+</para> <para>
+*OR*
+</para> <para>
+go to the reporter panel in incat and delete your repository URL and
+commit and then readd the repository URL and commit.  Readding the
+repository URL will force the agent to send out the new reporters.  This option is 
+usually less disruptive than restarting the agent.
+</para></listItem>
+</orderedList>
+<para>
+If the revised reporter still isn't deployed, look for any errors in the
+$INCA_DIST/var/agent.log that indicate the
+agent was unable to fetch the reporter or skipped over updating it.  Make
+sure there is an active series that uses the reporter with "use latest
+version" checked on the resource your intend it to run on incat.  Look for
+$INCA_DIST/var/repository/repository.xml entries for the
+reporter with "&lt;latestVersion&gt;false&lt;/latestVersion&gt;" (should be
+"&lt;latestVersion&gt;true&lt;/latestVersion&gt;" to get the updated reporters).
+</para>
+</section>
+
 </section>
