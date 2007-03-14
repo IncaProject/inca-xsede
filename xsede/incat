@@ -532,6 +532,11 @@
             <name>hostCountSuffix</name>
             <value>:ia32-compute</value>
           </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -752,7 +757,7 @@
       </resource>
       <resource>
         <name>gt4-seven-step</name>
-        <xpath>//resource[matches(name, '^(anl-ia64|ncsa-cobalt|ncsa-ia64|sdsc-ia64|tacc-lonestar|tacc-viz|ornl-login)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ANL-login|ncsa-cobalt|ncsa-ia64|sdsc-ia64|tacc-lonestar|tacc-viz|ornl-login)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -760,7 +765,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>anl-ia64 ncsa-cobalt ncsa-ia64 sdsc-ia64 tacc-lonestar tacc-viz ornl-login</value>
+            <value>ANL-login ncsa-cobalt ncsa-ia64 sdsc-ia64 tacc-lonestar tacc-viz ornl-login</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -826,7 +831,7 @@
       </resource>
       <resource>
         <name>hdf5</name>
-        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|psc-rachel|TACC)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -834,7 +839,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login PSC TACC</value>
+            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login psc-rachel TACC</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1734,6 +1739,28 @@
           <macro>
             <name>mpichG2Keys</name>
             <value>mpich-g2-1.2.6e-gcc32dbg</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>phdf5</name>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>phdf5</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login PSC TACC</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
           </macro>
         </macros>
       </resource>
@@ -3643,50 +3670,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>data.format.hdf5.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@hdf5-key@@@@post@</context>
-          </series>
-          <nickname>hdf5-version</nickname>
-          <resourceSetName>hdf5</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf5=="1.6.5"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
@@ -4786,46 +4769,6 @@
           </series>
           <nickname>compiler-gcc-fortran</nickname>
           <resourceSetName>compiler-gcc-fortran</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.format.phdf5.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@phdf5-key@@@@post@</context>
-          </series>
-          <nickname>phdf5-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -6625,11 +6568,95 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.format.hdf5.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@hdf5-key@@@@post@</context>
+          </series>
+          <nickname>hdf5-version</nickname>
+          <resourceSetName>hdf5</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf5=="1.6.5"</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.format.phdf5.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@phdf5-key@@@@post@</context>
+          </series>
+          <nickname>phdf5-unit</nickname>
+          <resourceSetName>phdf5</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>125</version>
+      <version>128</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -6751,7 +6778,7 @@
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>gig</description>
-      <version>20</version>
+      <version>24</version>
     </suite>
     <suite>
       <seriesConfigs>
