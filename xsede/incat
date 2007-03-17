@@ -145,6 +145,32 @@
         </macros>
       </resource>
       <resource>
+        <name>NCAR</name>
+        <xpath>//resource[matches(name, '^(ncar-frost)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>NCAR</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>ncar-frost</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>siteName</name>
+            <value>ncar</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>NCSA</name>
         <xpath>//resource[matches(name, '^(ncsa-ia64|ncsa-tungsten|ncsa-copper|ncsa-cobalt)$')]</xpath>
         <macros>
@@ -441,6 +467,24 @@
             <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install-ia64/lib/perl &amp;&amp;</value>
           </macro>
           <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
+            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
+          </macro>
+          <macro>
+            <name>hostCountSuffix</name>
+            <value>:ia64-compute</value>
+          </macro>
+          <macro>
+            <name>mpichG2LibKeys</name>
+            <value>globus-mpicc64-4.0.1-mpich-gm-intel81</value>
+            <value>globus-mpicc64dbg-4.0.1-mpich-gm-intel81</value>
+            <value>globus-mpicc64-4.0.1-mpich-gm-gcc32</value>
+            <value>globus-mpicc64dbg-4.0.1-mpich-gm-gcc32</value>
+          </macro>
+          <macro>
             <name>__groupname__</name>
             <value>anl-ia64</value>
           </macro>
@@ -459,24 +503,6 @@
           <macro>
             <name>__incaReporterManagerLocation__</name>
             <value>/home/inca/inca2install-ia64</value>
-          </macro>
-          <macro>
-            <name>mpichG2Keys</name>
-            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
-          </macro>
-          <macro>
-            <name>hostCountSuffix</name>
-            <value>:ia64-compute</value>
-          </macro>
-          <macro>
-            <name>mpichG2LibKeys</name>
-            <value>globus-mpicc64-4.0.1-mpich-gm-intel81</value>
-            <value>globus-mpicc64dbg-4.0.1-mpich-gm-intel81</value>
-            <value>globus-mpicc64-4.0.1-mpich-gm-gcc32</value>
-            <value>globus-mpicc64dbg-4.0.1-mpich-gm-gcc32</value>
           </macro>
         </macros>
       </resource>
@@ -1328,16 +1354,16 @@
         </macros>
       </resource>
       <resource>
-        <name>ncsa-cobalt</name>
-        <xpath>//resource[matches(name, '^(co-login1.ncsa.uiuc.edu)$')]</xpath>
+        <name>ncar-frost</name>
+        <xpath>//resource[matches(name, '^(fr0102ge\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>__regexp__</name>
-            <value>co-login1.ncsa.uiuc.edu</value>
+            <name>__groupname__</name>
+            <value>ncar-frost</value>
           </macro>
           <macro>
-            <name>__regexpTmp__</name>
-            <value>co-login1.ncsa.uiuc.edu login-co.ncsa.teragrid.org</value>
+            <name>__regexp__</name>
+            <value>fr0102ge.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1348,24 +1374,46 @@
             <value>inca</value>
           </macro>
           <macro>
-            <name>__incaComputeServer__</name>
-            <value>co-login1.ncsa.uiuc.edu</value>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
           </macro>
           <macro>
-            <name>__gridFtpServer__</name>
-            <value>cobalt.ncsa.teragrid.org</value>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
           </macro>
           <macro>
             <name>__equivalent__</name>
-            <value>false</value>
+            <value>true</value>
           </macro>
           <macro>
             <name>__incaReporterManagerLocation__</name>
-            <value>/u/ncsa/inca/inca2install</value>
+            <value>/home/inca/inca2install</value>
           </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>ncsa-cobalt</name>
+        <xpath>//resource[matches(name, '^(co-login1\.ncsa\.uiuc\.edu)$')]</xpath>
+        <macros>
           <macro>
-            <name>__groupname__</name>
-            <value>ncsa-cobalt</value>
+            <name>__regexpTmp__</name>
+            <value>co-login1.ncsa.uiuc.edu login-co.ncsa.teragrid.org</value>
           </macro>
           <macro>
             <name>compiler-intel-version</name>
@@ -1409,6 +1457,26 @@
             <value>mpich-g2-1.2.6e-mpi12-intel81-dbg</value>
             <value>mpich-g2-1.2.6e-mpi12-gcc33</value>
             <value>mpich-g2-1.2.6e-mpi12-gcc33-dbg</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>ncsa-cobalt</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>co-login1.ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/u/ncsa/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -2327,7 +2395,7 @@
       </resource>
       <resource>
         <name>tacc-lonestar</name>
-        <xpath>//resource[matches(name, '^(lslogin1\.tacc\.utexas\.edu)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lslogin(1|2)\.tacc\.utexas\.edu)$')]</xpath>
         <macros>
           <macro>
             <name>compiler-intel-version</name>
@@ -2346,36 +2414,8 @@
             <value>3.4.4</value>
           </macro>
           <macro>
-            <name>__groupname__</name>
-            <value>tacc-lonestar</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>lslogin1.tacc.utexas.edu</value>
-          </macro>
-          <macro>
             <name>__regexpTmp__</name>
             <value>lslogin1.tacc.utexas.edu tg-login.lonestar.tacc.teragrid.org tg-login.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__incaComputeServer__</name>
-            <value>lslogin1.tacc.utexas.edu</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
-            <name>__incaReporterManagerLocation__</name>
-            <value>/home/utexas/staff/inca/inca2install</value>
           </macro>
           <macro>
             <name>gridftpHost</name>
@@ -2418,6 +2458,26 @@
             <name>mpichG2LibKeys</name>
             <value>globus-mpicc64-4.0.1-mvapich-intel91</value>
             <value>globus-mpicc64dbg-4.0.1-mvapich-intel91</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>tacc-lonestar</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lslogin(1|2).tacc.utexas.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/home/utexas/staff/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -2514,7 +2574,7 @@
       </resource>
       <resource>
         <name>teragrid</name>
-        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC)$')]</xpath>
         <macros>
           <macro>
             <name>gridServicesNode</name>
@@ -2677,54 +2737,6 @@
             <value>@keyPre@mpich-g2-gcc @keyPost@</value>
           </macro>
           <macro>
-            <name>__groupname__</name>
-            <value>teragrid</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>SDSC NCSA ANL Indiana ORNL Purdue PSC TACC</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyFile__</name>
-            <value>/users/u3/inca/.ssh/id_dsa</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyPassword__</name>
-            <value>HmAnvxgybtpDlSORFSej3A==</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__gridFtpServer__</name>
-            <value>@gridServicesNode@</value>
-          </macro>
-          <macro>
-            <name>__myproxyHost__</name>
-            <value>myproxy.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__myproxyLifetime__</name>
-            <value>1440</value>
-          </macro>
-          <macro>
-            <name>__myproxyPassword__</name>
-            <value>HmAnvxgybtpDlSORFSej3A==</value>
-          </macro>
-          <macro>
-            <name>__myproxyUsername__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
             <name>keyPre2</name>
             <value>eval \"`soft-dec sh add @</value>
           </macro>
@@ -2815,6 +2827,72 @@
             <name>mpich_scratch</name>
             <value>$TG_CLUSTER_SCRATCH</value>
           </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>teragrid</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>teragrid-NCAR</name>
+        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>teragrid-NCAR</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2845,7 +2923,7 @@
       </resource>
       <resource>
         <name>teragrid-login</name>
-        <xpath>//resource[matches(name, '^(SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -2853,7 +2931,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC</value>
+            <value>NCAR SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2881,6 +2959,9 @@
         <name>ds001.sdsc.edu</name>
       </resource>
       <resource>
+        <name>fr0102ge.ncar.teragrid.org</name>
+      </resource>
+      <resource>
         <name>ih2.avidd.iu.edu</name>
       </resource>
       <resource>
@@ -2888,6 +2969,9 @@
       </resource>
       <resource>
         <name>lslogin1.tacc.utexas.edu</name>
+      </resource>
+      <resource>
+        <name>lslogin2.tacc.utexas.edu</name>
       </resource>
       <resource>
         <name>maverick.tacc.utexas.edu</name>
