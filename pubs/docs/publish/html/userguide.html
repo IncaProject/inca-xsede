@@ -115,6 +115,11 @@ HREF="#USERGUIDE-CONSUMER"
 HREF="#DEFAULT-CONSUMER"
 >Default Data Consumer</A
 ></DT
+><DT
+>6.2. <A
+HREF="#CONSUMER-ALT-LOCATION"
+>Non-default Data Consumer Installation</A
+></DT
 ></DL
 ></DD
 ><DT
@@ -1386,9 +1391,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->17 inca.agent.cert=agentcert.pem
+>17 inca.agent.cert=incatcert.pem
 ...
-29 inca.agent.key=agentkey.pem</PRE
+29 inca.agent.key=incatkey.pem</PRE
 ></FONT
 ></TD
 ></TR
@@ -2455,6 +2460,158 @@ TARGET="_top"
 >css tutorial</A
 > ]</P
 ></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="CONSUMER-ALT-LOCATION"
+>6.2. Non-default Data Consumer Installation</A
+></H3
+><P
+>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
+><P
+></P
+><UL
+><LI
+><P
+>            Copy the <TT
+CLASS="FILENAME"
+>incaInstall.sh</TT
+> script to the machine where the consumer will run.
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.01/incaInstall.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Install consumer on the new machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./incaInstall.sh $INCA_DIST consumers</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
+        to the new machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/consumerkey.pem $INCA_DIST/etc/; \
+scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/consumercert.pem $INCA_DIST/etc/;
+scp "<STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/trusted/*" $INCA_DIST/etc/trusted/;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Edit the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> local file and specify the full hostname 
+	of the machine where the agent and depot are running:
+            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>114 inca.consumer.agent=incas://<STRONG
+><FONT
+COLOR="RED"
+>agent.hostname</FONT
+></STRONG
+>:6323
+...
+128 inca.consumer.depot=incas://<STRONG
+><FONT
+COLOR="RED"
+>depot.hostname</FONT
+></STRONG
+>:6324</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+          </P
+></LI
+><LI
+><P
+> Start the consumer component on the new machine: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></UL
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2529,7 +2686,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN473"
+NAME="AEN499"
 ></A
 ><P
 ><B
@@ -3428,7 +3585,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN680"
+NAME="AEN706"
 ></A
 ><P
 ><B
@@ -3640,7 +3797,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN727"
+NAME="AEN753"
 ></A
 ><P
 ><B
@@ -4690,7 +4847,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN930"
+NAME="AEN956"
 ></A
 ><P
 ><B

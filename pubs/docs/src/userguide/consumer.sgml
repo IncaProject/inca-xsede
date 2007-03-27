@@ -198,4 +198,43 @@ Change default CSS (Cascading Style Sheet) properties such as colors and fonts b
 </para>
 </section>
 
+<section id="consumer-alt-location">
+<title>Non-default Data Consumer Installation</title>
+<para>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </para>
+      <itemizedList>
+        <listItem>
+          <para>
+            Copy the <filename>incaInstall.sh</filename> script to the machine where the consumer will run.
+          </para>
+          <screen>% wget http://inca.sdsc.edu/releases/2.01/incaInstall.sh</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Install consumer on the new machine:
+          </para>
+          <screen>% ./incaInstall.sh $INCA_DIST consumers</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
+        to the new machine:
+          </para>
+          <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumerkey.pem $INCA_DIST/etc/; \
+scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumercert.pem $INCA_DIST/etc/;
+scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
+        </listItem>
+        <listItem>
+          <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and specify the full hostname 
+	of the machine where the agent and depot are running:
+            <screen>114 inca.consumer.agent=incas://<emphasis role="red">agent.hostname</emphasis>:6323
+...
+128 inca.consumer.depot=incas://<emphasis role="red">depot.hostname</emphasis>:6324</screen>
+          </para>
+        </listItem>
+        <listItem> <para> Start the consumer component on the new machine: </para>
+          <screen>% cd $INCA_DIST; ./bin/inca start consumer</screen>
+        </listItem>
+      </itemizedList>
+</section>
+
 </section>
