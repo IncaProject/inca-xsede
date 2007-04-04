@@ -4664,8 +4664,8 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% cd $RM_INSTALL_DIR/var
-% tar xvf ../Inca-ReporterManager.tar
-% cd Inca-ReporterManager-*
+% tar zxvf ../Inca-Reporter.tar.gz
+% cd Inca-Reporter-*
 % perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
 % make install
@@ -4708,8 +4708,8 @@ CLASS="SCREEN"
  Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'manualResource'
  Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
 
- &#60;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&#62;
-   &#60;seriesConfigs&#62;
+ &#60;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;
+   &#60;seriesConfigs xmlns=""&#62;
        &#60;seriesConfig&#62;
 ...
     </PRE
@@ -4733,11 +4733,11 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
-> &#60;st:suite xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&#62;
-   &#60;seriesConfigs&#62;
+> &#60;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;
+   &#60;seriesConfigs xmlns=""&#62;
        &#60;seriesConfig&#62;
 ...
- &#60;/st:suite&#62; 
+ &#60;/suite&#62; 
     </PRE
 ></FONT
 ></TD
@@ -4749,7 +4749,7 @@ CLASS="SCREEN"
 CLASS="FILENAME"
 >$RM_INSTALL_DIR/var/reporter-packages/repository.xml</TT
 > to tell the reporter manager
-    where the reporters are installed.  The
+    where the reporters are installed (relative to $RM_INSTALL_DIR/var/reporter-packages).  The
     <TT
 CLASS="FILENAME"
 >repository.xml</TT
@@ -4788,13 +4788,23 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://depotHost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://agentHost:6323 -L DEBUG -P "stdin:password&#62;"</PRE
+>% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://<STRONG
+><FONT
+COLOR="RED"
+>depotHost</FONT
+></STRONG
+>:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://<STRONG
+><FONT
+COLOR="RED"
+>agentHost</FONT
+></STRONG
+>:6323 -L DEBUG -l var/reporter-manager.log -P true</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
+>Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
 ><P
 >To stop the reporter manager at any time, type </P
 ><TABLE
@@ -4847,7 +4857,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN956"
+NAME="AEN958"
 ></A
 ><P
 ><B
