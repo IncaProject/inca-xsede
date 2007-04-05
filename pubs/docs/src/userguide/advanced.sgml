@@ -257,21 +257,42 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
    </para>
     
    <para> Finally, you can start up the reporter manager using the
-       following command-line (replace "depotHost" and "agentHost" with the hostnames where the depot and agent are running): </para>
+       following command-line (replace "depotHost" with the hostname where the depot is running): </para>
        <screen>
-% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://<emphasis role="red">depotHost</emphasis>:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://<emphasis role="red">agentHost</emphasis>:6323 -L DEBUG -l var/reporter-manager.log -P true
+% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://<emphasis role="red">depotHost</emphasis>:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -s suite.xml -L DEBUG -l var/reporter-manager.log -P true
 </screen>
 <para>Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
              <screen>
 % ./sbin/inca stop reporter-manager
 </screen>
-        <para>The resource administrator will need to edit the 
-        <filename>suite.xml</filename> with any changes that are received by
-        email, edit the <filename>repository.xml</filename> with any new
-        reporters, and then restart the reporter manager.
-        </para>
-  </listItem>
+        <para>Make sure all reporter-manager ps are stopped</para>
+        <screen> % ps | grep manager </screen>
+        
+<para>
+Notes about email notification:
+</para>
+<itemizedList>
+<listItem><para>The resource administrator will need to edit
+<filename>suite.xml</filename> with any changes that are received by email,
+edit the <filename>repository.xml</filename> with any new reporters, and then
+restart the reporter manager.</para></listItem>
+<listItem><para>The <filename>&lt;action&gt;</filename> tag in the emailed change indicates how to edit <filename>suite.xml</filename>.
+For example, <filename>&lt;action&gt;add&lt;/action&gt;</filename> would be an addition to the existing suite.
+</para></listItem>
+<listItem><para>
+If a manual reporter manager has multiple
+suites, the <filename>&lt;seriesConfigs xmlns=""&gt;</filename> emailed in each suite can be
+combined and put into a single <filename>suite.xml</filename> document beginning with <filename>&lt;suite
+xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&gt;</filename>.
+</para></listItem>
+<listItem><para>
+Each time the agent is restarted the manual reporter manager administrator will
+receive an email for each suite that the agent would otherwise send directly to
+the reporter manager.  These emails do not necessarily contain changes to the suite(s). 
+</para> </listItem>
+</itemizedList>
+</listItem> 
 </orderedList>
 
 </section>
