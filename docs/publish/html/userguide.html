@@ -4777,7 +4777,7 @@ CLASS="SCREEN"
    </P
 ><P
 > Finally, you can start up the reporter manager using the
-       following command-line (replace "depotHost" and "agentHost" with the hostnames where the depot and agent are running): </P
+       following command-line (replace "depotHost" with the hostname where the depot is running): </P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -4793,12 +4793,7 @@ CLASS="SCREEN"
 COLOR="RED"
 >depotHost</FONT
 ></STRONG
->:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -a incas://<STRONG
-><FONT
-COLOR="RED"
->agentHost</FONT
-></STRONG
->:6323 -L DEBUG -l var/reporter-manager.log -P true</PRE
+>:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -s suite.xml -L DEBUG -l var/reporter-manager.log -P true</PRE
 ></FONT
 ></TD
 ></TR
@@ -4823,17 +4818,77 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->The resource administrator will need to edit the 
-        <TT
+>Make sure all reporter-manager ps are stopped</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> % ps | grep manager </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Notes about email notification:</P
+><P
+></P
+><UL
+><LI
+><P
+>The resource administrator will need to edit
+<TT
 CLASS="FILENAME"
 >suite.xml</TT
-> with any changes that are received by
-        email, edit the <TT
+> with any changes that are received by email,
+edit the <TT
 CLASS="FILENAME"
 >repository.xml</TT
-> with any new
-        reporters, and then restart the reporter manager.
-        </P
+> with any new reporters, and then
+restart the reporter manager.</P
+></LI
+><LI
+><P
+>The <TT
+CLASS="FILENAME"
+>&#60;action&#62;</TT
+> tag in the emailed change indicates how to edit <TT
+CLASS="FILENAME"
+>suite.xml</TT
+>.
+For example, <TT
+CLASS="FILENAME"
+>&#60;action&#62;add&#60;/action&#62;</TT
+> would be an addition to the existing suite.</P
+></LI
+><LI
+><P
+>If a manual reporter manager has multiple
+suites, the <TT
+CLASS="FILENAME"
+>&#60;seriesConfigs xmlns=""&#62;</TT
+> emailed in each suite can be
+combined and put into a single <TT
+CLASS="FILENAME"
+>suite.xml</TT
+> document beginning with <TT
+CLASS="FILENAME"
+>&#60;suite
+xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;</TT
+>.</P
+></LI
+><LI
+><P
+>Each time the agent is restarted the manual reporter manager administrator will
+receive an email for each suite that the agent would otherwise send directly to
+the reporter manager.  These emails do not necessarily contain changes to the suite(s). </P
+></LI
+></UL
 ></LI
 ></OL
 ></DIV
@@ -4857,7 +4912,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN958"
+NAME="AEN974"
 ></A
 ><P
 ><B
