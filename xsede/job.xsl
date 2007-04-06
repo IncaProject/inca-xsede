@@ -30,7 +30,8 @@
                 <tr>
                     <td class="header"><xsl:text>Machine</xsl:text></td>
                     <td class="header"><xsl:text>Reporter Status</xsl:text></td>
-                    <td class="header"><xsl:text>Start/End Time (GMT)</xsl:text></td>
+                    <td class="header"><xsl:text>Start (GMT)</xsl:text></td>
+                    <td class="header"><xsl:text>End (GMT)</xsl:text></td>
                     <td class="header"><xsl:text>User's Distinguished Name (DN)</xsl:text></td>
                     <td class="header"><xsl:text>Num. Jobs</xsl:text></td>
                 </tr>
@@ -41,11 +42,11 @@
                         <tr>
                             <xsl:call-template name="getResults">
                                 <xsl:with-param name="machine" select="name"/>
-                                <xsl:with-param name="col" select="'4'"/>
+                                <xsl:with-param name="col" select="'6'"/>
                                 <xsl:with-param name="ca" select="'0'"/>
                             </xsl:call-template>
                         </tr>
-			<tr><td class="midheader" colspan="5"><xsl:text> </xsl:text></td></tr>
+			<tr><td class="midheader" colspan="6"><xsl:text> </xsl:text></td></tr>
                     </xsl:for-each>
                 </xsl:if>
         </table>
@@ -57,7 +58,8 @@
                 <tr>
                     <td class="header"><xsl:text>Machine</xsl:text></td>
                     <td class="header"><xsl:text>Reporter Status</xsl:text></td>
-                    <td class="header"><xsl:text>Start/End Time (GMT)</xsl:text></td>
+                    <td class="header"><xsl:text>Start (GMT)</xsl:text></td>
+                    <td class="header"><xsl:text>End (GMT)</xsl:text></td>
                     <td class="header"><xsl:text>Certificate Authority (CA)</xsl:text></td>
                     <td class="header"><xsl:text>Total User Jobs</xsl:text></td>
                     <td class="header"><xsl:text>Unique User Jobs</xsl:text></td>
@@ -69,11 +71,11 @@
                         <tr>
                             <xsl:call-template name="getResults">
                                 <xsl:with-param name="machine" select="name"/>
-                                <xsl:with-param name="col" select="'5'"/>
+                                <xsl:with-param name="col" select="'7'"/>
                                 <xsl:with-param name="ca" select="'1'"/>
                             </xsl:call-template>
                         </tr>
-			<tr><td class="midheader" colspan="6"><xsl:text> </xsl:text></td></tr>
+			<tr><td class="midheader" colspan="7"><xsl:text> </xsl:text></td></tr>
                     </xsl:for-each>
                 </xsl:if>
         </table>
@@ -145,8 +147,8 @@
                             </td>
                        	    <xsl:choose>
                        	    <xsl:when test="$org!=''">
-				<td class="clear"><xsl:value-of select="$begin/name"/> <xsl:value-of select="' to '"/><br/>
-					 <xsl:value-of select="$end/name"/></td>
+				<td class="clear"><xsl:value-of select="$begin/name"/></td>
+				<td class="clear"><xsl:value-of select="$end/name"/></td>
                        	    	<xsl:if test="$ca='1'">
                     		<xsl:for-each select="$org">
                     			<xsl:sort select="statistics/statistic[matches(name, 'total')]/value" data-type="number" order="descending"/>
@@ -154,7 +156,7 @@
 					<td class="clear"><xsl:value-of select="statistics/statistic[matches(name, 'total')]/value"/></td>
 					<td class="clear"><xsl:value-of select="statistics/statistic[matches(name, 'unique')]/value"/></td>
 					<tr/>
-                       	    		<td colspan="3"/>
+                       	    		<td colspan="4"/>
                             	</xsl:for-each>
                             	</xsl:if>
                        	    	<xsl:if test="$ca='0'">
@@ -163,13 +165,12 @@
 					<td class="clear"><xsl:value-of select="name"/></td>
 					<td class="clear"><xsl:value-of select="statistics/statistic[matches(name, 'count')]/value"/></td>
 					<tr/>
-                       	    		<td colspan="3"/>
+                       	    		<td colspan="4"/>
                             	</xsl:for-each>
                             	</xsl:if>
                             </xsl:when>
                             <xsl:otherwise>
-				<xsl:variable name="span" select="$col - 1"/>
-                    		<td class="clear" colspan="{$span}"><xsl:text> </xsl:text></td>
+                    		<td class="clear" colspan="{$col}"><xsl:text> </xsl:text></td>
                             </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
@@ -184,7 +185,7 @@
                     <td class="na" colspan="{$col}"><xsl:text>n/a</xsl:text></td>
                 </xsl:otherwise>
             </xsl:choose>
-	    <td colspan="3"/>
+	    <td colspan="4"/>
     </xsl:template>
 
 
