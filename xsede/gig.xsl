@@ -90,6 +90,10 @@
                 	<font color="black">error</font>
                 </td>
             </tr>
+	   <tr valign="top">
+              <td class="tkt"><font color="black">tkt-#</font></td>
+              <td class="clear"><font color="black">TeraGrid ticket number </font></td>
+            </tr>
 	    <xsl:if test="$markOld!=''">
                 <tr valign="top">
               <td class="clear"><font color="black">*</font></td>
@@ -186,6 +190,9 @@
                         </xsl:variable>
                         <xsl:variable name="exit">
                             <xsl:choose>
+                                <xsl:when test="$testname='bg-login1.sdsc.edu-securemds' or $testname='ds001.sdsc.edu-securemds'">
+                                    <xsl:value-of select="'tkt'" />
+                                </xsl:when>
                                 <xsl:when test="string($instance)=''">
                                     <xsl:value-of select="''" />
                                 </xsl:when>
@@ -202,6 +209,12 @@
                                 <td class="{$exit}">
                                     <a href="{$href}">
 					<xsl:choose>
+                                          <xsl:when test="$testname='bg-login1.sdsc.edu-securemds'">
+                                            <xsl:value-of select="'tkt-136673'"/>
+                                          </xsl:when>
+                                          <xsl:when test="$testname='ds001.sdsc.edu-securemds'">
+                                            <xsl:value-of select="'tkt-137008'"/>
+                                          </xsl:when>
                                           <xsl:when test="string($mdshost)!=''">
                                             <xsl:value-of select="$mdshost"/>
                                           </xsl:when>
