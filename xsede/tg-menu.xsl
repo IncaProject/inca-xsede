@@ -5,7 +5,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
 
 <xsl:template name="tg-menu">
-  <form method="post" action="xslt.jsp">
+  <form method="get" action="xslt.jsp">
 	<table cellpadding="2">
 	<tr><td><p>KIT:<br/>
                 <select name="xmlFile">
@@ -43,6 +43,7 @@
 	</td>
               <td><input type="hidden" name="suiteName" value="ctss-v3"/>
                 <input type="hidden" name="xsl" value="ctssv4.xsl"/>
+                <input type="hidden" name="markOld" value=""/>
               <input type="submit" name="Submit" value="Submit"/></td>
           </tr></table>
 	</form>
