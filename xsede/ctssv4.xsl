@@ -77,7 +77,7 @@
     <xsl:template name="printResults">
         <table cellpadding="0" width="100%"><tr><td>
 	<h1 class="body">
-            <xsl:value-of select="combo/stack/id" />
+            <xsl:text>CTSSv4 </xsl:text><xsl:value-of select="combo/stack/id" /><xsl:text> Kit</xsl:text>
         </h1>
 	<xsl:variable name="datenow" select="date:new()" />
   	<xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')" />

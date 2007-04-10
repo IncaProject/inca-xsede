@@ -9,28 +9,35 @@
 	<table cellpadding="2">
 	<tr><td><p>KIT:<br/>
                 <select name="xmlFile">
-                  <option value="ctssv4-core.xml">core</option>
-		  <option value="ant">ant</option>
-         	  <option value="blas">blas</option>
+                  <option value="ctssv4-core.xml">- Select One -</option>
+                  <option value="ctssv4-core.xml">Core Integration</option>
+                  <option value="ctssv4-login.xml">Remote Login</option>
+                  <option value="ctssv4-compute.xml">Remote Compute</option>
+                  <option value="ctssv4-data.xml">Data Transfer and Management</option>
+                  <option value="ctssv4-apps.xml">Application Development &amp; Runtime Support</option>
+                  <option value="ctssv4-workflow.xml">Science Workflow Support</option>
+                  <option value="ctssv4-parallel-apps.xml">Parallel Application Support</option>
+                  <option value="ctssv4-distributed-parallel-apps.xml">Distributed Parallel Application Support</option>
  		</select></p>
         </td>
         <td> <p>RESOURCE:<br/>
               <select name="resourceID">
-                  <option value="teragrid-login"><xsl:value-of select="'TeraGrid'"/></option>
+                  <option value="teragrid-login">- Select One -</option>
+                  <option value="teragrid-login">TeraGrid</option>
                 <xsl:for-each select="/combo/resourceConfig/resources/resource[name]">
                   <xsl:sort select="." />
                   <xsl:variable name="name" select="name" />
                   <option value="{$name}"><xsl:value-of select="name"/></option>
                 </xsl:for-each>
-                  <option value="ANL-login"><xsl:value-of select="'ANL'"/></option>
-                  <option value="Indiana"><xsl:value-of select="'Indiana'"/></option>
-                  <option value="NCAR"><xsl:value-of select="'NCAR'"/></option>
-                  <option value="NCSA"><xsl:value-of select="'NCSA'"/></option>
-                  <option value="ORNL"><xsl:value-of select="'ORNL'"/></option>
-                  <option value="PSC"><xsl:value-of select="'PSC'"/></option>
-                  <option value="Purdue-login"><xsl:value-of select="'Purdue'"/></option>
-                  <option value="SDSC"><xsl:value-of select="'SDSC'"/></option>
-                  <option value="TACC"><xsl:value-of select="'TACC'"/></option>
+                  <option value="ANL-login">ANL</option>
+                  <option value="Indiana">Indiana</option>
+                  <option value="NCAR">NCAR</option>
+                  <option value="NCSA">NCSA</option>
+                  <option value="ORNL">ORNL</option>
+                  <option value="PSC">PSC</option>
+                  <option value="Purdue-login">Purdue</option>
+                  <option value="SDSC">SDSC</option>
+                  <option value="TACC">TACC</option>
               </select>
             </p>
 	</td>
