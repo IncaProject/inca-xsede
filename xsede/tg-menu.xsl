@@ -13,7 +13,9 @@
                   <option value="ctssv4-core.xml">Core Integration</option>
                   <option value="ctssv4-login.xml">Remote Login</option>
                   <option value="ctssv4-compute.xml">Remote Compute</option>
-                  <option value="ctssv4-data.xml">Data Transfer and Management</option>
+                  <option value="ctssv4-data-move.xml">Data Movement</option>
+                  <option value="ctssv4-data-manage.xml">Data Management</option>
+                  <option value="ctssv4-wide-area.xml">Wide Area Parallel File Systems</option>
                   <option value="ctssv4-apps.xml">Application Development &amp; Runtime Support</option>
                   <option value="ctssv4-workflow.xml">Science Workflow Support</option>
                   <option value="ctssv4-parallel-apps.xml">Parallel Application Support</option>
