@@ -45,6 +45,6 @@ $(DOC).bbl: $(DOC).bib $(DOC).aux
 	bibtex $(DOC)
 	latex $(DOC)
 
-$(DOC).dvi: $(DOC).tex $(DOC).bbl
+$(DOC).dvi: $(DOC).tex 
 	latex $(DOC)
 
