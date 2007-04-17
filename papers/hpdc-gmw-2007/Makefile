@@ -1,12 +1,12 @@
 
-DOC=gmw01c-ssmallen
+DOC=gmw01c-smallen
 DVIPS=dvips
 PS2PDF=pstopdf
 LATEX2RTF=latex2rtf
 ALLTEX=$(wildcard *.tex)
 REDUCE=psnup -n 2
 
-all: $(DOC).dvi 
+all: $(DOC).pdf
 
 spelling: 
 	ispell -t $(ALLTEX)
