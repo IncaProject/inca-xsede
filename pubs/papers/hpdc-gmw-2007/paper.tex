@@ -7,43 +7,39 @@
 %  $Revision: 1.4 $
 %
 
-\documentclass[times,10pt,twocolumn]{article} 
-\usepackage{dblfloatfix}
+\documentclass{sig-alternate}
 \usepackage{epsfig}
-\usepackage{latex8}
 \usepackage{listings}
 \usepackage{subfigure}
-\usepackage{times}
 \usepackage{url}
 
 %------------------------------------------------------------------------- 
-% take the % away on next line to produce the final camera-ready version 
-% takes away page numbers
-\pagestyle{empty}
-
-% some unnecessary whitespace still -- these suggestions from
-% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
-\renewcommand\dblfloatpagefraction{.95}
-\renewcommand\dbltopfraction{.95}
-\renewcommand\bottomfraction{.95}
-\renewcommand\textfraction{.05}   
-\setcounter{totalnumber}{50}
-\setcounter{dbltopnumber}{50}
-\setcounter{bottomnumber}{50}
-
+% Begin patch area for accents in 'Author Block' area - may be needed by
+% some authors / but not all
+\DeclareFixedFont{\auacc}{OT1}{phv}{m}{n}{12}   % Needed for "Author Block" accents - Patch by Gerry 3/21/07
+\DeclareFixedFont{\afacc}{OT1}{phv}{m}{n}{10}   % Needed for "Author Block" accents in the affiliation/address line - Patch by Gerry 3/21/07
 %------------------------------------------------------------------------- 
+
 \begin{document}
+
+\conferenceinfo{HPDC'07,} {June 25--29, 2007, Monterey, California, USA.}
+\CopyrightYear{2007}
+\crdata{978-1-59593-673-8/07/0006}
 
 \title{User-level Grid Monitoring with Inca 2}
 
-\author{Shava Smallen, Kate Ericson, Jim Hayes, Catherine Olschanowsky \\
-San Diego Supercomputer Center\\ University of California, San Diego\\ 
-9500 Gilman Drive, La Jolla, CA 92093-0505, USA\\ 
-\{ssmallen,kericson,jhayes,cmills\}@sdsc.edu\\
+\numberofauthors{1}
+
+\author{
+\alignauthor
+Shava Smallen, Kate Ericson, Jim Hayes, Catherine Olschanowsky \\
+\affaddr{San Diego Supercomputer Center} \\ 
+\affaddr{University of California, San Diego} \\ 
+\affaddr{9500 Gilman Drive, La Jolla, CA 92093-0505, USA}\\ 
+\email{\{ssmallen,kericson,jhayes,cmills\}@sdsc.edu}\\
 }
 
 \maketitle
-\thispagestyle{empty}
 
 %1.  Motivate and differentiate the Grid monitoring Inca does
 %2. Describe Inca 2 design and its benefits
@@ -70,7 +66,17 @@ Inca 2 deployments in production environments.
 \end{abstract}
 
 %------------------------------------------------------------------------- 
-\Section{Introduction}
+
+% A category with the (minimum) three required fields
+\category{C.4}{Performance Of Systems}{Performance attributes, Reliability,
+availability, and serviceability}
+
+\terms{Performance, Reliability, Verification}
+
+\keywords{User-level Grid monitoring, Grid monitoring, TeraGrid}
+
+%------------------------------------------------------------------------- 
+\section{Introduction}
 \label{intro}
 
 % Standard "Grids are good" intro paragraph.  But are complex.  
@@ -210,7 +216,7 @@ uses of Inca 2 for Grid software environment verification and benchmarking.
 Finally, we describe some future work and summarize the paper.
 
 %------------------------------------------------------------------------- 
-\Section{Inca 2 Features}
+\section{Inca 2 Features}
   
 \begin{figure*}[tbp]
   \centering
@@ -265,7 +271,7 @@ reduce the impact on resources as needed. *
 these features.
 
 %------------------------------------------------------------------------- 
-\Section{Inca 2 Architecture}
+\section{Inca 2 Architecture}
 
 % overview description of components
 Figure~\ref{arch_fig} shows the architecture of Inca 2, which
@@ -308,7 +314,7 @@ sends data to the depot.
 \noindent The following subsections describe the Inca components in more
 detail, using the order of the steps above.
 
-\SubSection{Reporters}
+\subsection{Reporters}
 
 \lstset{
   basicstyle=\scriptsize\ttfamily, 
@@ -387,7 +393,7 @@ short-term proxy before running this reporter (as discussed in
 Section~\ref{security}).  Most current reporters use the Perl APIs and consist
 of fewer than 30 lines of code.
 
-\SubSection{Reporter Repositories}
+\subsection{Reporter Repositories}
 
 % What are repositories and their key features
 Reporter repositories are collections of reporters, required
@@ -415,7 +421,7 @@ data tools, and visualization tools.  Current performance reporters
 measure data transfer and execute Grid benchmarks as described in
 Section~\ref{grasp}.
 
-\SubSection{Inca administration tool (incat)}
+\subsection{Inca administration tool (incat)}
 
 \begin{figure*}[tbp]
   \centering
@@ -467,7 +473,7 @@ case the series will be executed on the resource once for each macro value.
 Resource groups and macros ease the process of defining and maintaining
 multiple similar series.
 
-\SubSection{Agent}
+\subsection{Agent}
 \label{agent}
 
 The Inca agent is a server that implements the configuration specified by the
@@ -490,7 +496,7 @@ dependencies; it periodically checks repositories
 and automatically distributes reporter updates to the reporter managers as
 needed.  The agent is implemented using Java. 
 
-\SubSection{Reporter Manager}
+\subsection{Reporter Manager}
 \label{rm}
 
 The Inca reporter manager is a lightweight process responsible for managing
@@ -505,7 +511,7 @@ System usage information is sent to the depot with each report.
 The reporter manager is implemented using Perl to allow execution on
 a wide variety of UNIX systems.
 
-\SubSection{Depot}
+\subsection{Depot}
 
 The Inca depot server is responsible for storing configuration information and
 the data produced by reporters. The depot uses a relational database via
@@ -522,7 +528,7 @@ latest report instances of a suite, a single report instance, or a report
 history.  A Web services interface is also available to provide
 unauthenticated query access to data.  The depot is implemented using Java.
 
-\SubSection{Data Consumer}
+\subsection{Data Consumer}
 
 The Inca data consumer is a Web application that queries the Inca depot for
 data and displays it in a user-friendly format.  The data consumer is packaged
@@ -533,7 +539,7 @@ and a set of XSL stylesheets format the data as HTML.  An Inca administrator
 can customize the data display, either by modifying the XSL stylesheets or by
 writing their own JSP tags and pages.
 
-\SubSection{Security}
+\subsection{Security}
 \label{security}
 
 To provide for security, all Inca components communicate with each other using
@@ -547,7 +553,7 @@ credential is needed and then cleared from memory.  Generating short-term
 proxies as needed is more secure than maintaining long-term
 credentials and is easier to manage.
 
-\SubSection{Coordinating Inca Deployments}
+\subsection{Coordinating Inca Deployments}
 
 % Should illustrate that we've thought about how Inca can scale
 \begin{figure*}[tbp]
@@ -576,10 +582,10 @@ system.
 
 %------------------------------------------------------------------------- 
 
-\Section{Use Cases}
+\section{Use Cases}
 \label{usecases}
 
-\SubSection{TeraGrid}
+\subsection{TeraGrid}
 
 %\begin{figure}[tbp]
 %  \centering
@@ -646,7 +652,7 @@ page.  CTSSv3 software packages are listed along the column and TeraGrid
 resources (anonymized) in the header rows.  Test results for each package and
 resource are shown in the table body rows.
 
-\SubSection{GrASP}
+\subsection{GrASP}
 \label{grasp}
 
 % Describe GrASP probes
@@ -690,7 +696,7 @@ GrASP on TeraGrid in 2005. The highest occurring
 error was number 9, Assertion GLOBUS FALSE, which was the result of a bug in
 the Globus 2 GRAM server.  
 
-\SubSection{Other Uses}
+\subsection{Other Uses}
 
 Other Inca users include the European DEISA Grid~\cite{deisa} and the UK National Grid
 Service (NGS)~\cite{ngs}.  DEISA and NGS began using Inca in late 2004 and early 2005, respectively.  
@@ -710,7 +716,7 @@ NGS also has 12 tests for their compilers and
 utilize 2 security reporters from the Inca repository.
 
 %------------------------------------------------------------------------- 
-\Section{Future Work}
+\section{Future Work}
 
 In order to improve problem detection and diagnosis for system administrators,
 we plan to add graph rendering and statistical
@@ -741,7 +747,7 @@ send configuration to a backup depot if one is available in case of a depot
 failure.
 
 %------------------------------------------------------------------------- 
-\Section{Summary}
+\section{Summary}
 
 %1.  Motivate and differentiate the Grid monitoring Inca does 2. Describe Inca
 %2 design and its benefits 3. Illustrate that Inca 2 design is mature and
@@ -769,14 +775,14 @@ Grid infrastructure it monitors, ultimately improving the productivity of
 scientists who conduct research on a Grid. 
 
 %------------------------------------------------------------------------- 
-\Section{Acknowledgements}
+\section{Acknowledgements}
 
 The authors would like to thank Denis Girou and David Spence for providing
 details for the DEISA and NGS Inca deployments, respectively.  This work was
 supported by NSF grants SCI-0503944, SCI-0438741, and SCI-0503697.
 
 %------------------------------------------------------------------------- 
-\bibliographystyle{latex8}
+\bibliographystyle{abbrv}
 \bibliography{paper}
 
 \end{document}
