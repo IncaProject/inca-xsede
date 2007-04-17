@@ -1,5 +1,5 @@
 
-DOC=paper
+DOC=gmw01c-ssmallen
 DVIPS=dvips
 PS2PDF=pstopdf
 LATEX2RTF=latex2rtf
