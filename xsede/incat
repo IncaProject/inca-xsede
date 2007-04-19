@@ -941,6 +941,10 @@
             <name>gridScheduler</name>
             <value>Loadleveler</value>
           </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -1288,6 +1292,10 @@
           <macro>
             <name>jobQueue</name>
             <value>debug</value>
+          </macro>
+          <macro>
+            <name>gridScheduler</name>
+            <value>Cobalt</value>
           </macro>
         </macros>
       </resource>
@@ -1772,6 +1780,10 @@
             <name>nativeFortranCompiler</name>
             <value>g77</value>
           </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -1837,6 +1849,10 @@
           <macro>
             <name>mpich_scratch</name>
             <value>$HOME</value>
+          </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -1933,6 +1949,10 @@
           <macro>
             <name>mpich-p4-intel-version</name>
             <value>1.2.7</value>
+          </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -2210,6 +2230,10 @@
             <name>java-version</name>
             <value>1.4.2_SR5</value>
           </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2274,6 +2298,10 @@
             <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
             <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
             <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
+          </macro>
+          <macro>
+            <name>phdf5-key</name>
+            <value>@keyPre@phdf5-1.6.5-r1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -6910,56 +6938,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.middleware.globus.unit.ssldepth</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.ssldepth</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ssl_depth</nickname>
-          <resourceSetName>teragrid</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>depth &lt;= 7</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>security.hostcert.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.hostcert.unit</uri>
             <args>
@@ -7012,11 +6990,61 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.ssldepth</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.ssldepth</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ssl_depth</nickname>
+          <resourceSetName>teragrid</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>depth &lt;= 7</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>65</version>
+      <version>67</version>
     </suite>
     <suite>
       <seriesConfigs>
