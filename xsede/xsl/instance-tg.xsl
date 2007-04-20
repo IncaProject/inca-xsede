@@ -22,8 +22,10 @@
         <xsl:variable name="report" select="/combo/reportDetails/report"/>
         <xsl:variable name="config" select="/combo/reportDetails/seriesConfig"/>
         <xsl:variable name="configId" select="/combo/reportDetails/seriesConfigId"/>
+        <xsl:variable name="nickname" select="$config/nickname"/>
         <xsl:variable name="repname" select="$report/name"/>
-        <xsl:variable name="repository" select="substring-before($config/series/uri, $repname)"/> 
+        <xsl:variable name="host" select="$report/hostname"/>
+        <xsl:variable name="repository" select="substring-before($config/series/uri, $repname)"/>
         <xsl:variable name="rep-cgi">
             <xsl:value-of select="$repository"/>
             <xsl:value-of select="'../cgi-bin/reporters.cgi?reporter='"/>
@@ -56,8 +58,8 @@
                 <td colspan="2">
                     <h3><xsl:text>Details for "</xsl:text>
                       <xsl:choose>
-                        <xsl:when test="$config/nickname!=''">
-                          <xsl:value-of select="$config/nickname"/>
+                        <xsl:when test="$nickname!=''">
+                          <xsl:value-of select="$nickname"/>
                         </xsl:when>
                         <xsl:otherwise>
                           <xsl:value-of select="$report/name"/>
@@ -103,27 +105,6 @@
                 </td>
             </tr>
             <tr>
-               <td colspan="2" class="header"><xsl:text>Comments:</xsl:text></td>
-            </tr>
-	    <tr><td colspan="2">
-    	    <xsl:choose>
-              <xsl:when test="count(/combo/comments/row)>0">
-                <xsl:for-each select="/combo/comments/row">
-		    <xsl:sort select="date" data-type="text" order="descending"/>
-			<p class="code"><xsl:value-of select="comment"/>
-			<br/> (<xsl:value-of select="author"/>, <xsl:value-of select="date"/>)</p>
-                </xsl:for-each>
-              </xsl:when>
-              <xsl:otherwise>
-		  <p>No comments for this series.</p>
-              </xsl:otherwise>
-            </xsl:choose>
-	    <form method="get" action="comments.jsp">
-		<input type="hidden" name="series" value="{$configId}"/>
-              	<input type="submit" name="Submit" value="add comment"/>
-            </form>
-	    </td></tr>
-            <tr>
                 <td colspan="2" class="header"><xsl:text>Reporter details:</xsl:text></td>
             </tr>
             <tr>
@@ -161,8 +142,8 @@
 		<xsl:variable name="age-m" select="replace($age-h, 'M.*', ' minutes')" />
                 <td><xsl:value-of select="$age-m"/></td>
             </tr>
-            <tr>    
-                <td><xsl:text>cron</xsl:text></td>    
+            <tr>
+                <td><xsl:text>cron</xsl:text></td>
                 <td>
                     <xsl:for-each select="$config/schedule/cron/*[not(self::suspended) and not(self::numOccurs)]">
                        <xsl:value-of select="."/><xsl:text> </xsl:text>
@@ -171,7 +152,7 @@
             </tr>
             <tr>
                 <td><xsl:text>ran on (hostname)</xsl:text></td>
-                <td><xsl:value-of select="$report/hostname"/></td>
+                <td><xsl:value-of select="$host"/></td>
             </tr>
             <xsl:variable name="used" select="/combo/reportDetails/sysusage"/>
             <tr>
@@ -232,6 +213,29 @@
                     </td>
                 </tr>
             </xsl:if>
+            <tr>
+               <td colspan="2" class="header"><xsl:text>Comments:</xsl:text></td>
+            </tr>
+	        <tr><td colspan="2">
+    	        <xsl:choose>
+                    <xsl:when test="count(/combo/comments/row)>0">
+                        <xsl:for-each select="/combo/comments/row">
+		                    <xsl:sort select="date" data-type="text" order="descending"/>
+			                <p class="code"><xsl:value-of select="comment"/>
+			                <br/> (<xsl:value-of select="author"/>, <xsl:value-of select="date"/>)</p>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+		                <p>No comments for this series.</p>
+                    </xsl:otherwise>
+                </xsl:choose>
+	            <form method="get" action="comments.jsp">
+		            <input type="hidden" name="series" value="{$configId}"/>
+                    <input type="hidden" name="host" value="{$host}"/>
+                    <input type="hidden" name="nickname" value="{$nickname}"/>
+                    <input type="submit" name="Submit" value="add comment"/>
+                </form>
+	        </td></tr>
         </table>
     </xsl:template>
 

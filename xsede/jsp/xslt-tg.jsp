@@ -80,9 +80,11 @@
         SELECT * FROM incaseriesconfigcomments WHERE incaseriesconfigid='<%=configID%>'
       </sql:query>
       <c:forEach var="row" items="${comments.rows}">
-        <c:set var="author" value="${row.incaauthor}"/>
+        <c:set var="rawauthor" value="${row.incaauthor}"/>
+        <c:set var="author"><inca:printXML xml="<%=pageContext.getAttribute("rawauthor").toString()%>"/></c:set>        
         <c:set var="date" value="${row.incaentered}"/>
-        <c:set var="comment" value="${row.incacomment}"/>
+        <c:set var="rawcomment" value="${row.incacomment}"/>
+        <c:set var="comment"><inca:printXML xml="<%=pageContext.getAttribute("rawcomment").toString()%>"/></c:set>
         <% xml += "\n\t<row>\n\t\t<comment>" + pageContext.getAttribute("comment") + "</comment>";
            xml += "\n\t\t<author>" + pageContext.getAttribute("author") + "</author>";
            xml += "\n\t\t<date>" + pageContext.getAttribute("date") + "</date>\n\t</row>"; %>
