@@ -229,11 +229,13 @@
 		                <p>No comments for this series.</p>
                     </xsl:otherwise>
                 </xsl:choose>
-	            <form method="get" action="comments.jsp">
-		            <input type="hidden" name="series" value="{$configId}"/>
-                    <input type="hidden" name="host" value="{$host}"/>
-                    <input type="hidden" name="nickname" value="{$nickname}"/>
-                    <input type="submit" name="Submit" value="add comment"/>
+	        <hr/>
+		<form method="post" action="comments.jsp">
+		       	<input type="hidden" name="series" value="{$configId}"/>
+                    	<input type="hidden" name="host" value="{$host}"/>
+                    	<input type="hidden" name="nickname" value="{$nickname}"/>
+		       	<p>login to add comment: <input name="login" type="password" size="20"/>
+                    	<input type="submit" name="Submit" value="submit"/></p>
                 </form>
 	        </td></tr>
         </table>
