@@ -2,7 +2,6 @@
 <%@ taglib uri="sql.tld" prefix="sql" %>
 <%@ taglib uri="c.tld" prefix="c" %>
 <%@ taglib uri="inca.tld" prefix="inca" %>
-<%@ taglib uri="taglibs-mailer.tld" prefix="mt" %>
 
 
 <html>
@@ -52,19 +51,17 @@
                 "any problems.  <br><br><b>Date:</b> " + entered +
                 "<br><br><b>Author:</b> " + author +
                 "<br><br><b>Comment:</b> <pre>" + comment + "</pre></p>");
-    %>
-    <%@ include file="db-connect.jsp" %>
 
-      <sql:update var="insertcomments" dataSource="${tgdb}">
-        INSERT INTO incaseriesconfigcomments (incaentered,
-          incaseriesconfigid, incaauthor, incacomment)
-          VALUES ('<%=entered%>', '<%=series%>', ?, ?);
-          <sql:param value="${param['author']}"/>
-          <sql:param value="${param['comment']}"/>
-      </sql:update>
-      <mt:mail to="inca@sdsc.edu" from="inca@sdsc.edu" subject="TG comment">
-        <mt:message>test</mt:message>
-        <mt:send/>
-      </mt:mail>
+        String email = "echo \"Author: " + author + "\n\nComment: " + comment + "\" | mail -s \"New TG Status Page Comment\" inca@sdsc.edu";
+        String[] shmail = {"/bin/sh", "-c", email};
+        Runtime.getRuntime().exec(shmail);  %>
+        <%@ include file="db-connect.jsp" %>
+        <sql:update var="insertcomments" dataSource="${tgdb}">
+            INSERT INTO incaseriesconfigcomments (incaentered,
+            incaseriesconfigid, incaauthor, incacomment)
+            VALUES ('<%=entered%>', '<%=series%>', ?, ?);
+            <sql:param value="${param['author']}"/>
+            <sql:param value="${param['comment']}"/>
+        </sql:update>
 <%   } %>
 </html>
