@@ -9,6 +9,7 @@
 	xmlns:sdf="java.text.SimpleDateFormat"
 	xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
  
+    <xsl:param name="url" />
     <xsl:template match="/">
 	<head>
             <link href="css/inca.css" rel="stylesheet" type="text/css"/>
@@ -213,7 +214,9 @@
                     </td>
                 </tr>
             </xsl:if>
-            <tr>
+            <xsl:variable name="addComment" select="$url[not(matches(., 'noComment'))]"/>
+	    <xsl:if test="$addComment">
+	    <tr>
                <td colspan="2" class="header"><xsl:text>Comments:</xsl:text></td>
             </tr>
 	        <tr><td colspan="2">
@@ -230,6 +233,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
 	        <hr/>
+		<br/>
 		<form method="post" action="comments.jsp">
 		       	<input type="hidden" name="series" value="{$configId}"/>
                     	<input type="hidden" name="host" value="{$host}"/>
@@ -238,6 +242,7 @@
                     	<input type="submit" name="Submit" value="submit"/></p>
                 </form>
 	        </td></tr>
+		</xsl:if>
         </table>
     </xsl:template>
 
