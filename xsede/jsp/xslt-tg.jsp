@@ -10,6 +10,9 @@
 
 <%
   String urlStr = request.getQueryString();
+  URL currentURL = new URL(request.getScheme(), request.getServerName(),
+                           request.getServerPort(), request.getRequestURI());
+  String urlPage = currentURL.toString();
   String suiteName = request.getParameter("suiteName");
   String resourceID = request.getParameter("resourceID");
   String instanceID = request.getParameter("instanceID");
@@ -101,6 +104,7 @@
       %>
       <xslt:applyXSL xmlString="<%=xml%>" xslData="<%=xslPath%>">
         <xslt:setParameter name="url"><%=urlStr%></xslt:setParameter>
+        <xslt:setParameter name="page"><%=urlPage%></xslt:setParameter>
       </xslt:applyXSL>
       <%
     }else{

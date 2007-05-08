@@ -19,29 +19,32 @@
 %>
 <%@ include file="tgpw.jsp" %>
 
-<% if ( !login.equals(tgpw) || login == null ){ %>
-    <p><font color="red">Login incorrect</font> - please click back on your browser and
-        use the same password as https://repo.teragrid.org. </p>
-    <p>Email <a href="mailto:inca@sdsc.edu">inca@sdsc.edu</a>
-        with questions or problems.</p>
-<% } else if ( author == null || comment == null ||
-        (author.equals("") && comment.equals("")) ){ %>
-  <table width="600" cellpadding="4">
-    <tr><td><h3>Comment for the "<%=nickname%>" series on <%=host%></h3></td></tr>
+
+<% if ( author == null || comment == null ||
+       (author.equals("") && comment.equals("")) ||
+       !login.equals(tgpw) || login == null  ){ %>
+  <table cellpadding="4">
+    <tr><td><h3>Comment for the "<%=nickname%>" series on <%=host%></h3>
+        <p>Please email <a href="mailto:inca@sdsc.edu">inca@sdsc.edu</a>
+        with problems using this form.</p>
+    </td></tr>
     <form method="post" action="comments.jsp">
     <tr><td class="header">Comment:</td></tr>
-    <tr><td><textarea name="comment" cols="50" rows="10"></textarea></td></tr>
+    <tr><td><textarea name="comment" cols="50" rows="10"><%=comment%></textarea><br/></td></tr>
     <tr><td class="header">Name or email:</td></tr>
-    <tr><td><input name="author" type="text" size="50"></td></tr>
+    <tr><td><input name="author" type="text" size="50" value="<%=author%>"><br/></td></tr>
+    <tr><td class="header">Password to submit comment:</td></tr>
+    <tr><td>(hint: same password as https://repo.teragrid.org)<br/>
+        <input name="login" type="password" size="50"><br/></td></tr>
     <tr><td>
             <input type="hidden" name="series" value="<%=series%>"/>
             <input type="hidden" name="host" value="<%=host%>"/>
             <input type="hidden" name="nickname" value="<%=nickname%>"/>
-            <input type="hidden" name="login" value="<%=login%>"/>
             <input type="submit" name="Submit" value="add comment"/>
     </td></tr>
     </form>
   </table>
+
 <% } else {
         java.util.Date date = new java.util.Date();
         java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("MM-dd-yy, K:mm a (zz)");

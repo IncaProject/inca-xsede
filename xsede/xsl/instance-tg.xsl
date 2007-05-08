@@ -10,6 +10,7 @@
 	xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
  
     <xsl:param name="url" />
+    <xsl:param name="page" />
     <xsl:template match="/">
 	<head>
             <link href="css/inca.css" rel="stylesheet" type="text/css"/>
@@ -227,19 +228,23 @@
 			                <p class="code"><xsl:value-of select="comment"/>
 			                <br/> (<xsl:value-of select="author"/>, <xsl:value-of select="date"/>)</p>
                         </xsl:for-each>
+	        	<hr/>
                     </xsl:when>
                     <xsl:otherwise>
 		                <p>No comments for this series.</p>
                     </xsl:otherwise>
                 </xsl:choose>
-	        <hr/>
+		<xsl:variable name="https" select="replace($page, 'http://', 'http://')" />
+		<xsl:variable name="jsp" select="replace($https, 'xslt-tg.jsp', 'comments.jsp')" />
 		<br/>
-		<form method="post" action="comments.jsp">
+		<form method="post" action="{$jsp}">
 		       	<input type="hidden" name="series" value="{$configId}"/>
                     	<input type="hidden" name="host" value="{$host}"/>
                     	<input type="hidden" name="nickname" value="{$nickname}"/>
-		       	<p>login to add comment: <input name="login" type="password" size="20"/>
-                    	<input type="submit" name="Submit" value="submit"/></p>
+                    	<input type="hidden" name="login" value=""/>
+                    	<input type="hidden" name="comment" value=""/>
+                    	<input type="hidden" name="author" value=""/>
+                    	<input type="submit" name="Submit" value="add a comment"/>
                 </form>
 	        </td></tr>
 		</xsl:if>
