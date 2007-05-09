@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $dir = "/home/inca/mds-kit-info";
+my $configfile = $dir."/results";
+my $tmpfile = $dir."/results.$$";
+my $cmd = "wsrf-query -a -s https://mds.teragrid.org:8446/wsrf/services/DefaultIndexService \"//*[local-name()='V4KitsRP']\" > $tmpfile";
+`$cmd`;
+my $diff = `diff $configfile $tmpfile`;
+if ($diff eq ""){
+  unlink $tmpfile;
+}else{
+  my $body = "\n\nFile: " . $tmpfile . "\n\n" . $diff;
+  `echo \"$body\" | mail -s \"MDS Kit Change\" inca\@sdsc.edu`; 
+}
