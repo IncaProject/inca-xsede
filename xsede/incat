@@ -172,7 +172,7 @@
       </resource>
       <resource>
         <name>NCSA</name>
-        <xpath>//resource[matches(name, '^(ncsa-ia64|ncsa-tungsten|ncsa-copper|ncsa-cobalt)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-ia64|ncsa-tungsten|ncsa-copper|ncsa-cobalt|ncsa-abe)$')]</xpath>
         <macros>
           <macro>
             <name>siteName</name>
@@ -188,7 +188,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-ia64|ncsa-tungsten|ncsa-copper|ncsa-cobalt</value>
+            <value>ncsa-ia64|ncsa-tungsten|ncsa-copper|ncsa-cobalt|ncsa-abe</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -383,6 +383,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>sdsc_contact</name>
+            <value>kericson@sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -1300,6 +1304,60 @@
           <macro>
             <name>gramExecutable</name>
             <value>/home/inca/bin/cnkHostname</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>ncsa-abe</name>
+        <xpath>//resource[matches(name, '^(honest1\.ncsa\.uiuc\.edu|honest2\.ncsa\.uiuc\.edu|honest3\.ncsa\.uiuc\.edu)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>ncsa-abe</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>honest1.ncsa.uiuc.edu honest2.ncsa.uiuc.edu honest3.ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/u/ncsa/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -2779,6 +2837,10 @@
             <name>gramExecutable</name>
             <value>/bin/hostname</value>
           </macro>
+          <macro>
+            <name>sdsc_contact</name>
+            <value/>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -2868,6 +2930,15 @@
       </resource>
       <resource>
         <name>fr0103ge.ncar.teragrid.org</name>
+      </resource>
+      <resource>
+        <name>honest1.ncsa.uiuc.edu</name>
+      </resource>
+      <resource>
+        <name>honest2.ncsa.uiuc.edu</name>
+      </resource>
+      <resource>
+        <name>honest3.ncsa.uiuc.edu</name>
       </resource>
       <resource>
         <name>login.bigred.iu.teragrid.org</name>
@@ -5832,58 +5903,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.interactive_access.openssh.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>login</name>
-                <value>inca</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>gsissh</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@sshHosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>900.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>all2all:gsissh_to_@sshHosts@</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.7step.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
             <args>
@@ -6468,6 +6487,50 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>grid.security.gx-map.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gxmap-version</nickname>
+          <resourceSetName>gxmap</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -6604,8 +6667,8 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.security.gx-map.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
+            <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -6616,6 +6679,10 @@
                 <value>1</value>
               </arg>
               <arg>
+                <name>login</name>
+                <value>inca</value>
+              </arg>
+              <arg>
                 <name>help</name>
                 <value>no</value>
               </arg>
@@ -6623,14 +6690,22 @@
                 <name>log</name>
                 <value>3</value>
               </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@sshHosts@</value>
+              </arg>
             </args>
             <limits>
-              <wallClockTime>600.0</wallClockTime>
+              <wallClockTime>900.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gxmap-version</nickname>
-          <resourceSetName>gxmap</resourceSetName>
+          <nickname>all2all:gsissh_to_@sshHosts@</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -6640,17 +6715,13 @@
               <month>*</month>
             </cron>
           </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>146</version>
+      <version>155</version>
     </suite>
     <suite>
       <seriesConfigs>
