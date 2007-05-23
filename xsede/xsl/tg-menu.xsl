@@ -8,18 +8,18 @@
   <form method="get" action="xslt.jsp">
 	<table cellpadding="2">
 	<tr><td><p>KIT:<br/>
-                <select name="xmlFile">
-                  <option value="core.teragrid.org-4.0.0.xml">- Select One -</option>
-                  <option value="core.teragrid.org-4.0.0.xml">Core Integration</option>
-                  <option value="login.teragrid.org-4.0.0.xml">Remote Login</option>
-                  <option value="remote-compute.teragrid.org-4.0.0.xml">Remote Compute</option>
-                  <option value="data-move.xml">Data Movement</option>
-                  <option value="data-manage.xml">Data Management</option>
-                  <option value="wan-parallel-app.teragrid.org-4.0.0.xml">Wide Area Parallel File Systems</option>
-                  <option value="app-support.teragrid.org-4.0.0.xml">Application Development &amp; Runtime Support</option>
-                  <option value="workflow.teragrid.org-4.0.0.xml">Science Workflow Support</option>
-                  <option value="parallel-app.teragrid.org-4.0.0.xml">Parallel Application Support</option>
-                  <option value="dist-para-apps.xml">Distributed Parallel Application Support</option>
+                <select name="suiteName" onchange="this.form.xmlFile.value = this.options[this.selectedIndex].value + '.xml';">
+                  <option value="core.teragrid.org-4.0.0">- Select One -</option>
+                  <option value="core.teragrid.org-4.0.0">Core Integration</option>
+                  <option value="login.teragrid.org-4.0.0">Remote Login</option>
+                  <option value="remote-compute.teragrid.org-4.0.0">Remote Compute</option>
+                  <option value="data-move">Data Movement</option>
+                  <option value="data-manage">Data Management</option>
+                  <option value="wan-parallel-app.teragrid.org-4.0.0">Wide Area Parallel File Systems</option>
+                  <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support</option>
+                  <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
+                  <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
+                  <option value="dist-para-apps">Distributed Parallel Application Support</option>
  		</select></p>
         </td>
         <td> <p>RESOURCE:<br/>
@@ -43,10 +43,11 @@
               </select>
             </p>
 	</td>
-              <td><input type="hidden" name="suiteName" value="ctss-v3"/>
+              <td>
+		<input type="hidden" name="xmlFile" value=""/>
                 <input type="hidden" name="xsl" value="ctssv4.xsl"/>
                 <input type="hidden" name="markOld" value=""/>
-              <input type="submit" name="Submit" value="Submit"/></td>
+              	<input type="submit" name="Submit" value="Submit"/></td>
           </tr></table>
 	</form>
 </xsl:template>
