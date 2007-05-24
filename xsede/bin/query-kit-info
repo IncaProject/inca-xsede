@@ -6,12 +6,11 @@ use warnings;
 my $dir = "/home/inca/mds-kit-info";
 my $configfile = $dir."/results";
 my $tmpfile = $dir."/results.$$";
-#`wsrf-query -a -s https://mds.teragrid.org:8446/wsrf/services/DefaultIndexService \"//*[local-name()='V4KitsRP']\" > $tmpfile`;
 `wget -o /dev/null -O $tmpfile "http://mds.teragrid.org:8080/webmds/webmds?info=tgisinfo&xsl=kitsregistration"`;
 my $diff = `diff $configfile $tmpfile`;
 if ($diff eq ""){
   unlink $tmpfile;
 }else{
-  my $body = "\n\nFile: " . $tmpfile . "\n\n" . $diff;
+  my $body = "\n\nFile: " . $tmpfile;
   `echo \"$body\" | mail -s \"MDS Kit Change\" inca\@sdsc.edu`; 
 }
