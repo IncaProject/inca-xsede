@@ -2896,6 +2896,10 @@
             <value>mpich-g2-1.2.6e-HPC5.0-SUNWspro</value>
             <value>mpich-g2-1.2.6e-HPC5.0-SUNWspro-dbg</value>
           </macro>
+          <macro>
+            <name>condor-key</name>
+            <value>@keyPre@condor-6.9.2-r1 @keyPost@</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3543,50 +3547,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.scheduling.condorg.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@condor-key@@@@post@</context>
-          </series>
-          <nickname>condor-version</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>condor-g==6.9.1</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.admin.tgresid.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
             <args>
@@ -3673,11 +3633,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.scheduling.condorg.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@condor-key@@@@post@</context>
+          </series>
+          <nickname>condor-version</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>condor-g>=6.9.1</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.0.0</guid>
       <description>ctssv4 core suite</description>
-      <version>4</version>
+      <version>9</version>
     </suite>
     <suite>
       <seriesConfigs>
