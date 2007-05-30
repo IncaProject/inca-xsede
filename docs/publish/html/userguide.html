@@ -480,7 +480,11 @@ NAME="USERGUIDE-REQUIREMENTS"
 ><UL
 ><LI
 ><P
->JDK or JRE 1.4.2_09 or greater</P
+>           JDK or JRE 1.4.2_09 or greater.  When run with Java 1.4, the memory
+           usage of Inca components sometimes grows significantly over time.
+           This appears to be a problem in the Java run-time that is fixed in
+           Java 1.5 and 1.6, so use those versions if possible.
+        </P
 ></LI
 ><LI
 ><P
@@ -2027,11 +2031,30 @@ ALIGN="CENTER"></P
   </P
 ><P
 >The targets macro is also defined for the other resource groups since the defaultGrid 
-  contains all other groups.  Macros appear grey if they were defined in a resource group other than the one selected:
-  <P
+  contains all other groups.  As shown in <A
+HREF="#INCAT.MACRO2.FIG"
+>Figure 17</A
+>,
+  macros appear grey if they were defined in a resource group other than the
+  one selected.  You can override an inherited macro value by selecting the
+  macro in the Macros panel and pressing the Edit button to open the macro edit
+  dialog.  After you change the macro value and press OK, the updated macro
+  definition will show in black in the Macros panel, indicating that the
+  resource is no longer using the inherited value.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.MACRO2.FIG"
+></A
+><P
+><B
+>Figure 17. Inherited Macro</B
+></P
+><P
 ><IMG
 SRC="figures/incat/macro2.jpg"
 ALIGN="CENTER"></P
+></DIV
 >
   </P
 ><P
@@ -2714,7 +2737,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN511"
+NAME="AEN514"
 ></A
 ><P
 ><B
@@ -2901,7 +2924,7 @@ groups provide for subclassing.  </P
 ><P
 >The reporter schema is visualized in <A
 HREF="#REPORTER-SCHEMA-FIG"
->Figure 17</A
+>Figure 18</A
 >.
 <DIV
 CLASS="FIGURE"
@@ -2910,7 +2933,7 @@ NAME="REPORTER-SCHEMA-FIG"
 ></A
 ><P
 ><B
->Figure 17. Inca Reporter Schema</B
+>Figure 18. Inca Reporter Schema</B
 ></P
 ><P
 ><IMG
@@ -2937,7 +2960,7 @@ NAME="SAMPLE-REPORT"
 ></A
 ><P
 ><B
->Figure 18. Example of Reporter Output</B
+>Figure 19. Example of Reporter Output</B
 ></P
 ><TABLE
 BORDER="1"
@@ -2993,7 +3016,7 @@ CLASS="SCREEN"
 ><P
 >As shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 18</A
+>Figure 19</A
 >, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
 A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
@@ -3085,7 +3108,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 18</A
+>Figure 19</A
 > report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
@@ -3134,7 +3157,7 @@ CLASS="FILENAME"
 requirement for the contents of this tag is that they must be well-formed
 XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
 HREF="#SAMPLE-REPORT"
->Figure 18</A
+>Figure 19</A
 >
 shows the conventional body for version reporters.
   </P
@@ -3160,7 +3183,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 18</A
+>Figure 19</A
 > report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
@@ -3377,7 +3400,7 @@ determining version.</P
 ><P
 >The following is the Perl code for a reporter that produces output like <A
 HREF="#SAMPLE-REPORT"
->Figure 18</A
+>Figure 19</A
 >.  This reporter 
 uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
@@ -3613,7 +3636,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN718"
+NAME="AEN721"
 ></A
 ><P
 ><B
@@ -3825,7 +3848,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN765"
+NAME="AEN768"
 ></A
 ><P
 ><B
@@ -4516,7 +4539,7 @@ NAME="MANUAL.FIG"
 ></A
 ><P
 ><B
->Figure 19. Add Resource Screen</B
+>Figure 20. Add Resource Screen</B
 ></P
 ><P
 ><IMG
@@ -4940,7 +4963,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN986"
+NAME="AEN989"
 ></A
 ><P
 ><B
