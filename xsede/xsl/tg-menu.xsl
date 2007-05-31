@@ -13,8 +13,8 @@
                   <option value="core.teragrid.org-4.0.0">Core Integration</option>
                   <option value="login.teragrid.org-4.0.0">Remote Login</option>
                   <option value="remote-compute.teragrid.org-4.0.0">Remote Compute</option>
-                  <option value="data-move">Data Movement</option>
-                  <option value="data-manage">Data Management</option>
+                  <option value="data-movement.teragrid.org-4.0.0">Data Movement</option>
+                  <option value="data-management.teragrid.org-4.0.0">Data Management</option>
                   <option value="wan-parallel-app.teragrid.org-4.0.0">Wide Area Parallel File Systems</option>
                   <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support</option>
                   <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
