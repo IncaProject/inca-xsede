@@ -55,19 +55,20 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+	<xsl:variable name="nickName">
+		<xsl:choose>
+               		<xsl:when test="$nickname!=''">
+                        	<xsl:value-of select="$nickname"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          	<xsl:value-of select="$report/name"/>
+                        </xsl:otherwise>
+       		</xsl:choose>
+	</xsl:variable>
         <table width="600" cellpadding="4">
             <tr>
                 <td colspan="2">
-                    <h3><xsl:text>Details for "</xsl:text>
-                      <xsl:choose>
-                        <xsl:when test="$nickname!=''">
-                          <xsl:value-of select="$nickname"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:value-of select="$report/name"/>
-                        </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:text>" series</xsl:text></h3>
+                    <h3><xsl:text>Details for "</xsl:text><xsl:value-of select="$nickName"/><xsl:text>" series</xsl:text></h3>
                 </td>
             </tr>
             <tr>
@@ -215,6 +216,19 @@
                     </td>
                 </tr>
             </xsl:if>
+	    <tr>
+                <td colspan="2" class="header"><xsl:text>Run now command (system admins only):</xsl:text></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <xsl:variable name="repPath" select="$report/reporterPath"/>
+                    <xsl:variable name="incaloc" select="replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" />
+                    <p class="code"> <xsl:text>% cd </xsl:text>
+                        <xsl:value-of select="$incaloc"/>
+                        <xsl:text>; ./bin/teragrid-run-now </xsl:text>
+                        <xsl:value-of select="$nickName"/></p>
+                </td>
+            </tr>
             <xsl:variable name="addComment" select="$url[not(matches(., 'noComment'))]"/>
 	    <xsl:if test="$addComment">
 	    <tr>
