@@ -3,14 +3,20 @@
 use strict;
 use warnings;
 
-my $dir = "/home/inca/mds-kit-info";
-my $configfile = $dir."/results";
-my $tmpfile = $dir."/results.$$";
-`wget -o /dev/null -O $tmpfile "http://mds.teragrid.org:8080/webmds/webmds?info=tgisinfo&xsl=kitsregistration"`;
-my $diff = `diff $configfile $tmpfile`;
+my $dir = "/home/inca/mds";
+my $config = $dir."/query-kit-info.out";
+my $xsl = $dir."/query-kit-info.xsl";
+my $xml = $dir."/query-kit-info.xml.$$";
+my $out = $dir."/query-kit-info.out.$$";
+`echo "<query>" >> $xml`;
+`wsrf-query -a -s https://mds.teragrid.org:8446/wsrf/services/DefaultIndexService "//*[local-name()='V4KitsRP']" >> $xml`;
+`echo "</query>" >> $xml`;
+`export CLASSPATH=\$XSL_CLASS; /soft/java-1.4.2-r1/bin/java net.sf.saxon.Transform -o $out $xml $xsl`;
+my $diff = `diff $config $out`;
 if ($diff eq ""){
-  unlink $tmpfile;
+  unlink $xml;
+  unlink $out;
 }else{
-  my $body = "\n\nFile: " . $tmpfile;
+  my $body = "\n\nFile: " . $out;
   `echo \"$body\" | mail -s \"MDS Kit Change\" inca\@sdsc.edu`; 
 }
