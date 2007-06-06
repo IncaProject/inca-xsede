@@ -45,7 +45,7 @@
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
-                    <h1 class="body"><xsl:text>Inca Results for </xsl:text><xsl:value-of select="/combo/suite/name"/></h1>
+                    <h1 class="body"><xsl:text>Inca Results for globus-mds-auth</xsl:text></h1>
 	            <xsl:variable name="datenow" select="date:new()" />
   	            <xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')" />
 	            <p class="footer">Page loaded: <xsl:value-of select="sdf:format($dateformat, $datenow)" /></p>
@@ -190,7 +190,7 @@
                         </xsl:variable>
                         <xsl:variable name="exit">
                             <xsl:choose>
-                                <xsl:when test="$testname='bg-login1.sdsc.edu-securemds' or $testname='ds001.sdsc.edu-securemds'">
+                                <xsl:when test="$testname='bg-login1.sdsc.edu-securemds'">
                                     <xsl:value-of select="'tkt'" />
                                 </xsl:when>
                                 <xsl:when test="string($instance)=''">
@@ -211,9 +211,6 @@
 					<xsl:choose>
                                           <xsl:when test="$testname='bg-login1.sdsc.edu-securemds'">
                                             <xsl:value-of select="'tkt-136673'"/>
-                                          </xsl:when>
-                                          <xsl:when test="$testname='ds001.sdsc.edu-securemds'">
-                                            <xsl:value-of select="'tkt-137008'"/>
                                           </xsl:when>
                                           <xsl:when test="string($mdshost)!=''">
                                             <xsl:value-of select="$mdshost"/>
