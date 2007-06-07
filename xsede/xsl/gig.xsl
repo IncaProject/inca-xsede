@@ -210,7 +210,7 @@
                                     <a href="{$href}">
 					<xsl:choose>
                                           <xsl:when test="$testname='bg-login1.sdsc.edu-securemds'">
-                                            <xsl:value-of select="'tkt-136673'"/>
+                                            <xsl:value-of select="'tkt-140860'"/>
                                           </xsl:when>
                                           <xsl:when test="string($mdshost)!=''">
                                             <xsl:value-of select="$mdshost"/>
