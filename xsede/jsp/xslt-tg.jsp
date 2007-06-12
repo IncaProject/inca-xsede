@@ -56,24 +56,34 @@
     // get results for a suite
     if ( (suiteName != null)  && (!suiteName.equals("")) ) {
       type = "suite";
-      xml += "<combo>\n";
-      %><inca:getAll2AllSummary
-          suiteName="<%=suiteName%>" retAttrName="all2all"
-      /><%
-      xml += (String)pageContext.getAttribute("all2all");
-      %><inca:getSuiteLatestInstances
-          suiteName="<%=suiteName%>" retAttrName="suite"
-      /><%
-      xml += (String)pageContext.getAttribute("suite");
-      %><inca:getResourceConfig
-        resourceID="<%=resourceID%>" macros="__regexp__" retAttrName="resources"
-      /><%
-      xml += (String)pageContext.getAttribute("resources");
-      %><inca:getXmlFromClasspath
-        xmlFile="<%=xmlFile%>" retAttrName="swStack"
-      /><%
-      xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
-      xml += "</combo>\n";
+      String[] suiteNames = suiteName.split(",");
+      String[] resourceIDs = resourceID.split(",");
+      if ( (resourceIDs.length != 1) && (resourceIDs.length != suiteNames.length) ){
+        out.println("The resourceID parameter must contain either 1 or "+suiteNames.length+" resources.<br/><br/>");
+      }else{
+        String[] useResources = new String[suiteNames.length];
+        if ( resourceIDs.length == 1){
+          for(int i=0; i<useResources.length; i++) {
+              useResources[i] = resourceIDs[0];
+          }
+        }else{
+            useResources = resourceIDs;
+        }
+        xml += "<combo>\n";
+        for(int i=0; i<suiteNames.length; i++) {
+            xml += "<suiteResults>\n";
+            %><inca:getAll2AllSummary suiteName="<%=suiteNames[i]%>" retAttrName="all2all"/><%
+            xml += (String)pageContext.getAttribute("all2all");
+            %><inca:getSuiteLatestInstances suiteName="<%=suiteNames[i]%>" retAttrName="suite"/><%
+            xml += (String)pageContext.getAttribute("suite");
+            %><inca:getResourceConfig resourceID="<%=useResources[i]%>" macros="__regexp__" retAttrName="resources"/><%
+            xml += (String)pageContext.getAttribute("resources");
+            xml += "\n</suiteResults>\n";
+          }
+          %><inca:getXmlFromClasspath xmlFile="<%=xmlFile%>" retAttrName="swStack"/><%
+          xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
+          xml += "</combo>";
+      }
     } else if ( instanceID != null && ! instanceID.equals("")  ) {
       type ="test"; // get results for a single test
       %><inca:getInstance configID="<%=configID%>" instanceID="<%=instanceID%>" retAttrName="instance"/>
