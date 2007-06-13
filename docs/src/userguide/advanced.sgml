@@ -182,9 +182,9 @@ Verifying password - Enter PEM pass phrase: new-passphrase
       manager (e.g., $RM_INSTALL_DIR) and change to that
       directory.</para></listItem> 
       <listItem><para>Download
-      <ulink url="http://inca.sdsc.edu/releases/2.02/Inca-ReporterManager.tar.gz">reporter manager tarball</ulink></para></listItem>
+      <ulink url="http://inca.sdsc.edu/releases/2.03/Inca-ReporterManager.tar.gz">reporter manager tarball</ulink></para></listItem>
       <listItem><para>Download
-      <ulink url="http://inca.sdsc.edu/releases/2.02/buildRM.sh">reporter manager build script</ulink></para></listItem>
+      <ulink url="http://inca.sdsc.edu/releases/2.03/buildRM.sh">reporter manager build script</ulink></para></listItem>
       <listItem><para>Contact your Inca administrator for a set of
       credentials.  You should receive files called rmcert.pem, rmkey.pem,
       and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
@@ -204,7 +204,7 @@ bin                            etc          sbin
 common  log4j.properties  rmcert.pem  rmkey.pem  trusted
       </screen>
       <para>Next, install the initial set of reporters and their
-      libraries.  Download <ulink url="http://inca.sdsc.edu/releases/2.02/Inca-Reporter.tar.gz">Inca reporters tarball</ulink>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</para>
+      libraries.  Download <ulink url="http://inca.sdsc.edu/releases/2.03/Inca-Reporter.tar.gz">Inca reporters tarball</ulink>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</para>
       <screen>
 % cd $RM_INSTALL_DIR/var
 % tar zxvf ../Inca-Reporter.tar.gz
@@ -297,6 +297,176 @@ the reporter manager.  These emails do not necessarily contain changes to the su
 
 </section>
 
+<section id="userguide-advanced-manual-test-update">
+<title>Manual Test Result Update</title>
+ 
+<para>To invoke a test to run sooner than its regularly scheduled time (e.g.,
+after some system modification), use the reporter manager's <filename>inca-run-now</filename> script 
+in the <filename>$INCA_DIST/bin</filename> directory as described below.</para>
+
+<orderedList>
+
+
+<listItem><para> 
+Log into the inca account on the desired resource and change to the $INCA_DIST directory.
+You may need to set the PERL5LIB variable to include the script's modules.
+<screen>% cd $INCA_DIST; setenv PERL5LIB $INCA_DIST/lib/perl:$PERL5LIB</screen>
+</para></listItem> 
+
+<listItem><para> 
+Execute the <filename>inca-run-now</filename> script with the parameters for
+your inca installation.  Below is an example of executing the "ant_version"
+series and sending results to the depot.  Replace "incas://localhost:6324" with
+your depot URI, replace "localResource" with the resource name for your
+reporter manager, and replace "ant_version" with the name of any series to run.
+The password is the same as the password used in the createauth step of
+installing inca.
+</para><para>You may need to add the "-u" parameter for the appropriate user if the reporter
+manager is not running as inca.  You can also print the XML result that 
+gets sent to the Inca server in <filename>$INCA_DIST/var/run-now.log</filename> 
+by using the "-L DEBUG" flag.
+<screen>% ./bin/inca-run-now -c etc/rmcert.pem -d <emphasis role="red">incas://localhost:6324</emphasis> -k etc/rmkey.pem -P "stdin:password:" -t etc/trusted -i <emphasis role="red">localResource ant_version</emphasis>
+password:*********
+Started Inca reporter-manager</screen>
+</para></listItem> 
+
+<listItem><para> 
+Check for errors in <filename>$INCA_DIST/var/run-now.log</filename>.
+Wait about 10-15 minutes to view the result on your inca status page (data is 
+cached and takes a few minutes to update).
+</para></listItem> 
+
+<listItem><para> 
+<emphasis role="red">(optional)</emphasis>Execute multiple tests: in order 
+to specify that more than one test be executed, 
+use a Perl regex expression instead of the test name like:
+<screen>% ./bin/inca-run-now ... &lt;perl regex&gt;</screen>
+</para><para>
+For example, to execute all ant tests
+<screen>% ./bin/inca-run-now ... "ant.*"</screen>
+</para><para>
+In order to check your regular expression, you can use the "-l" flag. 
+This option will list the tests but will NOT execute them. 
+For example, to display all ant tests that would be executed:
+<screen>% ./bin/inca-run-now ... -l "ant.*"
+Suite:  sampleSuite (2 series)
+  ant_helloworld_compile_test
+  ant_version</screen>
+</para><para>
+To view all tests, use the regular expression ".*" as below:
+<screen>% ./bin/inca-run-now ... -l ".*"</screen>
+</para><para>
+You will notice that test names are listed under a "Suite: &lt;name&gt;" header. 
+You can also use that suite name to execute all of the tests included in it. 
+For example, the following shows the tests available in the sampleSuite kit:
+<screen>Suite:  sampleSuite (10 series)
+  ant_helloworld_compile_test
+  ant_version
+  gcc_hello_world
+  gcc_version
+  java_hello_world
+  java_version
+  openssh_version
+  openssl_version
+  vtk-nvgl_version
+  wget_page_test</screen>
+</para><para>
+To execute all test in a kit using the suite name, type:
+<screen>% ./bin/inca-run-now ... sampleSuite</screen>
+</para></listItem> 
+</orderedList>
+
+<para> 
+To allow system administrators or others to use the <filename>inca-run-now</filename> script with their own password, 
+copy the reporter manager key and cert for them and change the password:
+<screen>% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem; cp rmcert.pem admincert.pem; chmod 600 adminkey.pem; ssh-keygen -p
+
+Enter file in which the key is (/home/.ssh/id_rsa): /home/incaReporterManager/etc/adminkey.pem
+Enter old passphrase: 
+Key has comment '/home/incaReporterManager/etc/adminkey.pem'
+Enter new passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved with the new passphrase.
+</screen>
+</para>
+
+<para>For convenience, a custom wrapper script like the one below could be created and 
+saved in the $INCA_DIST/bin directory so that tests could be executed like 
+<filename>% ./bin/inca-run-now-wrapper &lt;test-to-run&gt;</filename>:
+<screen>#!/bin/sh
+
+DEPOT=incas://localhost:6324
+RESOURCE=localResource
+
+if ( test -z "${PERL5LIB}" ); then
+  PERL5LIB=lib/perl
+else
+  PERL5LIB=lib/perl:${PERL5LIB}
+fi
+export PERL5LIB
+
+./bin/inca-run-now -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*
+</screen></para>
+
+<para>Run the script with the "-h" flag for help information:
+<screen>% ./bin/inca-run-now -h
+
+Usage:
+    inca-run-now [options] &lt;pattern&gt;...
+
+Options:
+    a|--agent
+         A string containing the URI to the agent that can be contacted for
+         proxy information: inca[s]://&lt;host&gt;:&lt;port&gt; [default: none]
+
+    -c|--cert
+         A path to a valid certificate file [default: none]
+
+    -d|--depot
+         A string containing the URI of the Inca depot server to send the
+         results to: inca[s]://&lt;host&gt;:&lt;port&gt; [default: none]
+
+    -i|-id
+         The resource identifier supplied by the reporter agent that the
+         reporter manager will use to identify itself back to the reporter
+         agent.
+
+    -k|--key
+         A path to a valid key file [default: none]
+
+    -L|--level
+         A string containing the log message level (i.e., print statements
+         of this level and higher). [default: INFO]
+
+    -l|--list
+         List the series nicknames that would be executed but do not run
+         them.
+
+    -P|--passphrase
+    -r|--reporter-cache
+         A string containing the path to the local cache of reporters.
+
+         Read a passphrase for key from stdin
+
+    -s|--schedule
+         Path to filename containing the current execution schedule for this
+         reporter manager [default: &lt;INCA_DIST&gt;/var/schedule.xml]
+
+    -S|--suite
+         Force the patterns to be matched against suite names.
+
+    -t|--trusted
+         A path to either a directory or file of trusted certificates
+         [default: none]
+
+    -u|--user
+         The name of the account that the Inca deployment is running under
+         [default: inca]
+</screen>
+</para>
+
+</section>
+
 <section id="userguide-advanced-srcdist">
 <title>Source Distributions</title>
  
@@ -317,35 +487,35 @@ the reporter manager.  These emails do not necessarily contain changes to the su
   </thead>
   <tbody>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/inca-agent-src.tar.gz">agent</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/inca-agent-src.tar.gz">agent</ulink></para></entry>
       <entry><para>ant -Dinstalldir=$INCA_DIST install</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/inca-common-java-src.tar.gz">common</ulink> (used by all Inca Java components)</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/inca-common-java-src.tar.gz">common</ulink> (used by all Inca Java components)</para></entry>
       <entry><para>ant -Dinstalldir=$INCA_DIST install</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/inca-consumers-src.tar.gz">consumer</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/inca-consumers-src.tar.gz">consumer</ulink></para></entry>
       <entry><para>ant -Dinstalldir=$INCA_DIST install</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/inca-depot-src.tar.gz">depot</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/inca-depot-src.tar.gz">depot</ulink></para></entry>
       <entry><para>ant -Dinstalldir=$INCA_DIST install</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/incat-src.tar.gz">incat</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/incat-src.tar.gz">incat</ulink></para></entry>
       <entry><para>ant -Dinstalldir=$INCA_DIST install</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/Inca-Reporter.tar.gz">reporters</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/Inca-Reporter.tar.gz">reporters</ulink></para></entry>
       <entry><para>perl Makefile.PL &lt;options&gt;</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/Inca-ReporterManager.tar.gz">reporter manager</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/Inca-ReporterManager.tar.gz">reporter manager</ulink></para></entry>
       <entry><para>perl Makefile.PL &lt;options&gt;</para></entry>
     </row>
     <row>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.02/Inca-WS.tar.gz">web services</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/2.03/Inca-WS.tar.gz">web services</ulink></para></entry>
       <entry><para>perl Makefile.PL &lt;options&gt;</para></entry>
     </row>
   </tbody>
