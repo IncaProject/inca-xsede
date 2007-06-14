@@ -331,7 +331,7 @@ Your identification has been saved with the new passphrase.
 </para></listItem>
 
 <listItem><para>Create a custom wrapper script for <filename>$INCA_DIST/bin/inca-run-now</filename> 
-called <filename>$INCA_DIST/bin/inca-run-now-wrapper</filename> using the script below as an example. 
+called <filename>$INCA_DIST/bin/admin-run-now</filename> using the script below as an example. 
 Use the depot URI for your installation as DEPOT and the agent's name for the resource as RESOURCE.  
 You may need to add the "-u" parameter for the appropriate user if the reporter manager is not running as inca. 
 Run the script with the "-h" flag for more information about its input parameters:
@@ -355,10 +355,10 @@ export PERL5LIB
 </listItem>
 
 <listItem><para> 
-<emphasis role="red">(optional)</emphasis>The command to use the <filename>inca-run-now-wrapper</filename> script could be 
+<emphasis role="red">(optional)</emphasis>The command to use the <filename>admin-run-now</filename> script could be 
 added to the reporter details status pages.  This would require editing the <filename>$INCA_DIST/etc/instance.xsl</filename> 
 file on the machine where the consumer is running and adding the xsl required to print a command like:
-<screen> % cd /home/inca/inca2install; ./bin/inca-run-now-wrapper ant-unit </screen>
+<screen> % cd /home/inca/inca2install; ./bin/admin-run-now ant-unit </screen>
 The xsl would be similar to:
 <screen>&lt;tr&gt;
   &lt;td colspan="2" class="header"&gt;&lt;xsl:text&gt;Run now command (system admins only):&lt;/xsl:text&gt;&lt;/td&gt;
@@ -369,7 +369,7 @@ The xsl would be similar to:
     &lt;xsl:variable name="incaloc" select="replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&gt;
     &lt;p class="code"&gt; &lt;xsl:text&gt;% cd &lt;/xsl:text&gt;
     &lt;xsl:value-of select="$incaloc"/&gt;
-    &lt;xsl:text&gt;; ./bin/inca-run-now-wrapper &lt;/xsl:text&gt;
+    &lt;xsl:text&gt;; ./bin/admin-run-now &lt;/xsl:text&gt;
     &lt;xsl:value-of select="$nickName"/&gt;&lt;/p&gt;
   &lt;/td&gt;
 &lt;/tr&gt;</screen>
@@ -389,15 +389,15 @@ Log into the inca account on the desired resource and change to the $INCA_DIST d
 </para></listItem> 
 
 <listItem><para> 
-Execute <filename>inca-run-now-wrapper</filename> script using the series nickname as the 
+Execute <filename>admin-run-now</filename> script using the series nickname as the 
 input parameter and the password from your inca administrator: 
-<screen>% ./bin/inca-run-now-wrapper ant_version
+<screen>% ./bin/admin-run-now ant_version
 password:*********
 Started Inca reporter-manager</screen>
 You can also print the XML result that gets sent to the Inca server 
 in <filename>$INCA_DIST/var/run-now.log</filename> 
 by using the "-L DEBUG" flag:
-<screen>% ./bin/inca-run-now-wrapper -L DEBUG ant_version
+<screen>% ./bin/admin-run-now -L DEBUG ant_version
 password:*********
 Started Inca reporter-manager</screen>
 </para></listItem> 
@@ -412,21 +412,21 @@ cached and takes a few minutes to update).
 <emphasis role="red">(optional)</emphasis>Execute multiple tests: in order 
 to specify that more than one test be executed, 
 use a Perl regex expression instead of the test name like:
-<screen>% ./bin/inca-run-now-wrapper &lt;perl regex&gt;</screen>
+<screen>% ./bin/admin-run-now &lt;perl regex&gt;</screen>
 </para><para>
 For example, to execute all ant tests
-<screen>% ./bin/inca-run-now-wrapper "ant.*"</screen>
+<screen>% ./bin/admin-run-now "ant.*"</screen>
 </para><para>
 In order to check your regular expression, you can use the "-l" flag. 
 This option will list the tests but will NOT execute them. 
 For example, to display all ant tests that would be executed:
-<screen>% ./bin/inca-run-now-wrapper -l "ant.*"
+<screen>% ./bin/admin-run-now -l "ant.*"
 Suite:  sampleSuite (2 series)
 ant_helloworld_compile_test
 ant_version</screen>
 </para><para>
 To view all tests, use the regular expression ".*" as below:
-<screen>% ./bin/inca-run-now-wrapper -l ".*"</screen>
+<screen>% ./bin/admin-run-now -l ".*"</screen>
 </para><para>
 You will notice that test names are listed under a "Suite: &lt;name&gt;" header. 
 You can also use that suite name to execute all of the tests included in it. 
@@ -444,13 +444,13 @@ vtk-nvgl_version
 wget_page_test</screen>
 </para><para>
 To execute all test in a kit using the suite name, type:
-<screen>% ./bin/inca-run-now-wrapper sampleSuite</screen>
+<screen>% ./bin/admin-run-now sampleSuite</screen>
 </para></listItem> 
 </orderedList>
 
 
 <para>Run the script with the "-h" flag for help information:
-<screen>% ./bin/inca-run-now-wrapper -h</screen>
+<screen>% ./bin/admin-run-now -h</screen>
 </para>
 </section>
 
