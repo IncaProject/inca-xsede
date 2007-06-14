@@ -196,7 +196,7 @@ HREF="#USERGUIDE-ADVANCED-MANUAL"
 ><DT
 >12.4. <A
 HREF="#USERGUIDE-ADVANCED-RUNNOW"
->Manual Run Now (for resource administrators)</A
+>Manual Run Now</A
 ></DT
 ><DT
 >12.5. <A
@@ -4954,21 +4954,23 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW"
->12.4. Manual Run Now (for resource administrators)</A
+>12.4. Manual Run Now</A
 ></H3
 ><P
->Oftentimes resource or system administrators using inca to debug resource
-problem will want to independently run tests before they are scheduled to run
-and send results to the depot.  The inca administrator can provide resource
-administrators with a command line script to execute tests and send results to
-the depot rather than granting them access to incat and its full priviledges.</P
+>Oftentimes resource or system administrators will want to show that a
+problem has been resolved by independently executing inca tests before they are
+scheduled to run so that their results appear on status pages.  Rather than
+granting resource administrators full privileges just to use incat's "run now"
+button, the inca administrator can provide resource administrators with a
+"manual run now" option - a command line script to execute tests and send
+results to the depot.  </P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-CONFIG"
->12.4.1. Configuring Run Now Script</A
+>12.4.1. Configuring the Manual Run Now Script</A
 ></H4
 ><P
 >The instructions below need to be done *once* by the Inca administrator on each 
@@ -4981,7 +4983,7 @@ TYPE="1"
 ><P
 >To allow system administrators or others to execute tests with their own password, 
 copy the reporter manager key and cert for them and change the password. The 
-old password is the same as the password used in the createauth step ofinstalling inca.
+old password is the same as the password used in the createauth step of installing inca.
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -5018,6 +5020,25 @@ CLASS="FILENAME"
 > using the script below as an example. 
 Use the depot URI for your installation as DEPOT and the agent's name for the resource as RESOURCE.  
 You may need to add the "-u" parameter for the appropriate user if the reporter manager is not running as inca. 
+Run the script with the "-h" flag for more information about its input parameters:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% setenv PERL5LIB lib/perl:$PERL5LIB; bin/inca-run-now -h</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Example wrapper script:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -5047,6 +5068,69 @@ export PERL5LIB
 ></TABLE
 ></P
 ></LI
+><LI
+><P
+> 
+<STRONG
+><FONT
+COLOR="RED"
+>(optional)</FONT
+></STRONG
+>The command to use the <TT
+CLASS="FILENAME"
+>inca-run-now-wrapper</TT
+> script could be 
+added to the reporter details status pages.  This would require editing the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/instance.xsl</TT
+> 
+file on the machine where the consumer is running and adding the xsl required to print a command like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> % cd /home/inca/inca2install; ./bin/inca-run-now-wrapper ant-unit </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+The xsl would be similar to:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;tr&#62;
+  &#60;td colspan="2" class="header"&#62;&#60;xsl:text&#62;Run now command (system admins only):&#60;/xsl:text&#62;&#60;/td&#62;
+&#60;/tr&#62;
+&#60;tr&#62;
+  &#60;td colspan="2"&#62;
+    &#60;xsl:variable name="repPath" select="$report/reporterPath"/&#62;
+    &#60;xsl:variable name="incaloc" select="replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&#62;
+    &#60;p class="code"&#62; &#60;xsl:text&#62;% cd &#60;/xsl:text&#62;
+    &#60;xsl:value-of select="$incaloc"/&#62;
+    &#60;xsl:text&#62;; ./bin/inca-run-now-wrapper &#60;/xsl:text&#62;
+    &#60;xsl:value-of select="$nickName"/&#62;&#60;/p&#62;
+  &#60;/td&#62;
+&#60;/tr&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
 ></OL
 ></DIV
 ><DIV
@@ -5055,7 +5139,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-USING"
->12.4.2. Using the Run Now Wrapper Script</A
+>12.4.2. Using the Manual Run Now Script</A
 ></H4
 ><P
 ></P
@@ -5089,12 +5173,7 @@ Execute <TT
 CLASS="FILENAME"
 >inca-run-now-wrapper</TT
 > script using the series nickname as the 
-input parameter and the password from your inca administrator. You can also print the XML result that 
-gets sent to the Inca server in <TT
-CLASS="FILENAME"
->$INCA_DIST/var/run-now.log</TT
-> 
-by using the "-L DEBUG" flag.
+input parameter and the password from your inca administrator: 
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -5106,6 +5185,30 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% ./bin/inca-run-now-wrapper ant_version
+password:*********
+Started Inca reporter-manager</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You can also print the XML result that gets sent to the Inca server 
+in <TT
+CLASS="FILENAME"
+>$INCA_DIST/var/run-now.log</TT
+> 
+by using the "-L DEBUG" flag:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca-run-now-wrapper -L DEBUG ant_version
 password:*********
 Started Inca reporter-manager</PRE
 ></FONT
@@ -5272,59 +5375,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ./bin/inca-run-now-wrapper -h
-
-Usage:
-inca-run-now [options] &#60;pattern&#62;...
-
-Options:
-a|--agent
- A string containing the URI to the agent that can be contacted for
- proxy information: inca[s]://&#60;host&#62;:&#60;port&#62; [default: none]
-
--c|--cert
- A path to a valid certificate file [default: none]
-
--d|--depot
- A string containing the URI of the Inca depot server to send the
- results to: inca[s]://&#60;host&#62;:&#60;port&#62; [default: none]
-
--i|-id
- The resource identifier supplied by the reporter agent that the
- reporter manager will use to identify itself back to the reporter
- agent.
-
--k|--key
- A path to a valid key file [default: none]
-
--L|--level
- A string containing the log message level (i.e., print statements
- of this level and higher). [default: INFO]
-
--l|--list
- List the series nicknames that would be executed but do not run
- them.
-
--P|--passphrase
--r|--reporter-cache
- A string containing the path to the local cache of reporters.
-
- Read a passphrase for key from stdin
-
--s|--schedule
- Path to filename containing the current execution schedule for this
- reporter manager [default: &#60;INCA_DIST&#62;/var/schedule.xml]
-
--S|--suite
- Force the patterns to be matched against suite names.
-
--t|--trusted
- A path to either a directory or file of trusted certificates
- [default: none]
-
--u|--user
- The name of the account that the Inca deployment is running under
- [default: inca]</PRE
+>% ./bin/inca-run-now-wrapper -h</PRE
 ></FONT
 ></TD
 ></TR
@@ -5352,7 +5403,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1034"
+NAME="AEN1044"
 ></A
 ><P
 ><B
