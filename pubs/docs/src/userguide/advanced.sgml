@@ -332,7 +332,7 @@ Your identification has been saved with the new passphrase.
 
 <listItem><para>Create a custom wrapper script for <filename>$INCA_DIST/bin/inca-run-now</filename> 
 called <filename>$INCA_DIST/bin/admin-run-now</filename> using the script below as an example. 
-Use the depot URI for your installation as DEPOT and the agent's name for the resource as RESOURCE.  
+Use the agent and depot URIs for your installation as AGENT and DEPOT and the agent's name for the resource as RESOURCE.  
 You may need to add the "-u" parameter for the appropriate user if the reporter manager is not running as inca. 
 Run the script with the "-h" flag for more information about its input parameters:
 <screen>% setenv PERL5LIB lib/perl:$PERL5LIB; bin/inca-run-now -h</screen>
@@ -340,6 +340,7 @@ Run the script with the "-h" flag for more information about its input parameter
 Example wrapper script:
 <screen>#!/bin/sh
 
+AGENT=incas://localhost:6323
 DEPOT=incas://localhost:6324
 RESOURCE=localResource
 
@@ -350,7 +351,7 @@ PERL5LIB=lib/perl:${PERL5LIB}
 fi
 export PERL5LIB
 
-./bin/inca-run-now -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*
+./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*
 </screen></para>
 </listItem>
 

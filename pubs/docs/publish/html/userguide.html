@@ -5018,7 +5018,7 @@ called <TT
 CLASS="FILENAME"
 >$INCA_DIST/bin/admin-run-now</TT
 > using the script below as an example. 
-Use the depot URI for your installation as DEPOT and the agent's name for the resource as RESOURCE.  
+Use the agent and depot URIs for your installation as AGENT and DEPOT and the agent's name for the resource as RESOURCE.  
 You may need to add the "-u" parameter for the appropriate user if the reporter manager is not running as inca. 
 Run the script with the "-h" flag for more information about its input parameters:
 <TABLE
@@ -5051,6 +5051,7 @@ COLOR="#000000"
 CLASS="SCREEN"
 >#!/bin/sh
 
+AGENT=incas://localhost:6323
 DEPOT=incas://localhost:6324
 RESOURCE=localResource
 
@@ -5061,7 +5062,7 @@ PERL5LIB=lib/perl:${PERL5LIB}
 fi
 export PERL5LIB
 
-./bin/inca-run-now -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*</PRE
+./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*</PRE
 ></FONT
 ></TD
 ></TR
