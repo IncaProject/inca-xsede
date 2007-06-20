@@ -5,26 +5,31 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
 
 <xsl:template name="tg-menu">
-  <form method="get" action="xslt.jsp">
+  <script type="text/javascript">
+    function setResourceAndXml(){
+      document.form.xmlFile.value = document.form.suiteName.value + '.xml';
+      if (document.form.resource.value == "select"){
+        document.form.resourceID.value = document.form.suiteName.value;
+      }else{
+        document.form.resourceID.value = document.form.resource.value;
+      } 
+    }
+  </script>
+  <form method="get" action="xslt.jsp" name="form">
 	<table cellpadding="2">
 	<tr><td><p>KIT:<br/>
-                <select name="suiteName" onchange="this.form.xmlFile.value = this.options[this.selectedIndex].value + '.xml';">
+                <select name="suiteName">
                   <option value="core.teragrid.org-4.0.0">- Select One -</option>
                   <option value="core.teragrid.org-4.0.0">Core Integration</option>
                   <option value="login.teragrid.org-4.0.0">Remote Login</option>
-                  <option value="remote-compute.teragrid.org-4.0.0">Remote Compute</option>
                   <option value="data-movement.teragrid.org-4.0.0">Data Movement</option>
-                  <option value="data-management.teragrid.org-4.0.0">Data Management</option>
-                  <option value="wan-parallel-app.teragrid.org-4.0.0">Wide Area Parallel File Systems</option>
-                  <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support</option>
                   <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
                   <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
-                  <option value="dist-para-apps">Distributed Parallel Application Support</option>
  		</select></p>
         </td>
         <td> <p>RESOURCE:<br/>
-              <select name="resourceID">
-                  <option value="teragrid-login">- Select One -</option>
+              <select name="resource">
+                  <option value="select">- Select One -</option>
                   <option value="teragrid-login">TeraGrid</option>
                 <xsl:for-each select="/combo/resourceConfig/resources/resource[name]">
                   <xsl:sort select="." />
@@ -45,9 +50,10 @@
 	</td>
               <td>
 		<input type="hidden" name="xmlFile" value="core.teragrid.org-4.0.0.xml"/>
+		<input type="hidden" name="resourceID" value=""/>
                 <input type="hidden" name="xsl" value="ctssv4.xsl"/>
                 <input type="hidden" name="markOld" value=""/>
-              	<input type="submit" name="Submit" value="Submit"/></td>
+              	<input type="submit" name="Submit" value="Submit" onclick="setResourceAndXml()"/></td>
           </tr></table>
 	</form>
 </xsl:template>
