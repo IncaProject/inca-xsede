@@ -58,17 +58,12 @@
       type = "suite";
       String[] suiteNames = suiteName.split(",");
       String[] resourceIDs = resourceID.split(",");
+      String[] xmlFiles = xmlFile.split(",");
       if ( (resourceIDs.length != 1) && (resourceIDs.length != suiteNames.length) ){
         out.println("The resourceID parameter must contain either 1 or "+suiteNames.length+" resources.<br/><br/>");
+      }else if( (xmlFiles.length != 1) && (xmlFiles.length != suiteNames.length) ){
+        out.println("The xmlFile parameter must contain either 1 or "+suiteNames.length+" resources.<br/><br/>");
       }else{
-        String[] useResources = new String[suiteNames.length];
-        if ( resourceIDs.length == 1){
-          for(int i=0; i<useResources.length; i++) {
-              useResources[i] = resourceIDs[0];
-          }
-        }else{
-            useResources = resourceIDs;
-        }
         xml += "<combo>\n";
         for(int i=0; i<suiteNames.length; i++) {
             xml += "<suiteResults>\n";
@@ -76,13 +71,27 @@
             xml += (String)pageContext.getAttribute("all2all");
             %><inca:getSuiteLatestInstances suiteName="<%=suiteNames[i]%>" retAttrName="suite"/><%
             xml += (String)pageContext.getAttribute("suite");
-            %><inca:getResourceConfig resourceID="<%=useResources[i]%>" macros="__regexp__" retAttrName="resources"/><%
-            xml += (String)pageContext.getAttribute("resources");
+            if (resourceIDs.length == suiteNames.length) {
+                xml += "<suiteResources>\n";
+                xml += "<resourceName>"+resourceIDs[i]+"</resourceName>\n";
+                %><inca:getResourceConfig resourceID="<%=resourceIDs[i]%>" macros="__regexp__" retAttrName="resources"/><%
+                xml += (String)pageContext.getAttribute("resources");
+                xml += "\n</suiteResources>";
+            }
+            if (xmlFiles.length == suiteNames.length) {
+                %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[i]%>" retAttrName="swStack"/><%
+                xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
+            }
             xml += "\n</suiteResults>\n";
-          }
-          %><inca:getXmlFromClasspath xmlFile="<%=xmlFile%>" retAttrName="swStack"/><%
-          xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
-          xml += "</combo>";
+        }
+        if(resourceIDs.length == 1){
+            %><inca:getResourceConfig resourceID="<%=resourceIDs[0]%>" macros="__regexp__" retAttrName="resources"/><%
+            xml += (String)pageContext.getAttribute("resources");}
+        if(xmlFiles.length == 1){
+            %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[0]%>" retAttrName="swStack"/><%
+            xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
+        }
+        xml += "</combo>";
       }
     } else if ( instanceID != null && ! instanceID.equals("")  ) {
       type ="test"; // get results for a single test
