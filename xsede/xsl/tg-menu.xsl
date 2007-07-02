@@ -27,6 +27,7 @@
                   <option value="login.teragrid.org-4.0.0">Remote Login</option>
                   <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
                   <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
+                  <option value="vtss.teragrid.org-3.0.0">Vizualization Support</option>
  		</select></p>
         </td>
         <td> <p>RESOURCE:<br/>
