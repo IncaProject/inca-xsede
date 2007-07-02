@@ -386,7 +386,7 @@
           </macro>
           <macro>
             <name>sdsc_contact</name>
-            <value/>
+            <value>FailTo:kericson@sdsc.edu, FailTo:kmuriki@sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -2638,6 +2638,10 @@
             <name>java-version</name>
             <value>1.4.2_SR5</value>
           </macro>
+          <macro>
+            <name>gridScheduler</name>
+            <value>LoadLeveler</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3399,10 +3403,6 @@
             <name>mpi-key-parallelKit</name>
             <value>@keyPre@mpich @keyPost@</value>
           </macro>
-          <macro>
-            <name>pacman-3.20-key</name>
-            <value/>
-          </macro>
         </macros>
       </resource>
       <resource>
@@ -3715,46 +3715,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.admin.pacman.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@pacman-key-coreKit@@@@post@</context>
-          </series>
-          <nickname>pacman-unit</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.admin.tgresid.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
             <args>
@@ -3794,50 +3754,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>tgwhatami>=2.3.0  &amp;&amp; tgwhereami>=1.0.0</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.pacman.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@pacman-key-coreKit@@@@post@</context>
-          </series>
-          <nickname>pacman-version</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>pacman>=3.14.1</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -3885,11 +3801,95 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.pacman.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@pacman-key-coreKit@@@@post@</context>
+          </series>
+          <nickname>pacman-unit</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.pacman.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@pacman-key-coreKit@@@@post@</context>
+          </series>
+          <nickname>pacman-version</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>pacman>=3.14.1</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.0.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>9</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -5537,58 +5537,6 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>tgpolicy-unit</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.search.output.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>com</name>
-                <value>tgusage --account TG-STA060008N list --resource teragrid_roaming</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>search</name>
-                <value>.*\\d+\\s+SU\\s+\\d+\\s+SU\\s+\\d+\\s+SU</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>delim</name>
-                <value>\\|</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tgusage-unit</nickname>
           <resourceSetName>teragrid-login</resourceSetName>
           <schedule>
             <cron>
@@ -7819,11 +7767,63 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>tgusage --account TG-STA060008N list --resource teragrid_roaming</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>.*\\d+\\s+SU\\s+\\d+\\s+SU\\s+\\d+\\s+SU</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tgusage-unit</nickname>
+          <resourceSetName>teragrid-login</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>165</version>
+      <version>167</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -8008,6 +8008,7 @@
         <seriesConfig>
           <series>
             <name>cluster.accounting.tgusage.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -8051,6 +8052,7 @@
         <seriesConfig>
           <series>
             <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -8101,15 +8103,16 @@
         </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.0</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>1</version>
+      <version>4</version>
     </suite>
     <suite>
       <seriesConfigs>
         <seriesConfig>
           <series>
             <name>grid.parallel_tools.mpicc.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.parallel_tools.mpicc.unit</uri>
             <args>
               <arg>
                 <name>mpivar</name>
@@ -8160,9 +8163,9 @@
         </seriesConfig>
       </seriesConfigs>
       <name>parallel-app.teragrid.org-4.0.0</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>1</version>
+      <version>4</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -8521,6 +8524,7 @@
         <seriesConfig>
           <series>
             <name>grid.scheduling.gridshell.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.gridshell.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -8563,9 +8567,9 @@
         </seriesConfig>
       </seriesConfigs>
       <name>workflow.teragrid.org-4.0.0</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.0.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>1</version>
+      <version>4</version>
     </suite>
   </suites>
 </inca:inca>
