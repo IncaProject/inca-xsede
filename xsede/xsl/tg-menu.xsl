@@ -25,8 +25,9 @@
                   <option value="data-movement.teragrid.org-4.0.0">Data Movement</option>
                   <option value="remote-compute.teragrid.org-3.0.0">Remote Compute</option>
                   <option value="login.teragrid.org-4.0.0">Remote Login</option>
-                  <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
+                  <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support</option>
                   <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
+                  <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
                   <option value="vtss.teragrid.org-3.0.0">Vizualization Support</option>
  		</select></p>
         </td>
