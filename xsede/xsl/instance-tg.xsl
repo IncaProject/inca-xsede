@@ -23,8 +23,6 @@
     <xsl:template name="test">
         <xsl:variable name="report" select="/combo/reportDetails/report"/>
         <xsl:variable name="config" select="/combo/reportDetails/seriesConfig"/>
-        <xsl:variable name="configId" select="/combo/reportDetails/seriesConfigId"/>
-        <xsl:variable name="nickname" select="$config/nickname"/>
         <xsl:variable name="repname" select="$report/name"/>
         <xsl:variable name="host" select="$report/hostname"/>
         <xsl:variable name="repository" select="substring-before($config/series/uri, $repname)"/>
@@ -57,8 +55,8 @@
         </xsl:variable>
 	<xsl:variable name="nickName">
 		<xsl:choose>
-               		<xsl:when test="$nickname!=''">
-                        	<xsl:value-of select="$nickname"/>
+               		<xsl:when test="$config/nickname!=''">
+                        	<xsl:value-of select="$config/nickname"/>
                         </xsl:when>
                         <xsl:otherwise>
                           	<xsl:value-of select="$report/name"/>
@@ -248,13 +246,14 @@
 		                <p>No comments for this series.</p>
                     </xsl:otherwise>
                 </xsl:choose>
-		<xsl:variable name="https" select="replace($page, 'http://', 'http://')" />
+		<xsl:variable name="https" select="replace($page, 'http://', 'https://')" />
 		<xsl:variable name="jsp" select="replace($https, 'xslt-tg.jsp', 'comments.jsp')" />
+		<xsl:variable name="confid" select="/combo/reportDetails/seriesConfigId" />
 		<br/>
 		<form method="post" action="{$jsp}">
-		       	<input type="hidden" name="series" value="{$configId}"/>
+		       	<input type="hidden" name="series" value="{$confid}"/>
                     	<input type="hidden" name="host" value="{$host}"/>
-                    	<input type="hidden" name="nickname" value="{$nickname}"/>
+                    	<input type="hidden" name="nickname" value="{$config/nickname}"/>
                     	<input type="hidden" name="login" value=""/>
                     	<input type="hidden" name="comment" value=""/>
                     	<input type="hidden" name="author" value=""/>
