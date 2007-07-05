@@ -22,6 +22,7 @@
 
     <xsl:template name="test">
         <xsl:variable name="report" select="/combo/reportDetails/report"/>
+        <xsl:variable name="gmt" select="$report/gmt" as="xs:dateTime" />
         <xsl:variable name="config" select="/combo/reportDetails/seriesConfig"/>
         <xsl:variable name="repname" select="$report/name"/>
         <xsl:variable name="host" select="$report/hostname"/>
@@ -127,14 +128,12 @@
                 <td><xsl:text>ran at</xsl:text></td>
                 <td>
 		    <xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')" />
-        	    <xsl:variable name="gmt" select="$report/gmt" as="xs:dateTime" />
         	    <xsl:value-of select="sdf:format($dateformat, $gmt)" />
                 </td>
             </tr>
             <tr>
                 <td><xsl:text>age</xsl:text></td>
         	<xsl:variable name="now" select="current-dateTime()" />
-        	<xsl:variable name="gmt" select="$report/gmt" as="xs:dateTime" />
         	<xsl:variable name="age" select="$now - $gmt" />
 		<xsl:variable name="age-p" select="replace($age, 'P', '')" />
 		<xsl:variable name="age-d" select="replace($age-p, 'D', ' days ')" />
@@ -246,8 +245,9 @@
 		                <p>No comments for this series.</p>
                     </xsl:otherwise>
                 </xsl:choose>
-		<xsl:variable name="https" select="replace($page, 'http://', 'https://')" />
-		<xsl:variable name="jsp" select="replace($https, 'xslt-tg.jsp', 'comments.jsp')" />
+		<xsl:variable name="port" select="replace($page, ':8080/', ':8443/')" />
+		<xsl:variable name="https" select="replace($port, 'http://', 'https://')" />
+		<xsl:variable name="jsp" select="replace($https, 'xslt.jsp', 'comments.jsp')" />
 		<xsl:variable name="confid" select="/combo/reportDetails/seriesConfigId" />
 		<br/>
 		<form method="post" action="{$jsp}">

@@ -10,7 +10,8 @@
 
 <%
   String urlStr = request.getQueryString();
-  String urlPage = new URL(request.getScheme(), request.getServerName(),request.getServerPort(), request.getRequestURI()).toString();
+  String urlPage = new URL(request.getScheme(), request.getServerName(),
+                           request.getServerPort(), request.getRequestURI()).toString();
   String suiteName = request.getParameter("suiteName");
   String resourceID = request.getParameter("resourceID");
   String instanceID = request.getParameter("instanceID");
@@ -53,17 +54,17 @@
     String xml = "";
     // get results for a suite
     if ( (suiteName != null)  && (!suiteName.equals("")) ) {
-        type = "suite";
-        xml += "<combo>\n";
-        %><inca:getAll2AllSummary suiteName="<%=suiteName%>" retAttrName="all2all"  /><%
-        xml += (String)pageContext.getAttribute("all2all");
-        %><inca:getSuiteLatestInstances suiteName="<%=suiteName%>" retAttrName="suite" /><%
-        xml += (String)pageContext.getAttribute("suite");
-        %><inca:getResourceConfig resourceID="<%=resourceID%>" macros="__regexp__" retAttrName="resources"/><%
-        xml += (String)pageContext.getAttribute("resources");
-        %><inca:getXmlFromClasspath xmlFile="<%=xmlFile%>" retAttrName="swStack" /><%
-        xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
-        xml += "</combo>\n";
+      type = "suite";
+      xml += "<combo>\n";
+      %><inca:getAll2AllSummary suiteName="<%=suiteName%>" retAttrName="all2all"/><%
+      xml += (String)pageContext.getAttribute("all2all");
+      %><inca:getSuiteLatestInstances suiteName="<%=suiteName%>" retAttrName="suite"/><%
+      xml += (String)pageContext.getAttribute("suite");
+      %><inca:getResourceConfig resourceID="<%=resourceID%>" macros="__regexp__" retAttrName="resources"/><%
+      xml += (String)pageContext.getAttribute("resources");
+      %><inca:getXmlFromClasspath xmlFile="<%=xmlFile%>" retAttrName="swStack"/><%
+      xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
+      xml += "</combo>\n";
     } else if ( instanceID != null && ! instanceID.equals("")  ) {
       type ="test"; // get results for a single test
       %><inca:getInstance configID="<%=configID%>" instanceID="<%=instanceID%>" retAttrName="instance"/>
@@ -74,7 +75,7 @@
       </sql:query>
       <c:forEach var="row" items="${comments.rows}">
         <c:set var="rawauthor" value="${row.incaauthor}"/>
-        <c:set var="author"><inca:printXML xml="<%=pageContext.getAttribute("rawauthor").toString()%>"/></c:set>        
+        <c:set var="author"><inca:printXML xml="<%=pageContext.getAttribute("rawauthor").toString()%>"/></c:set>
         <c:set var="date" value="${row.incaentered}"/>
         <c:set var="rawcomment" value="${row.incacomment}"/>
         <c:set var="comment"><inca:printXML xml="<%=pageContext.getAttribute("rawcomment").toString()%>"/></c:set>
@@ -103,11 +104,10 @@
         "path to the xsl file you will use to format the " +
         "following xml <br>" +
         "(e.g. \"http://this.jsp?xsl=/path/to/xsl/file.xsl\"): " +
-        "<br/><br/><pre>"
+        "<br/><br/>"
       );
       %>
-          <inca:printXML xml="<%=xml%>"/>
-          </pre>
+          <pre><inca:printXML xml="<%=xml%>"/></pre>
       <%
     }
   }

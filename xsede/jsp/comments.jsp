@@ -2,6 +2,7 @@
 <%@ taglib uri="sql.tld" prefix="sql" %>
 <%@ taglib uri="c.tld" prefix="c" %>
 <%@ taglib uri="inca.tld" prefix="inca" %>
+<%@page import="java.net.URL"%>
 
 
 <html>
@@ -16,36 +17,41 @@
   String comment = request.getParameter("comment");
   String author = request.getParameter("author");
   String login = request.getParameter("login");
+  String protocol = request.getScheme().toString();
+
+
+
 %>
 <%@ include file="tgpw.jsp" %>
 
-
-<% if ( author == null || comment == null ||
-       (author.equals("") && comment.equals("")) ||
-       !login.equals(tgpw) || login == null  ){ %>
-  <table cellpadding="4">
-    <tr><td><h3>Comment for the "<%=nickname%>" series on <%=host%></h3>
-        <p>Please email <a href="mailto:inca@sdsc.edu">inca@sdsc.edu</a>
-        with problems using this form.</p>
-    </td></tr>
-    <form method="post" action="comments.jsp">
-    <tr><td class="header">Comment:</td></tr>
-    <tr><td><textarea name="comment" cols="50" rows="10"><%=comment%></textarea><br/></td></tr>
-    <tr><td class="header">Name or email:</td></tr>
-    <tr><td><input name="author" type="text" size="50" value="<%=author%>"><br/></td></tr>
-    <tr><td class="header">Password to submit comment:</td></tr>
-    <tr><td>(hint: same password as https://repo.teragrid.org)<br/>
-        <input name="login" type="password" size="50"><br/></td></tr>
-    <tr><td>
-            <input type="hidden" name="series" value="<%=series%>"/>
-            <input type="hidden" name="host" value="<%=host%>"/>
-            <input type="hidden" name="nickname" value="<%=nickname%>"/>
-            <input type="submit" name="Submit" value="add comment"/>
-    </td></tr>
-    </form>
-  </table>
-
+<% if ( !protocol.equals("https") ) { %>
+    <h3>This page requires SSL.</h3>
 <% } else {
+    if ( author == null || comment == null ||
+        (author.equals("") && comment.equals("")) ||
+        !login.equals(tgpw) || login == null  ){ %>
+        <table cellpadding="4">
+            <tr><td><h3>Comment for the "<%=nickname%>" series on <%=host%></h3>
+                <p>Please email <a href="mailto:inca@sdsc.edu">inca@sdsc.edu</a>
+                with problems using this form.</p>
+            </td></tr>
+            <form method="post" action="comments.jsp">
+            <tr><td class="header">Comment:</td></tr>
+            <tr><td><textarea name="comment" cols="50" rows="10"><%=comment%></textarea><br/></td></tr>
+            <tr><td class="header">Name or email:</td></tr>
+            <tr><td><input name="author" type="text" size="50" value="<%=author%>"><br/></td></tr>
+            <tr><td class="header">Password to submit comment:</td></tr>
+            <tr><td>(hint: same password as https://repo.teragrid.org)<br/>
+                <input name="login" type="password" size="50"><br/></td></tr>
+            <tr><td>
+                    <input type="hidden" name="series" value="<%=series%>"/>
+                    <input type="hidden" name="host" value="<%=host%>"/>
+                    <input type="hidden" name="nickname" value="<%=nickname%>"/>
+                    <input type="submit" name="Submit" value="add comment"/>
+            </td></tr>
+            </form>
+        </table>
+    <% } else {
         java.util.Date date = new java.util.Date();
         java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("MM-dd-yy, K:mm a (zz)");
         String entered = fmt.format(date);
@@ -66,5 +72,6 @@
             <sql:param value="${param['author']}"/>
             <sql:param value="${param['comment']}"/>
         </sql:update>
-<%   } %>
+<%     }
+   }%>
 </html>
