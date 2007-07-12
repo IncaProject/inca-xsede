@@ -1,0 +1,966 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Data Display (Data Consumers)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="Inca 2.1 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Administering Inca with incat"
+HREF="userguide-incat.html"><LINK
+REL="NEXT"
+TITLE="Reporters and Repositories"
+HREF="userguide-reporters.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.1 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-incat.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-CONSUMER"
+>6. Data Display (Data Consumers)</A
+></H1
+><P
+>The data that the Inca depot stores, as with all database data, can be displayed in many ways.  A data consumer is anything that 
+retrieves data from the depot and displays it (e.g. a JSP, sql query, CGI, etc.).</P
+><P
+><IMG
+SRC="figures/arch-consumer.jpg"
+ALIGN="CENTER"></P
+><P
+>  Data consumers can query the Inca depot to produce current and historical reports and graphs 
+or customized status information.  The Inca depot comes with two pre-defined queries: 
+<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>given instance and config IDs for a series, returns XML like the following (the results from executing
+a reporter at a particular point in time)
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;reportDetails&#62; 
+  &#60;suiteId&#62;1&#60;/suiteId&#62;
+  &#60;seriesConfigId&#62;5&#60;/seriesConfigId&#62;
+  &#60;seriesId&#62;5&#60;/seriesId&#62;
+  &#60;reportId&#62;1&#60;/reportId&#62;
+  &#60;instanceId&#62;73&#60;/instanceId&#62;
+  &#60;seriesConfig&#62;
+     ...    
+    &#60;nickname&#62;java_hello_world&#60;/nickname&#62;     
+     ...
+  &#60;/seriesConfig&#62;
+  &#60;report&#62;
+     ...
+  &#60;/report&#62;
+  &#60;sysusage&#62;
+     ...
+  &#60;/sysusage&#62;
+  &#60;stderr/&#62;
+&#60;/reportDetails&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>given a suite name, returns XML like the following (the latest report summaries for all of the series in the particular suite)
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;reportSummary&#62;
+  &#60;hostname&#62;Computer.local&#60;/hostname&#62;
+  &#60;uri&#62;http://repository/compiler.any.unit&#60;/uri&#62;
+  &#60;nickname&#62;java_hello_world&#60;/nickname&#62;
+  &#60;seriesConfigId&#62;5&#60;/seriesConfigId&#62;
+  &#60;instanceId&#62;73&#60;/instanceId&#62;
+  &#60;gmt&#62;2006-12-20T16:00:11.000-08:00&#60;/gmt&#62; 
+  &#60;body&#62;
+    &#60;package&#62;
+      &#60;ID&#62;openssl&#60;/ID&#62;
+      &#60;version&#62;0.9.7i&#60;/version&#62;
+    &#60;/package&#62;  
+  &#60;/body&#62;  
+&#60;/reportSummary&#62;
+&#60;reportSummary&#62;...&#60;/reportSummary&#62;
+&#60;reportSummary&#62;...&#60;/reportSummary&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+></P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="DEFAULT-CONSUMER"
+>6.1. Default Data Consumer</A
+></H2
+><P
+>The default data consumer is a <A
+HREF="http://www.mortbay.org/"
+TARGET="_top"
+>Jetty</A
+> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<A
+HREF="http://localhost:8080/index.jsp"
+TARGET="_top"
+>http://localhost:8080/index.jsp</A
+>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <A
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml&#38;xsl=default.xsl"
+TARGET="_top"
+>http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml&#38;xsl=default.xsl</A
+>).</P
+><P
+>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <A
+HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml"
+TARGET="_top"
+>http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xmlFile=swStack.xml</A
+> would produce something similar to: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>&#60;all2allSummaries&#62;  
+(cross-site test results calculated by the consumer): </P
+><P
+>The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
+be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).  <A
+HREF="userguide-incat.html#USERGUIDE-INCAT-ALL2ALL"
+>Section 5.7.1</A
+> describes how to configure all2all tests in incat.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&#62;
+  &#60;resources xmlns=""&#62;
+    &#60;resource&#62;
+      &#60;name&#62;localResource&#60;/name&#62;
+      &#60;testSummaries&#62;
+        &#60;testSummary&#62;
+          &#60;name&#62;gridftp&#60;/name&#62;
+          &#60;numSuccesses&#62;15&#60;/numSuccesses&#62;
+          &#60;numAtFaultFailures&#62;0&#60;/numAtFaultFailures&#62;
+          &#60;numNotAtFaultFailures&#62;1&#60;/numNotAtFaultFailures&#62;
+          &#60;failures/&#62;
+        &#60;/testSummary&#62;
+        &#60;testSummary&#62;
+          &#60;name&#62;gram&#60;/name&#62;
+          &#60;numSuccesses&#62;13&#60;/numSuccesses&#62;
+          &#60;numAtFaultFailures&#62;1&#60;/numAtFaultFailures&#62;
+          &#60;numNotAtFaultFailures&#62;0&#60;/numNotAtFaultFailures&#62;
+          &#60;failures&#62;
+            &#60;failure&#62;
+              &#60;nickname&#62;all2all:gram_to_localResource&#60;/nickname&#62;
+              &#60;instanceId&#62;239352&#60;/instanceId&#62;
+              &#60;seriesConfigId&#62;172057&#60;/seriesConfigId&#62;
+            &#60;/failure&#62;
+          &#60;/failures&#62;
+        &#60;/testSummary&#62;
+      &#60;/testSummaries&#62;
+    &#60;/resource&#62;
+  &#60;/resources&#62;
+&#60;/all2allSummaries&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>&#60;suite&#62; 
+(from xslt.jsp "suiteName" parameter):</P
+><P
+>Array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name 
+and returns summaries for the latest series instance in that suite.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;suite&#62;
+ &#60;reportSummary&#62;
+  &#60;hostname&#62;host1.name&#60;/hostname&#62;
+  &#60;uri&#62;http://repository/globus.unit.xio&#60;/uri&#62;
+  &#60;nickname&#62;gt4-xio&#60;/nickname&#62;
+  &#60;seriesConfigId&#62;115446&#60;/seriesConfigId&#62;
+  &#60;instanceId&#62;118115&#60;/instanceId&#62;
+  &#60;gmt&#62;2006-11-16T23:49:49.000-08:00&#60;/gmt&#62;
+  &#60;body/&#62;
+ &#60;/reportSummary&#62;
+ &#60;reportSummary&#62;
+  &#60;hostname&#62;host2.name&#60;/hostname&#62;
+  &#60;uri&#62;http://repository/globus.unit.xio&#60;/uri&#62;
+  &#60;nickname&#62;gt4-xio&#60;/nickname&#62;
+  &#60;seriesConfigId&#62;115466&#60;/seriesConfigId&#62;
+  &#60;instanceId&#62;219103&#60;/instanceId&#62;
+  &#60;gmt&#62;2006-12-15T01:31:53.000-08:00&#60;/gmt&#62;
+  &#60;body&#62;
+    &#60;unitTest&#62;
+      &#60;ID&#62;xioTest&#60;/ID&#62;
+    &#60;/unitTest&#62;
+  &#60;/body&#62;
+ &#60;/reportSummary&#62;
+&#60;/suite&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>&#60;resourceConfig&#62; 
+(from xslt.jsp "resourceID" parameter):</P
+><P
+>Array of all resources within a given resource group and their macros. 
+This part of the XML is retrieved from the agent.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+      &#60;name&#62;localResource&#60;/name&#62;
+      &#60;macros&#62;
+        &#60;macro&#62;
+          &#60;name&#62;__regexp__&#60;/name&#62;
+          &#60;value&#62;host.sitea.org&#60;/value&#62;
+        &#60;/macro&#62;
+      &#60;/macros&#62;
+    &#60;/resource&#62;
+  &#60;/resources&#62;
+&#60;/resourceConfig&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>extra xml 
+(from xslt.jsp "xmlFile" parameter):</P
+><P
+>XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;stack&#62;
+    &#60;id&#62;Software and Services&#60;/id&#62;
+    &#60;category&#62;
+        &#60;id&#62;Math Libraries&#60;/id&#62;
+        &#60;package&#62;
+            &#60;id&#62;globus&#60;/id&#62;
+            &#60;version&#62;4.0.1&#60;/version&#62;
+            &#60;tests&#62;
+                &#60;version&#62;
+			     &#60;id&#62;gt4-version&#60;/id&#62;
+		       &#60;/version&#62;
+                &#60;unitalias&#62;
+			     &#60;id&#62;gt4-xio&#60;/id&#62;
+		       &#60;/unitalias&#62;
+                &#60;unitalias&#62;
+			     &#60;id&#62;all2all:gram_to_localResource&#60;/id&#62;
+		       &#60;/unitalias&#62;
+            &#60;/tests&#62;
+        &#60;/package&#62;
+    &#60;/category&#62;
+&#60;/stack&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/default.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter (e.g. $INCA_DIST/etc/swStack.xsl).  [ <A
+HREF="http://www.w3schools.com/xsl/"
+TARGET="_top"
+>xsl tutorial</A
+> ] </P
+><P
+>Change default CSS (Cascading Style Sheet) properties such as colors and fonts by editing the $INCA_DIST/var/jetty/webapp/css/inca.css file. [ <A
+HREF="http://www.w3schools.com/css/"
+TARGET="_top"
+>css tutorial</A
+> ]</P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="CONSUMER-ALT-LOCATION"
+>6.2. Non-default Data Consumer Installation</A
+></H2
+><P
+>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
+><P
+></P
+><UL
+><LI
+><P
+>            Copy the <TT
+CLASS="FILENAME"
+>incaInstall.sh</TT
+> script to the machine where the consumer will run.
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.1/incaInstall.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Install consumer on the new machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./incaInstall.sh $INCA_DIST consumers</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>            Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
+        to the new machine:
+          </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/consumerkey.pem $INCA_DIST/etc/; \
+scp <STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/consumercert.pem $INCA_DIST/etc/;
+scp "<STRONG
+><FONT
+COLOR="RED"
+>orig.machine:$ORIG_INCA_DIST</FONT
+></STRONG
+>/etc/trusted/*" $INCA_DIST/etc/trusted/;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Edit the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> local file and specify the full hostname 
+	of the machine where the agent and depot are running:
+            <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>114 inca.consumer.agent=incas://<STRONG
+><FONT
+COLOR="RED"
+>agent.hostname</FONT
+></STRONG
+>:6323
+...
+128 inca.consumer.depot=incas://<STRONG
+><FONT
+COLOR="RED"
+>depot.hostname</FONT
+></STRONG
+>:6324</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+          </P
+></LI
+><LI
+><P
+> Start the consumer component on the new machine: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="HTTPS-CONSUMER"
+>6.3. Enabling https</A
+></H2
+><P
+>By default, the consumer is configured as an http server.  To
+disable http and enable https, edit the <TT
+CLASS="FILENAME"
+>jetty.xml</TT
+> 
+file in <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc</TT
+> and
+<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>comment out the section "Add and configure a HTTP listener to port 8080"</P
+></LI
+><LI
+><P
+>uncomment the section "Add a HTTPS SSL listener on port 8443".</P
+></LI
+></OL
+></P
+><P
+>Note that the example below is to disable http and enable https.  
+However, http and https can be enabled simultaneously if both sections are left uncommented.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  &#60;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&#62;
+  &#60;!-- Add and configure a HTTP listener to port 8080                  --&#62;
+  &#60;!-- The default port can be changed using: java -Djetty.port=80     --&#62;
+  &#60;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&#62;
+  &#60;!-- 
+  &#60;Call name="addListener"&#62;
+    &#60;Arg&#62;
+      &#60;New class="org.mortbay.http.SocketListener"&#62;
+        &#60;Set name="Port"&#62;&#60;SystemProperty name="jetty.port"
+default="8080"/&#62;&#60;/Set&#62;
+  &#60;Set name="PoolName"&#62;P1&#60;/Set&#62;
+        &#60;Set name="MinThreads"&#62;20&#60;/Set&#62;
+        &#60;Set name="MaxThreads"&#62;200&#60;/Set&#62;
+        &#60;Set name="lowResources"&#62;50&#60;/Set&#62;
+        &#60;Set name="MaxIdleTimeMs"&#62;30000&#60;/Set&#62;
+        &#60;Set name="LowResourcePersistTimeMs"&#62;2000&#60;/Set&#62;
+        &#60;Set name="acceptQueueSize"&#62;0&#60;/Set&#62;
+        &#60;Set name="ConfidentialPort"&#62;8443&#60;/Set&#62;
+        &#60;Set name="IntegralPort"&#62;8443&#60;/Set&#62;
+      &#60;/New&#62;
+    &#60;/Arg&#62;
+  &#60;/Call&#62;
+  --&#62;
+
+
+  &#60;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&#62;
+  &#60;!-- Add a HTTPS SSL listener on port 8443                           --&#62;
+  &#60;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&#62;
+  &#60;Call name="addListener"&#62;
+    &#60;Arg&#62;
+      &#60;New class="org.mortbay.http.SslListener"&#62;
+        &#60;Set name="Port"&#62;8443&#60;/Set&#62;
+        &#60;Set name="PoolName"&#62;P1&#60;/Set&#62;
+        &#60;Set name="MaxIdleTimeMs"&#62;30000&#60;/Set&#62;
+        &#60;Set name="lowResources"&#62;30&#60;/Set&#62;
+        &#60;Set name="LowResourcePersistTimeMs"&#62;2000&#60;/Set&#62;
+        &#60;Set name="Keystore"&#62;etc/consumerKeystore&#60;/Set&#62;
+        &#60;Set name="KeyPassword"&#62;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&#60;/Set&#62;
+        &#60;Set name="Password"&#62;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&#60;/Set&#62;
+        &#60;Set name="HttpHandler"&#62;
+          &#60;New class="org.mortbay.http.handler.MsieSslHandler"&#62;
+      &#60;Set name="UserAgentSubString"&#62;MSIE 5&#60;/Set&#62;
+    &#60;/New&#62;
+        &#60;/Set&#62;
+      &#60;/New&#62;
+    &#60;/Arg&#62;
+  &#60;/Call&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Then restart the consumer. </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>./bin/inca stop consumer; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The https server will be on port 8443.  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>https://<STRONG
+><FONT
+COLOR="RED"
+>hostname</FONT
+></STRONG
+>:8443</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="./stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>By default, the https server will use the credential stored in
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/consumerKeystore</TT
+>.  Its DN is 
+"cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd 
+like to generate a certificate with a different DN, run the keytool command as
+follows:</P
+></TD
+></TR
+></TABLE
+></DIV
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname <STRONG
+><FONT
+COLOR="RED"
+>your_DN</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>It will prompt you for a keystore password and a key password.  You can
+either make them different or use the same one.  If you use the password
+"consumer", no further changes are needed.  Otherwise, you will have to modify
+&#60;Set name="KeyPassword"&#62; and &#60;Set name="Password"&#62; in the 
+"Add a HTTPS SSL listener on port 8443" section in <TT
+CLASS="FILENAME"
+>jetty.xml</TT
+>.
+You can either put the password in there in plain text or obfuscate it using 
+Jetty's password utility as follows:</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> 
+java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password <STRONG
+><FONT
+COLOR="RED"
+>your_password</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>It will output two lines such as follows:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q
+MD5:1005b14bd29466723ace30d26f602f5b</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Open <TT
+CLASS="FILENAME"
+>etc/jetty.xml</TT
+> and replace the string beginning with OBF in both &#60;Set
+name="KeyPassword"&#62; and &#60;Set name="Password"&#62; with the string 
+provided by Jetty's password utility: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;Set name="KeyPassword"&#62;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&#60;/Set&#62;
+&#60;Set name="Password"&#62;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&#60;/Set&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="PASSWORD-CONSUMER"
+>6.4. Adding password protection</A
+></H2
+><P
+>By default, a password is not required for a user to access the status pages
+served by the consumer.  To require a password, edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/webdefault.xml</TT
+> 
+and uncomment the section "Require password authentication
+to access Inca status pages".  Note that there are two sections with that
+title -- one for http and the other for https.  Uncomment the appropriate
+section such as:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  &#60;!-- ==================================================================== --&#62;
+  &#60;!-- Require password authentication to access Inca status pages          --&#62;
+  &#60;!--                        (http version)                                --&#62;
+  &#60;!-- ==================================================================== --&#62;
+  &#60;security-constraint&#62;
+    &#60;web-resource-collection&#62;
+      &#60;web-resource-name&#62;Any User&#60;/web-resource-name&#62;
+      &#60;url-pattern&#62;/*&#60;/url-pattern&#62; 
+    &#60;/web-resource-collection&#62;
+    &#60;auth-constraint&#62;
+      &#60;role-name&#62;*&#60;/role-name&#62; 
+    &#60;/auth-constraint&#62;
+  &#60;/security-constraint&#62;
+ 
+  &#60;login-config&#62;
+    &#60;auth-method&#62;BASIC&#60;/auth-method&#62;
+    &#60;realm-name&#62;Inca Status Pages&#60;/realm-name&#62;
+  &#60;/login-config&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>By default, the username and password for the pages will be "inca".  To
+change this, edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/realm.properties</TT
+> and customize the 
+username and password for your installation.  If you do not want to store the
+password in plain text, use Jetty's password utility described in <A
+HREF="userguide-consumer.html#HTTPS-CONSUMER"
+>Section 6.3</A
+>.</P
+><P
+>Then restart the consumer. </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>./bin/inca stop consumer; ./bin/inca start consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The next time you view the status pages, you should see a login like:</P
+><P
+><IMG
+SRC="figures/ug-consumer-password.png"
+ALIGN="CENTER"></P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-incat.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Administering Inca with incat</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Reporters and Repositories</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

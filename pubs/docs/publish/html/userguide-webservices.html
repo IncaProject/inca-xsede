@@ -1,0 +1,525 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Web Services</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="Inca 2.1 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Inca Client APIs"
+HREF="userguide-apis.html"><LINK
+REL="NEXT"
+TITLE="Security"
+HREF="userguide-security.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.1 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-apis.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-WEBSERVICES"
+>9. Web Services</A
+></H1
+><P
+>To access Inca from a Web services API, you will need to install the
+Inca web services component, <TT
+CLASS="FILENAME"
+>incaws</TT
+>. </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sh incaInstall.sh $INCA_DIST incaws</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The results should look similar to:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+--12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+           =&#62; `Inca-WS.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1,226,347 (1.2M) [application/x-tar]
+
+100%[====================================&#62;] 1,226,347     --.--K/s             
+
+12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
+
+Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+Inca-WS-1.6421/
+Inca-WS-1.6421/lib/
+...
+Inca-WS-1.6421/etc/IncaWS.wsdl
+Inca-WS-1.6421/version.svn
+Will install Inca prerequisite Net::SSLeay
+Will install Inca prerequisite IO::Socket::SSL
+Will install Inca prerequisite Expat
+Will install Inca prerequisite LWP::UserAgent
+Will install Inca prerequisite MIME::Base64
+Will install Inca prerequisite SOAP::Lite
+Writing Makefile.perl.inc for Inca-WS
+Inca-WS installed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>To start incaws, specify the port, credentials, and hostname/port for
+the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca incaws --auth=yes --cert=etc/agentcert.pem --key=etc/agentkey.pem --trusted=etc/trusted/<STRONG
+><FONT
+COLOR="RED"
+>origHost</FONT
+></STRONG
+>cert.pem --port=8001 --password=yes <STRONG
+><FONT
+COLOR="RED"
+>depotHost</FONT
+></STRONG
+>:6324 <STRONG
+><FONT
+COLOR="RED"
+>agentHost</FONT
+></STRONG
+>:6323
+<STRONG
+><FONT
+COLOR="RED"
+>enter password (no prompt displayed)</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Check to make sure the incaws is running on port 8001:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% netstat -an | grep 8001
+tcp4       0      0  *.8001                 *.*                    LISTEN</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+Error logs are in $INCA_DIST/var.</P
+><P
+>The WSDL file for the incaws component is in <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/IncaWS.wsdl</TT
+>.  The following table summarizes the available functions. </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN815"
+></A
+><P
+><B
+>Table 4. Web services functions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Function</P
+></TH
+><TH
+><P
+>Description</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>getCatalog( [$url] )</P
+></TD
+><TD
+><P
+>Asks the agent to retrieve and return the package catalog
+      from the reporter repository accessed via $url.  An undefined $url
+      indicates that the agent should return a merged catalog for all known
+      repositories.</P
+></TD
+></TR
+><TR
+><TD
+><P
+>getConfig()</P
+></TD
+><TD
+><P
+>Asks the agent to return XML for the Inca deployment
+      configuration.  </P
+></TD
+></TR
+><TR
+><TD
+><P
+>pingAgent()</P
+></TD
+><TD
+><P
+>Check that the Inca agent is accessible. </P
+></TD
+></TR
+><TR
+><TD
+><P
+>pingDepot()</P
+></TD
+><TD
+><P
+>Check that the Inca depot is accessible. </P
+></TD
+></TR
+><TR
+><TD
+><P
+>queryGuids()</P
+></TD
+><TD
+><P
+>Asks the depot to return a space-separated list of known suite guids.  </P
+></TD
+></TR
+><TR
+><TD
+><P
+>queryHql($hql)</P
+></TD
+><TD
+><P
+>Asks the depot use the HQL select statement $hql to extract
+      and return information from the DB.  On success, returns a reference to
+      an array that contains the objects selected by the select
+      statement.</P
+></TD
+></TR
+><TR
+><TD
+><P
+>queryInstance($instanceId, $configId)</P
+></TD
+><TD
+><P
+>Asks the depot to report details about one particular
+      invocation of a reporter.  $instanceId is the DB id of the instance for
+      the invocation; $configId the related series configuration DB id.  On
+      success, returns a reference to a single-element array that contains a
+      ReportDetails document describing the instance.  </P
+></TD
+></TR
+><TR
+><TD
+><P
+>querySeries($configId)</P
+></TD
+><TD
+><P
+>Asks the depot to retrieve information about all instances
+      related to the series configuration identified by $configId.  On
+      success, returns a reference to an array that contains a set of
+      ReportDetail documents related to the series.
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+>querySuite($guid)</P
+></TD
+><TD
+><P
+>Asks the depot to retrieve information about all the series
+      of the suite identified by $guid.  On success, returns a reference to an
+      array that contains a set of ReportSummary documents related to the
+      series configurations of the suite.  </P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>Below shows an example of how to access the Inca web services from Perl
+using SOAP::Lite.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>use SOAP::Lite;
+use Cwd;
+
+my $cwd = getcwd();
+my $ws = SOAP::Lite-&#62;service("file:$cwd/etc/IncaWS.wsdl");
+
+# check agent and depot are available
+print $ws-&#62;pingAgent('hello agent'), "\n";
+print $ws-&#62;pingDepot('hello depot'), "\n";
+
+# get the Inca configuration
+print $ws-&#62;getConfig(), "\n";
+my $guid = $ws-&#62;queryGuids();
+
+# get the latest instances of a suite
+my $results = $ws-&#62;querySuite( $guid );
+for my $result ( @{$results} ) {
+  print $result;
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Place the above code in a file called <TT
+CLASS="FILENAME"
+>$INCA_DIST/sampleWS.pl</TT
+>
+and set the environment variable PERL5LIB to
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/lib/perl</TT
+>.  Then type, </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>perl sampleWS.pl</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>When run against the default installation, the results should look
+similar to below.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hello agent
+hello depot
+&#60;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&#62;&#60;repositories&#62;&#60;repository&#62;http://inca.sdsc.edu/repository/latest&#60;/repository&#62;&#60;/repositories&#62;&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+        &#60;name&#62;defaultGrid&#60;/name&#62;
+        &#60;xpath&#62;//resource[matches(name, "localSite")]&#60;/xpath&#62;
+      &#60;macros&#62;
+ ...
+  &#60;/resources&#62;
+  &#60;/resourceConfig&#62;&#60;suites&#62;&#60;suite&#62;&#60;seriesConfigs&#62;&#60;seriesConfig&#62;
+              &#60;series&#62;
+                  &#60;name&#62;cluster.math.atlas.version&#60;/name&#62;
+                  &#60;uri&#62;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&#60;/uri&#62;&#60;args&#62;
+                      &#60;arg&#62;&#60;name&#62;cc&#60;/name&#62;&#60;value&#62;cc&#60;/value&#62;&#60;/arg&#62;
+                      &#60;arg&#62;&#60;name&#62;dir&#60;/name&#62;&#60;value/&#62;&#60;/arg&#62;
+                      &#60;arg&#62;&#60;name&#62;help&#60;/name&#62;&#60;value&#62;no&#60;/value&#62;&#60;/arg&#62;
+                      &#60;arg&#62;&#60;name&#62;log&#60;/name&#62;&#60;value&#62;3&#60;/value&#62;&#60;/arg&#62;
+                      &#60;arg&#62;&#60;name&#62;verbose&#60;/name&#62;&#60;value&#62;1&#60;/value&#62;&#60;/arg&#62;
+             &#60;/cron&#62;&#60;/schedule&#62;
+              &#60;action&#62;add&#60;/action&#62;
+          &#60;/seriesConfig&#62;&#60;/seriesConfigs&#62;&#60;name&#62;sampleSuite&#60;/name&#62;&#60;guid&#62;incas://rocks-101.sdsc.edu:6323/sampleSuite&#60;/guid&#62;&#60;description/&#62;&#60;version&#62;1&#60;/version&#62;&#60;/suite&#62;&#60;/suites&#62;&#60;/inca:inca&#62;
+
+&#60;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&#62;
+  &#60;hostname xmlns=""&#62;localResource&#60;/hostname&#62;
+  &#60;uri
+xmlns=""&#62;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&#60;/uri&#62;
+  &#60;nickname xmlns=""&#62;atlas_version&#60;/nickname&#62;
+  &#60;seriesConfigId xmlns=""&#62;1&#60;/seriesConfigId&#62;
+  &#60;instanceId xmlns=""&#62;24&#60;/instanceId&#62;
+  &#60;gmt xmlns=""&#62;2007-02-01T13:21:01.000-08:00&#60;/gmt&#62;
+  &#60;body xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1" xmlns=""/&#62;
+  &#60;errorMessage xmlns=""&#62;Cannot locate ATLAS installation; use
+-dir&#60;/errorMessage&#62;                    
+&#60;/reportSummary&#62;
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-apis.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Inca Client APIs</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Security</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
