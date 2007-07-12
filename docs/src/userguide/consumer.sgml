@@ -237,4 +237,111 @@ scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*"
       </itemizedList>
 </section>
 
+<section id="https-consumer">
+<title>Configure https</title>
+<para>
+By default, the consumer will be configured as an http server.  To
+disable http and enable https, edit the jetty.xml file in $INCA_DIST/etc and
+1) comment out the section "Add and configure a HTTP listener to port 8080" and
+2) uncomment the section "Add a HTTPS SSL listener on port 8443".
+</para>
+<screen>
+  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+  &lt;!-- Add and configure a HTTP listener to port 8080                  --&gt;
+  &lt;!-- The default port can be changed using: java -Djetty.port=80     --&gt;
+  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+  &lt;!-- 
+  &lt;Call name="addListener"&gt;
+    &lt;Arg&gt;
+      &lt;New class="org.mortbay.http.SocketListener"&gt;
+        &lt;Set name="Port"&gt;&lt;SystemProperty name="jetty.port"
+default="8080"/&gt;&lt;/Set&gt;
+  &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
+        &lt;Set name="MinThreads"&gt;20&lt;/Set&gt;
+        &lt;Set name="MaxThreads"&gt;200&lt;/Set&gt;
+        &lt;Set name="lowResources"&gt;50&lt;/Set&gt;
+        &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
+        &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
+        &lt;Set name="acceptQueueSize"&gt;0&lt;/Set&gt;
+        &lt;Set name="ConfidentialPort"&gt;8443&lt;/Set&gt;
+        &lt;Set name="IntegralPort"&gt;8443&lt;/Set&gt;
+      &lt;/New&gt;
+    &lt;/Arg&gt;
+  &lt;/Call&gt;
+  --&gt;
+
+
+  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+  &lt;!-- Add a HTTPS SSL listener on port 8443                           --&gt;
+  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+  &lt;Call name="addListener"&gt;
+    &lt;Arg&gt;
+      &lt;New class="org.mortbay.http.SslListener"&gt;
+        &lt;Set name="Port"&gt;8443&lt;/Set&gt;
+        &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
+        &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
+        &lt;Set name="lowResources"&gt;30&lt;/Set&gt;
+        &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
+        &lt;Set name="Keystore"&gt;etc/consumerKeystore&lt;/Set&gt;
+        &lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+        &lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+        &lt;Set name="HttpHandler"&gt;
+          &lt;New class="org.mortbay.http.handler.MsieSslHandler"&gt;
+      &lt;Set name="UserAgentSubString"&gt;MSIE 5&lt;/Set&gt;
+    &lt;/New&gt;
+        &lt;/Set&gt;
+      &lt;/New&gt;
+    &lt;/Arg&gt;
+  &lt;/Call&gt;
+</screen>
+
+<para>Then restart the consumer. </para> 
+
+<screen>
+./bin/inca stop consumer; ./bin/inca start consumer
+</screen>
+
+<para>The https server will be on port 8443.  </para>
+
+<screen>https://<emphasis role="red">hostname</emphasis>:8443</screen>
+
+<note><para>By default, the https server will use the credential stored in
+$INCA_DIST/etc/consumerKeystore.  Its DN is 
+"cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd 
+like to generate a certificate with a different DN, run the keytool command as
+follows:
+</para>
+</note>
+
+<screen>
+rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname "your DN"
+</screen>
+
+<para>It will prompt you for a keystore password and a key password.  You can
+either make them different or use the same one.  If you use the password
+"consumer", no further changes are needed.  Otherwise, you will have to modify
+&lt;Set name="KeyPassword"&gt; and &lt;Set name="Password"&gt; in the 
+"Add a HTTPS SSL listener on port 8443" section in jetty.xml.
+You can either put the password in there in plain text or obfuscate it using 
+Jetty's password utility as follows:
+</para>
+
+<screen>
+java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password &lt;your-password&gt; 
+</screen>
+
+<para>It will output two lines such as follows:</para>
+
+<screen>
+OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q
+MD5:1005b14bd29466723ace30d26f602f5b
+</screen>
+
+<para>Replace the string beginning with OBF in both &lt;Set
+name="KeyPassword"&gt; and &lt;Set name="Password"&gt; with the string 
+provided by Jetty's password utility. 
+</para>
+
+</section>
+
 </section>
