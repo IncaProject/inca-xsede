@@ -240,10 +240,19 @@ scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*"
 <section id="https-consumer">
 <title>Enabling https</title>
 <para>
-By default, the consumer will be configured as an http server.  To
-disable http and enable https, edit the jetty.xml file in $INCA_DIST/etc and
-1) comment out the section "Add and configure a HTTP listener to port 8080" and
-2) uncomment the section "Add a HTTPS SSL listener on port 8443".
+By default, the consumer is configured as an http server.  To
+disable http and enable https, edit the <filename>jetty.xml</filename> 
+file in <filename>$INCA_DIST/etc</filename> and
+<orderedList>
+<listItem><para>
+comment out the section "Add and configure a HTTP listener to port 8080"
+</para></listItem>
+<listItem><para>
+uncomment the section "Add a HTTPS SSL listener on port 8443".
+</para></listItem>
+</orderedList>
+</para><para>Note that the example below is to disable http and enable https.  
+However, http and https can be enabled simultaneously if both sections are left uncommented.
 </para>
 <screen>
   &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
@@ -306,7 +315,7 @@ default="8080"/&gt;&lt;/Set&gt;
 <screen>https://<emphasis role="red">hostname</emphasis>:8443</screen>
 
 <note><para>By default, the https server will use the credential stored in
-$INCA_DIST/etc/consumerKeystore.  Its DN is 
+<filename>$INCA_DIST/etc/consumerKeystore</filename>.  Its DN is 
 "cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd 
 like to generate a certificate with a different DN, run the keytool command as
 follows:
@@ -314,21 +323,21 @@ follows:
 </note>
 
 <screen>
-rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname "your DN"
+rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
 </screen>
 
 <para>It will prompt you for a keystore password and a key password.  You can
 either make them different or use the same one.  If you use the password
 "consumer", no further changes are needed.  Otherwise, you will have to modify
 &lt;Set name="KeyPassword"&gt; and &lt;Set name="Password"&gt; in the 
-"Add a HTTPS SSL listener on port 8443" section in jetty.xml.
+"Add a HTTPS SSL listener on port 8443" section in <filename>jetty.xml</filename>.
 You can either put the password in there in plain text or obfuscate it using 
 Jetty's password utility as follows:
 </para>
 
 <para id="jetty-password">
 <screen> 
-java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password &lt;your-password&gt; 
+java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password <emphasis role="red">your_password</emphasis>
 </screen>
 </para>
 
@@ -339,22 +348,26 @@ OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q
 MD5:1005b14bd29466723ace30d26f602f5b
 </screen>
 
-<para>Replace the string beginning with OBF in both &lt;Set
+<para>Open <filename>etc/jetty.xml</filename> and replace the string beginning with OBF in both &lt;Set
 name="KeyPassword"&gt; and &lt;Set name="Password"&gt; with the string 
-provided by Jetty's password utility. 
+provided by Jetty's password utility: 
 </para>
+<screen>
+&lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+&lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+</screen>
 
 </section>
 
 <section id="password-consumer">
 <title>Adding password protection</title>
 <para>
-By default, no password is required for a user to access the status pages
-served by the consumer.  To change that, edit the webdefault.xml file
-in $INCA_DIST/etc and uncomment the section "Require password authentication
-to access Inca status pages".  Note, that there are two sections with that
+By default, a password is not required for a user to access the status pages
+served by the consumer.  To require a password, edit <filename>$INCA_DIST/etc/webdefault.xml</filename> 
+and uncomment the section "Require password authentication
+to access Inca status pages".  Note that there are two sections with that
 title -- one for http and the other for https.  Uncomment the appropriate
-section such as below:
+section such as:
 </para>
 
 <screen>
@@ -379,10 +392,10 @@ section such as below:
 </screen>
 
 <para>By default, the username and password for the pages will be "inca".  To
-change this, edit the file realm.properties in $INCA_DIST/etc and customize the 
+change this, edit <filename>$INCA_DIST/etc/realm.properties</filename> and customize the 
 username and password for your installation.  If you do not want to store the
 password in plain text, use Jetty's password utility described in <xref
-linkend="https-consumer"/>.</para>
+linkend="https-consumer">.</para>
   
 <para>Then restart the consumer. </para> 
 
@@ -390,9 +403,7 @@ linkend="https-consumer"/>.</para>
 ./bin/inca stop consumer; ./bin/inca start consumer
 </screen>
 
-<para>The next time view the status pages, you should see a prompt such as 
-below:
-</para>
+<para>The next time you view the status pages, you should see a login like:</para>
 
 <graphic fileref="figures/ug-consumer-password.png" align="center"></graphic>
 
