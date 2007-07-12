@@ -1,0 +1,1097 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Reporters and Repositories</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="Inca 2.1 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Data Display (Data Consumers)"
+HREF="userguide-consumer.html"><LINK
+REL="NEXT"
+TITLE="Inca Client APIs"
+HREF="userguide-apis.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.1 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-apis.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-REPORTERS"
+>7. Reporters and Repositories</A
+></H1
+><P
+>Inca reporters are executable programs and scripts, generally small, that test
+and report the health and characteristics of a system.  The figure below 
+illustrates a typical Inca installation where reporters are retrieved from a repository and sent to Reporter 
+Managers on Grid resources by the Agent.  The Reporter Managers then execute the reporters based on series configuration from the 
+Agent and send the XML reports to the Depot for storage.
+  <P
+><IMG
+SRC="figures/arch-reporters.jpg"
+ALIGN="CENTER"></P
+></P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="REPORTER-CMDLINE"
+>7.1. Executing Reporters</A
+></H2
+><P
+>Because they are executables, Inca reporters are independent of the rest of the Inca system.
+Reporters can be executed manually from a command line or automatically as part of an Inca installation.  
+Incorporating your own reporters into a running Inca installation requires only writing the reporters (<A
+HREF="userguide-reporters.html#REPORTER-WRITING"
+>Section 7.2</A
+>), 
+including them in a repository (<A
+HREF="userguide-reporters.html#REPORTER-REPOSITORIES"
+>Section 7.3</A
+>), 
+and configuring the repository's series using incat (<A
+HREF="userguide-incat.html"
+>Section 5</A
+>).  Most developers will execute reporters from the 
+command line before adding them to their Inca installation.   After installing Inca, you can try executing some of the reporters that come
+with the distribution from the command line:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/Inca-Reporter-*/bin
+% setenv PERL5LIB ../lib
+% ./cluster.compiler.gcc.version </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You should now see XML output like that in <A
+HREF="userguide-reporters.html#REPORTER-OUTPUT"
+>Section 7.2.2</A
+>.</P
+><P
+>All Inca reporters must support the command line arguments listed in the table
+below.  In addition, a reporter may support additional command line arguments
+specific to that reporter's task.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN561"
+></A
+><P
+><B
+>Table 2. Reporter Command Line Arguments</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><COL><THEAD
+><TR
+><TH
+><P
+>Argument</P
+></TH
+><TH
+><P
+>Valid Values</P
+></TH
+><TH
+><P
+>Default Value</P
+></TH
+><TH
+><P
+>Description</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>-help</P
+></TD
+><TD
+><P
+>yes|no</P
+></TD
+><TD
+><P
+>no</P
+></TD
+><TD
+><P
+>    Do not run the reporter; instead, print information on running it.  If
+    the value of the verbose argument is 0, this information will be readable
+    text; otherwise, it will be reporter XML.
+    </P
+></TD
+></TR
+><TR
+><TD
+><P
+>-log</P
+></TD
+><TD
+><P
+>0-5|debug|error|info|system|warn</P
+></TD
+><TD
+><P
+>0</P
+></TD
+><TD
+><P
+>    Include reporter log messages in the reporter output.  The named argument
+    values indicate specific types of log messages that should be included.  0
+    indicates no log messages should be included; the other numeric values
+    indicate error, warn, system, info, and debug messages, cumulatively.  For
+    example, --log=2 indicates both error and warn messages should be included,
+    while --log=4 includes error, warn, system, and info messages.
+    </P
+></TD
+></TR
+><TR
+><TD
+><P
+>-verbose</P
+></TD
+><TD
+><P
+>0-2</P
+></TD
+><TD
+><P
+>1</P
+></TD
+><TD
+><P
+>    Determine what the reporter prints.  A verbose level of 0 indicates that
+    the reporter prints only 'completed' or 'failed', depending on the outcome
+    of its testing.  Verbose level 1 produces XML that reports the testing
+    result, and verbose level 2 adds additional tags to this XML to give
+    instructions on running the reporter.
+    </P
+></TD
+></TR
+><TR
+><TD
+><P
+>-version</P
+></TD
+><TD
+><P
+>yes|no</P
+></TD
+><TD
+><P
+>no</P
+></TD
+><TD
+><P
+>    Do not run the reporter; instead, print its version number.
+    </P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>Executing a reporter using different arguments:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./cluster.compiler.gcc.version -log=3 
+% ./cluster.compiler.gcc.version -help=yes -verbose=0
+% ./cluster.compiler.gcc.version -version=yes</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="REPORTER-WRITING"
+>7.2. Writing Reporters</A
+></H2
+><P
+>Reporters can be written in any language as long as 
+they output XML according to the schema described in <A
+HREF="userguide-reporters.html#REPORTER-SCHEMA"
+>Section 7.2.1</A
+>.  
+New reporter developers may choose to write reporters in Perl since 
+the Inca distribution includes sample Perl reporters and API modules (<A
+HREF="userguide-reporters.html#REPORTER-API"
+>Section 7.2.3</A
+>) 
+for printing XML according to our schema.</P
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORTER-SCHEMA"
+>7.2.1. Reporter XML Schema</A
+></H3
+><P
+>In order to promote interoperability between reporters, we define a
+specification for how reporter output should be formatted.  Given the
+wide acceptance and availability of tools for XML, the specification
+requires that reporter output should be formatted using XML.  Furthermore, we
+specify a basic schema that the XML should follow so
+that we can handle the output in a general manner.   The goal of this schema
+is to be flexible enough to express a wide variety of data.</P
+><P
+>Our approach is to require a number of XML fields which provide metadata about
+the output and define one of the fields, body, to be abstract.  The body
+field is a placeholder for the formatted output and can be replaced by any XML
+ substitution group thereby allowing this schema to accommodate a large variety of output.  In
+other words, the basic schema is like an abstract class and the substitution
+groups provide for subclassing.  </P
+><P
+>The reporter schema is visualized in <A
+HREF="userguide-reporters.html#REPORTER-SCHEMA-FIG"
+>Figure 18</A
+>.
+<DIV
+CLASS="FIGURE"
+><A
+NAME="REPORTER-SCHEMA-FIG"
+></A
+><P
+><B
+>Figure 18. Inca Reporter Schema</B
+></P
+><P
+><IMG
+SRC="figures/reporter-schema.jpg"
+ALIGN="CENTER"></P
+></DIV
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORTER-OUTPUT"
+>7.2.2. Reporter XML Output</A
+></H3
+><P
+>Here is the output from the successful run of a typical Inca reporter.  The
+content and meaning of the XML tags is described below.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="SAMPLE-REPORT"
+></A
+><P
+><B
+>Figure 19. Example of Reporter Output</B
+></P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;?xml version='1.0'?&#62;
+&#60;inca:report xmlns:inca='http://inca.sdsc.edu/dataModel/report_2.1'&#62;
+  &#60;gmt&#62;2006-11-17T17:35:40Z&#60;/gmt&#62;
+  &#60;hostname&#62;jhayes-Computer.local&#60;/hostname&#62;
+  &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
+  &#60;version&#62;2&#60;/version&#62;
+  &#60;workingDir&#62;/Users/jhayes/Inca/subversion/inca/trunk/devel/reporters/bin&#60;/workingDir&#62;
+  &#60;reporterPath&#62;cluster.compiler.gcc.version&#60;/reporterPath&#62;
+  &#60;args&#62;
+    &#60;arg&#62;
+      &#60;name&#62;help&#60;/name&#62;
+      &#60;value&#62;no&#60;/value&#62;
+    &#60;/arg&#62;
+    &#60;arg&#62;
+      &#60;name&#62;log&#60;/name&#62;
+      &#60;value&#62;0&#60;/value&#62;
+    &#60;/arg&#62;
+    &#60;arg&#62;
+      &#60;name&#62;verbose&#60;/name&#62;
+      &#60;value&#62;1&#60;/value&#62;
+    &#60;/arg&#62;
+    &#60;arg&#62;
+      &#60;name&#62;version&#60;/name&#62;
+      &#60;value&#62;no&#60;/value&#62;
+    &#60;/arg&#62;
+  &#60;/args&#62;
+  &#60;body&#62;
+    &#60;package&#62;
+      &#60;ID&#62;gcc&#60;/ID&#62;
+      &#60;version&#62;3.3&#60;/version&#62;
+    &#60;/package&#62;
+  &#60;/body&#62;
+  &#60;exitStatus&#62;
+    &#60;completed&#62;true&#60;/completed&#62;
+  &#60;/exitStatus&#62;
+&#60;/inca:report&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>As shown in <A
+HREF="userguide-reporters.html#SAMPLE-REPORT"
+>Figure 19</A
+>, reporter output begins with an XML preamble and it surrounded by &#60;report&#62; tags.
+A prefix with a tag name that references
+http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
+the report schema, can also be used.</P
+><P
+>The following tags are defined within a &#60;report&#62;:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>gmt</TT
+></DT
+><DD
+><P
+>  the time the reporter ran (ISO 8601 format)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>hostname</TT
+></DT
+><DD
+><P
+>  host where reporter ran
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>name</TT
+></DT
+><DD
+><P
+>  reporter name
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>version</TT
+></DT
+><DD
+><P
+>  reporter version number
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>workingDir</TT
+></DT
+><DD
+><P
+>  directory where reporter execution begins
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>reporterPath</TT
+></DT
+><DD
+><P
+>  local path to reporter file
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>args</TT
+></DT
+><DD
+><P
+>	args must contain an arg name/value entry for every argument the reporter supports, 
+	including those for which the reporter supplies a default value (help, log, verbose, version)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>log</TT
+></DT
+><DD
+><P
+>    OPTIONAL TAG (not shown in <A
+HREF="userguide-reporters.html#SAMPLE-REPORT"
+>Figure 19</A
+> report). Log entries produced by the reporter.  This tag contains one or more
+&#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
+tags, each of which gives the text of the message and the time it was produced.
+Here is a typical example of a log section:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  &#60;log&#62;
+    &#60;system&#62;
+      &#60;gmt&#62;2006-11-17T18:28:10Z&#60;/gmt&#62;
+      &#60;message&#62;grid-proxy-info 2&#38;gt;&#38;amp;1&#60;/message&#62;
+    &#60;/system&#62;
+    &#60;debug&#62;
+      &#60;gmt&#62;2006-11-17T18:28:10Z&#60;/gmt&#62;
+      &#60;message&#62;Checking for grid proxy: Result of command "grid-proxy-info":
+         sh: line 1: grid-proxy-info: command not found
+      &#60;/message&#62;
+    &#60;/debug&#62;
+    &#60;error&#62;
+      &#60;gmt&#62;2006-11-17T18:28:10Z&#60;/gmt&#62;
+      &#60;message&#62;ERROR: Valid proxy needed for file transfer.&#60;/message&#62;
+    &#60;/error&#62;
+  &#60;/log&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>body</TT
+></DT
+><DD
+><P
+>    The body tag contains the results of the reporter testing.  The only
+requirement for the contents of this tag is that they must be well-formed
+XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
+HREF="userguide-reporters.html#SAMPLE-REPORT"
+>Figure 19</A
+>
+shows the conventional body for version reporters.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>exitStatus</TT
+></DT
+><DD
+><P
+>Includes the boolean &#60;completed&#62; tag, indicating whether or not the reporter
+successfully completed its testing, and the optional &#60;errorMessage&#62; tag,
+which contains a string indicating why the reporter failed to complete.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>help</TT
+></DT
+><DD
+><P
+>    OPTIONAL TAG (not shown in <A
+HREF="userguide-reporters.html#SAMPLE-REPORT"
+>Figure 19</A
+> report).  The help tag describes the reporter and how to run it.  Contents include
+the reporter name, version, description, and url, detailed descriptions of each
+argument, and an optional list of dependencies that the reporter has on other
+packages.  For example, here is the &#60;help&#62; section for the gcc version
+reporter.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  &#60;help&#62;
+    &#60;ID&#62;help&#60;/ID&#62;
+    &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
+    &#60;version&#62;2&#60;/version&#62;
+    &#60;description&#62;Reports the version of gcc&#60;/description&#62;
+    &#60;url&#62;http://gcc.gnu.org&#60;/url&#62;
+    &#60;argDescription&#62;
+      &#60;ID&#62;help&#60;/ID&#62;
+      &#60;accepted&#62;no|yes&#60;/accepted&#62;
+      &#60;description&#62;display usage information (no|yes)&#60;/description&#62;
+      &#60;default&#62;no&#60;/default&#62;
+    &#60;/argDescription&#62;
+    &#60;argDescription&#62;
+      &#60;ID&#62;log&#60;/ID&#62;
+      &#60;accepted&#62;[012345]|debug|error|info|system|warn&#60;/accepted&#62;
+      &#60;description&#62;log message types included in report&#60;/description&#62;
+      &#60;default&#62;0&#60;/default&#62;
+    &#60;/argDescription&#62;
+    &#60;argDescription&#62;
+      &#60;ID&#62;verbose&#60;/ID&#62;
+      &#60;accepted&#62;[012]&#60;/accepted&#62;
+      &#60;description&#62;verbosity level (0|1|2)&#60;/description&#62;
+      &#60;default&#62;1&#60;/default&#62;
+    &#60;/argDescription&#62;
+    &#60;argDescription&#62;
+      &#60;ID&#62;version&#60;/ID&#62;
+      &#60;accepted&#62;no|yes&#60;/accepted&#62;
+      &#60;description&#62;show reporter version (no|yes)&#60;/description&#62;
+      &#60;default&#62;no&#60;/default&#62;
+    &#60;/argDescription&#62;
+    &#60;dependency&#62;
+      &#60;ID&#62;Inca::Reporter&#60;/ID&#62;
+    &#60;/dependency&#62;
+    &#60;dependency&#62;
+      &#60;ID&#62;Inca::Reporter::Version&#60;/ID&#62;
+    &#60;/dependency&#62;
+  &#60;/help&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORTER-API"
+>7.2.3. Reporter APIs</A
+></H3
+><P
+>The Inca release includes a set of <A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/"
+TARGET="_top"
+>Perl modules</A
+> that make it easier to
+develop reporters that produce output as shown in <A
+HREF="userguide-reporters.html#REPORTER-OUTPUT"
+>Section 7.2.2</A
+>
+ and conform to the schema described in <A
+HREF="userguide-reporters.html#REPORTER-SCHEMA"
+>Section 7.2.1</A
+>.  
+The following are a list of modules and their purpose (click on module names for manpages):</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter.html"
+TARGET="_top"
+>Inca::Reporter</A
+></P
+><P
+>This module is the general reporter API and is the base class for all types of reporters.
+Inca::Reporter automates determination of hostname, gmt, reporter name, etc.,  handles command-line parsing, 
+provides an interface for log messages, and handles XML generation.</P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/GlobusUnit.html"
+TARGET="_top"
+>Inca::Reporter::GlobusUnit</A
+></P
+><P
+>The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
+provides methods for running Globus jobs.</P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/GridProxy.html"
+TARGET="_top"
+>Inca::Reporter::GridProxy</A
+></P
+><P
+>The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a reporter that requires a proxy:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name =&#62; 'grid.middleware.globus.unit.proxy',
+  version =&#62; 2,
+  description =&#62; 'Verifies that user has valid proxy',
+  url =&#62; 'http://www.globus.org/security/proxy.html',
+  unit_name =&#62; 'validproxy'
+);
+$reporter-&#62;addDependency( "Inca::Reporter::GridProxy" );
+$reporter-&#62;processArgv(@ARGV);
+
+# check to see if proxy has enough time left
+$reporter-&#62;log( 'info', "X509_USER_PROXY=$ENV{X509_USER_PROXY}" );
+my $output = $reporter-&#62;loggedCommand('grid-proxy-info -exists -hours 4 2&#62;&#38;1');
+if( $? != 0 ) {
+  $reporter-&#62;unitFailure("grid-proxy-info failed: $! $output");
+} else {
+  $reporter-&#62;unitSuccess();
+}
+$reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/Performance.html"
+TARGET="_top"
+>Inca::Reporter::Performance</A
+></P
+><P
+>The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
+defines a common &#60;body&#62; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
+parameters (name/value) and statistics (name/value/units). For a single benchmark, the <A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/Performance/Benchmark.html"
+TARGET="_top"
+>Inca::Test::Reporter::Performance::Benchmark</A
+> module is also available.</P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/SimpleUnit.html"
+TARGET="_top"
+>Inca::Reporter::SimpleUnit</A
+></P
+><P
+>The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
+defines a common &#60;body&#62; schema for unit test reporters and provides methods for recording results of unit tests.</P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/Usage.html"
+TARGET="_top"
+>Inca::Reporter::Usage</A
+></P
+><P
+>The Inca::Reporter::Usage module is used for creating simple usage reports.</P
+></LI
+><LI
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.1/perldocs/Inca/Reporter/Version.html"
+TARGET="_top"
+>Inca::Reporter::Version</A
+></P
+><P
+>The Inca::Reporter::Version module is used for reporting software versions.  This package 
+defines a common &#60;body&#62; schema for version reporters,  
+offers support for subpackage versions, and provides convenience methods for common ways of 
+determining version.</P
+></LI
+></OL
+><P
+>The following is the Perl code for a reporter that produces output like <A
+HREF="userguide-reporters.html#SAMPLE-REPORT"
+>Figure 19</A
+>.  This reporter 
+uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
+located in $INCA_DIST/Inca-Reporter-*/bin.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Version;
+
+my $reporter = new Inca::Reporter::Version(
+  name =&#62; 'cluster.compiler.gcc.version',
+  version =&#62; 2,
+  description =&#62; 'Reports the version of gcc',
+  url =&#62; 'http://gcc.gnu.org',
+  package_name =&#62; 'gcc'
+);
+$reporter-&#62;processArgv(@ARGV);
+
+$reporter-&#62;setVersionByExecutable('gcc -dumpversion');
+$reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="REPORTER-REPOSITORIES"
+>7.3. Reporter Repositories</A
+></H2
+><P
+>The Inca system retrieves reporters from external collections called
+repositories.  A reporter repository is simply a file directory, accessed via a
+file: or http: URL, that contains a catalog file named Packages.gz.  This
+gzipped file includes a sequence of name:value attribute pairs for every
+reporter and support package in the repository; blank lines separate the
+attributes for different reporters.  For example, here is a portion of the
+Packages.gz file for the Inca standard reporter repository.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::Version
+description: Reports the version of tgusage
+file: cluster.accounting.tgusage.version
+name: cluster.accounting.tgusage.version
+url: http://www.teragrid.org
+version: 2
+
+arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::SimpleUnit
+description: ant hello world test
+file: cluster.admin.ant.unit
+name: cluster.admin.ant.unit
+version: 3
+
+arguments: help no|yes no;log [012345]|debug|error|info|system|warn 0;verbose [0
+12] 1;version no|yes no
+dependencies: Inca::Reporter;Inca::Reporter::Version
+description: Reports the version of Apache Ant
+file: cluster.admin.ant.version
+name: cluster.admin.ant.version
+version: 2&#13;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Of the attributes shown, only file and name are required.  The file attribute
+gives the relative path to the reporter file, and the name attribute specifies
+the unique package name of the reporter.  If the reporter requires support
+packages to execute, it should include a dependencies attribute with a
+semicolon-separated list of package names.  The incat administration tool uses
+the Packages.gz file's arguments and description attributes as part of its series edit dialog.
+The value of the arguments attribute is a semicolon-separated list giving the
+name, value pattern, and default value, if any, for each supported command-line
+argument.</P
+><P
+>To create a local repository for your own reporters, you only need to collect
+them into a directory and create a Packages.gz in that directory. The default Inca installation has a 
+Packages.gz file in $INCA_DIST/Inca-Reporter-* that can be added in incat.  Inca also supplies a web accessible
+repository that can be added in incat as "http://inca.sdsc.edu/repository/latest/". </P
+><P
+>The Inca
+distribution includes a perl script, incpack, that can create Packages.gz for
+you.  Simply run incpack with a list of reporters that you want to include in
+Packages.gz, e.g.,</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>perl incpack jade.version f77.unit vim.version</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>incpack runs each of the listed reporters with --help=yes --verbose=1 to
+extract a standard set of attributes.  If your reporters use the Inca reporter
+perl modules, you might need to run incpack with a -I switch to specify the
+location of the Inca perl library, like this.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>perl incpack -I ${INCA_DIST}/lib jade.version f77.unit vim.version</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="UPDATE-REPOSITORY"
+>7.4. Updating Reporter Repositories</A
+></H2
+><P
+>The Inca agent will detect changes to your reporter repository and
+automatically send changes to the appropriate reporter managers if you:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>update the reporter version number (ie. change a line like "version =&#62;
+1" to "version =&#62; 2" in the body of the reporter)</P
+></LI
+><LI
+><P
+>make sure the reporter permissions are set so the agent can fetch the
+reporter (755 is the standard reporter permission)</P
+></LI
+><LI
+><P
+>update your Packages.gz file using incpack.  The command will
+be something like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/Inca-Reporter-*; ./sbin/incpack -I lib bin/&#60;reportername&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>wait for the agent to deploy the new reporter automatically (it looks
+for new reporters every four hours by default),</P
+><P
+>*OR*</P
+><P
+>restart the agent,</P
+><P
+>*OR*</P
+><P
+>go to the reporter panel in incat and delete your repository URL and
+commit and then readd the repository URL and commit.  Readding the
+repository URL will force the agent to send out the new reporters.  This option is 
+usually less disruptive than restarting the agent.</P
+></LI
+></OL
+><P
+>If the revised reporter still isn't deployed, look for any errors in the
+$INCA_DIST/var/agent.log that indicate the
+agent was unable to fetch the reporter or skipped over updating it.  Make
+sure there is an active series that uses the reporter with "use latest
+version" checked on the resource your intend it to run on incat.  Look for
+$INCA_DIST/var/repository/repository.xml entries for the
+reporter with "&#60;latestVersion&#62;false&#60;/latestVersion&#62;" (should be
+"&#60;latestVersion&#62;true&#60;/latestVersion&#62;" to get the updated reporters).</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-apis.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Data Display (Data Consumers)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Inca Client APIs</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
