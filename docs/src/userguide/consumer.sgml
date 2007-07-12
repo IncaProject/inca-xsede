@@ -238,7 +238,7 @@ scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*"
 </section>
 
 <section id="https-consumer">
-<title>Configure https</title>
+<title>Enabling https</title>
 <para>
 By default, the consumer will be configured as an http server.  To
 disable http and enable https, edit the jetty.xml file in $INCA_DIST/etc and
@@ -326,9 +326,11 @@ You can either put the password in there in plain text or obfuscate it using
 Jetty's password utility as follows:
 </para>
 
-<screen>
+<para id="jetty-password">
+<screen> 
 java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password &lt;your-password&gt; 
 </screen>
+</para>
 
 <para>It will output two lines such as follows:</para>
 
@@ -341,6 +343,58 @@ MD5:1005b14bd29466723ace30d26f602f5b
 name="KeyPassword"&gt; and &lt;Set name="Password"&gt; with the string 
 provided by Jetty's password utility. 
 </para>
+
+</section>
+
+<section id="password-consumer">
+<title>Adding password protection</title>
+<para>
+By default, no password is required for a user to access the status pages
+served by the consumer.  To change that, edit the webdefault.xml file
+in $INCA_DIST/etc and uncomment the section "Require password authentication
+to access Inca status pages".  Note, that there are two sections with that
+title -- one for http and the other for https.  Uncomment the appropriate
+section such as below:
+</para>
+
+<screen>
+  &lt;!-- ==================================================================== --&gt;
+  &lt;!-- Require password authentication to access Inca status pages          --&gt;
+  &lt;!--                        (http version)                                --&gt;
+  &lt;!-- ==================================================================== --&gt;
+  &lt;security-constraint&gt;
+    &lt;web-resource-collection&gt;
+      &lt;web-resource-name&gt;Any User&lt;/web-resource-name&gt;
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt; 
+    &lt;/web-resource-collection&gt;
+    &lt;auth-constraint&gt;
+      &lt;role-name&gt;*&lt;/role-name&gt; 
+    &lt;/auth-constraint&gt;
+  &lt;/security-constraint&gt;
+ 
+  &lt;login-config&gt;
+    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+    &lt;realm-name&gt;Inca Status Pages&lt;/realm-name&gt;
+  &lt;/login-config&gt;
+</screen>
+
+<para>By default, the username and password for the pages will be "inca".  To
+change this, edit the file realm.properties in $INCA_DIST/etc and customize the 
+username and password for your installation.  If you do not want to store the
+password in plain text, use Jetty's password utility described in <xref
+linkend="https-consumer"/>.</para>
+  
+<para>Then restart the consumer. </para> 
+
+<screen>
+./bin/inca stop consumer; ./bin/inca start consumer
+</screen>
+
+<para>The next time view the status pages, you should see a prompt such as 
+below:
+</para>
+
+<graphic fileref="figures/ug-consumer-password.png" align="center"></graphic>
 
 </section>
 
