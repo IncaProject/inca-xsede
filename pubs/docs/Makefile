@@ -28,10 +28,17 @@ $(TARGETS):
 	make $@.rtf
 
 %.sgml %.html:
-	$(DB2HTML) "$(TOP_DIR)/config/ldp.dsl$(HTML_MODE)" $(CATALOG) -o publish/html --nochunks  src/$*.sgml
-	mkdir -p publish/html/stylesheet-images; cp config/stylesheet-images/*.gif publish/html/stylesheet-images
-	cp config/inca.css publish/html/inca.css
-	rm -rf publish/html/figures; mkdir -p publish/html/figures; cp -r src/figures publish/html
+	doc=`echo userguide.html | sed 's/\.html//'`; \
+	mkdir -p publish/html/$$doc; \
+	$(DB2HTML) "$(TOP_DIR)/config/ldp.dsl$(HTML_MODE)" $(CATALOG) -o publish/html/$$doc src/$*.sgml; \
+	$(DB2HTML) "$(TOP_DIR)/config/ldp.dsl$(HTML_MODE)" $(CATALOG) -o publish/html --nochunks  src/$*.sgml; \
+	mv publish/html/$@ publish/html/$${doc}-one.html; \
+	mv publish/html/$$doc/index.html publish/html/$$doc-index.html; \
+	mv publish/html/$$doc/* publish/html; \
+  rmdir publish/html/$$doc; \
+	mkdir -p publish/html/stylesheet-images; cp config/stylesheet-images/*.gif publish/html/stylesheet-images; \
+	cp config/inca.css publish/html/inca.css; \
+	rm -rf publish/html/figures; mkdir -p publish/html/figures; cp -r src/figures publish/html; \
 	mkdir -p publish/html/schemas; cp src/schemas/*.xsd publish/html/schemas
 
 %.sgml %.pdf:
