@@ -2,7 +2,6 @@
 <%@ taglib uri="sql.tld" prefix="sql" %>
 <%@ taglib uri="c.tld" prefix="c" %>
 <%@ taglib uri="inca.tld" prefix="inca" %>
-<%@page import="java.net.URL"%>
 
 
 <html>
@@ -16,20 +15,16 @@
   String nickname = request.getParameter("nickname");
   String comment = request.getParameter("comment");
   String author = request.getParameter("author");
-  String login = request.getParameter("login");
   String protocol = request.getScheme().toString();
 
 
 
 %>
-<%@ include file="tgpw.jsp" %>
 
 <% if ( !protocol.equals("https") ) { %>
     <h3>This page requires SSL.</h3>
 <% } else {
-    if ( author == null || comment == null ||
-        (author.equals("") && comment.equals("")) ||
-        !login.equals(tgpw) || login == null  ){ %>
+    if ( author == null || comment == null || (author.equals("") && comment.equals("")) ){ %>
         <table cellpadding="4">
             <tr><td><h3>Comment for the "<%=nickname%>" series on <%=host%></h3>
                 <p>Please email <a href="mailto:inca@sdsc.edu">inca@sdsc.edu</a>
@@ -40,9 +35,6 @@
             <tr><td><textarea name="comment" cols="50" rows="10"><%=comment%></textarea><br/></td></tr>
             <tr><td class="header">Name or email:</td></tr>
             <tr><td><input name="author" type="text" size="50" value="<%=author%>"><br/></td></tr>
-            <tr><td class="header">Password to submit comment:</td></tr>
-            <tr><td>(hint: same password as https://repo.teragrid.org)<br/>
-                <input name="login" type="password" size="50"><br/></td></tr>
             <tr><td>
                     <input type="hidden" name="series" value="<%=series%>"/>
                     <input type="hidden" name="host" value="<%=host%>"/>
@@ -61,7 +53,9 @@
                 "<br><br><b>Author:</b> " + author +
                 "<br><br><b>Comment:</b> <pre>" + comment + "</pre></p>");
 
-        String email = "echo \"Author: " + author + "\n\nComment: " + comment + "\" | mail -s \"New TG Status Page Comment\" inca@sdsc.edu";
+        String subject = "New TG Comment for " + nickname + " on " + host;
+        String email = "echo \"Author: " + author + "\n\nComment: " + comment +
+                "\" | mail -s \"" + subject + "\" inca@sdsc.edu";
         String[] shmail = {"/bin/sh", "-c", email};
         Runtime.getRuntime().exec(shmail);  %>
         <%@ include file="db-connect.jsp" %>
