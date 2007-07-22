@@ -97,18 +97,17 @@
     <!-- or printPackage if a specific package is passed in the URL           -->
     <!-- ==================================================================== -->
     <xsl:template name="printSuiteInfo" match="suite">
-        <xsl:variable name="cats" select="../../stack/category"/>
         <xsl:choose>
             <xsl:when test="count(/combo/resourceConfig)=1">
                 <xsl:call-template name="printAllPackages">
                     <xsl:with-param name="resources" select="/combo/resourceConfig/resources/resource[name]"/>
-                    <xsl:with-param name="cats" select="$cats" />
+                    <xsl:with-param name="cats" select="../../stack/category" />
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="printAllPackages">
                     <xsl:with-param name="resources" select="../resourceConfig/resources/resource[name]"/>
-                    <xsl:with-param name="cats" select="$cats" />
+                    <xsl:with-param name="cats" select="../stack/category" />
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
