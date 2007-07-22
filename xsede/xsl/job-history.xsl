@@ -18,20 +18,6 @@
     <xsl:variable name="div" select="','"/>
 
     <xsl:template match="/">
-<xsl:text>
-		
-</xsl:text><xsl:value-of select="series/reportDetails/seriesConfig/series/name"/>
-<xsl:text>
-		
-		
-</xsl:text><xsl:text>Num. jobs per unique user:</xsl:text>
-<xsl:text>
-		
-</xsl:text>	
-	  <xsl:for-each select="series/reportDetails">
-	    <xsl:sort select="report/gmt" data-type="text" order="descending"/>
-            <xsl:variable name="details" select="."/>
-	    <xsl:if test="position() = 1"> 
                 <!-- print DN stats header row -->
                     <xsl:text>Machine</xsl:text><xsl:value-of select="$div"/>
                     <xsl:text>Reporter Status</xsl:text><xsl:value-of select="$div"/>
@@ -41,8 +27,11 @@
                     <xsl:text>User's Distinguished Name (DN)</xsl:text><xsl:value-of select="$div"/>
                     <xsl:text>Num. Jobs</xsl:text>
 <xsl:text>
+
 </xsl:text>	
-            </xsl:if>
+	  <xsl:for-each select="series/reportDetails">
+	    <xsl:sort select="report/gmt" data-type="text" order="descending"/>
+            <xsl:variable name="details" select="."/>
 	        <!-- print DN stats -->
                 <xsl:call-template name="getResults">
                    <xsl:with-param name="details" select="$details"/>

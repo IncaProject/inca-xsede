@@ -4,28 +4,17 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
 
-    <xsl:param name="type"/>
-    <xsl:param name="xsl"/>
-    <xsl:variable name="jsp">
-        <xsl:value-of select="'xslt.jsp?xsl=instance.xsl'"/>
-        <xsl:value-of select="'&amp;instanceID='"/>
-    </xsl:variable>
-
-    <xsl:template match="/">
-        <head>
-            <link href="css/inca.css" rel="stylesheet" type="text/css"/>
-        </head>
-        <body>
-            <xsl:call-template name="suite" />
-        </body>
+    <xsl:template match="/combo">
+        <head><link href="css/inca.css" rel="stylesheet" type="text/css"/></head>
+        <body><xsl:call-template name="suite" /></body>
     </xsl:template>
 
-
     <xsl:template name="suite">
-        <h1 class="body"><xsl:value-of select="combo/stack/id"/></h1>
-	<!-- print table with DN stats -->
+        <h1 class="body"><xsl:value-of select="stack/id"/></h1>
 	<br/><font class="ptext"><b><xsl:text>Num. jobs per unique user:</xsl:text></b></font><br/>
-        <table class="subheader">
+	<!-- print table with DN stats -->
+        <xsl:variable name="resources" select="suiteResults/resourceConfig/resources/resource[name]"/>
+	<table class="subheader">
                 <!-- print header row -->
                 <tr>
                     <td class="header"><xsl:text>Machine</xsl:text></td>
@@ -36,21 +25,18 @@
                     <td class="header"><xsl:text>Num. Jobs</xsl:text></td>
                 </tr>
                 <!-- print row for each resource -->
-                <xsl:if test="count(//resourceConfig/resources/resource)>0">
-                    <xsl:for-each select="//resourceConfig/resources/resource[name]">
-                        <xsl:sort select="."/>
-                        <tr>
-                            <xsl:call-template name="getResults">
-                                <xsl:with-param name="machine" select="name"/>
-                                <xsl:with-param name="col" select="'6'"/>
-                                <xsl:with-param name="ca" select="'0'"/>
-                            </xsl:call-template>
-                        </tr>
-			<tr><td class="midheader" colspan="6"><xsl:text> </xsl:text></td></tr>
-                    </xsl:for-each>
-                </xsl:if>
-        </table>
-	<br/><br/><br/><br/>
+                <xsl:for-each select="$resources">
+                    <xsl:sort select="."/>
+                    <tr>
+                        <xsl:call-template name="getResults">
+                           <xsl:with-param name="machine" select="name"/>
+                           <xsl:with-param name="col" select="'6'"/>
+                           <xsl:with-param name="ca" select="'0'"/>
+                        </xsl:call-template>
+                    </tr>
+		    <tr><td class="midheader" colspan="6"><xsl:text> </xsl:text></td></tr>
+               </xsl:for-each>
+        </table><br/><br/><br/><br/>
 	<!-- print table with CA stats -->
 	<font class="ptext"><b><xsl:text>CA stats:</xsl:text></b></font><br/>
         <table class="subheader">
@@ -65,19 +51,17 @@
                     <td class="header"><xsl:text>Unique User Jobs</xsl:text></td>
                 </tr>
                 <!-- print row for each resource -->
-                <xsl:if test="count(//resourceConfig/resources/resource)>0">
-                    <xsl:for-each select="//resourceConfig/resources/resource[name]">
-                        <xsl:sort select="."/>
-                        <tr>
-                            <xsl:call-template name="getResults">
-                                <xsl:with-param name="machine" select="name"/>
-                                <xsl:with-param name="col" select="'7'"/>
-                                <xsl:with-param name="ca" select="'1'"/>
-                            </xsl:call-template>
-                        </tr>
-			<tr><td class="midheader" colspan="7"><xsl:text> </xsl:text></td></tr>
-                    </xsl:for-each>
-                </xsl:if>
+                <xsl:for-each select="$resources">
+                    <xsl:sort select="."/>
+                    <tr>
+                        <xsl:call-template name="getResults">
+                            <xsl:with-param name="machine" select="name"/>
+                            <xsl:with-param name="col" select="'7'"/>
+                            <xsl:with-param name="ca" select="'1'"/>
+                        </xsl:call-template>
+                    </tr>
+		    <tr><td class="midheader" colspan="7"><xsl:text> </xsl:text></td></tr>
+                </xsl:for-each>
         </table>
     </xsl:template>
 
@@ -134,12 +118,7 @@
             <xsl:choose>
                 <xsl:when test="$uri!=''">
                     <!-- resource is not exempt -->
-                    <xsl:variable name="href">
-                        <xsl:value-of select="$jsp"/>
-                        <xsl:value-of select="$instance"/>
-                        <xsl:value-of select="'&amp;configID='"/>
-                        <xsl:value-of select="$conf"/>
-                    </xsl:variable>
+                    <xsl:variable name="href" select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',$instance,'&amp;configID=',$conf)"/>
                     <xsl:choose>
                         <xsl:when test="$exit!=''">
                             <td class="{$exit}">
