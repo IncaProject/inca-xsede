@@ -38,8 +38,11 @@ binary release. The figure below represents a typical installation.
     <screen>% sh incaInstall.sh $INCA_DIST core</screen>
     <para>$INCA_DIST is the location of the directory where you want to
     install Inca.  You should see something like:
-    <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
---12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+    <screen>
+Retrieving http://inca.sdsc.edu/releases/current/
+inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/
+inca-common-java-bin.tar.gz
 => `inca-common-java-bin.tar.gz'
 Resolving inca.sdsc.edu... 198.202.75.28
 Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
@@ -48,7 +51,8 @@ Length: 5,921,461 [application/x-tar]
 
 100%[======================>] 5,921,461    1.23M/s  ETA 00:00
 
-12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] 
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz'
+saved [5921461/5921461] 
 ...
 common-java installed ...
 agent installed ...
@@ -77,7 +81,8 @@ incat installed</screen>
     stored in $INCA_DIST/etc: 
     </para>
     <para>
-    <screen>password> (choose a password for the administration of your Inca installation)
+    <screen>
+password> (choose a password for your Inca installation administration)
 Generating a 512 bit RSA private key
 .++++++++++++
 writing new private key to 'clientx.sdsc.edukey.pem'
@@ -111,7 +116,7 @@ Initializing Inca configuration...
     state on the Inca depot and configuration on the agent 
     Do you wish to continue (y/n)? y
 Initializing depot...
-Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxIdleTime -> 1800, maxPoolSize -> 10, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 3, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -> null, driverClass -> null, factoryClassLocation -> null, jdbcUrl -> jdbc:hsqldb:test, properties -> {user=******, password=******} ] , preferredTestQuery -> null, propertyCycle -> 300, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, usesTraditionalReflectiveProxies -> false ] , factoryClassLocation -> null, numHelperThreads -> 3, poolOwnerIdentityToken -> 904b13 ] 
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@90....
 Database Initialization Completed
 done
 Initializing agent
@@ -126,27 +131,34 @@ Deploying default configuration
       <para>During this step:</para>
       <itemizedList>
         <listItem><para>three server components are started on localhost:</para>
-<screen>% ps | grep java
- 3527  p1  S      0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l /inca-dist/./bin/../var/agent.log
- 3560  p1  S      0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l /inca-dist/./bin/../var/depot.log
- 3593  p1  S      0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer -l /inca-dist/./bin/../var/consumer.log</screen></listItem>
+<screen>
+% ps | grep java
+3527 p1 S 0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l agent.log
+3560 p1 S 0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l depot.log
+3593 p1 S 0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer consumer.log
+</screen>
+</listItem>
         <listItem><para>a sample suite called <emphasis>sampleSuite</emphasis> is sent to the
         agent requesting reporters to be started on a localhost client using the
         schedule:</para>
-<screen>1-59/10 * * * * cluster.admin.ant.unit  			(ant_helloworld_compile_test)
-2-59/10 * * * * cluster.admin.ant.version  			(ant_version)
-3-59/10 * * * * cluster.compiler.any.unit  			(gcc_hello_world)
-4-59/10 * * * * cluster.compiler.gcc.version  			(gcc_version)
-5-59/10 * * * * cluster.compiler.any.unit  			(java_hello_world)
-6-59/10 * * * * cluster.java.sun.version  			(java_version)
-7-59/10 * * * * cluster.interactive_access.openssh.version	(openssh_version)
-8-59/10 * * * * cluster.security.openssl.version		(openssl_version)
-9-59/10 * * * * viz.lib.vtk-nvgl.version			(vtk-nvgl_version)
-0-59/10 * * * * grid.wget.unit					(wget_page_test)</screen>
+<screen>
+cluster.admin.ant.unit  			(ant_helloworld_compile_test)
+cluster.admin.ant.version  			(ant_version)
+cluster.compiler.any.unit  			(gcc_hello_world)
+cluster.compiler.gcc.version  			(gcc_version)
+cluster.compiler.any.unit  			(java_hello_world)
+cluster.java.sun.version  			(java_version)
+cluster.interactive_access.openssh.version	(openssh_version)
+cluster.security.openssl.version		(openssl_version)
+viz.lib.vtk-nvgl.version			(vtk-nvgl_version)
+grid.wget.unit					(wget_page_test)
+</screen>
         </listItem>
         <listItem><para>a client component is started on localhost:</para>
 	<screen>% ps | grep Manager
- 5382  p1  S      0:02.14 /usr/bin/perl /home/incaReporterManager/sbin/../sbin/reporter-manager -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.</screen>
+5382 p1 S 0:02.14 /usr/bin/perl reporter-manager
+                  -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.
+</screen>
 	<itemizedList>
 	<listItem><para>The agent receives <emphasis>sampleSuite</emphasis> suite and installs a reporter 
           manager on the localhost in <filename>~/incaReporterManager</filename> (takes 1-5 minutes - view progress of build in 
@@ -276,9 +288,10 @@ Deploying default configuration
             Copy the incat key, certificate, and trusted directory from the original machine 
         to your local machine:
           </para>
-          <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatkey.pem $INCA_DIST/etc/; \
-scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatcert.pem $INCA_DIST/etc/;
-scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
+          <screen>
+% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatkey.pem $INCA_DIST/etc/
+% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatcert.pem $INCA_DIST/etc/
+% scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/</screen>
         </listItem>
         <listItem>
           <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and change the agent key/cert to the incat key/cert:

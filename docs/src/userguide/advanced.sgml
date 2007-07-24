@@ -209,7 +209,11 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
 % cd $RM_INSTALL_DIR/var
 % tar zxvf ../Inca-Reporter.tar.gz
 % cd Inca-Reporter-*
-% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages \
+> INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
+> INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
+> INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
+> INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
 % make install
       </screen>
@@ -228,7 +232,8 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
  Message 1:
  From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
  To: inca@sdsc.edu
- Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'manualResource'
+ Subject: [inca notification] change to suite
+          inca://localhost:6323/sampleSuite  for resource 'manualResource'
  Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
 
  &lt;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&gt;
@@ -253,13 +258,30 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
     the catalog: reporters and perl libraries.  Each package has 4 tags:
     dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
    it with any non-default reporters configured in the suite.xml file:
-    <screen>% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml $RM_INSTALL_DIR/var/reporter-packages/repository.xml</screen>
+    <screen>
+% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
+>    $RM_INSTALL_DIR/var/reporter-packages/repository.xml
+    </screen>
    </para>
     
    <para> Finally, you can start up the reporter manager using the
-       following command-line (replace "depotHost" with the hostname where the depot is running): </para>
+       following command-lines (replace "depotHost" with the hostname where the depot is running): </para>
        <screen>
-% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://<emphasis role="red">depotHost</emphasis>:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -s suite.xml -L DEBUG -l var/reporter-manager.log -P true
+% cd $RM_INSTALL_DIR
+% ./sbin/inca reporter-manager \
+> -d incas://<emphasis role="red">depotHost</emphasis>:6324 \
+> -c etc/rmcert.pem \
+> -k etc/rmkey.pem -t etc/trusted \
+> -e bin/inca-null-reporter \
+> -r var/reporter-packages \
+> -R sbin/reporter-instance-manager \
+> -v var \
+> -w 1 \
+> -i manualResource \
+> -s suite.xml \
+> -L DEBUG \
+> -l var/reporter-manager.log \
+> -P true
 </screen>
 <para>Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
@@ -319,9 +341,14 @@ resource where the resource administrator would like to manually run tests.</par
 To allow system administrators or others to execute tests with their own password, 
 copy the reporter manager key and cert for them and change the password. The 
 old password is the same as the password used in the createauth step of installing inca.
-<screen>% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem; cp rmcert.pem admincert.pem; chmod 600 adminkey.pem; ssh-keygen -p
+<screen>
+% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem
+% cp rmcert.pem admincert.pem
+% chmod 600 adminkey.pem
+% ssh-keygen -p
 
-Enter file in which the key is (/home/.ssh/id_rsa): /home/incaReporterManager/etc/adminkey.pem
+Enter file in which the key is (/home/.ssh/id_rsa):
+  /home/incaReporterManager/etc/adminkey.pem
 Enter old passphrase: 
 Key has comment '/home/incaReporterManager/etc/adminkey.pem'
 Enter new passphrase (empty for no passphrase): 
@@ -351,7 +378,9 @@ PERL5LIB=lib/perl:${PERL5LIB}
 fi
 export PERL5LIB
 
-./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*
+./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT \
+                   -k etc/adminkey.pem -P "stdin:password:" \
+                   -t etc/trusted -i $RESOURCE $*
 </screen></para>
 </listItem>
 
@@ -361,19 +390,24 @@ added to the reporter details status pages.  This would require editing the <fil
 file on the machine where the consumer is running and adding the xsl required to print a command like:
 <screen> % cd /home/inca/inca2install; ./bin/admin-run-now ant-unit </screen>
 The xsl would be similar to:
-<screen>&lt;tr&gt;
-  &lt;td colspan="2" class="header"&gt;&lt;xsl:text&gt;Run now command (system admins only):&lt;/xsl:text&gt;&lt;/td&gt;
+<screen>
+&lt;tr&gt;
+  &lt;td colspan="2" class="header"&gt;
+    &lt;xsl:text&gt;Run now command (system admins only):&lt;/xsl:text&gt;
+  &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
   &lt;td colspan="2"&gt;
     &lt;xsl:variable name="repPath" select="$report/reporterPath"/&gt;
-    &lt;xsl:variable name="incaloc" select="replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&gt;
+    &lt;xsl:variable name="incaloc" select=
+      "replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&gt;
     &lt;p class="code"&gt; &lt;xsl:text&gt;% cd &lt;/xsl:text&gt;
     &lt;xsl:value-of select="$incaloc"/&gt;
     &lt;xsl:text&gt;; ./bin/admin-run-now &lt;/xsl:text&gt;
     &lt;xsl:value-of select="$nickName"/&gt;&lt;/p&gt;
   &lt;/td&gt;
-&lt;/tr&gt;</screen>
+&lt;/tr&gt;
+</screen>
 </para></listItem>
 </orderedList>
 </section>

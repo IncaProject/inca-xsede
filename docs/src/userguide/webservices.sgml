@@ -40,7 +40,17 @@ Inca-WS installed
 <para>To start incaws, specify the port, credentials, and hostname/port for
 the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</para>
 
-<screen>% cd $INCA_DIST; ./bin/inca incaws --auth=yes --cert=etc/agentcert.pem --key=etc/agentkey.pem --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem --port=8001 --password=yes <emphasis role="red">depotHost</emphasis>:6324 <emphasis role="red">agentHost</emphasis>:6323
+<screen>
+% cd $INCA_DIST
+% ./bin/inca incaws \
+> --auth=yes \
+> --cert=etc/agentcert.pem \
+> --key=etc/agentkey.pem \
+> --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem \
+> --port=8001 \
+> --password=yes \
+> <emphasis role="red">depotHost</emphasis>:6324 \
+> <emphasis role="red">agentHost</emphasis>:6323
 <emphasis role="red">enter password (no prompt displayed)</emphasis>
 </screen> 
 
@@ -156,7 +166,11 @@ similar to below.</para>
 <screen>
 hello agent
 hello depot
-&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;&lt;repositories&gt;&lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;&lt;/repositories&gt;&lt;resourceConfig&gt;
+&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;
+&lt;repositories&gt;
+  &lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;
+&lt;/repositories&gt;
+&lt;resourceConfig&gt;
   &lt;resources&gt;
     &lt;resource&gt;
         &lt;name&gt;defaultGrid&lt;/name&gt;
@@ -164,23 +178,49 @@ hello depot
       &lt;macros&gt;
  ...
   &lt;/resources&gt;
-  &lt;/resourceConfig&gt;&lt;suites&gt;&lt;suite&gt;&lt;seriesConfigs&gt;&lt;seriesConfig&gt;
-              &lt;series&gt;
-                  &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
-                  &lt;uri&gt;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&lt;/uri&gt;&lt;args&gt;
-                      &lt;arg&gt;&lt;name&gt;cc&lt;/name&gt;&lt;value&gt;cc&lt;/value&gt;&lt;/arg&gt;
-                      &lt;arg&gt;&lt;name&gt;dir&lt;/name&gt;&lt;value/&gt;&lt;/arg&gt;
-                      &lt;arg&gt;&lt;name&gt;help&lt;/name&gt;&lt;value&gt;no&lt;/value&gt;&lt;/arg&gt;
-                      &lt;arg&gt;&lt;name&gt;log&lt;/name&gt;&lt;value&gt;3&lt;/value&gt;&lt;/arg&gt;
-                      &lt;arg&gt;&lt;name&gt;verbose&lt;/name&gt;&lt;value&gt;1&lt;/value&gt;&lt;/arg&gt;
-             &lt;/cron&gt;&lt;/schedule&gt;
-              &lt;action&gt;add&lt;/action&gt;
-          &lt;/seriesConfig&gt;&lt;/seriesConfigs&gt;&lt;name&gt;sampleSuite&lt;/name&gt;&lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;&lt;description/&gt;&lt;version&gt;1&lt;/version&gt;&lt;/suite&gt;&lt;/suites&gt;&lt;/inca:inca&gt;
+&lt;/resourceConfig&gt;
+&lt;suites&gt;
+  &lt;suite&gt;
+    &lt;seriesConfigs&gt;
+      &lt;seriesConfig&gt;
+        &lt;series&gt;
+          &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
+          &lt;uri&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
+          &lt;args&gt;
+            &lt;arg&gt;
+              &lt;name&gt;cc&lt;/name&gt;
+              &lt;value&gt;cc&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;dir&lt;/name&gt;
+              &lt;value/&gt;&lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;help&lt;/name&gt;
+              &lt;value&gt;no&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;log&lt;/name&gt;
+              &lt;value&gt;3&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;verbose&lt;/name&gt;
+              &lt;value&gt;1&lt;/value&gt;
+            &lt;/arg&gt;
+ ...
+        &lt;action&gt;add&lt;/action&gt;
+      &lt;/seriesConfig&gt;
+    &lt;/seriesConfigs&gt;
+    &lt;name&gt;sampleSuite&lt;/name&gt;
+    &lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;
+    &lt;description/&gt;
+    &lt;version&gt;1&lt;/version&gt;
+  &lt;/suite&gt;
+&lt;/suites&gt;
+&lt;/inca:inca&gt;
 
 &lt;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
   &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
-  &lt;uri
-xmlns=""&gt;http://inca.sdsc.edu/repository/latest/bin/cluster.math.atlas.version&lt;/uri&gt;
+  &lt;uri xmlns=""&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
   &lt;nickname xmlns=""&gt;atlas_version&lt;/nickname&gt;
   &lt;seriesConfigId xmlns=""&gt;1&lt;/seriesConfigId&gt;
   &lt;instanceId xmlns=""&gt;24&lt;/instanceId&gt;
