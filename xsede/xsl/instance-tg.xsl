@@ -165,7 +165,7 @@
             <tr><td colspan="2" class="header"><xsl:text>Run now command (system admins only):</xsl:text></td></tr>
             <tr>
                 <td colspan="2"><p class="code">
-                    <xsl:value-of select="concat('% cd ', replace(reporterPath, '/var/reporter-packages/bin/.*', ''), '; ./bin/teragrid-run-now ', $nickName)"/>
+                    <xsl:value-of select="concat('% cd ', replace(reporterPath, '/var/reporter-packages/bin/.*', ''), '; ./bin/teragrid-run-now ', $nickName, ' -L DEBUG')"/>
                 </p></td>
             </tr>
             <xsl:if test="$url[not(matches(., 'noComment'))]">
