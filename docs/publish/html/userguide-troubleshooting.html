@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Troubleshooting</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="Inca 2.1 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Component Man Pages"
+HREF="userguide-man.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.1 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-man.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-TROUBLESHOOTING"
+>13. Troubleshooting</A
+></H1
+><P
+>This section describes some useful tips for troubleshooting problems
+with an Inca deployment.</P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-LOGGING"
+>13.1. Log Files</A
+></H2
+><P
+>The agent, depot and consumer logs are located in the $INCA_DIST/var directory.  Reporter manager logs are located in each manager's install directory under the var directory (e.g. ~/incaReporterManager/var). </P
+><P
+>Logging is informational by default, but can be adjusted to be more verbose ('info' to 'debug') or less verbose ('info' to 'error') by editing the $INCA_DIST/etc/common/log4j.properties file and then restarting inca components.  Note that passwords are logged when 'debug' logging is turned on.  Logging for the inca components can be adjusted by editing lines 26 and 27 ("log4j.rootLogger=info, stdout" and "log4j.logger.edu.sdsc.inca=info").  To log the most verbose globus error messages change line 33 in log4j.properties from "log4j.logger.org.globus=error" to "log4j.logger.org.globus=debug". </P
+><P
+>If a reporter manager is not started on a resource after you have
+scheduled reporters to run there, it is likely the build on that resource
+failed.  You can confirm by looking for "Unable to stage reporter manager to "
+in $INCA_DIST/var/agent.log.  If found, look for errors on the resource in the
+2 build log files from the reporter manager build attempt:
+~/incaReporterManager/build.log and
+~/incaReporterManager/Inca-ReporterManager-*/build.log.  The most common
+build failure is a bad build of the dependency Net::SSLeay which is
+required for secure communication; the build for Net::SSLeay will fail if it
+is unable to find OpenSSL on the resource.  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-AUTHPROB"
+>13.2. Authentication Problems</A
+></H2
+><P
+>If you observe that a reporter manager on a resource is having trouble
+connecting to either the agent or depot, there could be a problem with either
+the installed SSL libraries or certificates.  To test, use the
+<TT
+CLASS="FILENAME"
+>inca-ping-client</TT
+> script installed with the reporter
+manager as in the example below. Replace $RM_INSTALL_DIR with the path to the
+directory where the reporter manager is installed. Supply the appropriate
+hostname and port for either the depot or agent.  After pressing return, type
+the password for the certificates.  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd <STRONG
+><FONT
+COLOR="RED"
+>$RM_INSTALL_DIR</FONT
+></STRONG
+>
+% env PERL5LIB=lib/perl bin/inca-ping-client \
+  -c etc/rmcert.pem \
+  -k etc/rmkey.pem -P true -t etc/trusted \
+  -uri incas://<STRONG
+><FONT
+COLOR="RED"
+>&#60;agent or depot hostname&#62;</FONT
+></STRONG
+>:<STRONG
+><FONT
+COLOR="RED"
+>&#60;port&#62;</FONT
+></STRONG
+>
+<STRONG
+><FONT
+COLOR="RED"
+>&#60;your password&#62;</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> If there are no problems contacting either the agent or depot, the exit
+code will be 0 and nothing will be printed to the screen.  If there is an
+authentication problem, the exit code will be non-zero and a message such as
+the following will be printed to stderr:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>ERROR - Unable to create Inca::IO socket: : IO::Socket::INET configuration failed
+Error contacting Inca server 'incas://rocks-101:6325' at bin/inca-ping-client line 137, &#60;STDIN&#62; line 1.</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Please email inca@sdsc.edu if you are unable to determine the cause of 
+the authentication problem.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-man.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Component Man Pages</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
