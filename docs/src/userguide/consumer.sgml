@@ -166,25 +166,25 @@ extra xml
 <para>
 XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
 <screen>&lt;stack&gt;
-    &lt;id&gt;Software and Services&lt;/id&gt;
-    &lt;category&gt;
-        &lt;id&gt;Math Libraries&lt;/id&gt;
-        &lt;package&gt;
-            &lt;id&gt;globus&lt;/id&gt;
-            &lt;version&gt;4.0.1&lt;/version&gt;
-            &lt;tests&gt;
-                &lt;version&gt;
-			     &lt;id&gt;gt4-version&lt;/id&gt;
-		       &lt;/version&gt;
-                &lt;unitalias&gt;
-			     &lt;id&gt;gt4-xio&lt;/id&gt;
-		       &lt;/unitalias&gt;
-                &lt;unitalias&gt;
-			     &lt;id&gt;all2all:gram_to_localResource&lt;/id&gt;
-		       &lt;/unitalias&gt;
-            &lt;/tests&gt;
-        &lt;/package&gt;
-    &lt;/category&gt;
+  &lt;id&gt;Software and Services&lt;/id&gt;
+  &lt;category&gt;
+    &lt;id&gt;Math Libraries&lt;/id&gt;
+    &lt;package&gt;
+      &lt;id&gt;globus&lt;/id&gt;
+      &lt;version&gt;4.0.1&lt;/version&gt;
+      &lt;tests&gt;
+        &lt;version&gt;
+	  &lt;id&gt;gt4-version&lt;/id&gt;
+	&lt;/version&gt;
+        &lt;unitalias&gt;
+	  &lt;id&gt;gt4-xio&lt;/id&gt;
+	&lt;/unitalias&gt;
+        &lt;unitalias&gt;
+	  &lt;id&gt;all2all:gram_to_localResource&lt;/id&gt;
+	&lt;/unitalias&gt;
+      &lt;/tests&gt;
+    &lt;/package&gt;
+  &lt;/category&gt;
 &lt;/stack&gt;
 </screen></para>
 </listItem>
@@ -307,7 +307,7 @@ default="8080"/&gt;&lt;/Set&gt;
 <para>Then restart the consumer. </para> 
 
 <screen>
-./bin/inca stop consumer; ./bin/inca start consumer
+% ./bin/inca stop consumer; ./bin/inca start consumer
 </screen>
 
 <para>The https server will be on port 8443.  </para>
@@ -322,8 +322,8 @@ follows:
 </para>
 </note>
 
-<screen>
-rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
+<screen>% rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore \
+  -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
 </screen>
 
 <para>It will prompt you for a keystore password and a key password.  You can
@@ -336,8 +336,8 @@ Jetty's password utility as follows:
 </para>
 
 <para id="jetty-password">
-<screen> 
-java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar org.mortbay.util.Password <emphasis role="red">your_password</emphasis>
+<screen>% java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar \
+  org.mortbay.util.Password <emphasis role="red">your_password</emphasis>
 </screen>
 </para>
 
@@ -399,9 +399,7 @@ linkend="https-consumer">.</para>
   
 <para>Then restart the consumer. </para> 
 
-<screen>
-./bin/inca stop consumer; ./bin/inca start consumer
-</screen>
+<screen>% ./bin/inca stop consumer; ./bin/inca start consumer</screen>
 
 <para>The next time you view the status pages, you should see a login like:</para>
 
