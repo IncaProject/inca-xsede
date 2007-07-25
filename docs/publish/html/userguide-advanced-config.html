@@ -10,8 +10,8 @@ REL="HOME"
 TITLE="Inca 2.1 User's Guide"
 HREF="index.html"><LINK
 REL="PREVIOUS"
-TITLE="Log Files"
-HREF="userguide-logging.html"><LINK
+TITLE="Security"
+HREF="userguide-security.html"><LINK
 REL="NEXT"
 TITLE="Component Man Pages"
 HREF="userguide-man.html"><LINK
@@ -53,7 +53,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="userguide-logging.html"
+HREF="userguide-security.html"
 ACCESSKEY="P"
 >Prev</A
 ></TD
@@ -82,7 +82,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-CONFIG"
->12. Advanced Configuration</A
+>11. Advanced Configuration</A
 ></H1
 ><P
 >This section describes advanced configuration options such as
@@ -93,7 +93,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="COMP-OPTIONS"
->12.1. Inca Component Options</A
+>11.1. Inca Component Options</A
 ></H2
 ><P
 >Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </P
@@ -173,7 +173,7 @@ COLOR="RED"
 ><P
 >Man pages with component options are described in <A
 HREF="userguide-man.html"
->Section 13</A
+>Section 12</A
 >.</P
 ><P
 >Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
@@ -205,7 +205,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="DB-CONFIG"
->12.2. Depot Database Configuration</A
+>11.2. Depot Database Configuration</A
 ></H2
 ><P
 >The Inca depot uses Hibernate to interface to a relational database backend for 
@@ -367,7 +367,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-MANUAL"
->12.3. Manual Access Method</A
+>11.3. Manual Access Method</A
 ></H2
 ><P
 >A resource administrator may prefer to have local control of the
@@ -617,7 +617,11 @@ CLASS="SCREEN"
 >% cd $RM_INSTALL_DIR/var
 % tar zxvf ../Inca-Reporter.tar.gz
 % cd Inca-Reporter-*
-% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+% perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages \
+&#62; INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
+&#62; INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
+&#62; INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
+&#62; INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
 % make install
       </PRE
@@ -656,7 +660,8 @@ CLASS="SCREEN"
  Message 1:
  From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
  To: inca@sdsc.edu
- Subject: [inca notification] change to suite inca://localhost:6323/sampleSuite  for resource 'manualResource'
+ Subject: [inca notification] change to suite
+          inca://localhost:6323/sampleSuite  for resource 'manualResource'
  Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
 
  &#60;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;
@@ -719,7 +724,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml $RM_INSTALL_DIR/var/reporter-packages/repository.xml</PRE
+>% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
+&#62;    $RM_INSTALL_DIR/var/reporter-packages/repository.xml
+    </PRE
 ></FONT
 ></TD
 ></TR
@@ -728,7 +735,7 @@ CLASS="SCREEN"
    </P
 ><P
 > Finally, you can start up the reporter manager using the
-       following command-line (replace "depotHost" with the hostname where the depot is running): </P
+       following command-lines (replace "depotHost" with the hostname where the depot is running): </P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -739,12 +746,26 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $RM_INSTALL_DIR; ./sbin/inca reporter-manager -d incas://<STRONG
+>% cd $RM_INSTALL_DIR
+% ./sbin/inca reporter-manager \
+&#62; -d incas://<STRONG
 ><FONT
 COLOR="RED"
 >depotHost</FONT
 ></STRONG
->:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e bin/inca-null-reporter -r var/reporter-packages -R sbin/reporter-instance-manager -v var -w 1 -i manualResource -s suite.xml -L DEBUG -l var/reporter-manager.log -P true</PRE
+>:6324 \
+&#62; -c etc/rmcert.pem \
+&#62; -k etc/rmkey.pem -t etc/trusted \
+&#62; -e bin/inca-null-reporter \
+&#62; -r var/reporter-packages \
+&#62; -R sbin/reporter-instance-manager \
+&#62; -v var \
+&#62; -w 1 \
+&#62; -i manualResource \
+&#62; -s suite.xml \
+&#62; -L DEBUG \
+&#62; -l var/reporter-manager.log \
+&#62; -P true</PRE
 ></FONT
 ></TD
 ></TR
@@ -849,7 +870,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW"
->12.4. Manual Run Now</A
+>11.4. Manual Run Now</A
 ></H2
 ><P
 >Oftentimes resource or system administrators will want to show that a
@@ -865,7 +886,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-CONFIG"
->12.4.1. Configuring the Manual Run Now Script</A
+>11.4.1. Configuring the Manual Run Now Script</A
 ></H3
 ><P
 >The instructions below need to be done *once* by the Inca administrator on each 
@@ -889,9 +910,13 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem; cp rmcert.pem admincert.pem; chmod 600 adminkey.pem; ssh-keygen -p
+>% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem
+% cp rmcert.pem admincert.pem
+% chmod 600 adminkey.pem
+% ssh-keygen -p
 
-Enter file in which the key is (/home/.ssh/id_rsa): /home/incaReporterManager/etc/adminkey.pem
+Enter file in which the key is (/home/.ssh/id_rsa):
+  /home/incaReporterManager/etc/adminkey.pem
 Enter old passphrase: 
 Key has comment '/home/incaReporterManager/etc/adminkey.pem'
 Enter new passphrase (empty for no passphrase): 
@@ -957,7 +982,9 @@ PERL5LIB=lib/perl:${PERL5LIB}
 fi
 export PERL5LIB
 
-./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT -k etc/adminkey.pem -P "stdin:password:" -t etc/trusted -i $RESOURCE $*</PRE
+./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT \
+                   -k etc/adminkey.pem -P "stdin:password:" \
+                   -t etc/trusted -i $RESOURCE $*</PRE
 ></FONT
 ></TD
 ></TR
@@ -1009,12 +1036,15 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >&#60;tr&#62;
-  &#60;td colspan="2" class="header"&#62;&#60;xsl:text&#62;Run now command (system admins only):&#60;/xsl:text&#62;&#60;/td&#62;
+  &#60;td colspan="2" class="header"&#62;
+    &#60;xsl:text&#62;Run now command (system admins only):&#60;/xsl:text&#62;
+  &#60;/td&#62;
 &#60;/tr&#62;
 &#60;tr&#62;
   &#60;td colspan="2"&#62;
     &#60;xsl:variable name="repPath" select="$report/reporterPath"/&#62;
-    &#60;xsl:variable name="incaloc" select="replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&#62;
+    &#60;xsl:variable name="incaloc" select=
+      "replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&#62;
     &#60;p class="code"&#62; &#60;xsl:text&#62;% cd &#60;/xsl:text&#62;
     &#60;xsl:value-of select="$incaloc"/&#62;
     &#60;xsl:text&#62;; ./bin/admin-run-now &#60;/xsl:text&#62;
@@ -1035,7 +1065,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-USING"
->12.4.2. Using the Manual Run Now Script</A
+>11.4.2. Using the Manual Run Now Script</A
 ></H3
 ><P
 ></P
@@ -1285,7 +1315,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-SRCDIST"
->12.5. Source Distributions</A
+>11.5. Source Distributions</A
 ></H2
 ><P
 >  Source distributions of the Inca components are also available.  The 
@@ -1299,7 +1329,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1091"
+NAME="AEN1086"
 ></A
 ><P
 ><B
@@ -1454,7 +1484,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="userguide-logging.html"
+HREF="userguide-security.html"
 ACCESSKEY="P"
 >Prev</A
 ></TD
@@ -1482,7 +1512,7 @@ ACCESSKEY="N"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Log Files</TD
+>Security</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
