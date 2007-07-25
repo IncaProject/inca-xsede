@@ -151,10 +151,8 @@ resource administrator:
     commit the changes.  A set of credentials (e.g., rmcert.pem, rmkey.pem,
     trusted) will be generated in $INCA_DIST/var/rm/&lt;resource name&gt;/
     such as below:
-      <screen>
-% ls var/rm/manualResource/        
-      catalog.xml  rmcert.pem  rmkey.pem  trusted
-      </screen>
+      <screen>% ls var/rm/manualResource/        
+catalog.xml  rmcert.pem  rmkey.pem  trusted</screen>
     These credentials will need to be given to the resource administrator in
     order to send reports to the depot.  The rmkey.pem will be encrypted with
     the same password as the agent's private key.  It is recommended that you
@@ -178,13 +176,14 @@ Verifying password - Enter PEM pass phrase: new-passphrase
   <listItem id="man-step2">
     <para>The resource administrator will install the reporter manager distribution on their resource using the following steps:</para>
     <orderedList>
-      <listItem><para>Create an installation directory for the reporter
-      manager (e.g., $RM_INSTALL_DIR) and change to that
-      directory.</para></listItem> 
-      <listItem><para>Download
-      <ulink url="http://inca.sdsc.edu/releases/&ugVersion/Inca-ReporterManager.tar.gz">reporter manager tarball</ulink></para></listItem>
-      <listItem><para>Download
-      <ulink url="http://inca.sdsc.edu/releases/&ugVersion/buildRM.sh">reporter manager build script</ulink></para></listItem>
+      <listItem>
+<para>Create an installation directory for the reporter manager (e.g.,
+$RM_INSTALL_DIR).  Download the reporter manager tarball and build
+script:</para>
+<screen>% cd $RM_INSTALL_DIR \
+  wget http://inca.sdsc.edu/releases/&ugVersion/Inca-ReporterManager.tar.gz \
+  wget http://inca.sdsc.edu/releases/&ugVersion/buildRM.sh</screen>
+</listItem>
       <listItem><para>Contact your Inca administrator for a set of
       credentials.  You should receive files called rmcert.pem, rmkey.pem,
       and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
@@ -194,8 +193,10 @@ Inca-ReporterManager.tar.gz    rmcert.pem    trusted0.pem
 buildRM.sh                     rmkey.pem     trusted1.pem
 </screen>
       </para></listItem>
-      <listItem><para>Run 'bash buildRM.sh -u false $RM_INSTALL_DIR  Inca-ReporterManager.tar.gz'.  When completed, the installation directory should looks something like this:</para>
-      <screen>% ls $RM_INSTALL_DIR 
+      <listItem><para>Install the reporter manager and list directories to verify files unpacked correctly:</para>
+      <screen>% bash buildRM.sh -u false $RM_INSTALL_DIR Inca-ReporterManager.tar.gz
+
+% ls $RM_INSTALL_DIR 
 Inca-ReporterManager-8.6279    build.log    lib    var
 Inca-ReporterManager.tar       buildRM.sh   man
 bin                            etc          sbin
@@ -203,20 +204,17 @@ bin                            etc          sbin
 % ls $RM_INSTALL_DIR/etc/
 common  log4j.properties  rmcert.pem  rmkey.pem  trusted
       </screen>
-      <para>Next, install the initial set of reporters and their
-      libraries.  Download <ulink url="http://inca.sdsc.edu/releases/&ugVersion/Inca-Reporter.tar.gz">Inca reporters tarball</ulink>.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</para>
-      <screen>
-% cd $RM_INSTALL_DIR/var
-% tar zxvf ../Inca-Reporter.tar.gz
+      <para>Install the default set of reporters and their libraries:</para>
+      <screen>% cd $RM_INSTALL_DIR; wget http://inca.sdsc.edu/releases/&ugVersion/Inca-Reporter.tar.gz
+% cd var; tar zxvf ../Inca-Reporter.tar.gz
 % cd Inca-Reporter-*
 % perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages \
-> INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
-> INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
-> INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
-> INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+ INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
+ INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
+ INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
+ INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
-% make install
-      </screen>
+% make install</screen>
       </listItem>
     </orderedList>
   </listItem>
@@ -258,31 +256,30 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
     the catalog: reporters and perl libraries.  Each package has 4 tags:
     dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
    it with any non-default reporters configured in the suite.xml file:
-    <screen>
-% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
->    $RM_INSTALL_DIR/var/reporter-packages/repository.xml
-    </screen>
+    <screen>% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
+  $RM_INSTALL_DIR/var/reporter-packages/repository.xml</screen>
    </para>
     
-   <para> Finally, you can start up the reporter manager using the
-       following command-lines (replace "depotHost" with the hostname where the depot is running): </para>
-       <screen>
-% cd $RM_INSTALL_DIR
+   <para>Finally, you can start up the reporter manager using the commands
+below.  Replace "depotHost" with the hostname where the depot is running and
+replace "manualResource" with the manual resource group name added in step
+<xref linkend="man-step1">: </para>
+
+       <screen>% cd $RM_INSTALL_DIR
 % ./sbin/inca reporter-manager \
-> -d incas://<emphasis role="red">depotHost</emphasis>:6324 \
-> -c etc/rmcert.pem \
-> -k etc/rmkey.pem -t etc/trusted \
-> -e bin/inca-null-reporter \
-> -r var/reporter-packages \
-> -R sbin/reporter-instance-manager \
-> -v var \
-> -w 1 \
-> -i manualResource \
-> -s suite.xml \
-> -L DEBUG \
-> -l var/reporter-manager.log \
-> -P true
-</screen>
+ -d incas://<emphasis role="red">depotHost</emphasis>:6324 \
+ -c etc/rmcert.pem \
+ -k etc/rmkey.pem -t etc/trusted \
+ -e bin/inca-null-reporter \
+ -r var/reporter-packages \
+ -R sbin/reporter-instance-manager \
+ -v var \
+ -w 1 \
+ -i <emphasis role="red">manualResource</emphasis> \
+ -s suite.xml \
+ -L DEBUG \
+ -l var/reporter-manager.log \
+ -P true</screen>
 <para>Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
              <screen>
@@ -379,9 +376,8 @@ fi
 export PERL5LIB
 
 ./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT \
-                   -k etc/adminkey.pem -P "stdin:password:" \
-                   -t etc/trusted -i $RESOURCE $*
-</screen></para>
+  -k etc/adminkey.pem -P "stdin:password:" \
+  -t etc/trusted -i $RESOURCE $* </screen></para>
 </listItem>
 
 <listItem><para> 
