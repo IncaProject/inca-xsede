@@ -1451,7 +1451,7 @@
       </resource>
       <resource>
         <name>login.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|bigben\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|bigben\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|frost\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -1459,7 +1459,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org bigben.psc.teragrid.org dtf.sdsc.teragrid.org rachel.psc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org bigben.psc.teragrid.org dtf.sdsc.teragrid.org rachel.psc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org frost.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1872,6 +1872,12 @@
           <macro>
             <name>tgpolicy-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>sshHostLoginKit</name>
+            <value>tg-login.frost.ncar.teragrid.org</value>
+            <value>-p</value>
+            <value>22</value>
           </macro>
         </macros>
       </resource>
@@ -3378,6 +3384,10 @@
             <name>gridftpDataKitHost</name>
             <value>ds004.sdsc.teragrid.org</value>
           </macro>
+          <macro>
+            <name>mpi-key-parallelKit</name>
+            <value/>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -4497,6 +4507,50 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>data.transfer.tgcp.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.tgcp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@tgcp-key-appKit@@@@post@</context>
+          </series>
+          <nickname>tgcp-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tgcp==1.0.0</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>data.access.srb.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.srb.version</uri>
             <args>
@@ -4619,55 +4673,11 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.transfer.tgcp.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.tgcp.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@tgcp-key-appKit@@@@post@</context>
-          </series>
-          <nickname>tgcp-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tgcp==1.0.0</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>6</version>
+      <version>11</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -9328,10 +9338,10 @@
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
-      <name>gig</name>
-      <guid>incas://sapa.sdsc.edu:6323/gig</guid>
-      <description>gig</description>
-      <version>50</version>
+      <name>globus-mds-auth</name>
+      <guid>incas://sapa.sdsc.edu:6323/globus-mds-auth</guid>
+      <description>globus-mds-auth for gig</description>
+      <version>1</version>
     </suite>
     <suite>
       <seriesConfigs>
