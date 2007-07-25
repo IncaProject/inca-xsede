@@ -465,8 +465,7 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% ls var/rm/manualResource/        
-      catalog.xml  rmcert.pem  rmkey.pem  trusted
-      </PRE
+catalog.xml  rmcert.pem  rmkey.pem  trusted</PRE
 ></FONT
 ></TD
 ></TR
@@ -524,27 +523,26 @@ NAME="MAN-STEP2"
 TYPE="a"
 ><LI
 ><P
->Create an installation directory for the reporter
-      manager (e.g., $RM_INSTALL_DIR) and change to that
-      directory.</P
-></LI
-><LI
-><P
->Download
-      <A
-HREF="http://inca.sdsc.edu/releases/2.1/Inca-ReporterManager.tar.gz"
-TARGET="_top"
->reporter manager tarball</A
-></P
-></LI
-><LI
-><P
->Download
-      <A
-HREF="http://inca.sdsc.edu/releases/2.1/buildRM.sh"
-TARGET="_top"
->reporter manager build script</A
-></P
+>Create an installation directory for the reporter manager (e.g.,
+$RM_INSTALL_DIR).  Download the reporter manager tarball and build
+script:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR \
+  wget http://inca.sdsc.edu/releases/2.1/Inca-ReporterManager.tar.gz \
+  wget http://inca.sdsc.edu/releases/2.1/buildRM.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
 ></LI
 ><LI
 ><P
@@ -574,7 +572,7 @@ buildRM.sh                     rmkey.pem     trusted1.pem</PRE
 ></LI
 ><LI
 ><P
->Run 'bash buildRM.sh -u false $RM_INSTALL_DIR  Inca-ReporterManager.tar.gz'.  When completed, the installation directory should looks something like this:</P
+>Install the reporter manager and list directories to verify files unpacked correctly:</P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -585,7 +583,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ls $RM_INSTALL_DIR 
+>% bash buildRM.sh -u false $RM_INSTALL_DIR Inca-ReporterManager.tar.gz
+
+% ls $RM_INSTALL_DIR 
 Inca-ReporterManager-8.6279    build.log    lib    var
 Inca-ReporterManager.tar       buildRM.sh   man
 bin                            etc          sbin
@@ -598,12 +598,7 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
 ></TR
 ></TABLE
 ><P
->Next, install the initial set of reporters and their
-      libraries.  Download <A
-HREF="http://inca.sdsc.edu/releases/2.1/Inca-Reporter.tar.gz"
-TARGET="_top"
->Inca reporters tarball</A
->.  Then unpack the Inca-Reporters.tar.gz tarball and install into the reporter manager directory as follows:</P
+>Install the default set of reporters and their libraries:</P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -614,17 +609,16 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $RM_INSTALL_DIR/var
-% tar zxvf ../Inca-Reporter.tar.gz
+>% cd $RM_INSTALL_DIR; wget http://inca.sdsc.edu/releases/2.1/Inca-Reporter.tar.gz
+% cd var; tar zxvf ../Inca-Reporter.tar.gz
 % cd Inca-Reporter-*
 % perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages \
-&#62; INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
-&#62; INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
-&#62; INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
-&#62; INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
+ INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
+ INSTALLSCRIPT=${RM_INSTALL_DIR}/var/reporter-packages/bin \
+ INSTALLMAN1DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man1 \
+ INSTALLMAN3DIR=${RM_INSTALL_DIR}/var/reporter-packages/man/man3
 % make
-% make install
-      </PRE
+% make install</PRE
 ></FONT
 ></TD
 ></TR
@@ -725,8 +719,7 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
-&#62;    $RM_INSTALL_DIR/var/reporter-packages/repository.xml
-    </PRE
+  $RM_INSTALL_DIR/var/reporter-packages/repository.xml</PRE
 ></FONT
 ></TD
 ></TR
@@ -734,8 +727,13 @@ CLASS="SCREEN"
 >
    </P
 ><P
-> Finally, you can start up the reporter manager using the
-       following command-lines (replace "depotHost" with the hostname where the depot is running): </P
+>Finally, you can start up the reporter manager using the commands
+below.  Replace "depotHost" with the hostname where the depot is running and
+replace "manualResource" with the manual resource group name added in step
+<A
+HREF="userguide-advanced-config.html#MAN-STEP1"
+>1</A
+>: </P
 ><TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -748,24 +746,29 @@ COLOR="#000000"
 CLASS="SCREEN"
 >% cd $RM_INSTALL_DIR
 % ./sbin/inca reporter-manager \
-&#62; -d incas://<STRONG
+ -d incas://<STRONG
 ><FONT
 COLOR="RED"
 >depotHost</FONT
 ></STRONG
 >:6324 \
-&#62; -c etc/rmcert.pem \
-&#62; -k etc/rmkey.pem -t etc/trusted \
-&#62; -e bin/inca-null-reporter \
-&#62; -r var/reporter-packages \
-&#62; -R sbin/reporter-instance-manager \
-&#62; -v var \
-&#62; -w 1 \
-&#62; -i manualResource \
-&#62; -s suite.xml \
-&#62; -L DEBUG \
-&#62; -l var/reporter-manager.log \
-&#62; -P true</PRE
+ -c etc/rmcert.pem \
+ -k etc/rmkey.pem -t etc/trusted \
+ -e bin/inca-null-reporter \
+ -r var/reporter-packages \
+ -R sbin/reporter-instance-manager \
+ -v var \
+ -w 1 \
+ -i <STRONG
+><FONT
+COLOR="RED"
+>manualResource</FONT
+></STRONG
+> \
+ -s suite.xml \
+ -L DEBUG \
+ -l var/reporter-manager.log \
+ -P true</PRE
 ></FONT
 ></TD
 ></TR
@@ -983,8 +986,8 @@ fi
 export PERL5LIB
 
 ./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT \
-                   -k etc/adminkey.pem -P "stdin:password:" \
-                   -t etc/trusted -i $RESOURCE $*</PRE
+  -k etc/adminkey.pem -P "stdin:password:" \
+  -t etc/trusted -i $RESOURCE $* </PRE
 ></FONT
 ></TD
 ></TR
@@ -1329,7 +1332,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1086"
+NAME="AEN1082"
 ></A
 ><P
 ><B
