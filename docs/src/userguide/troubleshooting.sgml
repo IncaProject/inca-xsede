@@ -25,31 +25,31 @@ is unable to find OpenSSL on the resource.
 
 </section>
 
-<section id="userguide-authprob">
+<section id="userguide-authprob"> 
 <title>Authentication Problems</title>
+
 <para>If you observe that a reporter manager on a resource is having trouble
 connecting to either the agent or depot, there could be a problem with either
 the installed SSL libraries or certificates.  To test, use the
-<filename>inca-ping-client</filename> script installed in the reporter manager
-directory on the resource as follows:
-</para>
+<filename>inca-ping-client</filename> script installed with the reporter
+manager as in the example below. Replace $RM_INSTALL_DIR with the path to the
+directory where the reporter manager is installed. Supply the appropriate
+hostname and port for either the depot or agent.  After pressing return, type
+the password for the certificates.  </para>
 
 <screen>
-% cd ${HOME}/incaReporterManager
+% cd <emphasis role="red">$RM_INSTALL_DIR</emphasis>
 % env PERL5LIB=lib/perl bin/inca-ping-client \
-> -c etc/rmcert.pem \
-> -k etc/rmkey.pem -P true -t etc/trusted \
-> -uri incas://<emphasis>&lt;agent or depot hostname&gt;</emphasis>:<emphasis>&lt;port&gt;</emphasis>
-<emphasis>your password</emphasis>
+  -c etc/rmcert.pem \
+  -k etc/rmkey.pem -P true -t etc/trusted \
+  -uri incas://<emphasis role="red">&lt;agent or depot hostname&gt;</emphasis>:<emphasis role="red">&lt;port&gt;</emphasis>
+<emphasis role="red">&lt;your password&gt;</emphasis>
 </screen>
 
-<para>Supply the appropriate hostname and port for either the depot or agent.
-After pressing return, type the password for the certificates.  If there are
-no problems contacting either the agent or depot, the exit code will be 0 and
-nothing will be printed to the screen.  If there is an authentication problem,
-the exit code will be non-zero and a message such as the following will be
-printed to stderr.
-</para>
+<para> If there are no problems contacting either the agent or depot, the exit
+code will be 0 and nothing will be printed to the screen.  If there is an
+authentication problem, the exit code will be non-zero and a message such as
+the following will be printed to stderr:</para>
 
 <screen>
 ERROR - Unable to create Inca::IO socket: : IO::Socket::INET configuration failed
