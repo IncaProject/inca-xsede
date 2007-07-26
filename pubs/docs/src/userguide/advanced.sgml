@@ -136,6 +136,11 @@ resource administrator:
 </simpleList>
 
 <orderedList>
+  <listItem id="man-step0">
+    <para><emphasis role="red">(optional)</emphasis>To customize the email
+    message that gets sent to the resource administrators, edit the text in
+    $INCA_DIST/etc/manualEmail.txt.</para>
+  </listItem>
   <listItem id="man-step1">
     <para>The Inca administrator will add the specified resource within incat
     and choose 'manual' as below:
@@ -220,34 +225,26 @@ common  log4j.properties  rmcert.pem  rmkey.pem  trusted
   </listItem>
   <listItem id="man-step3">
     <para>The suite and any changes to that suite are emailed to the resource
-    administrator specified by the Inca administrator in Step <xref linkend="man-step1">.  For example, </para>
-    <screen>
- % mail
- Mail version 8.1 6/6/93.  Type ? for help.
- "/var/mail/ssmallen": 1 message 1 new
- >N  1 inca@sdsc.edu  Tue Jan 30 15:01 118/3642  "[inca notification] change"
- & t 1
- Message 1:
- From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
- To: inca@sdsc.edu
- Subject: [inca notification] change to suite
-          inca://localhost:6323/sampleSuite  for resource 'manualResource'
- Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
+    administrator specified by the Inca administrator in Step <xref
+    linkend="man-step1">.  The changes will be attached in a file called
+    <filename>suiteChanges.xml</filename> and the updated configuration for
+    your resource (with the changes included) will be attached in a file
+    called <filename>updatedSuite.xml</filename>.  View the add/delete changes
+    in <filename>suiteChange.xml</filename>.  Then copy the
+    <filename>updatedSuite.xml</filename> to a file called
+    <filename>$RM_INSTALL_DIR/suite.xml</filename>. 
+    <xref linkend="manualEmail.fig"> shows an example of a notification mail
+    viewed from Apple Mail.  
+    </para>
 
- &lt;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&gt;
-   &lt;seriesConfigs xmlns=""&gt;
-       &lt;seriesConfig&gt;
-...
-    </screen>
-    <para>Save the message to a file called <filename>$RM_INSTALL_DIR/suite.xml</filename> and
-    edit out the email headers until just the xml remains.  E.g.,</para>
-    <screen>
- &lt;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&gt;
-   &lt;seriesConfigs xmlns=""&gt;
-       &lt;seriesConfig&gt;
-...
- &lt;/suite&gt; 
-    </screen>
+    <figure id="manualEmail.fig">
+      <title>Example of Inca notification email upon suite change</title>
+      <graphic fileref="figures/ug-manualEmail.png" align="center">
+      </graphic>
+    </figure>
+
+
+
     <para>Next, create a repository catalog file called 
     <filename>$RM_INSTALL_DIR/var/reporter-packages/repository.xml</filename> to tell the reporter manager
     where the reporters are installed (relative to $RM_INSTALL_DIR/var/reporter-packages).  The

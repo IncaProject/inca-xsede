@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
 >Inca 2.1 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -4908,7 +4908,7 @@ BORDER="0"
 ><TD
 >Step <A
 HREF="#MAN-STEP1"
->1</A
+>2</A
 >: Add resource in incat with access method 'manual'</TD
 ></TR
 ></TBODY
@@ -4926,14 +4926,14 @@ BORDER="0"
 ><TD
 >Step <A
 HREF="#MAN-STEP2"
->2</A
+>3</A
 >: Install reporter manager</TD
 ></TR
 ><TR
 ><TD
 >Step <A
 HREF="#MAN-STEP3"
->3</A
+>4</A
 >: Start and manually manage reporter manager</TD
 ></TR
 ></TBODY
@@ -4944,6 +4944,20 @@ HREF="#MAN-STEP3"
 ></P
 ><OL
 TYPE="1"
+><LI
+><A
+NAME="MAN-STEP0"
+></A
+><P
+><STRONG
+><FONT
+COLOR="RED"
+>(optional)</FONT
+></STRONG
+>To customize the email
+    message that gets sent to the resource administrators, edit the text in
+    $INCA_DIST/etc/manualEmail.txt.</P
+></LI
 ><LI
 ><A
 NAME="MAN-STEP1"
@@ -5024,10 +5038,10 @@ Verifying password - Enter PEM pass phrase: new-passphrase
 >Give the reporter manager credentials to the resource system
     administrator and instruct them to follow steps <A
 HREF="#MAN-STEP2"
->2</A
+>3</A
 > and <A
 HREF="#MAN-STEP3"
->3</A
+>4</A
 >.
     </P
 ></LI
@@ -5154,65 +5168,49 @@ NAME="MAN-STEP3"
 >The suite and any changes to that suite are emailed to the resource
     administrator specified by the Inca administrator in Step <A
 HREF="#MAN-STEP1"
->1</A
->.  For example, </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
-> % mail
- Mail version 8.1 6/6/93.  Type ? for help.
- "/var/mail/ssmallen": 1 message 1 new
- &#62;N  1 inca@sdsc.edu  Tue Jan 30 15:01 118/3642  "[inca notification] change"
- &#38; t 1
- Message 1:
- From inca@rocks-101.sdsc.edu  Tue Jan 30 15:01:03 2007
- To: inca@sdsc.edu
- Subject: [inca notification] change to suite
-          inca://localhost:6323/sampleSuite  for resource 'manualResource'
- Date: Tue, 30 Jan 2007 15:01:01 -0800 (PST)
-
- &#60;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;
-   &#60;seriesConfigs xmlns=""&#62;
-       &#60;seriesConfig&#62;
-...
-    </PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->Save the message to a file called <TT
+>2</A
+>.  The changes will be attached in a file called
+    <TT
+CLASS="FILENAME"
+>suiteChanges.xml</TT
+> and the updated configuration for
+    your resource (with the changes included) will be attached in a file
+    called <TT
+CLASS="FILENAME"
+>updatedSuite.xml</TT
+>.  View the add/delete changes
+    in <TT
+CLASS="FILENAME"
+>suiteChange.xml</TT
+>.  Then copy the
+    <TT
+CLASS="FILENAME"
+>updatedSuite.xml</TT
+> to a file called
+    <TT
 CLASS="FILENAME"
 >$RM_INSTALL_DIR/suite.xml</TT
-> and
-    edit out the email headers until just the xml remains.  E.g.,</P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
-> &#60;suite xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;
-   &#60;seriesConfigs xmlns=""&#62;
-       &#60;seriesConfig&#62;
-...
- &#60;/suite&#62; 
-    </PRE
-></FONT
-></TD
-></TR
-></TABLE
+>. 
+    <A
+HREF="#MANUALEMAIL.FIG"
+>Figure 21</A
+> shows an example of a notification mail
+    viewed from Apple Mail.  
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="MANUALEMAIL.FIG"
+></A
+><P
+><B
+>Figure 21. Example of Inca notification email upon suite change</B
+></P
+><P
+><IMG
+SRC="figures/ug-manualEmail.png"
+ALIGN="CENTER"></P
+></DIV
 ><P
 >Next, create a repository catalog file called 
     <TT
@@ -5252,7 +5250,7 @@ below.  Replace "depotHost" with the hostname where the depot is running and
 replace "manualResource" with the manual resource group name added in step
 <A
 HREF="#MAN-STEP1"
->1</A
+>2</A
 >: </P
 ><TABLE
 BORDER="1"
@@ -5852,7 +5850,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1082"
+NAME="AEN1090"
 ></A
 ><P
 ><B
