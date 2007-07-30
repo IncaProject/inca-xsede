@@ -6,13 +6,13 @@ installing components in non-default locations and changing other default proper
 
 <section id="comp-options">
 <title>Inca Component Options</title>
-<para>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the consumer on port 8082 instead of 8080 and enter the password on the command line rather than get it from standard in, you could: </para>
+<para>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the agent on port 5323 instead of 6323 and enter the password on the command line rather than get it from standard in, you could: </para>
 <orderedList>
 <listItem>
 <para>edit $INCA_DIST/etc/common/inca.properties and replace:</para>
 <itemizedList>
 <listItem>
-<para>"#inca.consumer.port=8080" with "inca.consumer.port=8082"</para>
+<para>"#inca.agent.port=6323" with "inca.agent.port=5323"</para>
 </listItem>
 <listItem><para>"inca.consumer.password=stdin:password>" with "inca.consumer.password=pass:<emphasis role="red">&lt;password&gt;</emphasis>" (where &lt;password&gt; is the password set with the createauth command)</para> 
 </listItem>
@@ -22,11 +22,15 @@ installing components in non-default locations and changing other default proper
 </listItem>
 <listItem>
 <para><emphasis role="red">OR</emphasis> execute the following command:
-<screen>% cd $INCA_DIST; ./bin/inca start consumer -p 8082 -P pass:<emphasis role="red">&lt;password&gt;</emphasis></screen>
+<screen>% cd $INCA_DIST; ./bin/inca start agent -p 5323 -P pass:<emphasis role="red">&lt;password&gt;</emphasis></screen>
 </para>
 </listItem>
 </orderedList>
 <para>Man pages with component options are described in <xref linkend="userguide-man">.</para> 
+
+<para>Note:  To change the port of the consumer, see <xref linkend="consumer-port">.
+</para>
+
 <para>
 Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
 to be 10 more than the number of reporter managers.  For example, if running 15 reporter managers edit the inca.properties file as follows:
