@@ -10,16 +10,21 @@
                 xmlns:sdf="java.text.SimpleDateFormat"
                 xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
 
+  <xsl:include href="header.xsl"/>
+  <xsl:include href="footer.xsl"/>
+
   <xsl:param name="url" />
   <xsl:param name="page" />
-
 
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
   <xsl:template match="/">
-    <head><link href="css/inca.css" rel="stylesheet" type="text/css"/></head>
+    <!-- header.xsl -->
+    <xsl:call-template name="header"/>
     <body><xsl:apply-templates select="combo/reportDetails/report" /></body>
+    <!-- footer.xsl -->
+    <xsl:call-template name="footer"/>
   </xsl:template>
 
   <!-- ==================================================================== -->

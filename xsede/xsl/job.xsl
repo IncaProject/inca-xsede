@@ -8,16 +8,22 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml">
 
+  <xsl:include href="header.xsl"/>
+  <xsl:include href="footer.xsl"/>
+
   <xsl:template match="/combo">
-    <head><link href="css/inca.css" rel="stylesheet" type="text/css"/></head>
+    <!-- header.xsl -->
+    <xsl:call-template name="header"/>
     <body><xsl:call-template name="suite" /></body>
+    <!-- footer.xsl -->
+    <xsl:call-template name="footer"/>
   </xsl:template>
 
   <xsl:template name="suite">
     <h1 class="body"><xsl:value-of select="stack/id"/></h1>
     <br/><font class="ptext"><b>
-      <xsl:text>Num. jobs per unique user:</xsl:text>
-    </b></font><br/>
+    <xsl:text>Num. jobs per unique user:</xsl:text>
+  </b></font><br/>
     <!-- print table with DN stats -->
     <xsl:variable
         name="resources"

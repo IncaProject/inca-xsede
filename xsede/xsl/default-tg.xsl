@@ -10,6 +10,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xsl:include href="inca-common.xsl"/>
+  <xsl:include href="header.xsl"/>
   <xsl:include href="legend.xsl"/>
   <xsl:include href="footer.xsl"/>
   <xsl:param name="url" />
@@ -29,7 +30,8 @@
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
   <xsl:template match="/">
-    <head><link href="css/inca.css" rel="stylesheet" type="text/css" /></head>
+    <!-- header.xsl -->
+    <xsl:call-template name="header"/>
     <body>
       <xsl:choose>
         <xsl:when test="count(error)>0">
@@ -42,14 +44,15 @@
         </xsl:otherwise>
       </xsl:choose>
     </body>
+    <!-- footer.xsl -->
+    <xsl:call-template name="footer"/>
   </xsl:template>
 
   <!-- ==================================================================== -->
   <!-- generateHTML                                                         -->
   <!--                                                                      -->
   <!-- Prints an html header with a page title and a legend.                -->
-  <!-- Calls printSuiteInfo.                                                -->
-  <!-- Prints a footer.                                                     -->
+  <!-- Calls printSuiteInfo.                                                  -->
   <!-- ==================================================================== -->
   <xsl:template name="generateHTML" match="combo">
     <!-- inca-common.xsl -->
@@ -71,8 +74,6 @@
     <xsl:call-template name="printLegend"/>
     <!-- printSuiteInfo -->
     <xsl:apply-templates select="suiteResults/suite" />
-    <!-- footer.xsl -->
-    <xsl:call-template name="footer"/>
   </xsl:template>
 
   <!-- ==================================================================== -->
