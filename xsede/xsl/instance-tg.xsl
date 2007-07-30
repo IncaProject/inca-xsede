@@ -24,7 +24,7 @@
     <xsl:call-template name="header"/>
     <body><xsl:apply-templates select="combo/reportDetails/report" /></body>
     <!-- footer.xsl -->
-    <xsl:call-template name="footer"/>
+    <xsl:call-template name="footer" />
   </xsl:template>
 
   <!-- ==================================================================== -->
