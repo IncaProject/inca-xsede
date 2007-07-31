@@ -1,66 +1,89 @@
 <section id="userguide-consumer">
 <title>Data Display (Data Consumers)</title>
 
-<para>The data that the Inca depot stores, as with all database data, can be displayed in many ways.  A data consumer is anything that 
-retrieves data from the depot and displays it (e.g. a JSP, sql query, CGI, etc.).</para>
+<para>The data that the Inca depot stores, as with all database data, can be
+displayed in many ways.  An Inca data consumer is anything that retrieves data
+from the depot and displays it (e.g. a JSP, SQL query, CGI, etc.).</para>
+<graphic fileref="figures/arch-consumer.jpg" align="center"></graphic> 
 
-<graphic fileref="figures/arch-consumer.jpg" align="center"></graphic>
-<para>  Data consumers can query the Inca depot to produce current and historical reports and graphs 
-or customized status information.  The Inca depot comes with two pre-defined queries: 
-<orderedList>
-<listItem>
-<para>given instance and config IDs for a series, returns XML like the following (the results from executing
-a reporter at a particular point in time)
-<screen>&lt;reportDetails&gt; 
-  &lt;suiteId&gt;1&lt;/suiteId&gt;
-  &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
-  &lt;seriesId&gt;5&lt;/seriesId&gt;
-  &lt;reportId&gt;1&lt;/reportId&gt;
-  &lt;instanceId&gt;73&lt;/instanceId&gt;
-  &lt;seriesConfig&gt;
-     ...    
-    &lt;nickname&gt;java_hello_world&lt;/nickname&gt;     
-     ...
-  &lt;/seriesConfig&gt;
-  &lt;report&gt;
-     ...
-  &lt;/report&gt;
-  &lt;sysusage&gt;
-     ...
-  &lt;/sysusage&gt;
-  &lt;stderr/&gt;
-&lt;/reportDetails&gt;</screen>
-</para>
-</listItem>
-<listItem>
-<para>given a suite name, returns XML like the following (the latest report summaries for all of the series in the particular suite)
-<screen>&lt;reportSummary&gt;
-  &lt;hostname&gt;Computer.local&lt;/hostname&gt;
-  &lt;uri&gt;http://repository/compiler.any.unit&lt;/uri&gt;
-  &lt;nickname&gt;java_hello_world&lt;/nickname&gt;
-  &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
-  &lt;instanceId&gt;73&lt;/instanceId&gt;
-  &lt;gmt&gt;2006-12-20T16:00:11.000-08:00&lt;/gmt&gt; 
-  &lt;body&gt;
-    &lt;package&gt;
-      &lt;ID&gt;openssl&lt;/ID&gt;
-      &lt;version&gt;0.9.7i&lt;/version&gt;
-    &lt;/package&gt;  
-  &lt;/body&gt;  
-&lt;/reportSummary&gt;
-&lt;reportSummary&gt;...&lt;/reportSummary&gt;
-&lt;reportSummary&gt;...&lt;/reportSummary&gt;</screen>
-</para>
-</listItem>
-</orderedList>
-</para>
+<para>Data consumers can query the Inca depot to produce current and historical
+reports and graphs or customized status information.  The Inca depot has Perl
+and Java client APIs for its pre-defined queries (see section <xref
+linkend="userguide-apis">). </para> 
+
 <section id="default-consumer">
 <title>Default Data Consumer</title>
-<para>
-The default data consumer is a <ulink url="http://www.mortbay.org/">Jetty</ulink> deployed WAR file ($INCA_DIST/etc/inca-consumers.war) that contains a set of JSP pages along with their associated files and stylesheets.  Currently the WAR file cannot be deployed outside of the inca consumer server (e.g. in tomcat).  The WAR's index.jsp page (<ulink url="http://localhost:8080/index.jsp">http://localhost:8080/index.jsp</ulink>) allows its user to choose "suiteName" and "resourceID" parameters for a second JSP page called xslt.jsp.  The xslt.jsp script retrieves XML (partly from the second pre-defined query shown above) and formats it with an XSL stylesheet if the script is passed the name of a stylesheet as an input parameter. The default data consumer redirects to the xslt.jsp script and adds an input parameter with an XSL stylesheet so the result is formatted html (i.e. index.jsp redirects to something like <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml&amp;xsl=default.xsl</ulink>).</para> 
 
-<para>To view the XML that is retrieved and formatted by the xslt.jsp script, remove its XSL parameter.  For example, <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xmlFile=swStack.xml</ulink> would produce something similar to: 
+<para>The default data consumer is a <ulink
+url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
+file</ulink> that contains a collection of <ulink
+url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
+their associated files.  The WAR file is initially installed as
+<filename>$INCA_DIST/webapps/inca.war</filename> and is deployed with <ulink
+url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
+./bin/inca start consumer).  The default consumer creates a Jetty directory
+like <filename>$INCA_DIST/var/jetty*/webapp</filename> for each WAR file in
+<filename>$INCA_DIST/webapps</filename> - custom WAR files can be dropped into
+the <filename>$INCA_DIST/webapps</filename> directory and deployed by
+restarting the consumer.  Currently Inca WAR files cannot be deployed outside
+of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
+on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
+as described in section <xref linkend="consumer-port">.</para>
+
+<para>There are three main JSP contained in the <filename>inca.war</filename>:</para>
+
+<orderedList>
+<listItem> 
+<para><filename>index.jsp</filename>:</para> 
+<para>Lists an installation's configured suites and resource names in an HTML form whose
+action is to display results for the selected suite and resource.  The consumer
+initially redirects to this page (<ulink
+url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp</ulink>).
+</para> 
+<para>The <filename>index.jsp</filename> uses JSP tag libraries to retrieve current suite configuration from 
+the depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
+function and cached resource configuration infomation from the agent's
+<ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
 </para>
+<para>The XML returned by the depot and agent functions is transformed into an HTML
+form for selecting a suite and resource to view results for.
+The stylesheet that does the XML to HTML transformation is
+<filename>$INCA_DIST/etc/index.xsl</filename> - if it does not exist the JSP
+will display the depot/agent XML.</para> 
+</listItem>
+
+<listItem> 
+<para><filename>config.jsp</filename>:</para> 
+<para>Prints description of deployed suites and series.
+This page is linked at the bottom of <filename>index.jsp</filename> 
+(<ulink url="http://localhost:8080/inca/config.jsp?xsl=config.xsl">http://localhost:8080/inca/config.jsp?xsl=config.xsl</ulink>).
+</para> 
+<para>The <filename>config.jsp</filename> uses JSP tag libraries to retrieve current catalog configuration from 
+the agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
+function and cached suite configuration infomation from the agent's
+<ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
+</para>
+<para>The XML returned by the agent functions is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is 
+"config.xsl", which translates to the <filename>$INCA_DIST/etc/config.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>. If the "xsl" parameter is not passed to the script (<ulink url="http://localhost:8080/inca/config.jsp">http://localhost:8080/inca/config.jsp</ulink>), the XML returned from the agent functions is displayed.</para>
+</listItem>
+
+<listItem> 
+<para><filename>xslt.jsp</filename>:</para> 
+<para>Displays results for a set of suites or reporter details.  
+This page is the action of the <filename>index.jsp</filename> form to display a single suite's results.
+(<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl</ulink>).
+</para> 
+<itemizedList>
+<listItem>
+<para>Suite results:</para>
+<para>In order to display results for a set of suites, the <filename>xslt.jsp</filename> requires 
+the "suiteName" and "resourceID" parameters.  The JSP uses these parameters to 
+retrieve cached results from the depot.  The "suiteName" and "resourceID" parameters may contain a single value 
+(e.g. "suiteName=sampleSuite&amp;resourceID=defaultGrid") or multiple comma-separated values 
+(e.g. "suiteName=sampleSuite,myNewSuite&amp;resourceID=defaultGrid,newSuiteResources").  If multiple suites and resources are used, the JSP will return results for each suite/resource pair in the order they are entered.  If multiple suites and a single resource are used, the JSP will return results for each suite using the same resource.  </para>
+<para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/etc/common</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/etc/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
+</para>
+<para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/etc/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
 <orderedList>
 <listItem>
 <para>
@@ -189,6 +212,48 @@ XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is
 </screen></para>
 </listItem>
 </orderedList>
+</listItem>
+<listItem>
+<para>Reporter detail results:</para>
+<para>In order to display reporter detail results, the <filename>xslt.jsp</filename> requires 
+a "configID" parameter for the series.  The JSP uses this parameter to 
+retrieve reporter results from the depot.  If an "instanceID" parameter is not also supplied, the JSP returns a history of 
+XML results for the series.  If an "instanceID" parameter is supplied, the JSP returns XML results for a the specified instance of the series.
+</para>
+<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/etc/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" and "instanceID" parameters are not set, the XML reporter reporter results are displayed:</para>
+<screen>&lt;reportDetails&gt; 
+  &lt;suiteId&gt;1&lt;/suiteId&gt;
+  &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
+  &lt;seriesId&gt;5&lt;/seriesId&gt;
+  &lt;reportId&gt;1&lt;/reportId&gt;
+  &lt;instanceId&gt;73&lt;/instanceId&gt;
+  &lt;seriesConfig&gt;
+    &lt;series&gt;
+     ...    
+    &lt;/series&gt;
+    &lt;nickname&gt;java_hello_world&lt;/nickname&gt;     
+    &lt;resourceHostname&gt;localResource&lt;/resourceHostname&gt;     
+    &lt;schedule&gt;
+     ...    
+    &lt;/schedule&gt;
+    &lt;action&gt;add&lt;/action&gt;     
+  &lt;/seriesConfig&gt;
+  &lt;report&gt;
+     ...
+  &lt;/report&gt;
+  &lt;sysusage&gt;
+     ...
+  &lt;/sysusage&gt;
+  &lt;stderr/&gt;
+&lt;/reportDetails&gt;</screen>
+</listItem>
+</itemizedList>
+</listItem>
+</orderedList>
+</section>
+
+<section id="custom-display">
+<title>Changing the Look of the Default Status Pages</title>
 
 <para>
 To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/default.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter (e.g. $INCA_DIST/etc/swStack.xsl).  [ <ulink url="http://www.w3schools.com/xsl/">xsl tutorial</ulink> ] 
