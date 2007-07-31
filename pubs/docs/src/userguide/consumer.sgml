@@ -8,8 +8,7 @@ from the depot and displays it (e.g. a JSP, SQL query, CGI, etc.).</para>
 
 <para>Data consumers can query the Inca depot to produce current and historical
 reports and graphs or customized status information.  The Inca depot has Perl
-and Java client APIs for its pre-defined queries (see section <xref
-linkend="userguide-apis">). </para> 
+and Java client APIs for its pre-defined queries (see <xref linkend="userguide-apis">). </para> 
 
 <section id="default-consumer">
 <title>Default Data Consumer</title>
@@ -28,7 +27,7 @@ the <filename>$INCA_DIST/webapps</filename> directory and deployed by
 restarting the consumer.  Currently Inca WAR files cannot be deployed outside
 of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
 on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
-as described in section <xref linkend="consumer-port">.</para>
+as described in <xref linkend="consumer-port">.</para>
 
 <para>There are three main JSP contained in the <filename>inca.war</filename>:</para>
 
@@ -42,7 +41,7 @@ url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp<
 </para> 
 <para>The <filename>index.jsp</filename> uses JSP tag libraries to retrieve current suite configuration from 
 the depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
-function and cached resource configuration infomation from the agent's
+function and cached resource configuration information from the agent's
 <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
 </para>
 <para>The XML returned by the depot and agent functions is transformed into an HTML
@@ -84,7 +83,7 @@ retrieve cached results from the depot.  The "suiteName" and "resourceID" parame
 <para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/etc/common</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/etc/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
 </para>
 <para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/etc/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
-<orderedList>
+<itemizedList>
 <listItem>
 <para>
 &lt;all2allSummaries&gt;  
@@ -123,8 +122,7 @@ be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are 
   &lt;/resources&gt;
 &lt;/all2allSummaries&gt;
 </screen></para>
-</listItem>
-<listItem>
+
 <para>
 &lt;suite&gt; 
 (from xslt.jsp "suiteName" parameter):
@@ -157,8 +155,7 @@ and returns summaries for the latest series instance in that suite.
  &lt;/reportSummary&gt;
 &lt;/suite&gt;
 </screen></para>
-</listItem>
-<listItem>
+
 <para>
 &lt;resourceConfig&gt; 
 (from xslt.jsp "resourceID" parameter):
@@ -180,8 +177,7 @@ This part of the XML is retrieved from the agent.
   &lt;/resources&gt;
 &lt;/resourceConfig&gt;
 </screen></para>
-</listItem>
-<listItem>
+
 <para>
 extra xml 
 (from xslt.jsp "xmlFile" parameter):
@@ -211,7 +207,7 @@ XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is
 &lt;/stack&gt;
 </screen></para>
 </listItem>
-</orderedList>
+</itemizedList>
 </listItem>
 <listItem>
 <para>Reporter detail results:</para>
@@ -220,7 +216,7 @@ a "configID" parameter for the series.  The JSP uses this parameter to
 retrieve reporter results from the depot.  If an "instanceID" parameter is not also supplied, the JSP returns a history of 
 XML results for the series.  If an "instanceID" parameter is supplied, the JSP returns XML results for a the specified instance of the series.
 </para>
-<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/etc/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" and "instanceID" parameters are not set, the XML reporter reporter results are displayed:</para>
+<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/etc/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" parameter is not set, the XML reporter results are displayed:</para>
 <screen>&lt;reportDetails&gt; 
   &lt;suiteId&gt;1&lt;/suiteId&gt;
   &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
@@ -253,18 +249,191 @@ XML results for the series.  If an "instanceID" parameter is supplied, the JSP r
 </section>
 
 <section id="custom-display">
-<title>Changing the Look of the Default Status Pages</title>
+<title>Changing the Look</title>
+
+<section id="custom-color">
+<title>Colors and Fonts</title>
+<para>
+Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in 
+<filename>$INCA_DIST/var/jetty*/webapp/css/inca.css</filename>.  For example, to change the color in the reporter detail pages header bar 
+open <filename>inca.css</filename> and change lines 111-112 to:
+<screen>.header {
+    background-color: #D07651;</screen>
+The details pages will now look like:
+<graphic fileref="figures/consumer/color-change.jpg" align="center"></graphic> 
+</para>
+<para>For general information, visit the [ <ulink url="http://www.w3schools.com/css/">CSS tutorial</ulink> ].</para>
+</section>
+
+<section id="custom-html">
+<title>HTML Layout</title>
+<para>
+The three default JSP scripts retrieve XML data from the agent and depot and then use the XSL stylesheets in 
+<filename>$INCA_DIST/etc</filename> to transform the 
+XML into HTML.  The following stylesheets are installed with the default consumer:</para>
+<orderedList>
+<listItem> 
+<para><filename>index.xsl</filename>:</para> 
+<para>Lists all configured suite and resource names in an   
+ HTML form whose action is to display results for the selected suite and resource.  
+</para> 
+<para>The <filename>index.xsl</filename> stylesheet is applied to XML returned by <filename>index.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>config.xsl</filename>:</para> 
+<para>Prints description of deployed suites and series. </para>
+<para>The <filename>config.xsl</filename> stylesheet is applied to XML returned by <filename>config.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>default.xsl</filename>:</para> 
+<para>Prints table of suite(s) results. 
+</para>
+<para>The <filename>default.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>swStack.xsl</filename>:</para> 
+<para>Prints table of suite(s) results.  Uses XML file
+ to format table rows by software categories and packages. 
+</para>
+<para>The <filename>swStack.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>summary.xsl</filename>:</para> 
+<para>Prints summary results table with a list of resources in the left column and
+ a list of the suite tests each resource is failing 
+ in the right column.  Failing tests are listed by name 
+ and by overall percentage passing in suite.  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups. 
+</para>
+<para>The <filename>summary.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>instance.xsl</filename>:</para> 
+<para>Prints HTML table with report details.
+</para>
+<para>The <filename>instance.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>header.xsl</filename>:</para> 
+<para>Prints HTML page header with a link to <filename>inca.css</filename> between &lt;header&gt; tags.
+</para>
+<para>The <filename>header.xsl</filename> stylesheet is included in most other stylesheets.</para>
+</listItem>
+<listItem> 
+<para><filename>footer.xsl</filename>:</para> 
+<para>Prints HTML page footer with the Inca logo.
+</para>
+<para>The <filename>footer.xsl</filename> stylesheet is included in most other stylesheets.</para>
+</listItem>
+<listItem> 
+<para><filename>legend.xsl</filename>:</para> 
+<para>Prints a key to cell colors and text.
+</para>
+<para>The <filename>legend.xsl</filename> stylesheet is included in the <filename>default.xsl</filename> 
+and <filename>swStack.xsl</filename> stylesheets.</para>
+</listItem>
+<listItem> 
+<para><filename>inca-common.xsl</filename>:</para> 
+<para>Common templates for use in Inca stylesheets. 
+</para>
+<para>The <filename>inca-common.xsl</filename> stylesheet is included in most other stylesheets.</para>
+</listItem>
+</orderedList>
 
 <para>
-To change the XML to HTML transformation, either edit the default XSL stylesheet ($INCA_DIST/etc/default.xsl for the summary page or $INCA_DIST/etc/instance.xsl for the report detail pages), or pass another XSL file in the $INCA_DIST/etc directory as the xslt.jsp "xsl" parameter (e.g. $INCA_DIST/etc/swStack.xsl).  [ <ulink url="http://www.w3schools.com/xsl/">xsl tutorial</ulink> ] 
+To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet 
+in <filename>$INCA_DIST/etc</filename> and pass it to the JSP as the "xsl" parameter.  </para>
+<para>For general information about editing stylesheets, 
+visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
+
+<section id="custom-html-values">
+<title>Custom Values in HTML Table Cells</title>
+<para>To display particular values from the body of a 
+report rather than pass/error/version on the suite results pages, you could edit <filename>default.xsl</filename>.  For a report body that looks like:</para>
+<para>
+<screen>&lt;body&gt;
+  &lt;performance&gt;
+    &lt;ID&gt;securemds&lt;/ID&gt;
+    &lt;benchmark&gt;
+      &lt;ID&gt;wsrf-get-property&lt;/ID&gt;
+      &lt;statistics&gt;
+        &lt;statistic&gt;
+          &lt;ID&gt;hostname&lt;/ID&gt;
+          &lt;value&gt;tg-login.ornl.teragrid.org&lt;/value&gt;
+          &lt;units&gt;host&lt;/units&gt;
+        &lt;/statistic&gt;
+      &lt;/statistics&gt;
+    &lt;/benchmark&gt;
+  &lt;/performance&gt;
+&lt;/body&gt;</screen>
 </para>
 <para>
-Change default CSS (Cascading Style Sheet) properties such as colors and fonts by editing the $INCA_DIST/var/jetty/webapp/css/inca.css file. [ <ulink url="http://www.w3schools.com/css/">css tutorial</ulink> ]
+The edit to <filename>default.xsl</filename> would be around line 189 and would look something like:
+</para>
+<para>
+<screen>&lt;td class="{$exit}"&gt;
+  &lt;a href="{$href}"&gt;
+    &lt;xsl:variable name="stats" select="$result/body/performance/benchmark/statistics" /&gt;
+    &lt;xsl:variable name="mdshost" select="$stats/statistic[matches(., 'hostname')]/value" /&gt;
+    &lt;xsl:choose&gt;
+      &lt;xsl:when test="string($mdshost)!=''"&gt;
+        &lt;xsl:value-of select="$mdshost"/&gt;
+      &lt;/xsl:when&gt;
+...</screen>
+</para>
+<para>The resulting page would look like:
+<graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic> 
 </para>
 </section>
 
+<section id="custom-html-header">
+<title>Custom HTML Header</title>
+
+<para>An example of customizing the HTML header would be to add a call to a custom header stylesheet in the 
+"printBodyTitle" template.  Edit <filename>inca-common.xsl</filename>:</para>
+<para><screen>13  <emphasis role="red">&lt;xsl:include href="custom-header.xsl"/&gt;</emphasis>
+...
+24  &lt;xsl:template name="printBodyTitle"&gt;
+25    &lt;xsl:param name="title"/&gt;
+26    <emphasis role="red">&lt;xsl:call-template name="custom-header"/&gt;</emphasis>
+27    &lt;xsl:variable name="datenow" select="date:new()" /&gt;
+28    &lt;xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')"/&gt;
+29    &lt;table width="100%" border="0"&gt;
+30      &lt;tr align="left"&gt;</screen></para>
+
+<para>Create a <filename>$INCA_DIST/etc/custom-header.xsl</filename> like:</para>
+
+<para><screen>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;!-- ================================================ --&gt;
+&lt;!-- Prints out custom header for Inca status pages   --&gt;
+&lt;!-- ================================================ --&gt;
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns="http://www.w3.org/1999/xhtml"&gt;
+
+  &lt;xsl:template name="custom-header"&gt;
+    &lt;table class="header" width="100%"&gt;
+      &lt;tr&gt;
+        &lt;td bgcolor="#003366"&gt;
+          &lt;img class="logo" src="img/header.jpg"/&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;table class="menu" width="100%"&gt;
+      ... custom navigation ...
+    &lt;/table&gt;
+ &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</screen></para>
+
+<para>The resulting page would look something like: </para>
+<para><graphic fileref="figures/consumer/custom-header.jpg" align="center"></graphic></para>
+</section>
+</section>
+</section>
+
 <section id="consumer-alt-location">
-<title>Non-default Data Consumer Installation</title>
+<title>Changing the Installation Location</title>
 <para>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </para>
       <itemizedList>
         <listItem>
@@ -303,7 +472,7 @@ scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*"
 </section>
 
 <section id="consumer-port">
-<title>Change port</title>
+<title>Changing the Port</title>
 <para>
 By default, the consumer is started on port 8080.  To change this, edit
 the etc/jetty.xml file and search for 'SocketListener'.  To change the 
@@ -445,7 +614,7 @@ provided by Jetty's password utility:
 </section>
 
 <section id="password-consumer">
-<title>Adding password protection</title>
+<title>Adding Password Protection</title>
 <para>
 By default, a password is not required for a user to access the status pages
 served by the consumer.  To require a password, edit <filename>$INCA_DIST/etc/webdefault.xml</filename> 
