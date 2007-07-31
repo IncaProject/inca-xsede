@@ -12,6 +12,7 @@
 
   <xsl:include href="header.xsl"/>
   <xsl:include href="footer.xsl"/>
+  <xsl:include href="inca-common.xsl"/>
 
   <xsl:param name="url" />
   <xsl:param name="page" />
@@ -22,7 +23,9 @@
   <xsl:template match="/">
     <!-- header.xsl -->
     <xsl:call-template name="header"/>
-    <body topMargin="0"><xsl:apply-templates select="combo/reportDetails/report" /></body>
+    <body topMargin="0">
+      <xsl:apply-templates select="combo/reportDetails/report" />
+    </body>
     <!-- footer.xsl -->
     <xsl:call-template name="footer" />
   </xsl:template>
@@ -76,9 +79,12 @@
       </xsl:choose>
     </xsl:variable>
 
+    <!-- inca-common.xsl -->
+    <xsl:call-template name="printBodyTitle">
+      <xsl:with-param name="title" select="concat('Details for ',
+      $nickName, ' series')" />
+    </xsl:call-template>
     <table width="600" cellpadding="4">
-      <tr><td colspan="2"><h3><xsl:value-of select="concat('Details for ',
-      $nickName, ' series')"/></h3></td></tr>
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
         <td colspan="2">
