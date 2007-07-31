@@ -22,7 +22,7 @@
     <head>
       <link href="css/inca.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
+    <body topMargin="0">
       <h1 class="body">
         <xsl:value-of select="series/reportDetails/seriesConfig/series/name"/>
       </h1>

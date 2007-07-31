@@ -14,7 +14,7 @@
   <xsl:template match="/combo">
     <!-- header.xsl -->
     <xsl:call-template name="header"/>
-    <body><xsl:call-template name="suite" /></body>
+    <body topMargin="0"><xsl:call-template name="suite" /></body>
     <!-- footer.xsl -->
     <xsl:call-template name="footer"/>
   </xsl:template>

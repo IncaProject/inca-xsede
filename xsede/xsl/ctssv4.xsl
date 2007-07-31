@@ -53,7 +53,7 @@
   <xsl:template match="/">
     <!-- header.xsl -->
     <xsl:call-template name="header"/>
-    <body>
+    <body topMargin="0">
       <xsl:choose>
         <xsl:when test="count(error)>0">
           <!-- inca-common.xsl printErrors -->
