@@ -3007,10 +3007,11 @@ SRC="figures/consumer/text-change.jpg"
 ALIGN="CENTER"></P
 ></P
 ><P
->Edit the following lines of <TT
+>Edit <TT
 CLASS="FILENAME"
 >default.xsl</TT
->:</P
+>, add a new variable for the custom table cell text and 
+print the custom cell text rather than the default text:</P
 ><P
 ><TABLE
 BORDER="1"
@@ -3022,40 +3023,31 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->173  &#60;xsl:variable name="exit"&#62;
-174    &#60;xsl:choose&#62;
-175      &#60;xsl:when test="string($instance)=''"&#62;
-176        &#60;xsl:value-of select="''" /&#62;
-177      &#60;/xsl:when&#62;
-178      &#60;xsl:when test="string($result/body)!=''
-179      and string($result/errorMessage)=''
-180      and ($comparitor='Success' or count($comparitor)=0)"&#62;
-181        &#60;xsl:value-of select="concat('passed: ',
-182        replace(substring(concat($result/gmt, ' '), 1, 16), 'T', ' '))" /&#62;
-183      &#60;/xsl:when&#62;
-184      &#60;xsl:otherwise&#62;
-185        &#60;xsl:value-of select="concat('error: ',
-186        substring(concat($result/errorMessage, ' '), 1, 30))" /&#62;
-187      &#60;/xsl:otherwise&#62;
-188    &#60;/xsl:choose&#62;
-189  &#60;/xsl:variable&#62;
-190  &#60;xsl:variable name="color"&#62;
-191    &#60;xsl:choose&#62;
-192      &#60;xsl:when test="$exit[matches(.,'^passed:')]"&#62;
-193        &#60;xsl:value-of select="'pass'" /&#62;
-194      &#60;/xsl:when&#62;
-195      &#60;xsl:when test="$exit[matches(.,'^error:')]"&#62;
-196        &#60;xsl:value-of select="'error'" /&#62;
-197      &#60;/xsl:when&#62;
-198      &#60;xsl:otherwise&#62;
-199        &#60;xsl:value-of select="''"/&#62;
-200      &#60;/xsl:otherwise&#62;
-201    &#60;/xsl:choose&#62;
-202  &#60;/xsl:variable&#62;
-203  &#60;xsl:choose&#62;
-204    &#60;xsl:when test="$exit!=''"&#62;
-205      &#60;td class="{$color}"&#62;
-206        &#60;a href="{$href}"&#62; &#60;xsl:value-of select="$exit"/&#62; &#60;/a&#62;</PRE
+>188  &#60;xsl:variable name="cellText"&#62;
+189    &#60;xsl:choose&#62;
+190      &#60;xsl:when test="string($instance)=''"&#62;
+191        &#60;xsl:value-of select="''" /&#62;
+192      &#60;/xsl:when&#62;
+193      &#60;xsl:when test="string($result/body)!=''
+194             and string($result/errorMessage)=''
+195             and ($comparitor='Success' or count($comparitor)=0)"&#62;
+196               passed: 
+197        &#60;!-- get yyyy-mm-dd from gmt timestamp --&#62;
+198        &#60;xsl:value-of select="substring($result/gmt, 1, 10)" /&#62; 
+199        &#60;!-- get HH:MM from gmt timestamp --&#62;
+200        &#60;xsl:value-of select="substring($result/gmt, 12, 5)" /&#62;
+201      &#60;/xsl:when&#62;
+202      &#60;xsl:otherwise&#62;
+203               error:
+204        &#60;xsl:value-of select="substring($result/errorMessage, 1, 30)" /&#62;
+205      &#60;/xsl:otherwise&#62;
+206    &#60;/xsl:choose&#62;
+207  &#60;/xsl:variable&#62;
+208  &#60;xsl:choose&#62;
+209    &#60;xsl:when test="$exit!=''"&#62;
+210      &#60;td class="{$exit}"&#62;
+211        &#60;a href="{$href}"&#62;&#60;xsl:value-of select="$cellText"/&#62;&#60;/a&#62;
+212        &#60;xsl:if test="$url[matches(., 'markOld')]"&#62;</PRE
 ></FONT
 ></TD
 ></TR
