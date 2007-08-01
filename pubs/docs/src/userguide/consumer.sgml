@@ -347,41 +347,50 @@ visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</
 
 <section id="custom-html-values">
 <title>Custom Values in HTML Table Cells</title>
-<para>To display particular values from the body of a 
-report rather than pass/error/version on the suite results pages, you could edit <filename>default.xsl</filename>.  For a report body that looks like:</para>
-<para>
-<screen>&lt;body&gt;
-  &lt;performance&gt;
-    &lt;ID&gt;securemds&lt;/ID&gt;
-    &lt;benchmark&gt;
-      &lt;ID&gt;wsrf-get-property&lt;/ID&gt;
-      &lt;statistics&gt;
-        &lt;statistic&gt;
-          &lt;ID&gt;hostname&lt;/ID&gt;
-          &lt;value&gt;tg-login.ornl.teragrid.org&lt;/value&gt;
-          &lt;units&gt;host&lt;/units&gt;
-        &lt;/statistic&gt;
-      &lt;/statistics&gt;
-    &lt;/benchmark&gt;
-  &lt;/performance&gt;
-&lt;/body&gt;</screen>
+<para>To display report values other
+ than the default text of either a software version, "pass", or "error" 
+on the suite results pages, edit <filename>default.xsl</filename>.  </para>
+<para> For example, to change the default suite status to print the time successful 
+reporters ran and a truncated error message for failures like:
+</para>
+<para><graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic></para>
+<para>Edit the following lines of <filename>default.xsl</filename>:
 </para>
 <para>
-The edit to <filename>default.xsl</filename> would be around line 189 and would look something like:
-</para>
-<para>
-<screen>&lt;td class="{$exit}"&gt;
-  &lt;a href="{$href}"&gt;
-    &lt;xsl:variable name="stats" select="$result/body/performance/benchmark/statistics" /&gt;
-    &lt;xsl:variable name="mdshost" select="$stats/statistic[matches(., 'hostname')]/value" /&gt;
-    &lt;xsl:choose&gt;
-      &lt;xsl:when test="string($mdshost)!=''"&gt;
-        &lt;xsl:value-of select="$mdshost"/&gt;
-      &lt;/xsl:when&gt;
-...</screen>
-</para>
-<para>The resulting page would look like:
-<graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic> 
+<screen>173  &lt;xsl:variable name="exit"&gt;
+174    &lt;xsl:choose&gt;
+175      &lt;xsl:when test="string($instance)=''"&gt;
+176        &lt;xsl:value-of select="''" /&gt;
+177      &lt;/xsl:when&gt;
+178      &lt;xsl:when test="string($result/body)!=''
+179      and string($result/errorMessage)=''
+180      and ($comparitor='Success' or count($comparitor)=0)"&gt;
+181        &lt;xsl:value-of select="concat('passed: ',
+182        replace(substring(concat($result/gmt, ' '), 1, 16), 'T', ' '))" /&gt;
+183      &lt;/xsl:when&gt;
+184      &lt;xsl:otherwise&gt;
+185        &lt;xsl:value-of select="concat('error: ',
+186        substring(concat($result/errorMessage, ' '), 1, 30))" /&gt;
+187      &lt;/xsl:otherwise&gt;
+188    &lt;/xsl:choose&gt;
+189  &lt;/xsl:variable&gt;
+190  &lt;xsl:variable name="color"&gt;
+191    &lt;xsl:choose&gt;
+192      &lt;xsl:when test="$exit[matches(.,'^passed:')]"&gt;
+193        &lt;xsl:value-of select="'pass'" /&gt;
+194      &lt;/xsl:when&gt;
+195      &lt;xsl:when test="$exit[matches(.,'^error:')]"&gt;
+196        &lt;xsl:value-of select="'error'" /&gt;
+197      &lt;/xsl:when&gt;
+198      &lt;xsl:otherwise&gt;
+199        &lt;xsl:value-of select="''"/&gt;
+200      &lt;/xsl:otherwise&gt;
+201    &lt;/xsl:choose&gt;
+202  &lt;/xsl:variable&gt;
+203  &lt;xsl:choose&gt;
+204    &lt;xsl:when test="$exit!=''"&gt;
+205      &lt;td class="{$color}"&gt;
+206        &lt;a href="{$href}"&gt; &lt;xsl:value-of select="$exit"/&gt; &lt;/a&gt;</screen>
 </para>
 </section>
 
