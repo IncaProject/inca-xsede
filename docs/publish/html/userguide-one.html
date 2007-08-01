@@ -2991,79 +2991,76 @@ NAME="CUSTOM-HTML-VALUES"
 >6.2.2.1. Custom Values in HTML Table Cells</A
 ></H5
 ><P
->To display particular values from the body of a 
-report rather than pass/error/version on the suite results pages, you could edit <TT
+>To display report values other
+ than the default text of either a software version, "pass", or "error" 
+on the suite results pages, edit <TT
 CLASS="FILENAME"
 >default.xsl</TT
->.  For a report body that looks like:</P
+>.  </P
 ><P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->&#60;body&#62;
-  &#60;performance&#62;
-    &#60;ID&#62;securemds&#60;/ID&#62;
-    &#60;benchmark&#62;
-      &#60;ID&#62;wsrf-get-property&#60;/ID&#62;
-      &#60;statistics&#62;
-        &#60;statistic&#62;
-          &#60;ID&#62;hostname&#60;/ID&#62;
-          &#60;value&#62;tg-login.ornl.teragrid.org&#60;/value&#62;
-          &#60;units&#62;host&#60;/units&#62;
-        &#60;/statistic&#62;
-      &#60;/statistics&#62;
-    &#60;/benchmark&#62;
-  &#60;/performance&#62;
-&#60;/body&#62;</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
+> For example, to change the default suite status to print the time successful 
+reporters ran and a truncated error message for failures like:</P
 ><P
->The edit to <TT
-CLASS="FILENAME"
->default.xsl</TT
-> would be around line 189 and would look something like:</P
 ><P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->&#60;td class="{$exit}"&#62;
-  &#60;a href="{$href}"&#62;
-    &#60;xsl:variable name="stats" select="$result/body/performance/benchmark/statistics" /&#62;
-    &#60;xsl:variable name="mdshost" select="$stats/statistic[matches(., 'hostname')]/value" /&#62;
-    &#60;xsl:choose&#62;
-      &#60;xsl:when test="string($mdshost)!=''"&#62;
-        &#60;xsl:value-of select="$mdshost"/&#62;
-      &#60;/xsl:when&#62;
-...</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-><P
->The resulting page would look like:
-<P
 ><IMG
 SRC="figures/consumer/text-change.jpg"
 ALIGN="CENTER"></P
-> </P
+></P
+><P
+>Edit the following lines of <TT
+CLASS="FILENAME"
+>default.xsl</TT
+>:</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>173  &#60;xsl:variable name="exit"&#62;
+174    &#60;xsl:choose&#62;
+175      &#60;xsl:when test="string($instance)=''"&#62;
+176        &#60;xsl:value-of select="''" /&#62;
+177      &#60;/xsl:when&#62;
+178      &#60;xsl:when test="string($result/body)!=''
+179      and string($result/errorMessage)=''
+180      and ($comparitor='Success' or count($comparitor)=0)"&#62;
+181        &#60;xsl:value-of select="concat('passed: ',
+182        replace(substring(concat($result/gmt, ' '), 1, 16), 'T', ' '))" /&#62;
+183      &#60;/xsl:when&#62;
+184      &#60;xsl:otherwise&#62;
+185        &#60;xsl:value-of select="concat('error: ',
+186        substring(concat($result/errorMessage, ' '), 1, 30))" /&#62;
+187      &#60;/xsl:otherwise&#62;
+188    &#60;/xsl:choose&#62;
+189  &#60;/xsl:variable&#62;
+190  &#60;xsl:variable name="color"&#62;
+191    &#60;xsl:choose&#62;
+192      &#60;xsl:when test="$exit[matches(.,'^passed:')]"&#62;
+193        &#60;xsl:value-of select="'pass'" /&#62;
+194      &#60;/xsl:when&#62;
+195      &#60;xsl:when test="$exit[matches(.,'^error:')]"&#62;
+196        &#60;xsl:value-of select="'error'" /&#62;
+197      &#60;/xsl:when&#62;
+198      &#60;xsl:otherwise&#62;
+199        &#60;xsl:value-of select="''"/&#62;
+200      &#60;/xsl:otherwise&#62;
+201    &#60;/xsl:choose&#62;
+202  &#60;/xsl:variable&#62;
+203  &#60;xsl:choose&#62;
+204    &#60;xsl:when test="$exit!=''"&#62;
+205      &#60;td class="{$color}"&#62;
+206        &#60;a href="{$href}"&#62; &#60;xsl:value-of select="$exit"/&#62; &#60;/a&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3790,7 +3787,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN729"
+NAME="AEN728"
 ></A
 ><P
 ><B
@@ -4687,7 +4684,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN936"
+NAME="AEN935"
 ></A
 ><P
 ><B
@@ -4908,7 +4905,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN983"
+NAME="AEN982"
 ></A
 ><P
 ><B
@@ -6500,7 +6497,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1260"
+NAME="AEN1259"
 ></A
 ><P
 ><B
