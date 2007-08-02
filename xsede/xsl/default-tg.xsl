@@ -52,7 +52,7 @@
   <!-- generateHTML                                                         -->
   <!--                                                                      -->
   <!-- Prints an html header with a page title and a legend.                -->
-  <!-- Calls printSuiteInfo.                                                  -->
+  <!-- Calls printSuiteInfo.                                                -->
   <!-- ==================================================================== -->
   <xsl:template name="generateHTML" match="combo">
     <!-- inca-common.xsl -->
@@ -220,35 +220,7 @@
                 <xsl:variable
                     name="mdshost"
                     select="$stats/statistic[matches(., 'hostname')]/value" />
-                <xsl:variable name="formatGmt">
-                  <xsl:call-template name="formatDate">
-                    <xsl:with-param name="date" 
-                       select="$result/gmt" as="xs:dateTime"/>
-                  </xsl:call-template>
-                </xsl:variable>
-                <xsl:variable name="real-time-text">
-                  <xsl:choose>
-                    <xsl:when test="string($instance)=''">
-                      <xsl:value-of select="''" />
-                    </xsl:when>
-                    <xsl:when test="string($result/body)!=''
-                    and string($result/errorMessage)=''
-                    and ($comparitor='Success' or count($comparitor)=0)">
-                        <xsl:value-of select="'passed'"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="concat('error: ',
-                      substring($result/errorMessage, 1, 30))"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:variable>
                 <xsl:choose>
-                  <xsl:when test="$url[matches(., 'suiteName=real-time')]">
-                    <xsl:value-of select="$real-time-text"/>
-                    <td class="clear">
-                      <xsl:value-of select="$formatGmt"/>
-                    </td>
-                  </xsl:when>
                   <xsl:when test="string($depth)!=''">
                     <xsl:value-of select="$depth"/>
                   </xsl:when>
