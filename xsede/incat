@@ -9810,7 +9810,7 @@
               </arg>
               <arg>
                 <name>log</name>
-                <value>5</value>
+                <value>0</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -9818,7 +9818,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>1800.0</wallClockTime>
+              <wallClockTime>600.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -9827,60 +9827,6 @@
           <schedule>
             <cron>
               <min>*/10</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>2119</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-netstat</nickname>
-          <resourceSetName>sdsc-ia64</resourceSetName>
-          <schedule>
-            <cron>
-              <min>*/3</min>
               <hour>*</hour>
               <mday>*</mday>
               <wday>*</wday>
@@ -9966,7 +9912,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>7200.0</wallClockTime>
+              <wallClockTime>39600.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -10060,7 +10006,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>7200.0</wallClockTime>
+              <wallClockTime>600.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -10087,11 +10033,332 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>2048</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@gramExecutable@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gatekeeperHost@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-fork</nickname>
+          <resourceSetName>sdsc-ia64</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/4</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@gridScheduler@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>@maxMem@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@gramExecutable@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gatekeeperHost@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-batch</nickname>
+          <resourceSetName>sdsc-ia64</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>2119</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-netstat</nickname>
+          <resourceSetName>sdsc-ia64</resourceSetName>
+          <schedule>
+            <cron>
+              <min>*/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-netstat</nickname>
+          <resourceSetName>sdsc-ia64</resourceSetName>
+          <schedule>
+            <cron>
+              <min>*/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gramversion</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@gridScheduler@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gatekeeperHost@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-wsrf-get-property</nickname>
+          <resourceSetName>sdsc-ia64</resourceSetName>
+          <schedule>
+            <cron>
+              <min>*/10</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>2</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
