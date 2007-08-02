@@ -42,10 +42,6 @@
     <xsl:variable name="comp" select="../comparisonResult"/>
     <xsl:variable name="used" select="../sysusage"/>
     <xsl:variable name="gmt" select="gmt" as="xs:dateTime" />
-    <xsl:variable
-        name="age"
-        select="replace(replace(replace(replace(replace(current-dateTime()-$gmt,
-        'P',''),'D',' days '),'T',''),'H',' hours '),'M.*',' minutes')"/>
     <xsl:variable name="complete" select="exitStatus/completed"/>
     <xsl:variable name="errMsg" select="exitStatus/errorMessage" />
     <xsl:variable name="package" select="body/package"/>
@@ -132,12 +128,19 @@
       </tr>
       <tr>
         <td><xsl:text>ran at</xsl:text></td>
-        <td><xsl:value-of select="sdf:format(sdf:new('MM-dd-yyyy hh:mm a (z)'),
-        $gmt)" /></td>
+        <td>
+          <xsl:call-template name="formatDate">
+            <xsl:with-param name="date" select="$gmt"/>
+          </xsl:call-template>
+        </td>
       </tr>
       <tr>
         <td><xsl:text>age</xsl:text></td>
-        <td><xsl:value-of select="$age"/></td>
+        <td>
+          <xsl:call-template name="formatAge">
+            <xsl:with-param name="age" select="$gmt"/>
+          </xsl:call-template>
+        </td>
       </tr>
       <tr>
         <td><xsl:text>cron</xsl:text></td>
