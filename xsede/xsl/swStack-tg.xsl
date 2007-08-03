@@ -3,7 +3,7 @@
 <!-- ==================================================================== -->
 <!-- swStack.xsl:  Prints table of suite(s) results.  Uses XML file       -->
 <!--               to format table rows by software categories and        -->
-<!--               packages.  Customized for TG real time monitoring.     -->
+<!--               packages.                                              -->
 <!-- ==================================================================== -->
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -319,13 +319,12 @@
                   <xsl:value-of select="$exit"/>
                 </xsl:otherwise>
               </xsl:choose>
-              <xsl:value-of select="concat(' (',$age,' ago)')"/>
             </xsl:variable>
             <td class="{$class}">
               <a href="{$href}">
                 <xsl:choose>
                   <xsl:when test="$url[matches(., 'suiteName=real-time')]">
-                    <xsl:value-of select="$real-time-text"/>
+                    <xsl:value-of select="$real-time-text"/> 
                   </xsl:when>
                   <xsl:when test="string($foundVersion)=''">
                     <xsl:value-of select="$exit"/>
@@ -335,6 +334,9 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </a>
+              <xsl:if test="$url[matches(., 'suiteName=real-time')]">
+                <br/><xsl:value-of select="concat('(',$age,' ago)')"/>
+              </xsl:if>
               <xsl:if test="$url[matches(., 'markOld')]">
                 <!-- inca-common.xsl -->
                 <xsl:call-template name="markOld">
