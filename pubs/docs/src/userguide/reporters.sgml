@@ -104,6 +104,9 @@ New reporter developers may choose to write reporters in Perl since
 the Inca distribution includes sample Perl reporters and API modules (<xref linkend="reporter-api">) 
 for printing XML according to our schema.
 </para>
+<para>
+NOTE: Because some databases won't allow queries greater than 4kB, the XML portion of the report for logging/debugging and the error message must each be smaller than 4kB in size.  The body XML can be 12kB in size because it is queried in three parts.  If the report XML is greater than its limit, the depot truncates the oversized section from the beginning until it is the right size.  
+</para>
 <section id="reporter-schema">
 <title>Reporter XML Schema</title>
 <para>
