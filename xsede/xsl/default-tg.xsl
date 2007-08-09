@@ -210,7 +210,7 @@
         <xsl:choose>
           <xsl:when test="$exit!=''">
             <td class="{$exit}">
-              <a href="{$href}">
+              <a href="{$href}" title="{$result/errorMessage}">
                 <xsl:variable
                     name="stats"
                     select="$result/body/performance/benchmark/statistics" />
