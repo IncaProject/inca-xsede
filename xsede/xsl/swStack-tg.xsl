@@ -16,6 +16,7 @@
   <xsl:include href="inca-common.xsl"/>
   <xsl:include href="header.xsl"/>
   <xsl:include href="tg-legend.xsl"/>
+  <xsl:include href="sw-menu.xsl"/>
   <xsl:include href="footer.xsl"/>
   <xsl:param name="url" />
 
@@ -89,8 +90,13 @@
     <xsl:call-template name="printBodyTitle">
       <xsl:with-param name="title" select="$title"/>
     </xsl:call-template>
-    <!-- legend.xsl -->
+    <table><tr><td>
+    <!-- tg-legend.xsl -->
     <xsl:call-template name="printLegend"/>
+    </td><td>
+    <!-- sw-menu.xsl -->
+    <xsl:call-template name="sw-menu"/>
+    </td></tr></table>
     <!-- printSuiteInfo -->
     <xsl:apply-templates select="suiteResults/suite" />
   </xsl:template>
@@ -306,26 +312,9 @@
                                 select="$result/gmt" as="xs:dateTime"/>
               </xsl:call-template>
             </xsl:variable>
-            <xsl:variable name="real-time-text">
-              <xsl:choose>
-                <xsl:when test="$exit[matches(.,'^pass$')]">
-                  <xsl:value-of select="'passed'"/>
-                </xsl:when>
-                <xsl:when test="$exit[matches(.,'^error$')]">
-                  <xsl:value-of select="concat('error: ',
-                      substring($result/errorMessage, 1, 30))"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$exit"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
             <td class="{$class}">
-              <a href="{$href}">
+              <a href="{$href}" title="{$result/errorMessage}">
                 <xsl:choose>
-                  <xsl:when test="$url[matches(., 'suiteName=real-time')]">
-                    <xsl:value-of select="$real-time-text"/> 
-                  </xsl:when>
                   <xsl:when test="string($foundVersion)=''">
                     <xsl:value-of select="$exit"/>
                   </xsl:when>

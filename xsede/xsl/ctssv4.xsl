@@ -300,7 +300,7 @@
               </xsl:call-template>
             </xsl:variable>
             <td class="{$class}">
-              <a href="{$href}">
+              <a href="{$href}" title="{$result/errorMessage}">
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)=''">
                     <xsl:value-of select="$exit"/>
