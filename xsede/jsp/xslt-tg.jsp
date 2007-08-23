@@ -73,7 +73,7 @@
             xml += (String)pageContext.getAttribute("suite");
             if (resourceIDs.length == suiteNames.length) {
                 xml += "<resourceName>"+resourceIDs[i]+"</resourceName>\n";
-                %><inca:getResourceConfig resourceID="<%=resourceIDs[i]%>" macros="__regexp__" retAttrName="resources"/><%
+                %><inca:getResourceConfig resourceID="<%=resourceIDs[i]%>" macros="__regexp__ __regexpTmp__" retAttrName="resources"/><%
                 xml += (String)pageContext.getAttribute("resources");
             }
             if (xmlFiles.length == suiteNames.length) {
@@ -84,7 +84,7 @@
         }
         if(resourceIDs.length == 1){
             xml += "<resourceName>"+resourceIDs[0]+"</resourceName>\n";
-            %><inca:getResourceConfig resourceID="<%=resourceIDs[0]%>" macros="__regexp__" retAttrName="resources"/><%
+            %><inca:getResourceConfig resourceID="<%=resourceIDs[0]%>" macros="__regexp__ __regexpTmp__" retAttrName="resources"/><%
             xml += (String)pageContext.getAttribute("resources");}
         if(xmlFiles.length == 1){
             %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[0]%>" retAttrName="swStack"/><%
