@@ -9,7 +9,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:sdf="java.text.SimpleDateFormat"
-                xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
+                xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes"
+		xmlns:ser="http://inca.sdsc.edu/queryResult/series_2.0">
 
   <xsl:param name="type"/>
   <xsl:param name="xsl"/>
@@ -32,7 +33,7 @@
     <xsl:text>
 
     </xsl:text>
-    <xsl:for-each select="series/reportDetails">
+    <xsl:for-each select="ser:series/reportDetails">
       <xsl:sort select="report/gmt" data-type="text" order="descending"/>
       <xsl:variable name="details" select="."/>
       <!-- print DN stats -->
@@ -50,7 +51,7 @@
 
     </xsl:text>
     <xsl:variable name="details" select="."/>
-    <xsl:for-each select="series/reportDetails">
+    <xsl:for-each select="ser:series/reportDetails">
       <xsl:sort select="report/gmt" data-type="text" order="descending"/>
       <xsl:variable name="details" select="."/>
       <xsl:if test="position() = 1">

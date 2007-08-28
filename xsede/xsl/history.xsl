@@ -8,7 +8,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:sdf="java.text.SimpleDateFormat"
-                xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
+                xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes"
+		xmlns:ser="http://inca.sdsc.edu/queryResult/series_2.0">
 
   <xsl:param name="type"/>
   <xsl:param name="xsl"/>
@@ -24,11 +25,11 @@
     </head>
     <body topMargin="0">
       <h1 class="body">
-        <xsl:value-of select="series/reportDetails/seriesConfig/series/name"/>
+        <xsl:value-of select="ser:series/reportDetails/seriesConfig/series/name"/>
       </h1>
       <table class="clear" border="1" cellpadding="4">
         <tr><td>HOST</td><td>RAN</td><td>CONFIG ID</td><td>INSTANCE ID</td></tr>
-        <xsl:for-each select="series/reportDetails">
+        <xsl:for-each select="ser:series/reportDetails">
           <xsl:sort select="report/gmt" data-type="text" order="descending"/>
           <xsl:variable name="details" select="."/>
           <xsl:variable name="uri" select="$details/seriesConfig/series/uri"/>
