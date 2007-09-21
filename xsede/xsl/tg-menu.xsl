@@ -32,6 +32,7 @@
             <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
             <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
             <option value="vtss.teragrid.org-3.0.0">Vizualization Support</option>
+            <option value="wanfs.teragrid.org-4.0.0">Wide Area File System</option>
           </select></p>
         </td>
           <td> <p>RESOURCE:<br/>
