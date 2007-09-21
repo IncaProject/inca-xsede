@@ -1775,7 +1775,7 @@
       </resource>
       <resource>
         <name>login-gxmap</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|bigben\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|lear\.purdue\.teragrid\.org|viz\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|lear\.purdue\.teragrid\.org|viz\.uc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -1783,7 +1783,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org bigben.psc.teragrid.org dtf.sdsc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org frost.ncar.teragrid.org lear.purdue.teragrid.org viz.uc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org dtf.sdsc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org frost.ncar.teragrid.org lear.purdue.teragrid.org viz.uc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4983,10 +4983,6 @@
             <value>@keyPre@tgproxy-0.9.1 @keyPost@</value>
           </macro>
           <macro>
-            <name>real_time_email</name>
-            <value>inca@sdsc.edu, FailTo:kmuriki@sdsc.edu</value>
-          </macro>
-          <macro>
             <name>gridftpHosts</name>
             <value>gridftp.bigred.iu.teragrid.org</value>
             <value>gridftp-co.ncsa.teragrid.org</value>
@@ -5004,6 +5000,10 @@
             <value>gridftp.frost.ncar.teragrid.org</value>
             <value>gridftp-abe.ncsa.teragrid.org</value>
             <value>gridftp.intimidata.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>real_time_email</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:kmuriki@sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -5110,6 +5110,28 @@
           <macro>
             <name>__regexp__</name>
             <value>maverick.tacc.teragrid.org viz.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wanfs.teragrid.org-4.0.0</name>
+        <xpath>//resource[matches(name, '^(intimidata\.sdsc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wanfs.teragrid.org-4.0.0</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>intimidata.sdsc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8403,7 +8425,7 @@
       <name>data-movement.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.0.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>15</version>
+      <version>26</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -9473,7 +9495,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''&amp;&amp;errorMessage!~'Time ran out'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ '(Time ran out|Reporter exceeded usage limits)'</comparison>
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
@@ -9551,7 +9573,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''&amp;&amp;errorMessage!~'Time ran out'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ '(Time ran out|Reporter exceeded usage limits)'</comparison>
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
@@ -9645,7 +9667,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''&amp;&amp;errorMessage!~'Time ran out'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ '(Time ran out|Reporter exceeded usage limits)'</comparison>
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
@@ -9739,7 +9761,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''&amp;&amp;errorMessage!~'Time ran out'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ '(Time ran out|Reporter exceeded usage limits)'</comparison>
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
@@ -9753,7 +9775,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>33</version>
+      <version>39</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -9881,90 +9903,6 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-version</nickname>
-          <resourceSetName>remote-compute.teragrid.org-3.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>01:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>$INCA_LOCATION/bin/stream</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@gatekeeperHost@/@batchJobManager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globus-job-submit</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>7200.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-batch</nickname>
           <resourceSetName>remote-compute.teragrid.org-3.0.0</resourceSetName>
           <schedule>
             <cron>
@@ -10113,11 +10051,95 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>01:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>$INCA_LOCATION/bin/stream</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gatekeeperHost@/@batchJobManager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globus-job-submit</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>7200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch</nickname>
+          <resourceSetName>remote-compute.teragrid.org-3.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-3.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-3.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>22</version>
+      <version>24</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -10646,6 +10668,13 @@
       <guid>incas://sapa.sdsc.edu:6323/vtss.teragrid.org-3.0.0</guid>
       <description>Vizualization software</description>
       <version>3</version>
+    </suite>
+    <suite>
+      <seriesConfigs/>
+      <name>wanfs.teragrig.org-4.0.0</name>
+      <guid/>
+      <description>The Wide Area File System kit provides a set of capabilities for users to read and write data in a high-performance, parallel fashion from widely distributed resources on the TeraGrid network.</description>
+      <version>1</version>
     </suite>
     <suite>
       <seriesConfigs>
