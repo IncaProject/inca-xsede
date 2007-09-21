@@ -83,7 +83,7 @@
     <table width="600" cellpadding="4">
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
-        <td colspan="2">
+        <td>
           <p><xsl:value-of select="$resultText"/></p>
           <xsl:if test="$resultText=$comp">
             <p class="code"><xsl:value-of select="concat('Expecting: ',
@@ -108,6 +108,17 @@
             </xsl:if>
           </xsl:if>
         </td>
+        <td>
+          <xsl:variable name="label"
+                        select="concat(hostname, ' (',$nickName,')')"/>
+          <xsl:variable name="graphUrl"
+                        select="concat('graph.jsp?bgcolor=&amp;xmin=&amp;xmax=&amp;',
+               'title=', $label,
+               '&amp;configID=', ../seriesConfigId,
+               '&amp;seriesLabel=', $label)"/>
+          <a href="{$graphUrl}">
+            <img src="img/chart.gif" alt="graph history"/>
+          </a></td>
       </tr>
       <tr><td colspan="2" class="header">
         <xsl:text>Reporter details:</xsl:text>
