@@ -83,7 +83,7 @@
     <table width="600" cellpadding="4">
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
-        <td>
+        <td colspan="2">
           <p><xsl:value-of select="$resultText"/></p>
           <xsl:if test="$resultText=$comp">
             <p class="code"><xsl:value-of select="concat('Expecting: ',
@@ -107,8 +107,6 @@
               <p class="code"><xsl:apply-templates  select="../stderr"/></p>
             </xsl:if>
           </xsl:if>
-        </td>
-        <td>
           <xsl:variable name="label"
                         select="concat(hostname, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
