@@ -83,8 +83,19 @@
     <table width="600" cellpadding="4">
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
-        <td colspan="2">
-          <p><xsl:value-of select="$resultText"/></p>
+        <td><p><xsl:value-of select="$resultText"/></p></td>
+        <td>
+          <xsl:variable name="label"
+                        select="concat(hostname, ' (',$nickName,')')"/>
+          <xsl:variable name="graphUrl"
+                        select="concat('graph.jsp?bgcolor=&amp;xmin=&amp;xmax=&amp;',
+               'title=', $label,
+               '&amp;configID=', ../seriesConfigId,
+               '&amp;seriesLabel=', $label)"/>
+         <table><tr><td><a href="{$graphUrl}"><img src="img/chart.gif" alt="graph history"/></a></td>
+		    <td> <a href="{$graphUrl}">view result history</a></td></tr></table></td>
+        </tr>
+        <tr><td colspan="2">
           <xsl:if test="$resultText=$comp">
             <p class="code"><xsl:value-of select="concat('Expecting: ',
             $config/acceptedOutput/comparison)"/></p>
@@ -107,16 +118,7 @@
               <p class="code"><xsl:apply-templates  select="../stderr"/></p>
             </xsl:if>
           </xsl:if>
-          <xsl:variable name="label"
-                        select="concat(hostname, ' (',$nickName,')')"/>
-          <xsl:variable name="graphUrl"
-                        select="concat('graph.jsp?bgcolor=&amp;xmin=&amp;xmax=&amp;',
-               'title=', $label,
-               '&amp;configID=', ../seriesConfigId,
-               '&amp;seriesLabel=', $label)"/>
-          <a href="{$graphUrl}">
-            <img src="img/chart.gif" alt="graph history"/>
-          </a></td>
+		</td>
       </tr>
       <tr><td colspan="2" class="header">
         <xsl:text>Reporter details:</xsl:text>
