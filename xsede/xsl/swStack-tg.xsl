@@ -290,6 +290,10 @@
               <xsl:value-of select="'incaErr'" />
             </xsl:when>
             <xsl:when test="$result[matches(errorMessage,
+            'Time ran out')]">
+              <xsl:value-of select="'timeOut'" />
+            </xsl:when>
+            <xsl:when test="$result[matches(errorMessage,
             'Reporter exceeded usage limits')]">
               <xsl:value-of select="'timeOut'" />
             </xsl:when>

@@ -207,13 +207,13 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
+                <xsl:variable
+                    name="stats"
+                    select="$result/body/performance/benchmark/statistics" />
         <xsl:choose>
           <xsl:when test="$exit!=''">
             <td class="{$exit}">
               <a href="{$href}" title="{$result/errorMessage}">
-                <xsl:variable
-                    name="stats"
-                    select="$result/body/performance/benchmark/statistics" />
                 <xsl:variable
                     name="depth"
                     select="$stats/statistic[matches(., 'depth')]/value" />
@@ -235,6 +235,12 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </a>
+                <xsl:variable
+                    name="env"
+                    select="$stats/statistic[matches(., 'env')]/value" />
+              <xsl:if test="string($env)!=''">
+                <br/><br/><table><tr><td class="clear"><pre><xsl:value-of select="$env"/></pre></td></tr></table>
+              </xsl:if>
               <xsl:if test="$url[matches(., 'markOld')]">
                 <!-- inca-common.xsl -->
                 <xsl:call-template name="markOld">

@@ -265,13 +265,16 @@
   <!-- ==================================================================== -->
   <!-- printLog - print paragraph with log message                          -->
   <!-- ==================================================================== -->
-  <xsl:template name="printLog" match="info|debug|system">
+  <xsl:template name="printLog" match="info|system">
     <p class="code">
       <xsl:if test="self::system">
         <xsl:text>% </xsl:text>
       </xsl:if>
       <xsl:value-of select="message"/>
     </p>
+  </xsl:template>
+  <xsl:template name="printDebug" match="debug">
+    <pre><p class="code"><xsl:value-of select="message"/></p></pre>
   </xsl:template>
 
   <!-- ==================================================================== -->
