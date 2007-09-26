@@ -3518,6 +3518,14 @@
             <name>tgproxy-key-loginKit</name>
             <value>@keyPre@tgproxy-0.9.0-r1 @keyPost@</value>
           </macro>
+          <macro>
+            <name>gridScheduler</name>
+            <value>PBS</value>
+          </macro>
+          <macro>
+            <name>jobQueue</name>
+            <value>standby</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3597,6 +3605,28 @@
           <macro>
             <name>__regexp__</name>
             <value>bigben.psc.teragrid.org bigred.iu.teragrid.org dtf.sdsc.teragrid.org dtf.ncsa.teragrid.org rachel.psc.teragrid.org lonestar.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org lear.purdue.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>remote-compute-wsgram-batch</name>
+        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|bigred\.iu\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|lear\.purdue\.teragrid\.org|viz\.uc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>remote-compute-wsgram-batch</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>bigben.psc.teragrid.org bigred.iu.teragrid.org dtf.sdsc.teragrid.org dtf.uc.teragrid.org dtf.ncsa.teragrid.org rachel.psc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org lear.purdue.teragrid.org viz.uc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5123,7 +5153,7 @@
       </resource>
       <resource>
         <name>wanfs.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(intimidata\.sdsc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(intimidata\.sdsc\.teragrid\.org|datastar\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5131,7 +5161,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>intimidata.sdsc.teragrid.org</value>
+            <value>intimidata.sdsc.teragrid.org datastar.sdsc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -9483,7 +9513,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-fork</nickname>
-          <resourceSetName>real-time-wsgram</resourceSetName>
+          <resourceSetName>real-time</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -10039,7 +10069,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-batch</nickname>
-          <resourceSetName>remote-compute.teragrid.org-3.0.0</resourceSetName>
+          <resourceSetName>remote-compute-wsgram-batch</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -10670,11 +10700,49 @@
       <version>3</version>
     </suite>
     <suite>
-      <seriesConfigs/>
-      <name>wanfs.teragrig.org-4.0.0</name>
-      <guid/>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.ant.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>temp_test</nickname>
+          <resourceSetName>wanfs.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>?</mday>
+              <wday>*</wday>
+              <month>*/59</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>wanfs.teragrid.org-4.0.0</name>
+      <guid>incas://sapa.sdsc.edu:6323/wanfs.teragrid.org-4.0.0</guid>
       <description>The Wide Area File System kit provides a set of capabilities for users to read and write data in a high-performance, parallel fashion from widely distributed resources on the TeraGrid network.</description>
-      <version>1</version>
+      <version>3</version>
     </suite>
     <suite>
       <seriesConfigs>
