@@ -88,9 +88,11 @@
     <xsl:variable name="seriesNames"
                   select="distinct-values(reportSummary/nickname)"/>
     <!-- inca-common.xsl -->
-    <xsl:call-template name="printSeriesNamesTable">
-      <xsl:with-param name="seriesNames" select="$seriesNames"/>
-    </xsl:call-template>
+    <xsl:if test="name[not(matches(., '^(tg-mds|security|globus-mds-auth)$'))]">
+      <xsl:call-template name="printSeriesNamesTable">
+        <xsl:with-param name="seriesNames" select="$seriesNames"/>
+      </xsl:call-template>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="count(/combo/resourceConfig)=1">
         <xsl:call-template name="printSeriesResultsTable">
@@ -144,7 +146,7 @@
     <table class="subheader">
       <xsl:for-each select="$seriesNames[.!='mds.teragrid.org:8448']">
         <xsl:sort/>
-        <xsl:if test="position() mod 20 = 1">
+        <xsl:if test="position() mod 25 = 1">
           <tr>
             <td class="subheader"/>
             <!-- inca-common.xsl printResourceNameCell -->
