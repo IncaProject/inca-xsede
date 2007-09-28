@@ -67,34 +67,34 @@
         xml += "<combo>\n";
         for(int i=0; i<suiteNames.length; i++) {
             xml += "<suiteResults>\n";
-            %><inca:getAll2AllSummary suiteName="<%=suiteNames[i]%>" retAttrName="all2all"/><%
+            %><inca:getAll2AllSummary suiteName="<%=suiteNames[i]%>" var="all2all"/><%
             xml += (String)pageContext.getAttribute("all2all");
-            %><inca:getSuiteLatestInstances suiteName="<%=suiteNames[i]%>" retAttrName="suite"/><%
+            %><inca:getSuiteLatestInstances suiteName="<%=suiteNames[i]%>" var="suite"/><%
             xml += (String)pageContext.getAttribute("suite");
             if (resourceIDs.length == suiteNames.length) {
                 xml += "<resourceName>"+resourceIDs[i]+"</resourceName>\n";
-                %><inca:getResourceConfig resourceID="<%=resourceIDs[i]%>" macros="__regexp__ __regexpTmp__" retAttrName="resources"/><%
+                %><inca:getResourceConfig resourceID="<%=resourceIDs[i]%>" macros="__regexp__ __regexpTmp__" var="resources"/><%
                 xml += (String)pageContext.getAttribute("resources");
             }
             if (xmlFiles.length == suiteNames.length) {
-                %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[i]%>" retAttrName="swStack"/><%
+                %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[i]%>" var="swStack"/><%
                 xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
             }
             xml += "</suiteResults>";
         }
         if(resourceIDs.length == 1){
             xml += "<resourceName>"+resourceIDs[0]+"</resourceName>\n";
-            %><inca:getResourceConfig resourceID="<%=resourceIDs[0]%>" macros="__regexp__ __regexpTmp__" retAttrName="resources"/><%
+            %><inca:getResourceConfig resourceID="<%=resourceIDs[0]%>" macros="__regexp__ __regexpTmp__" var="resources"/><%
             xml += (String)pageContext.getAttribute("resources");}
         if(xmlFiles.length == 1){
-            %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[0]%>" retAttrName="swStack"/><%
+            %><inca:getXmlFromClasspath xmlFile="<%=xmlFiles[0]%>" var="swStack"/><%
             xml += ((String)pageContext.getAttribute("swStack")).replaceAll("<\\?xml.*\\?>", "");
         }
         xml += "</combo>";
       }
     } else if ( instanceID != null && ! instanceID.equals("")  ) {
       // get results for a single test
-      %><inca:getInstance configID="<%=configID%>" instanceID="<%=instanceID%>" retAttrName="instance"/>
+      %><inca:getInstance configID="<%=configID%>" instanceID="<%=instanceID%>" var="instance"/>
       <% xml = "<combo>\n" + (String)pageContext.getAttribute("instance") + "\n<comments>"; %>
       <%@ include file="db-connect.jsp" %>
       <sql:query var="comments" dataSource="${tgdb}">
@@ -112,7 +112,7 @@
       </c:forEach>
       <% xml += "\n</comments>\n</combo>\n";
     } else {
-      %><inca:getSeries configID="<%=configID%>" retAttrName="series"/><%
+      %><inca:getSeries configID="<%=configID%>" var="series"/><%
       xml = (String)pageContext.getAttribute("series");
     }
     if ( xsl!=null && !xsl.equals("") && !xml.equals("")){
