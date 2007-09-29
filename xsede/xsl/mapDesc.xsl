@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ==================================================================== -->
-<!-- header.xsl:  Prints HTML page header.                                -->
+<!-- mapDesc.xsl:  Description of TG google map                           -->
 <!-- ==================================================================== -->
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml">
 
-  <xsl:include href="../etc/header.xsl"/>
+  <xsl:include href="header.xsl"/>
 
   <xsl:template name="mapDesc">
     <xsl:call-template name="header"/>
