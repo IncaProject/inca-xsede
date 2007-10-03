@@ -46,7 +46,7 @@
         </xsl:choose>
         <xsl:variable name="confid" select="../seriesConfigId" /><br/>
         <form method="post" action="{replace(replace(replace($page, ':8080/',
-          ':8443/'), 'http://', 'https://'), 'xslt.jsp', 'comments.jsp')}">
+          ':8443/'), 'http://', 'https://'), 'xslt.jsp', 'addDbCommentsForm.jsp')}">
           <input type="hidden" name="series" value="{$confid}"/>
           <input type="hidden" name="host" value="{hostname}"/>
           <input type="hidden" name="nickname" value="{$config/nickname}"/>
