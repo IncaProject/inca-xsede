@@ -838,6 +838,28 @@
         </macros>
       </resource>
       <resource>
+        <name>app-support-compiler-hp</name>
+        <xpath>//resource[matches(name, '^(rachel\.psc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>app-support-compiler-hp</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>rachel.psc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>app-support-compiler-ibm</name>
         <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|bigred\.iu\.teragrid\.org)$')]</xpath>
         <macros>
@@ -4953,6 +4975,10 @@
             <name>real_time_email</name>
             <value>FailTo:inca@sdsc.edu, FailTo:kmuriki@sdsc.edu</value>
           </macro>
+          <macro>
+            <name>compiler-hp-key-appsKit</name>
+            <value/>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -5188,6 +5214,11 @@
     </resources>
   </resourceConfig>
   <suites>
+    <suite>
+      <seriesConfigs/>
+      <name>UnnamedSuite</name>
+      <guid>UnnamedSuite</guid>
+    </suite>
     <suite>
       <seriesConfigs>
         <seriesConfig>
@@ -6635,6 +6666,191 @@
           </series>
           <nickname>grid-proxy-init-patched</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.gcc.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@compiler-hp-key-appsKit@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-version</nickname>
+          <resourceSetName>app-support-compiler-hp</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hp-c-compiler=~".*"</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>cxx</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c++</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@compiler-hp-key-appsKit@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-c++</nickname>
+          <resourceSetName>app-support-compiler-hp</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <version>2</version>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>f90</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>fortran</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@compiler-hp-key-appsKit@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-fortran</nickname>
+          <resourceSetName>app-support-compiler-hp</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>cc</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@compiler-hp-key-appsKit@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-c</nickname>
+          <resourceSetName>app-support-compiler-hp</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
