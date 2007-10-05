@@ -2297,7 +2297,7 @@ TARGET="_top"
 their associated files.  The WAR file is initially installed as
 <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps/inca.war</TT
+>$INCA_DIST/webapps/war/inca.war</TT
 > and is deployed with <A
 HREF="http://www.mortbay.org/"
 TARGET="_top"
@@ -2310,11 +2310,11 @@ CLASS="FILENAME"
 > for each WAR file in
 <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps</TT
+>$INCA_DIST/webapps/war</TT
 > - custom WAR files can be dropped into
 the <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps</TT
+>$INCA_DIST/webapps/war</TT
 > directory and deployed by
 restarting the consumer.  Currently Inca WAR files cannot be deployed outside
 of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
@@ -2371,7 +2371,7 @@ form for selecting a suite and resource to view results for.
 The stylesheet that does the XML to HTML transformation is
 <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/index.xsl</TT
+>$INCA_DIST/webapps/xsl/index.xsl</TT
 > - if it does not exist the JSP
 will display the depot/agent XML.</P
 ></LI
@@ -2412,10 +2412,10 @@ TARGET="_top"
 >The XML returned by the agent functions is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is 
 "config.xsl", which translates to the <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/config.xsl</TT
+>$INCA_DIST/webapps/xsl/config.xsl</TT
 > file, but it can be set to any XSL file in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc</TT
+>$INCA_DIST/webapps/xsl</TT
 >. If the "xsl" parameter is not passed to the script (<A
 HREF="http://localhost:8080/inca/config.jsp"
 TARGET="_top"
@@ -2457,18 +2457,18 @@ retrieve cached results from the depot.  The "suiteName" and "resourceID" parame
 ><P
 >An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/common</TT
+>$INCA_DIST/webapps/xml</TT
 > to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/swStack.xsl</TT
+>$INCA_DIST/webapps/xsl/swStack.xsl</TT
 > (e.g. "xmlFile=swStack.xml&#38;xsl=swStack.xsl").</P
 ><P
 >The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/default.xsl</TT
+>$INCA_DIST/webapps/xsl/default.xsl</TT
 > file, but it can be set to any XSL file in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc</TT
+>$INCA_DIST/webapps/xsl</TT
 >.  If the "xsl" parameter is not set (<A
 HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid"
 TARGET="_top"
@@ -2614,7 +2614,7 @@ CLASS="SCREEN"
 >extra xml 
 (from xslt.jsp "xmlFile" parameter):</P
 ><P
->XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+>XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/webapps/xml/swStack.xml, but any XML file in the $INCA_DIST/webapps/xml directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -2668,10 +2668,10 @@ XML results for the series.  If an "instanceID" parameter is supplied, the JSP r
 ><P
 >The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/instance.xsl</TT
+>$INCA_DIST/webapps/xsl/instance.xsl</TT
 > file, but it can be set to any XSL file in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc</TT
+>$INCA_DIST/webapps/xsl</TT
 >.  If the "xsl" parameter is not set, the XML reporter results are displayed:</P
 ><TABLE
 BORDER="1"
@@ -2716,6 +2716,63 @@ CLASS="SCREEN"
 ></UL
 ></LI
 ></OL
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="HISTORICAL-DATA"
+>6.1.1. Historical Data</A
+></H4
+><P
+>All reporter data collected by Inca is stored in the depot.  
+The depot can then be queried to produce graphs of historical information.  
+Inca's default data consumer uses 
+<A
+HREF="http://cewolf.sourceforge.net/"
+TARGET="_top"
+>Cewolf</A
+>, 
+a JSP tag library for graphing based on
+<A
+HREF="http://www.object-refinery.com/jfreechart/"
+TARGET="_top"
+>JFreeChart</A
+>.
+The default consumer includes a basic graph of the historical pass/fail status of 
+reporter series.  The pass/fail status is either the comparitor status (if the series 
+has a comparitor) or the reporter's exit status.</P
+><P
+>If <TT
+CLASS="FILENAME"
+>graph.xsl</TT
+> is used as the xsl parameter for the 
+<TT
+CLASS="FILENAME"
+>xslt.jsp</TT
+> script that displays suite results, 
+a form will be generated to select suite series to graph.  For 
+example, <A
+HREF="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid</A
+> will generate:
+<P
+><IMG
+SRC="figures/consumer/graphForm.gif"
+ALIGN="CENTER"></P
+> </P
+><P
+>After clicking on the "graph" button in the form above, a graph of the pass/fail status of the selected 
+series is shown along with a pass/fail summary table and a form to customize the graph 
+further (as in the image below).  The data points are interactive - clicking on them will lead to 
+report details pages, mousing over them will show collection times and any error messages.
+<P
+><IMG
+SRC="figures/consumer/graphSampleSuite.gif"
+ALIGN="CENTER"></P
+> </P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -2738,7 +2795,12 @@ NAME="CUSTOM-COLOR"
 <TT
 CLASS="FILENAME"
 >$INCA_DIST/var/jetty*/webapp/css/inca.css</TT
->.  For example, to change the color in the reporter detail pages header bar 
+>.  The drop down nav bar in the header is controlled by 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/var/jetty*/webapp/css/nav.css</TT
+>.  
+For example, to change the color in the reporter detail pages header bar 
 open <TT
 CLASS="FILENAME"
 >inca.css</TT
@@ -2889,6 +2951,23 @@ CLASS="FILENAME"
 ><P
 ><TT
 CLASS="FILENAME"
+>graph.xsl</TT
+>:</P
+><P
+>Prints form to select series to graph.</P
+><P
+>The <TT
+CLASS="FILENAME"
+>graph.xsl</TT
+> stylesheet is applied to XML returned by <TT
+CLASS="FILENAME"
+>xslt.jsp</TT
+>.</P
+></LI
+><LI
+><P
+><TT
+CLASS="FILENAME"
 >instance.xsl</TT
 >:</P
 ><P
@@ -2973,7 +3052,7 @@ CLASS="FILENAME"
 >To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet 
 in <TT
 CLASS="FILENAME"
->$INCA_DIST/etc</TT
+>$INCA_DIST/webapps/xsl</TT
 > and pass it to the JSP as the "xsl" parameter.  </P
 ><P
 >For general information about editing stylesheets, 
@@ -3106,7 +3185,7 @@ COLOR="RED"
 ><P
 >Create a <TT
 CLASS="FILENAME"
->$INCA_DIST/etc/custom-header.xsl</TT
+>$INCA_DIST/webapps/xsl/custom-header.xsl</TT
 > like:</P
 ><P
 ><TABLE
@@ -3779,7 +3858,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN728"
+NAME="AEN748"
 ></A
 ><P
 ><B
@@ -4678,7 +4757,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN936"
+NAME="AEN956"
 ></A
 ><P
 ><B
@@ -4899,7 +4978,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN983"
+NAME="AEN1003"
 ></A
 ><P
 ><B
@@ -6491,7 +6570,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1260"
+NAME="AEN1280"
 ></A
 ><P
 ><B
