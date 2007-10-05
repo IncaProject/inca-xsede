@@ -246,6 +246,33 @@ XML results for the series.  If an "instanceID" parameter is supplied, the JSP r
 </itemizedList>
 </listItem>
 </orderedList>
+
+<section id="historical-data">
+<title>Historical Data</title>
+<para>All reporter data collected by Inca is stored in the depot.  
+The depot can then be queried to produce graphs of historical information.  
+Inca's default data consumer uses 
+<ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>, 
+a JSP tag library for graphing based on
+<ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
+The default consumer includes a basic graph of the historical pass/fail status of 
+reporter series.  The pass/fail status is either the comparitor status (if the series 
+has a comparitor) or the reporter's exit status.
+</para>
+<para>If <filename>graph.xsl</filename> is used as the xsl parameter for the 
+<filename>xslt.jsp</filename> script that displays suite results, 
+a form will be generated to select suite series to graph.  For 
+example, <ulink url="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink> will generate:
+<graphic fileref="figures/consumer/graphForm.gif" align="center"></graphic> 
+</para>
+<para>
+After clicking on the "graph" button in the form above, a graph of the pass/fail status of the selected 
+series is shown along with a pass/fail summary table and a form to customize the graph 
+further (as in the image below).  The data points are interactive - clicking on them will lead to 
+report details pages, mousing over them will show collection times and any error messages.
+<graphic fileref="figures/consumer/graphSampleSuite.gif" align="center"></graphic> 
+</para>
+</section>
 </section>
 
 <section id="custom-display">
@@ -307,6 +334,11 @@ XML into HTML.  The following stylesheets are installed with the default consume
  and by overall percentage passing in suite.  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups. 
 </para>
 <para>The <filename>summary.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
+</listItem>
+<listItem> 
+<para><filename>graph.xsl</filename>:</para> 
+<para>Prints form to select series to graph.</para>
+<para>The <filename>graph.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
 </listItem>
 <listItem> 
 <para><filename>instance.xsl</filename>:</para> 
