@@ -18,12 +18,12 @@ url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
 file</ulink> that contains a collection of <ulink
 url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
 their associated files.  The WAR file is initially installed as
-<filename>$INCA_DIST/webapps/inca.war</filename> and is deployed with <ulink
+<filename>$INCA_DIST/webapps/war/inca.war</filename> and is deployed with <ulink
 url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
 ./bin/inca start consumer).  The default consumer creates a Jetty directory
 like <filename>$INCA_DIST/var/jetty*/webapp</filename> for each WAR file in
-<filename>$INCA_DIST/webapps</filename> - custom WAR files can be dropped into
-the <filename>$INCA_DIST/webapps</filename> directory and deployed by
+<filename>$INCA_DIST/webapps/war</filename> - custom WAR files can be dropped into
+the <filename>$INCA_DIST/webapps/war</filename> directory and deployed by
 restarting the consumer.  Currently Inca WAR files cannot be deployed outside
 of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
 on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
@@ -47,7 +47,7 @@ function and cached resource configuration information from the agent's
 <para>The XML returned by the depot and agent functions is transformed into an HTML
 form for selecting a suite and resource to view results for.
 The stylesheet that does the XML to HTML transformation is
-<filename>$INCA_DIST/etc/index.xsl</filename> - if it does not exist the JSP
+<filename>$INCA_DIST/webapps/xsl/index.xsl</filename> - if it does not exist the JSP
 will display the depot/agent XML.</para> 
 </listItem>
 
@@ -63,7 +63,7 @@ function and cached suite configuration infomation from the agent's
 <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
 </para>
 <para>The XML returned by the agent functions is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is 
-"config.xsl", which translates to the <filename>$INCA_DIST/etc/config.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>. If the "xsl" parameter is not passed to the script (<ulink url="http://localhost:8080/inca/config.jsp">http://localhost:8080/inca/config.jsp</ulink>), the XML returned from the agent functions is displayed.</para>
+"config.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/config.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>. If the "xsl" parameter is not passed to the script (<ulink url="http://localhost:8080/inca/config.jsp">http://localhost:8080/inca/config.jsp</ulink>), the XML returned from the agent functions is displayed.</para>
 </listItem>
 
 <listItem> 
@@ -80,9 +80,9 @@ the "suiteName" and "resourceID" parameters.  The JSP uses these parameters to
 retrieve cached results from the depot.  The "suiteName" and "resourceID" parameters may contain a single value 
 (e.g. "suiteName=sampleSuite&amp;resourceID=defaultGrid") or multiple comma-separated values 
 (e.g. "suiteName=sampleSuite,myNewSuite&amp;resourceID=defaultGrid,newSuiteResources").  If multiple suites and resources are used, the JSP will return results for each suite/resource pair in the order they are entered.  If multiple suites and a single resource are used, the JSP will return results for each suite using the same resource.  </para>
-<para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/etc/common</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/etc/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
+<para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/webapps/xml</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/webapps/xsl/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
 </para>
-<para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/etc/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
+<para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
 <itemizedList>
 <listItem>
 <para>
@@ -183,7 +183,7 @@ extra xml
 (from xslt.jsp "xmlFile" parameter):
 </para>
 <para>
-XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/etc/common/swStack.xml, but any XML file in the $INCA_DIST/etc/common directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
+XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/webapps/xml/swStack.xml, but any XML file in the $INCA_DIST/webapps/xml directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
 <screen>&lt;stack&gt;
   &lt;id&gt;Software and Services&lt;/id&gt;
   &lt;category&gt;
@@ -216,7 +216,7 @@ a "configID" parameter for the series.  The JSP uses this parameter to
 retrieve reporter results from the depot.  If an "instanceID" parameter is not also supplied, the JSP returns a history of 
 XML results for the series.  If an "instanceID" parameter is supplied, the JSP returns XML results for a the specified instance of the series.
 </para>
-<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/etc/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/etc</filename>.  If the "xsl" parameter is not set, the XML reporter results are displayed:</para>
+<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set, the XML reporter results are displayed:</para>
 <screen>&lt;reportDetails&gt; 
   &lt;suiteId&gt;1&lt;/suiteId&gt;
   &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
@@ -255,7 +255,9 @@ XML results for the series.  If an "instanceID" parameter is supplied, the JSP r
 <title>Colors and Fonts</title>
 <para>
 Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in 
-<filename>$INCA_DIST/var/jetty*/webapp/css/inca.css</filename>.  For example, to change the color in the reporter detail pages header bar 
+<filename>$INCA_DIST/var/jetty*/webapp/css/inca.css</filename>.  The drop down nav bar in the header is controlled by 
+<filename>$INCA_DIST/var/jetty*/webapp/css/nav.css</filename>.  
+For example, to change the color in the reporter detail pages header bar 
 open <filename>inca.css</filename> and change lines 111-112 to:
 <screen>.header {
     background-color: #D07651;</screen>
@@ -341,7 +343,7 @@ and <filename>swStack.xsl</filename> stylesheets.</para>
 
 <para>
 To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet 
-in <filename>$INCA_DIST/etc</filename> and pass it to the JSP as the "xsl" parameter.  </para>
+in <filename>$INCA_DIST/webapps/xsl</filename> and pass it to the JSP as the "xsl" parameter.  </para>
 <para>For general information about editing stylesheets, 
 visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
 
@@ -401,7 +403,7 @@ print the custom cell text rather than the default text:
 29    &lt;table width="100%" border="0"&gt;
 30      &lt;tr align="left"&gt;</screen></para>
 
-<para>Create a <filename>$INCA_DIST/etc/custom-header.xsl</filename> like:</para>
+<para>Create a <filename>$INCA_DIST/webapps/xsl/custom-header.xsl</filename> like:</para>
 
 <para><screen>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
