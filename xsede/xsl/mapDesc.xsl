@@ -14,7 +14,6 @@
     
     <table>
       <tr>
-        <td valign="top"><a href="http://www.teragrid.org"><img src="http://inca.sdsc.edu/www/images/tg.gif"/></a></td>
         <td>
 	  <p>*** In development ***</p>
 	  <p>The below map uses the 
