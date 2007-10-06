@@ -56,19 +56,8 @@
   <!-- ==================================================================== -->
   <xsl:template name="generateHTML" match="combo">
     <!-- inca-common.xsl -->
-    <xsl:variable name="title">
-      <xsl:choose>
-        <xsl:when test="count(suiteResults)=1">
-          <xsl:value-of select="concat('Inca Results for ',
-          suiteResults/suite/name)"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="''"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <xsl:call-template name="printBodyTitle">
-      <xsl:with-param name="title" select="$title" />
+      <xsl:with-param name="title" select="''" />
     </xsl:call-template>
     <!-- legend.xsl -->
     <xsl:call-template name="printLegend"/>
@@ -82,9 +71,7 @@
   <!-- Calls printSeriesNamesTable and printSeriesResultsTable              -->
   <!-- ==================================================================== -->
   <xsl:template name="printSuiteInfo" match="suite">
-    <xsl:if test="count(/combo/suiteResults)>1">
-      <h1 class="body"><xsl:value-of select="name"/></h1>
-    </xsl:if>
+    <h1 class="body"><xsl:value-of select="name"/></h1>
     <xsl:variable name="seriesNames"
                   select="distinct-values(reportSummary/nickname)"/>
     <!-- inca-common.xsl -->

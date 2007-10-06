@@ -25,12 +25,12 @@
                 <ul>
                   <li>
                     <a href="config.jsp?xsl=config.xsl">
-                      list running reporters
+                      TeraGrid Test Configuration
                     </a>
                   </li>
                   <li>
                     <a href="http://www.teragridforum.org/mediawiki/index.php?title=Inca_Information_for_System_Administrators">
-                      info for system admins
+                      Info for System Admins
                     </a>
                   </li>
                 </ul>

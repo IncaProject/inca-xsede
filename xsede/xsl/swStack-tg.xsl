@@ -76,19 +76,9 @@
   <!-- Calls printSuiteInfo.                                                -->
   <!-- ==================================================================== -->
   <xsl:template name="generateHTML" match="combo">
-    <xsl:variable name="title">
-      <xsl:choose>
-        <xsl:when test="count(suiteResults)=1">
-          <xsl:value-of select="stack/id"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="''"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <!-- inca-common.xsl -->
     <xsl:call-template name="printBodyTitle">
-      <xsl:with-param name="title" select="$title"/>
+      <xsl:with-param name="title" select="''"/>
     </xsl:call-template>
     <table><tr><td>
     <!-- tg-legend.xsl -->
@@ -136,9 +126,7 @@
     <xsl:param name="resources"/>
     <xsl:param name="cats"/>
     <xsl:variable name="suite" select="."/>
-    <xsl:if test="count(/combo/suiteResults)>1">
-      <h1 class="body"><xsl:value-of select="$cats/../id"/></h1>
-    </xsl:if>
+    <h1 class="body"><xsl:value-of select="$cats/../id"/></h1>
     <!-- inca-common.xsl -->
     <xsl:call-template name="printSeriesNamesTable">
       <xsl:with-param name="seriesNames" select="$cats/package/id"/>

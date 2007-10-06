@@ -85,14 +85,6 @@
             </tr>
           </table>
         </td>
-        <td>New!<br/>
-          <xsl:variable name="graphUrl" select="concat('xslt.jsp?',
-                replace($url, 'xsl=.[^&amp;]*', 'xsl=graph.xsl'))"/>
-          <a href="{$graphUrl}">
-            <img src="img/chart.gif" alt="graph history"/><br/>
-            Result History Graphs
-          </a>
-        </td>
       </tr>
     </table><br/>
   </xsl:template>
