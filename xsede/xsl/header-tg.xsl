@@ -28,11 +28,6 @@
                       TeraGrid Test Configuration
                     </a>
                   </li>
-                  <li>
-                    <a href="http://www.teragridforum.org/mediawiki/index.php?title=Inca_Information_for_System_Administrators">
-                      Info for System Admins
-                    </a>
-                  </li>
                 </ul>
               </li>
             </ul>
