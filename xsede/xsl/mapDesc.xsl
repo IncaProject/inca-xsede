@@ -15,14 +15,14 @@
     <table>
       <tr>
         <td>
-	  <p>*** In development ***</p>
+	  <br/>
 	  <p>The below map uses the 
 	     <a href="http://www.google.com/apis/maps">Google Maps API</a> 
 	     to display the summary status of the TeraGrid as monitored by
-	     <a href="http://inca.sdsc.edu">Inca</a>. 
-	     Click on any marker to view more information about that resource.
-	     Use the buttons below the map to turn the gram, gridftp, and
-	     gsissh status lines on and off.</p> 
+	     <a href="http://inca.sdsc.edu">Inca</a>. </p><p>
+	     Click on resource markers to view test errors for 
+             individual resources<br/> (any cross-resource tests will have 
+             toggle buttons to display them under the map image).</p>
 	</td>
     </tr>
   </table>

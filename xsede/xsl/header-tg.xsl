@@ -70,6 +70,11 @@
                           expanded detailed table
                         </a>
                       </li>
+                      <li>
+                        <a href="ctssv4-map.html">
+                          google map
+                        </a>
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -88,7 +93,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="xslt.jsp?xsl=google.xsl&amp;xmlFile=google.xml&amp;suiteName=ctss-v3&amp;resourceID=teragrid-login">
+                        <a href="ctssv3-map.html">
                           google map
                         </a>
                       </li>
