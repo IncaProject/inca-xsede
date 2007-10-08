@@ -25,7 +25,7 @@
                 <ul>
                   <li>
                     <a href="config.jsp?xsl=config.xsl">
-                      TeraGrid Test Configuration
+                      List Running Tests
                     </a>
                   </li>
                 </ul>
@@ -41,7 +41,7 @@
                   </li>
                   <li>
                     <a href="ctssv3-graph.html">
-                      CTSSv3 &amp; Cross-Site Graph
+                      CTSSv3 and Cross-Site Graph
                     </a>
                   </li>
                   <li>
@@ -74,7 +74,7 @@
                   </li>
                   <li>
                     <a href="ctssv3-expanded.html">
-                      CTSSv3 &amp; Cross-Site
+                      CTSSv3 and Cross-Site
                     </a>
                     <ul>
                       <li>

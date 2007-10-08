@@ -23,16 +23,17 @@
         <tr><td><p>KIT:<br/>
           <select name="suiteName">
             <option value="core.teragrid.org-4.0.0">- Select One -</option>
-            <option value="core.teragrid.org-4.0.0">Core Integration</option>
-            <option value="data-management.teragrid.org-4.0.0">Data Management</option>
-            <option value="data-movement.teragrid.org-4.0.0">Data Movement</option>
-            <option value="remote-compute.teragrid.org-3.0.0">Remote Compute</option>
-            <option value="login.teragrid.org-4.0.0">Remote Login</option>
-            <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support</option>
-            <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support</option>
-            <option value="workflow.teragrid.org-4.0.0">Science Workflow Support</option>
-            <option value="vtss.teragrid.org-3.0.0">Vizualization Support</option>
-            <option value="wanfs.teragrid.org-4.0.0">Wide Area File System</option>
+            <option value="core.teragrid.org-4.0.0">Core Integration 4.0.0</option>
+            <option value="data-management.teragrid.org-4.0.0">Data Management 4.0.0</option>
+            <option value="data-movement.teragrid.org-4.0.0">Data Movement 4.0.0</option>
+            <option value="remote-compute.teragrid.org-3.0.0">Remote Compute 3.0.0</option>
+            <option value="remote-compute.teragrid.org-4.0.0">Remote Compute 4.0.0</option>
+            <option value="login.teragrid.org-4.0.0">Remote Login 4.0.0</option>
+            <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support 4.0.0</option>
+            <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support 4.0.0</option>
+            <option value="workflow.teragrid.org-4.0.0">Science Workflow Support 4.0.0</option>
+            <option value="vtss.teragrid.org-3.0.0">Vizualization Support 3.0.0</option>
+            <option value="wanfs.teragrid.org-4.0.0">Wide Area File System 4.0.0</option>
           </select></p>
         </td>
           <td> <p>RESOURCE:<br/>
