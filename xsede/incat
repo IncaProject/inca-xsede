@@ -2333,6 +2333,26 @@
             <name>gatekeeperHost</name>
             <value>gatekeeper.frost.ncar.teragrid.org</value>
           </macro>
+          <macro>
+            <name>prews-gram-batch-remoteCompute4.0.0</name>
+            <value>fr0103ge.ncar.teragrid.org:2120/jobmanager-cobalt</value>
+          </macro>
+          <macro>
+            <name>gatekeeperHost-remoteCompute4.0.0</name>
+            <value>gatekeeperHost-remoteCompute4.0.0</value>
+          </macro>
+          <macro>
+            <name>wsgram-remoteCompute4.0.0</name>
+            <value>fr0103ge.ncar.teragrid.org:8443</value>
+          </macro>
+          <macro>
+            <name>wsrf-query-mds-auth-remoteCompute4.0.0</name>
+            <value>fr0103ge.ncar.teragrid.org:8448</value>
+          </macro>
+          <macro>
+            <name>wsrf-query-mds-remoteCompute4.0.0</name>
+            <value>fr0103ge.ncar.teragrid.org:8443</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3040,7 +3060,7 @@
       </resource>
       <resource>
         <name>phdf5</name>
-        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|psc-rachel|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|sdsc-datastar|NCSA|ANL-login|Indiana|ORNL|Purdue-login|psc-rachel)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -3048,7 +3068,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login psc-rachel TACC</value>
+            <value>sdsc-ia64 sdsc-datastar NCSA ANL-login Indiana ORNL Purdue-login psc-rachel</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3556,7 +3576,7 @@
       </resource>
       <resource>
         <name>remote-compute-mds-auth-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -3564,7 +3584,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org frost.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3644,7 +3664,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -3652,7 +3672,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4418,6 +4438,14 @@
             <name>prews-gram-pbs</name>
             <value>tg-login.tacc.teragrid.org:2119/jobmanager-lsf</value>
           </macro>
+          <macro>
+            <name>wsrf-query-mds-auth-remoteCompute4.0.0</name>
+            <value>tg-login.tacc.teragrid.org:8448</value>
+          </macro>
+          <macro>
+            <name>wsrf-query-mds-remoteCompute4.0.0</name>
+            <value>tg-login.tacc.teragrid.org:8443</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -4580,6 +4608,14 @@
           <macro>
             <name>gatekeeperHost-remoteCompute4.0.0</name>
             <value>tg-viz-login.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>wsrf-query-mds-auth-remoteCompute4.0.0</name>
+            <value>tg-viz-login.tacc.teragrid.org:8448</value>
+          </macro>
+          <macro>
+            <name>wsrf-query-mds-remoteCompute4.0.0</name>
+            <value>tg-viz-login.tacc.teragrid.org:8443</value>
           </macro>
         </macros>
       </resource>
@@ -10384,6 +10420,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.unit.wsrfquery</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10403,7 +10440,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@wsrf-query-mds@</value>
+                <value>@wsrf-query-mds-remoteCompute4.0.0@</value>
               </arg>
             </args>
             <limits>
@@ -10427,6 +10464,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.unit.wsrfquery</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10446,7 +10484,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@wsrf-query-mds-auth@</value>
+                <value>@wsrf-query-mds-auth-remoteCompute4.0.0@</value>
               </arg>
             </args>
             <limits>
@@ -10470,6 +10508,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.unit.gramversion</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gramversion</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10517,6 +10556,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.unit.wsgram</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
               <arg>
                 <name>nodes</name>
@@ -10584,6 +10624,7 @@
         <seriesConfig>
           <series>
             <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
             <args>
               <arg>
                 <name>maxRun</name>
@@ -10667,6 +10708,7 @@
         <seriesConfig>
           <series>
             <name>grid.middleware.globus.unit.wsgram</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
               <arg>
                 <name>nodes</name>
@@ -10733,7 +10775,7 @@
         </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.0.0</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
       <version>1</version>
     </suite>
