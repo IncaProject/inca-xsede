@@ -148,12 +148,12 @@ trusted certificate.</member>
 
 <orderedList>
   <listItem id="man-admin-opt">
-    <para><emphasis role="red">(optional -- one time only)</emphasis> To customize the email
-    message that gets sent to the resource administrators, edit the text in
+    <para>INCA ADMIN: <emphasis role="red">(optional -- one time only)</emphasis> customize the email
+    message that gets sent to the resource administrators by editing the text in
     $INCA_DIST/etc/manualEmail.txt.</para>
   </listItem>
   <listItem id="man-sysadmin-install">
-    <para>The resource administrator will install the reporter manager distribution on their resource using the following steps:</para>
+    <para>RESOURCE ADMIN: install the reporter manager distribution on your resource using the following steps.</para>
     <orderedList>
       <listItem>
 <para>Create an installation directory for the reporter manager (e.g.,
@@ -191,22 +191,22 @@ bin                            etc          sbin
     </orderedList>
   </listItem>
   <listItem id="man-sysadmin-cred">
-    <para>Create a set of credentials for the reporter manager (i.e., private
-    key and certificate request) as follows: </para>
+    <para>RESOURCE ADMIN: create a set of credentials for the reporter manager (i.e., private
+    key and certificate request) using the command below.</para>
     <screen>
 % cd $RM_INSTALL_DIR; ./sbin/inca createRmCertRequest -P stdin:password: 
     </screen>
     <para>Enter a password for your key (to use when you start up the
     reporter manager).  Two files will be created in 
-    <filename>$INCA_DIST/etc</filename>:  
+    <filename>$RM_INSTALL_DIR/etc</filename>:  
     an encrypted private key called <filename>rmkey.pem</filename> and 
     a certificate request called <filename>rmreq.pem</filename>.  
     Email <filename>rmreq.pem</filename> to your Inca administrator and they
-    will return you a certificate for your reporter manager.
+    will generate a certificate for your reporter manager.
     </para>
   </listItem>
   <listItem id="man-admin-cert">
-    <para>Upon receiving a rmreq.pem file, the Inca administrator will 
+    <para>INCA ADMIN: upon receiving a rmreq.pem file,
     generate a certificate for a reporter manager using the 
     command below.  Replace "rmreq.pem" with to the path to the rmreq.pem
     file that you received from the resource administrator and
@@ -231,7 +231,7 @@ agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
     </screen>
   </listItem>
   <listItem id="man-admin-add">
-    <para>The Inca administrator will add the specified resource within incat
+    <para>INCA ADMIN: add the specified resource within incat
     and choose 'manual' as below:
     </para>
     <figure id="manual.fig">
@@ -239,27 +239,30 @@ agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
       <graphic fileref="figures/incat/manual.jpg" align="center"></graphic>
     </figure>
     <para>The "Resource Admin Email" field should be filled with the email
-    address of the resource administrator of the manual resource.  When suite
-    changes are committed in incat, the agent will email the suite changes to
+    address of the resource administrator of the manual resource.  Make sure the 
+    "Equivalent" box is checked, otherwise the depot may discard reports with 
+    "unattached to any DB config" warnings.  The new "manualResource" will 
+     also need to be added to the "defaultGrid" resource in order to run the default sampleSuite.</para>
+    <para>When suite changes are committed in incat, the agent will email the suite changes to
     the resource administrator.  Select "Agent->Commit" from the menu to
     commit the changes.  
     </para>
   </listItem>
   <listItem id="man-sysadmin-cert">
-    <para>Install your certificate and trusted certificate (received from the 
-    Inca administrator) into your reporter manager installation.  Replace
+    <para>RESOURCE ADMIN: install the certificate and trusted certificate from the 
+    Inca admin in your reporter manager installation.  Replace
     "rmcert-resource.pem" and "trusted.0" with the names of the files
     received from your Inca administrator.
     </para>
     <screen>
-cd $RM_INSTALL_DIR
-cp <emphasis role="red">rmcert-resource.pem</emphasis> $RM_INSTALL_DIR/etc/rmcert.pem
-mkdir $RM_INSTALL_DIR/etc/trusted
-cp <emphasis role="red">trusted.0</emphasis> $RM_INSTALL_DIR/etc/trusted
+% cd $RM_INSTALL_DIR
+% cp <emphasis role="red">rmcert-resource.pem</emphasis> $RM_INSTALL_DIR/etc/rmcert.pem
+% mkdir $RM_INSTALL_DIR/etc/trusted
+% cp <emphasis role="red">trusted.0</emphasis> $RM_INSTALL_DIR/etc/trusted
     </screen>
   </listItem>
   <listItem id="man-sysadmin-start">
-    <para>The suite and any changes to that suite are emailed to the resource
+    <para>RESOURCE ADMIN: The suite and any changes to that suite are emailed to the resource
     administrator specified by the Inca administrator in Step <xref
     linkend="man-admin-add">.  The changes will be attached in a file called
     <filename>suiteChanges.xml</filename> and the updated configuration for
@@ -311,7 +314,7 @@ replace "manualResource" with the manual resource group name added in step
  -L DEBUG \
  -l var/reporter-manager.log \
  -P true</screen>
-<para>Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
+<para>Command will hang until the password for the reporter manager key is entered.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</para>
         <para>To stop the reporter manager at any time, type </para>
              <screen>
 % ./sbin/inca stop reporter-manager
@@ -319,29 +322,10 @@ replace "manualResource" with the manual resource group name added in step
         <para>Make sure all reporter-manager ps are stopped</para>
         <screen> % ps | grep manager </screen>
         
-<para>
-Notes about email notification:
-</para>
-<itemizedList>
-<listItem><para>The resource administrator will need to edit
+<para>NOTE: The resource administrator will need to replace
 <filename>suite.xml</filename> with any changes that are received by email,
 edit the <filename>repository.xml</filename> with any new reporters, and then
-restart the reporter manager.</para></listItem>
-<listItem><para>The <filename>&lt;action&gt;</filename> tag in the emailed change indicates how to edit <filename>suite.xml</filename>.
-For example, <filename>&lt;action&gt;add&lt;/action&gt;</filename> would be an addition to the existing suite.
-</para></listItem>
-<listItem><para>
-If a manual reporter manager has multiple
-suites, the <filename>&lt;seriesConfigs xmlns=""&gt;</filename> emailed in each suite can be
-combined and put into a single <filename>suite.xml</filename> document beginning with <filename>&lt;suite
-xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&gt;</filename>.
-</para></listItem>
-<listItem><para>
-Each time the agent is restarted the manual reporter manager administrator will
-receive an email for each suite that the agent would otherwise send directly to
-the reporter manager.  These emails do not necessarily contain changes to the suite(s). 
-</para> </listItem>
-</itemizedList>
+restart the reporter manager.</para>
 </listItem> 
 </orderedList>
 
