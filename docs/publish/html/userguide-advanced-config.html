@@ -392,8 +392,28 @@ BORDER="0"
 ><TR
 ><TD
 >Step <A
-HREF="userguide-advanced-config.html#MAN-STEP1"
->2</A
+HREF="userguide-advanced-config.html#MAN-ADMIN-OPT"
+>1</A
+>: <STRONG
+><FONT
+COLOR="RED"
+>(optional -- one time only)</FONT
+></STRONG
+> Customize email message sent to resource administrators.</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-ADMIN-CERT"
+>4</A
+>: Generate a certificate for the
+reporter manager.</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-ADMIN-ADD"
+>5</A
 >: Add resource in incat with access method 'manual'</TD
 ></TR
 ></TBODY
@@ -410,15 +430,31 @@ BORDER="0"
 ><TR
 ><TD
 >Step <A
-HREF="userguide-advanced-config.html#MAN-STEP2"
->3</A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-INSTALL"
+>2</A
 >: Install reporter manager</TD
 ></TR
 ><TR
 ><TD
 >Step <A
-HREF="userguide-advanced-config.html#MAN-STEP3"
->4</A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-CRED"
+>3</A
+>: Generate private key and
+certificate request</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-CERT"
+>6</A
+>: Install certificate and
+trusted certificate.</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-START"
+>7</A
 >: Start and manually manage reporter manager</TD
 ></TR
 ></TBODY
@@ -431,111 +467,24 @@ HREF="userguide-advanced-config.html#MAN-STEP3"
 TYPE="1"
 ><LI
 ><A
-NAME="MAN-STEP0"
+NAME="MAN-ADMIN-OPT"
 ></A
 ><P
-><STRONG
+>INCA ADMIN: <STRONG
 ><FONT
 COLOR="RED"
->(optional)</FONT
+>(optional -- one time only)</FONT
 ></STRONG
->To customize the email
-    message that gets sent to the resource administrators, edit the text in
+> customize the email
+    message that gets sent to the resource administrators by editing the text in
     $INCA_DIST/etc/manualEmail.txt.</P
 ></LI
 ><LI
 ><A
-NAME="MAN-STEP1"
+NAME="MAN-SYSADMIN-INSTALL"
 ></A
 ><P
->The Inca administrator will add the specified resource within incat
-    and choose 'manual' as below:
-    </P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="MANUAL.FIG"
-></A
-><P
-><B
->Figure 20. Add Resource Screen</B
-></P
-><P
-><IMG
-SRC="figures/incat/manual.jpg"
-ALIGN="CENTER"></P
-></DIV
-><P
->The "Resource Admin Email" field should be filled with the email
-    address of the resource administrator of the manual resource.  When suite
-    changes are committed in incat, the agent will email the suite changes to
-    the resource administrator.  Select "Agent-&#62;Commit" from the menu to
-    commit the changes.  A set of credentials (e.g., rmcert.pem, rmkey.pem,
-    trusted) will be generated in $INCA_DIST/var/rm/&#60;resource name&#62;/
-    such as below:
-      <TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% ls var/rm/manualResource/        
-catalog.xml  rmcert.pem  rmkey.pem  trusted</PRE
-></FONT
-></TD
-></TR
-></TABLE
->
-    These credentials will need to be given to the resource administrator in
-    order to send reports to the depot.  The rmkey.pem will be encrypted with
-    the same password as the agent's private key.  It is recommended that you
-    change the password before giving them to the resource system
-    administrator using the following commands:
-    </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% openssl rsa -in rmkey.pem -out rmkey.pem2 -des
-read RSA key
-Enter PEM pass phrase: agent-passphrase
-writing RSA key
-Enter PEM pass phrase: new-passphrase
-Verifying password - Enter PEM pass phrase: new-passphrase
-
-% mv rmkey.pem2 rmkey.pem
-    </PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->Give the reporter manager credentials to the resource system
-    administrator and instruct them to follow steps <A
-HREF="userguide-advanced-config.html#MAN-STEP2"
->3</A
-> and <A
-HREF="userguide-advanced-config.html#MAN-STEP3"
->4</A
->.
-    </P
-></LI
-><LI
-><A
-NAME="MAN-STEP2"
-></A
-><P
->The resource administrator will install the reporter manager distribution on their resource using the following steps:</P
+>RESOURCE ADMIN: install the reporter manager distribution on your resource using the following steps.</P
 ><P
 ></P
 ><OL
@@ -562,12 +511,8 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
-></LI
-><LI
 ><P
->Contact your Inca administrator for a set of
-      credentials.  You should receive files called rmcert.pem, rmkey.pem,
-      and trusted*.pem.  Place them in $RM_INSTALL_DIR as is.  At this point
+> At this point
       the directory on the remote machine should look something like this:
       <TABLE
 BORDER="1"
@@ -580,8 +525,8 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% ls         
-Inca-ReporterManager.tar.gz    rmcert.pem    trusted0.pem
-buildRM.sh                     rmkey.pem     trusted1.pem</PRE
+Inca-ReporterManager.tar.gz    
+buildRM.sh                    </PRE
 ></FONT
 ></TD
 ></TR
@@ -608,9 +553,6 @@ CLASS="SCREEN"
 Inca-ReporterManager-9.6764    build.log    lib    share
 Inca-ReporterManager.tar       buildRM.sh   man    var
 bin                            etc          sbin
-
-% ls $RM_INSTALL_DIR/etc
-common  log4j.properties  rmcert.pem  rmkey.pem  trusted
       </PRE
 ></FONT
 ></TD
@@ -646,13 +588,210 @@ CLASS="SCREEN"
 ></LI
 ><LI
 ><A
-NAME="MAN-STEP3"
+NAME="MAN-SYSADMIN-CRED"
 ></A
 ><P
->The suite and any changes to that suite are emailed to the resource
+>RESOURCE ADMIN: create a set of credentials for the reporter manager (i.e., private
+    key and certificate request) using the command below.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR; ./sbin/inca createRmCertRequest -P stdin:password: 
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Enter a password for your key (to use when you start up the
+    reporter manager).  Two files will be created in 
+    <TT
+CLASS="FILENAME"
+>$RM_INSTALL_DIR/etc</TT
+>:  
+    an encrypted private key called <TT
+CLASS="FILENAME"
+>rmkey.pem</TT
+> and 
+    a certificate request called <TT
+CLASS="FILENAME"
+>rmreq.pem</TT
+>.  
+    Email <TT
+CLASS="FILENAME"
+>rmreq.pem</TT
+> to your Inca administrator and they
+    will generate a certificate for your reporter manager.
+    </P
+></LI
+><LI
+><A
+NAME="MAN-ADMIN-CERT"
+></A
+><P
+>INCA ADMIN: upon receiving a rmreq.pem file,
+    generate a certificate for a reporter manager using the 
+    command below.  Replace "rmreq.pem" with to the path to the rmreq.pem
+    file that you received from the resource administrator and
+    "rmcert-resource.pem" with the path to the reporter manager certificate
+    that will be generated by the command.
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca createRmCert -P stdin:password: <STRONG
+><FONT
+COLOR="RED"
+>rmreq.pem</FONT
+></STRONG
+> <STRONG
+><FONT
+COLOR="RED"
+>rmcert-resource.pem</FONT
+></STRONG
+>
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Enter the password for the inca distribution (i.e., created in
+    Step <A
+HREF="userguide-quickstart.html#QS-STEP4"
+>4</A
+> during the initial installation process).  
+    Email the reporter manager certificate, "rmcert-resource.pem",
+    and trusted certificate to the resource administrator.  The trusted
+    certificate is the file ending with the <TT
+CLASS="FILENAME"
+>.0</TT
+> extension
+    in your <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+> directory.  For
+    example <TT
+CLASS="FILENAME"
+>f73fee74.0</TT
+> is the trusted certificate in the
+    following directory:
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls etc/trusted/
+agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><A
+NAME="MAN-ADMIN-ADD"
+></A
+><P
+>INCA ADMIN: add the specified resource within incat
+    and choose 'manual' as below:
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="MANUAL.FIG"
+></A
+><P
+><B
+>Figure 20. Add Resource Screen</B
+></P
+><P
+><IMG
+SRC="figures/incat/manual.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>The "Resource Admin Email" field should be filled with the email
+    address of the resource administrator of the manual resource.  Make sure the 
+    "Equivalent" box is checked, otherwise the depot may discard reports with 
+    "unattached to any DB config" warnings.  The new "manualResource" will 
+     also need to be added to the "defaultGrid" resource in order to run the default sampleSuite.</P
+><P
+>When suite changes are committed in incat, the agent will email the suite changes to
+    the resource administrator.  Select "Agent-&#62;Commit" from the menu to
+    commit the changes.  
+    </P
+></LI
+><LI
+><A
+NAME="MAN-SYSADMIN-CERT"
+></A
+><P
+>RESOURCE ADMIN: install the certificate and trusted certificate from the 
+    Inca admin in your reporter manager installation.  Replace
+    "rmcert-resource.pem" and "trusted.0" with the names of the files
+    received from your Inca administrator.
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR
+% cp <STRONG
+><FONT
+COLOR="RED"
+>rmcert-resource.pem</FONT
+></STRONG
+> $RM_INSTALL_DIR/etc/rmcert.pem
+% mkdir $RM_INSTALL_DIR/etc/trusted
+% cp <STRONG
+><FONT
+COLOR="RED"
+>trusted.0</FONT
+></STRONG
+> $RM_INSTALL_DIR/etc/trusted
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><A
+NAME="MAN-SYSADMIN-START"
+></A
+><P
+>RESOURCE ADMIN: The suite and any changes to that suite are emailed to the resource
     administrator specified by the Inca administrator in Step <A
-HREF="userguide-advanced-config.html#MAN-STEP1"
->2</A
+HREF="userguide-advanced-config.html#MAN-ADMIN-ADD"
+>5</A
 >.  The changes will be attached in a file called
     <TT
 CLASS="FILENAME"
@@ -733,8 +872,8 @@ CLASS="SCREEN"
 below.  Replace "depotHost" with the hostname where the depot is running and
 replace "manualResource" with the manual resource group name added in step
 <A
-HREF="userguide-advanced-config.html#MAN-STEP1"
->2</A
+HREF="userguide-advanced-config.html#MAN-ADMIN-ADD"
+>5</A
 >: </P
 ><TABLE
 BORDER="1"
@@ -748,6 +887,12 @@ COLOR="#000000"
 CLASS="SCREEN"
 >% cd $RM_INSTALL_DIR
 % ./sbin/inca reporter-manager \
+ -a incas://<STRONG
+><FONT
+COLOR="RED"
+>agentHost</FONT
+></STRONG
+>:6323 \
  -d incas://<STRONG
 ><FONT
 COLOR="RED"
@@ -776,7 +921,7 @@ COLOR="RED"
 ></TR
 ></TABLE
 ><P
->Enter the password for the reporter manager key.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
+>Command will hang until the password for the reporter manager key is entered.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
 ><P
 >To stop the reporter manager at any time, type </P
 ><TABLE
@@ -812,13 +957,7 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->Notes about email notification:</P
-><P
-></P
-><UL
-><LI
-><P
->The resource administrator will need to edit
+>NOTE: The resource administrator will need to replace
 <TT
 CLASS="FILENAME"
 >suite.xml</TT
@@ -828,44 +967,6 @@ CLASS="FILENAME"
 >repository.xml</TT
 > with any new reporters, and then
 restart the reporter manager.</P
-></LI
-><LI
-><P
->The <TT
-CLASS="FILENAME"
->&#60;action&#62;</TT
-> tag in the emailed change indicates how to edit <TT
-CLASS="FILENAME"
->suite.xml</TT
->.
-For example, <TT
-CLASS="FILENAME"
->&#60;action&#62;add&#60;/action&#62;</TT
-> would be an addition to the existing suite.</P
-></LI
-><LI
-><P
->If a manual reporter manager has multiple
-suites, the <TT
-CLASS="FILENAME"
->&#60;seriesConfigs xmlns=""&#62;</TT
-> emailed in each suite can be
-combined and put into a single <TT
-CLASS="FILENAME"
->suite.xml</TT
-> document beginning with <TT
-CLASS="FILENAME"
->&#60;suite
-xmlns="http://inca.sdsc.edu/dataModel/suite_2.0"&#62;</TT
->.</P
-></LI
-><LI
-><P
->Each time the agent is restarted the manual reporter manager administrator will
-receive an email for each suite that the agent would otherwise send directly to
-the reporter manager.  These emails do not necessarily contain changes to the suite(s). </P
-></LI
-></UL
 ></LI
 ></OL
 ></DIV
@@ -1334,7 +1435,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1282"
+NAME="AEN1298"
 ></A
 ><P
 ><B
