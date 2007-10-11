@@ -3876,10 +3876,6 @@
             <value>198.202.115.180:2119/jobmanager-loadleveler</value>
           </macro>
           <macro>
-            <name>condor-key-workflowKit</name>
-            <value>@keyPre@condor-6.9.1-r1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>condorg-key-workflowKit</name>
             <value>@keyPre@condor-g-6.8.4-r1 @keyPost@</value>
           </macro>
@@ -3938,6 +3934,10 @@
           <macro>
             <name>gatekeeperHost</name>
             <value>198.202.115.180</value>
+          </macro>
+          <macro>
+            <name>condor-key-workflowKit</name>
+            <value>@keyPre@condor-6.9.3-r1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -5334,11 +5334,6 @@
     </resources>
   </resourceConfig>
   <suites>
-    <suite>
-      <seriesConfigs/>
-      <name>UnnamedSuite</name>
-      <guid>UnnamedSuite</guid>
-    </suite>
     <suite>
       <seriesConfigs>
         <seriesConfig>
@@ -10419,94 +10414,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>grid.middleware.globus.unit.wsrfquery</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@wsrf-query-mds-remoteCompute4.0.0@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsrf-query-mds</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.wsrfquery</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@wsrf-query-mds-auth-remoteCompute4.0.0@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsrf-query-mds-auth</nickname>
-          <resourceSetName>remote-compute-mds-auth-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.unit.gramversion</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gramversion</uri>
             <args>
@@ -10773,11 +10680,99 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsrfquery</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@wsrf-query-mds-remoteCompute4.0.0@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsrfquery</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@wsrf-query-mds-auth-remoteCompute4.0.0@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth</nickname>
+          <resourceSetName>remote-compute-mds-auth-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>1</version>
+      <version>3</version>
     </suite>
     <suite>
       <seriesConfigs>
