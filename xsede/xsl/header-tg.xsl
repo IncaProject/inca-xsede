@@ -127,7 +127,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="xslt.jsp?xsl=swStack.xsl&amp;resourceID=SDSC&amp;suiteName=real-time&amp;xmlFile=real-time.xml">
+                        <a href="xslt.jsp?xsl=swStack.xsl&amp;resourceID=real-time&amp;suiteName=real-time&amp;xmlFile=real-time.xml">
                           real-time monitoring testbed
                         </a>
                       </li>
