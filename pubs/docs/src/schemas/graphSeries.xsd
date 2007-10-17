@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For graphing series in the Inca data consumer -->
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace= "http://inca.sdsc.edu/dataModel/graphSeries_2.0"
+        xmlns:gs="http://inca.sdsc.edu/dataModel/graphSeries_2.0"
+        xmlns:qr="http://inca.sdsc.edu/dataModel/queryResults_2.0"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="unqualified">
+  <element name="object" type="qr:object">
+    <complexType>
+      <sequence>
+        <element name="row" maxOccurs="unbounded">
+          <element name="object">
+            <element name="series" type="gs:series"/>
+          </element>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+  <complexType name="series">
+    <sequence>
+      <element name="instanceId" type="string"/>
+      <element name="collected" type="dateTime"/>
+      <element name="exit_status" type="string"/>
+      <element name="exit_message" type="string"/>
+      <element name="comparisonResult" type="string"/>
+    </sequence>
+  </complexType>
+</schema>
