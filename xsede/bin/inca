@@ -28,6 +28,7 @@ my @COMMON_COMMANDS =
 my $DEFAULT_REPOSITORY = "http://inca.sdsc.edu/repository/latest";
 use constant DEFAULT_PASSPHRASE => 'test';
 
+use Cwd;
 use File::Basename;
 use Net::Domain 'hostfqdn';
 use Sys::Hostname;
@@ -85,8 +86,8 @@ distinguished_name = servername
 [servername]
 C=US
 ST=California
-L=San Diego
-O=SDSC
+O=UCSD
+OU=SDSC
 CN=IncaDefaultCA_$caName
 
 [is_ca]
@@ -143,24 +144,18 @@ ENDPASS");
 #          <name>key.pem and <name>req.pem.
 #------------------------------------------------------------------------------
 sub signCertRequest {
-  my ($caName, $name) = @_;
+  my ($caName, $name, $reqFile) = @_;
+
+  $reqFile = "${name}req.pem" if ! defined( $reqFile );
 
   my $caPassword = $PASSWORD eq '' ? DEFAULT_PASSPHRASE : $PASSWORD;
-  my $keyPassword = $caPassword;
   my $extension = $name =~ /^agent$/ ? "is_ca" : "not_ca";
-  &d("openssl ca -config $caName.cnf -in ${name}req.pem -out ${name}cert.pem -extensions $extension -passin stdin -batch > /dev/null << ENDPASS
+  &d("openssl ca -config $caName.cnf -in $reqFile -out ${name}cert.pem -extensions $extension -passin stdin -batch > /dev/null << ENDPASS
 $caPassword
 ENDPASS");
-  &d("/bin/rm -f ${name}req.pem");
+  &d("/bin/rm -f ${name}req.pem") if ! defined $reqFile;
   &d("openssl x509 -in ${name}cert.pem -text | grep 'Issuer:'");
   &d("openssl x509 -in ${name}cert.pem -text | grep 'Subject:'");
-  if($PASSWORD eq '') {
-    &d("openssl rsa -in ${name}key.pem -out ${name}keynoenc.pem -passin stdin << ENDPASS
-$keyPassword
-ENDPASS");
-    &d("/bin/rm -f ${name}key.pem");
-    &d("/bin/mv ${name}keynoenc.pem ${name}key.pem");
-  }
 }
 
 #------------------------------------------------------------------------------
@@ -180,6 +175,15 @@ sub createRegularCertificateRequest {
   &d("openssl req -new -config $caName.cnf -passout stdin -keyout ${name}key.pem -out ${name}req.pem << ENDPASS
 $keyPassword
 ENDPASS");
+
+  # remove password if set to blank
+  if($PASSWORD eq '') {
+    &d("openssl rsa -in ${name}key.pem -out ${name}keynoenc.pem -passin stdin << ENDPASS
+$keyPassword
+ENDPASS");
+    &d("/bin/rm -f ${name}key.pem");
+    &d("/bin/mv ${name}keynoenc.pem ${name}key.pem");
+  }
 }
 
 #------------------------------------------------------------------------------
@@ -241,10 +245,43 @@ sub createNewAuthFiles {
   &d("/bin/chmod 600 etc/*.pem");
   chomp(my $hash=`openssl x509 -in etc/${HOSTNAME}cert.pem -hash -noout`);
   &d("openssl x509 -in etc/${HOSTNAME}cert.pem -trustout -out etc/trusted/$hash.0");
-  &d("/bin/mv etc/${HOSTNAME}cert.pem etc/trusted");
+  &d("/bin/cp etc/${HOSTNAME}cert.pem etc/trusted");
 
   # cleanup
   &cleanupConfigFiles($HOSTNAME);
+}
+
+#-----------------------------------------------------------------------------#
+# createRmCert
+#
+# Create new reporter manager certificate from request file
+#-----------------------------------------------------------------------------#
+sub createRmCert{
+  my $rmReqPath = shift;
+  my $rmCertPath = shift;
+
+  die "$rmReqPath is not a file" if ! -f $rmReqPath;
+
+  # all of our certs are in etc and functions expect the files to be in
+  # current path
+  my $cwd = getcwd();
+  $rmReqPath = "$cwd/$rmReqPath" if $rmReqPath !~ /^\//;
+  chdir "$BASE_DIR/etc";
+
+  my $caCert = $HOSTNAME . "cert.pem";
+  &d("/bin/cp $BASE_DIR/etc/trusted/$caCert $BASE_DIR/etc" ) if ! -f $caCert;
+  my $subject = `openssl req -in $rmReqPath -subject -noout 2>/dev/null`;
+  my ( $cn ) = $subject =~ /CN=(.+)$/;
+  &createConfigFile($HOSTNAME);
+  &signCertRequest($HOSTNAME, "rm", $rmReqPath);
+  $rmCertPath = "$cwd/$rmCertPath" if $rmCertPath !~ /^\//;
+  &d("mv rmcert.pem $rmCertPath"); 
+  
+  # cleanup
+  &cleanupConfigFiles($HOSTNAME);
+
+  # change back to where we were
+  chdir $cwd;
 }
 
 #-----------------------------------------------------------------------------#
@@ -254,7 +291,7 @@ sub createNewAuthFiles {
 #-----------------------------------------------------------------------------#
 sub createRmCertRequest {
   &createConfigFile($HOSTNAME);
-  &changeCN($HOSTNAME, "rm" );
+  &changeCN($HOSTNAME, "rm-$HOSTNAME" );
   &createRegularCertificateRequest($HOSTNAME, "rm" );
   
   &d("/bin/mv *.pem etc/");
@@ -1123,6 +1160,17 @@ if($command eq 'createauth') {
   &createNewAuthFiles();
 } elsif($command eq 'createRmCertRequest') {
   &createRmCertRequest();
+} elsif($command eq 'createRmCert') {
+  my @certArgs;
+  for(my $i = 0; $i <= $#ARGV; $i++) {
+    if ( $ARGV[$i] =~ /-P|--password/ ) {
+      $i++;
+    } else {
+      push( @certArgs, $ARGV[$i] );
+    }
+  }
+  die "Specify cert request file and certificate dest" if scalar(@certArgs) < 2;
+  &createRmCert( @certArgs );
 } elsif($command eq 'default') {
   print("Preparing to deploy default Inca configuration...\n" );
   my $java = &findJava();
