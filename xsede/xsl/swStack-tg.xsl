@@ -253,6 +253,9 @@
         <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="exit">
           <xsl:choose>
+            <xsl:when test="string($instance)=''">
+              <xsl:value-of select="''" />
+            </xsl:when>
             <xsl:when test="$tickets/ticket[matches(resource, $thisResource)]">
               <xsl:value-of select="'tkt-'" />
               <xsl:value-of select="$tickets/ticket[matches(resource,
@@ -265,9 +268,6 @@
             <xsl:when test="$package/incawait[matches(resource,
             $thisResource)]">
               <xsl:value-of select="'incaWait'" />
-            </xsl:when>
-            <xsl:when test="string($instance)=''">
-              <xsl:value-of select="''" />
             </xsl:when>
             <xsl:when test="string($result/body)!=''
             and string($result/errorMessage)=''
