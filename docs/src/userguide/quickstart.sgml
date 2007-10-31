@@ -140,9 +140,9 @@ Deploying default configuration
 3593 p1 S 0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer consumer.log
 </screen>
 </listItem>
-        <listItem><para>a sample suite called <emphasis>sampleSuite</emphasis> is sent to the
-        agent requesting reporters to be started on a localhost client using the
-        schedule:</para>
+        <listItem><para>a sample test suite called <emphasis>sampleSuite</emphasis> is sent to the
+        agent.  The sample suite contains a schedule for executing each of the following reporters
+	every ten minutes:</para>
 <screen>
 cluster.admin.ant.unit  			(ant_helloworld_compile_test)
 cluster.admin.ant.version  			(ant_version)
@@ -204,7 +204,7 @@ grid.wget.unit					(wget_page_test)
     installed an Inca reporter manager on.
         <figure id="inca.startup.fig">
           <title>Default Inca start up page with suite and resources.</title>
-          <graphic fileref="figures/consumer/index3.jpg" align="center"></graphic>
+          <graphic fileref="figures/consumer/index2.jpg" align="center"></graphic>
         </figure>
     </para>
     <para>
@@ -213,7 +213,7 @@ grid.wget.unit					(wget_page_test)
     button.  You should see a page similar to the figure below with
     the reporter series scheduled to execute on localhost.  The reporters test a small set of compiler, 
     grid services, math library and
-    scientific visualization packages.  Each reporters may perform
+    scientific visualization packages.  Each reporter may perform
     a software package version query (e.g., gcc) and/or unit test (e.g., java --
     unit test name is java_hello_world).  Almost all boxes should be empty
     indicating that the reports have not yet been received. 
@@ -228,16 +228,15 @@ grid.wget.unit					(wget_page_test)
     results filled in, check the .log files in $INCA_DIST/var for
     <filename>ERROR</filename> or <filename>Exception</filename>. See
     <xref linkend="userguide-logging"> for more information about logging.
-     Note that the "openssh_to_localhost" box will remain blank until myproxy is 
-     configured according to <xref linkend="proxies"> because the reporter 
-     uses the Inca::Reporter::GridProxy module.  
     </para> 
+    <para>You can also navigate to this page from the "table of sampleSuite 
+    results" link under "Current Data" in the page header.</para>
         <figure id="inca.default.results.fig">
           <title>Default Inca results page with results.</title>
           <graphic fileref="figures/consumer/sum_page2.jpg" align="center"></graphic>
         </figure>
     <para>Click on any red/green box to see the details of how the result was
-    collected.  The below figure shows the details of the 
+    collected.  The figure below shows the details of the 
     <filename>cluster.compiler.any.unit</filename> reporter that compiles
     and executes a small hello world java program.  
         <figure id="inca.java.fig">
