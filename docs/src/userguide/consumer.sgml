@@ -1,1025 +1,1325 @@
 <section id="userguide-consumer">
-<title>Data Display (Data Consumers)</title>
+  <title>Data Display (Data Consumers)</title>
 
-<para>The data that the Inca depot stores, as with all database data, can be
-displayed in many ways.  An Inca data consumer is anything that retrieves data
-from the depot and displays it (e.g. a JSP, SQL query, CGI, etc.).</para>
-<graphic fileref="figures/arch-consumer.jpg" align="center"></graphic> 
+  <para>The data that the Inca depot stores, as with all database data, can be
+    displayed in many ways.  An Inca data consumer is anything that retrieves data
+    from the depot and displays it (e.g. a JSP, SQL query, CGI, etc.).</para>
+  <graphic fileref="figures/arch-consumer.jpg" align="center"></graphic>
 
-<para>Data consumers can query the Inca depot to produce current and historical
-reports and graphs or customized status information.  The Inca depot has Perl
-and Java client APIs for its pre-defined queries (see <xref linkend="userguide-apis">). </para> 
+  <para>Data consumers can query the Inca depot to produce current and historical
+    reports and graphs or customized status information.  The Inca depot has Perl
+    and Java client APIs for its pre-defined queries (see <xref linkend="userguide-apis">). </para>
 
-<section id="default-consumer">
-<title>Default Data Consumer</title>
+  <section id="default-consumer">
+    <title>Default Data Consumer</title>
 
-<para>The default data consumer is a <ulink
-url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
-file</ulink> that contains a collection of <ulink
-url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
-their associated files.  The WAR file is initially installed as
-<filename>$INCA_DIST/webapps/war/inca.war</filename> and is deployed with <ulink
-url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
-./bin/inca start consumer).  The default consumer creates a Jetty directory
-like <filename>$INCA_DIST/var/jetty*/webapp</filename> for each WAR file in
-<filename>$INCA_DIST/webapps/war</filename> - custom WAR files can be dropped into
-the <filename>$INCA_DIST/webapps/war</filename> directory and deployed by
-restarting the consumer.  Currently Inca WAR files cannot be deployed outside
-of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
-on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
-as described in <xref linkend="consumer-port">.</para>
+    <para>The default data consumer is a <ulink
+        url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
+      file</ulink> that contains a collection of <ulink
+        url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
+      their associated files.  The WAR file is initially installed as
+      <filename>$INCA_DIST/webapps/war/inca.war</filename> and is deployed with <ulink
+        url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
+      ./bin/inca start consumer).  The default consumer creates a Jetty directory
+      like <filename>$INCA_DIST/var/jetty*/webapp</filename> for each WAR file in
+      <filename>$INCA_DIST/webapps/war</filename> - custom WAR files can be dropped into
+      the <filename>$INCA_DIST/webapps/war</filename> directory and deployed by
+      restarting the consumer.  Currently Inca WAR files cannot be deployed outside
+      of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
+      on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
+      as described in <xref linkend="consumer-port">.</para>
 
-<para>There are three main JSP contained in the <filename>inca.war</filename>:</para>
+    <para>
+      There are four main JSP contained in the
+      <filename>inca.war</filename>.
+      The JSP generally return XML from depot and agent functions and
+      apply XSL stylesheets to display HTML.  If the "xsl" parameter
+      for the JSP is removed, the JSP prints the XML returned.
+    </para>
 
-<orderedList>
-<listItem> 
-<para><filename>index.jsp</filename>:</para> 
-<para>Lists an installation's configured suites and resource names in an HTML form whose
-action is to display results for the selected suite and resource.  The consumer
-initially redirects to this page (<ulink
-url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp</ulink>).
-</para> 
-<para>The <filename>index.jsp</filename> uses JSP tag libraries to retrieve current suite configuration from 
-the depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
-function and cached resource configuration information from the agent's
-<ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
-</para>
-<para>The XML returned by the depot and agent functions is transformed into an HTML
-form for selecting a suite and resource to view results for.
-The stylesheet that does the XML to HTML transformation is
-<filename>$INCA_DIST/webapps/xsl/index.xsl</filename> - if it does not exist the JSP
-will display the depot/agent XML.</para> 
-</listItem>
+    <table>
+      <title>Default Consumer JSP</title>
+      <tgroup cols="4">
+        <thead>
+          <row valign="top">
+            <entry><para>Name</para></entry>
+            <entry><para>Purpose</para></entry>
+            <entry><para>Server Functions Called</para></entry>
+            <entry><para>Parameters</para></entry>
+          </row>
+        </thead>
+        <tbody>
 
-<listItem> 
-<para><filename>config.jsp</filename>:</para> 
-<para>Prints description of deployed suites and series.
-This page is linked at the bottom of <filename>index.jsp</filename> 
-(<ulink url="http://localhost:8080/inca/config.jsp?xsl=config.xsl">http://localhost:8080/inca/config.jsp?xsl=config.xsl</ulink>).
-</para> 
-<para>The <filename>config.jsp</filename> uses JSP tag libraries to retrieve current catalog configuration from 
-the agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
-function and cached suite configuration infomation from the agent's
-<ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink> function.
-</para>
-<para>The XML returned by the agent functions is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is 
-"config.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/config.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>. If the "xsl" parameter is not passed to the script (<ulink url="http://localhost:8080/inca/config.jsp">http://localhost:8080/inca/config.jsp</ulink>), the XML returned from the agent functions is displayed.</para>
-</listItem>
+          <row valign="top">
+            <entry>
+              <para><filename>index.jsp</filename>
+                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Lists an installation's configured suites and resource
+                names in an HTML form whose action is to display results
+                for the selected suite and resource.  The consumer
+                initially redirects to this page.
+              </para>
+            </entry>
+            <entry>
+              <para>Depot's
+                <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
+                function for current suite configuration
+                and agent's <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached resource configuration information.
+              </para>
+            </entry>
+            <entry>
+              <itemizedList>
+                <listItem>
+                  <para>xsl: stylesheet to format returned XML</para>
+                </listItem>
+              </itemizedList>
+              <para>e.g. <ulink url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp</ulink></para>
+            </entry>
+          </row>
 
-<listItem> 
-<para><filename>xslt.jsp</filename>:</para> 
-<para>Displays results for a set of suites or reporter details.  
-This page is the action of the <filename>index.jsp</filename> form to display a single suite's results.
-(<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl</ulink>).
-</para> 
-<itemizedList>
-<listItem>
-<para>Suite results:</para>
-<para>In order to display results for a set of suites, the <filename>xslt.jsp</filename> requires 
-the "suiteName" and "resourceID" parameters.  The JSP uses these parameters to 
-retrieve cached results from the depot.  The "suiteName" and "resourceID" parameters may contain a single value 
-(e.g. "suiteName=sampleSuite&amp;resourceID=defaultGrid") or multiple comma-separated values 
-(e.g. "suiteName=sampleSuite,myNewSuite&amp;resourceID=defaultGrid,newSuiteResources").  If multiple suites and resources are used, the JSP will return results for each suite/resource pair in the order they are entered.  If multiple suites and a single resource are used, the JSP will return results for each suite using the same resource.  </para>
-<para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/webapps/xml</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/webapps/xsl/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
-</para>
-<para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
-<itemizedList>
-<listItem>
-<para>
-&lt;all2allSummaries&gt;  
-(cross-site test results calculated by the consumer): 
-</para>
-<para>
-The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must 
-be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).  <xref linkend="userguide-incat-all2all"> describes how to configure all2all tests in incat.
-<screen>&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
-  &lt;resources xmlns=""&gt;
-    &lt;resource&gt;
-      &lt;name&gt;localResource&lt;/name&gt;
-      &lt;testSummaries&gt;
-        &lt;testSummary&gt;
-          &lt;name&gt;gridftp&lt;/name&gt;
-          &lt;numSuccesses&gt;15&lt;/numSuccesses&gt;
-          &lt;numAtFaultFailures&gt;0&lt;/numAtFaultFailures&gt;
-          &lt;numNotAtFaultFailures&gt;1&lt;/numNotAtFaultFailures&gt;
-          &lt;failures/&gt;
-        &lt;/testSummary&gt;
-        &lt;testSummary&gt;
-          &lt;name&gt;gram&lt;/name&gt;
-          &lt;numSuccesses&gt;13&lt;/numSuccesses&gt;
-          &lt;numAtFaultFailures&gt;1&lt;/numAtFaultFailures&gt;
-          &lt;numNotAtFaultFailures&gt;0&lt;/numNotAtFaultFailures&gt;
-          &lt;failures&gt;
-            &lt;failure&gt;
-              &lt;nickname&gt;all2all:gram_to_localResource&lt;/nickname&gt;
-              &lt;instanceId&gt;239352&lt;/instanceId&gt;
-              &lt;seriesConfigId&gt;172057&lt;/seriesConfigId&gt;
-            &lt;/failure&gt;
-          &lt;/failures&gt;
-        &lt;/testSummary&gt;
-      &lt;/testSummaries&gt;
-    &lt;/resource&gt;
-  &lt;/resources&gt;
-&lt;/all2allSummaries&gt;
-</screen></para>
+          <row valign="top">
+            <entry>
+              <para><filename>config.jsp</filename>
+                <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Prints description of deployed suites and series.
+                Linked at the bottom of <filename>index.jsp</filename>
+              </para>
+            </entry>
+            <entry>
+              <para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
+                function for current catalog configuration and
+                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached suite configuration infomation.
+              </para>
+            </entry>
+            <entry>
+              <itemizedList>
+                <listItem>
+                  <para>xsl: stylesheet to format returned XML</para>
+                </listItem>
+              </itemizedList>
+              <para>e.g. <ulink url="http://localhost:8080/inca/config.jsp?xsl=config.xsl">http://localhost:8080/inca/config.jsp?xsl=config.xsl</ulink></para>
+            </entry>
+          </row>
 
-<para>
-&lt;suite&gt; 
-(from xslt.jsp "suiteName" parameter):
-</para>
-<para>
-Array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name 
-and returns summaries for the latest series instance in that suite.
-<screen>&lt;suite&gt;
- &lt;reportSummary&gt;
-  &lt;hostname&gt;host1.name&lt;/hostname&gt;
-  &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
-  &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
-  &lt;seriesConfigId&gt;115446&lt;/seriesConfigId&gt;
-  &lt;instanceId&gt;118115&lt;/instanceId&gt;
-  &lt;gmt&gt;2006-11-16T23:49:49.000-08:00&lt;/gmt&gt;
-  &lt;body/&gt;
- &lt;/reportSummary&gt;
- &lt;reportSummary&gt;
-  &lt;hostname&gt;host2.name&lt;/hostname&gt;
-  &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
-  &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
-  &lt;seriesConfigId&gt;115466&lt;/seriesConfigId&gt;
-  &lt;instanceId&gt;219103&lt;/instanceId&gt;
-  &lt;gmt&gt;2006-12-15T01:31:53.000-08:00&lt;/gmt&gt;
-  &lt;body&gt;
-    &lt;unitTest&gt;
-      &lt;ID&gt;xioTest&lt;/ID&gt;
-    &lt;/unitTest&gt;
-  &lt;/body&gt;
- &lt;/reportSummary&gt;
-&lt;/suite&gt;
-</screen></para>
+          <row valign="top">
+            <entry>
+              <para><filename>xslt.jsp</filename>
+                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Displays current results for a set of suites or reporter details.
+                This page is the action of the <filename>index.jsp</filename> form to display a single suite's results.
+              </para>
+            </entry>
+            <entry>
+              <para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
+                function for current catalog configuration and
+                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached suite configuration infomation.
+              </para>
+            </entry>
+            <entry>
+              <itemizedList>
+                <listItem>
+                  <para>suiteName: comma separated list of test suite
+                    names to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>resourceID: comma separated list of resource group
+                    names to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>instanceID: test instance ID number to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>configID: test configuration ID number to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>xmlFile: name of XML file whose contents will be appended to
+                  cached depot results</para>
+                </listItem>
+                <listItem>
+                  <para>xsl: name of stylesheet to format returned XML</para>
+                </listItem>
+              </itemizedList>
+              <para>e.g. <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl</ulink></para>
+            </entry>
+          </row>
 
-<para>
-&lt;resourceConfig&gt; 
-(from xslt.jsp "resourceID" parameter):
-</para>
-<para>
-Array of all resources within a given resource group and their macros. 
-This part of the XML is retrieved from the agent.
-<screen>&lt;resourceConfig&gt;
-  &lt;resources&gt;
-    &lt;resource&gt;
-      &lt;name&gt;localResource&lt;/name&gt;
-      &lt;macros&gt;
-        &lt;macro&gt;
-          &lt;name&gt;__regexp__&lt;/name&gt;
-          &lt;value&gt;host.sitea.org&lt;/value&gt;
-        &lt;/macro&gt;
-      &lt;/macros&gt;
-    &lt;/resource&gt;
-  &lt;/resources&gt;
-&lt;/resourceConfig&gt;
-</screen></para>
+          <row valign="top">
+            <entry>
+              <para><filename>graph.jsp</filename>
+                <graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                Historical graphs of pass/fail status and error frequency.
+              </para>
+            </entry>
+            <entry>
+              <para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
+                function to query for historical infomation.
+              </para>
+            </entry>
+            <entry>
+              <itemizedList>
+                <listItem>
+                  <para>configID: comma separated list of configuration IDs to
+                  get data for</para>
+                </listItem>
+                <listItem>
+                  <para>seriesLabel: comma separated list of legend labels</para>
+                </listItem>
+                <listItem>
+                  <para>title: title of pass/fail status graph</para>
+                </listItem>
+                <listItem>
+                  <para>alias: boolean for image anti-aliasing</para>
+                </listItem>
+                <listItem>
+                  <para>legend: boolean for showing legend</para>
+                </listItem>
+                <listItem>
+                  <para>legendAnchor: position of legend</para>
+                </listItem>
+                <listItem>
+                  <para>height: graph height in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>width: graph width in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>mime: boolean for image MIME</para>
+                </listItem>
+                <listItem>
+                  <para>xaxislabel: label for x-axis of pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>xmin: date to start querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>xmax: date to stop querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>start: boolean for getting only past two weeks of data</para>
+                </listItem>
+                <listItem>
+                  <para>yaxislabel: label for y-axis of pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ymin: y-axis min for pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ymax: y-axis max for pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ytick: tick increment for y-axis pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>bgcolor: background color of graph images</para>
+                </listItem>
+                <listItem>
+                  <para>map: boolean for showing graph links and mouseovers</para>
+                </listItem>
+              </itemizedList>
+              <para>e.g. <ulink url="http://localhost:8080/inca/graph.jsp?configID=1">http://localhost:8080/inca/graph.jsp?configID=1</ulink></para>
+            </entry>
+          </row>
 
-<para>
-extra xml 
-(from xslt.jsp "xmlFile" parameter):
-</para>
-<para>
-XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/webapps/xml/swStack.xml, but any XML file in the $INCA_DIST/webapps/xml directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.  
-<screen>&lt;stack&gt;
-  &lt;id&gt;Software and Services&lt;/id&gt;
-  &lt;category&gt;
-    &lt;id&gt;Math Libraries&lt;/id&gt;
-    &lt;package&gt;
-      &lt;id&gt;globus&lt;/id&gt;
-      &lt;version&gt;4.0.1&lt;/version&gt;
-      &lt;tests&gt;
-        &lt;version&gt;
-	  &lt;id&gt;gt4-version&lt;/id&gt;
-	&lt;/version&gt;
-        &lt;unitalias&gt;
-	  &lt;id&gt;gt4-xio&lt;/id&gt;
-	&lt;/unitalias&gt;
-        &lt;unitalias&gt;
-	  &lt;id&gt;all2all:gram_to_localResource&lt;/id&gt;
-	&lt;/unitalias&gt;
-      &lt;/tests&gt;
-    &lt;/package&gt;
-  &lt;/category&gt;
-&lt;/stack&gt;
-</screen></para>
-</listItem>
-</itemizedList>
-</listItem>
-<listItem>
-<para>Reporter detail results:</para>
-<para>In order to display reporter detail results, the <filename>xslt.jsp</filename> requires 
-a "configID" parameter for the series.  The JSP uses this parameter to 
-retrieve reporter results from the depot.  If an "instanceID" parameter is not also supplied, the JSP returns a history of 
-XML results for the series.  If an "instanceID" parameter is supplied, the JSP returns XML results for a the specified instance of the series.
-</para>
-<para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set, the XML reporter results are displayed:</para>
-<screen>&lt;reportDetails&gt; 
-  &lt;suiteId&gt;1&lt;/suiteId&gt;
-  &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
-  &lt;seriesId&gt;5&lt;/seriesId&gt;
-  &lt;reportId&gt;1&lt;/reportId&gt;
-  &lt;instanceId&gt;73&lt;/instanceId&gt;
-  &lt;seriesConfig&gt;
-    &lt;series&gt;
-     ...    
-    &lt;/series&gt;
-    &lt;nickname&gt;java_hello_world&lt;/nickname&gt;     
-    &lt;resourceHostname&gt;localResource&lt;/resourceHostname&gt;     
-    &lt;schedule&gt;
-     ...    
-    &lt;/schedule&gt;
-    &lt;action&gt;add&lt;/action&gt;     
-  &lt;/seriesConfig&gt;
-  &lt;report&gt;
-     ...
-  &lt;/report&gt;
-  &lt;sysusage&gt;
-     ...
-  &lt;/sysusage&gt;
-  &lt;stderr/&gt;
-&lt;/reportDetails&gt;</screen>
-</listItem>
-</itemizedList>
-</listItem>
-</orderedList>
+        </tbody>
+      </tgroup>
+    </table>
 
-<section id="google">
-<title>Map View using Google Map API</title>
+         <para>
+        The default JSP scripts retrieve XML data from the
+        agent and depot and then use the XSL stylesheets in
+        <filename>$INCA_DIST/webapps/xsl</filename> are used
+           to transform the XML into HTML.
+           The following stylesheets are installed
+        with the default consumer:</para>
 
-  <section id="google-overview">
-  <title>Overview</title>
-  <para>The map view provides a summary view of the current status
-  of resources on a Google map.  For each resource, the summary view will
-  provide the percentage of reports passed, number of passed reports, number
-  of failed reports, and a list of the failed tests (with a link to the report
-  details page).  A resource is represented on the map as a marker and colored
-  red, green, or orange based on the number of tests that have passed and/or
-  failed.  The figure below shows the Inca Google map view for the NEON
-  testbed (four resources at SDSC and one resource at James Reserve).  All
-  resources are passing their tests so every resource marker is green.  
-  </para>
-  <graphic fileref="figures/consumer/googleNeon.png" align="center"></graphic> 
-  <para>
-  Clicking on a marker will display an info window with the name of the
-  resource and the status information as show below.
-  </para>
-  <graphic fileref="figures/consumer/googleNeonInfo.png" align="center">
-  </graphic>
-  <para>
-  Clicking on the "Toggle ping status" button will display the status of the
-  cross-site ping test as show below. 
-  </para>
-  <graphic fileref="figures/consumer/googleNeonPing.png" align="center">
-  </graphic>
+      <table>
+        <title>Default Consumer XSL</title>
+        <tgroup cols="3">
+          <thead>
+            <row valign="top">
+              <entry><para>Name</para></entry>
+              <entry><para>Applied To</para></entry>
+              <entry><para>Purpose</para></entry>
+            </row>
+          </thead>
+          <tbody>
+
+            <row valign="top">
+              <entry>
+                <para><filename>index.xsl</filename>
+                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>index.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>
+                  Lists all configured suite and resource names in an
+                  HTML form whose action is to display results for the
+                  selected suite and resource.
+                </para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>config.xsl</filename>
+                  <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+               <entry>
+                <para><filename>config.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints description of deployed suites and series.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>default.xsl</filename>
+                  <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints table of suite(s) results.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>swStack.xsl</filename>
+                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints table of suite(s) results.  Uses XML file
+                  to format table rows by software categories and packages.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>summary.xsl</filename>
+                  <graphic fileref="figures/consumer/summary_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints summary results table with a list of
+                  resources in the left column and
+                  a list of the suite tests each resource is failing
+                  in the right column.  Failing tests are listed by name
+                  and by overall percentage passing in suite.
+                  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups.
+                </para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>google.xsl</filename>
+                  <graphic fileref="figures/consumer/google_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints google map summary of current data.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>graph.xsl</filename>
+                  <graphic fileref="figures/consumer/graph_form_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints form to select series to graph.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>instance.xsl</filename>
+                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>xslt.jsp</filename></para>
+              </entry>
+              <entry>
+                <para>Prints HTML table with report details.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>header.xsl</filename>
+                  <graphic fileref="figures/consumer/header_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para><filename>(included in most other xsl files)</filename></para>
+              </entry>
+              <entry>
+                <para>Prints HTML page header.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>footer.xsl</filename>
+                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para>(included in most other xsl files)</para>
+              </entry>
+              <entry>
+                <para>Prints HTML page footer with the Inca logo.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>legend.xsl</filename>
+                  <graphic fileref="figures/consumer/legend_sm.jpg" align="center"></graphic>
+                </para>
+              </entry>
+              <entry>
+                <para>(included in <filename>default.xsl</filename>
+                  and <filename>swStack.xsl</filename>)</para>
+              </entry>
+              <entry>
+                <para>Prints a key to cell colors and text.</para>
+              </entry>
+            </row>
+
+            <row valign="top">
+              <entry>
+                <para><filename>inca-common.xsl</filename></para>
+              </entry>
+              <entry>
+                <para>(included in most other stylesheets)</para>
+              </entry>
+              <entry>
+                <para>Common templates for use in Inca stylesheets.</para>
+              </entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </table>
+
+
+    <orderedList>
+      <listItem>
+        <itemizedList>
+          <listItem>
+            <para>Suite results:</para>
+            <para>In order to display results for a set of suites, the <filename>xslt.jsp</filename> requires
+              the "suiteName" and "resourceID" parameters.  The JSP uses these parameters to
+              retrieve cached results from the depot.  The "suiteName" and "resourceID" parameters may contain a single value
+              (e.g. "suiteName=sampleSuite&amp;resourceID=defaultGrid") or multiple comma-separated values
+              (e.g. "suiteName=sampleSuite,myNewSuite&amp;resourceID=defaultGrid,newSuiteResources").  If multiple suites and resources are used, the JSP will return results for each suite/resource pair in the order they are entered.  If multiple suites and a single resource are used, the JSP will return results for each suite using the same resource.  </para>
+            <para>An optional "xmlFile" parameter (e.g. "xmlFile=swStack.xml") adds the content of an XML file in <filename>$INCA_DIST/webapps/xml</filename> to the cached depot results. This can be useful for advanced data display.  An example stylesheet to use with this parameter is located in <filename>$INCA_DIST/webapps/xsl/swStack.xsl</filename> (e.g. "xmlFile=swStack.xml&amp;xsl=swStack.xsl").
+            </para>
+            <para>The XML returned from the depot cache and optional "xmlFile" parameter is transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "default.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/default.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set (<ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>), the XML returned from the depot cache and "xmlFile" parameter is displayed:</para>
+            <itemizedList>
+              <listItem>
+                <para>
+                  &lt;all2allSummaries&gt;
+                  (cross-site test results calculated by the consumer):
+                </para>
+                <para>
+                  The default installation doesn't include cross-site tests; this section will be empty unless the Inca admin creates all2all series in incat.  Cross-site, or "all to all", tests determine whether all resources in a Grid can reach all other resources (e.g. via gsissh, gram, gridftp).  To be included in cross-site test calculation, a series must
+                  be assigned a nickname like "all2all:x_to_y" in incat.  Cross-site failures are calculated differently than regular failures.  For example, resource A will not be assigned a failure trying to reach resource B if all other resources trying to reach resource B also fail (i.e. there is a problem with resource B not resource A).  <xref linkend="userguide-incat-all2all"> describes how to configure all2all tests in incat.
+                  <screen>&lt;all2allSummaries xmlns="http://inca.sdsc.edu/dataModel/all2all_2.0"&gt;
+                    &lt;resources xmlns=""&gt;
+                    &lt;resource&gt;
+                    &lt;name&gt;localResource&lt;/name&gt;
+                    &lt;testSummaries&gt;
+                    &lt;testSummary&gt;
+                    &lt;name&gt;gridftp&lt;/name&gt;
+                    &lt;numSuccesses&gt;15&lt;/numSuccesses&gt;
+                    &lt;numAtFaultFailures&gt;0&lt;/numAtFaultFailures&gt;
+                    &lt;numNotAtFaultFailures&gt;1&lt;/numNotAtFaultFailures&gt;
+                    &lt;failures/&gt;
+                    &lt;/testSummary&gt;
+                    &lt;testSummary&gt;
+                    &lt;name&gt;gram&lt;/name&gt;
+                    &lt;numSuccesses&gt;13&lt;/numSuccesses&gt;
+                    &lt;numAtFaultFailures&gt;1&lt;/numAtFaultFailures&gt;
+                    &lt;numNotAtFaultFailures&gt;0&lt;/numNotAtFaultFailures&gt;
+                    &lt;failures&gt;
+                    &lt;failure&gt;
+                    &lt;nickname&gt;all2all:gram_to_localResource&lt;/nickname&gt;
+                    &lt;instanceId&gt;239352&lt;/instanceId&gt;
+                    &lt;seriesConfigId&gt;172057&lt;/seriesConfigId&gt;
+                    &lt;/failure&gt;
+                    &lt;/failures&gt;
+                    &lt;/testSummary&gt;
+                    &lt;/testSummaries&gt;
+                    &lt;/resource&gt;
+                    &lt;/resources&gt;
+                    &lt;/all2allSummaries&gt;
+                  </screen></para>
+
+                <para>
+                  &lt;suite&gt;
+                  (from xslt.jsp "suiteName" parameter):
+                </para>
+                <para>
+                  Array of report summaries for the suite.  This part of the XML is retrieved from the pre-defined depot query that takes a suite name
+                  and returns summaries for the latest series instance in that suite.
+                  <screen>&lt;suite&gt;
+                    &lt;reportSummary&gt;
+                    &lt;hostname&gt;host1.name&lt;/hostname&gt;
+                    &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
+                    &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
+                    &lt;seriesConfigId&gt;115446&lt;/seriesConfigId&gt;
+                    &lt;instanceId&gt;118115&lt;/instanceId&gt;
+                    &lt;gmt&gt;2006-11-16T23:49:49.000-08:00&lt;/gmt&gt;
+                    &lt;body/&gt;
+                    &lt;/reportSummary&gt;
+                    &lt;reportSummary&gt;
+                    &lt;hostname&gt;host2.name&lt;/hostname&gt;
+                    &lt;uri&gt;http://repository/globus.unit.xio&lt;/uri&gt;
+                    &lt;nickname&gt;gt4-xio&lt;/nickname&gt;
+                    &lt;seriesConfigId&gt;115466&lt;/seriesConfigId&gt;
+                    &lt;instanceId&gt;219103&lt;/instanceId&gt;
+                    &lt;gmt&gt;2006-12-15T01:31:53.000-08:00&lt;/gmt&gt;
+                    &lt;body&gt;
+                    &lt;unitTest&gt;
+                    &lt;ID&gt;xioTest&lt;/ID&gt;
+                    &lt;/unitTest&gt;
+                    &lt;/body&gt;
+                    &lt;/reportSummary&gt;
+                    &lt;/suite&gt;
+                  </screen></para>
+
+                <para>
+                  &lt;resourceConfig&gt;
+                  (from xslt.jsp "resourceID" parameter):
+                </para>
+                <para>
+                  Array of all resources within a given resource group and their macros.
+                  This part of the XML is retrieved from the agent.
+                  <screen>&lt;resourceConfig&gt;
+                    &lt;resources&gt;
+                    &lt;resource&gt;
+                    &lt;name&gt;localResource&lt;/name&gt;
+                    &lt;macros&gt;
+                    &lt;macro&gt;
+                    &lt;name&gt;__regexp__&lt;/name&gt;
+                    &lt;value&gt;host.sitea.org&lt;/value&gt;
+                    &lt;/macro&gt;
+                    &lt;/macros&gt;
+                    &lt;/resource&gt;
+                    &lt;/resources&gt;
+                    &lt;/resourceConfig&gt;
+                  </screen></para>
+
+                <para>
+                  extra xml
+                  (from xslt.jsp "xmlFile" parameter):
+                </para>
+                <para>
+                  XML from the file passed as the xslt.jsp xmlFile parameter.  The default file is $INCA_DIST/webapps/xml/swStack.xml, but any XML file in the $INCA_DIST/webapps/xml directory can be passed as the xslt.jsp xmlFile parameter and it will automatically be picked up by the data consumer.
+                  <screen>&lt;stack&gt;
+                    &lt;id&gt;Software and Services&lt;/id&gt;
+                    &lt;category&gt;
+                    &lt;id&gt;Math Libraries&lt;/id&gt;
+                    &lt;package&gt;
+                    &lt;id&gt;globus&lt;/id&gt;
+                    &lt;version&gt;4.0.1&lt;/version&gt;
+                    &lt;tests&gt;
+                    &lt;version&gt;
+                    &lt;id&gt;gt4-version&lt;/id&gt;
+                    &lt;/version&gt;
+                    &lt;unitalias&gt;
+                    &lt;id&gt;gt4-xio&lt;/id&gt;
+                    &lt;/unitalias&gt;
+                    &lt;unitalias&gt;
+                    &lt;id&gt;all2all:gram_to_localResource&lt;/id&gt;
+                    &lt;/unitalias&gt;
+                    &lt;/tests&gt;
+                    &lt;/package&gt;
+                    &lt;/category&gt;
+                    &lt;/stack&gt;
+                  </screen></para>
+              </listItem>
+            </itemizedList>
+          </listItem>
+          <listItem>
+            <para>Reporter detail results:</para>
+            <para>In order to display reporter detail results, the <filename>xslt.jsp</filename> requires
+              a "configID" parameter for the series.  The JSP uses this parameter to
+              retrieve reporter results from the depot.  If an "instanceID" parameter is not also supplied, the JSP returns a history of
+              XML results for the series.  If an "instanceID" parameter is supplied, the JSP returns XML results for a the specified instance of the series.
+            </para>
+            <para>The XML reporter results are transformed into HTML by the stylesheet passed via the "xsl" parameter.  By default the "xsl" parameter is "instance.xsl", which translates to the <filename>$INCA_DIST/webapps/xsl/instance.xsl</filename> file, but it can be set to any XSL file in <filename>$INCA_DIST/webapps/xsl</filename>.  If the "xsl" parameter is not set, the XML reporter results are displayed:</para>
+            <screen>&lt;reportDetails&gt;
+              &lt;suiteId&gt;1&lt;/suiteId&gt;
+              &lt;seriesConfigId&gt;5&lt;/seriesConfigId&gt;
+              &lt;seriesId&gt;5&lt;/seriesId&gt;
+              &lt;reportId&gt;1&lt;/reportId&gt;
+              &lt;instanceId&gt;73&lt;/instanceId&gt;
+              &lt;seriesConfig&gt;
+              &lt;series&gt;
+              ...
+              &lt;/series&gt;
+              &lt;nickname&gt;java_hello_world&lt;/nickname&gt;
+              &lt;resourceHostname&gt;localResource&lt;/resourceHostname&gt;
+              &lt;schedule&gt;
+              ...
+              &lt;/schedule&gt;
+              &lt;action&gt;add&lt;/action&gt;
+              &lt;/seriesConfig&gt;
+              &lt;report&gt;
+              ...
+              &lt;/report&gt;
+              &lt;sysusage&gt;
+              ...
+              &lt;/sysusage&gt;
+              &lt;stderr/&gt;
+              &lt;/reportDetails&gt;</screen>
+          </listItem>
+        </itemizedList>
+      </listItem>
+    </orderedList>
+
+    <section id="google">
+      <title>Map View using Google Map API</title>
+
+      <section id="google-overview">
+        <title>Overview</title>
+        <para>The map view provides a summary view of the current status
+          of resources on a Google map.  For each resource, the summary view will
+          provide the percentage of reports passed, number of passed reports, number
+          of failed reports, and a list of the failed tests (with a link to the report
+          details page).  A resource is represented on the map as a marker and colored
+          red, green, or orange based on the number of tests that have passed and/or
+          failed.  The figure below shows the Inca Google map view for the NEON
+          testbed (four resources at SDSC and one resource at James Reserve).  All
+          resources are passing their tests so every resource marker is green.
+        </para>
+        <graphic fileref="figures/consumer/googleNeon.png" align="center"></graphic>
+        <para>
+          Clicking on a marker will display an info window with the name of the
+          resource and the status information as show below.
+        </para>
+        <graphic fileref="figures/consumer/googleNeonInfo.png" align="center">
+        </graphic>
+        <para>
+          Clicking on the "Toggle ping status" button will display the status of the
+          cross-site ping test as show below.
+        </para>
+        <graphic fileref="figures/consumer/googleNeonPing.png" align="center">
+        </graphic>
+      </section>
+
+      <section id="google-setup">
+        <title>Setting up Google Map View</title>
+        <para>
+          The Google Map View is generated by running the
+          <filename>google.xsl</filename> stylesheet over the XML collected by
+          <filename>xslt.jsp</filename>.  To load the Google map for your Inca
+          default deployment, click on the "map of sampleSuite results" link
+          underneath the "CURRENT DATA" menu item in the navigation bar.
+        </para>
+        <graphic fileref="figures/consumer/googleMapMenu.png" align="center">
+        </graphic>
+        <para>Or you can view the map using the following url:  </para>
+        <screen>
+          http://<emphasis role="red">yourhost</emphasis>:8080/inca/xslt.jsp?xsl=google.xsl&amp;xmlFile=google.xml&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid
+        </screen>
+        <para>
+          The tags "suiteName" and "resourceID" can be a comma delimited list to show
+          the resource status for multiple suites.
+        </para>
+        <para>
+          If this is your first time loading the page, you will see
+          a Javascript alert box such as that below.</para>
+        <graphic fileref="figures/consumer/googlePopUp.png" align="center">
+        </graphic>
+        <para>
+          To utilize the Google map server, you need a "Google Maps API key" for
+          your Inca consumer.  To generate one, go the Google Maps API web page at
+          <ulink
+              url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>
+          and type in "http://<emphasis role="red">yourHost</emphasis>:8080 in the
+          "My web site URL" text box and click the "Generate API key" button.  A
+          page will be generated displaying a new key for your server that looks
+          something like this:
+          ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ.
+          Next, open <filename>$INCA_DIST/webapps/xml/google.xml</filename> and go to
+          line 12.
+        </para>
+        <screen>
+          ...
+          &lt;!-- Google key for your Inca server.  Go to the following website and put
+          http://yourservername:8080 in the "My web site URL" textbox at:
+          http://www.google.com/apis/maps/signup.html --&gt;
+          &lt;key&gt;Insert key here&lt;/key&gt;
+          ...
+        </screen>
+        <para>Replace "Insert key here" with your new Google Maps API key as below
+          and save the file.
+        </para>
+        <screen>
+          ...
+          &lt;!-- Google key for your Inca server.  Go to the following website and put
+          http://yourservername:8080 in the "My web site URL" textbox at:
+          http://www.google.com/apis/maps/signup.html --&gt;
+          &lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
+          ...
+        </screen>
+        <para>Next, reload the web page and the default configuration will show
+          one resource (indicated by the orange marker) and the Inca logo as below.
+        </para>
+        <graphic fileref="figures/consumer/googleDefaultMap.png" align="center">
+        </graphic>
+        <para>Clicking on the orange marker will display an info box as below
+          indicating "vtk-ngl_version" as the only test that has failed. Clicking on
+          "vtk-ngl_version" will take you to the reporter details page.</para>
+        <graphic fileref="figures/consumer/googleDefaultMapInfo.png" align="center">
+        </graphic>
+      </section>
+
+      <section id="google-custom">
+        <title>Customizing the Google Map View</title>
+        <para>
+          The configuration information for the Google Map View is located in a
+          XML file at <filename>$INCA_DIST/webapps/xml/google.xml</filename>.
+          Below is a list of customizations you can make to your Google display.
+        </para>
+        <variablelist><title>Customizations</title>
+          <varlistentry><term><filename>map size</filename></term>
+            <listitem>
+              <para>
+                The size of the Google map can be customized using the &lt;width&gt; and
+                &lt;height&gt; tags on lines 14-15.  By default the map is 800x500.
+                <screen>
+                  13  &lt;!-- The size of the map graphic (in pixels) that will be generated --&gt;
+                  14  &lt;width&gt;800&lt;/width&gt;
+                  15  &lt;height&gt;500&lt;/height&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>map center</filename></term>
+            <listitem>
+              <para>
+                The center of the map is expressed in latitude/longitude coordinates on
+                lines 18-21.  By default, the center of the map corresponds to the
+                center of the U.S.
+                <screen>
+                  17   &lt;!-- The center of the map in latitude/longitude coordinates --&gt;
+                  18   &lt;center&gt;
+                  19     &lt;latitude&gt;37&lt;/latitude&gt;
+                  20     &lt;longitude&gt;982&lt;/longitude&gt;
+                  21   &lt;/center&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>magnification level</filename></term>
+            <listitem>
+              <para>
+                The initial magnification or zoom level of the map is expressed as
+                a number between 1 and 12 and is located on line 24.  A zoom level of 1
+                will give you the entire world and a zoom level of 12 will allow you to
+                read street names.  By default the initial zoom level is 4 which allows
+                most of the U.S. to be viewed.
+                <screen>
+                  23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
+                  24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>marker distance</filename></term>
+            <listitem>
+              <para>
+                If there is more than one resource at a particular site, the resources
+                will be layed in a circle around the site center.  By default, the
+                distance between the markers will be determined by the chosen
+                magnificationLevel so that the markers do not overlap each other.  To
+                increase or decrease the distance in between the markers (expressed in
+                latitude/longitude), uncomment the &lt;markerDist&gt; tag on line 29.
+                <screen>
+                  26   &lt;!-- The distance in between resource markers at a site.  A default value
+                  27        is available based on the magnificationLevel.  To override the default,
+                  28        uncommment the line below and set a new value
+                  29   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
+                  30   --&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>number of errors displayed in info window</filename></term>
+            <listitem>
+              <para>
+                If there are more than fifteen errors at a resource, only the first fifteen
+                errors will be displayed in the info window that is displayed when a
+                resource is clicked.  To override, edit the &lt;maxErrors&gt; tag on line
+                33.
+                <screen>
+                  32   &lt;!-- The maximum number of errors to display in the info window --&gt;
+                  33   &lt;maxErrors&gt;15&lt;/maxErrors&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>cross-site test line colors</filename></term>
+            <listitem>
+              <para>
+                If a suite contains a cross-site test, a button will be displayed below
+                the map named "Toggle &lt;testName&gt; status".  When the button is
+                clicked, the status of an individual cross-site test will be expressed as
+                a line in between the source resource and the destination resource.
+                The color of the line used to represent the test status can be customized.
+                By default, green represents the test passed and red represents the test
+                failed.  To change, edit lines 37-40.
+                <screen>
+                  35   &lt;!-- For cross-site tests, a line will be displayed in between the 2 sites to
+                  36        indicate the test status.  Customize the colors for pass fail below. --&gt;
+                  37   &lt;line&gt;
+                  38     &lt;pass&gt;#228B22&lt;/pass&gt;
+                  39     &lt;fail&gt;#FF0000&lt;/fail&gt;
+                  40   &lt;/line&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>resource markers</filename></term>
+            <listitem>
+              <para>
+                A resource is represented by a Google marker and the color varies
+                on the number of tests that it failed:
+                all tests passed = <inlinegraphic fileref="figures/consumer/mm_20_green.png" align="center"></inlinegraphic>, at least one test failed = <inlinegraphic fileref="figures/consumer/mm_20_orange.png" align="center"> </inlinegraphic>,
+                all tests failed = <inlinegraphic fileref="figures/consumer/mm_20_red.png" align="center">
+              </inlinegraphic>.  Suppose you wanted to change the icons displayed to
+                weather icons found at <ulink
+                  url="http://econym.googlepages.com/geicons.htm">http://econym.googlepages.com/geicons.htm</ulink> such as follows:
+                all tests passed = <inlinegraphic fileref="figures/consumer/icon33.png" align="center"></inlinegraphic>, at least one test failed = <inlinegraphic fileref="figures/consumer/icon34.png" align="center"> </inlinegraphic>,
+                all tests failed = <inlinegraphic fileref="figures/consumer/icon36.png" align="center"></inlinegraphic>.  Use the following steps:
+
+                <orderedlist numeration="lowerroman">
+                  <listitem>
+                    <para>Find the size of the icons and modify the tags &lt;iconWidth&gt; and
+                      &lt;iconHeight&gt;.  These weather icons are 32x32 so we would change lines
+                      46 and 47 as follows:
+                      <screen>
+                        46     &lt;iconWidth&gt;32&lt;/iconWidth&gt;
+                        47     &lt;iconHeight&gt;32&lt;/iconHeight&gt;
+                      </screen>
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>Pick the anchor point for the icon to be placed in relation to
+                      the resource's place on the map.  Since we want the middle of
+                      the icon to be placed on the map, we choose the coordinates (16, 16)
+                      and modify line 50 as follows:
+                      <screen>
+                        50     &lt;iconAnchorCoord&gt;16, 16&lt;/iconAnchorCoord&gt;
+                      </screen>
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>Then we also need to determine the anchor point for the info
+                      window to pop up relative to the icon.  Since we want the info window
+                      to appear in the top middle, we choose the coordinates (16, 10) and
+                      modify line 54 as follows:
+                      <screen>
+                        54     &lt;iconInfoWindowAnchorCoord&gt;16, 10&lt;/iconInfoWindowAnchorCoord&gt;
+                      </screen>
+                    </para>
+                  </listitem>
+                  <listitem>
+                    <para>The three weather icons are located on the Google server at:
+                      <ulink
+                          url="http://maps.google.com/mapfiles/kml/pal4/icon33.png">http://maps.google.com/mapfiles/kml/pal4/icon33.png</ulink>,
+                      <ulink
+                          url="http://maps.google.com/mapfiles/kml/pal4/icon34.png">http://maps.google.com/mapfiles/kml/pal4/icon34.png</ulink>,
+                      <ulink
+                          url="http://maps.google.com/mapfiles/kml/pal4/icon36.png">http://maps.google.com/mapfiles/kml/pal4/icon36.png</ulink>.  Modify lines 61-67 as follows:
+                      <screen>
+                        61  &lt;iconUrlPrefix&gt;http://maps.google.com/mapfiles/kml/pal4/icon&lt;/iconUrlPrefix&gt;
+                        62  &lt;iconStatus&gt;
+                        63    &lt;fail&gt;36&lt;/fail&gt;
+                        64    &lt;pass&gt;33&lt;/pass&gt;
+                        65    &lt;warn&gt;34&lt;/warn&gt;
+                        66  &lt;/iconStatus&gt;
+                        67  &lt;iconUrlSuffix&gt;.png&lt;/iconUrlSuffix&gt;
+                      </screen>
+                    </para>
+                  </listitem>
+                  <listItem>
+                    <para>Finally, we specify the url to the shadow icon using
+                      &lt;shadowIconUrl&gt;, &lt;shadowIconWidth&gt;, and
+                      &lt;shadowIconHeight&gt; tags on lines 70-74 as follows:
+                      <screen>
+                        69  &lt;!-- Url of a icon to use for the shadow of the resource icon --&gt;
+                        70  &lt;shadowIconUrl&gt;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&lt;/shadowIconUrl&gt;
+                        71
+                        72  &lt;!-- the size of the shadow icon --&gt;
+                        73  &lt;shadowIconWidth&gt;59&lt;/shadowIconWidth&gt;
+                        74  &lt;shadowIconHeight&gt;32&lt;/shadowIconHeight&gt;
+                      </screen>
+                    </para>
+                  </listItem>
+                </orderedlist>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>sites</filename></term>
+            <listitem>
+              <para>
+                By default, resources will be displayed around in the map center.
+                To specify a site (i.e., a location on the map with its resources), use
+                the &lt;site&gt; tag from lines 80 to 111.  Provide a site name using the
+                &lt;name&gt; tag, latitude/longitude coordinates using the &lt;latitude&gt;
+                and &lt;longitude&gt; tags.  There are online tools, like
+                <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>,
+                to help convert the IP addresses of your resources to latitude/longitude.
+                Specify a list of resource names at a site using the &lt;resource&gt; tag.
+                Optionally you can specify a logo for the site
+                using the &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt;
+                and &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo
+                anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
+                shown in the below figure.
+                <graphic fileref="figures/consumer/googleSite.png" align="center">
+                </graphic>
+              </para>
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+      </section>
+    </section>
+
+    <section id="historical-data">
+      <title>Historical Data</title>
+      <para>All reporter data collected by Inca is stored in the depot.
+        The depot can then be queried to produce graphs of historical information.
+        Inca's default data consumer uses
+        <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
+        a JSP tag library for graphing based on
+        <ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
+        The default consumer includes a basic graph of the historical pass/fail status of
+        reporter series.  The pass/fail status is either the comparitor status (if the series
+        has a comparitor) or the reporter's exit status.
+      </para>
+      <para>If <filename>graph.xsl</filename> is used as the xsl parameter for the
+        <filename>xslt.jsp</filename> script that displays suite results,
+        a form will be generated to select suite series to graph.  For
+        example, <ulink url="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink> will generate:
+        <graphic fileref="figures/consumer/graphForm.gif" align="center"></graphic>
+      </para>
+      <para>
+        After clicking on the "graph" button in the form above, a graph page is shown with
+        an XY plot of the pass/fail status of the selected
+        series, a series pass/fail summary table, and a form to customize the graph
+        further (as in the image below).  This graph page is generated by the <filename>graph.jsp</filename> script
+        with Cewolf tags.
+      </para>
+      <para>The graphed data points are interactive - clicking on them will lead to
+        report details pages, mousing over them will show collection times and any error messages.
+        <graphic fileref="figures/consumer/graphSampleSuite.gif" align="center"></graphic>
+      </para>
+
+      <para>Graph pages for individual series are also linked from the report details pages.
+        <graphic fileref="figures/consumer/details_graph.png" align="center"></graphic>
+      </para>
+    </section>
   </section>
 
-  <section id="google-setup">
-  <title>Setting up Google Map View</title>
-  <para>
-    The Google Map View is generated by running the 
-    <filename>google.xsl</filename> stylesheet over the XML collected by
-    <filename>xslt.jsp</filename>.  To load the Google map for your Inca
-    default deployment, click on the "map of sampleSuite results" link
-    underneath the "CURRENT DATA" menu item in the navigation bar.  
-  </para>
-  <graphic fileref="figures/consumer/googleMapMenu.png" align="center">
-  </graphic> 
-  <para>Or you can view the map using the following url:  </para>
-  <screen>
-http://<emphasis role="red">yourhost</emphasis>:8080/inca/xslt.jsp?xsl=google.xsl&amp;xmlFile=google.xml&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid
-  </screen>
-  <para>
-    The tags "suiteName" and "resourceID" can be a comma delimited list to show
-    the resource status for multiple suites.  
-  </para>
-  <para>
-    If this is your first time loading the page, you will see
-    a Javascript alert box such as that below.</para>
-    <graphic fileref="figures/consumer/googlePopUp.png" align="center">
-    </graphic> 
-    <para>
-      To utilize the Google map server, you need a "Google Maps API key" for
-      your Inca consumer.  To generate one, go the Google Maps API web page at
-      <ulink
-      url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>
-      and type in "http://<emphasis role="red">yourHost</emphasis>:8080 in the
-      "My web site URL" text box and click the "Generate API key" button.  A
-      page will be generated displaying a new key for your server that looks
-      something like this:
-    ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ.
-    Next, open <filename>$INCA_DIST/webapps/xml/google.xml</filename> and go to
-    line 12.
-    </para>
-    <screen>
-    ...
-     &lt;!-- Google key for your Inca server.  Go to the following website and put
-           http://yourservername:8080 in the "My web site URL" textbox at:
-           http://www.google.com/apis/maps/signup.html --&gt;
-      &lt;key&gt;Insert key here&lt;/key&gt;
-    ...
-    </screen>
-    <para>Replace "Insert key here" with your new Google Maps API key as below
-     and save the file.  
-    </para>
-    <screen>
-    ...
-     &lt;!-- Google key for your Inca server.  Go to the following website and put
-           http://yourservername:8080 in the "My web site URL" textbox at:
-           http://www.google.com/apis/maps/signup.html --&gt;
-      &lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
-    ...
-    </screen>
-    <para>Next, reload the web page and the default configuration will show
-    one resource (indicated by the orange marker) and the Inca logo as below.
-    </para>
-    <graphic fileref="figures/consumer/googleDefaultMap.png" align="center">
-    </graphic> 
-    <para>Clicking on the orange marker will display an info box as below
-    indicating "vtk-ngl_version" as the only test that has failed. Clicking on
-    "vtk-ngl_version" will take you to the reporter details page.</para>
-    <graphic fileref="figures/consumer/googleDefaultMapInfo.png" align="center">
-    </graphic> 
-  </section>
+  <section id="custom-display">
+    <title>Changing the Look</title>
 
-  <section id="google-custom">
-  <title>Customizing the Google Map View</title>
-  <para>
-    The configuration information for the Google Map View is located in a
-    XML file at <filename>$INCA_DIST/webapps/xml/google.xml</filename>.
-    Below is a list of customizations you can make to your Google display.
-  </para>
-  <variablelist><title>Customizations</title>
-  <varlistentry><term><filename>map size</filename></term>
-    <listitem>
-    <para>
-    The size of the Google map can be customized using the &lt;width&gt; and
-    &lt;height&gt; tags on lines 14-15.  By default the map is 800x500.
-    <screen>
-13  &lt;!-- The size of the map graphic (in pixels) that will be generated --&gt;
-14  &lt;width&gt;800&lt;/width&gt;
-15  &lt;height&gt;500&lt;/height&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+    <section id="custom-color">
+      <title>Colors and Fonts</title>
+      <para>
+        Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in
+        <filename>$INCA_DIST/var/jetty*/webapp/css/inca.css</filename>.  The drop down nav bar in the header is controlled by
+        <filename>$INCA_DIST/var/jetty*/webapp/css/nav.css</filename>.
+        For example, to change the color in the reporter detail pages header bar
+        open <filename>inca.css</filename> and change lines 111-112 to:
+        <screen>.header {
+          background-color: #D07651;</screen>
+        The details pages will now look like:
+        <graphic fileref="figures/consumer/color-change.jpg" align="center"></graphic>
+      </para>
+      <para>For general information, visit the [ <ulink url="http://www.w3schools.com/css/">CSS tutorial</ulink> ].</para>
+    </section>
 
-  <varlistentry><term><filename>map center</filename></term>
-    <listitem>
-    <para>
-    The center of the map is expressed in latitude/longitude coordinates on 
-    lines 18-21.  By default, the center of the map corresponds to the
-    center of the U.S.  
-    <screen>
-17   &lt;!-- The center of the map in latitude/longitude coordinates --&gt;
-18   &lt;center&gt;
-19     &lt;latitude&gt;37&lt;/latitude&gt;
-20     &lt;longitude&gt;982&lt;/longitude&gt;
-21   &lt;/center&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+    <section id="custom-html">
+      <title>HTML Layout</title>
 
-  <varlistentry><term><filename>magnification level</filename></term>
-    <listitem>
-    <para>
-    The initial magnification or zoom level of the map is expressed as 
-    a number between 1 and 12 and is located on line 24.  A zoom level of 1
-    will give you the entire world and a zoom level of 12 will allow you to
-    read street names.  By default the initial zoom level is 4 which allows
-    most of the U.S. to be viewed. 
-    <screen>
-23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
-24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+      <para>
+        To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
+        in <filename>$INCA_DIST/webapps/xsl</filename> and pass it to the JSP as the "xsl" parameter.  </para>
+      <para>For general information about editing stylesheets,
+        visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
 
-  <varlistentry><term><filename>marker distance</filename></term>
-    <listitem>
-    <para>
-    If there is more than one resource at a particular site, the resources
-    will be layed in a circle around the site center.  By default, the 
-    distance between the markers will be determined by the chosen
-    magnificationLevel so that the markers do not overlap each other.  To
-    increase or decrease the distance in between the markers (expressed in
-    latitude/longitude), uncomment the &lt;markerDist&gt; tag on line 29.   
-    <screen>
-26   &lt;!-- The distance in between resource markers at a site.  A default value
-27        is available based on the magnificationLevel.  To override the default,
-28        uncommment the line below and set a new value 
-29   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
-30   --&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+      <section id="custom-html-values">
+        <title>Custom Values in HTML Table Cells</title>
+        <para>To display report values other
+          than the default text of either a software version, "pass", or "error"
+          on the suite results pages, edit <filename>default.xsl</filename>.  </para>
+        <para> For example, to change the default suite status to print the time successful
+          reporters ran and a truncated error message for failures like:
+        </para>
+        <para><graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic></para>
+        <para>Edit <filename>default.xsl</filename>, add a new variable for the custom table cell text and
+          print the custom cell text rather than the default text:
+        </para>
+        <para>
+          <screen>188  &lt;xsl:variable name="cellText"&gt;
+            189    &lt;xsl:choose&gt;
+            190      &lt;xsl:when test="string($instance)=''"&gt;
+            191        &lt;xsl:value-of select="''" /&gt;
+            192      &lt;/xsl:when&gt;
+            193      &lt;xsl:when test="string($result/body)!=''
+            194             and string($result/errorMessage)=''
+            195             and ($comparitor='Success' or count($comparitor)=0)"&gt;
+            196               passed:&#160;
+            197        &lt;!-- get yyyy-mm-dd from gmt timestamp --&gt;
+            198        &lt;xsl:value-of select="substring($result/gmt, 1, 10)" /&gt;&#160;
+            199        &lt;!-- get HH:MM from gmt timestamp --&gt;
+            200        &lt;xsl:value-of select="substring($result/gmt, 12, 5)" /&gt;
+            201      &lt;/xsl:when&gt;
+            202      &lt;xsl:otherwise&gt;
+            203               error:
+            204        &lt;xsl:value-of select="substring($result/errorMessage, 1, 30)" /&gt;
+            205      &lt;/xsl:otherwise&gt;
+            206    &lt;/xsl:choose&gt;
+            207  &lt;/xsl:variable&gt;
+            208  &lt;xsl:choose&gt;
+            209    &lt;xsl:when test="$exit!=''"&gt;
+            210      &lt;td class="{$exit}"&gt;
+            211        &lt;a href="{$href}"&gt;&lt;xsl:value-of select="$cellText"/&gt;&lt;/a&gt;
+            212        &lt;xsl:if test="$url[matches(., 'markOld')]"&gt;</screen>
+        </para>
+      </section>
 
-  <varlistentry><term><filename>number of errors displayed in info window</filename></term>
-    <listitem>
-    <para>
-    If there are more than fifteen errors at a resource, only the first fifteen
-    errors will be displayed in the info window that is displayed when a
-    resource is clicked.  To override, edit the &lt;maxErrors&gt; tag on line
-    33.
-    <screen>
-32   &lt;!-- The maximum number of errors to display in the info window --&gt;
-33   &lt;maxErrors&gt;15&lt;/maxErrors&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+      <section id="custom-html-header">
+        <title>Custom HTML Header</title>
 
-  <varlistentry><term><filename>cross-site test line colors</filename></term>
-    <listitem>
-    <para>
-    If a suite contains a cross-site test, a button will be displayed below
-    the map named "Toggle &lt;testName&gt; status".  When the button is 
-    clicked, the status of an individual cross-site test will be expressed as
-    a line in between the source resource and the destination resource.  
-    The color of the line used to represent the test status can be customized.
-    By default, green represents the test passed and red represents the test 
-    failed.  To change, edit lines 37-40.
-    <screen>
-35   &lt;!-- For cross-site tests, a line will be displayed in between the 2 sites to
-36        indicate the test status.  Customize the colors for pass fail below. --&gt;
-37   &lt;line&gt;
-38     &lt;pass&gt;#228B22&lt;/pass&gt;
-39     &lt;fail&gt;#FF0000&lt;/fail&gt;
-40   &lt;/line&gt;
-    </screen>
-    </para>
-    </listitem>
-  </varlistentry>
+        <para>An example of customizing the HTML header would be to add a call to a custom header stylesheet in the
+          "printBodyTitle" template.  Edit <filename>inca-common.xsl</filename>:</para>
+        <para><screen>13  <emphasis role="red">&lt;xsl:include href="custom-header.xsl"/&gt;</emphasis>
+          ...
+          24  &lt;xsl:template name="printBodyTitle"&gt;
+          25    &lt;xsl:param name="title"/&gt;
+          26    <emphasis role="red">&lt;xsl:call-template name="custom-header"/&gt;</emphasis>
+          27    &lt;xsl:variable name="datenow" select="date:new()" /&gt;
+          28    &lt;xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')"/&gt;
+          29    &lt;table width="100%" border="0"&gt;
+          30      &lt;tr align="left"&gt;</screen></para>
 
-  <varlistentry><term><filename>resource markers</filename></term>
-    <listitem>
-    <para>
-    A resource is represented by a Google marker and the color varies
-    on the number of tests that it failed: 
-    all tests passed = <inlinegraphic fileref="figures/consumer/mm_20_green.png" align="center"></inlinegraphic>, at least one test failed = <inlinegraphic fileref="figures/consumer/mm_20_orange.png" align="center"> </inlinegraphic>,
-    all tests failed = <inlinegraphic fileref="figures/consumer/mm_20_red.png" align="center">
-    </inlinegraphic>.  Suppose you wanted to change the icons displayed to
-    weather icons found at <ulink
-    url="http://econym.googlepages.com/geicons.htm">http://econym.googlepages.com/geicons.htm</ulink> such as follows:
-    all tests passed = <inlinegraphic fileref="figures/consumer/icon33.png" align="center"></inlinegraphic>, at least one test failed = <inlinegraphic fileref="figures/consumer/icon34.png" align="center"> </inlinegraphic>,
-    all tests failed = <inlinegraphic fileref="figures/consumer/icon36.png" align="center"></inlinegraphic>.  Use the following steps:
-    
-    <orderedlist numeration="lowerroman">
-    <listitem>
-    <para>Find the size of the icons and modify the tags &lt;iconWidth&gt; and
-    &lt;iconHeight&gt;.  These weather icons are 32x32 so we would change lines 
-    46 and 47 as follows:
-    <screen>
-46     &lt;iconWidth&gt;32&lt;/iconWidth&gt;
-47     &lt;iconHeight&gt;32&lt;/iconHeight&gt;
-    </screen>
-    </para>
-    </listitem>
-    <listitem>
-    <para>Pick the anchor point for the icon to be placed in relation to
-    the resource's place on the map.  Since we want the middle of
-    the icon to be placed on the map, we choose the coordinates (16, 16)
-    and modify line 50 as follows:
-    <screen>
-50     &lt;iconAnchorCoord&gt;16, 16&lt;/iconAnchorCoord&gt;
-    </screen>
-    </para>
-    </listitem>
-    <listitem>
-    <para>Then we also need to determine the anchor point for the info
-    window to pop up relative to the icon.  Since we want the info window
-    to appear in the top middle, we choose the coordinates (16, 10) and
-    modify line 54 as follows:
-    <screen>
-54     &lt;iconInfoWindowAnchorCoord&gt;16, 10&lt;/iconInfoWindowAnchorCoord&gt;
-    </screen>
-    </para>
-    </listitem>
-    <listitem>
-    <para>The three weather icons are located on the Google server at:
-    <ulink
-    url="http://maps.google.com/mapfiles/kml/pal4/icon33.png">http://maps.google.com/mapfiles/kml/pal4/icon33.png</ulink>,
-    <ulink
-    url="http://maps.google.com/mapfiles/kml/pal4/icon34.png">http://maps.google.com/mapfiles/kml/pal4/icon34.png</ulink>,
-    <ulink
-    url="http://maps.google.com/mapfiles/kml/pal4/icon36.png">http://maps.google.com/mapfiles/kml/pal4/icon36.png</ulink>.  Modify lines 61-67 as follows:
-    <screen>
-61  &lt;iconUrlPrefix&gt;http://maps.google.com/mapfiles/kml/pal4/icon&lt;/iconUrlPrefix&gt;
-62  &lt;iconStatus&gt;
-63    &lt;fail&gt;36&lt;/fail&gt;
-64    &lt;pass&gt;33&lt;/pass&gt;
-65    &lt;warn&gt;34&lt;/warn&gt;
-66  &lt;/iconStatus&gt;
-67  &lt;iconUrlSuffix&gt;.png&lt;/iconUrlSuffix&gt;
-    </screen>
-    </para>
-    </listitem>
-    <listItem>
-      <para>Finally, we specify the url to the shadow icon using
-      &lt;shadowIconUrl&gt;, &lt;shadowIconWidth&gt;, and
-      &lt;shadowIconHeight&gt; tags on lines 70-74 as follows:
-      <screen>
-69  &lt;!-- Url of a icon to use for the shadow of the resource icon --&gt;
-70  &lt;shadowIconUrl&gt;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&lt;/shadowIconUrl&gt;
-71
-72  &lt;!-- the size of the shadow icon --&gt;
-73  &lt;shadowIconWidth&gt;59&lt;/shadowIconWidth&gt;
-74  &lt;shadowIconHeight&gt;32&lt;/shadowIconHeight&gt;
-    </screen>
-    </para>
-    </listItem>
-    </orderedlist>
-    </para>
-    </listitem>
-  </varlistentry>
+        <para>Create a <filename>$INCA_DIST/webapps/xsl/custom-header.xsl</filename> like:</para>
 
-  <varlistentry><term><filename>sites</filename></term>
-    <listitem>
-    <para>
-    By default, resources will be displayed around in the map center.
-    To specify a site (i.e., a location on the map with its resources), use
-    the &lt;site&gt; tag from lines 80 to 111.  Provide a site name using the
-    &lt;name&gt; tag, latitude/longitude coordinates using the &lt;latitude&gt;
-    and &lt;longitude&gt; tags.  There are online tools, like 
-    <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>,
-    to help convert the IP addresses of your resources to latitude/longitude.
-    Specify a list of resource names at a site using the &lt;resource&gt; tag.  
-    Optionally you can specify a logo for the site
-    using the &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt;
-    and &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo 
-    anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
-    shown in the below figure.  
-    <graphic fileref="figures/consumer/googleSite.png" align="center">
-    </graphic> 
-    </para>
-    </listitem>
-  </varlistentry>
+        <para><screen>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
-  </variablelist>
-  </section>
-</section>
+          &lt;!-- ================================================ --&gt;
+          &lt;!-- Prints out custom header for Inca status pages   --&gt;
+          &lt;!-- ================================================ --&gt;
+          &lt;xsl:stylesheet version="1.0"
+          xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+          xmlns="http://www.w3.org/1999/xhtml"&gt;
 
-<section id="historical-data">
-<title>Historical Data</title>
-<para>All reporter data collected by Inca is stored in the depot.  
-The depot can then be queried to produce graphs of historical information.  
-Inca's default data consumer uses 
-<ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>, 
-a JSP tag library for graphing based on
-<ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
-The default consumer includes a basic graph of the historical pass/fail status of 
-reporter series.  The pass/fail status is either the comparitor status (if the series 
-has a comparitor) or the reporter's exit status.
-</para>
-<para>If <filename>graph.xsl</filename> is used as the xsl parameter for the 
-<filename>xslt.jsp</filename> script that displays suite results, 
-a form will be generated to select suite series to graph.  For 
-example, <ulink url="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink> will generate:
-<graphic fileref="figures/consumer/graphForm.gif" align="center"></graphic> 
-</para>
-<para>
-After clicking on the "graph" button in the form above, a graph page is shown with 
-an XY plot of the pass/fail status of the selected 
-series, a series pass/fail summary table, and a form to customize the graph 
-further (as in the image below).  This graph page is generated by the <filename>graph.jsp</filename> script 
-with Cewolf tags.  
-</para>
-<para>The graphed data points are interactive - clicking on them will lead to 
-report details pages, mousing over them will show collection times and any error messages.
-<graphic fileref="figures/consumer/graphSampleSuite.gif" align="center"></graphic> 
-</para>
-
-<para>Graph pages for individual series are also linked from the report details pages.
-<graphic fileref="figures/consumer/details_graph.png" align="center"></graphic> 
-</para> 
-</section>
-</section>
-
-<section id="custom-display">
-<title>Changing the Look</title>
-
-<section id="custom-color">
-<title>Colors and Fonts</title>
-<para>
-Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in 
-<filename>$INCA_DIST/var/jetty*/webapp/css/inca.css</filename>.  The drop down nav bar in the header is controlled by 
-<filename>$INCA_DIST/var/jetty*/webapp/css/nav.css</filename>.  
-For example, to change the color in the reporter detail pages header bar 
-open <filename>inca.css</filename> and change lines 111-112 to:
-<screen>.header {
-    background-color: #D07651;</screen>
-The details pages will now look like:
-<graphic fileref="figures/consumer/color-change.jpg" align="center"></graphic> 
-</para>
-<para>For general information, visit the [ <ulink url="http://www.w3schools.com/css/">CSS tutorial</ulink> ].</para>
-</section>
-
-<section id="custom-html">
-<title>HTML Layout</title>
-<para>
-The three default JSP scripts retrieve XML data from the agent and depot and then use the XSL stylesheets in 
-<filename>$INCA_DIST/etc</filename> to transform the 
-XML into HTML.  The following stylesheets are installed with the default consumer:</para>
-<orderedList>
-<listItem> 
-<para><filename>index.xsl</filename>:</para> 
-<para>Lists all configured suite and resource names in an   
- HTML form whose action is to display results for the selected suite and resource.  
-</para> 
-<para>The <filename>index.xsl</filename> stylesheet is applied to XML returned by <filename>index.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>config.xsl</filename>:</para> 
-<para>Prints description of deployed suites and series. </para>
-<para>The <filename>config.xsl</filename> stylesheet is applied to XML returned by <filename>config.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>default.xsl</filename>:</para> 
-<para>Prints table of suite(s) results. 
-</para>
-<para>The <filename>default.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>swStack.xsl</filename>:</para> 
-<para>Prints table of suite(s) results.  Uses XML file
- to format table rows by software categories and packages. 
-</para>
-<para>The <filename>swStack.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>summary.xsl</filename>:</para> 
-<para>Prints summary results table with a list of resources in the left column and
- a list of the suite tests each resource is failing 
- in the right column.  Failing tests are listed by name 
- and by overall percentage passing in suite.  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups. 
-</para>
-<para>The <filename>summary.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>graph.xsl</filename>:</para> 
-<para>Prints form to select series to graph.</para>
-<para>The <filename>graph.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>instance.xsl</filename>:</para> 
-<para>Prints HTML table with report details.
-</para>
-<para>The <filename>instance.xsl</filename> stylesheet is applied to XML returned by <filename>xslt.jsp</filename>.</para>
-</listItem>
-<listItem> 
-<para><filename>header.xsl</filename>:</para> 
-<para>Prints HTML page header with a link to <filename>inca.css</filename> between &lt;header&gt; tags.
-</para>
-<para>The <filename>header.xsl</filename> stylesheet is included in most other stylesheets.</para>
-</listItem>
-<listItem> 
-<para><filename>footer.xsl</filename>:</para> 
-<para>Prints HTML page footer with the Inca logo.
-</para>
-<para>The <filename>footer.xsl</filename> stylesheet is included in most other stylesheets.</para>
-</listItem>
-<listItem> 
-<para><filename>legend.xsl</filename>:</para> 
-<para>Prints a key to cell colors and text.
-</para>
-<para>The <filename>legend.xsl</filename> stylesheet is included in the <filename>default.xsl</filename> 
-and <filename>swStack.xsl</filename> stylesheets.</para>
-</listItem>
-<listItem> 
-<para><filename>inca-common.xsl</filename>:</para> 
-<para>Common templates for use in Inca stylesheets. 
-</para>
-<para>The <filename>inca-common.xsl</filename> stylesheet is included in most other stylesheets.</para>
-</listItem>
-</orderedList>
-
-<para>
-To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet 
-in <filename>$INCA_DIST/webapps/xsl</filename> and pass it to the JSP as the "xsl" parameter.  </para>
-<para>For general information about editing stylesheets, 
-visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
-
-<section id="custom-html-values">
-<title>Custom Values in HTML Table Cells</title>
-<para>To display report values other
- than the default text of either a software version, "pass", or "error" 
-on the suite results pages, edit <filename>default.xsl</filename>.  </para>
-<para> For example, to change the default suite status to print the time successful 
-reporters ran and a truncated error message for failures like:
-</para>
-<para><graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic></para>
-<para>Edit <filename>default.xsl</filename>, add a new variable for the custom table cell text and 
-print the custom cell text rather than the default text:
-</para>
-<para>
-<screen>188  &lt;xsl:variable name="cellText"&gt;
-189    &lt;xsl:choose&gt;
-190      &lt;xsl:when test="string($instance)=''"&gt;
-191        &lt;xsl:value-of select="''" /&gt;
-192      &lt;/xsl:when&gt;
-193      &lt;xsl:when test="string($result/body)!=''
-194             and string($result/errorMessage)=''
-195             and ($comparitor='Success' or count($comparitor)=0)"&gt;
-196               passed:&#160;
-197        &lt;!-- get yyyy-mm-dd from gmt timestamp --&gt;
-198        &lt;xsl:value-of select="substring($result/gmt, 1, 10)" /&gt;&#160;
-199        &lt;!-- get HH:MM from gmt timestamp --&gt;
-200        &lt;xsl:value-of select="substring($result/gmt, 12, 5)" /&gt;
-201      &lt;/xsl:when&gt;
-202      &lt;xsl:otherwise&gt;
-203               error:
-204        &lt;xsl:value-of select="substring($result/errorMessage, 1, 30)" /&gt;
-205      &lt;/xsl:otherwise&gt;
-206    &lt;/xsl:choose&gt;
-207  &lt;/xsl:variable&gt;
-208  &lt;xsl:choose&gt;
-209    &lt;xsl:when test="$exit!=''"&gt;
-210      &lt;td class="{$exit}"&gt;
-211        &lt;a href="{$href}"&gt;&lt;xsl:value-of select="$cellText"/&gt;&lt;/a&gt;
-212        &lt;xsl:if test="$url[matches(., 'markOld')]"&gt;</screen>
-</para>
-</section>
-
-<section id="custom-html-header">
-<title>Custom HTML Header</title>
-
-<para>An example of customizing the HTML header would be to add a call to a custom header stylesheet in the 
-"printBodyTitle" template.  Edit <filename>inca-common.xsl</filename>:</para>
-<para><screen>13  <emphasis role="red">&lt;xsl:include href="custom-header.xsl"/&gt;</emphasis>
-...
-24  &lt;xsl:template name="printBodyTitle"&gt;
-25    &lt;xsl:param name="title"/&gt;
-26    <emphasis role="red">&lt;xsl:call-template name="custom-header"/&gt;</emphasis>
-27    &lt;xsl:variable name="datenow" select="date:new()" /&gt;
-28    &lt;xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')"/&gt;
-29    &lt;table width="100%" border="0"&gt;
-30      &lt;tr align="left"&gt;</screen></para>
-
-<para>Create a <filename>$INCA_DIST/webapps/xsl/custom-header.xsl</filename> like:</para>
-
-<para><screen>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-
-&lt;!-- ================================================ --&gt;
-&lt;!-- Prints out custom header for Inca status pages   --&gt;
-&lt;!-- ================================================ --&gt;
-&lt;xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns="http://www.w3.org/1999/xhtml"&gt;
-
-  &lt;xsl:template name="custom-header"&gt;
-    &lt;table class="header" width="100%"&gt;
-      &lt;tr&gt;
-        &lt;td bgcolor="#003366"&gt;
+          &lt;xsl:template name="custom-header"&gt;
+          &lt;table class="header" width="100%"&gt;
+          &lt;tr&gt;
+          &lt;td bgcolor="#003366"&gt;
           &lt;img class="logo" src="img/header.jpg"/&gt;
-        &lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/table&gt;
-    &lt;table class="menu" width="100%"&gt;
-      ... custom navigation ...
-    &lt;/table&gt;
- &lt;/xsl:template&gt;
+          &lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;/table&gt;
+          &lt;table class="menu" width="100%"&gt;
+          ... custom navigation ...
+          &lt;/table&gt;
+          &lt;/xsl:template&gt;
 
-&lt;/xsl:stylesheet&gt;</screen></para>
+          &lt;/xsl:stylesheet&gt;</screen></para>
 
-<para>The resulting page would look something like: </para>
-<para><graphic fileref="figures/consumer/custom-header.jpg" align="center"></graphic></para>
-</section>
-</section>
-</section>
+        <para>The resulting page would look something like: </para>
+        <para><graphic fileref="figures/consumer/custom-header.jpg" align="center"></graphic></para>
+      </section>
+    </section>
+  </section>
 
-<section id="consumer-alt-location">
-<title>Changing the Installation Location</title>
-<para>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </para>
-      <itemizedList>
-        <listItem>
-          <para>
-            Copy the <filename>incaInstall.sh</filename> script to the machine where the consumer will run.
-          </para>
-          <screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh</screen>
-        </listItem>
-        <listItem>
-          <para>
-            Install consumer on the new machine:
-          </para>
-          <screen>% ./incaInstall.sh $INCA_DIST consumers</screen>
-        </listItem>
-        <listItem>
-          <para>
-            Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
-        to the new machine:
-          </para>
-          <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumerkey.pem $INCA_DIST/etc/; \
-scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumercert.pem $INCA_DIST/etc/;
-scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
-        </listItem>
-        <listItem>
-          <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and specify the full hostname 
-	of the machine where the agent and depot are running:
-            <screen>114 inca.consumer.agent=incas://<emphasis role="red">agent.hostname</emphasis>:6323
-...
-128 inca.consumer.depot=incas://<emphasis role="red">depot.hostname</emphasis>:6324</screen>
-          </para>
-        </listItem>
-        <listItem> <para> Start the consumer component on the new machine: </para>
-          <screen>% cd $INCA_DIST; ./bin/inca start consumer</screen>
-        </listItem>
-      </itemizedList>
-</section>
+  <section id="consumer-alt-location">
+    <title>Changing the Installation Location</title>
+    <para>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </para>
+    <itemizedList>
+      <listItem>
+        <para>
+          Copy the <filename>incaInstall.sh</filename> script to the machine where the consumer will run.
+        </para>
+        <screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh</screen>
+      </listItem>
+      <listItem>
+        <para>
+          Install consumer on the new machine:
+        </para>
+        <screen>% ./incaInstall.sh $INCA_DIST consumers</screen>
+      </listItem>
+      <listItem>
+        <para>
+          Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
+          to the new machine:
+        </para>
+        <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumerkey.pem $INCA_DIST/etc/; \
+          scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumercert.pem $INCA_DIST/etc/;
+          scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
+      </listItem>
+      <listItem>
+        <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and specify the full hostname
+          of the machine where the agent and depot are running:
+          <screen>114 inca.consumer.agent=incas://<emphasis role="red">agent.hostname</emphasis>:6323
+            ...
+            128 inca.consumer.depot=incas://<emphasis role="red">depot.hostname</emphasis>:6324</screen>
+        </para>
+      </listItem>
+      <listItem> <para> Start the consumer component on the new machine: </para>
+        <screen>% cd $INCA_DIST; ./bin/inca start consumer</screen>
+      </listItem>
+    </itemizedList>
+  </section>
 
-<section id="consumer-port">
-<title>Changing the Port</title>
-<para>
-By default, the consumer is started on port 8080.  To change this, edit
-the etc/jetty.xml file and search for 'SocketListener'.  To change the 
-port to say 8085, change the following line:
-</para>
+  <section id="consumer-port">
+    <title>Changing the Port</title>
+    <para>
+      By default, the consumer is started on port 8080.  To change this, edit
+      the etc/jetty.xml file and search for 'SocketListener'.  To change the
+      port to say 8085, change the following line:
+    </para>
 
-<screen>
-  &lt;Set name="Port"&gt;&lt;SystemProperty name="jetty.port" default="8080"/&gt;&lt;/Set&gt;
-</screen>
+    <screen>
+      &lt;Set name="Port"&gt;&lt;SystemProperty name="jetty.port" default="8080"/&gt;&lt;/Set&gt;
+    </screen>
 
-<para>to: </para>
+    <para>to: </para>
 
-<screen>
-  &lt;Set name="Port"&gt;8085&lt;/Set&gt;
-</screen>
+    <screen>
+      &lt;Set name="Port"&gt;8085&lt;/Set&gt;
+    </screen>
 
-</section>
+  </section>
 
-<section id="https-consumer">
-<title>Enabling https</title>
-<para>
-By default, the consumer is configured as an http server.  To
-disable http and enable https, edit the <filename>jetty.xml</filename> 
-file in <filename>$INCA_DIST/etc</filename> and
-<orderedList>
-<listItem><para>
-comment out the section "Add and configure a HTTP listener to port 8080"
-</para></listItem>
-<listItem><para>
-uncomment the section "Add a HTTPS SSL listener on port 8443".
-</para></listItem>
-</orderedList>
-</para><para>Note that the example below is to disable http and enable https.  
-However, http and https can be enabled simultaneously if both sections are left uncommented.
-</para>
-<screen>
-  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
-  &lt;!-- Add and configure a HTTP listener to port 8080                  --&gt;
-  &lt;!-- The default port can be changed using: java -Djetty.port=80     --&gt;
-  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
-  &lt;!-- 
-  &lt;Call name="addListener"&gt;
-    &lt;Arg&gt;
+  <section id="https-consumer">
+    <title>Enabling https</title>
+    <para>
+      By default, the consumer is configured as an http server.  To
+      disable http and enable https, edit the <filename>jetty.xml</filename>
+      file in <filename>$INCA_DIST/etc</filename> and
+      <orderedList>
+        <listItem><para>
+          comment out the section "Add and configure a HTTP listener to port 8080"
+        </para></listItem>
+        <listItem><para>
+          uncomment the section "Add a HTTPS SSL listener on port 8443".
+        </para></listItem>
+      </orderedList>
+    </para><para>Note that the example below is to disable http and enable https.
+    However, http and https can be enabled simultaneously if both sections are left uncommented.
+  </para>
+    <screen>
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;!-- Add and configure a HTTP listener to port 8080                  --&gt;
+      &lt;!-- The default port can be changed using: java -Djetty.port=80     --&gt;
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;!--
+      &lt;Call name="addListener"&gt;
+      &lt;Arg&gt;
       &lt;New class="org.mortbay.http.SocketListener"&gt;
-        &lt;Set name="Port"&gt;&lt;SystemProperty name="jetty.port"
-default="8080"/&gt;&lt;/Set&gt;
-  &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
-        &lt;Set name="MinThreads"&gt;20&lt;/Set&gt;
-        &lt;Set name="MaxThreads"&gt;200&lt;/Set&gt;
-        &lt;Set name="lowResources"&gt;50&lt;/Set&gt;
-        &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
-        &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
-        &lt;Set name="acceptQueueSize"&gt;0&lt;/Set&gt;
-        &lt;Set name="ConfidentialPort"&gt;8443&lt;/Set&gt;
-        &lt;Set name="IntegralPort"&gt;8443&lt;/Set&gt;
+      &lt;Set name="Port"&gt;&lt;SystemProperty name="jetty.port"
+      default="8080"/&gt;&lt;/Set&gt;
+      &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
+      &lt;Set name="MinThreads"&gt;20&lt;/Set&gt;
+      &lt;Set name="MaxThreads"&gt;200&lt;/Set&gt;
+      &lt;Set name="lowResources"&gt;50&lt;/Set&gt;
+      &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
+      &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
+      &lt;Set name="acceptQueueSize"&gt;0&lt;/Set&gt;
+      &lt;Set name="ConfidentialPort"&gt;8443&lt;/Set&gt;
+      &lt;Set name="IntegralPort"&gt;8443&lt;/Set&gt;
       &lt;/New&gt;
-    &lt;/Arg&gt;
-  &lt;/Call&gt;
-  --&gt;
+      &lt;/Arg&gt;
+      &lt;/Call&gt;
+      --&gt;
 
 
-  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
-  &lt;!-- Add a HTTPS SSL listener on port 8443                           --&gt;
-  &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
-  &lt;Call name="addListener"&gt;
-    &lt;Arg&gt;
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;!-- Add a HTTPS SSL listener on port 8443                           --&gt;
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;Call name="addListener"&gt;
+      &lt;Arg&gt;
       &lt;New class="org.mortbay.http.SslListener"&gt;
-        &lt;Set name="Port"&gt;8443&lt;/Set&gt;
-        &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
-        &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
-        &lt;Set name="lowResources"&gt;30&lt;/Set&gt;
-        &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
-        &lt;Set name="Keystore"&gt;etc/consumerKeystore&lt;/Set&gt;
-        &lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
-        &lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
-        &lt;Set name="HttpHandler"&gt;
-          &lt;New class="org.mortbay.http.handler.MsieSslHandler"&gt;
+      &lt;Set name="Port"&gt;8443&lt;/Set&gt;
+      &lt;Set name="PoolName"&gt;P1&lt;/Set&gt;
+      &lt;Set name="MaxIdleTimeMs"&gt;30000&lt;/Set&gt;
+      &lt;Set name="lowResources"&gt;30&lt;/Set&gt;
+      &lt;Set name="LowResourcePersistTimeMs"&gt;2000&lt;/Set&gt;
+      &lt;Set name="Keystore"&gt;etc/consumerKeystore&lt;/Set&gt;
+      &lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+      &lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+      &lt;Set name="HttpHandler"&gt;
+      &lt;New class="org.mortbay.http.handler.MsieSslHandler"&gt;
       &lt;Set name="UserAgentSubString"&gt;MSIE 5&lt;/Set&gt;
-    &lt;/New&gt;
-        &lt;/Set&gt;
       &lt;/New&gt;
-    &lt;/Arg&gt;
-  &lt;/Call&gt;
-</screen>
+      &lt;/Set&gt;
+      &lt;/New&gt;
+      &lt;/Arg&gt;
+      &lt;/Call&gt;
+    </screen>
 
-<para>Then restart the consumer. </para> 
+    <para>Then restart the consumer. </para>
 
-<screen>
-% ./bin/inca stop consumer; ./bin/inca start consumer
-</screen>
+    <screen>
+      % ./bin/inca stop consumer; ./bin/inca start consumer
+    </screen>
 
-<para>The https server will be on port 8443.  </para>
+    <para>The https server will be on port 8443.  </para>
 
-<screen>https://<emphasis role="red">hostname</emphasis>:8443</screen>
+    <screen>https://<emphasis role="red">hostname</emphasis>:8443</screen>
 
-<note><para>By default, the https server will use the credential stored in
-<filename>$INCA_DIST/etc/consumerKeystore</filename>.  Its DN is 
-"cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd 
-like to generate a certificate with a different DN, run the keytool command as
-follows:
-</para>
-</note>
+    <note><para>By default, the https server will use the credential stored in
+      <filename>$INCA_DIST/etc/consumerKeystore</filename>.  Its DN is
+      "cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd
+      like to generate a certificate with a different DN, run the keytool command as
+      follows:
+    </para>
+    </note>
 
-<screen>% rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore \
-  -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
-</screen>
+    <screen>% rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore \
+      -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
+    </screen>
 
-<para>It will prompt you for a keystore password and a key password.  You can
-either make them different or use the same one.  If you use the password
-"consumer", no further changes are needed.  Otherwise, you will have to modify
-&lt;Set name="KeyPassword"&gt; and &lt;Set name="Password"&gt; in the 
-"Add a HTTPS SSL listener on port 8443" section in <filename>jetty.xml</filename>.
-You can either put the password in there in plain text or obfuscate it using 
-Jetty's password utility as follows:
-</para>
+    <para>It will prompt you for a keystore password and a key password.  You can
+      either make them different or use the same one.  If you use the password
+      "consumer", no further changes are needed.  Otherwise, you will have to modify
+      &lt;Set name="KeyPassword"&gt; and &lt;Set name="Password"&gt; in the
+      "Add a HTTPS SSL listener on port 8443" section in <filename>jetty.xml</filename>.
+      You can either put the password in there in plain text or obfuscate it using
+      Jetty's password utility as follows:
+    </para>
 
-<para id="jetty-password">
-<screen>% java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar \
-  org.mortbay.util.Password <emphasis role="red">your_password</emphasis>
-</screen>
-</para>
+    <para id="jetty-password">
+      <screen>% java -classpath lib/org.mortbay.jetty-5.1.10.jar:lib/commons-logging-1.0.4.jar \
+        org.mortbay.util.Password <emphasis role="red">your_password</emphasis>
+      </screen>
+    </para>
 
-<para>It will output two lines such as follows:</para>
+    <para>It will output two lines such as follows:</para>
 
-<screen>
-OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q
-MD5:1005b14bd29466723ace30d26f602f5b
-</screen>
+    <screen>
+      OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q
+      MD5:1005b14bd29466723ace30d26f602f5b
+    </screen>
 
-<para>Open <filename>etc/jetty.xml</filename> and replace the string beginning with OBF in both &lt;Set
-name="KeyPassword"&gt; and &lt;Set name="Password"&gt; with the string 
-provided by Jetty's password utility: 
-</para>
-<screen>
-&lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
-&lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
-</screen>
+    <para>Open <filename>etc/jetty.xml</filename> and replace the string beginning with OBF in both &lt;Set
+      name="KeyPassword"&gt; and &lt;Set name="Password"&gt; with the string
+      provided by Jetty's password utility:
+    </para>
+    <screen>
+      &lt;Set name="KeyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+      &lt;Set name="Password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+    </screen>
 
-</section>
+  </section>
 
-<section id="password-consumer">
-<title>Adding Password Protection</title>
-<para>
-By default, a password is not required for a user to access the status pages
-served by the consumer.  To require a password, edit <filename>$INCA_DIST/etc/webdefault.xml</filename> 
-and uncomment the section "Require password authentication
-to access Inca status pages".  Note that there are two sections with that
-title -- one for http and the other for https.  Uncomment the appropriate
-section such as:
-</para>
+  <section id="password-consumer">
+    <title>Adding Password Protection</title>
+    <para>
+      By default, a password is not required for a user to access the status pages
+      served by the consumer.  To require a password, edit <filename>$INCA_DIST/etc/webdefault.xml</filename>
+      and uncomment the section "Require password authentication
+      to access Inca status pages".  Note that there are two sections with that
+      title -- one for http and the other for https.  Uncomment the appropriate
+      section such as:
+    </para>
 
-<screen>
-  &lt;!-- ==================================================================== --&gt;
-  &lt;!-- Require password authentication to access Inca status pages          --&gt;
-  &lt;!--                        (http version)                                --&gt;
-  &lt;!-- ==================================================================== --&gt;
-  &lt;security-constraint&gt;
-    &lt;web-resource-collection&gt;
+    <screen>
+      &lt;!-- ==================================================================== --&gt;
+      &lt;!-- Require password authentication to access Inca status pages          --&gt;
+      &lt;!--                        (http version)                                --&gt;
+      &lt;!-- ==================================================================== --&gt;
+      &lt;security-constraint&gt;
+      &lt;web-resource-collection&gt;
       &lt;web-resource-name&gt;Any User&lt;/web-resource-name&gt;
-      &lt;url-pattern&gt;/*&lt;/url-pattern&gt; 
-    &lt;/web-resource-collection&gt;
-    &lt;auth-constraint&gt;
-      &lt;role-name&gt;*&lt;/role-name&gt; 
-    &lt;/auth-constraint&gt;
-  &lt;/security-constraint&gt;
- 
-  &lt;login-config&gt;
-    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
-    &lt;realm-name&gt;Inca Status Pages&lt;/realm-name&gt;
-  &lt;/login-config&gt;
-</screen>
+      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+      &lt;/web-resource-collection&gt;
+      &lt;auth-constraint&gt;
+      &lt;role-name&gt;*&lt;/role-name&gt;
+      &lt;/auth-constraint&gt;
+      &lt;/security-constraint&gt;
 
-<para>By default, the username and password for the pages will be "inca".  To
-change this, edit <filename>$INCA_DIST/etc/realm.properties</filename> and customize the 
-username and password for your installation.  If you do not want to store the
-password in plain text, use Jetty's password utility described in <xref
-linkend="https-consumer">.</para>
-  
-<para>Then restart the consumer. </para> 
+      &lt;login-config&gt;
+      &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+      &lt;realm-name&gt;Inca Status Pages&lt;/realm-name&gt;
+      &lt;/login-config&gt;
+    </screen>
 
-<screen>% ./bin/inca stop consumer; ./bin/inca start consumer</screen>
+    <para>By default, the username and password for the pages will be "inca".  To
+      change this, edit <filename>$INCA_DIST/etc/realm.properties</filename> and customize the
+      username and password for your installation.  If you do not want to store the
+      password in plain text, use Jetty's password utility described in <xref
+        linkend="https-consumer">.</para>
 
-<para>The next time you view the status pages, you should see a login like:</para>
+    <para>Then restart the consumer. </para>
 
-<graphic fileref="figures/ug-consumer-password.png" align="center"></graphic>
+    <screen>% ./bin/inca stop consumer; ./bin/inca start consumer</screen>
 
-</section>
+    <para>The next time you view the status pages, you should see a login like:</para>
+
+    <graphic fileref="figures/ug-consumer-password.png" align="center"></graphic>
+
+  </section>
 
 </section>
