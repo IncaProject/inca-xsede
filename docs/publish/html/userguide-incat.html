@@ -834,6 +834,396 @@ SRC="figures/incat/incat-annotated-subpackage-version.jpg"
 ALIGN="CENTER"></P
 >
   </P
+><P
+>  By default, emails sent by Inca include a short description of the series,
+  resource, and comparison.  You can customize the content and subject of the
+  emails by setting the depot.notification property in your 
+  <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+>
+  file before starting the depot.  The value of this property can mix literal
+  text you want included in the email with macro-like references to information
+  about the series and reporter execution.  For example, the property setting
+  that generates the default email format is:
+  <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.depot.notification=\
+SUBJECT=Inca Notification: @nickname@ on @hostname@ @result@ED\n \
+The following Inca test has @result@ED:\n\n \
+RAN AT:  @collected@\n\n \
+RAN ON:  @hostname@\n\n \
+TEST:  @reporterPath@\n\n \
+INPUT PARAMETERS:  @args@\n\n \
+LOGGED COMMANDS: @log@\n\n \
+ERROR MESSAGE: @errorMessage@\n\n \
+STANDARD ERROR: @stderr@\n\n \
+\n\n \ 
+details at http://localhost:8080/inca/xslt.jsp?xsl=instance.xsl=@instanceId@=@configId@\n\n
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  As shown here, multi-line emails are specified by including newline markers
+  ("\n") in the property value.  Inca uses the line in the value that contains
+  "SUBJECT=" as the email subject; remaining lines are the email body.  Any
+  lines that contain an undefined macro value are removed, so, in the above,
+  the final line would not appear if the reporter execution didn't produce an
+  error message.
+  </P
+><P
+>  These are the macro names that Inca defines for your use in constructing
+  notification emails:
+  <DIV
+CLASS="TABLE"
+><A
+NAME="AEN442"
+></A
+><P
+><B
+>Table 2. Email Macro Names</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Name</P
+></TH
+><TH
+><P
+>Meaning</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>args</P
+></TD
+><TD
+><P
+>the arguments passed to the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>body</P
+></TD
+><TD
+><P
+>the report body</P
+></TD
+></TR
+><TR
+><TD
+><P
+>collected</P
+></TD
+><TD
+><P
+>the time the reporter ran</P
+></TD
+></TR
+><TR
+><TD
+><P
+>commited</P
+></TD
+><TD
+><P
+>the time the report was entered in the Depot</P
+></TD
+></TR
+><TR
+><TD
+><P
+>comparison</P
+></TD
+><TD
+><P
+>the comparison specified for this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>comparisonResult</P
+></TD
+><TD
+><P
+>the output of the comparison for this report, typically "SUCCESS" or "FAIL" followed by a list of identifiers</P
+></TD
+></TR
+><TR
+><TD
+><P
+>completed</P
+></TD
+><TD
+><P
+>whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>configId</P
+></TD
+><TD
+><P
+>the Inca database id of the series configuration</P
+></TD
+></TR
+><TR
+><TD
+><P
+>context</P
+></TD
+><TD
+><P
+>the complete command, including arguments, used to execute the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>cpuLimit</P
+></TD
+><TD
+><P
+>the maximum CPU seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>cpuUsage</P
+></TD
+><TD
+><P
+>the actual CPU seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>errorMessage</P
+></TD
+><TD
+><P
+>any failure message recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>hostname</P
+></TD
+><TD
+><P
+>the name of the host where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>instanceId</P
+></TD
+><TD
+><P
+>the Inca database id of this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>log</P
+></TD
+><TD
+><P
+>log messages recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>memoryLimit</P
+></TD
+><TD
+><P
+>the maximum memory MB allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>memoryUsage</P
+></TD
+><TD
+><P
+>the actual memory MB used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>nickname</P
+></TD
+><TD
+><P
+>the nickname of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>reportId</P
+></TD
+><TD
+><P
+>the Inca database id of the report</P
+></TD
+></TR
+><TR
+><TD
+><P
+>reporter</P
+></TD
+><TD
+><P
+>the name of the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>reporterPath</P
+></TD
+><TD
+><P
+>the path to the reporter on the host where it executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>resource</P
+></TD
+><TD
+><P
+>the name of the Inca resource where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>result</P
+></TD
+><TD
+><P
+>"PASS" or "FAIL", depending on whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>seriesId</P
+></TD
+><TD
+><P
+>the Inca database id of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>stderr</P
+></TD
+><TD
+><P
+>any text written by the reporter to stderr</P
+></TD
+></TR
+><TR
+><TD
+><P
+>target</P
+></TD
+><TD
+><P
+>the email to which the notification is sent</P
+></TD
+></TR
+><TR
+><TD
+><P
+>uri</P
+></TD
+><TD
+><P
+>the reporter URI</P
+></TD
+></TR
+><TR
+><TD
+><P
+>version</P
+></TD
+><TD
+><P
+>the reporter version</P
+></TD
+></TR
+><TR
+><TD
+><P
+>wallClockLimit</P
+></TD
+><TD
+><P
+>the maximum wall clock seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>wallClockUsage</P
+></TD
+><TD
+><P
+>the actual wall clock seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>workingDir</P
+></TD
+><TD
+><P
+>the working directory for the reporter manager on the host where the reporter executed</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+>
+  </P
 ></DIV
 ></DIV
 ><DIV
