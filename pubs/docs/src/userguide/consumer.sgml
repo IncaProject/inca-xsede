@@ -10,10 +10,7 @@
     reports and graphs or customized status information.  The Inca depot has Perl
     and Java client APIs for its pre-defined queries (see <xref linkend="userguide-apis">). </para>
 
-  <section id="default-consumer">
-    <title>Default Data Consumer</title>
-
-    <para>The default data consumer is a <ulink
+  <para>The default data consumer is a <ulink
         url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
       file</ulink> that contains a collection of <ulink
         url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
@@ -29,312 +26,31 @@
       on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
       as described in <xref linkend="consumer-port">.</para>
 
-    <para>
-      There are four main JSP contained in the
-      <filename>inca.war</filename>.
-      The JSP generally return XML from depot and agent functions and
-      apply XSL stylesheets to display HTML.  If the "xsl" parameter
-      for the JSP is removed, the JSP prints the XML returned.
-    </para>
-
-    <table>
-      <title>Default Consumer JSP</title>
-      <tgroup cols="4">
-        <thead>
-          <row valign="top">
-            <entry><para>Name</para></entry>
-            <entry><para>Purpose</para></entry>
-            <entry><para>Server Functions Called</para></entry>
-            <entry><para>Parameters</para></entry>
-          </row>
-        </thead>
-        <tbody>
-
-          <row valign="top">
-            <entry><para><filename>index.jsp</filename>
-                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Lists an installation's configured suites and resource
-                names in an HTML form whose action is to display results
-                for the selected suite and resource.  The consumer
-                initially redirects to this page.
-              </para></entry>
-            <entry><para>Depot's
-                <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
-                function for current suite configuration
-                and agent's <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached resource configuration information.
-              </para></entry>
-            <entry><itemizedList><listItem><para>xsl: stylesheet to format returned XML</para></listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp</ulink></para></entry>
-          </row>
-
-          <row valign="top">
-            <entry><para><filename>config.jsp</filename>
-                <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Prints description of deployed suites and series.
-                Linked at the bottom of <filename>index.jsp</filename>
-              </para></entry>
-            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
-                function for current catalog configuration and
-                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached suite configuration infomation.
-              </para></entry>
-            <entry><itemizedList>
-                <listItem><para>xsl: stylesheet to format returned XML</para>
-                </listItem></itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/config.jsp?xsl=config.xsl">http://localhost:8080/inca/config.jsp?xsl=config.xsl</ulink></para></entry>
-          </row>
-
-          <row valign="top">
-            <entry><para><filename>xslt.jsp</filename>
-                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Displays current results for a set of suites or reporter details.
-                This page is the action of the <filename>index.jsp</filename> form to display a single suite's results.
-              </para></entry>
-            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
-                function for current catalog configuration and
-                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached suite configuration infomation.
-              </para></entry>
-            <entry><itemizedList>
-                <listItem>
-                  <para>suiteName: comma separated list of test suite
-                    names to get data for</para>
-                </listItem>
-                <listItem>
-                  <para>resourceID: comma separated list of resource group
-                    names to get data for</para>
-                </listItem>
-                <listItem>
-                  <para>instanceID: test instance ID number to get data for</para>
-                </listItem>
-                <listItem>
-                  <para>configID: test configuration ID number to get data for</para>
-                </listItem>
-                <listItem>
-                  <para>xmlFile: name of XML file whose contents will be appended to
-                  cached depot results</para>
-                </listItem>
-                <listItem>
-                  <para>xsl: name of stylesheet to format returned XML</para>
-                </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl</ulink></para></entry>
-          </row>
-
-          <row valign="top">
-            <entry><para><filename>graph.jsp</filename>
-                <graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Historical graphs of pass/fail status and error frequency.
-              </para></entry>
-            <entry><para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
-                function to query for historical infomation.
-              </para></entry>
-            <entry><itemizedList>
-                <listItem>
-                  <para>configID: comma separated list of configuration IDs to
-                  get data for</para>
-                </listItem>
-                <listItem>
-                  <para>seriesLabel: comma separated list of legend labels</para>
-                </listItem>
-                <listItem>
-                  <para>title: title of pass/fail status graph</para>
-                </listItem>
-                <listItem>
-                  <para>alias: boolean for image anti-aliasing</para>
-                </listItem>
-                <listItem>
-                  <para>legend: boolean for showing legend</para>
-                </listItem>
-                <listItem>
-                  <para>legendAnchor: position of legend</para>
-                </listItem>
-                <listItem>
-                  <para>height: graph height in pixels</para>
-                </listItem>
-                <listItem>
-                  <para>width: graph width in pixels</para>
-                </listItem>
-                <listItem>
-                  <para>mime: boolean for image MIME</para>
-                </listItem>
-                <listItem>
-                  <para>xaxislabel: label for x-axis of pass/fail graph</para>
-                </listItem>
-                <listItem>
-                  <para>xmin: date to start querying data for</para>
-                </listItem>
-                <listItem>
-                  <para>xmax: date to stop querying data for</para>
-                </listItem>
-                <listItem>
-                  <para>start: boolean for getting only past two weeks of data</para>
-                </listItem>
-                <listItem>
-                  <para>yaxislabel: label for y-axis of pass/fail graph</para>
-                </listItem>
-                <listItem>
-                  <para>ymin: y-axis min for pass/fail graph</para>
-                </listItem>
-                <listItem>
-                  <para>ymax: y-axis max for pass/fail graph</para>
-                </listItem>
-                <listItem>
-                  <para>ytick: tick increment for y-axis pass/fail graph</para>
-                </listItem>
-                <listItem>
-                  <para>bgcolor: background color of graph images</para>
-                </listItem>
-                <listItem>
-                  <para>map: boolean for showing graph links and mouseovers</para>
-                </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/graph.jsp?configID=1">http://localhost:8080/inca/graph.jsp?configID=1</ulink></para></entry>
-          </row>
-
-        </tbody>
-      </tgroup>
-    </table>
-
-         <para>
-        The default JSP scripts retrieve XML data from the
-        agent and depot and then use the XSL stylesheets in
-        <filename>$INCA_DIST/webapps/xsl</filename> are used
-           to transform the XML into HTML.
-           The following stylesheets are installed
-        with the default consumer:</para>
-
-      <table>
-        <title>Default Consumer XSL</title>
-        <tgroup cols="3">
-          <thead>
-            <row valign="top">
-              <entry><para>Name</para></entry>
-              <entry><para>Applied To</para></entry>
-              <entry><para>Purpose</para></entry>
-            </row>
-          </thead>
-          <tbody>
-
-            <row valign="top">
-              <entry><para><filename>index.xsl</filename>
-                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>index.jsp</filename></para></entry>
-              <entry><para>
-                  Lists all configured suite and resource names in an
-                  HTML form whose action is to display results for the
-                  selected suite and resource.
-                </para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>config.xsl</filename>
-                  <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
-                </para></entry>
-               <entry><para><filename>config.jsp</filename></para></entry>
-              <entry><para>Prints description of deployed suites and series.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>default.xsl</filename>
-                  <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints table of suite(s) results.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>swStack.xsl</filename>
-                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints table of suite(s) results.  Uses XML file
-                  to format table rows by software categories and packages.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>summary.xsl</filename>
-                  <graphic fileref="figures/consumer/summary_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints summary results table with a list of
-                  resources in the left column and
-                  a list of the suite tests each resource is failing
-                  in the right column.  Failing tests are listed by name
-                  and by overall percentage passing in suite.
-                  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups.
-                </para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>google.xsl</filename>
-                  <graphic fileref="figures/consumer/google_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints google map summary of current data.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>graph.xsl</filename>
-                  <graphic fileref="figures/consumer/graph_form_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints form to select series to graph.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>instance.xsl</filename>
-                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>xslt.jsp</filename></para></entry>
-              <entry><para>Prints HTML table with report details.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>header.xsl</filename>
-                  <graphic fileref="figures/consumer/header_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>(included in most other xsl files)</filename></para></entry>
-              <entry><para>Prints HTML page header.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>footer.xsl</filename>
-                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para>(included in most other xsl files)</para></entry>
-              <entry><para>Prints HTML page footer with the Inca logo.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>legend.xsl</filename>
-                  <graphic fileref="figures/consumer/legend_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para>(included in <filename>default.xsl</filename>
-                  and <filename>swStack.xsl</filename>)</para></entry>
-              <entry><para>Prints a key to cell colors and text.</para></entry>
-            </row>
-
-            <row valign="top">
-              <entry><para><filename>inca-common.xsl</filename></para></entry>
-              <entry><para>(included in most other stylesheets)</para></entry>
-              <entry><para>Common templates for use in Inca stylesheets.</para></entry>
-            </row>
-
-          </tbody>
-        </tgroup>
-      </table>
-
     <section id="current-data">
       <title>Current Data Pages</title>
 
+      <para>The default page header navigation contains
+        links to tabular and map view result summaries for
+        the sample suite.  To add other current
+      pages under this heading (e.g. result summary tables for
+        other suites, customize the
+      <filename>header.xsl</filename> file as described in
+      <xref linkend="custom-html-header">.</para>
+
+    <section id="table-summary">
+      <title>Tabular Suite Summary View</title>
+      <para>A summary table of suite results is created by
+      passing the suiteName (e.g. sampleSuite) and resourceID
+        (e.g. defaultGrid) parameters to
+      <filename>xslt.jsp</filename> and adding
+      <filename>default.xsl</filename> as the xsl parameter.
+      More information about the consumer's JSP and XSL files is
+      provided in <xref linkend="file-desc">.  For example,
+      <ulink url="http://localhost:8080/inca/xslt.jsp?xsl=default.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?xsl=default.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink>
+      produces the following image:
+      <graphic fileref="figures/consumer/sum_page2.jpg" align="center"></graphic>
+      </para>
+    </section>
 
     <section id="google">
       <title>Map View using Google Map API</title>
@@ -674,7 +390,7 @@
       <para>The section for historical data in the
         default page header is a form to select series from the
         sampleSuite suite.  To link other historical
-      pages under this heading (e.g. a form to select series from
+      pages under this heading (e.g. forms to select series from
         other suites, customize the
       <filename>header.xsl</filename> file as described in
       <xref linkend="custom-html-header">.</para>
@@ -733,7 +449,312 @@
 
   </section>
 
-  </section>
+<section id="file-desc">
+    <title>Description of Data Consumer Files</title>
+
+    <para>
+      There are four main JSP contained in the
+      <filename>inca.war</filename>.
+      The JSP generally return XML from depot and agent functions and
+      apply XSL stylesheets to display HTML.  If the "xsl" parameter
+      for the JSP is removed, the JSP prints the XML returned.
+    </para>
+
+    <table>
+      <title>Default Consumer JSP</title>
+      <tgroup cols="4">
+        <thead>
+          <row valign="top">
+            <entry><para>Name</para></entry>
+            <entry><para>Purpose</para></entry>
+            <entry><para>Server Functions Called</para></entry>
+            <entry><para>Parameters</para></entry>
+          </row>
+        </thead>
+        <tbody>
+
+          <row valign="top">
+            <entry><para><filename>index.jsp</filename>
+                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Lists an installation's configured suites and resource
+                names in an HTML form whose action is to display results
+                for the selected suite and resource.  The consumer
+                initially redirects to this page.
+              </para></entry>
+            <entry><para>Depot's
+                <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
+                function for current suite configuration
+                and agent's <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached resource configuration information.
+              </para></entry>
+            <entry><itemizedList><listItem><para>xsl: stylesheet to format returned XML</para></listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/index.jsp">http://localhost:8080/inca/index.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>config.jsp</filename>
+                <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Prints description of deployed suites and series.
+                Linked at the bottom of <filename>index.jsp</filename>
+              </para></entry>
+            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
+                function for current catalog configuration and
+                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached suite configuration infomation.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem><para>xsl: stylesheet to format returned XML</para>
+                </listItem></itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/config.jsp?xsl=config.xsl">http://localhost:8080/inca/config.jsp?xsl=config.xsl</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>xslt.jsp</filename>
+                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays current results for a set of suites or reporter details.
+                This page is the action of the <filename>index.jsp</filename> form to display a single suite's results.
+              </para></entry>
+            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
+                function for current catalog configuration and
+                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
+                function for cached suite configuration infomation.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>suiteName: comma separated list of test suite
+                    names to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>resourceID: comma separated list of resource group
+                    names to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>instanceID: test instance ID number to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>configID: test configuration ID number to get data for</para>
+                </listItem>
+                <listItem>
+                  <para>xmlFile: name of XML file whose contents will be appended to
+                  cached depot results</para>
+                </listItem>
+                <listItem>
+                  <para>xsl: name of stylesheet to format returned XML</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl">http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&amp;resourceID=defaultGrid&amp;xsl=default.xsl</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>graph.jsp</filename>
+                <graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Historical graphs of pass/fail status and error frequency.
+              </para></entry>
+            <entry><para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
+                function to query for historical infomation.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>configID: comma separated list of configuration IDs to
+                  get data for</para>
+                </listItem>
+                <listItem>
+                  <para>seriesLabel: comma separated list of legend labels</para>
+                </listItem>
+                <listItem>
+                  <para>title: title of pass/fail status graph</para>
+                </listItem>
+                <listItem>
+                  <para>alias: boolean for image anti-aliasing</para>
+                </listItem>
+                <listItem>
+                  <para>legend: boolean for showing legend</para>
+                </listItem>
+                <listItem>
+                  <para>legendAnchor: position of legend</para>
+                </listItem>
+                <listItem>
+                  <para>height: graph height in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>width: graph width in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>mime: boolean for image MIME</para>
+                </listItem>
+                <listItem>
+                  <para>xaxislabel: label for x-axis of pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>xmin: date to start querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>xmax: date to stop querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>start: boolean for getting only past two weeks of data</para>
+                </listItem>
+                <listItem>
+                  <para>yaxislabel: label for y-axis of pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ymin: y-axi4s min for pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ymax: y-axis max for pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>ytick: tick increment for y-axis pass/fail graph</para>
+                </listItem>
+                <listItem>
+                  <para>bgcolor: background color of graph images</para>
+                </listItem>
+                <listItem>
+                  <para>map: boolean for showing graph links and mouseovers</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/graph.jsp?configID=1">http://localhost:8080/inca/graph.jsp?configID=1</ulink></para></entry>
+          </row>
+
+        </tbody>
+      </tgroup>
+    </table>
+
+         <para>
+        The default JSP scripts retrieve XML data from the
+        agent and depot and then use the XSL stylesheets in
+        <filename>$INCA_DIST/webapps/xsl</filename> are used
+           to transform the XML into HTML.
+           The following stylesheets are installed
+        with the default consumer:</para>
+
+      <table>
+        <title>Default Consumer XSL</title>
+        <tgroup cols="3">
+          <thead>
+            <row valign="top">
+              <entry><para>Name</para></entry>
+              <entry><para>Applied To</para></entry>
+              <entry><para>Purpose</para></entry>
+            </row>
+          </thead>
+          <tbody>
+
+            <row valign="top">
+              <entry><para><filename>index.xsl</filename>
+                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>index.jsp</filename></para></entry>
+              <entry><para>
+                  Lists all configured suite and resource names in an
+                  HTML form whose action is to display results for the
+                  selected suite and resource.
+                </para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>config.xsl</filename>
+                  <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+                </para></entry>
+               <entry><para><filename>config.jsp</filename></para></entry>
+              <entry><para>Prints description of deployed suites and series.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>default.xsl</filename>
+                  <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints table of suite(s) results.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>swStack.xsl</filename>
+                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints table of suite(s) results.  Uses XML file
+                  to format table rows by software categories and packages.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>summary.xsl</filename>
+                  <graphic fileref="figures/consumer/summary_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints summary results table with a list of
+                  resources in the left column and
+                  a list of the suite tests each resource is failing
+                  in the right column.  Failing tests are listed by name
+                  and by overall percentage passing in suite.
+                  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups.
+                </para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>google.xsl</filename>
+                  <graphic fileref="figures/consumer/google_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints google map summary of current data.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>graph.xsl</filename>
+                  <graphic fileref="figures/consumer/graph_form_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints form to select series to graph.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>instance.xsl</filename>
+                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>xslt.jsp</filename></para></entry>
+              <entry><para>Prints HTML table with report details.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>header.xsl</filename>
+                  <graphic fileref="figures/consumer/header_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>(included in most other xsl files)</filename></para></entry>
+              <entry><para>Prints HTML page header.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>footer.xsl</filename>
+                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para>(included in most other xsl files)</para></entry>
+              <entry><para>Prints HTML page footer with the Inca logo.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>legend.xsl</filename>
+                  <graphic fileref="figures/consumer/legend_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para>(included in <filename>default.xsl</filename>
+                  and <filename>swStack.xsl</filename>)</para></entry>
+              <entry><para>Prints a key to cell colors and text.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>inca-common.xsl</filename></para></entry>
+              <entry><para>(included in most other stylesheets)</para></entry>
+              <entry><para>Common templates for use in Inca stylesheets.</para></entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </table>
+     </section>
 
   <section id="custom-display">
     <title>Changing the Look</title>
@@ -759,7 +780,9 @@
 
       <para>
         To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
-        in <filename>$INCA_DIST/webapps/xsl</filename> and pass it to the JSP as the "xsl" parameter.  </para>
+        in <filename>$INCA_DIST/webapps/xsl</filename> and pass it to the JSP as the "xsl" parameter.
+      The default JSP and XSL files are described in
+      <xref linkend="file-desc">.</para>
       <para>For general information about editing stylesheets,
         visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
 
@@ -807,7 +830,32 @@
       <section id="custom-html-header">
         <title>Custom Page Header</title>
 
-        <para>An example of customizing the HTML header would be to add a call to a custom header stylesheet in the
+        <para>The default page header is generated by the inclusion of the
+          <filename>header.xsl</filename> file in other xsl files.  The header
+          is a navigation bar with drop down links to a set of default status
+          pages:
+          <graphic fileref="figures/consumer/googleMapMenu.png" align="center"></graphic>
+        </para>
+        <para>The header's navigation bar is an HTML unordered list that is
+        formatted with the <filename>nav.css</filename> stylesheet.  To add
+        or remove links in the navigation bar, open <filename>$INCA_DIST/webapps/xsl/header.xsl</filename>
+          and change the appropriate link.  For example, to show a table of suite
+          results for a new suite called "newSuite" on a new resource called "newResource":
+        <screen>57  &lt;li&gt;&lt;h2&gt;Current Data&lt;/h2&gt;
+58    &lt;ul&gt;
+59      &lt;li&gt;
+60        &lt;a href="'xslt.jsp?xsl=default.xsl&amp;suiteName=newSuite&amp;resourceID=newResource'"&gt;
+61           table of newSuite results&lt;/a&gt;
+62      &lt;/li&gt;</screen>
+        </para>
+        <para>Any other link can be added or removed as a list element.  The
+          stylesheet supports additional levels of nested list links.  Note that
+          the top level list elements are displayed from bottom to top (i.e. "Current Data"
+          is listed last in <filename>header.xsl</filename> but it is displayed
+          further left than "Historical Data" and "Info" in the navigation bar).
+        </para>
+
+        <para>Another example of customizing the HTML header would be to add a call to a custom header stylesheet in the
           "printBodyTitle" template.  Edit <filename>inca-common.xsl</filename>:</para>
         <para><screen>13  <emphasis role="red">&lt;xsl:include href="custom-header.xsl"/&gt;</emphasis>
           ...
