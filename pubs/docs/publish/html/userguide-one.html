@@ -937,9 +937,21 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->    The output will look similar to below and when it is completed, you should
-    see a certificate/key created for each of the four Inca components and
-    stored in $INCA_DIST/etc: 
+>    <STRONG
+><FONT
+COLOR="RED"
+>NOTE:</FONT
+></STRONG
+> the default life of 2.2 
+    certificates is 5 years (1 year in earlier releases).
+    To replace expired certificates, execute "bin/inca createauth" again to 
+    create new certificates and "bin/inca agent -u &#60;resource group&#62; 
+    -logfile var/upgrade.log" to update the certificates on the reporter managers.
+    </P
+><P
+>    Output from "bin/inca createauth" looks similar to the text below.  When 
+    completed, you should see a certificate/key created for each of the 
+    four Inca components and stored in $INCA_DIST/etc: 
     </P
 ><P
 >    <TABLE
@@ -1714,7 +1726,11 @@ ALIGN="CENTER"></P
 ></DIV
 ><P
 >  In the Group Name text box, enter the name "localResource" as a nickname for the machine the Reporter Manager client runs on. 
-  Enter "localhost" in the Members text box and select "local" as the access method.
+  Enter "localhost" in the Members text box and select "local" as the access method (for a description 
+  of access methods see <A
+HREF="#ACCESS-METHODS"
+>Section 5.5</A
+>).
   Press OK to complete entry of this resource group.  Incat will close the
   resource group edit dialog and will display localResource in the Resource Groups
   section of the Resource Configuration panel.
@@ -1811,7 +1827,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN297"
+NAME="AEN300"
 ></A
 ><P
 ><B
@@ -2060,7 +2076,8 @@ NAME="ACCESS-METHODS"
 >ssh:</P
 ><P
 >  The Agent starts a Reporter Manager on a remote machine using ssh to access
-  the remote machine.  Reporter Manager files are copied from the Agent to the
+  the remote machine.  The Agent must have ssh key access to the remote machine.
+  Reporter Manager files are copied from the Agent to the
   remote machine using sftp.  For ssh resource groups, incat provides text
   boxes for you to enter the login id, password, and path to the ssh key file
   on the Agent machine.  For security purposes, incat displays asterisks for
@@ -2396,7 +2413,7 @@ details at http://localhost:8080/inca/xslt.jsp?xsl=instance.xsl&#38;instanceID=@
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN441"
+NAME="AEN444"
 ></A
 ><P
 ><B
@@ -3668,7 +3685,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN780"
+NAME="AEN783"
 ></A
 ><P
 ><B
@@ -4029,7 +4046,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN911"
+NAME="AEN914"
 ></A
 ><P
 ><B
@@ -5354,7 +5371,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1185"
+NAME="AEN1188"
 ></A
 ><P
 ><B
@@ -6253,7 +6270,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1393"
+NAME="AEN1396"
 ></A
 ><P
 ><B
@@ -6474,7 +6491,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1440"
+NAME="AEN1443"
 ></A
 ><P
 ><B
@@ -7647,13 +7664,22 @@ COLOR="RED"
  -s suite.xml \
  -L DEBUG \
  -l var/reporter-manager.log \
- -P true</PRE
+ -P true
+<STRONG
+><FONT
+COLOR="RED"
+>&#60;enter your password&#62;</FONT
+></STRONG
+></PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->Command will hang until the password for the reporter manager key is entered.  Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
+>Command will hang until the password for the reporter manager key is entered.  
+If the private key is not password protected, don't use the -P option in the command above.
+Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and 
+make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
 ><P
 >To stop the reporter manager at any time, type </P
 ><TABLE
@@ -8167,7 +8193,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1731"
+NAME="AEN1735"
 ></A
 ><P
 ><B
@@ -8697,7 +8723,8 @@ in $INCA_DIST/var/agent.log.  If found, look for errors on the resource in the
 ~/incaReporterManager/Inca-ReporterManager-*/build.log.  The most common
 build failure is a bad build of the dependency Net::SSLeay which is
 required for secure communication; the build for Net::SSLeay will fail if it
-is unable to find OpenSSL on the resource.  </P
+is unable to find OpenSSL on the resource.  The Perl SSL modules 
+call the same functions as "openssl verify". </P
 ></DIV
 ><DIV
 CLASS="SECTION"
