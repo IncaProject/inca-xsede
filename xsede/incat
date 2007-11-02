@@ -2777,10 +2777,6 @@
             <value>login-hg.ncsa.teragrid.org -p 22</value>
           </macro>
           <macro>
-            <name>dataMove4.0.0-rft-host</name>
-            <value>grid-abe.ncsa.teragrid.org</value>
-          </macro>
-          <macro>
             <name>remote3.0.0-mds</name>
             <value>grid-hg.ncsa.teragrid.org:8443</value>
           </macro>
@@ -2815,6 +2811,14 @@
           <macro>
             <name>remote4.0.0-prews-gram</name>
             <value>grid-hg.ncsa.teragrid.org:2120</value>
+          </macro>
+          <macro>
+            <name>dataMove4.0.0-rft-host</name>
+            <value>grid-hg.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-wsgram</name>
+            <value>grid-hg.ncsa.teragrid.org:8444</value>
           </macro>
         </macros>
       </resource>
@@ -2933,6 +2937,18 @@
           <macro>
             <name>remote3.0.0-mds</name>
             <value>grid-w.ncsa.teragrid.org:8446</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-mds</name>
+            <value>grid-w.ncsa.teragrid.org:8446</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-wsgram</name>
+            <value>grid-w.ncsa.teragrid.org:8444</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-gatekeeper-host</name>
+            <value>grid-w.ncsa.teragrid.org:8444</value>
           </macro>
         </macros>
       </resource>
@@ -3738,7 +3754,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|dtf\.ncsa\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>remote4.0.0-mds</name>
@@ -3749,16 +3765,12 @@
             <value>tg-login.@siteName@.teragrid.org</value>
           </macro>
           <macro>
-            <name>remote4.0.0-prews-gram</name>
-            <value>tg-login.@siteName@.teragrid.org</value>
-          </macro>
-          <macro>
             <name>__groupname__</name>
             <value>remote-compute.teragrid.org-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org dtf.ncsa.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3797,8 +3809,34 @@
         </macros>
       </resource>
       <resource>
+        <name>remote-compute.teragrid.org-4.0.0-prewsgram</name>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|dtf\.ncsa\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>remote4.0.0-prews-gram</name>
+            <value>tg-login.@siteName@.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>remote-compute.teragrid.org-4.0.0-prewsgram</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org dtf.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>remote-compute.teragrid.org-4.0.0-wsgram</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>remote4.0.0-wsgram</name>
@@ -3810,7 +3848,33 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>remote-compute.teragrid.org-4.0.0-wsgram-batch</name>
+        <xpath>//resource[matches(name, '^(dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>remote4.0.0-wsgram</name>
+            <value>tg-login.@siteName@.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>remote-compute.teragrid.org-4.0.0-wsgram-batch</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -10348,7 +10412,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>prews-gram-batch</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -10485,6 +10549,140 @@
           </series>
           <nickname>wsgram-version</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>2048</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@gramExecutable@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@remote4.0.0-gatekeeper-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-fork</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-batch</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@gridScheduler@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>@maxMem@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@gramExecutable@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@remote4.0.0-gatekeeper-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>7200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-batch</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-batch</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
