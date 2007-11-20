@@ -269,9 +269,10 @@
             $thisResource)]">
               <xsl:value-of select="'incaWait'" />
             </xsl:when>
-            <xsl:when test="string($result/body)!=''
-            and string($result/errorMessage)=''
-            and ($comparitor='Success' or count($comparitor)=0)">
+            <xsl:when test="$comparitor='Success' or
+              (string($result/body)!=''
+               and string($result/errorMessage)=''
+               and count($comparitor)=0 )"> 
               <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:when test="$result[matches(errorMessage, 'Inca error')]">
