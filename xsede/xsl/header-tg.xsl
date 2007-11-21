@@ -28,6 +28,11 @@
                       List Running Tests
                     </a>
                   </li>
+                  <li>
+                    <a href="http://news.teragrid.org/">
+                      User/System News
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -50,7 +55,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=SDSC,teragrid,teragrid-gridnodes&amp;suiteName=real-time,security,usage&amp;xmlFile=jobs.xml">
+                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=real-time,teragrid,teragrid-gridnodes&amp;suiteName=real-time,security,usage&amp;xmlFile=jobs.xml">
                       Other Test Suites Graph
                     </a>
                   </li>
