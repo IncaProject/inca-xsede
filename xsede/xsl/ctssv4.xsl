@@ -94,19 +94,51 @@
   <!-- or printPackage if a specific package is passed in the URL           -->
   <!-- ==================================================================== -->
   <xsl:template name="printSuiteInfo" match="suite">
+    <xsl:variable name="testResources" select="string(../../stack/testing/resource|../stack/testing/resource)"/>
+    <xsl:variable name="matchResources">
+      <xsl:choose>
+        <xsl:when test="$testResources!=''">
+          <xsl:value-of select="$testResources"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="' '"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="numResource" select="count(/combo/resourceConfig)"/>
+    <xsl:variable name="displayTesting" select="$url[matches(., 'supportLevel=testing')]"/>
     <xsl:choose>
-      <xsl:when test="count(/combo/resourceConfig)=1">
+      <xsl:when test="$numResource=1 and $displayTesting">
         <xsl:call-template name="printAllPackages">
           <xsl:with-param
               name="resources"
-              select="/combo/resourceConfig/resources/resource[name]"/>
+              select="/combo/resourceConfig/resources/resource[name 
+                      and matches(name, $matchResources)]"/>
           <xsl:with-param name="cats" select="../../stack/category" />
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$numResource=1">
+        <xsl:call-template name="printAllPackages">
+          <xsl:with-param
+              name="resources"
+              select="/combo/resourceConfig/resources/resource[name 
+                      and not(matches(name, $matchResources))]"/>
+          <xsl:with-param name="cats" select="../../stack/category" />
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$numResource!=1 and $displayTesting">
+        <xsl:call-template name="printAllPackages">
+          <xsl:with-param name="resources"
+                          select="../resourceConfig/resources/resource[name
+                                  and matches(name, $matchResources)]"/>
+          <xsl:with-param name="cats" select="../stack/category" />
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="printAllPackages">
           <xsl:with-param name="resources"
-                          select="../resourceConfig/resources/resource[name]"/>
+                          select="../resourceConfig/resources/resource[name
+                                  and not(matches(name, $matchResources))]"/>
           <xsl:with-param name="cats" select="../stack/category" />
         </xsl:call-template>
       </xsl:otherwise>
