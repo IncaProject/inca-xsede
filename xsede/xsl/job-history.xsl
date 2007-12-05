@@ -14,10 +14,6 @@
 
   <xsl:param name="type"/>
   <xsl:param name="xsl"/>
-  <xsl:variable name="jsp">
-    <xsl:value-of select="'xslt.jsp?xsl=instance.xsl'"/>
-    <xsl:value-of select="'&amp;instanceID='"/>
-  </xsl:variable>
   <xsl:variable name="div" select="','"/>
 
   <xsl:template match="/">

@@ -249,7 +249,8 @@
         <!-- resource is not exempt -->
         <xsl:variable name="href"
                       select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
-                      $instance, '&amp;configID=', $result/seriesConfigId)"/>
+                      $instance, '&amp;configID=', $result/seriesConfigId,
+                      '&amp;resourceName=', name)"/>
         <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="exit">
           <xsl:choose>
