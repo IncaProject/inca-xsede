@@ -115,7 +115,7 @@
         <xsl:variable name="href"
                       select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
                       $instance, '&amp;configID=', $result/seriesConfigId,
-                      '&amp;resourceName=', name)"/>
+                      '&amp;resourceName=repo')"/>
         <xsl:variable name="exit">
           <xsl:choose>
             <xsl:when test="string($instance)=''">
