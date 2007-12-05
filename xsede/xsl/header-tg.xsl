@@ -24,6 +24,11 @@
               <li><h2>Info</h2>
                 <ul>
                   <li>
+                    <a href="index.html">
+                      Description of Status Pages
+                    </a>
+                  </li>
+                  <li>
                     <a href="config.jsp?xsl=config.xsl">
                       List Running Tests
                     </a>
