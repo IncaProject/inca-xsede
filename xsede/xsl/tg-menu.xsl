@@ -28,7 +28,6 @@
             <option value="data-movement.teragrid.org-4.0.0">Data Movement 4.0.0</option>
             <option value="data-movement.teragrid.org-4.1.0">Data Movement 4.1.0</option>
             <option value="remote-compute.teragrid.org-3.0.0">Remote Compute 3.0.0</option>
-            <option value="remote-compute.teragrid.org-4.0.0">Remote Compute 4.0.0</option>
             <option value="login.teragrid.org-4.0.0">Remote Login 4.0.0</option>
             <option value="app-support.teragrid.org-4.0.0">Application Development &amp; Runtime Support 4.0.0</option>
             <option value="parallel-app.teragrid.org-4.0.0">Parallel Application Support 4.0.0</option>
