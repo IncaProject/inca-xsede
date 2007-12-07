@@ -57,6 +57,19 @@ ERROR - Unable to create Inca::IO socket: : IO::Socket::INET configuration faile
 Error contacting Inca server 'incas://rocks-101:6325' at bin/inca-ping-client line 137, &lt;STDIN&gt; line 1.
 </screen>
 
+<para>One possible cause of connection problems may occur when the agent does a local lookup of 'localhost' for its hostname but Java doesn't find the fully qualified hostname.  An example is when the logged agent hostname is something like 'agent-machine:6323' but should be 'agent-machine.sdsc.edu:6323'.  You can override this by adding the fully qualified hostname to your $INCA_DIST/etc/common/inca.properties file on the agent (add 'inca.agent.hostname=agent-machine.sdsc.edu' to inca.properties in this case).  Change other properties with 'localhost' values to your fully qualified hostname, e.g.:
+
+<screen>inca.agent.depot=incas://depot-machine.sdsc.edu:6324
+...
+details at http://consumer-machine.sdsc.edu:8080/inca/xslt.jsp?xsl=instance.xsl&instanceID=@instanceId@&configID=@configId@\n\n
+...
+inca.consumer.agent=incas://agent-machine.sdsc.edu:6323
+...
+inca.consumer.depot=incas://depot-machine.sdsc.edu:6324</screen>
+
+After you do this, you may need to remove the reporter manager directories on your Grid machines and re-initialize the configuration with the "bin/inca default" command so that new suite names are created with the correct hostname.  If you've already invested a lot in your configuration and don't want to re-initialize, email inca@sdsc.edu for help. 
+</para>
+
 <para>Please email inca@sdsc.edu if you are unable to determine the cause of 
 the authentication problem.
 </para>

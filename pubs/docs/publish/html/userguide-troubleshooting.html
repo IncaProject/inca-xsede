@@ -7,7 +7,7 @@
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="HOME"
-TITLE="Inca 2.2 User's Guide"
+TITLE="Inca 2.3 User's Guide"
 HREF="index.html"><LINK
 REL="PREVIOUS"
 TITLE="Component Man Pages"
@@ -34,7 +34,7 @@ CELLSPACING="0"
 ><TH
 COLSPAN="3"
 ALIGN="center"
->Inca 2.2 User's Guide: [<A
+>Inca 2.3 User's Guide: [<A
 HREF="userguide-one.html"
 TARGET="_top"
 >Single page</A
@@ -186,6 +186,33 @@ Error contacting Inca server 'incas://rocks-101:6325' at bin/inca-ping-client li
 ></TD
 ></TR
 ></TABLE
+><P
+>One possible cause of connection problems may occur when the agent does a local lookup of 'localhost' for its hostname but Java doesn't find the fully qualified hostname.  An example is when the logged agent hostname is something like 'agent-machine:6323' but should be 'agent-machine.sdsc.edu:6323'.  You can override this by adding the fully qualified hostname to your $INCA_DIST/etc/common/inca.properties file on the agent (add 'inca.agent.hostname=agent-machine.sdsc.edu' to inca.properties in this case).  Change other properties with 'localhost' values to your fully qualified hostname, e.g.:
+
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.agent.depot=incas://depot-machine.sdsc.edu:6324
+...
+details at http://consumer-machine.sdsc.edu:8080/inca/xslt.jsp?xsl=instance.xsl=@instanceId@=@configId@\n\n
+...
+inca.consumer.agent=incas://agent-machine.sdsc.edu:6323
+...
+inca.consumer.depot=incas://depot-machine.sdsc.edu:6324</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+
+After you do this, you may need to remove the reporter manager directories on your Grid machines and re-initialize the configuration with the "bin/inca default" command so that new suite names are created with the correct hostname.  If you've already invested a lot in your configuration and don't want to re-initialize, email inca@sdsc.edu for help. </P
 ><P
 >Please email inca@sdsc.edu if you are unable to determine the cause of 
 the authentication problem.</P
