@@ -2096,16 +2096,16 @@
             <value>8445</value>
           </macro>
           <macro>
-            <name>real-time-fs</name>
-            <value>/N/dc/projects/lead</value>
-          </macro>
-          <macro>
             <name>real-time-gridftp-host</name>
             <value>login.bigred.iu.teragrid.org</value>
           </macro>
           <macro>
             <name>real-time-gridftp-port</name>
             <value>2811</value>
+          </macro>
+          <macro>
+            <name>real-time-fs</name>
+            <value>/N/dc/scratch</value>
           </macro>
         </macros>
       </resource>
@@ -4328,6 +4328,28 @@
         </macros>
       </resource>
       <resource>
+        <name>real-time-wsgram-fork-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|anl-grid)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>real-time-wsgram-fork-4.0.0</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>ncsa-grid-hg ncsa-tungsten anl-grid</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>real-time-wsgram-netstat-4.0.0</name>
         <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten)$')]</xpath>
         <macros>
@@ -4880,10 +4902,20 @@
             <value><![CDATA[bash -l -c 'set -a; cd @__incaReporterManagerLocation__@; cp ~/.soft ~/.soft.$$ && soft-msc ~/.soft.$$ && source ~/.soft.$$.cache.sh && export PERL5LIB=/home/inca/inca2install/var/reporter-packages/lib/perl &&]]></value>
           </macro>
           <macro>
+            <name>service_hosts</name>
+            <value>mds.teragrid.org</value>
+            <value>info1.dyn.teragrid.org</value>
+            <value>info2.dyn.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>info_service_hosts</name>
+            <value>info1.dyn.teragrid.org</value>
+            <value>info2.dyn.teragrid.org</value>
+          </macro>
+          <macro>
             <name>mdsHosts</name>
             <value>ds001.sdsc.edu</value>
             <value>tg-login3.ncsa.teragrid.org</value>
-            <value>cu12.ncsa.uiuc.edu</value>
             <value>co-login1.ncsa.uiuc.edu</value>
             <value>h6.bigred.teragrid.iu.edu</value>
             <value>tund.ncsa.uiuc.edu</value>
@@ -4896,17 +4928,6 @@
             <value>bg-login1.sdsc.edu</value>
             <value>lslogin2.tacc.utexas.edu</value>
             <value>tg-mayor1.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>service_hosts</name>
-            <value>mds.teragrid.org</value>
-            <value>info1.dyn.teragrid.org</value>
-            <value>info2.dyn.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>info_service_hosts</name>
-            <value>info1.dyn.teragrid.org</value>
-            <value>info2.dyn.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -6281,94 +6302,6 @@
           </series>
           <nickname>softenv-unit</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.tcl.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.tcl.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tcl-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tcl=~"8.*"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
-            <args>
-              <arg>
-                <name>interpreter</name>
-                <value>tclsh</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tcl-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -7852,21 +7785,58 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>app-support.teragrid.org-4.0.0</name>
-      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.0</guid>
-      <description>Application Development and Runtime Support Capability</description>
-      <version>35</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.ps.count.unit</name>
+            <name>cluster.scripting.tcl.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.tcl.version</uri>
             <args>
               <arg>
-                <name>max</name>
-                <value>@psMax@</value>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tcl-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tcl=~"8.*"</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.scripting.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
+            <args>
+              <arg>
+                <name>interpreter</name>
+                <value>tclsh</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -7882,46 +7852,32 @@
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>psArgs</name>
-                <value>@psArgs@</value>
+                <value>5</value>
               </arg>
             </args>
             <limits>
-              <wallClockTime>120.0</wallClockTime>
+              <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@@</context>
+            <context>@pre@@@@post@</context>
           </series>
-          <nickname>ps-count</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
+          <nickname>tcl-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
-              <hour>?-23</hour>
+              <hour>?</hour>
               <mday>*</mday>
               <wday>*</wday>
               <month>*</month>
             </cron>
           </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
-      <name>check-reporter-managers</name>
-      <guid/>
-      <description>test to make sure RMs are running as expected</description>
-      <version>1</version>
+      <name>app-support.teragrid.org-4.0.0</name>
+      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.0</guid>
+      <description>Application Development and Runtime Support Capability</description>
+      <version>36</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -10843,222 +10799,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@remote3.0.0-prews-gram-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-netstat</nickname>
-          <resourceSetName>real-time-prewsgram-netstat</resourceSetName>
-          <schedule>
-            <cron>
-              <min>*/3</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@remote3.0.0-wsgram-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-netstat</nickname>
-          <resourceSetName>real-time-wsgram-netstat</resourceSetName>
-          <schedule>
-            <cron>
-              <min>2-59/3</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@remote4.0.0-prews-gram-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-netstat-4.0.0</nickname>
-          <resourceSetName>real-time-prewsgram-netstat-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>1-59/3</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@remote4.0.0-wsgram-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-netstat-4.0.0</nickname>
-          <resourceSetName>real-time-wsgram-netstat-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>3-59/3</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>user.basicFunctionality.gridJobSubmission.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
             <args>
@@ -11778,6 +11518,222 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@remote3.0.0-prews-gram-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-netstat</nickname>
+          <resourceSetName>real-time-prewsgram-netstat</resourceSetName>
+          <schedule>
+            <cron>
+              <min>*/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@remote3.0.0-wsgram-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-netstat</nickname>
+          <resourceSetName>real-time-wsgram-netstat</resourceSetName>
+          <schedule>
+            <cron>
+              <min>2-59/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@remote4.0.0-prews-gram-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-netstat-4.0.0</nickname>
+          <resourceSetName>real-time-prewsgram-netstat-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>1-59/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@remote4.0.0-wsgram-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-netstat-4.0.0</nickname>
+          <resourceSetName>real-time-wsgram-netstat-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>3-59/3</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -11832,7 +11788,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-fork-4.0.0</nickname>
-          <resourceSetName>real-time-wsgram-4.0.0</resourceSetName>
+          <resourceSetName>real-time-wsgram-fork-4.0.0</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -11858,7 +11814,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>80</version>
+      <version>83</version>
     </suite>
     <suite>
       <seriesConfigs>
