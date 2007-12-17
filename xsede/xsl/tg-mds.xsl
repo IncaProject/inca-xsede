@@ -118,7 +118,7 @@
                       '&amp;resourceName=repo')"/>
         <xsl:variable name="exit">
           <xsl:choose>
-            <xsl:when test="string($instance)=''">
+            <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
             <xsl:when test="string($result/body)!=''
