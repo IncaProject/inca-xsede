@@ -60,7 +60,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=real-time,teragrid,teragrid-gridnodes&amp;suiteName=real-time,security,usage&amp;xmlFile=jobs.xml">
+                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteName=real-time,security,usage,sdsc-ops,check-reporter-managers">
                       Other Test Suites Graph
                     </a>
                   </li>
@@ -144,6 +144,16 @@
                       <li>
                         <a href="xslt.jsp?markOld&amp;xsl=default.xsl&amp;resourceID=teragrid&amp;suiteName=security">
                           security
+                        </a>
+                      </li>
+                      <li>
+                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=sdsc-ia64&amp;suiteName=sdsc-ops">
+                          sdsc operations
+                        </a>
+                      </li>
+                      <li>
+                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=ALL-RM&amp;suiteName=check-reporter-managers">
+                          inca self check
                         </a>
                       </li>
                     </ul>
