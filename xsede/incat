@@ -770,6 +770,10 @@
             <name>remote3.0.0-mds</name>
             <value>tg-grid1.uc.teragrid.org:8446</value>
           </macro>
+          <macro>
+            <name>real-time-gridftp-port</name>
+            <value>2811</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -3858,6 +3862,10 @@
           <macro>
             <name>remote3.0.0-prews-batch-job-manager</name>
             <value>jobmanager-pbs</value>
+          </macro>
+          <macro>
+            <name>real_time_script</name>
+            <value>/opt/xt-catamount/default/bin/cnos64/hello_qk</value>
           </macro>
         </macros>
       </resource>
@@ -8191,7 +8199,7 @@
           <resourceSetName>ALL-RM</resourceSetName>
           <schedule>
             <cron>
-              <min>?-59/15</min>
+              <min>?</min>
               <hour>*</hour>
               <mday>*</mday>
               <wday>*</wday>
@@ -8214,7 +8222,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>2</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -11584,6 +11592,9 @@
                 <value>0</value>
               </arg>
             </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-auth</nickname>
@@ -12198,6 +12209,7 @@
         <seriesConfig>
           <series>
             <name>data.transfer.gridftp.unit.copy</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -12256,7 +12268,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>85</version>
+      <version>86</version>
     </suite>
     <suite>
       <seriesConfigs>
