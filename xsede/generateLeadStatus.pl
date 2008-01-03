@@ -171,10 +171,11 @@ if ( ! -d $dir && ! mkdir($dir) ) {
 }
 
 # download html
-`wget -q -O $dir/$INDEX_FILENAME '$url'`;
+`wget -q -O $dir/$INDEX_FILENAME.tmp '$url'`;
 die "Unable to fetch '$url'" if $? != 0;
-die "No error but file not written to disk" if ! -f "$dir/$INDEX_FILENAME";
+die "No error but file not written to disk" if ! -f "$dir/$INDEX_FILENAME.tmp";
 
-my @urls = getUrlsFromHtml( "$dir/$INDEX_FILENAME" );
+my @urls = getUrlsFromHtml( "$dir/$INDEX_FILENAME.tmp" );
 my %localFiles = downloadFiles( $dir, $relUrl, $rootUrl, @urls );
-replaceUrls( "$dir/$INDEX_FILENAME", %localFiles );
+replaceUrls( "$dir/$INDEX_FILENAME.tmp", %localFiles );
+`mv $dir/$INDEX_FILENAME.tmp $dir/$INDEX_FILENAME`
