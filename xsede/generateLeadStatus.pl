@@ -59,6 +59,7 @@ sub downloadFiles {
       $filename = "$suffix" . "0.$suffix";
     } else {
       $filename = "$suffix" . $suffixCounter{$suffix} . "." . $suffix;
+      $suffixCounter{$suffix}++;
     }
     $localFiles{$url} = $filename;
     my $fullUrl = $url;
