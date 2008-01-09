@@ -199,6 +199,32 @@
         </macros>
       </resource>
       <resource>
+        <name>LSU</name>
+        <xpath>//resource[matches(name, '^(lsu-qb)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>LSU</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lsu-qb</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>siteName</name>
+            <value>lsu</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>NCAR</name>
         <xpath>//resource[matches(name, '^(ncar-frost)$')]</xpath>
         <macros>
@@ -1937,7 +1963,7 @@
       </resource>
       <resource>
         <name>gt4-seven-step</name>
-        <xpath>//resource[matches(name, '^(ANL-login|ncsa-cobalt|ncsa-ia64|sdsc-ia64|tacc-viz|ornl-login)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ANL-login|ncsa-cobalt|ncsa-ia64|sdsc-ia64|ornl-login|tacc-lonestar|psc-rachel)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -1945,7 +1971,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ANL-login ncsa-cobalt ncsa-ia64 sdsc-ia64 tacc-viz ornl-login</value>
+            <value>ANL-login ncsa-cobalt ncsa-ia64 sdsc-ia64 ornl-login tacc-lonestar psc-rachel</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2337,6 +2363,64 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>lsu-qb</name>
+        <xpath>//resource[matches(name, '^(qb1\.loni\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__regexpTmp__</name>
+            <value>tg-login1.sdsc.teragrid.org tg-login.sdsc.teragrid.org tg-gridftp.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>lsu-qb</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>qb1.loni.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/home/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -4017,6 +4101,10 @@
             <name>dataMove4.1.0-gridftp-striped-host</name>
             <value>gridftp.psc.teragrid.org</value>
           </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mpicc64-hp</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -4249,7 +4337,7 @@
       </resource>
       <resource>
         <name>real-time</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ANL|Indiana|ncsa-grid-hg|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ANL|Indiana|ncsa-grid-hg|ncsa-grid-abe|repo)$')]</xpath>
         <macros>
           <macro>
             <name>real_time_email</name>
@@ -4261,7 +4349,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ANL Indiana ncsa-grid-hg ncsa-grid-abe</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ANL Indiana ncsa-grid-hg ncsa-grid-abe repo</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4511,16 +4599,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram-batch-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-ia64|anl-viz)$')]</xpath>
+        <name>real-time-wsgram-batch</name>
+        <xpath>//resource[matches(name, '^(sdsc-ia64|ncsa-grid-hg|ncsa-grid-abe|ncsa-cobalt|ncsa-tungsten|ANL-login|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram-batch-4.0.0</value>
+            <value>real-time-wsgram-batch</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-ia64 anl-viz</value>
+            <value>sdsc-ia64 ncsa-grid-hg ncsa-grid-abe ncsa-cobalt ncsa-tungsten ANL-login Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4533,16 +4621,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram-batch</name>
-        <xpath>//resource[matches(name, '^(sdsc-ia64|ncsa-grid-hg|ncsa-grid-abe|ncsa-cobalt|ncsa-tungsten|ANL-login|Indiana)$')]</xpath>
+        <name>real-time-wsgram-batch-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-ia64|anl-viz)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram-batch</value>
+            <value>real-time-wsgram-batch-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>sdsc-ia64 ncsa-grid-hg ncsa-grid-abe ncsa-cobalt ncsa-tungsten ANL-login Indiana</value>
+            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-ia64 anl-viz</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5814,11 +5902,6 @@
             <value>1024</value>
           </macro>
           <macro>
-            <name>mpichG2Keys</name>
-            <value>mpich-g2-1.2.6e-mvapich-intel91</value>
-            <value>mpich-g2-1.2.6e-mvapich-intel91-dbg</value>
-          </macro>
-          <macro>
             <name>mpichG2LibKeys</name>
             <value>globus-mpicc64-4.0.1-mvapich-intel91</value>
             <value>globus-mpicc64dbg-4.0.1-mvapich-intel91</value>
@@ -5930,6 +6013,11 @@
           <macro>
             <name>dataMove4.1.0-gridftp-nonstriped-port</name>
             <value>2812</value>
+          </macro>
+          <macro>
+            <name>mpichG2Keys</name>
+            <value>mpich-g2-1.2.6e-mvapich-intel91</value>
+            <value>mpich-g2-1.2.6e-mvapich-intel91-dbg</value>
           </macro>
         </macros>
       </resource>
@@ -6110,7 +6198,7 @@
       </resource>
       <resource>
         <name>teragrid</name>
-        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC|LSU)$')]</xpath>
         <macros>
           <macro>
             <name>keyPre</name>
@@ -6209,50 +6297,6 @@
             <value>@keyPre@phdf5-1.6.5 @keyPost@</value>
           </macro>
           <macro>
-            <name>__groupname__</name>
-            <value>teragrid</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyFile__</name>
-            <value>/users/u3/inca/.ssh/id_dsa</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyPassword__</name>
-            <value>HmAnvxgybtpDlSORFSej3A==</value>
-          </macro>
-          <macro>
-            <name>__myproxyHost__</name>
-            <value>myproxy.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__myproxyLifetime__</name>
-            <value>1440</value>
-          </macro>
-          <macro>
-            <name>__myproxyPassword__</name>
-            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
-          </macro>
-          <macro>
-            <name>__myproxyUsername__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
             <name>gramExecutable</name>
             <value>/bin/hostname</value>
           </macro>
@@ -6317,6 +6361,50 @@
             <value>gridftp-abe.ncsa.teragrid.org</value>
             <value>bg-login1.sdsc.edu</value>
           </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>teragrid</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC LSU</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -6347,7 +6435,7 @@
       </resource>
       <resource>
         <name>teragrid-login</name>
-        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC|LSU)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -6355,7 +6443,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>NCAR SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC</value>
+            <value>NCAR SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC LSU</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6552,6 +6640,9 @@
       </resource>
       <resource>
         <name>maverick.tacc.utexas.edu</name>
+      </resource>
+      <resource>
+        <name>qb1.loni.org</name>
       </resource>
       <resource>
         <name>rachel.psc.edu</name>
@@ -8351,68 +8442,7 @@
             <notifications>
               <notification>
                 <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.rm.ps.unit</name>
-            <args>
-              <arg>
-                <name>maxMan</name>
-                <value>@maxMan@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>maxSched</name>
-                <value>@maxSched@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>psArgs</name>
-                <value>@psArgs@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>cluster.rm.ps.unit</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
+                <target>inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
