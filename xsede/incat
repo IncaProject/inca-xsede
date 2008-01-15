@@ -286,32 +286,8 @@
       </resource>
       <resource>
         <name>NCSA-gatekeepers</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-abe|ncsa-grid-hg)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-abe|ncsa-grid-hg|ncsa-grid-tun)$')]</xpath>
         <macros>
-          <macro>
-            <name>__groupname__</name>
-            <value>NCSA-gatekeepers</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>ncsa-grid-abe|ncsa-grid-hg</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__myproxyHost__</name>
-            <value>myproxy.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
-            <name>nodeCount</name>
-            <value>1</value>
-          </macro>
           <macro>
             <name>chargeProject</name>
             <value>TG-STA060008N</value>
@@ -351,6 +327,30 @@
           <macro>
             <name>real_time_email</name>
             <value>FailTo:inca@sdsc.edu, FailTo:marcusiu@ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>nodeCount</name>
+            <value>4</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>NCSA-gatekeepers</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>ncsa-grid-abe|ncsa-grid-hg|ncsa-grid-tun</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
           </macro>
         </macros>
       </resource>
@@ -3306,6 +3306,100 @@
         </macros>
       </resource>
       <resource>
+        <name>ncsa-grid-tun</name>
+        <xpath>//resource[matches(name, '^(tunf012\.ncsa\.uiuc\.edu)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__regexpTmp__</name>
+            <value>tg-login1.ncsa.teragrid.org login-hg.ncsa.teragrid.org gridftp-hg.ncsa.teragrid.org grid-hg.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>real-time-gridftp-port</name>
+            <value>2812</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-wsgram-port</name>
+            <value>8444</value>
+          </macro>
+          <macro>
+            <name>real-time-fs</name>
+            <value>/gpfs_scratch1</value>
+          </macro>
+          <macro>
+            <name>real-time-gridftp-host</name>
+            <value>grid-hg.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>ncsa-grid-tun</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>tunf012.ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/u/ncsa/inca/inca2install-grid</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-gatekeeper-host</name>
+            <value>tunf012.ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-prews-batch-job-manager</name>
+            <value>jobmanager-lsf</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-prews-fork-job-manager</name>
+            <value>jobmanager-fork</value>
+          </macro>
+          <macro>
+            <name>gridScheduler</name>
+            <value>LSF</value>
+          </macro>
+          <macro>
+            <name>remote3.0.0-prews-batch-job-manager</name>
+            <value>jobmanager-lsf</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>ncsa-ia64</name>
         <xpath>//resource[matches(name, '^(tg-login1.ncsa.teragrid.org)$')]</xpath>
         <macros>
@@ -3432,14 +3526,6 @@
             <value>tg-login3.ncsa.teragrid.org</value>
           </macro>
           <macro>
-            <name>remote4.0.0-gatekeeper-host</name>
-            <value>grid-hg.ncsa.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>remote4.0.0-mds</name>
-            <value>grid-hg.ncsa.teragrid.org:8443</value>
-          </macro>
-          <macro>
             <name>dataMove4.0.0-rft-host</name>
             <value>grid-hg.ncsa.teragrid.org</value>
           </macro>
@@ -3478,6 +3564,14 @@
           <macro>
             <name>dataMove4.1.0-gridftp-nonstriped-port</name>
             <value>2812</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-gatekeeper-host</name>
+            <value>tg-s037.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-prews-fork-job-manager</name>
+            <value>jobmanager-fork</value>
           </macro>
         </macros>
       </resource>
@@ -4337,7 +4431,7 @@
       </resource>
       <resource>
         <name>real-time</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ANL|Indiana|ncsa-grid-hg|ncsa-grid-abe|repo)$')]</xpath>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ANL|Indiana|ncsa-grid-hg|ncsa-grid-abe|repo|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>real_time_email</name>
@@ -4349,7 +4443,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ANL Indiana ncsa-grid-hg ncsa-grid-abe repo</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ANL Indiana ncsa-grid-hg ncsa-grid-abe repo ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4424,7 +4518,7 @@
       </resource>
       <resource>
         <name>real-time-prewsgram-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4432,7 +4526,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4468,7 +4562,7 @@
       </resource>
       <resource>
         <name>real-time-prewsgram-batch-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4476,7 +4570,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4512,7 +4606,7 @@
       </resource>
       <resource>
         <name>real-time-prewsgram-netstat-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4520,7 +4614,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4555,16 +4649,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-grid)$')]</xpath>
+        <name>real-time-wsgram</name>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram-4.0.0</value>
+            <value>real-time-wsgram</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-grid</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4577,16 +4671,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
+        <name>real-time-wsgram-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-grid|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram</value>
+            <value>real-time-wsgram-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
+            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-grid ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4622,7 +4716,7 @@
       </resource>
       <resource>
         <name>real-time-wsgram-batch-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-ia64|anl-viz)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-ia64|anl-viz|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4630,7 +4724,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-ia64 anl-viz</value>
+            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-ia64 anl-viz ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4644,7 +4738,7 @@
       </resource>
       <resource>
         <name>real-time-wsgram-fork-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|anl-grid)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|anl-grid|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4652,7 +4746,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten anl-grid</value>
+            <value>ncsa-grid-hg ncsa-tungsten anl-grid ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4688,7 +4782,7 @@
       </resource>
       <resource>
         <name>real-time-wsgram-netstat-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -4696,7 +4790,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten</value>
+            <value>ncsa-grid-hg ncsa-tungsten ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4932,7 +5026,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>remote4.0.0-wsgram-port</name>
@@ -4960,7 +5054,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg tungsten.ncsa.teragrid.org cobalt.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg tungsten.ncsa.teragrid.org cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5026,7 +5120,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-prewsgram</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5034,7 +5128,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5048,7 +5142,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-prewsgram-batch</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5056,7 +5150,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5070,7 +5164,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-prewsgram-netstat</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5078,7 +5172,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5092,7 +5186,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-wsgram</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5100,7 +5194,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org ncsa-grid-hg tungsten.ncsa.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org ncsa-grid-hg tungsten.ncsa.teragrid.org ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5114,7 +5208,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-wsgram-batch</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|tungsten\.ncsa\.teragrid\.org|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5122,7 +5216,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg tungsten.ncsa.teragrid.org</value>
+            <value>ncsa-grid-hg tungsten.ncsa.teragrid.org ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5136,7 +5230,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.0-wsgram-netstat</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-hg)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|ncsa-grid-hg|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -5144,7 +5238,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-hg</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org tungsten.ncsa.teragrid.org ncsa-grid-hg ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5681,7 +5775,7 @@
           </macro>
           <macro>
             <name>psArgs</name>
-            <value>-ef | grep inca</value>
+            <value>-f -u inca</value>
           </macro>
         </macros>
       </resource>
@@ -6241,10 +6335,6 @@
             <value/>
           </macro>
           <macro>
-            <name>nodeCount</name>
-            <value>1</value>
-          </macro>
-          <macro>
             <name>chargeProject</name>
             <value>TG-STA060008N</value>
           </macro>
@@ -6404,6 +6494,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>nodeCount</name>
+            <value>4</value>
           </macro>
         </macros>
       </resource>
@@ -6685,6 +6779,9 @@
       </resource>
       <resource>
         <name>tund.ncsa.uiuc.edu</name>
+      </resource>
+      <resource>
+        <name>tunf012.ncsa.uiuc.edu</name>
       </resource>
     </resources>
   </resourceConfig>
@@ -8345,61 +8442,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.ps.count.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.ps.count.unit</uri>
-            <args>
-              <arg>
-                <name>max</name>
-                <value>@psMax@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>psArgs</name>
-                <value>@psArgs@</value>
-              </arg>
-            </args>
-            <context>@@</context>
-          </series>
-          <nickname>cluster.ps.count.unit</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>data.access.postgres.unit.connect</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.postgres.unit.connect</uri>
             <args>
@@ -8448,11 +8490,125 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.rm.ps.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.rm.ps.unit</uri>
+            <args>
+              <arg>
+                <name>maxMan</name>
+                <value>@maxMan@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>maxSched</name>
+                <value>@maxSched@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>psArgs</name>
+                <value>@psArgs@</value>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>cluster.rm.ps.unit</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.ps.count.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.ps.count.unit</uri>
+            <args>
+              <arg>
+                <name>max</name>
+                <value>@psMax@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>psArgs</name>
+                <value>@psArgs@</value>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>cluster.ps.count.unit</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>9</version>
+      <version>15</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -9570,170 +9726,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>grid.middleware.globus.7step.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
-            <args>
-              <arg>
-                <name>extraEnv</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>date</name>
-                <value>@date@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>hostCount</name>
-                <value>1@hostCountSuffix@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>softenvKey</name>
-                <value>@mpichG2Keys@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>env</name>
-                <value>@env@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@/@remote3.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>extraRsl</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>rm</name>
-                <value>@rm@</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@keyPre2@@mpichG2Keys@ @keyPost@@@@post@</context>
-          </series>
-          <nickname>gt4-seven-step_@mpichG2Keys@</nickname>
-          <resourceSetName>gt4-seven-step</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.mpiring.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.mpiring.unit</uri>
-            <args>
-              <arg>
-                <name>extraEnv</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>date</name>
-                <value>@date@</value>
-              </arg>
-              <arg>
-                <name>nodeCount</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>hostCount</name>
-                <value>1@hostCountSuffix@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>softenvKey</name>
-                <value>@mpichG2Keys@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>env</name>
-                <value>@env@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@/@remote3.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>extraRsl</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>rm</name>
-                <value>@rm@</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@keyPre2@@mpichG2Keys@ @keyPost@@@@post@</context>
-          </series>
-          <nickname>gt4-mpiring_@mpichG2Keys@</nickname>
-          <resourceSetName>gt4-seven-step</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.unit.gatekeeper</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gatekeeper</uri>
             <args>
@@ -9876,11 +9868,175 @@
           </schedule>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.7step.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.7step.unit</uri>
+            <args>
+              <arg>
+                <name>extraEnv</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>date</name>
+                <value>@date@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>hostCount</name>
+                <value>2@hostCountSuffix@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>softenvKey</name>
+                <value>@mpichG2Keys@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>env</name>
+                <value>@env@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@/@remote3.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>extraRsl</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>rm</name>
+                <value>@rm@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@keyPre2@@mpichG2Keys@ @keyPost@@@@post@</context>
+          </series>
+          <nickname>gt4-seven-step_@mpichG2Keys@</nickname>
+          <resourceSetName>gt4-seven-step</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.mpiring.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.mpiring.unit</uri>
+            <args>
+              <arg>
+                <name>extraEnv</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>date</name>
+                <value>@date@</value>
+              </arg>
+              <arg>
+                <name>nodeCount</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>hostCount</name>
+                <value>2@hostCountSuffix@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>softenvKey</name>
+                <value>@mpichG2Keys@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>env</name>
+                <value>@env@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@/@remote3.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>extraRsl</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>rm</name>
+                <value>@rm@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@keyPre2@@mpichG2Keys@ @keyPost@@@@post@</context>
+          </series>
+          <nickname>gt4-mpiring_@mpichG2Keys@</nickname>
+          <resourceSetName>gt4-seven-step</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>ctss-v3</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss-v3</guid>
       <description/>
-      <version>205</version>
+      <version>209</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -11422,382 +11578,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>39600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-batch</nickname>
-          <resourceSetName>real-time-prewsgram-batch</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*/12</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-fork-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-fork</nickname>
-          <resourceSetName>real-time-prewsgram</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*/4</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-fork-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-fork-4.0.0</nickname>
-          <resourceSetName>real-time-prewsgram-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*/4</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>39600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-batch-4.0.0</nickname>
-          <resourceSetName>real-time-prewsgram-batch-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*/12</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
-            <notifications>
-              <notification>
-                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
-                <target>@real_time_email@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>data.transfer.gridftp.unit.copy</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy</uri>
             <args>
@@ -12650,11 +12430,877 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
+            <args>
+              <arg>
+                <name>gridftpPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpDstFile</name>
+                <value>/tmp/inca-cogster</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopyPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstFile</name>
+                <value>/tmp/inca-cogster-urlcp</value>
+              </arg>
+              <arg>
+                <name>cogProxy</name>
+                <value>/tmp/x509up_u1119</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpGridPort</name>
+                <value>2811</value>
+              </arg>
+              <arg>
+                <name>gridftpDstHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-cog-bigred-tungsten</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
+            <args>
+              <arg>
+                <name>gridftpPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpDstFile</name>
+                <value>/tmp/inca-cogster</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopyPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstFile</name>
+                <value>/tmp/inca-cogster-urlcp</value>
+              </arg>
+              <arg>
+                <name>cogProxy</name>
+                <value>/tmp/x509up_u1119</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpGridPort</name>
+                <value>2811</value>
+              </arg>
+              <arg>
+                <name>gridftpDstHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-cog-bigred-mercury</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
+            <args>
+              <arg>
+                <name>gridftpPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpDstFile</name>
+                <value>/tmp/inca-cogster</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopyPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstFile</name>
+                <value>/tmp/inca-cogster-urlcp</value>
+              </arg>
+              <arg>
+                <name>cogProxy</name>
+                <value>/tmp/x509up_u1119</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpGridPort</name>
+                <value>2812</value>
+              </arg>
+              <arg>
+                <name>gridftpDstHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-cog-tungsten-bigred</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
+            <args>
+              <arg>
+                <name>gridftpPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpDstFile</name>
+                <value>/tmp/inca-cogster</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopyPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstFile</name>
+                <value>/tmp/inca-cogster-urlcp</value>
+              </arg>
+              <arg>
+                <name>cogProxy</name>
+                <value>/tmp/x509up_u1119</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpGridPort</name>
+                <value>2812</value>
+              </arg>
+              <arg>
+                <name>gridftpDstHost</name>
+                <value>login.bigred.iu.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-cog-mercury-bigred</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
+            <args>
+              <arg>
+                <name>gridftpPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpDstFile</name>
+                <value>/tmp/inca-cogster</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopyPortRange</name>
+                <value>50000,51000</value>
+              </arg>
+              <arg>
+                <name>urlcopyDstFile</name>
+                <value>/tmp/inca-cogster-urlcp</value>
+              </arg>
+              <arg>
+                <name>cogProxy</name>
+                <value>/tmp/x509up_u1119</value>
+              </arg>
+              <arg>
+                <name>gridftpSrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcHost</name>
+                <value>grid-hg.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>gridftpGridPort</name>
+                <value>2812</value>
+              </arg>
+              <arg>
+                <name>gridftpDstHost</name>
+                <value>gridftp-w.ncsa.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>urlcopySrcFile</name>
+                <value>/home/inca/cogster/data/test</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>java-cog-mercury-tungsten</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch</nickname>
+          <resourceSetName>real-time-prewsgram-batch</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-fork-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-fork</nickname>
+          <resourceSetName>real-time-prewsgram</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/4</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-fork-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-fork-4.0.0</nickname>
+          <resourceSetName>real-time-prewsgram-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/4</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch-4.0.0</nickname>
+          <resourceSetName>real-time-prewsgram-batch-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>*/12</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>edu.sdsc.inca.depot.util.EmailNotifier</notifier>
+                <target>@real_time_email@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>90</version>
+      <version>95</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12944,182 +13590,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>39600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-batch</nickname>
-          <resourceSetName>remote-compute.teragrid.org-3.0.0-prewsgram-batch</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-fork-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-fork</nickname>
-          <resourceSetName>remote-compute.teragrid.org-3.0.0-prewsgram</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -13334,11 +13804,187 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch</nickname>
+          <resourceSetName>remote-compute.teragrid.org-3.0.0-prewsgram-batch</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote3.0.0-gatekeeper-host@:@remote3.0.0-prews-gram-port@/@remote3.0.0-prews-fork-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-fork</nickname>
+          <resourceSetName>remote-compute.teragrid.org-3.0.0-prewsgram</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-3.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-3.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>57</version>
+      <version>61</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13628,182 +14274,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>39600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-batch</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-batch</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
-            <args>
-              <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>memory</name>
-                <value>@memory@</value>
-              </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-fork-job-manager@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
-              </arg>
-              <arg>
-                <name>type</name>
-                <value>globusrun</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
-              </arg>
-              <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-fork</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -14018,11 +14488,187 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-batch</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-fork-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-fork</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>27</version>
+      <version>31</version>
     </suite>
     <suite>
       <seriesConfigs>
