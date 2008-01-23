@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
 >Inca 2.3 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -996,7 +996,7 @@ COLOR="RED"
 ></STRONG
 > this command only needs to 
 be executed ONCE.  The components started in this step can later be stopped with "./bin/inca stop all" and started with 
-"./bin/inca start all").  The Inca server components are agent, depot, and consumer
+"./bin/inca start all".  A restart command is also available).  The Inca server components are agent, depot, and consumer
     and will be started on ports 6323, 6324, and 8080 respectively.  Please
     edit the inca.properties file in etc/common to change the default ports
     for the agent and depot.  For the consumer, the port number can be
@@ -6144,8 +6144,13 @@ argument.</P
 ><P
 >To create a local repository for your own reporters, you only need to collect
 them into a directory and create a Packages.gz in that directory. The default Inca installation has a 
-Packages.gz file in $INCA_DIST/Inca-Reporter-* that can be added in incat.  Inca also supplies a web accessible
-repository that can be added in incat as "http://inca.sdsc.edu/repository/latest/". </P
+Packages.gz file in $INCA_DIST/Inca-Reporter-* that can be added in incat.  Inca also supplies 
+<A
+HREF="http://inca.sdsc.edu/repository/latest/cgi-bin/list_reporters.cgi"
+TARGET="_top"
+>a web accessible
+repository</A
+> that can be added in incat as "http://inca.sdsc.edu/repository/latest/". </P
 ><P
 >The Inca
 distribution includes a perl script, incpack, that can create Packages.gz for
@@ -6273,7 +6278,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1396"
+NAME="AEN1397"
 ></A
 ><P
 ><B
@@ -6494,7 +6499,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1443"
+NAME="AEN1444"
 ></A
 ><P
 ><B
@@ -8196,7 +8201,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1735"
+NAME="AEN1736"
 ></A
 ><P
 ><B
@@ -8369,13 +8374,15 @@ Available subcommands:
   default
   init
   help
+  restart
   start
   stop
   version
   agent
   depot
   incat
-  reporter-manager
+  incaws 
+  reporter-manager 
   consumer</PRE
 ></FONT
 ></TD
@@ -8447,29 +8454,30 @@ COLOR="#000000"
 CLASS="SCREEN"
 >% bin/inca help agent
 java edu.sdsc.inca.Agent
-  C|check        str     check the reporter manager stage on resources
-  D|depot        str     Depot specification; host:port
-  P|password     str     Specify how to obtain encryption password
-  R|refreshPkgs  int     refresh period for checking for package updates
-  S|server       str     Server specification; host:port
-  S|startAttempt int     period between re-start attempts of the manager
-  V|version      null    Display program version
-  a|auth         boolean Authenticated (secure) connection?
-  b|buildscript  str     path to reporter manager build script
-  c|cert         path    Path to the authentication certificate
-  e|email        str     email to send notifications of manager restarts
-  h|help         null    Print help/usage
-  h|hostname     str     Hostname the server should provide to clients
-  i|init         path    Path to properties file
-  k|key          path    Path to the authentication key
-  l|logfile      str     Route log messages to a file
-  n|numthreads   int     # threads in worker pool
-  p|port         int     Server listening port
-  r|rmdist       str     path to reporter manager tarball distribution
-  s|stayAlive    int     period between stay alive pings of the manager
-  t|trusted      path    Path to authentication trusted certificate dir
-  u|upgrade      str     upgrade the reporter manager install on resources
-  v|var          path    Absolute path to server temp dir</PRE
+  C|check            str     check the reporter manager on resources
+  D|depot            str     Depot specification; host:port
+  H|hostname         str     Hostname where the server is running
+  P|password         str     Specify how to obtain encryption password
+  R|refreshPkgs      int     repository check period for package updates
+  S|server           str     Server specification; host:port
+  S|startAttempt     int     re-start attempt period fpr the manager
+  U|upgradeTargets   str     makefile targets to execute during upgrade
+  V|version          null    Display program version
+  a|auth             boolean Authenticated (secure) connection?
+  b|buildscript      str     path to reporter manager build script
+  c|cert             path    Path to the authentication certificate
+  e|email            str     email to send notices of manager restarts
+  h|help             null    Print help/usage
+  i|init             path    Path to properties file
+  k|key              path    Path to the authentication key
+  l|logfile          str     Route log messages to a file
+  n|numthreads       int     # threads in worker pool
+  p|port             int     Server listening port
+  r|rmdist           str     path to reporter manager tarball distribution
+  s|stayAlive        int     stay alive ping period for the manager
+  t|trusted          path    Path to authentication trusted certificate dir
+  u|upgradeResources str     upgrade managers in specified resource group
+  v|var              path    Absolute path to server temp dir</PRE
 ></FONT
 ></TD
 ></TR
