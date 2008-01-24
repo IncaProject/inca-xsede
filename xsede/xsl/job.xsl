@@ -45,7 +45,7 @@
         <xsl:sort select="."/>
         <tr>
           <xsl:call-template name="getResults">
-            <xsl:with-param name="machine" select="name"/>
+            <xsl:with-param name="machine" select="concat('^', name, '$')"/>
             <xsl:with-param name="col" select="'6'"/>
             <xsl:with-param name="ca" select="'0'"/>
           </xsl:call-template>
@@ -71,7 +71,7 @@
         <xsl:sort select="."/>
         <tr>
           <xsl:call-template name="getResults">
-            <xsl:with-param name="machine" select="name"/>
+            <xsl:with-param name="machine" select="concat('^', name, '$')"/>
             <xsl:with-param name="col" select="'7'"/>
             <xsl:with-param name="ca" select="'1'"/>
           </xsl:call-template>

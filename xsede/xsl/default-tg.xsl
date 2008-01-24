@@ -154,9 +154,7 @@
   <xsl:template name="printResourceResultCell" match="resource" mode="result">
     <xsl:param name="testname"/>
     <xsl:param name="suite"/>
-    <xsl:variable
-        name="regexHost"
-        select="concat(name, '|',
+    <xsl:variable name="regexHost" select="concat('^', name, '$|',
         replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
     <xsl:variable name="result"
                   select="$suite/reportSummary[matches(hostname, $regexHost)

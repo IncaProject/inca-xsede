@@ -224,7 +224,7 @@
     <xsl:param name="package"/>
     <xsl:param name="suite"/>
     <xsl:variable name="testname" select="$test/id"/>
-    <xsl:variable name="thisResource" select="name"/>
+    <xsl:variable name="thisResource" select="concat('^', name, '$')"/>
     <xsl:variable name="regexHost" select="concat($thisResource, '|',
     replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
     <xsl:variable name="result"
