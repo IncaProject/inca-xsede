@@ -47,6 +47,7 @@
               </xsl:for-each>
               <option value="ANL-login">ANL</option>
               <option value="Indiana">Indiana</option>
+              <option value="LSU">LSU</option>
               <option value="NCAR">NCAR</option>
               <option value="NCSA">NCSA</option>
               <option value="ORNL">ORNL</option>
