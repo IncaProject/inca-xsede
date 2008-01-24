@@ -110,17 +110,17 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld=1">
+                    <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld">
                       MDS
                     </a>
                     <ul>
                       <li>
-                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld=1">
+                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld">
                           tg wide information services
                         </a>
                       </li>
                       <li>
-                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=repo&amp;suiteName=globus-mds-auth&amp;markOld=1">
+                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=repo&amp;suiteName=globus-mds-auth&amp;markOld">
                           globus-mds-auth service
                         </a>
                       </li>

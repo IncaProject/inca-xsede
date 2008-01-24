@@ -14,17 +14,6 @@
   <xsl:include href="footer.xsl"/>
   <xsl:param name="url" />
 
-  <xsl:variable name="markHours">
-    <xsl:analyze-string select="$url" regex="(.*)arkOld=([0-9]+)(.*)">
-      <xsl:matching-substring>
-        <xsl:value-of select="regex-group(2)"/>
-      </xsl:matching-substring>
-      <xsl:non-matching-substring>
-        <xsl:value-of select="'24'"/>
-      </xsl:non-matching-substring>
-    </xsl:analyze-string>
-  </xsl:variable>
-
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
@@ -147,9 +136,7 @@
               <xsl:if test="$url[matches(., 'markOld')]">
                 <!-- inca-common.xsl -->
                 <xsl:call-template name="markOld">
-                  <xsl:with-param name="gmt"
-                                  select="$result/gmt" as="xs:dateTime"/>
-                  <xsl:with-param name="markHours" select="$markHours"/>
+                  <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
                 </xsl:call-template>
               </xsl:if>
             </td>
