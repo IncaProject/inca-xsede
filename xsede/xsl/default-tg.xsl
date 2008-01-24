@@ -64,7 +64,7 @@
     <xsl:variable name="seriesNames"
                   select="distinct-values(reportSummary/nickname)"/>
     <!-- inca-common.xsl -->
-    <xsl:if test="name[not(matches(., '^(tg-mds|security|globus-mds-auth)$'))]">
+    <xsl:if test="name[not(matches(., '^(tg-mds|security|globus-mds-auth|sdsc-ops)$'))]">
       <xsl:call-template name="printSeriesNamesTable">
         <xsl:with-param name="seriesNames" select="$seriesNames"/>
       </xsl:call-template>
@@ -133,7 +133,7 @@
         </xsl:if>
         <tr>
           <td class="clear">
-            <a name="{.}"><xsl:value-of select="."/></a>
+            <a name="{.}"><xsl:value-of select="replace(., '^all2all:gridftp_to_', '')" /></a>
           </td>
           <!-- printResourceResultCell -->
           <xsl:apply-templates select="$resources" mode="result">
