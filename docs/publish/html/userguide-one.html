@@ -1807,14 +1807,14 @@ ALIGN="CENTER"></P
 >
   </P
 ><P
->  The bottommost two text boxes in the series dialog
-  allow you to test the output of the reporter and send email if the test
-  fails.  This is covered in <A
+>  The bottommost box in the series dialog allows you to test the output of the
+  reporter and send email or take other actions if the test fails.  This is
+  covered in <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
 >Section 5.8</A
-> below;
-  for this series leave these boxes blank.  Press the OK button, and incat will
-  close the series dialog box and add the series to the Series list in the
+> below; for this series
+  leave this box blank.  Press the OK button, and incat will close the series
+  dialog box and add the series to the Series list in the
   suite/series specification panel.
   </P
 ><P
@@ -2058,7 +2058,7 @@ NAME="ACCESS-METHODS"
   must start the Reporter Manager on the command line and restart it any time
   you want to change the reporter series configuration for the group.  The
   Agent will NOT automatically start a Reporter Manager for a manual resource
-  as it will for local, ssh, or globus2 resources.  For a manual resource group, 
+  as it will for local, ssh, or globus2 resources.  For a manual resource group,
   incat provides a text box for you to enter an email that should be notified 
   when the Inca configuration on the resource needs to be updated.
   </P
@@ -2303,7 +2303,7 @@ NAME="USERGUIDE-INCAT-COMPARISON"
   run a program, etc.  Using Inca's comparison and notification feature, you
   can refine a series to define success more precisely and to receive
   notification from Inca when a series reporter detects a problem.  The bottom
-  two text boxes of the series edit dialog provide access to Inca's comparison
+  text boxes of the series edit dialog provide access to Inca's comparison
   and notification feature.
   </P
 ><P
@@ -2356,7 +2356,8 @@ CLASS="SCREEN"
   to be "".
   </P
 ><P
->The image below illustrates how a comparison for subpackage versions would be configured. 
+>The image below illustrates how a comparison for subpackage versions
+        would be configured. 
   <P
 ><IMG
 SRC="figures/incat/incat-annotated-subpackage-version.jpg"
@@ -2364,17 +2365,23 @@ ALIGN="CENTER"></P
 >
   </P
 ><P
->  By default, emails sent by Inca include a short description of the series,
-  resource, and comparison.  You can customize the content and subject of the
-  emails by setting the depot.notification property in your 
-  <TT
-CLASS="FILENAME"
->$INCA_DIST/etc/common/inca.properties</TT
->
-  file before starting the depot.  The value of this property can mix literal
-  text you want included in the email with macro-like references to information
-  about the series and reporter execution.  For example, the property setting
-  that generates the default email format is:
+>  Inca supports the ability to run a script that notifies you of changes in a
+  series comparison.  When you specify a series comparison in the incat series
+  dialog, two additional components become visible.  The Notification Script
+  pull-down menu allows you to select the script to run, and the Script
+  Parameters text box allows you to enter parameters to pass to the script.
+  By default, the Inca installation provides two notification scripts,
+  EmailNotifier and LogNotifier.  The first sends email to each address
+  specified by the script parameters; the second writes a message to the
+  specified log file.
+  </P
+><P
+>  To customize the notification you receive, you can either modify the default
+  Inca notification scripts (found in the sbin/ subdirectory of your Inca Depot
+  installation) or write your own.  Set inca.incat.notifiers in your
+  inca.property file to add a new script to the options presented in the incat
+  series dialog.  For example, to add a script named "MyNotifier" to the
+  options, you would add the following line to inca.properties.
   <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -2385,34 +2392,20 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->inca.depot.notification=\
-SUBJECT=Inca Notification: @nickname@ on @hostname@ @result@ED\n \
-The following Inca test has @result@ED:\n\n \
-RAN AT:  @collected@\n\n \
-RAN ON:  @hostname@\n\n \
-TEST:  @reporterPath@\n\n \
-INPUT PARAMETERS:  @args@\n\n \
-LOGGED COMMANDS: @log@\n\n \
-ERROR MESSAGE: @errorMessage@\n\n \
-STANDARD ERROR: @stderr@\n\n \
-\n\n \ 
-details at http://localhost:8080/inca/xslt.jsp?xsl=instance.xsl&#38;instanceID=@instanceId@&#38;configID=@configId@\n\n
+>  inca.incat.notifiers=EmailNotifier,LogNotifier,MyNotifier
   </PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 >
-  As shown here, multi-line emails are specified by including newline markers
-  ("\n") in the property value.  Inca uses the line in the value that contains
-  "SUBJECT=" as the email subject; remaining lines are the email body.  Any
-  lines that contain an undefined macro value are removed, so, in the above,
-  the final line would not appear if the reporter execution didn't produce an
-  error message.
   </P
 ><P
->  These are the macro names that Inca defines for your use in constructing
-  notification emails:
+>  The Inca Depot sets environment variables that provide information to the
+  notification script about the series and comparison, and the script can
+  incorporate these variables into its notification.  For example,
+  EmailNotifier uses several of these variables in constructing the email body.
+  These are the environment variable names that the Depot defines:
   <DIV
 CLASS="TABLE"
 ><A
@@ -2441,7 +2434,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->args</P
+>incaargs</P
 ></TD
 ><TD
 ><P
@@ -2451,7 +2444,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->body</P
+>incabody</P
 ></TD
 ><TD
 ><P
@@ -2461,7 +2454,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->collected</P
+>incacollected</P
 ></TD
 ><TD
 ><P
@@ -2471,7 +2464,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->commited</P
+>incacommited</P
 ></TD
 ><TD
 ><P
@@ -2481,7 +2474,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->comparison</P
+>incacomparison</P
 ></TD
 ><TD
 ><P
@@ -2491,7 +2484,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->comparisonResult</P
+>incacomparisonResult</P
 ></TD
 ><TD
 ><P
@@ -2501,7 +2494,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->completed</P
+>incacompleted</P
 ></TD
 ><TD
 ><P
@@ -2511,7 +2504,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->configId</P
+>incaconfigId</P
 ></TD
 ><TD
 ><P
@@ -2521,7 +2514,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->context</P
+>incacontext</P
 ></TD
 ><TD
 ><P
@@ -2531,7 +2524,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->cpuLimit</P
+>incacpuLimit</P
 ></TD
 ><TD
 ><P
@@ -2541,7 +2534,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->cpuUsage</P
+>incacpuUsage</P
 ></TD
 ><TD
 ><P
@@ -2551,7 +2544,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->errorMessage</P
+>incaerrorMessage</P
 ></TD
 ><TD
 ><P
@@ -2561,7 +2554,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->hostname</P
+>incahostname</P
 ></TD
 ><TD
 ><P
@@ -2571,7 +2564,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->instanceId</P
+>incainstanceId</P
 ></TD
 ><TD
 ><P
@@ -2581,7 +2574,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->log</P
+>incalog</P
 ></TD
 ><TD
 ><P
@@ -2591,7 +2584,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->memoryLimit</P
+>incamemoryLimit</P
 ></TD
 ><TD
 ><P
@@ -2601,7 +2594,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->memoryUsage</P
+>incamemoryUsage</P
 ></TD
 ><TD
 ><P
@@ -2611,7 +2604,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->nickname</P
+>incanickname</P
 ></TD
 ><TD
 ><P
@@ -2621,7 +2614,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->reportId</P
+>incareportId</P
 ></TD
 ><TD
 ><P
@@ -2631,7 +2624,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->reporter</P
+>incareporter</P
 ></TD
 ><TD
 ><P
@@ -2641,7 +2634,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->reporterPath</P
+>incareporterPath</P
 ></TD
 ><TD
 ><P
@@ -2651,7 +2644,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->resource</P
+>incaresource</P
 ></TD
 ><TD
 ><P
@@ -2661,7 +2654,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->result</P
+>incaresult</P
 ></TD
 ><TD
 ><P
@@ -2671,7 +2664,17 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->seriesId</P
+>incaschedule</P
+></TD
+><TD
+><P
+>the cron spec for this series' schedule</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaseriesId</P
 ></TD
 ><TD
 ><P
@@ -2681,7 +2684,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->stderr</P
+>incastderr</P
 ></TD
 ><TD
 ><P
@@ -2691,17 +2694,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->target</P
-></TD
-><TD
-><P
->the email to which the notification is sent</P
-></TD
-></TR
-><TR
-><TD
-><P
->uri</P
+>incauri</P
 ></TD
 ><TD
 ><P
@@ -2711,7 +2704,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->version</P
+>incaversion</P
 ></TD
 ><TD
 ><P
@@ -2721,7 +2714,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->wallClockLimit</P
+>incawallClockLimit</P
 ></TD
 ><TD
 ><P
@@ -2731,7 +2724,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->wallClockUsage</P
+>incawallClockUsage</P
 ></TD
 ><TD
 ><P
@@ -2741,7 +2734,7 @@ CLASS="CALSTABLE"
 ><TR
 ><TD
 ><P
->workingDir</P
+>incaworkingDir</P
 ></TD
 ><TD
 ><P
