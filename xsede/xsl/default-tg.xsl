@@ -177,7 +177,7 @@
             <xsl:when test="$comparitor='Success' or 
               (string($result/body)!=''
                and string($result/errorMessage)=''
-               and $comparitor='')">
+               and string($comparitor)='')">
               <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:otherwise>

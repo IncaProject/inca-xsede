@@ -284,10 +284,11 @@
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
-            <xsl:when test="string($result/body)!=''
-            and string($result/errorMessage)=''
-            and ($comparitor='Success' or $comparitor='')">
-              <xsl:value-of select="'pass'" />
+            <xsl:when test="$comparitor='Success' or 
+              (string($result/body)!=''
+               and string($result/errorMessage)=''
+               and string($comparitor)='' )">
+               <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:when test="$result[matches(errorMessage, 'Inca error')]">
               <xsl:value-of select="'incaErr'" />
