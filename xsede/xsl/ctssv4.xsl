@@ -20,8 +20,6 @@
   <xsl:include href="footer.xsl"/>
   <xsl:param name="url" />
 
-  <xsl:variable name="markOld" select="$url[matches(., 'markOld')]"/>
-
   <xsl:variable name="matchProd"
                 select="$url[matches(., 'reporterStatus=prod')]"/>
 
@@ -325,12 +323,10 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </a>
-              <xsl:if test="$url[matches(., 'markOld')]">
-                <!-- inca-common.xsl -->
-                <xsl:call-template name="markOld">
-                  <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
-                </xsl:call-template>
-              </xsl:if>
+              <!-- inca-common.xsl -->
+              <xsl:call-template name="markOld">
+                <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
+              </xsl:call-template>
             </td>
           </xsl:when>
           <!-- missing data -->

@@ -219,12 +219,10 @@
               <xsl:if test="string($env)!=''">
                 <br/><br/><table><tr><td class="clear"><pre><xsl:value-of select="$env"/></pre></td></tr></table>
               </xsl:if>
-              <xsl:if test="$url[matches(., 'markOld')]">
-                <!-- inca-common.xsl -->
-                <xsl:call-template name="markOld">
-                  <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
-                </xsl:call-template>
-              </xsl:if>
+              <!-- inca-common.xsl -->
+              <xsl:call-template name="markOld">
+                <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
+              </xsl:call-template>
             </td>
           </xsl:when>
           <!-- missing data -->

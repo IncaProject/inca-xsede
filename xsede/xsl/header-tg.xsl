@@ -110,17 +110,17 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld">
+                    <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds">
                       MDS
                     </a>
                     <ul>
                       <li>
-                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds&amp;markOld">
+                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds">
                           tg wide information services
                         </a>
                       </li>
                       <li>
-                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=repo&amp;suiteName=globus-mds-auth&amp;markOld">
+                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=repo&amp;suiteName=globus-mds-auth">
                           globus-mds-auth service
                         </a>
                       </li>
@@ -142,7 +142,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="xslt.jsp?markOld&amp;xsl=default.xsl&amp;resourceID=teragrid&amp;suiteName=security">
+                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=teragrid&amp;suiteName=security">
                           security
                         </a>
                       </li>

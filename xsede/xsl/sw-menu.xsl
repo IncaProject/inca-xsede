@@ -57,7 +57,6 @@
             <input type="hidden" name="suiteName" value="{$suiteName}"/>
             <input type="hidden" name="xmlFile" value="{$xmlFile}"/>
             <input type="hidden" name="xsl" value="swStack.xsl"/>
-            <input type="hidden" name="markOld" value=""/>
             <input type="submit" name="Submit" value="Submit"/></td>
         </tr></table>
     </form>

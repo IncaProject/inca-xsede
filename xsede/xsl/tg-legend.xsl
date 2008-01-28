@@ -72,12 +72,10 @@
                   <td class="timeOut"><font color="black">timeOut</font></td>
                   <td class="clear"><font color="black">reporter timed out</font></td>
                 </tr>
-                <xsl:if test="$markOld!=''">
-                  <tr valign="top">
-                    <td class="clear"><font color="black">*</font></td>
-                    <td class="clear"><font color="black">result is stale</font></td>
-                  </tr>
-                </xsl:if>
+                <tr valign="top">
+                  <td class="clear"><font color="black">*</font></td>
+                  <td class="clear"><font color="black">result is stale</font></td>
+                </tr>
               </table></td>
             </tr>
           </table>

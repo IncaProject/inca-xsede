@@ -134,12 +134,10 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </a>
-              <xsl:if test="$url[matches(., 'markOld')]">
-                <!-- inca-common.xsl -->
-                <xsl:call-template name="markOld">
-                  <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
-                </xsl:call-template>
-              </xsl:if>
+              <!-- inca-common.xsl -->
+              <xsl:call-template name="markOld">
+                <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
+              </xsl:call-template>
             </td>
           </xsl:when>
           <!-- missing data -->

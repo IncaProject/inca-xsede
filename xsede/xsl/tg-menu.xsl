@@ -62,7 +62,6 @@
             <input type="hidden" name="xmlFile" value="core.teragrid.org-4.0.0.xml"/>
             <input type="hidden" name="resourceID" value=""/>
             <input type="hidden" name="xsl" value="ctssv4.xsl"/>
-            <input type="hidden" name="markOld" value=""/>
             <input type="submit" name="Submit" value="Submit" onclick="setResourceAndXml()"/></td>
         </tr></table>
     </form>
