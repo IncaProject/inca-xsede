@@ -93,39 +93,36 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="numResource" select="count(/combo/resourceConfig)"/>
+    <xsl:variable name="numStack" select="count(/combo/stack)"/>
     <xsl:variable name="displayTesting" select="$url[matches(., 'supportLevel=testing')]"/>
     <xsl:choose>
       <xsl:when test="$numResource=1 and $displayTesting">
         <xsl:call-template name="printAllPackages">
-          <xsl:with-param
-              name="resources"
-              select="/combo/resourceConfig/resources/resource[name 
-                      and matches(name, $matchResources)]"/>
+          <xsl:with-param name="resources" select="/combo/resourceConfig/resources/resource[name and matches(name, $matchResources)]"/>
           <xsl:with-param name="cats" select="../../stack/category" />
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$numResource=1 and $numStack!=1">
+        <xsl:call-template name="printAllPackages">
+          <xsl:with-param name="resources" select="/combo/resourceConfig/resources/resource[name and not(matches(name, $matchResources))]"/>
+          <xsl:with-param name="cats" select="../stack/category" />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$numResource=1">
         <xsl:call-template name="printAllPackages">
-          <xsl:with-param
-              name="resources"
-              select="/combo/resourceConfig/resources/resource[name 
-                      and not(matches(name, $matchResources))]"/>
+          <xsl:with-param name="resources" select="/combo/resourceConfig/resources/resource[name and not(matches(name, $matchResources))]"/>
           <xsl:with-param name="cats" select="../../stack/category" />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$numResource!=1 and $displayTesting">
         <xsl:call-template name="printAllPackages">
-          <xsl:with-param name="resources"
-                          select="../resourceConfig/resources/resource[name
-                                  and matches(name, $matchResources)]"/>
+          <xsl:with-param name="resources" select="../resourceConfig/resources/resource[name and matches(name, $matchResources)]"/>
           <xsl:with-param name="cats" select="../stack/category" />
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="printAllPackages">
-          <xsl:with-param name="resources"
-                          select="../resourceConfig/resources/resource[name
-                                  and not(matches(name, $matchResources))]"/>
+          <xsl:with-param name="resources" select="../resourceConfig/resources/resource[name and not(matches(name, $matchResources))]"/>
           <xsl:with-param name="cats" select="../stack/category" />
         </xsl:call-template>
       </xsl:otherwise>
@@ -282,14 +279,12 @@
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
-            <xsl:when test="$comparitor='Success' or 
-              (string($result/body)!=''
-               and string($result/errorMessage)=''
-               and string($comparitor)='' )">
-               <xsl:value-of select="'pass'" />
-            </xsl:when>
             <xsl:when test="$result[matches(errorMessage, 'Inca error')]">
               <xsl:value-of select="'incaErr'" />
+            </xsl:when>
+            <xsl:when test="$result[matches(errorMessage,
+            'globusrun call timed out')]">
+              <xsl:value-of select="'timeOut'" />
             </xsl:when>
             <xsl:when test="$result[matches(errorMessage,
             'Time ran out')]">
@@ -298,6 +293,12 @@
             <xsl:when test="$result[matches(errorMessage,
             'Reporter exceeded usage limits')]">
               <xsl:value-of select="'timeOut'" />
+            </xsl:when>
+            <xsl:when test="$comparitor='Success' or 
+              (string($result/body)!=''
+               and string($result/errorMessage)=''
+               and string($comparitor)='' )">
+               <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="'error'" />
