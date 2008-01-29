@@ -43,6 +43,260 @@ to be 10 more than the number of reporter managers.  For example, if running 15 
 </para>
 </section>
 
+<section id="custom-notification">
+<title>Customizing Series Notification</title>
+  <para>
+  To customize the notification you receive whenever the result of a series
+  comparison changes, you can either modify the default Inca notification
+  scripts (found in the sbin/ subdirectory of your Inca Depot installation) or
+  write your own.  Set inca.incat.notifiers in your inca.property file to add a
+  new script to the options presented in the incat series dialog.  For example,
+  to add a script named "MyNotifier" to the options, you would add the
+  following line to inca.properties.
+  <screen>
+  inca.incat.notifiers=EmailNotifier,LogNotifier,MyNotifier
+  </screen>
+  </para><para>
+  The Inca Depot sets environment variables that provide information to the
+  notification script about the series and comparison, and the script can
+  incorporate these variables into its notification.  For example,
+  EmailNotifier uses several of these variables in constructing the email body.
+  These are the environment variable names that the Depot defines:
+  <table><title>Email Macro Names</title>
+  <tgroup cols="2">
+  <thead>
+    <row>
+      <entry><para>Name</para></entry>
+      <entry><para>Meaning</para></entry>
+    </row>
+  </thead>
+  <tbody>
+<!--
+NOTE: Some available email macros have little practical use for end users.  The
+documentation for these is commented below to avoid cluttering the table.
+-->
+<!--
+    <row>
+      <entry><para>activated</para></entry>
+      <entry><para>the suite version where this series was last activated</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incaargs</para></entry>
+      <entry><para>the arguments passed to the reporter</para></entry>
+    </row>
+    <row>
+      <entry><para>incabody</para></entry>
+      <entry><para>the report body</para></entry>
+    </row>
+    <row>
+      <entry><para>incacollected</para></entry>
+      <entry><para>the time the reporter ran</para></entry>
+    </row>
+    <row>
+      <entry><para>incacommited</para></entry>
+      <entry><para>the time the report was entered in the Depot</para></entry>
+    </row>
+    <row>
+      <entry><para>incacomparison</para></entry>
+      <entry><para>the comparison specified for this series</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>comparisonId</para></entry>
+      <entry><para>the Inca database id of the comparison</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incacomparisonResult</para></entry>
+      <entry><para>the output of the comparison for this report, typically "SUCCESS" or "FAIL" followed by a list of identifiers</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>comparitor</para></entry>
+      <entry><para>the name of the comparitor class used with this series ("ExprComparitor")</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incacompleted</para></entry>
+      <entry><para>whether or not the reporter completed execution</para></entry>
+    </row>
+    <row>
+      <entry><para>incaconfigId</para></entry>
+      <entry><para>the Inca database id of the series configuration</para></entry>
+    </row>
+    <row>
+      <entry><para>incacontext</para></entry>
+      <entry><para>the complete command, including arguments, used to execute the reporter</para></entry>
+    </row>
+    <row>
+      <entry><para>incacpuLimit</para></entry>
+      <entry><para>the maximum CPU seconds allowed for this reporter to execute</para></entry>
+    </row>
+    <row>
+      <entry><para>incacpuUsage</para></entry>
+      <entry><para>the actual CPU seconds used by this reporter execution</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>incadeactivated</para></entry>
+      <entry><para>the suite version where this series was last deactivated, -1 if never</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incaerrorMessage</para></entry>
+      <entry><para>any failure message recorded by the reporter</para></entry>
+    </row>
+    <row>
+      <entry><para>incahostname</para></entry>
+      <entry><para>the name of the host where the reporter executed</para></entry>
+    </row>
+    <row>
+      <entry><para>incainstanceId</para></entry>
+      <entry><para>the Inca database id of this reporter execution</para></entry>
+    </row>
+    <row>
+      <entry><para>incalog</para></entry>
+      <entry><para>log messages recorded by the reporter</para></entry>
+    </row>
+    <row>
+      <entry><para>incamemoryLimit</para></entry>
+      <entry><para>the maximum memory MB allowed for this reporter to execute</para></entry>
+    </row>
+    <row>
+      <entry><para>incamemoryUsage</para></entry>
+      <entry><para>the actual memory MB used by this reporter execution</para></entry>
+    </row>
+    <!--
+    <row>
+      <entry><para>incanice</para></entry>
+      <entry><para>whether to run this reporter nice -9 (unused)</para></entry>
+    </row>
+    -->
+    <row>
+      <entry><para>incanickname</para></entry>
+      <entry><para>the nickname of this series</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>incanotifier</para></entry>
+      <entry><para>the name of the notifier script</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incareportId</para></entry>
+      <entry><para>the Inca database id of the report</para></entry>
+    </row>
+    <row>
+      <entry><para>incareporter</para></entry>
+      <entry><para>the name of the reporter</para></entry>
+    </row>
+    <row>
+      <entry><para>incareporterPath</para></entry>
+      <entry><para>the path to the reporter on the host where it executed</para></entry>
+    </row>
+    <row>
+      <entry><para>incaresource</para></entry>
+      <entry><para>the name of the Inca resource where the reporter executed</para></entry>
+    </row>
+    <row>
+      <entry><para>incaresult</para></entry>
+      <entry><para>"PASS" or "FAIL", depending on whether or not the reporter completed execution</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>incarunInfoId</para></entry>
+      <entry><para>the Inca database id of runtime information for this reporter execution</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incaschedule</para></entry>
+      <entry><para>the cron spec for this series' schedule</para></entry>
+    </row>
+    <row>
+      <entry><para>incaseriesId</para></entry>
+      <entry><para>the Inca database id of this series</para></entry>
+    </row>
+    <row>
+      <entry><para>incastderr</para></entry>
+      <entry><para>any text written by the reporter to stderr</para></entry>
+    </row>
+<!--
+    <row>
+      <entry><para>incatarget</para></entry>
+      <entry><para>the notification script parameters</para></entry>
+    </row>
+-->
+    <row>
+      <entry><para>incauri</para></entry>
+      <entry><para>the reporter URI</para></entry>
+    </row>
+    <row>
+      <entry><para>incaversion</para></entry>
+      <entry><para>the reporter version</para></entry>
+    </row>
+    <row>
+      <entry><para>incawallClockLimit</para></entry>
+      <entry><para>the maximum wall clock seconds allowed for this reporter to execute</para></entry>
+    </row>
+    <row>
+      <entry><para>incawallClockUsage</para></entry>
+      <entry><para>the actual wall clock seconds used by this reporter execution</para></entry>
+    </row>
+    <row>
+      <entry><para>incaworkingDir</para></entry>
+      <entry><para>the working directory for the reporter manager on the host where the reporter executed</para></entry>
+    </row>
+  </tbody>
+  </tgroup>
+  </table>
+  </para>
+</section>
+
+<section id="report-filtering">
+<title>Report Filtering</title>
+<para>
+The Inca Depot allows you to filtering incoming reports before information
+about them is placed in the Inca database.  To do so, you need to write a class
+that extends edu.sdsc.inca.depot.util.ReportFilter and set the property
+inca.depot.reportFilter to the name of the class.
+</para><para>
+An Inca report consists of five elements, all strings: the execution context
+(reporter name and arguments), the name of the resource where the reporter ran,
+the reporter stdout (i.e., report), the reporter stderr, and a report of the
+system resources used by the reporter execution.  Of these, stderr may be null;
+the other four are required.
+</para><para>
+The ReportFilter class provides set and get methods for each of these five
+elements.  If the inca.depot.reportFilter property is set, the Inca Depot
+creates an instance of the named class, then calls each of its set and get
+methods in turn to allow it to make changes to any of the elements.  Changes
+made by the filter are incorporated into the information stored in the Depot
+database.  If a ReportFilter get method for any of the elements other than
+stderr returns null, the Depot discards the report.
+</para><para>
+For example, this class directs the Depot to ignore reports that arrive from
+blue.ufo.edu and modifies report stderr values that contain particular messages.
+</para><para>
+<screen>
+public class MyReportFilter extends edu.sdsc.inca.depot.util.ReportFilter {
+
+  public String getResource() {
+    String resource = super.getResource();
+    return resource.equals("blue.ufo.edu") ? null : resource;
+  }
+
+  public String getStderr() {
+    String stderr = super.getStderr();
+    stderr = stderr.replaceAll("Try again.*\n", "");
+    return stderr;
+  }
+
+}
+</screen>
+</para>
+</section>
+
 <section id="db-config">
 <title>Depot Database Configuration</title>
 <para>The Inca depot uses Hibernate to interface to a relational database backend for 
