@@ -874,8 +874,9 @@ TARGET="_top"
       </P
 ><P
 >The section for historical data in the
-        default page header is a form to select series from the
-        sampleSuite suite.  To link other historical
+        default page header has links to a series graphing form
+         and a sample summary report for sampleSuite series.  
+       To link other historical
       pages under this heading (e.g. forms to select series from
         other suites, customize the
       <TT
@@ -886,8 +887,18 @@ CLASS="FILENAME"
 HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
 >Section 6.5.3</A
 >.</P
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="GRAPH-SERIES"
+>6.2.1. Graph Series Result History</A
+></H3
 ><P
->If <TT
+>Historical pass/fail status graphs and error frequency information can be 
+       displayed by the default consumer.
+       If <TT
 CLASS="FILENAME"
 >graph.xsl</TT
 > is used as the xsl parameter for the
@@ -965,6 +976,45 @@ ALIGN="CENTER"></P
 ></DIV
 ><DIV
 CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="SUMMARY-REPORT"
+>6.2.2. Summary Reports</A
+></H3
+><P
+>Historical summary reports with pass/fail status and error information 
+          can also be created for sets of series.  Summary reports are generated 
+        with <TT
+CLASS="FILENAME"
+>report.jsp</TT
+> and configured with 
+       <TT
+CLASS="FILENAME"
+>webapps/xml/statusReport.xml</TT
+>.  As a summary report example, the default consumer groups different combinations 
+       of sampleSuite series in <TT
+CLASS="FILENAME"
+>statusReport.xml</TT
+> and displays the past two weeks 
+       of results using <TT
+CLASS="FILENAME"
+>report.jsp</TT
+>'s startDate param.   Each set of series has a title for its grouping, 
+       e.g. Software Deployment Tests, and the series nickname, resource name, and report label for each series in the group. 
+         Depending on database size and the number of series included, summary reports may benefit from being pre-generated.
+       </P
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summary_report.jpg"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
 ><H2
 CLASS="SECTION"
 ><A
@@ -997,7 +1047,7 @@ NAME="FILE-DESC"
 >6.4. Description of Data Consumer Files</A
 ></H2
 ><P
->      There are four main JSP contained in the
+>      There are five main JSP contained in the
       <TT
 CLASS="FILENAME"
 >inca.war</TT
@@ -1009,11 +1059,11 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN783"
+NAME="AEN631"
 ></A
 ><P
 ><B
->Table 3. Default Consumer JSP</B
+>Table 2. Default Consumer JSP</B
 ></P
 ><TABLE
 BORDER="1"
@@ -1270,7 +1320,12 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->configID: comma separated list of configuration IDs to
+>testName: comma separated list of series nicknames to
+                  get data for</P
+></LI
+><LI
+><P
+>resourceName: comma separated list of resources to
                   get data for</P
 ></LI
 ><LI
@@ -1348,9 +1403,67 @@ TARGET="_top"
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/graph.jsp?configID=1"
+HREF="http://localhost:8080/inca/graph.jsp?testName=ant_version&#38;resourceName=localResource"
 TARGET="_top"
->http://localhost:8080/inca/graph.jsp?configID=1</A
+>http://localhost:8080/inca/graph.jsp?testName=ant_version&#38;resourceName=localResource</A
+></P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>report.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/summary_report_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Summary report with graphs of pass/fail status and error frequency.
+              </P
+></TD
+><TD
+><P
+>Depot's <A
+HREF="http://inca.sdsc.edu/releases/2.3/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)"
+TARGET="_top"
+>queryHql()</A
+>
+                function to query for historical infomation.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>startDate: start date for summary report (gets complete history by default)</P
+></LI
+><LI
+><P
+>endDate: end date for summary report (current date by default)</P
+></LI
+><LI
+><P
+>xmlFile: name of xml file to configure report (<TT
+CLASS="FILENAME"
+>webapps/xml/statusReport.xml</TT
+> by default)</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/report.jsp"
+TARGET="_top"
+>http://localhost:8080/inca/report.jsp</A
 ></P
 ></TD
 ></TR
@@ -1370,11 +1483,11 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN914"
+NAME="AEN785"
 ></A
 ><P
 ><B
->Table 4. Default Consumer XSL</B
+>Table 3. Default Consumer XSL</B
 ></P
 ><TABLE
 BORDER="1"
