@@ -209,8 +209,450 @@ CLASS="SECTION"
 ><H2
 CLASS="SECTION"
 ><A
+NAME="CUSTOM-NOTIFICATION"
+>11.2. Customizing Series Notification</A
+></H2
+><P
+>  To customize the notification you receive whenever the result of a series
+  comparison changes, you can either modify the default Inca notification
+  scripts (found in the sbin/ subdirectory of your Inca Depot installation) or
+  write your own.  Set inca.incat.notifiers in your inca.property file to add a
+  new script to the options presented in the incat series dialog.  For example,
+  to add a script named "MyNotifier" to the options, you would add the
+  following line to inca.properties.
+  <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  inca.incat.notifiers=EmailNotifier,LogNotifier,MyNotifier
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+><P
+>  The Inca Depot sets environment variables that provide information to the
+  notification script about the series and comparison, and the script can
+  incorporate these variables into its notification.  For example,
+  EmailNotifier uses several of these variables in constructing the email body.
+  These are the environment variable names that the Depot defines:
+  <DIV
+CLASS="TABLE"
+><A
+NAME="AEN1422"
+></A
+><P
+><B
+>Table 7. Email Macro Names</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Name</P
+></TH
+><TH
+><P
+>Meaning</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>incaargs</P
+></TD
+><TD
+><P
+>the arguments passed to the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incabody</P
+></TD
+><TD
+><P
+>the report body</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacollected</P
+></TD
+><TD
+><P
+>the time the reporter ran</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacommited</P
+></TD
+><TD
+><P
+>the time the report was entered in the Depot</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacomparison</P
+></TD
+><TD
+><P
+>the comparison specified for this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacomparisonResult</P
+></TD
+><TD
+><P
+>the output of the comparison for this report, typically "SUCCESS" or "FAIL" followed by a list of identifiers</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacompleted</P
+></TD
+><TD
+><P
+>whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaconfigId</P
+></TD
+><TD
+><P
+>the Inca database id of the series configuration</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacontext</P
+></TD
+><TD
+><P
+>the complete command, including arguments, used to execute the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacpuLimit</P
+></TD
+><TD
+><P
+>the maximum CPU seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacpuUsage</P
+></TD
+><TD
+><P
+>the actual CPU seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaerrorMessage</P
+></TD
+><TD
+><P
+>any failure message recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incahostname</P
+></TD
+><TD
+><P
+>the name of the host where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incainstanceId</P
+></TD
+><TD
+><P
+>the Inca database id of this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incalog</P
+></TD
+><TD
+><P
+>log messages recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incamemoryLimit</P
+></TD
+><TD
+><P
+>the maximum memory MB allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incamemoryUsage</P
+></TD
+><TD
+><P
+>the actual memory MB used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incanickname</P
+></TD
+><TD
+><P
+>the nickname of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareportId</P
+></TD
+><TD
+><P
+>the Inca database id of the report</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareporter</P
+></TD
+><TD
+><P
+>the name of the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareporterPath</P
+></TD
+><TD
+><P
+>the path to the reporter on the host where it executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaresource</P
+></TD
+><TD
+><P
+>the name of the Inca resource where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaresult</P
+></TD
+><TD
+><P
+>"PASS" or "FAIL", depending on whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaschedule</P
+></TD
+><TD
+><P
+>the cron spec for this series' schedule</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaseriesId</P
+></TD
+><TD
+><P
+>the Inca database id of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incastderr</P
+></TD
+><TD
+><P
+>any text written by the reporter to stderr</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incauri</P
+></TD
+><TD
+><P
+>the reporter URI</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaversion</P
+></TD
+><TD
+><P
+>the reporter version</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incawallClockLimit</P
+></TD
+><TD
+><P
+>the maximum wall clock seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incawallClockUsage</P
+></TD
+><TD
+><P
+>the actual wall clock seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaworkingDir</P
+></TD
+><TD
+><P
+>the working directory for the reporter manager on the host where the reporter executed</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+>
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="REPORT-FILTERING"
+>11.3. Report Filtering</A
+></H2
+><P
+>The Inca Depot allows you to filtering incoming reports before information
+about them is placed in the Inca database.  To do so, you need to write a class
+that extends edu.sdsc.inca.depot.util.ReportFilter and set the property
+inca.depot.reportFilter to the name of the class.</P
+><P
+>An Inca report consists of five elements, all strings: the execution context
+(reporter name and arguments), the name of the resource where the reporter ran,
+the reporter stdout (i.e., report), the reporter stderr, and a report of the
+system resources used by the reporter execution.  Of these, stderr may be null;
+the other four are required.</P
+><P
+>The ReportFilter class provides set and get methods for each of these five
+elements.  If the inca.depot.reportFilter property is set, the Inca Depot
+creates an instance of the named class, then calls each of its set and get
+methods in turn to allow it to make changes to any of the elements.  Changes
+made by the filter are incorporated into the information stored in the Depot
+database.  If a ReportFilter get method for any of the elements other than
+stderr returns null, the Depot discards the report.</P
+><P
+>For example, this class directs the Depot to ignore reports that arrive from
+blue.ufo.edu and modifies report stderr values that contain particular messages.</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>public class MyReportFilter extends edu.sdsc.inca.depot.util.ReportFilter {
+
+  public String getResource() {
+    String resource = super.getResource();
+    return resource.equals("blue.ufo.edu") ? null : resource;
+  }
+
+  public String getStderr() {
+    String stderr = super.getStderr();
+    stderr = stderr.replaceAll("Try again.*\n", "");
+    return stderr;
+  }
+
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
 NAME="DB-CONFIG"
->11.2. Depot Database Configuration</A
+>11.4. Depot Database Configuration</A
 ></H2
 ><P
 >The Inca depot uses Hibernate to interface to a relational database backend for 
@@ -372,7 +814,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-MANUAL"
->11.3. Manual Access Method</A
+>11.5. Manual Access Method</A
 ></H2
 ><P
 >A resource administrator may prefer to have local control of the
@@ -610,8 +1052,8 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->Enter a password for your key (to use when you start up the
-    reporter manager).  Two files will be created in 
+>Enter a password for your key (to use when you start up
+    the reporter manager).  Two files will be created in 
     <TT
 CLASS="FILENAME"
 >$RM_INSTALL_DIR/etc</TT
@@ -985,7 +1427,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW"
->11.4. Manual Run Now</A
+>11.6. Manual Run Now</A
 ></H2
 ><P
 >Oftentimes resource or system administrators will want to show that a
@@ -1001,7 +1443,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-CONFIG"
->11.4.1. Configuring the Manual Run Now Script</A
+>11.6.1. Configuring the Manual Run Now Script</A
 ></H3
 ><P
 >The instructions below need to be done *once* by the Inca administrator on each 
@@ -1180,7 +1622,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-USING"
->11.4.2. Using the Manual Run Now Script</A
+>11.6.2. Using the Manual Run Now Script</A
 ></H3
 ><P
 ></P
@@ -1430,7 +1872,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-SRCDIST"
->11.5. Source Distributions</A
+>11.7. Source Distributions</A
 ></H2
 ><P
 >  Source distributions of the Inca components are also available.  The 
@@ -1444,7 +1886,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1736"
+NAME="AEN1785"
 ></A
 ><P
 ><B

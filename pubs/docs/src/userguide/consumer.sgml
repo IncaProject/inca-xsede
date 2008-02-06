@@ -388,13 +388,19 @@
         has a comparitor) or the reporter's exit status.
       </para>
       <para>The section for historical data in the
-        default page header is a form to select series from the
-        sampleSuite suite.  To link other historical
+        default page header has links to a series graphing form
+         and a sample summary report for sampleSuite series.  
+       To link other historical
       pages under this heading (e.g. forms to select series from
         other suites, customize the
       <filename>header.xsl</filename> file as described in
       <xref linkend="custom-html-header">.</para>
-      <para>If <filename>graph.xsl</filename> is used as the xsl parameter for the
+
+    <section id="graph-series">
+      <title>Graph Series Result History</title>
+      <para>Historical pass/fail status graphs and error frequency information can be 
+       displayed by the default consumer.
+       If <filename>graph.xsl</filename> is used as the xsl parameter for the
         <filename>xslt.jsp</filename> script that displays suite results,
         a form will be generated to select suite series to graph.  For
         example, <ulink url="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid">http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&amp;suiteName=sampleSuite&amp;resourceID=defaultGrid</ulink> will generate:
@@ -435,8 +441,25 @@
       <para>Graph pages for individual series are also linked from the report details pages.
         <graphic fileref="figures/consumer/details_graph.png" align="center"></graphic>
        </para>
-
     </section>
+    
+    <section id="summary-report">
+      <title>Summary Reports</title>
+      <para>Historical summary reports with pass/fail status and error information 
+          can also be created for sets of series.  Summary reports are generated 
+        with <filename>report.jsp</filename> and configured with 
+       <filename>webapps/xml/statusReport.xml</filename>.  As a summary report example, the default consumer groups different combinations 
+       of sampleSuite series in <filename>statusReport.xml</filename> and displays the past two weeks 
+       of results using <filename>report.jsp</filename>'s startDate param.   Each set of series has a title for its grouping, 
+       e.g. Software Deployment Tests, and the series nickname, resource name, and report label for each series in the group. 
+         Depending on database size and the number of series included, summary reports may benefit from being pre-generated.
+       </para>
+       <para>
+        <graphic fileref="figures/consumer/summary_report.jpg" align="center"></graphic>
+       </para>
+    </section>
+  
+  </section>
 
   <section id="info">
       <title>Info Pages</title>
@@ -453,7 +476,7 @@
     <title>Description of Data Consumer Files</title>
 
     <para>
-      There are four main JSP contained in the
+      There are five main JSP contained in the
       <filename>inca.war</filename>.
       The JSP generally return XML from depot and agent functions and
       apply XSL stylesheets to display HTML.  If the "xsl" parameter
@@ -561,7 +584,11 @@
               </para></entry>
             <entry><itemizedList>
                 <listItem>
-                  <para>configID: comma separated list of configuration IDs to
+                  <para>testName: comma separated list of series nicknames to
+                  get data for</para>
+                </listItem>
+                <listItem>
+                  <para>resourceName: comma separated list of resources to
                   get data for</para>
                 </listItem>
                 <listItem>
@@ -618,7 +645,30 @@
                 <listItem>
                   <para>map: boolean for showing graph links and mouseovers</para>
                 </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/graph.jsp?configID=1">http://localhost:8080/inca/graph.jsp?configID=1</ulink></para></entry>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/graph.jsp?testName=ant_version&amp;resourceName=localResource">http://localhost:8080/inca/graph.jsp?testName=ant_version&amp;resourceName=localResource</ulink></para></entry>
+          </row>
+          
+          <row valign="top">
+            <entry><para><filename>report.jsp</filename>
+                <graphic fileref="figures/consumer/summary_report_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Summary report with graphs of pass/fail status and error frequency.
+              </para></entry>
+            <entry><para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
+                function to query for historical infomation.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>startDate: start date for summary report (gets complete history by default)</para>
+                </listItem>
+                <listItem>
+                  <para>endDate: end date for summary report (current date by default)</para>
+                </listItem>
+                <listItem>
+                  <para>xmlFile: name of xml file to configure report (<filename>webapps/xml/statusReport.xml</filename> by default)</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/report.jsp">http://localhost:8080/inca/report.jsp</ulink></para></entry>
           </row>
 
         </tbody>
