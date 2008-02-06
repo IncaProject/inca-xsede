@@ -263,6 +263,12 @@
         <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="exit">
           <xsl:choose>
+            <xsl:when test="$comparitor='Success' or 
+              (string($result/body)!=''
+               and string($result/errorMessage)=''
+               and string($comparitor)='' )">
+               <xsl:value-of select="'pass'" />
+            </xsl:when>
             <xsl:when test="$tickets/ticket[matches(resource, $thisResource)]">
               <xsl:value-of select="'tkt-'" />
               <xsl:value-of select="$tickets/ticket[matches(resource,
@@ -293,12 +299,6 @@
             <xsl:when test="$result[matches(errorMessage,
             'Reporter exceeded usage limits')]">
               <xsl:value-of select="'timeOut'" />
-            </xsl:when>
-            <xsl:when test="$comparitor='Success' or 
-              (string($result/body)!=''
-               and string($result/errorMessage)=''
-               and string($comparitor)='' )">
-               <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="'error'" />
