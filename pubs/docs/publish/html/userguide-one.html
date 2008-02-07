@@ -258,6 +258,11 @@ HREF="#REPORTER-OUTPUT"
 HREF="#REPORTER-API"
 >Reporter APIs</A
 ></DT
+><DT
+>7.2.4. <A
+HREF="#WRITING-TIPS"
+>Reporter Writing Tips</A
+></DT
 ></DL
 ></DD
 ><DT
@@ -675,8 +680,7 @@ NAME="USERGUIDE-REQUIREMENTS"
 ></LI
 ></UL
 ><P
->      For each resource Inca will be monitoring, the following is
-      required:
+>      Each Unix OS resource Inca will run a reporter manager on to monitor should have:
     </P
 ><P
 ></P
@@ -700,6 +704,36 @@ NAME="USERGUIDE-REQUIREMENTS"
 ><LI
 ><P
 >a C compiler</P
+></LI
+></UL
+><P
+>      Each Windows OS resource Inca will run a reporter manager on to monitor should have cygwin installed with the following modules (tested on XP):</P
+><P
+></P
+><UL
+><LI
+><P
+>ssh server</P
+></LI
+><LI
+><P
+>perl</P
+></LI
+><LI
+><P
+>make</P
+></LI
+><LI
+><P
+>gcc</P
+></LI
+><LI
+><P
+>openssl &#38; openssl-dev</P
+></LI
+><LI
+><P
+>vim (not required for reporter manager but generally useful)</P
 ></LI
 ></UL
 ></DIV
@@ -1860,7 +1894,7 @@ HREF="#USERGUIDE-INCAT-COMPARISON"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN304"
+NAME="AEN318"
 ></A
 ><P
 ><B
@@ -3279,10 +3313,10 @@ ALIGN="CENTER"></P
 >
       </P
 ><P
->To improve query speed, only two weeks of data are returned
+>Only two weeks of data are returned
         initially.  To query for all results, clear the "start date"
         field in the "customize graph" section and click "re-graph".
-        Also to improve graph generate speed, data point
+        To retrieve graphs more quickly, data point
         mouseover text and links to
         report details are turned off for the pass/fail graph.
         The data points can be made interactive by choosing "show mouseovers/hyperlinks"
@@ -3328,21 +3362,41 @@ NAME="SUMMARY-REPORT"
         with <TT
 CLASS="FILENAME"
 >report.jsp</TT
-> and configured with 
+> and configured by default with 
        <TT
 CLASS="FILENAME"
 >webapps/xml/statusReport.xml</TT
->.  As a summary report example, the default consumer groups different combinations 
-       of sampleSuite series in <TT
+>.  
+       </P
+><P
+><IMG
+SRC="figures/consumer/menu_summaryreport.png"
+ALIGN="CENTER"></P
+><P
+>As a summary report example, the default consumer groups
+        different combinations of sampleSuite series in
+        <TT
 CLASS="FILENAME"
 >statusReport.xml</TT
 > and displays the past two weeks 
        of results using <TT
 CLASS="FILENAME"
 >report.jsp</TT
->'s startDate param.   Each set of series has a title for its grouping, 
-       e.g. Software Deployment Tests, and the series nickname, resource name, and report label for each series in the group. 
-         Depending on database size and the number of series included, summary reports may benefit from being pre-generated.
+>'s startDate param.
+       Each set of series has a title (e.g. Software Deployment Tests) for its
+       grouping and the series nickname, resource name, and report label for
+       each series in the group.  Create one or more custom reports by editing
+       the groupings and titles.  The width and height of the graphs can also
+       be adjusted in <TT
+CLASS="FILENAME"
+>webapps/xml/statusReport.xml</TT
+>.  
+       See <A
+HREF="#FILE-DESC"
+>Section 6.4</A
+> for more
+       details.  Depending on database size and the number of series
+       included, summary reports may benefit from being pre-generated.
        </P
 ><P
 >        <P
@@ -3399,7 +3453,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN631"
+NAME="AEN649"
 ></A
 ><P
 ><B
@@ -3823,7 +3877,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN785"
+NAME="AEN803"
 ></A
 ><P
 ><B
@@ -5148,7 +5202,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1059"
+NAME="AEN1077"
 ></A
 ><P
 ><B
@@ -5850,6 +5904,115 @@ $reporter-&#62;print();</PRE
 ></TABLE
 ></P
 ></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="WRITING-TIPS"
+>7.2.4. Reporter Writing Tips</A
+></H4
+><P
+>In general using the reporter APIs described in 
+<A
+HREF="#REPORTER-API"
+>Section 7.2.3</A
+> will help to produce the most 
+efficient reporter code.  There are additional considerations when
+writing reporters that:
+<P
+></P
+><UL
+><LI
+><P
+>create temporary files and directories</P
+></LI
+><LI
+><P
+>cd to directories with variable names</P
+></LI
+><LI
+><P
+>include variable information like timestamps or PIDs in the
+exit error message</P
+></LI
+></UL
+></P
+><P
+>The perl APIs offer a function called "tempFile" to 
+remove temporary files or directories upon exit.  If the tempFile function is used then 
+additional code to remove temporary files or directories (e.g. unlink or rm)
+is not required.  The reporter below uses the tempFile function to remove 
+the temp $scratchDir it creates.  If a reporter changes directories to one whose 
+name is variable, like the one below that includes a PID, it's good practice 
+to have the reporter change back to the original directory before exiting.  If 
+the reporter does not return to the original directory and the directory it changes to contains 
+a PID, for example, a report will be created in the database each time the reporter runs (one 
+for each reporter working dirctory).  For similar reasons, it's best practice never to use a 
+PID or variable information as a reporter argument value or to include PIDs or timestamps in 
+error messages.  If a reporter error message may contain variable information, a function to replace 
+the variable can be written to normalize the error (like the "failClean" function in the reporter below).</P
+><P
+> <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Date::Parse;
+use Cwd;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name =&#62; 'security.ca.unit',
+  version =&#62; 9,
+  description =&#62; 'Checks whether the CA certificates or CRLs have expired',
+  unit_name =&#62; 'caCertNCrlExpire'
+);
+
+ ...
+
+my $origDir = getcwd();
+my $scratchDir = "/tmp/security.ca.unit.$$";
+if ( ! mkdir($scratchDir) ) {
+  failClean("Cannot mkdir scratch dir $scratchDir"); 
+}
+$reporter-&#62;tempFile( $scratchDir );
+if ( ! chdir($scratchDir) ) {
+  failClean("Cannot change to scratch dir $scratchDir"); 
+}
+
+ ...
+
+if ($err ne ""){
+  failClean($err);
+} else {
+  $reporter-&#62;unitSuccess();
+  chdir($origDir);
+  $reporter-&#62;print();
+}
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
+  $err =~ s/$$/PID/g;
+  chdir($origDir);
+  $reporter-&#62;failPrintAndExit($err);
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -6052,7 +6215,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1268"
+NAME="AEN1300"
 ></A
 ><P
 ><B
@@ -6273,7 +6436,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1315"
+NAME="AEN1347"
 ></A
 ><P
 ><B
@@ -6778,7 +6941,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1422"
+NAME="AEN1454"
 ></A
 ><P
 ><B
@@ -8417,7 +8580,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1785"
+NAME="AEN1817"
 ></A
 ><P
 ><B

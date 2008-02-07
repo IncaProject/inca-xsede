@@ -435,7 +435,79 @@ $reporter->print();
 </screen>
 </para>
 
-</section>
+</section> 
+<section id="writing-tips"> 
+<title>Reporter Writing Tips</title>
+<para>In general using the reporter APIs described in 
+<xref linkend="reporter-api"> will help to produce the most 
+efficient reporter code.  There are additional considerations when
+writing reporters that:
+<itemizedList>
+<listItem><para>create temporary files and directories</para></listItem>
+<listItem><para>cd to directories with variable names</para></listItem>
+<listItem><para>include variable information like timestamps or PIDs in the
+exit error message</para></listItem>
+</itemizedList>
+</para>
+<para>The perl APIs offer a function called "tempFile" to 
+remove temporary files or directories upon exit.  If the tempFile function is used then 
+additional code to remove temporary files or directories (e.g. unlink or rm)
+is not required.  The reporter below uses the tempFile function to remove 
+the temp $scratchDir it creates.  If a reporter changes directories to one whose 
+name is variable, like the one below that includes a PID, it's good practice 
+to have the reporter change back to the original directory before exiting.  If 
+the reporter does not return to the original directory and the directory it changes to contains 
+a PID, for example, a report will be created in the database each time the reporter runs (one 
+for each reporter working dirctory).  For similar reasons, it's best practice never to use a 
+PID or variable information as a reporter argument value or to include PIDs or timestamps in 
+error messages.  If a reporter error message may contain variable information, a function to replace 
+the variable can be written to normalize the error (like the "failClean" function in the reporter below).
+</para>
+<para> <screen>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Date::Parse;
+use Cwd;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'security.ca.unit',
+  version => 9,
+  description => 'Checks whether the CA certificates or CRLs have expired',
+  unit_name => 'caCertNCrlExpire'
+);
+
+ ...
+
+my $origDir = getcwd();
+my $scratchDir = "/tmp/security.ca.unit.$$";
+if ( ! mkdir($scratchDir) ) {
+  failClean("Cannot mkdir scratch dir $scratchDir"); 
+}
+$reporter->tempFile( $scratchDir );
+if ( ! chdir($scratchDir) ) {
+  failClean("Cannot change to scratch dir $scratchDir"); 
+}
+
+ ...
+
+if ($err ne ""){
+  failClean($err);
+} else {
+  $reporter->unitSuccess();
+  chdir($origDir);
+  $reporter->print();
+}
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
+  $err =~ s/$$/PID/g;
+  chdir($origDir);
+  $reporter->failPrintAndExit($err);
+}</screen></para>
+  </section>
 </section>
 
 <section id="reporter-repositories">

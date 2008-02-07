@@ -149,7 +149,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1059"
+NAME="AEN1077"
 ></A
 ><P
 ><B
@@ -845,6 +845,115 @@ $reporter-&#62;processArgv(@ARGV);
 
 $reporter-&#62;setVersionByExecutable('gcc -dumpversion');
 $reporter-&#62;print();</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="WRITING-TIPS"
+>7.2.4. Reporter Writing Tips</A
+></H3
+><P
+>In general using the reporter APIs described in 
+<A
+HREF="userguide-reporters.html#REPORTER-API"
+>Section 7.2.3</A
+> will help to produce the most 
+efficient reporter code.  There are additional considerations when
+writing reporters that:
+<P
+></P
+><UL
+><LI
+><P
+>create temporary files and directories</P
+></LI
+><LI
+><P
+>cd to directories with variable names</P
+></LI
+><LI
+><P
+>include variable information like timestamps or PIDs in the
+exit error message</P
+></LI
+></UL
+></P
+><P
+>The perl APIs offer a function called "tempFile" to 
+remove temporary files or directories upon exit.  If the tempFile function is used then 
+additional code to remove temporary files or directories (e.g. unlink or rm)
+is not required.  The reporter below uses the tempFile function to remove 
+the temp $scratchDir it creates.  If a reporter changes directories to one whose 
+name is variable, like the one below that includes a PID, it's good practice 
+to have the reporter change back to the original directory before exiting.  If 
+the reporter does not return to the original directory and the directory it changes to contains 
+a PID, for example, a report will be created in the database each time the reporter runs (one 
+for each reporter working dirctory).  For similar reasons, it's best practice never to use a 
+PID or variable information as a reporter argument value or to include PIDs or timestamps in 
+error messages.  If a reporter error message may contain variable information, a function to replace 
+the variable can be written to normalize the error (like the "failClean" function in the reporter below).</P
+><P
+> <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Date::Parse;
+use Cwd;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name =&#62; 'security.ca.unit',
+  version =&#62; 9,
+  description =&#62; 'Checks whether the CA certificates or CRLs have expired',
+  unit_name =&#62; 'caCertNCrlExpire'
+);
+
+ ...
+
+my $origDir = getcwd();
+my $scratchDir = "/tmp/security.ca.unit.$$";
+if ( ! mkdir($scratchDir) ) {
+  failClean("Cannot mkdir scratch dir $scratchDir"); 
+}
+$reporter-&#62;tempFile( $scratchDir );
+if ( ! chdir($scratchDir) ) {
+  failClean("Cannot change to scratch dir $scratchDir"); 
+}
+
+ ...
+
+if ($err ne ""){
+  failClean($err);
+} else {
+  $reporter-&#62;unitSuccess();
+  chdir($origDir);
+  $reporter-&#62;print();
+}
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
+  $err =~ s/$$/PID/g;
+  chdir($origDir);
+  $reporter-&#62;failPrintAndExit($err);
+}</PRE
 ></FONT
 ></TD
 ></TR
