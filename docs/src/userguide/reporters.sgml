@@ -449,12 +449,14 @@ writing reporters that:
 exit error message</para></listItem>
 </itemizedList>
 </para>
-<para>The perl APIs offer a function called "tempFile" to 
-remove temporary files or directories upon exit.  If the tempFile function is used then 
+<para>For reporters that create temporary files or directories, the perl APIs offer 
+a function called "tempFile" to remove them.  If the tempFile function is used then 
 additional code to remove temporary files or directories (e.g. unlink or rm)
 is not required.  The reporter below uses the tempFile function to remove 
-the temp $scratchDir it creates.  If a reporter changes directories to one whose 
-name is variable, like the one below that includes a PID, it's good practice 
+the temp $scratchDir it creates.  
+</para>
+<para>
+If a reporter changes directories to one whose name is variable, like the one below that includes a PID, it's good practice 
 to have the reporter change back to the original directory before exiting.  If 
 the reporter does not return to the original directory and the directory it changes to contains 
 a PID, for example, a report will be created in the database each time the reporter runs (one 
