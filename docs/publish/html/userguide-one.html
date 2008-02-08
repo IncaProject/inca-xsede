@@ -6153,8 +6153,13 @@ NAME="PACKAGE-DEPEND"
 ><P
 >Some reporters use packaged tests for their results.  For example, the Basic Linear 
 Algebra Subprograms (BLAS) have a set of packaged fortran tests that come with the 
-BLAS software.  Reporters can use packaged tests if the tests are bundled into a .tar.gz file, 
-noted as a dependency in the reporters, and added using incpack to the reporter repository.</P
+BLAS software.  Reporters can use packaged tests if the tests are 1) bundled into a .tar.gz file, 
+2) noted as a dependency in the reporters, and 3) added using incpack to the reporter repository.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
 ><P
 >In the case of the BLAS tests, a file called <TT
 CLASS="FILENAME"
@@ -6171,7 +6176,7 @@ contains:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -6186,12 +6191,14 @@ cblat2.f        cblat3d         dblat1.f        dblat3.f        sblat2.f        
 ></TR
 ></TABLE
 ></P
+></LI
+><LI
 ><P
 >Reporters that use the BLAS tests include the following line with the first part of the .tar.gz filename:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -6204,13 +6211,16 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ></P
+></LI
+><LI
 ><P
 >After reporters include the dependency line, the reporter repository needs to be updated with both the reporter 
 itself and its package dependencies (e.g. <TT
 CLASS="FILENAME"
 >blasTestSuite.tar.gz</TT
 >).  In order to update the 
-reporter repository with a package dependency an .attrib file is required.
+reporter repository with a package dependency an .attrib file is required and must contain 
+the package dependency's file name, version number, description, and any urls or dependencies.
 For BLAS, a file called <TT
 CLASS="FILENAME"
 >blasTestSuite.tar.gz.attrib</TT
@@ -6222,7 +6232,7 @@ CLASS="FILENAME"
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -6240,7 +6250,7 @@ dependencies:</PRE
 ></TABLE
 ></P
 ><P
->Then the dependency was added to the repository using incpack (see <A
+>Then the dependency is added to the repository using incpack (see <A
 HREF="#UPDATE-REPOSITORY"
 >Section 7.3.2</A
 >
@@ -6248,7 +6258,7 @@ for more about repository updates):
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
-WIDTH="100%"
+WIDTH="90%"
 ><TR
 ><TD
 ><FONT
@@ -6264,6 +6274,8 @@ Note: replacing entry in catalog for file share/blasTestSuite.tar.gz</PRE
 ></TR
 ></TABLE
 ></P
+></LI
+></OL
 ><P
 >The agent installs package dependencies on the reporter managers under 
 <TT
@@ -6504,7 +6516,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1346"
+NAME="AEN1350"
 ></A
 ><P
 ><B
@@ -6725,7 +6737,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1393"
+NAME="AEN1397"
 ></A
 ><P
 ><B
@@ -7230,7 +7242,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1500"
+NAME="AEN1504"
 ></A
 ><P
 ><B
@@ -8869,7 +8881,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1863"
+NAME="AEN1867"
 ></A
 ><P
 ><B
