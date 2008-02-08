@@ -555,7 +555,8 @@ Of the attributes shown, only file and name are required.  The file attribute
 gives the relative path to the reporter file, and the name attribute specifies
 the unique package name of the reporter.  If the reporter requires support
 packages to execute, it should include a dependencies attribute with a
-semicolon-separated list of package names.  The incat administration tool uses
+semicolon-separated list of package names.  For more information about reporter 
+package dependencies see <xref linkend="package-depend">.  The incat administration tool uses
 the Packages.gz file's arguments and description attributes as part of its series edit dialog.
 The value of the arguments attribute is a semicolon-separated list giving the
 name, value pattern, and default value, if any, for each supported command-line
@@ -580,7 +581,85 @@ perl modules, you might need to run incpack with a -I switch to specify the
 location of the Inca perl library, like this.
 </para>
 <screen>% perl incpack -I ${INCA_DIST}/lib jade.version f77.unit vim.version</screen>
+
+<section id="package-depend">
+<title>Reporter Package Dependencies</title>
+<para>Some reporters use packaged tests for their results.  For example, the Basic Linear 
+Algebra Subprograms (BLAS) have a set of packaged fortran tests that come with the 
+BLAS software.  Reporters can use packaged tests if the tests are bundled into a .tar.gz file, 
+noted as a dependency in the reporters, and added using incpack to the reporter repository.</para>
+
+<para>In the case of the BLAS tests, a file called <filename>blasTestSuite.tar.gz</filename> was created
+in the <filename>share</filename> directory under the reporter repository.  The <filename>blasTestSuite.tar.gz</filename> file 
+contains:
+<screen>Makefile.in     cblat2d         configure       dblat2.f        dblat3d         sblat2d         zblat1.f        zblat3.f
+cblat1.f        cblat3.f        configure.in    dblat2d         sblat1.f        sblat3.f        zblat2.f        zblat3d
+cblat2.f        cblat3d         dblat1.f        dblat3.f        sblat2.f        sblat3d         zblat2d</screen>
+</para>
+<para>Reporters that use the BLAS tests include the following line with the first part of the .tar.gz filename:
+<screen>$reporter->addDependency('blasTestSuite');</screen>
+</para>
+<para>After reporters include the dependency line, the reporter repository needs to be updated with both the reporter 
+itself and its package dependencies (e.g. <filename>blasTestSuite.tar.gz</filename>).  In order to update the 
+reporter repository with a package dependency an .attrib file is required.
+For BLAS, a file called <filename>blasTestSuite.tar.gz.attrib</filename> was created in the 
+<filename>share</filename> directory containing:
+<screen>name: blasTestSuite
+version: 1.0
+description: Test programs for the BLAS library
+url: http://inca.sdsc.edu
+dependencies:</screen>
+</para>
+<para>
+Then the dependency was added to the repository using incpack (see <xref linkend="update-repository">
+for more about repository updates):
+<screen>% sbin/incpack share/blasTestSuite.tar.gz
+Note: Appending to existing Packages.gz file
+share/blasTestSuite.tar.gz
+Note: replacing entry in catalog for file share/blasTestSuite.tar.gz</screen>
+</para>
+<para>The agent installs package dependencies on the reporter managers under 
+<filename>$RM_INSTALL_DIR/var/reporter-packages/build</filename> (reporters are 
+installed under <filename>$RM_INSTALL_DIR/var/reporter-packages/bin</filename>).
+Then the .tar.gz package dependency files are unzipped and untarred and configured 
+according to what files are contained in the tar ball.  If the tar ball contains a 
+<filename>configure</filename> file, like <filename>blasTestSuite.tar.gz.attrib</filename>,
+then then the following commands are executed inside the reporter dependency directory once 
+it's untarred:
+<screen>% ./configure; gmake || make; gmake install || make install</screen>
+</para><para>
+If a <filename>configure</filename> file isn't found, but a <filename>[M|m]akefile</filename> file
+is found, then the following is executed:
+<screen>% gmake || make; gmake install || make install</screen>
+</para><para>
+If <filename>configure</filename> and <filename>[M|m]akefile</filename> files aren't found, but a <filename>Makefile.PL</filename> file
+is found, then the following is executed:
+<screen>% perl Makefile.PL 
+  PREFIX=lib/perl \
+  LIB=lib/perl \
+  INSTALLDIRS=perl \
+  INSTALLSCRIPT=bin \
+  INSTALLMAN1DIR=man/man1 \
+  INSTALLMAN3DIR=man/man3;
+gmake || make; gmake install || make install</screen>
+</para><para>
+If <filename>configure</filename>, <filename>[M|m]akefile</filename>, and <filename>Makefile.PL</filename> 
+files aren't found, but a <filename>Build.PL</filename> file
+is found, then the following is executed:
+<screen>% perl -I lib/perl Build.PL \
+  --install_path lib=lib/perl \
+  --install_path libdoc=man/man3 \
+  --install_path bindoc=man/man1 \
+  --install_path bin=bin \
+  --install_path script=bin \
+  --install_path arch=lib/perl;
+perl -I lib/perl Build; perl -I lib/perl Build install</screen>
+</para><para>
+If <filename>configure</filename>, <filename>[M|m]akefile</filename>, <filename>Makefile.PL</filename> 
+and <filename>Build.PL</filename> files aren't found, then the package dependency .tar.gz file is just 
+unzipped and untarred.</para>
 </section>
+
 
 <section id="update-repository">
 <title>Updating Reporter Repositories</title>
@@ -629,4 +708,5 @@ reporter with "&lt;latestVersion&gt;false&lt;/latestVersion&gt;" (should be
 </para>
 </section>
 
+</section>
 </section>
