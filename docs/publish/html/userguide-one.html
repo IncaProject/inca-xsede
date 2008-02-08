@@ -6142,6 +6142,12 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+><P
+>For more information about incpack usage, click <A
+HREF="http://inca.sdsc.edu/releases/2.3/perldocs/incpack.html"
+TARGET="_top"
+>here</A
+>.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
@@ -6151,24 +6157,39 @@ NAME="PACKAGE-DEPEND"
 >7.3.1. Reporter Package Dependencies</A
 ></H4
 ><P
->Some reporters use packaged tests for their results.  For example, the Basic Linear 
-Algebra Subprograms (BLAS) have a set of packaged fortran tests that come with the 
-BLAS software.  Reporters can use packaged tests if the tests are 1) bundled into a .tar.gz file, 
-2) noted as a dependency in the reporters, and 3) added using incpack to the reporter repository.</P
+>Some reporters may require a CPAN Perl module, C library, compiled executable, or 
+some other tar.gz packaged dependency.  Reporters can use packaged
+dependencies if the dependencies are 1) bundled into a tar.gz file, 2) added
+using incpack to the reporter repository, and 3) noted as a dependency in the
+reporters.</P
+><P
+>For example, the <TT
+CLASS="FILENAME"
+>cluster.math.blas.unit.level1</TT
+> reporter wraps
+the Level 1 BLAS Test Suite available from the <A
+HREF="http://www.netlib.org/blas/"
+TARGET="_top"
+>Basic 
+Linear Algebra Subprograms (BLAS) website</A
+>.  To add the BLAS Test Suite
+as a dependency to the <TT
+CLASS="FILENAME"
+>cluster.math.blas.unit.level1</TT
+>
+reporter, use the following steps:  </P
 ><P
 ></P
 ><OL
 TYPE="1"
 ><LI
 ><P
->In the case of the BLAS tests, a file called <TT
+>Package the Level1 BLAS Test Suite files
+(fortran code) into a tar.gz called <TT
 CLASS="FILENAME"
 >blasTestSuite.tar.gz</TT
-> was created
-in the <TT
-CLASS="FILENAME"
->share</TT
-> directory under the reporter repository.  The <TT
+>
+along with a Makefile and configure script.  The <TT
 CLASS="FILENAME"
 >blasTestSuite.tar.gz</TT
 > file 
@@ -6194,41 +6215,15 @@ cblat2.f        cblat3d         dblat1.f        dblat3.f        sblat2.f        
 ></LI
 ><LI
 ><P
->Reporters that use the BLAS tests include the following line with the first part of the .tar.gz filename:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->$reporter-&#62;addDependency('blasTestSuite');</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
-></LI
-><LI
-><P
->After reporters include the dependency line, the reporter repository needs to be updated with both the reporter 
-itself and its package dependencies (e.g. <TT
-CLASS="FILENAME"
->blasTestSuite.tar.gz</TT
->).  In order to update the 
-reporter repository with a package dependency an .attrib file is required and must contain 
-the package dependency's file name, version number, description, and any urls or dependencies.
-For BLAS, a file called <TT
-CLASS="FILENAME"
->blasTestSuite.tar.gz.attrib</TT
-> was created in the 
+>Update the reporter repository with the package dependency using
+an .attrib file.  An .attrib file contains information about the
+dependency such as its name, version number, description, a descriptive url
+and dependencies.  The .attrib file needs to be prefixed with the
+tar.gz name.  For example, the BLAS Test Suite's .attrib would be named
 <TT
 CLASS="FILENAME"
->share</TT
-> directory containing:
+>blasTestSuite.tar.gz.attrib</TT
+> and contain:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -6250,7 +6245,20 @@ dependencies:</PRE
 ></TABLE
 ></P
 ><P
->Then the dependency is added to the repository using incpack (see <A
+>Both the <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz</TT
+> and
+<TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz.attrib</TT
+> files are then placed in the
+<TT
+CLASS="FILENAME"
+>share</TT
+> directory or can be placed anwhere inside the
+repository directory.   Then the dependency is added to the repository using
+incpack (see <A
 HREF="#UPDATE-REPOSITORY"
 >Section 7.3.2</A
 >
@@ -6267,8 +6275,49 @@ COLOR="#000000"
 CLASS="SCREEN"
 >% sbin/incpack share/blasTestSuite.tar.gz
 Note: Appending to existing Packages.gz file
-share/blasTestSuite.tar.gz
-Note: replacing entry in catalog for file share/blasTestSuite.tar.gz</PRE
+share/blasTestSuite.tar.gz</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Include the following line in reporters that use the blasTestSuite dependency 
+ before $reporter-&#62;processArgv is called.   Use the 
+name specified in the .attrib file:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>$reporter-&#62;addDependency('blasTestSuite');</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Then add the reporter to the repository using incpack:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sbin/incpack -I lib bin/cluster.math.blas.unit.level1
+Note: Appending to existing Packages.gz file
+bin/cluster.math.blas.unit.level1</PRE
 ></FONT
 ></TD
 ></TR
@@ -6277,7 +6326,7 @@ Note: replacing entry in catalog for file share/blasTestSuite.tar.gz</PRE
 ></LI
 ></OL
 ><P
->The agent installs package dependencies on the reporter managers under 
+>The agent propagates package dependencies to the reporter managers under 
 <TT
 CLASS="FILENAME"
 >$RM_INSTALL_DIR/var/reporter-packages/build</TT
@@ -6293,7 +6342,7 @@ CLASS="FILENAME"
 >configure</TT
 > file, like <TT
 CLASS="FILENAME"
->blasTestSuite.tar.gz.attrib</TT
+>blasTestSuite</TT
 >,
 then then the following commands are executed inside the reporter dependency directory once 
 it's untarred:
@@ -6307,7 +6356,9 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ./configure; gmake || make; gmake install || make install</PRE
+>% ./configure
+% [g]make
+% [g]make install</PRE
 ></FONT
 ></TD
 ></TR
@@ -6316,9 +6367,6 @@ CLASS="SCREEN"
 ><P
 >If a <TT
 CLASS="FILENAME"
->configure</TT
-> file isn't found, but a <TT
-CLASS="FILENAME"
 >[M|m]akefile</TT
 > file
 is found, then the following is executed:
@@ -6332,23 +6380,18 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% gmake || make; gmake install || make install</PRE
+>% [g]make INSTALL_DIR=$RM_INSTALL_DIR/var/reporter-packages 
+% [g]make INSTALL_DIR=$RM_INSTALL_DIR=/var/reporter-packages</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ></P
 ><P
->If <TT
-CLASS="FILENAME"
->configure</TT
-> and <TT
-CLASS="FILENAME"
->[M|m]akefile</TT
-> files aren't found, but a <TT
+>If a <TT
 CLASS="FILENAME"
 >Makefile.PL</TT
-> file
+> file (i.e., Perl package)
 is found, then the following is executed:
 <TABLE
 BORDER="1"
@@ -6360,31 +6403,22 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% perl Makefile.PL 
-  PREFIX=lib/perl \
-  LIB=lib/perl \
+>% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl  Makefile.PL \
+  PREFIX=$RM_INSTALL_DIR/var/reporter-packages/lib/perl \
+  LIB=$RM_INSTALL_DIR/var/reporter-packages/lib/perl \
   INSTALLDIRS=perl \
-  INSTALLSCRIPT=bin \
-  INSTALLMAN1DIR=man/man1 \
-  INSTALLMAN3DIR=man/man3;
-gmake || make; gmake install || make install</PRE
+  INSTALLSCRIPT=$RM_INSTALL_DIR/var/reporter-packages/bin \
+  INSTALLMAN1DIR=$RM_INSTALL_DIR/var/reporter-packages/man/man1 \
+  INSTALLMAN3DIR=$RM_INSTALL_DIR/var/reporter-packages/man/man3
+% [g]make
+% [g]make install</PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ></P
 ><P
->If <TT
-CLASS="FILENAME"
->configure</TT
->, <TT
-CLASS="FILENAME"
->[M|m]akefile</TT
->, and <TT
-CLASS="FILENAME"
->Makefile.PL</TT
-> 
-files aren't found, but a <TT
+>If a <TT
 CLASS="FILENAME"
 >Build.PL</TT
 > file
@@ -6399,14 +6433,15 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% perl -I lib/perl Build.PL \
-  --install_path lib=lib/perl \
-  --install_path libdoc=man/man3 \
-  --install_path bindoc=man/man1 \
-  --install_path bin=bin \
-  --install_path script=bin \
-  --install_path arch=lib/perl;
-perl -I lib/perl Build; perl -I lib/perl Build install</PRE
+>% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build.PL \
+  --install_path lib=$RM_INSTALL_DIR/var/reporter-packages/lib/perl \
+  --install_path libdoc=$RM_INSTALL_DIR/var/reporter-packages/man/man3 \
+  --install_path bindoc=$RM_INSTALL_DIR/var/reporter-packages/man/man1 \
+  --install_path bin=$RM_INSTALL_DIR/var/reporter-packages/bin \
+  --install_path script=$RM_INSTALL_DIR/var/reporter-packages/bin \
+  --install_path arch=$RM_INSTALL_DIR/var/reporter-packages/lib/perl
+% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build
+% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build install</PRE
 ></FONT
 ></TD
 ></TR
@@ -6426,8 +6461,12 @@ CLASS="FILENAME"
 and <TT
 CLASS="FILENAME"
 >Build.PL</TT
-> files aren't found, then the package dependency .tar.gz file is just 
-unzipped and untarred.</P
+> files aren't found, 
+then the package dependency .tar.gz file is just 
+unzipped and untarred in the <TT
+CLASS="FILENAME"
+>build</TT
+> directory.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -6456,7 +6495,12 @@ reporter (755 is the standard reporter permission)</P
 ></LI
 ><LI
 ><P
->update your Packages.gz file using incpack.  The command will
+>update your Packages.gz file using 
+<A
+HREF="http://inca.sdsc.edu/releases/2.3/perldocs/incpack.html"
+TARGET="_top"
+>incpack</A
+>.  The command will
 be something like:
 <TABLE
 BORDER="1"
@@ -6516,7 +6560,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1350"
+NAME="AEN1354"
 ></A
 ><P
 ><B
@@ -6737,7 +6781,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1397"
+NAME="AEN1401"
 ></A
 ><P
 ><B
@@ -7242,7 +7286,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1504"
+NAME="AEN1508"
 ></A
 ><P
 ><B
@@ -8881,7 +8925,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1867"
+NAME="AEN1871"
 ></A
 ><P
 ><B

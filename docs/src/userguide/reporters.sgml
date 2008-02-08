@@ -598,7 +598,7 @@ as a dependency to the <filename>cluster.math.blas.unit.level1</filename>
 reporter, use the following steps:  </para>
 
 <orderedList>
-<listItem><para>First, we package the the Level1 BLAS Test Suite files
+<listItem><para>Package the Level1 BLAS Test Suite files
 (fortran code) into a tar.gz called <filename>blasTestSuite.tar.gz</filename>
 along with a Makefile and configure script.  The <filename>blasTestSuite.tar.gz</filename> file 
 contains:
@@ -608,8 +608,8 @@ cblat2.f        cblat3d         dblat1.f        dblat3.f        sblat2.f        
 </para>
 </listItem>
 <listItem>
-<para>Next to update the reporter repository with a package dependency an
-.attrib file is required.  An .attrib file contains information about the
+<para>Update the reporter repository with the package dependency using
+an .attrib file.  An .attrib file contains information about the
 dependency such as its name, version number, description, a descriptive url
 and dependencies.  The .attrib file needs to be prefixed with the
 tar.gz name.  For example, the BLAS Test Suite's .attrib would be named
@@ -634,12 +634,12 @@ share/blasTestSuite.tar.gz
 </para>
 </listItem>
 <listItem>
-<para>Reporters that use the blasTestSuite dependency would include the
-following line (before $reporter->processArgv is called) with the 
-name specified in the .attrib file.
+<para>Include the following line in reporters that use the blasTestSuite dependency 
+ before $reporter->processArgv is called.   Use the 
+name specified in the .attrib file:
 <screen>$reporter->addDependency('blasTestSuite');</screen>
 </para>
-<para>Next, the reporter would need to added to the repository using incpack.
+<para>Then add the reporter to the repository using incpack:
 <screen>% sbin/incpack -I lib bin/cluster.math.blas.unit.level1
 Note: Appending to existing Packages.gz file
 bin/cluster.math.blas.unit.level1</screen></para>
