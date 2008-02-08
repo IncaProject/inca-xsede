@@ -1021,7 +1021,11 @@ version: 2&#13;</PRE
 gives the relative path to the reporter file, and the name attribute specifies
 the unique package name of the reporter.  If the reporter requires support
 packages to execute, it should include a dependencies attribute with a
-semicolon-separated list of package names.  The incat administration tool uses
+semicolon-separated list of package names.  For more information about reporter 
+package dependencies see <A
+HREF="userguide-reporters.html#PACKAGE-DEPEND"
+>Section 7.3.1</A
+>.  The incat administration tool uses
 the Packages.gz file's arguments and description attributes as part of its series edit dialog.
 The value of the arguments attribute is a semicolon-separated list giving the
 name, value pattern, and default value, if any, for each supported command-line
@@ -1076,15 +1080,289 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="PACKAGE-DEPEND"
+>7.3.1. Reporter Package Dependencies</A
+></H3
+><P
+>Some reporters use packaged tests for their results.  For example, the Basic Linear 
+Algebra Subprograms (BLAS) have a set of packaged fortran tests that come with the 
+BLAS software.  Reporters can use packaged tests if the tests are bundled into a .tar.gz file, 
+noted as a dependency in the reporters, and added using incpack to the reporter repository.</P
+><P
+>In the case of the BLAS tests, a file called <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz</TT
+> was created
+in the <TT
+CLASS="FILENAME"
+>share</TT
+> directory under the reporter repository.  The <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz</TT
+> file 
+contains:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Makefile.in     cblat2d         configure       dblat2.f        dblat3d         sblat2d         zblat1.f        zblat3.f
+cblat1.f        cblat3.f        configure.in    dblat2d         sblat1.f        sblat3.f        zblat2.f        zblat3d
+cblat2.f        cblat3d         dblat1.f        dblat3.f        sblat2.f        sblat3d         zblat2d</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Reporters that use the BLAS tests include the following line with the first part of the .tar.gz filename:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>$reporter-&#62;addDependency('blasTestSuite');</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>After reporters include the dependency line, the reporter repository needs to be updated with both the reporter 
+itself and its package dependencies (e.g. <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz</TT
+>).  In order to update the 
+reporter repository with a package dependency an .attrib file is required.
+For BLAS, a file called <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz.attrib</TT
+> was created in the 
+<TT
+CLASS="FILENAME"
+>share</TT
+> directory containing:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>name: blasTestSuite
+version: 1.0
+description: Test programs for the BLAS library
+url: http://inca.sdsc.edu
+dependencies:</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Then the dependency was added to the repository using incpack (see <A
+HREF="userguide-reporters.html#UPDATE-REPOSITORY"
+>Section 7.3.2</A
+>
+for more about repository updates):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sbin/incpack share/blasTestSuite.tar.gz
+Note: Appending to existing Packages.gz file
+share/blasTestSuite.tar.gz
+Note: replacing entry in catalog for file share/blasTestSuite.tar.gz</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>The agent installs package dependencies on the reporter managers under 
+<TT
+CLASS="FILENAME"
+>$RM_INSTALL_DIR/var/reporter-packages/build</TT
+> (reporters are 
+installed under <TT
+CLASS="FILENAME"
+>$RM_INSTALL_DIR/var/reporter-packages/bin</TT
+>).
+Then the .tar.gz package dependency files are unzipped and untarred and configured 
+according to what files are contained in the tar ball.  If the tar ball contains a 
+<TT
+CLASS="FILENAME"
+>configure</TT
+> file, like <TT
+CLASS="FILENAME"
+>blasTestSuite.tar.gz.attrib</TT
+>,
+then then the following commands are executed inside the reporter dependency directory once 
+it's untarred:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./configure; gmake || make; gmake install || make install</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>If a <TT
+CLASS="FILENAME"
+>configure</TT
+> file isn't found, but a <TT
+CLASS="FILENAME"
+>[M|m]akefile</TT
+> file
+is found, then the following is executed:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% gmake || make; gmake install || make install</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>If <TT
+CLASS="FILENAME"
+>configure</TT
+> and <TT
+CLASS="FILENAME"
+>[M|m]akefile</TT
+> files aren't found, but a <TT
+CLASS="FILENAME"
+>Makefile.PL</TT
+> file
+is found, then the following is executed:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% perl Makefile.PL 
+  PREFIX=lib/perl \
+  LIB=lib/perl \
+  INSTALLDIRS=perl \
+  INSTALLSCRIPT=bin \
+  INSTALLMAN1DIR=man/man1 \
+  INSTALLMAN3DIR=man/man3;
+gmake || make; gmake install || make install</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>If <TT
+CLASS="FILENAME"
+>configure</TT
+>, <TT
+CLASS="FILENAME"
+>[M|m]akefile</TT
+>, and <TT
+CLASS="FILENAME"
+>Makefile.PL</TT
+> 
+files aren't found, but a <TT
+CLASS="FILENAME"
+>Build.PL</TT
+> file
+is found, then the following is executed:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% perl -I lib/perl Build.PL \
+  --install_path lib=lib/perl \
+  --install_path libdoc=man/man3 \
+  --install_path bindoc=man/man1 \
+  --install_path bin=bin \
+  --install_path script=bin \
+  --install_path arch=lib/perl;
+perl -I lib/perl Build; perl -I lib/perl Build install</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>If <TT
+CLASS="FILENAME"
+>configure</TT
+>, <TT
+CLASS="FILENAME"
+>[M|m]akefile</TT
+>, <TT
+CLASS="FILENAME"
+>Makefile.PL</TT
+> 
+and <TT
+CLASS="FILENAME"
+>Build.PL</TT
+> files aren't found, then the package dependency .tar.gz file is just 
+unzipped and untarred.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
-><H2
+><H3
 CLASS="SECTION"
 ><A
 NAME="UPDATE-REPOSITORY"
->7.4. Updating Reporter Repositories</A
-></H2
+>7.3.2. Updating Reporter Repositories</A
+></H3
 ><P
 >The Inca agent will detect changes to your reporter repository and
 automatically send changes to the appropriate reporter managers if you:</P
@@ -1147,6 +1425,7 @@ version" checked on the resource your intend it to run on incat.  Look for
 $INCA_DIST/var/repository/repository.xml entries for the
 reporter with "&#60;latestVersion&#62;false&#60;/latestVersion&#62;" (should be
 "&#60;latestVersion&#62;true&#60;/latestVersion&#62;" to get the updated reporters).</P
+></DIV
 ></DIV
 ></DIV
 ><DIV
