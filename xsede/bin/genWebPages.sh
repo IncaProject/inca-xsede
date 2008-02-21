@@ -127,7 +127,7 @@ fi
 
 # get ctssv4 test kit
 echo "$date = $?" >> ${HOME}/genWebPages.log
-wget -o /dev/null -O $c4testtmp "http://sapa.sdsc.edu:8080/inca/xslt.jsp?supportLevel=testing&suiteName=remote-compute.teragrid.org-4.0.0&resourceID=remote-compute.teragrid.org-4.0.0&xmlFile=remote-compute.teragrid.org-4.0.0.xml&xsl=ctssv4.xsl"
+wget -o /dev/null -O $c4testtmp "http://sapa.sdsc.edu:8080/inca/xslt.jsp?supportLevel=testing&suiteName=remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0&resourceID=remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0&xmlFile=remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml&xsl=ctssv4.xsl"
 if ( test $? -ne 0 ); then
   ctss4testerr="$err ctssv4-test "
   err=$ctss4testerr
