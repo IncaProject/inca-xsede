@@ -251,6 +251,8 @@ documentation for these is commented below to avoid cluttering the table.
   </tgroup>
   </table>
   </para>
+  <para>Values that are specified as the "Script Arguments" in incat are
+  passed as arguments to the script.</para>
 </section>
 
 <section id="report-filtering">
@@ -295,6 +297,19 @@ public class MyReportFilter extends edu.sdsc.inca.depot.util.ReportFilter {
 }
 </screen>
 </para>
+<para>To install your filter, first compile the class.</para>
+<screen>% javac -classpath lib/inca-depot.jar MyReportFilter.java</screen>
+<para>Copy the compiled class to your <filename>$INCA_DIST/lib</filename> 
+directory.  For example, </para>
+<screen>% cp MyReportFilter.class $INCA_DIST/lib</screen>
+<para>Then add the inca.depot.reportFilter property to your 
+<filename>$INCA_DIST/etc/common/inca.properties</filename> file.</para>
+<screen>...
+inca.depot.reportFilter=MyReportFilter
+...
+</screen>
+<para>Finally, restart the depot.</para>
+<screen>% ./bin/inca restart depot</screen>
 </section>
 
 <section id="db-config">
