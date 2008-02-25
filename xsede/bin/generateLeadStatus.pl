@@ -128,7 +128,7 @@ sub replaceUrls {
     if ( $html !~ /\Q$url/ ) {
       print "Cannot find $url\n";
     }
-    my $result = $html =~ s/\Q$url\Q/$filemap{$url}/;
+    my $result = $html =~ s/\Q$url\Q/$filemap{$url}/g;
   }
 
   open( NEW_FD, ">$filename.tmp") || die "Cannot open $filename.tmp";
@@ -141,6 +141,9 @@ sub replaceUrls {
 # Main
 #-----------------------------------------------------------------------------#
 
+# time it
+my $startTime = time();
+
 # check arg
 my $url = $ARGV[0];
 die "Missing url" if ! defined $url;
@@ -151,32 +154,38 @@ my ( $rootUrl ) = $url =~ /^(http:\/\/[^\/]+)/;
 # calculate start and end dates based on a weekly schedule calculated at
 # day $DAY
 my $date = ParseDate("today");
+my $lastThurs = Date_GetPrev($date,"Thu", 0);
 if ( $url !~ /startDate/ ) {
-  my $lastThurs = Date_GetPrev($date,"Thu", 0);
   my $startDate = UnixDate( $lastThurs, "%m%d%y");
   $url = $url . "&startDate=" . $startDate;
 }
+my ( $startDate ) = $url =~ /startDate=(\d+)/;
 if ( $url !~ /endDate/ ) {
   # add 1 to get all of Thurs that we can
-  my $nextThursPlus1 = DateCalc( Date_GetNext($date, $DAY, 0), "+1D" );
+  my $nextThursPlus1 = DateCalc( $lastThurs, "+7D" );
   my $endDate = UnixDate( $nextThursPlus1, "%m%d%y");
   $url = $url . "&endDate=" . $endDate;
 }
+my ( $endDate ) = $url =~ /endDate=(\d+)/;
 
 # lets create a directory for the local copy based on start and end dates
-my ( $startDate ) = $url =~ /startDate=(\d+)/;
-my ( $endDate ) = $url =~ /endDate=(\d+)/;
 my $dir = "$startDate-$endDate";
 if ( ! -d $dir && ! mkdir($dir) ) {
   die "Cannot create dir $dir";
 }
 
 # download html
-`wget -q -O $dir/$INDEX_FILENAME.tmp '$url'`;
+`wget -T 7200 -q -O $dir/$INDEX_FILENAME.tmp '$url'`;
 die "Unable to fetch '$url'" if $? != 0;
 die "No error but file not written to disk" if ! -f "$dir/$INDEX_FILENAME.tmp";
 
 my @urls = getUrlsFromHtml( "$dir/$INDEX_FILENAME.tmp" );
 my %localFiles = downloadFiles( $dir, $relUrl, $rootUrl, @urls );
 replaceUrls( "$dir/$INDEX_FILENAME.tmp", %localFiles );
-`mv $dir/$INDEX_FILENAME.tmp $dir/$INDEX_FILENAME`
+`mv $dir/$INDEX_FILENAME.tmp $dir/$INDEX_FILENAME`;
+
+# log time
+my $loadTime = time() - $startTime;
+open( FD, ">> $ENV{HOME}/lead.log" ) || die "Cannot open log";
+print FD time() . " " . $loadTime . "\n";
+close FD;
