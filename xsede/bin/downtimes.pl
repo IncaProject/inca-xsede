@@ -7,10 +7,10 @@ use DateTime;
 use DateTime::Format::Strptime;
 
 my $dir = "/misc/inca/install-2r5/webapps/xsl/";
-my $cacheFile = $dir . "newsCache";
-my $tmpFile = $dir . "newsCache.tmp";
+my $cacheFile = $dir . "downtimes.properties";
+my $tmpFile = $dir . "downtimes.properties.tmp";
 
-my $service = q{inca/PW@(DESCRIPTION =
+my $service = q{inca/inca_test@(DESCRIPTION =
           (ADDRESS = (PROTOCOL = TCP)(HOST = spike-vip.sdsc.edu)(PORT = 1521))
           (ADDRESS = (PROTOCOL = TCP)(HOST = jet-vip.sdsc.edu)(PORT = 1521))
           (ADDRESS = (PROTOCOL = TCP)(HOST = faye-vip.sdsc.edu)(PORT = 1521))
@@ -46,10 +46,8 @@ open TMP,">$tmpFile";
 while ( my ($id, $subject, $content, $start, $end, $zone, $name ) = $sth->fetchrow()){
   my $startDate = convertToDateTime($start, $zone);
   my $endDate = convertToDateTime($end, $zone);
-  #$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-02-26 08.00.00 AM')->set_time_zone('America/Chicago');
   if ($startDate <= $now && $endDate >= $now){
-    #print TMP "$id\t$name\t$startDate\t$endDate\t$now\n";
-    print TMP "$name\t$id\n";
+    print TMP "$name=$id\n";
   }
 }
 $dbh->disconnect();
