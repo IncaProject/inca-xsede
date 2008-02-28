@@ -162,21 +162,30 @@
     <xsl:variable name="instance" select="$result/instanceId" />
     <xsl:variable name="comparitor" select="$result/comparisonResult" />
     <xsl:variable name="foundVersion" select="$result/body/package/version" />
+    <xsl:variable name="errMsg" select="$result/errorMessage" />
     <xsl:choose>
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
-        <xsl:variable name="href"
+        <xsl:variable name="href">
+          <xsl:call-template name="getLink">
+            <xsl:with-param name="errMsg" select="$errMsg"/>
+            <xsl:with-param name="normRef" 
                       select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
                       $instance, '&amp;configID=', $result/seriesConfigId,
                       '&amp;resourceName=', name)"/>
+          </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="exit">
           <xsl:choose>
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
+            <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
+              <xsl:value-of select="'down'" />
+            </xsl:when>
             <xsl:when test="$comparitor='Success' or 
               (string($result/body)!=''
-               and string($result/errorMessage)=''
+               and string($errMsg)=''
                and string($comparitor)='')">
               <xsl:value-of select="'pass'" />
             </xsl:when>
@@ -191,7 +200,7 @@
         <xsl:choose>
           <xsl:when test="$exit!=''">
             <td class="{$exit}">
-              <a href="{$href}" title="{$result/errorMessage}">
+              <a href="{$href}" title="{$errMsg}">
                 <xsl:variable
                     name="depth"
                     select="$stats/statistic[matches(., 'depth')]/value" />

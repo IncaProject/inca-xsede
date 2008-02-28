@@ -231,18 +231,27 @@
     <xsl:variable name="instance" select="$result/instanceId" />
     <xsl:variable name="comparitor" select="$result/comparisonResult" />
     <xsl:variable name="foundVersion" select="$result/body/package/version" />
+    <xsl:variable name="errMsg" select="$result/errorMessage" />
     <xsl:choose>
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
-        <xsl:variable name="href"
+        <xsl:variable name="href">
+          <xsl:call-template name="getLink">
+            <xsl:with-param name="errMsg" select="$errMsg"/>
+            <xsl:with-param name="normRef" 
                       select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
                       $instance, '&amp;configID=', $result/seriesConfigId,
                       '&amp;resourceName=', name)"/>
+          </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="exit">
           <xsl:choose>
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
+            </xsl:when>
+            <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
+              <xsl:value-of select="'down'" />
             </xsl:when>
             <xsl:when test="$tickets/ticket[matches(resource, $thisResource)]">
               <xsl:value-of select="'tkt-'" />
@@ -259,19 +268,17 @@
             </xsl:when>
             <xsl:when test="$comparitor='Success' or
               (string($result/body)!=''
-               and string($result/errorMessage)=''
+               and string($errMsg)=''
                and string($comparitor)='' )"> 
               <xsl:value-of select="'pass'" />
             </xsl:when>
-            <xsl:when test="$result[matches(errorMessage, 'Inca error')]">
+            <xsl:when test="$errMsg[matches(., 'Inca error')]">
               <xsl:value-of select="'incaErr'" />
             </xsl:when>
-            <xsl:when test="$result[matches(errorMessage,
-            'Time ran out')]">
+            <xsl:when test="$errMsg[matches(., 'Time ran out')]">
               <xsl:value-of select="'timeOut'" />
             </xsl:when>
-            <xsl:when test="$result[matches(errorMessage,
-            'Reporter exceeded usage limits')]">
+            <xsl:when test="$errMsg[matches(., 'Reporter exceeded usage limits')]">
               <xsl:value-of select="'timeOut'" />
             </xsl:when>
             <xsl:otherwise>
@@ -294,7 +301,7 @@
               </xsl:call-template>
             </xsl:variable>
             <td class="{$class}">
-              <a href="{$href}" title="{$result/errorMessage}">
+              <a href="{$href}" title="{$errMsg}">
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)=''">
                     <xsl:value-of select="$exit"/>

@@ -15,6 +15,12 @@
             <tr valign="top">
               <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
+                  <td class="down"><font color="black">down</font></td>
+                  <td class="clear">
+                    <font color="black">resource is down</font>
+                  </td>
+                </tr>
+                <tr valign="top">
                   <td class="na"><font color="black">n/a</font></td>
                   <td class="clear">
                     <font color="black">does not apply to resource</font>
