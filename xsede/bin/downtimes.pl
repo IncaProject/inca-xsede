@@ -6,10 +6,14 @@ use Data::Dumper;
 use DateTime;
 use DateTime::Format::Strptime;
 
+my $home = "$ENV{'HOME'}";
 my $dir = "/misc/inca/install-2r5/webapps/xsl/";
 my $cacheFile = $dir . "downtime.properties";
 my $tmpFile = $dir . "downtime.properties.tmp";
-my $pw = `cat $ENV{'HOME'}/bin/downtimes.db`;
+my $pastFile = "$home/logs/downtimes.log";
+my $pastDown = `cat $pastFile`;
+my @past = split("\n", $pastDown);
+my $pw = `cat $home/bin/downtimes.db`;
 $pw =~ s/\n//g;
 
 my $service = "inca/". $pw . "@(DESCRIPTION =
@@ -26,7 +30,7 @@ my $now = DateTime->now;
 #$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-02-26 08.00.00 AM')->set_time_zone('America/Chicago'); 
 
 my $query = "SELECT i.item_id, i.subject, i.content, 
-                s.event_start_time, + s.event_end_time, s.event_time_zone, 
+                s.event_start_time, + s.event_end_time, s.event_time_zone, s.update_id,
                 ps.inca_name 
           FROM  user_news.item i, 
                 user_news.system_event s,
@@ -47,20 +51,26 @@ if ( !defined $sth ) {
 }
 $sth->execute();
 my $email = "";
+my @new = ();
 open TMP,">$tmpFile";
-while ( my ($id, $subject, $content, $start, $end, $zone, $name ) = $sth->fetchrow()){
+while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
   my $startDate = convertToDateTime($start, $zone);
   my $endDate = convertToDateTime($end, $zone);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
-    $email .= "$name, http://news.teragrid.org/view-item.php?item=$id\n";
+    if (!grep(/^$id\s$update$/, @past)){
+      $email .= "$name, http://news.teragrid.org/view-item.php?item=$id\n";
+      push (@new, "$id\t$update");
+    }
   }
 }
 $dbh->disconnect();
 close TMP;
 `mv $tmpFile $cacheFile`;
 if ($email ne ""){
-  `echo "$email" | mail -s "TeraGrid News DB has resources down" inca\@sdsc.edu`
+  `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
+  my $newDown = join("\n", @new);
+  `echo $newDown >> $pastFile`;
 }
 
 sub convertToDateTime{
