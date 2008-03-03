@@ -310,6 +310,94 @@ inca.depot.reportFilter=MyReportFilter
 </screen>
 <para>Finally, restart the depot.</para>
 <screen>% ./bin/inca restart depot</screen>
+<section id="downtime-filter">
+<title>Downtime Filter</title>
+<para>The depot has a ready to use filter called "DowntimeFilter" that prefixes
+the error messages of resources marked as down with "DOWNTIME:+additionalCustomErrorMessagePrefixString:".  
+By default the consumer will display results with a error message starting with 
+"DOWNTIME:" neutrally - summary pages print the result as "down" instead of "error" and
+historical graphs show the result as "unknown".</para>
+<para>The downtime filter is included in the inca-depot.jar and looks like:</para>
+<para>
+<screen>
+package edu.sdsc.inca.depot.util;
+
+import org.apache.log4j.Logger;
+import java.net.URL;
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.IOException;
+
+public class DowntimeFilter extends edu.sdsc.inca.depot.util.ReportFilter {
+  private static Logger logger = Logger.getLogger(DowntimeFilter.class);
+  private Properties downtimes = new Properties();
+
+  /**
+   * Reads file with a property list of resources in downtime from classpath
+   * (downtime.properties) and returns value for the resource if it exists.
+   */
+  public DowntimeFilter()  {
+    String downtimePropFile = System.getProperty("inca.depot.downtimeFile");
+    if(downtimePropFile == null) {
+      downtimePropFile  = "downtime.properties";
+    }
+    URL url = ClassLoader.getSystemClassLoader().getResource(downtimePropFile);
+    if(url == null) {
+      logger.error( downtimePropFile + " not found in classpath" );
+    }
+    logger.debug( "Located file " + url.getFile() );
+    try {
+      InputStream is = url.openStream();
+      downtimes.load(is);
+      is.close();
+    } catch (IOException e){
+      logger.error( "Can't load properties file" );
+    }
+  }
+
+  /**
+   * Writes new report with modified error message to depot if resource is down
+   * @return  string with depot report (reporter Stdout)
+   */
+  public String getStdout() {
+    String resourceProp  = this.downtimes.getProperty(super.getResource());
+    if (resourceProp != null){
+      logger.debug( super.getResource() + " is down " + resourceProp );
+      return super.getStdout().replaceFirst(
+          "&lt;errorMessage>", "&lt;errorMessage>DOWNTIME:"+ resourceProp +": ");
+    } else{
+      return super.getStdout();
+    }
+  }
+
+} </screen>
+</para>
+
+<para>To use this filter, first 
+write a script that prints the names of down resources to a file called "downtime.properties" 
+in the classpath of the depot (e.g. $INCA_DIST/webapps/xsl/downtime.properties).  If you prefer to 
+call the file something besides "downtime.properties", set the name of the file in 
+your <filename>$INCA_DIST/etc/common/inca.properties</filename> file:</para>
+<screen>...
+inca.depot.downtimePropFile=MyDowntimeFilename
+...
+</screen>
+<para>The "downtime.properties" file contents can be something like:
+<screen>downResource1=additionalCustomErrorMessagePrefixStringForResource1
+downResource2=additionalCustomErrorMessagePrefixStringForResource2</screen>
+    OR
+<screen>downResource1
+downResource2</screen>
+</para>
+<para>Next add the inca.depot.reportFilter property to your 
+<filename>$INCA_DIST/etc/common/inca.properties</filename> file.</para>
+<screen>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter
+...
+</screen>
+<para>Finally, restart the depot.</para>
+<screen>% ./bin/inca restart depot</screen>
+</section>
 </section>
 
 <section id="db-config">
