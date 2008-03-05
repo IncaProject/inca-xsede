@@ -269,6 +269,9 @@
         <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="exit">
           <xsl:choose>
+            <xsl:when test="count($result/body)=0">
+              <xsl:value-of select="''" />
+            </xsl:when>
             <xsl:when test="$comparitor='Success' or 
               (string($result/body)!=''
                and string($errMsg)=''
@@ -290,9 +293,6 @@
             <xsl:when test="$package/incawait[matches(resource,
             $thisResource)]">
               <xsl:value-of select="'incaWait'" />
-            </xsl:when>
-            <xsl:when test="count($result/body)=0">
-              <xsl:value-of select="''" />
             </xsl:when>
             <xsl:when test="$errMsg[matches(., 'Inca error')]">
               <xsl:value-of select="'incaErr'" />
