@@ -28,9 +28,12 @@ my $dbh = DBI->connect('dbi:Oracle:', $service, '') || die "Database connect err
 my $now = DateTime->now;
 #debug time that will get a down resource
 #$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-02-26 08.00.00 AM')->set_time_zone('America/Chicago'); 
+#debug time that will get an update
+#$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-03-06 02.51.22 PM')->set_time_zone('America/Los_Angeles'); 
+my $nowMinusHour =  $now->clone->subtract( hours => 1 );
 
 my $query = "SELECT i.item_id, i.subject, i.content, 
-                s.event_start_time, + s.event_end_time, s.event_time_zone, s.update_id,
+                s.event_start_time, s.event_end_time, s.event_time_zone, s.update_id,
                 ps.inca_name 
           FROM  user_news.item i, 
                 user_news.system_event s,
@@ -42,7 +45,7 @@ my $query = "SELECT i.item_id, i.subject, i.content,
                 s.event_end_time >= '" . $now->ymd . "' AND
                 s.outage_type_id = '2' AND
                 i.deleted IS NULL AND
-                s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id) 
+                s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id)
           ORDER BY s.event_start_time";
 
 my $sth = $dbh->prepare($query);
@@ -59,14 +62,49 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
     if (!grep(/^$id\s$update$/, @past)){
-      $email .= "$name, http://news.teragrid.org/view-item.php?item=$id\n";
+      $email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
       push (@new, "$id\t$update");
     }
   }
 }
-$dbh->disconnect();
 close TMP;
 `mv $tmpFile $cacheFile`;
+
+my $query2 = "SELECT distinct i.item_id, i.subject, i.content, 
+                iu.create_timestamp,
+                s.event_start_time, s.event_end_time, s.event_time_zone, s.update_id,
+                ps.inca_name 
+          FROM  user_news.item i, 
+                user_news.item_update iu,
+                user_news.system_event s,
+                user_news.platform_system ps, 
+                user_news.item_platform ip 
+          WHERE s.item_id = i.item_id  AND
+                iu.item_id = i.item_id AND
+                ip.item_id = i.item_id AND
+                ip.system_id = ps.system_id AND
+                s.outage_type_id = '2' AND
+                i.deleted IS NULL AND
+                s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id) AND
+                iu.create_timestamp = (SELECT MAX(up.create_timestamp) FROM user_news.item_update up WHERE up.update_id = s.update_id) 
+          ORDER BY i.item_id";
+
+my $sth2 = $dbh->prepare($query2);
+if ( !defined $sth2 ) {
+  die "Cannot prepare statement: $DBI::errstr\n";
+}
+$sth2->execute();
+while ( my ($id, $subject, $content, $updatetime, $start, $end, $zone, $update, $name ) = $sth2->fetchrow()){
+  my $uptime = convertToDateTime($updatetime, 'PT'); 
+  if ($nowMinusHour <= $uptime && $now >= $uptime){
+    if (!grep(/^$id\s$update$/, @past)){
+      $email .= "New update: $name, http://news.teragrid.org/view-item.php?item=$id\n";
+      push (@new, "$id\t$update");
+    }
+  }
+}
+
+$dbh->disconnect();
 if ($email ne ""){
   `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
   my $newDown = join("\n", @new);
