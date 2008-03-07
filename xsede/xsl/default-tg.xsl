@@ -166,13 +166,14 @@
     <xsl:choose>
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
+        <xsl:variable name="normRef" 
+                  select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
+                  $instance, '&amp;configID=', $result/seriesConfigId,
+                  '&amp;resourceName=', name)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
-            <xsl:with-param name="normRef" 
-                      select="concat('xslt.jsp?xsl=instance.xsl&amp;instanceID=',
-                      $instance, '&amp;configID=', $result/seriesConfigId,
-                      '&amp;resourceName=', name)"/>
+            <xsl:with-param name="normRef" select="$normRef"/>
           </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="exit">
@@ -227,6 +228,10 @@
                     select="$stats/statistic[matches(., 'env')]/value" />
               <xsl:if test="string($env)!=''">
                 <br/><br/><table><tr><td class="clear"><pre><xsl:value-of select="$env"/></pre></td></tr></table>
+              </xsl:if>
+              <xsl:if test="$exit='down'">
+                <xsl:value-of select="' '" />
+                <a href="{$normRef}" title="{$errMsg}">err</a>
               </xsl:if>
               <!-- inca-common.xsl -->
               <xsl:call-template name="markOld">
