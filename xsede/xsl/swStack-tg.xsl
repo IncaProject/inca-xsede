@@ -251,6 +251,12 @@
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
+            <xsl:when test="$comparitor='Success' or
+              (string($result/body)!=''
+               and string($errMsg)=''
+               and string($comparitor)='' )"> 
+              <xsl:value-of select="'pass'" />
+            </xsl:when>
             <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
               <xsl:value-of select="'down'" />
             </xsl:when>
@@ -266,12 +272,6 @@
             <xsl:when test="$package/incawait[matches(resource,
             $thisResource)]">
               <xsl:value-of select="'incaWait'" />
-            </xsl:when>
-            <xsl:when test="$comparitor='Success' or
-              (string($result/body)!=''
-               and string($errMsg)=''
-               and string($comparitor)='' )"> 
-              <xsl:value-of select="'pass'" />
             </xsl:when>
             <xsl:when test="$errMsg[matches(., 'Inca error')]">
               <xsl:value-of select="'incaErr'" />

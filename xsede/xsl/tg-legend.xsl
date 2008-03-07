@@ -15,7 +15,7 @@
             <tr valign="top">
               <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
-                  <td class="down"><font color="black">down</font></td>
+                  <td class="down"><font color="black">down err</font></td>
                   <td class="clear">
                     <font color="black">resource is down</font>
                   </td>
