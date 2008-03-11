@@ -108,7 +108,9 @@ $dbh->disconnect();
 if ($email ne ""){
   `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
   my $newDown = join("\n", @new);
-  `echo $newDown >> $pastFile`;
+  open PF,">>$pastFile";
+  print PF $newDown;
+  close PF;
 }
 
 sub convertToDateTime{
