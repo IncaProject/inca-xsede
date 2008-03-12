@@ -7783,7 +7783,7 @@ NAME="DOWNTIME-FILTER"
 ></H4
 ><P
 >The depot has a ready to use filter called "DowntimeFilter" that prefixes
-the error messages of resources marked as down with "DOWNTIME:+additionalCustomErrorMessagePrefixString:".  
+the error messages of resources marked as down with "DOWNTIME: +optionalString+:".  
 By default the consumer will display results with a error message starting with 
 "DOWNTIME:" neutrally - summary pages print the result as "down" instead of "error" and
 historical graphs show the result as "unknown".  The consumer has templates in the 
@@ -7867,18 +7867,9 @@ public class DowntimeFilter extends edu.sdsc.inca.depot.util.ReportFilter {
       } catch (IOException e){
         logger.error( "Can't load properties file" );
       }
-      setLastRefresh(System.currentTimeMillis());
+      lastRefresh = System.currentTimeMillis();
     }
     return downtimes;
-  }
-
-  /**
-   * Gets milliseconds since last downtime property refresh
-   *
-   * @return  milliseconds since last refresh
-   */
-  public static long getLastRefresh() {
-    return lastRefresh;
   }
 
   /**
@@ -7897,13 +7888,6 @@ public class DowntimeFilter extends edu.sdsc.inca.depot.util.ReportFilter {
     }
   }
 
-  /**
-   * Sets milliseconds since last downtime property refresh
-   */
-  public static void setLastRefresh(long lastRefresh) {
-    DowntimeFilter.lastRefresh = lastRefresh;
-  }
-
 }</PRE
 ></FONT
 ></TD
@@ -7913,7 +7897,7 @@ public class DowntimeFilter extends edu.sdsc.inca.depot.util.ReportFilter {
 ><P
 >To use this filter, first 
 write a script that prints the names of down resources to a file called "downtime.properties" 
-in the classpath of the depot (e.g. $INCA_DIST/webapps/xsl/downtime.properties).  If you prefer to 
+in the classpath of the depot (e.g. $INCA_DIST/etc/common/downtime.properties).  If you prefer to 
 call the file something besides "downtime.properties", set the name of the file in 
 your <TT
 CLASS="FILENAME"
@@ -7973,8 +7957,8 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->downResource1=additionalCustomErrorMessagePrefixStringForResource1
-downResource2=additionalCustomErrorMessagePrefixStringForResource2</PRE
+>downResource1=optionalErrorMessagePrefixStringForResource1
+downResource2=optionalErrorMessagePrefixStringForResource2</PRE
 ></FONT
 ></TD
 ></TR
