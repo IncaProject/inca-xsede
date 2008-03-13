@@ -22,7 +22,8 @@ command line before adding them to their Inca installation.   After installing I
 with the distribution from the command line:
 <screen>
 % cd $INCA_DIST/Inca-Reporter-*/bin
-% setenv PERL5LIB ../lib
+% setenv PERL5LIB ../lib/perl
+% setenv PYTHONPATH ../lib/python
 % ./cluster.compiler.gcc.version 
 </screen>
 You should now see XML output like that in <xref linkend="reporter-output">.</para>
@@ -100,8 +101,9 @@ specific to that reporter's task.
 <para>
 Reporters can be written in any language as long as 
 they output XML according to the schema described in <xref linkend="reporter-schema">.  
-New reporter developers may choose to write reporters in Perl since 
-the Inca distribution includes sample Perl reporters and API modules (<xref linkend="reporter-api">) 
+New reporter developers may choose to write reporters in Perl or Python since 
+the Inca distribution includes sample reporters and API modules in those
+languages (<xref linkend="reporter-api">) 
 for printing XML according to our schema.
 </para>
 <para>
@@ -333,28 +335,35 @@ reporter.
 <section id="reporter-api">
 <title>Reporter APIs</title>
 <para>
-The Inca release includes a set of <ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/">Perl modules</ulink> that make it easier to
+The Inca release includes a set of <ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/">Perl modules</ulink> and a <ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/">Python package</ulink> that make it easier to
 develop reporters that produce output as shown in <xref linkend="reporter-output">
  and conform to the schema described in <xref linkend="reporter-schema">.  
 The following are a list of modules and their purpose (click on module names for manpages):</para>
 <orderedList>
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter.html">Inca::Reporter</ulink></para>
-  <para>This module is the general reporter API and is the base class for all types of reporters.
-Inca::Reporter automates determination of hostname, gmt, reporter name, etc.,  handles command-line parsing, 
-provides an interface for log messages, and handles XML generation.
-</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.Reporter-module.html">inca.Reporter</ulink></para>
+  <para>
+  This module is the general reporter API and is the base class for all types
+  of reporters.  It automates determination of hostname, gmt, reporter name,sx
+  etc.,  handles command-line parsing, provides an interface for log messages,
+  and handles XML generation.
+  </para>
 </listItem>
 
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/GlobusUnit.html">Inca::Reporter::GlobusUnit</ulink></para>
-  <para>The Inca::Reporter::GlobusUnit module is used for Globus unit tests.  This package 
-provides methods for running Globus jobs.</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.GlobusUnitReporter-module.html">inca.GlobusUnitReporter</ulink></para>
+  <para>
+  This module is used for Globus unit tests.  it provides methods for running
+  Globus jobs.
+  </para>
 </listItem>
  
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/GridProxy.html">Inca::Reporter::GridProxy</ulink></para>
-  <para>The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a reporter that requires a proxy:
+  <para>The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a perl reporter that requires a proxy.  Python reporters should
+use the equivalent, reporter.addDependency('Inca::Reporter::GridProxy').
 <screen>#!/usr/bin/env perl
 
 use strict;
@@ -386,34 +395,49 @@ $reporter->print();
  
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/Performance.html">Inca::Reporter::Performance</ulink></para>
-  <para>The Inca::Reporter::Performance module is used to gather system performance metrics.  This package 
-defines a common &lt;body&gt; schema for system/software performance metric reporters and produces a collection of benchmarks, each a set of 
-parameters (name/value) and statistics (name/value/units). For a single benchmark, the <ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/Performance/Benchmark.html">Inca::Test::Reporter::Performance::Benchmark</ulink> module is also available.</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.PerformanceReporter-module.html">inca.PerformanceReporter</ulink></para>
+  <para>
+  This module is used to gather system performance metrics.  It defines a
+  common &lt;body&gt; schema for system/software performance metric reporters
+  and produces a collection of benchmarks, each a set of parameters
+  (name/value) and statistics (name/value/units). A dependent Benchmark class
+  is used to define individual benchmarks.
+  </para>
 </listItem>
  
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/SimpleUnit.html">Inca::Reporter::SimpleUnit</ulink></para>
-  <para>The Inca::Reporter::SimpleUnit module is used for software unit tests.  This package 
-defines a common &lt;body&gt; schema for unit test reporters and provides methods for recording results of unit tests.</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.SimpleUnitReporter-module.html">inca.SimpleUnitReporter</ulink></para>
+  <para>
+  This module is used for software unit tests.  It defines a common
+  &lt;body&gt; schema for unit test reporters and provides methods for
+  recording results of unit tests.
+  </para>
 </listItem>
 
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/Usage.html">Inca::Reporter::Usage</ulink></para>
-  <para>The Inca::Reporter::Usage module is used for creating simple usage reports.</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.UsageReporter-module.html">inca.UsageReporter</ulink></para>
+  <para>
+  This module is used for creating simple usage reports.
+  </para>
 </listItem>
 
 <listItem>
   <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/Inca/Reporter/Version.html">Inca::Reporter::Version</ulink></para>
-  <para>The Inca::Reporter::Version module is used for reporting software versions.  This package 
-defines a common &lt;body&gt; schema for version reporters,  
-offers support for subpackage versions, and provides convenience methods for common ways of 
-determining version.</para>
+  <para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/pythondocs/inca.VersionReporter-module.html">inca.VersionReporter</ulink></para>
+  <para>
+  This module is used for reporting software versions.  It defines a common
+  &lt;body&gt; schema for version reporters, offers support for subpackage
+  versions, and provides convenience methods for common ways of determining
+  version.
+  </para>
 </listItem>
 
 </orderedList>
 
 <para>The following is the Perl code for a reporter that produces output like <xref linkend="sample-report">.  This reporter 
-uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other Perl modules are 
+uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
 <screen>#!/usr/bin/env perl
 
@@ -449,7 +473,7 @@ writing reporters that:
 exit error message</para></listItem>
 </itemizedList>
 </para>
-<para>For reporters that create temporary files or directories, the perl APIs offer 
+<para>For reporters that create temporary files or directories, the APIs offer 
 a function called "tempFile" to remove them.  If the tempFile function is used then 
 additional code to remove temporary files or directories (e.g. unlink or rm)
 is not required.  The reporter below uses the tempFile function to remove 
@@ -577,10 +601,10 @@ Packages.gz, e.g.,
 <para>
 incpack runs each of the listed reporters with --help=yes --verbose=1 to
 extract a standard set of attributes.  If your reporters use the Inca reporter
-perl modules, you might need to run incpack with a -I switch to specify the
-location of the Inca perl library, like this.
+APIs, you might need to run incpack with -I switches to specify the location of
+the Inca libraries, like this.
 </para>
-<screen>% perl incpack -I ${INCA_DIST}/lib jade.version f77.unit vim.version</screen>
+<screen>% perl incpack -I ${INCA_DIST}/lib/perl -I ${INCA_DIST}/lib/python jade.version f77.unit vim.version</screen>
 <para>For more information about incpack usage, click <ulink url="http://inca.sdsc.edu/releases/&ugVersion/perldocs/incpack.html">here</ulink>.</para>
 
 <section id="package-depend">
@@ -640,7 +664,7 @@ name specified in the .attrib file:
 <screen>$reporter->addDependency('blasTestSuite');</screen>
 </para>
 <para>Then add the reporter to the repository using incpack:
-<screen>% sbin/incpack -I lib bin/cluster.math.blas.unit.level1
+<screen>% sbin/incpack -I lib/perl -I lib/python bin/cluster.math.blas.unit.level1
 Note: Appending to existing Packages.gz file
 bin/cluster.math.blas.unit.level1</screen></para>
 </listItem>
