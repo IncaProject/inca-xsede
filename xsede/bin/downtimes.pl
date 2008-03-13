@@ -61,7 +61,22 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
   my $startDate = convertToDateTime($start, $zone);
   my $endDate = convertToDateTime($end, $zone);
   if ($startDate <= $now && $endDate >= $now){
-    print TMP "$name=$id";
+    print TMP "$name=$id\n";
+    if ($name eq "ncsa-abe"){
+      print TMP "ncsa-grid-abe=$id\n";
+    }
+    if ($name eq "ncsa-ia64"){
+      print TMP "ncsa-grid-hg=$id\n";
+    }
+    if ($name eq "ncsa-tungsten"){
+      print TMP "ncsa-grid-tun=$id\n";
+    }
+    if ($name eq "purdue-lear"){
+      print TMP "purdue-grid=$id\n";
+    }
+    if ($name eq "loni-lsu-queenbee"){
+      print TMP "loni-lsu-qb=$id\n";
+    }
     my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
     if (!grep(/^$str$/, @past)){
       $email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
@@ -71,41 +86,6 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
 }
 close TMP;
 `mv $tmpFile $cacheFile`;
-
-my $query2 = "SELECT distinct i.item_id, i.subject, i.content, 
-                iu.create_timestamp,
-                s.event_start_time, s.event_end_time, s.event_time_zone, s.update_id,
-                ps.inca_name 
-          FROM  user_news.item i, 
-                user_news.item_update iu,
-                user_news.system_event s,
-                user_news.platform_system ps, 
-                user_news.item_platform ip 
-          WHERE s.item_id = i.item_id  AND
-                iu.item_id = i.item_id AND
-                ip.item_id = i.item_id AND
-                ip.system_id = ps.system_id AND
-                s.outage_type_id = '2' AND
-                i.deleted IS NULL AND
-                s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id) AND
-                iu.create_timestamp = (SELECT MAX(up.create_timestamp) FROM user_news.item_update up WHERE up.update_id = s.update_id) 
-          ORDER BY i.item_id";
-
-my $sth2 = $dbh->prepare($query2);
-if ( !defined $sth2 ) {
-  die "Cannot prepare statement: $DBI::errstr\n";
-}
-$sth2->execute();
-while ( my ($id, $subject, $content, $updatetime, $start, $end, $zone, $update, $name ) = $sth2->fetchrow()){
-  my $uptime = convertToDateTime($updatetime, 'PT'); 
-  if ($nowMinusHour <= $uptime && $now >= $uptime){
-    my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
-    if (!grep(/^$str$/, @past)){
-      $email .= "New update: $name, http://news.teragrid.org/view-item.php?item=$id\n";
-      push (@new, $str);
-    }
-  }
-}
 
 $dbh->disconnect();
 if ($email ne ""){
