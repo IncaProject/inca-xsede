@@ -62,6 +62,9 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
   my $endDate = convertToDateTime($end, $zone);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
+    if ($name eq "anl-ia64"){
+      print TMP "anl-grid=$id\n";
+    }
     if ($name eq "ncsa-abe"){
       print TMP "ncsa-grid-abe=$id\n";
     }
