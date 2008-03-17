@@ -1,15 +1,10 @@
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
 import java.net.URL;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.apache.log4j.Logger;
 import edu.sdsc.inca.depot.util.DowntimeFilter;
 
@@ -27,7 +22,9 @@ import edu.sdsc.inca.depot.util.DowntimeFilter;
 public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
   private static Logger logger = Logger.getLogger(DowntimeFilter.class);
   private static Properties downtimes = new Properties();
-  private static long lastRefresh = 0;
+  private static Properties filters = new Properties();
+  private static long lastDowntimeRefresh = 0;
+  private static long lastFilterRefresh = 0;
 
   /**
    * Checks context to see if matches regex string for a down resource
@@ -36,44 +33,61 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
    */
   private String downSeriesResource() {
     String downResource = null;
-    URL url = ClassLoader.getSystemClassLoader().getResource("filter.xml");
-    if(url == null) {
-      logger.error( "filter.xml not found in classpath" );
-    }
+    Enumeration keys = getFilters().keys();
     Vector checkResources = new Vector();
-    try {
-      File file = new File(url.getFile());
-      Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
-      doc.getDocumentElement().normalize();
-      NodeList nodeLst = doc.getElementsByTagName("resource");
-      for (int i = 0; i < nodeLst.getLength(); i++) {
-        Node node = nodeLst.item(i);
-        if (node.getNodeType() == Node.ELEMENT_NODE) {
-          Element resource = (Element)node;
-          Element name = (Element)(resource.getElementsByTagName("name").item(0));
-          String resourceName = (name.getChildNodes().item(0)).getNodeValue();
-          //logger.debug("Name: "  + resourceName);
-          Element regex = (Element)(resource.getElementsByTagName("regex").item(0));
-          String regexStr = (regex.getChildNodes().item(0)).getNodeValue();
-          //logger.debug("Regex: "  + regexStr);
-          if (Pattern.matches("(.|\\n)*"+regexStr+"(.|\\n)*", super.getContext())){
-            checkResources.addElement(resourceName);
-          }
-        }
+    while (keys.hasMoreElements()) {
+      String key = (String)keys.nextElement();
+      String value = (String)getFilters().get(key);
+      if (Pattern.matches("(.|\\n)*"+value+"(.|\\n)*", super.getContext())){
+        checkResources.addElement(key);
       }
-      String[] check = (String[])checkResources.toArray(
-          new String [checkResources.size()] );
-      for (String lookup : check){
-        String resourceProp  = getDowntimes().getProperty(lookup);
-        if (resourceProp != null){
-          logger.debug( lookup + " is down " + resourceProp );
-          return resourceProp;
-        }
+    }
+    String[] check = (String[])checkResources.toArray(
+        new String [checkResources.size()] );
+    for (String lookup : check){
+      String resourceProp  = getDowntimes().getProperty(lookup);
+      if (resourceProp != null){
+        logger.debug( lookup + " is down " + resourceProp );
+        return resourceProp;
       }
-    } catch (Exception e){
-      logger.error( "Problem parsing: " + e );
     }
     return downResource;
+  }
+
+  /**
+   * Returns cached property list of regex filters.  Gets and caches
+   * property list from file in classpath (filter.properties) if cache has
+   * expired according to refreshMins.
+   *
+   */
+  synchronized static Properties getFilters()  {
+    String filterPropFile = System.getProperty("inca.depot.filterFile");
+    if(filterPropFile == null) {
+      filterPropFile  = "filter.properties";
+    }
+    String filterRefresh = System.getProperty("inca.depot.filterRefresh");
+    if(filterRefresh == null) {
+      filterRefresh  = "1440";
+    }
+    Integer refreshMins = Integer.parseInt(filterRefresh);
+    long minSinceLastRefresh = (System.currentTimeMillis()-lastFilterRefresh)/60000;
+    if (minSinceLastRefresh >= refreshMins){
+      URL url = ClassLoader.getSystemClassLoader().getResource(filterPropFile);
+      if(url == null) {
+        logger.error( filterPropFile + " not found in classpath" );
+      }
+      logger.debug( "Located file " + url.getFile() );
+      filters.clear();
+      try {
+        InputStream is = url.openStream();
+        filters.load(is);
+        is.close();
+      } catch (IOException e){
+        logger.error( "Can't load filter properties file" );
+      }
+      lastFilterRefresh = System.currentTimeMillis();
+    }
+    return filters;
   }
 
   /**
@@ -102,7 +116,7 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
       downtimeRefresh  = "15";
     }
     Integer refreshMins = Integer.parseInt(downtimeRefresh);
-    long minSinceLastRefresh = (System.currentTimeMillis()-lastRefresh)/60000;
+    long minSinceLastRefresh = (System.currentTimeMillis()-lastDowntimeRefresh)/60000;
     if (minSinceLastRefresh >= refreshMins){
       URL url = ClassLoader.getSystemClassLoader().getResource(downtimePropFile);
       if(url == null) {
@@ -115,9 +129,9 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
         downtimes.load(is);
         is.close();
       } catch (IOException e){
-        logger.error( "Can't load properties file" );
+        logger.error( "Can't load downtime properties file" );
       }
-      lastRefresh = System.currentTimeMillis();
+      lastDowntimeRefresh = System.currentTimeMillis();
     }
     return downtimes;
   }
