@@ -7,7 +7,7 @@ use DateTime;
 use DateTime::Format::Strptime;
 
 my $home = "$ENV{'HOME'}";
-my $dir = "/misc/inca/install-2r5/webapps/xsl/";
+my $dir = "/misc/inca/install-2r5/etc/";
 my $cacheFile = $dir . "downtime.properties";
 #my $cacheFile = $dir . "downtime.properties.test";
 my $tmpFile = $dir . "downtime.properties.tmp";
@@ -62,9 +62,6 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
   my $endDate = convertToDateTime($end, $zone);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
-    if ($name eq "anl-ia64"){
-      print TMP "anl-grid=$id\n";
-    }
     if ($name eq "ncsa-abe"){
       print TMP "ncsa-grid-abe=$id\n";
     }
@@ -93,6 +90,7 @@ close TMP;
 $dbh->disconnect();
 if ($email ne ""){
   `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
+  #`echo "$email" | mail -s "TeraGrid News DB has new update or resource down" kericson\@sdsc.edu`;
   my $newDown = join("\n", @new);
   open PF,">>$pastFile";
   print PF "\n$newDown\n";
@@ -103,9 +101,9 @@ sub convertToDateTime{
   my $date = shift;
   my $zone = shift;
 
-  $zone =~ s/PT/America\/Los_Angeles/g;
-  $zone =~ s/CT/America\/Chicago/g;
-  $zone =~ s/ET/America\/New_York/g;
+  $zone =~ s/P(|.)T/America\/Los_Angeles/g;
+  $zone =~ s/C(|.)T/America\/Chicago/g;
+  $zone =~ s/E(|.)T/America\/New_York/g;
   my $parser = DateTime::Format::Strptime->new( 
                pattern => '%Y-%m-%d %l.%M.%S %p' ); # 2008-02-26 08.00.00 AM
   my $parseDate = $parser->parse_datetime($date);
