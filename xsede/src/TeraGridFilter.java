@@ -31,13 +31,15 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
    *
    * @return  string with resource down optional string
    */
-  private String downSeriesResource() {
+  private String downSeriesResource(Properties downProp) {
     String downResource = null;
-    Enumeration keys = getFilters().keys();
+    Properties filterProp =
+        getProperties("filter", "1440", filters, lastFilterRefresh);
+    Enumeration keys = filterProp.keys();
     Vector checkResources = new Vector();
     while (keys.hasMoreElements()) {
       String key = (String)keys.nextElement();
-      String value = (String)getFilters().get(key);
+      String value = (String)filterProp.get(key);
       if (Pattern.matches("(.|\\n)*"+value+"(.|\\n)*", super.getContext())){
         checkResources.addElement(key);
       }
@@ -45,7 +47,7 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
     String[] check = (String[])checkResources.toArray(
         new String [checkResources.size()] );
     for (String lookup : check){
-      String resourceProp  = getDowntimes().getProperty(lookup);
+      String resourceProp  = downProp.getProperty(lookup);
       if (resourceProp != null){
         logger.debug( lookup + " is down " + resourceProp );
         return resourceProp;
@@ -55,85 +57,43 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
   }
 
   /**
-   * Returns cached property list of regex filters.  Gets and caches
-   * property list from file in classpath (filter.properties) if cache has
-   * expired according to refreshMins.
-   *
+   * Returns cached property list.  Gets property list from file in classpath
+   * if cache has expired according to refreshMins.
    */
-  synchronized static Properties getFilters()  {
-    String filterPropFile = System.getProperty("inca.depot.filterFile");
-    if(filterPropFile == null) {
-      filterPropFile  = "filter.properties";
+  synchronized static Properties getProperties(
+      String name, String refreshDefault, Properties prop, long lastRefresh)  {
+    String propFile = System.getProperty("inca.depot."+name+"File");
+    if(propFile == null) {
+      propFile  = name+".properties";
     }
-    String filterRefresh = System.getProperty("inca.depot.filterRefresh");
-    if(filterRefresh == null) {
-      filterRefresh  = "1440";
+    String refresh = System.getProperty("inca.depot."+name+"Refresh");
+    if(refresh == null) {
+      refresh  = refreshDefault;
     }
-    Integer refreshMins = Integer.parseInt(filterRefresh);
-    long minSinceLastRefresh = (System.currentTimeMillis()-lastFilterRefresh)/60000;
+    Integer refreshMins = Integer.parseInt(refresh);
+    long minSinceLastRefresh = (System.currentTimeMillis()-lastRefresh)/60000;
     if (minSinceLastRefresh >= refreshMins){
-      URL url = ClassLoader.getSystemClassLoader().getResource(filterPropFile);
+      URL url = ClassLoader.getSystemClassLoader().getResource(propFile);
       if(url == null) {
-        logger.error( filterPropFile + " not found in classpath" );
+        logger.error( propFile + " not found in classpath" );
       }
       logger.debug( "Located file " + url.getFile() );
-      filters.clear();
+      prop.clear();
       try {
         InputStream is = url.openStream();
-        filters.load(is);
+        prop.load(is);
         is.close();
       } catch (IOException e){
-        logger.error( "Can't load filter properties file" );
+        logger.error( "Can't load "+name+" properties file" );
       }
-      lastFilterRefresh = System.currentTimeMillis();
-    }
-    return filters;
-  }
-
-  /**
-   * Returns cached property list of resources in downtime.  Gets and caches
-   * property list from file in classpath (downtime.properties) if cache has
-   * expired according to refreshMins.
-   *
-   * The property list file contents can be:
-   *
-   *  downResource1=optionalErrorMessagePrefixStringForResource1
-   *  downResource2=optionalErrorMessagePrefixStringForResource2
-   *
-   * OR
-   *
-   *  downResource1
-   *  downResource2
-   *
-   */
-  synchronized static Properties getDowntimes()  {
-    String downtimePropFile = System.getProperty("inca.depot.downtimeFile");
-    if(downtimePropFile == null) {
-      downtimePropFile  = "downtime.properties";
-    }
-    String downtimeRefresh = System.getProperty("inca.depot.downtimeRefresh");
-    if(downtimeRefresh == null) {
-      downtimeRefresh  = "15";
-    }
-    Integer refreshMins = Integer.parseInt(downtimeRefresh);
-    long minSinceLastRefresh = (System.currentTimeMillis()-lastDowntimeRefresh)/60000;
-    if (minSinceLastRefresh >= refreshMins){
-      URL url = ClassLoader.getSystemClassLoader().getResource(downtimePropFile);
-      if(url == null) {
-        logger.error( downtimePropFile + " not found in classpath" );
+      if (name == "downtime") {
+        lastDowntimeRefresh = System.currentTimeMillis();
       }
-      logger.debug( "Located file " + url.getFile() );
-      downtimes.clear();
-      try {
-        InputStream is = url.openStream();
-        downtimes.load(is);
-        is.close();
-      } catch (IOException e){
-        logger.error( "Can't load downtime properties file" );
+      if (name == "filter") {
+        lastFilterRefresh = System.currentTimeMillis();
       }
-      lastDowntimeRefresh = System.currentTimeMillis();
     }
-    return downtimes;
+    return prop;
   }
 
   /**
@@ -142,15 +102,17 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
    * @return  string with depot report (reporter Stdout)
    */
   public String getStdout() {
-    if (getDowntimes().isEmpty()){
+    Properties downProp =
+        getProperties("downtime", "15", downtimes, lastDowntimeRefresh);
+    if (downProp.isEmpty()){
       return super.getStdout();
     } else {
-      String downSeriesProp = downSeriesResource();
+      String downSeriesProp = downSeriesResource(downProp);
       if (downSeriesProp != null){
         return super.getStdout().replaceFirst(
             "<errorMessage>", "<errorMessage>DOWNTIME:"+ downSeriesProp +": ");
       }
-      String resourceProp  = getDowntimes().getProperty(super.getResource());
+      String resourceProp  = downProp.getProperty(super.getResource());
       if (resourceProp != null){
         logger.debug( super.getResource() + " is down " + resourceProp );
         return super.getStdout().replaceFirst(
