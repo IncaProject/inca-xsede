@@ -21,13 +21,15 @@ import edu.sdsc.inca.depot.util.DowntimeFilter;
  */
 public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
   private static Logger logger = Logger.getLogger(DowntimeFilter.class);
-  private CachedProperties cacheDown = new CachedProperties("downtime", "15");
-  private CachedProperties cacheFilter = new CachedProperties("filter", "1440");
+  private static CachedProperties cacheDown =
+      new CachedProperties("downtime", "15");
+  private static CachedProperties cacheFilter =
+      new CachedProperties("filter", "1440");
 
   /**
    * Creates cached Properties fetched according to refreshMins.
    */
-  private class CachedProperties {
+  private static class CachedProperties {
     private Properties prop = new Properties();
     private long lastRefresh = 0;
     private String fileName;
@@ -122,7 +124,8 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
         return super.getStdout().replaceFirst(
             "<errorMessage>", "<errorMessage>DOWNTIME:"+ downSeriesProp +": ");
       }
-      String resourceProp  = cacheDown.getProperties().getProperty(super.getResource());
+      String resourceProp  =
+          cacheDown.getProperties().getProperty(super.getResource());
       if (resourceProp != null){
         logger.debug( super.getResource() + " is down " + resourceProp );
         return super.getStdout().replaceFirst(
