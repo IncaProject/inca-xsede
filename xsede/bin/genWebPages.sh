@@ -28,8 +28,8 @@ c4graph=$webdir/ctssv4-graph.html
 c4graphtmp=$webdir/ctssv4-graph.html.tmp
 c4map=$webdir/ctssv4-map.html
 c4maptmp=$webdir/ctssv4-map.html.tmp
-c4jsp="http://sapa.sdsc.edu:8080/inca/xslt.jsp?suiteName=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0&resourceID=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0"
-c4xml="&xmlFile=core.teragrid.org-4.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-3.0.0.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml"
+c4jsp="http://sapa.sdsc.edu:8080/inca/xslt.jsp?suiteName=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0&resourceID=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0"
+c4xml="&xmlFile=core.teragrid.org-4.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-3.0.0.xml,remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml"
 c4url=$c4jsp$c4xml
 
 # get instance
@@ -47,17 +47,17 @@ else
   err=$ierr
 fi
 DIFF=$(expr $END - $START)
-echo $END: $DIFF >> instanceTime.log
+echo $END: $DIFF >> ${HOME}/logs/instanceTime.log
 
 countPostgres=`ps awwx | grep postgres | wc -l`
-echo $countPostgres >> postgresCount.log
+echo $countPostgres >> ${HOME}/logs/postgresCount.log
 maxPostgres=60
 if ( test $countPostgres -gt $maxPostgres ); then
   date | mail -s "postgres count is $countPostgres (over $maxPostgres processes)" inca@sdsc.edu
 fi
 
 # get summary page
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $stmp "http://sapa.sdsc.edu:8080/inca/xslt.jsp?xmlFile=ctssv3.xml&xsl=summary.xsl&resourceID=teragrid-login&suiteName=ctss"
 if ( test $? -ne 0 ); then
   sumerr="$err summary "
@@ -72,7 +72,7 @@ fi
 
 
 # get ctssv3 expanded page with old results marked
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 curl -o $c3tmp $c3url"&xsl=swStack.xsl" > /dev/null 2>&1
 if ( test $? -ne 0 ); then
   ctsseerr="$err ctssv3 "
@@ -85,7 +85,7 @@ else
   err=$ctsseerr
 fi
 # get ctssv3 graph page
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c3graphtmp $c3url"&xsl=graph.xsl"
 if ( test $? -ne 0 ); then
   ctssGerr="$err ctssv3-graph "
@@ -98,7 +98,7 @@ else
   err=$ctssGerr
 fi
 # get ctssv3 map page
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c3maptmp $c3jsp"&xmlFile=google.xml&xsl=google.xsl"
 if ( test $? -ne 0 ); then
   ctssMerr="$err ctssv3-map "
@@ -112,7 +112,7 @@ else
 fi
 
 # get ctssv4 expanded page with old results marked
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c4tmp $c4url"&xsl=ctssv4.xsl"
 if ( test $? -ne 0 ); then
   ctsseerr="$err ctssv4 "
@@ -126,7 +126,7 @@ else
 fi
 
 # get ctssv4 test kit
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c4testtmp "http://sapa.sdsc.edu:8080/inca/xslt.jsp?supportLevel=testing&suiteName=remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0&resourceID=remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0&xmlFile=remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml&xsl=ctssv4.xsl"
 if ( test $? -ne 0 ); then
   ctss4testerr="$err ctssv4-test "
@@ -143,7 +143,7 @@ if [ "$err" != "" ]; then
 fi
 
 # get ctssv4 graph page
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c4graphtmp $c4url"&xsl=graph.xsl"
 if ( test $? -ne 0 ); then
   ctss4err="$err ctssv4-graph "
@@ -156,7 +156,7 @@ else
   err=$ctss4err
 fi
 # get ctssv4 map page
-echo "$date = $?" >> ${HOME}/genWebPages.log
+echo "$date = $?" >> ${HOME}/logs/genWebPages.log
 wget -o /dev/null -O $c4maptmp $c4jsp"&xmlFile=google.xml&xsl=google.xsl"
 if ( test $? -ne 0 ); then
   ctss4err="$err ctssv4-map "
