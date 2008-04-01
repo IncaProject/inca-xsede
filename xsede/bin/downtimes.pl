@@ -105,6 +105,7 @@ sub convertToDateTime{
   my $zone = shift;
 
   $zone =~ s/P(|.)T/America\/Los_Angeles/g;
+  $zone =~ s/M(|.)T/America\/Denver/g;
   $zone =~ s/C(|.)T/America\/Chicago/g;
   $zone =~ s/E(|.)T/America\/New_York/g;
   my $parser = DateTime::Format::Strptime->new( 
