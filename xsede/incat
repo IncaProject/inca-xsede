@@ -4865,16 +4865,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-grid|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
+        <name>real-time-wsgram</name>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram-4.0.0</value>
+            <value>real-time-wsgram</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-grid ncsa-grid-tun ncsa-ia64</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4887,16 +4887,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-wsgram</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
+        <name>real-time-wsgram-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|indiana-bigred|anl-grid|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-wsgram</value>
+            <value>real-time-wsgram-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
+            <value>ncsa-grid-hg ncsa-tungsten indiana-bigred anl-grid ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6460,10 +6460,6 @@
             <value>@keyPre@ tgproxy/0.9.1 @keyPost@</value>
           </macro>
           <macro>
-            <name>login4.0.0-gxmap-key</name>
-            <value>@keyPre@ gx-map/0.5.3.2 @keyPost@</value>
-          </macro>
-          <macro>
             <name>login4.0.0-tgusage-key</name>
             <value>@keyPre@ tgusage/2.9 @keyPost@</value>
           </macro>
@@ -6588,10 +6584,6 @@
             <value>@keyPre@ mycluster @keyPost@</value>
           </macro>
           <macro>
-            <name>gatekeeperlog</name>
-            <value>/import/data2/TG/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
-          </macro>
-          <macro>
             <name>login4.0.0-gsissh-key</name>
             <value/>
             <value>@keyPre@ gsissh/4.1 @keyPost@</value>
@@ -6617,6 +6609,14 @@
           <macro>
             <name>remote4.0.0-mds</name>
             <value>ranger.tacc.teragrid.org:8446</value>
+          </macro>
+          <macro>
+            <name>gatekeeperlog</name>
+            <value>/share/apps/teragrid/prews-gram-4.0.5-r1/var/globus-gatekeeper.log</value>
+          </macro>
+          <macro>
+            <name>login4.0.0-gxmap-key</name>
+            <value>@keyPre@ gx-map/0.5.3.3 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -11193,98 +11193,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.interactive_access.openssh.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>gsissh</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-gsissh-key@us@@@post@</context>
-          </series>
-          <nickname>gsissh-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>openssh>=3.9</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.transfer.uberftp.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-uberftp-key@us@@@post@</context>
-          </series>
-          <nickname>uberftp-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>uberftp>=1.18</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.accounting.tgusage.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
             <args>
@@ -11421,58 +11329,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.interactive_access.openssh.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>login</name>
-                <value>inca</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>gsissh</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@login4.0.0-ssh-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>900.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-gsissh-key@us@@@post@</context>
-          </series>
-          <nickname>gsissh-unit</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.tg.softenv.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
             <args>
@@ -11557,6 +11413,150 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>cluster.interactive_access.openssh.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-gsissh-key@@@@post@</context>
+          </series>
+          <nickname>gsissh-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>openssh>=3.9</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.uberftp.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-uberftp-key@@@@post@</context>
+          </series>
+          <nickname>uberftp-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>uberftp>=1.18</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>login</name>
+                <value>inca</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@login4.0.0-ssh-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>900.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-gsissh-key@@@@post@</context>
+          </series>
+          <nickname>gsissh-unit</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>grid.interactive_access.myproxy.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.interactive_access.myproxy.version</uri>
             <args>
@@ -11580,7 +11580,7 @@
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@login4.0.0-myproxy-key@us@@@post@</context>
+            <context>@pre@@login4.0.0-myproxy-key@@@@post@</context>
           </series>
           <nickname>myproxy-version</nickname>
           <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
@@ -11603,7 +11603,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>37</version>
+      <version>40</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13356,6 +13356,7 @@
         <seriesConfig>
           <series>
             <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
             <args>
               <arg>
                 <name>Host1</name>
@@ -13459,6 +13460,7 @@
         <seriesConfig>
           <series>
             <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
             <args>
               <arg>
                 <name>Host1</name>
@@ -13562,6 +13564,7 @@
         <seriesConfig>
           <series>
             <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
             <args>
               <arg>
                 <name>Host1</name>
@@ -13665,6 +13668,7 @@
         <seriesConfig>
           <series>
             <name>java.cog.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/java.cog.unit</uri>
             <args>
               <arg>
                 <name>Host1</name>
@@ -13769,7 +13773,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>165</version>
+      <version>169</version>
     </suite>
     <suite>
       <seriesConfigs>
