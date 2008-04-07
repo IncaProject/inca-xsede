@@ -56,29 +56,20 @@ if ( !defined $sth ) {
 $sth->execute();
 my $email = "";
 my @new = ();
+my %equivHosts = ( "anl-ia64" => "anl-grid",
+    "ncsa-abe" => "ncsa-grid-abe",
+    "ncsa-ia64" => "ncsa-grid-hg",
+    "ncsa-tungsten" => "ncsa-grid-tun",
+    "purdue-lear" => "purdue-grid",
+    "loni-lsu-queenbee" => "loni-lsu-qb");
 open TMP,">$tmpFile";
 while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
   my $startDate = convertToDateTime($start, $zone);
   my $endDate = convertToDateTime($end, $zone);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
-    if ($name eq "anl-ia64"){
-      print TMP "anl-grid=$id\n";
-    }
-    if ($name eq "ncsa-abe"){
-      print TMP "ncsa-grid-abe=$id\n";
-    }
-    if ($name eq "ncsa-ia64"){
-      print TMP "ncsa-grid-hg=$id\n";
-    }
-    if ($name eq "ncsa-tungsten"){
-      print TMP "ncsa-grid-tun=$id\n";
-    }
-    if ($name eq "purdue-lear"){
-      print TMP "purdue-grid=$id\n";
-    }
-    if ($name eq "loni-lsu-queenbee"){
-      print TMP "loni-lsu-qb=$id\n";
+    if (grep(/^$name$/, keys %equivHosts)){
+      print TMP "$equivHosts{$name}=$id\n";
     }
     my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
     if (!grep(/^$str$/, @past)){
