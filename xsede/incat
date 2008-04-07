@@ -3450,14 +3450,6 @@
             <value>8444</value>
           </macro>
           <macro>
-            <name>real-time-fs</name>
-            <value>/gpfs_scratch1</value>
-          </macro>
-          <macro>
-            <name>real-time-gridftp-host</name>
-            <value>grid-hg.ncsa.teragrid.org</value>
-          </macro>
-          <macro>
             <name>remote4.0.0-prews-batch-job-manager</name>
             <value>jobmanager-lsf</value>
           </macro>
@@ -3528,6 +3520,14 @@
           <macro>
             <name>remote3.0.0-gatekeeper-host</name>
             <value>tune.ncsa.uiuc.edu</value>
+          </macro>
+          <macro>
+            <name>real-time-gridftp-host</name>
+            <value>gridftp-w.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>real-time-fs</name>
+            <value>/cfs/scratch/users</value>
           </macro>
         </macros>
       </resource>
@@ -4673,7 +4673,7 @@
       </resource>
       <resource>
         <name>real-time-gridftp</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-tungsten|ncsa-grid-hg|indiana-bigred|anl-ia64)$')]</xpath>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-tungsten|ncsa-grid-hg|indiana-bigred|anl-ia64|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>real-time-gridftp-host</name>
@@ -4684,12 +4684,17 @@
             <value>@dataMove4.0.0-gridftp-port@</value>
           </macro>
           <macro>
+            <name>real-time-fs</name>
+            <value>/gpfs-wan/scratch</value>
+            <value>/gpfs</value>
+          </macro>
+          <macro>
             <name>__groupname__</name>
             <value>real-time-gridftp</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-tungsten ncsa-grid-hg indiana-bigred anl-ia64</value>
+            <value>SDSC ncsa-tungsten ncsa-grid-hg indiana-bigred anl-ia64 ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4699,24 +4704,23 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
-          <macro>
-            <name>real-time-fs</name>
-            <value>/gpfs-wan/scratch</value>
-            <value>/gpfs</value>
-          </macro>
         </macros>
       </resource>
       <resource>
         <name>real-time-lead-gridftp</name>
-        <xpath>//resource[matches(name, '^(ncsa-tungsten|ncsa-grid-hg|indiana-bigred)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-tungsten|ncsa-grid-hg|indiana-bigred|ncsa-grid-tun)$')]</xpath>
         <macros>
+          <macro>
+            <name>real-time-lead-gridftp</name>
+            <value>gridftp.bigred.iu.teragrid.org:2812/N/dc/scratch</value>
+          </macro>
           <macro>
             <name>__groupname__</name>
             <value>real-time-lead-gridftp</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-tungsten ncsa-grid-hg indiana-bigred</value>
+            <value>ncsa-tungsten ncsa-grid-hg indiana-bigred ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4725,10 +4729,6 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
-          </macro>
-          <macro>
-            <name>real-time-lead-gridftp</name>
-            <value>gridftp.bigred.iu.teragrid.org:2812/N/dc/scratch</value>
           </macro>
         </macros>
       </resource>
