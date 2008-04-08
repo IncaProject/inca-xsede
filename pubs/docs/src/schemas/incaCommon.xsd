@@ -252,4 +252,38 @@
     </sequence>
   </complexType>
 
+  <!-- seriesHistory summarizes series successes and failures over a
+       specified period -->
+  <complexType name="seriesHistory">
+    <sequence>
+      <element name="series">
+        <complexType>
+          <sequence>
+            <element name = "guid" type = "string"/>
+            <element name = "nickname" type = "string"/>
+            <element name = "resource" type = "string"/>
+            <element name="period" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <sequence>
+                  <element name = "begin" type = "long"/>
+                  <element name = "end" type = "long"/>
+                  <element name = "successes" type = "long"/>
+                  <element name = "failure"
+                           minOccurs = "0" maxOccurs = "unbounded">
+                    <complexType>
+                      <sequence>
+                        <element name="message" type = "string"/>
+                        <element name="count" type = "long"/>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
 </schema>
