@@ -55,12 +55,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=repo&amp;suiteName=tg-mds,globus-mds-auth">
-                      MDS Graph
-                    </a>
-                  </li>
-                  <li>
-                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteName=real-time,security,usage,sdsc-ops,check-reporter-managers">
+                    <a href="xslt.jsp?xsl=graph.xsl&amp;resourceID=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteName=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers">
                       Other Test Suites Graph
                     </a>
                   </li>
@@ -110,23 +105,6 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds">
-                      MDS
-                    </a>
-                    <ul>
-                      <li>
-                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds">
-                          tg wide information services
-                        </a>
-                      </li>
-                      <li>
-                        <a href="xslt.jsp?xsl=default.xsl&amp;resourceID=repo&amp;suiteName=globus-mds-auth">
-                          globus-mds-auth service
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
                     <a href="xslt.jsp?xsl=job.xsl&amp;resourceID=teragrid-gridnodes&amp;suiteName=usage&amp;xmlFile=jobs.xml">
                       Other Test Suites
                     </a>
@@ -137,8 +115,13 @@
                         </a>
                       </li>
                       <li>
+                        <a href="xslt.jsp?xsl=tg-mds.xsl&amp;xmlFile=tg-mds.xml&amp;resourceID=repo&amp;suiteName=tg-mds">
+                          tg wide mds
+                        </a>
+                      </li>
+                      <li>
                         <a href="xslt.jsp?xsl=swStack.xsl&amp;resourceID=real-time&amp;suiteName=real-time&amp;xmlFile=real-time.xml">
-                          real-time monitoring testbed
+                          real-time testbed
                         </a>
                       </li>
                       <li>
