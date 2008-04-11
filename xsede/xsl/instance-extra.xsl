@@ -28,35 +28,32 @@
           $nickName, ' -L DEBUG')"/>
       </p></td>
     </tr>
-    <xsl:if test="$url[not(matches(., 'noComment'))]">
-      <tr><td colspan="2" class="header">
-        <xsl:text>Comments:</xsl:text>
-      </td></tr>
-      <tr><td colspan="2">
-        <xsl:choose>
-          <xsl:when test="count(../../comments/row)>0">
-            <xsl:apply-templates select="../../comments/row">
-              <xsl:sort select="date" data-type="text" order="descending"/>
-            </xsl:apply-templates>
-            <hr/>
-          </xsl:when>
-          <xsl:otherwise>
-            <p>No comments for this series.</p>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:variable name="confid" select="../seriesConfigId" /><br/>
-        <form method="post" action="{replace(replace(replace($page, ':8080/',
-          ':8443/'), 'http://', 'https://'), 'xslt.jsp', 'addDbCommentsForm.jsp')}">
-          <input type="hidden" name="series" value="{$confid}"/>
-          <input type="hidden" name="host" value="{hostname}"/>
-          <input type="hidden" name="nickname" value="{$config/nickname}"/>
-          <input type="hidden" name="login" value=""/>
-          <input type="hidden" name="comment" value=""/>
-          <input type="hidden" name="author" value=""/>
-          <input type="submit" name="Submit" value="add a comment"/>
-        </form>
-      </td></tr>
-    </xsl:if>
+    <tr><td colspan="2" class="header">
+      <xsl:text>Comments:</xsl:text>
+    </td></tr>
+    <tr><td colspan="2">
+      <xsl:choose>
+        <xsl:when test="count(/instance/comments/row)>0">
+          <xsl:apply-templates select="/instance/comments/row">
+            <xsl:sort select="date" data-type="text" order="descending"/>
+          </xsl:apply-templates>
+          <hr/>
+        </xsl:when>
+        <xsl:otherwise>
+          <p>No comments for this series.</p>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:variable name="confid" select="../seriesConfigId" /><br/>
+      <form method="post" action="https://sapa.sdsc.edu:8443/inca/addDbCommentsForm.jsp">
+        <input type="hidden" name="series" value="{$confid}"/>
+        <input type="hidden" name="host" value="{hostname}"/>
+        <input type="hidden" name="nickname" value="{$config/nickname}"/>
+        <input type="hidden" name="login" value=""/>
+        <input type="hidden" name="comment" value=""/>
+        <input type="hidden" name="author" value=""/>
+        <input type="submit" name="Submit" value="add a comment"/>
+      </form>
+    </td></tr>
   </xsl:template>
 
 </xsl:stylesheet>
