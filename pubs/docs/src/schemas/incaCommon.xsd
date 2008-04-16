@@ -130,7 +130,12 @@
        series should be run once, immediately. -->
   <complexType name = "schedule">
     <sequence>
-      <element name = "cron" type = "inca:cron" minOccurs = "0"/>
+      <choice minOccurs = "0">
+        <element name = "cron" type = "inca:cron"/>
+        <element name = "crontime" type = "string"/>
+      </choice>
+      <element name = "numOccurs" type = "string" minOccurs = "0"/>
+      <element name = "suspended" type = "boolean" minOccurs = "0"/>
     </sequence>
   </complexType>
   <complexType name = "cron">
@@ -140,9 +145,6 @@
       <element name = "mday" type = "string"/>
       <element name = "wday" type = "string"/>
       <element name = "month" type = "string"/>
-      <element name = "cronspec" type = "string" minOccurs = "0"/>
-      <element name = "numOccurs" type = "string" minOccurs = "0"/>
-      <element name = "suspended" type = "boolean" minOccurs = "0"/>
     </sequence>
   </complexType>
   
