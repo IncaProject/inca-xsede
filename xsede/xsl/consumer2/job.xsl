@@ -9,19 +9,8 @@
                 xmlns:quer="http://inca.sdsc.edu/dataModel/queryResults_2.0"
                 xmlns:rs="http://inca.sdsc.edu/queryResult/reportSummary_2.0"
                 xmlns="http://www.w3.org/1999/xhtml">
-
-  <xsl:include href="../xsl/header.xsl"/>
-  <xsl:include href="../xsl/footer.xsl"/>
-
-  <xsl:template match="/combo">
-    <!-- header.xsl -->
-    <xsl:call-template name="header"/>
-    <body topMargin="0"><xsl:call-template name="suite" /></body>
-    <!-- footer.xsl -->
-    <xsl:call-template name="footer"/>
-  </xsl:template>
-
-  <xsl:template name="suite">
+  
+  <xsl:template match="/combo">  
     <h1 class="body"><xsl:value-of select="stack/id"/></h1>
     <br/><font class="ptext"><b>
     <xsl:text>Num. jobs per unique user:</xsl:text>
