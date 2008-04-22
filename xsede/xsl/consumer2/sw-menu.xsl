@@ -28,13 +28,13 @@
         </xsl:non-matching-substring>
       </xsl:analyze-string>
     </xsl:variable>
-    <form method="get" action="status.jsp" name="form">
+    <form method="get" action="../jsp/status.jsp" name="form">
       <table cellpadding="2">
         <tr>
           <td> <p>RESOURCE:<br/>
             <select name="resourceIds">
               <option value="select">- Select One -</option>
-              <xsl:for-each select="/combo/resourceConfig/resources/resource[name]">
+              <xsl:for-each select="/combo/resources/resource[name]">
                 <xsl:sort select="." />
                 <xsl:variable name="name" select="name" />
                 <option value="{$name}"><xsl:value-of select="name"/></option>

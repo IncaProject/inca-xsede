@@ -10,21 +10,21 @@
   <xsl:template name="tg-menu">
     <script type="text/javascript">
       function setResourceAndXml(){
-        document.form.xmlFile.value = document.form.suiteName.value + '.xml';
-        if (document.form.suiteName.value.match(/,/)){
-          document.form.xmlFile.value = "core.teragrid.org-4.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-3.0.0.xml,remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml";
+        document.form.xml.value = document.form.suiteNames.value + '.xml';
+        if (document.form.suiteNames.value.match(/,/)){
+          document.form.xml.value = "core.teragrid.org-4.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-3.0.0.xml,remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml";
         }
         if (document.form.resource.value == "select"){
-          document.form.resourceID.value = document.form.suiteName.value;
+          document.form.resourceIds.value = document.form.suiteNames.value;
         }else{
-          document.form.resourceID.value = document.form.resource.value;
+          document.form.resourceIds.value = document.form.resource.value;
         }
       }
     </script>
-    <form method="get" action="xslt.jsp" name="form">
+    <form method="get" action="../jsp/status.jsp" name="form">
       <table cellpadding="2">
         <tr><td><p>KIT:<br/>
-          <select name="suiteName">
+          <select name="suiteNames">
             <option value="core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">- Select One -</option>
             <option value="core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">ALL KITS</option>
             <option value="core.teragrid.org-4.0.0">Core Integration 4.0.0</option>
@@ -44,7 +44,7 @@
             <select name="resource">
               <option value="select">- Select One -</option>
               <option value="teragrid-login">TeraGrid</option>
-              <xsl:for-each select="/combo/resourceConfig/resources/resource[name]">
+              <xsl:for-each select="/combo/resources/resource[name]">
                 <xsl:sort select="." />
                 <xsl:variable name="name" select="name" />
                 <option value="{$name}"><xsl:value-of select="name"/></option>
@@ -63,9 +63,10 @@
           </p>
           </td>
           <td>
-            <input type="hidden" name="xmlFile" value="core.teragrid.org-4.0.0.xml"/>
-            <input type="hidden" name="resourceID" value=""/>
-            <input type="hidden" name="xsl" value="ctssv4.xsl"/>
+            <input type="hidden" name="xml" value="core.teragrid.org-4.0.0.xml"/>
+            <input type="hidden" name="xsl" value="swStack.xsl"/>
+            <input type="hidden" name="noCategoryHeaders" value=""/>
+            <input type="hidden" name="resourceIds" value=""/>
             <input type="submit" name="Submit" value="Submit" onclick="setResourceAndXml()"/></td>
         </tr></table>
     </form>

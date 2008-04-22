@@ -17,6 +17,7 @@
 
   <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:include href="../xsl/tg-legend.xsl"/>
+  <xsl:include href="../xsl/tg-menu.xsl"/>
   <xsl:include href="../xsl/sw-menu.xsl"/>
   <xsl:param name="queryStr" />
 
@@ -47,17 +48,48 @@
     <table><tr><td>
     <!-- tg-legend.xsl -->
     <xsl:call-template name="printLegend"/>
-    </td><td>
-    <!-- sw-menu.xsl -->
-    <xsl:call-template name="sw-menu"/>
+    </td><td align="right">
+    <!-- sw-menu.xsl or tg-menu.xsl -->
+    <xsl:if test="$queryStr[matches(., 'suiteNames=ctss')]">
+      <xsl:call-template name="sw-menu"/>
+    </xsl:if>
+    <xsl:if test="$queryStr[matches(., 'suiteNames=.*\.teragrid.org-.*')]">
+      <xsl:call-template name="tg-menu"/>
+    </xsl:if>
     </td></tr></table>
+    <xsl:variable name="testResources" 
+                  select="string(//stack/testing/resource)"/>
+    <xsl:variable name="matchResources">
+      <xsl:choose>
+        <xsl:when test="$testResources!=''">
+          <xsl:value-of select="$testResources"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="' '"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:for-each select="suites/suite">
-      <xsl:call-template name="printAllPackages">
-        <xsl:with-param name="resources"
-          select="/combo/resources/resource[name]|resources/resource[name]"/>
-        <xsl:with-param name="cats" 
-            select="/combo/stack/category|stack/category" />
-      </xsl:call-template>
+      <xsl:choose>
+        <xsl:when test="$queryStr[matches(., 'supportLevel=testing')]">
+          <xsl:call-template name="printAllPackages">
+            <xsl:with-param name="resources"
+              select="/combo/resources/resource[name and matches(name, $matchResources)]
+                  |resources/resource[name and matches(name, $matchResources)]"/>
+            <xsl:with-param name="cats" 
+                select="/combo/stack/category|stack/category" />
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="printAllPackages">
+            <xsl:with-param name="resources"
+              select="/combo/resources/resource[name and not(matches(name, $matchResources))]
+                  |resources/resource[name and not(matches(name, $matchResources))]"/>
+            <xsl:with-param name="cats" 
+                select="/combo/stack/category|stack/category" />
+          </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:for-each>
   </xsl:template>
 
@@ -94,9 +126,11 @@
     <xsl:param name="resources"/>
     <xsl:param name="suite"/>
     <xsl:variable name="span" select="count($resources)+1" />
+    <xsl:if test="$queryStr[not(matches(., 'noCategoryHeaders'))]">
     <tr><td colspan="{$span}" class="header">
       <xsl:value-of select="upper-case(id)"/>
     </td></tr>
+    </xsl:if>
     <!-- printPackage -->
     <xsl:apply-templates select="package">
       <xsl:sort/>
