@@ -116,7 +116,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=tg-mds.xsl&amp;xml=tg-mds.xml&amp;resourceIds=repo&amp;suiteNames=tg-mds')}">
+                        <a href="{concat($url, '/jsp/status.jsp?xml=tg-mds.xml&amp;resourceIds=repo&amp;suiteNames=tg-mds')}">
                           tg wide mds
                         </a>
                       </li>
