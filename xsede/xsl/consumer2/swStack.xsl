@@ -57,19 +57,19 @@
       <xsl:call-template name="tg-menu"/>
     </xsl:if>
     </td></tr></table>
-    <xsl:variable name="testResources" 
-                  select="string(//stack/testing/resource)"/>
-    <xsl:variable name="matchResources">
-      <xsl:choose>
-        <xsl:when test="$testResources!=''">
-          <xsl:value-of select="$testResources"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="' '"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <xsl:for-each select="suites/suite">
+      <xsl:variable name="testResources" 
+                  select="string(/combo/stack/testing/resource|stack/testing/resource)"/>
+      <xsl:variable name="matchResources">
+        <xsl:choose>
+          <xsl:when test="$testResources!=''">
+            <xsl:value-of select="$testResources"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="' '"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <xsl:choose>
         <xsl:when test="$queryStr[matches(., 'supportLevel=testing')]">
           <xsl:call-template name="printAllPackages">
