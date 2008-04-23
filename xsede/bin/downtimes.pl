@@ -11,6 +11,7 @@ my $dir = "/misc/inca/install-2r5/etc/";
 my $cacheFile = $dir . "downtime.properties";
 #my $cacheFile = $dir . "downtime.properties.test";
 my $tmpFile = $dir . "downtime.properties.tmp";
+my $publicFile = $dir . "../var/jetty1/webapp/downtimes.txt";
 my $pastFile = "$home/logs/downtimes.log";
 my $pastDown = `cat $pastFile`;
 my @past = split("\n", $pastDown);
@@ -80,6 +81,7 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
 }
 close TMP;
 `mv $tmpFile $cacheFile`;
+`cp $cacheFile $publicFile`;
 
 $dbh->disconnect();
 if ($email ne ""){
