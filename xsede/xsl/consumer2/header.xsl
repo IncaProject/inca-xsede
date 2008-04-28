@@ -43,6 +43,17 @@
               </li>
             </ul>
             <ul>
+              <li><h2>Reports</h2>
+                <ul>
+                  <li>
+                    <a href="http://cuzco.sdsc.edu:8085/lead/042408-050108/">
+                      Gateway Debug (LEAD Testbed)
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul>
               <li><h2>Historical Data</h2>
                 <ul>
                   <li>
