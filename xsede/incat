@@ -92,7 +92,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ANL-login anl-grid </value>
+            <value>ANL-login anl-grid</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1013,27 +1013,7 @@
             <value>1.4.2</value>
           </macro>
           <macro>
-            <name>dataMove4.0.0-gridftp-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>dataMove4.0.0-rft-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-ssh-host</name>
-            <value>tg-grid2.uc.teragrid.org -p 22</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-default-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-host</name>
             <value>tg-grid2.uc.teragrid.org</value>
           </macro>
           <macro>
@@ -1051,6 +1031,26 @@
           <macro>
             <name>workflow4.0.0-gridshell-key</name>
             <value>@keyPre@gridshell-1.0 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>dataMove4.0.0-gridftp-host</name>
+            <value>tg-gridftp.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.0.0-ssh-host</name>
+            <value>tg-login2.uc.teragrid.org -p 22</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.0-gridftp-default-host</name>
+            <value>tg-gridftp.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
+            <value>tg-gridftp.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.0-gridftp-striped-host</name>
+            <value>tg-gridftp.uc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -5312,16 +5312,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram-netstat-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun)$')]</xpath>
+        <name>real-time-prewsgram-netstat</name>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram-netstat-4.0.0</value>
+            <value>real-time-prewsgram-netstat</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5334,16 +5334,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram-netstat</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
+        <name>real-time-prewsgram-netstat-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram-netstat</value>
+            <value>real-time-prewsgram-netstat-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
+            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -11658,58 +11658,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>user.search.output.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>com</name>
-                <value>tgusage --account TG-STA060008N list --resource staff.teragrid</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>search</name>
-                <value>.*\\d+\\s+SU\\s+\\d+\\s+SU\\s+\\d+\\s+SU</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>delim</name>
-                <value>\\|</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
-          </series>
-          <nickname>tgusage-unit</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.admin.tgproxy.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgproxy.unit</uri>
             <args>
@@ -12020,11 +11968,63 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>tgusage --account TG-STA060008N list --resource staff.teragrid</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>.*\\d+\\s+SU\\s+\\d+\\s+SU\\s+\\d+\\s+SU</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
+          </series>
+          <nickname>tgusage-unit</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <cron>
+              <min>?</min>
+              <hour>?</hour>
+              <mday>*</mday>
+              <wday>*</wday>
+              <month>*</month>
+            </cron>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>40</version>
+      <version>43</version>
     </suite>
     <suite>
       <seriesConfigs>
