@@ -21,7 +21,7 @@ use File::Temp qw(tempfile);
 #=============================================================================#
 # Global Vars
 #=============================================================================#
-my $DAY = "Thu"; # weekly reports should start and end on Thurs.
+my $DAY = "Mon"; # weekly reports should start and end on Monday.
 my $INDEX_FILENAME = "index.html";  # name of top level index file
 
 #-----------------------------------------------------------------------------#
@@ -52,7 +52,7 @@ sub downloadFiles {
   my %localFiles;
   my %suffixCounter;
   for my $url ( @urls ) {
-    my ($suffix) = $url =~ /\.(.+)$/;
+    my ($suffix) = $url =~ /\.(\w+)$/;
     my $filename;
     if ( ! exists $suffixCounter{$suffix} ) {
       $suffixCounter{$suffix} = 1;
@@ -65,10 +65,11 @@ sub downloadFiles {
     my $fullUrl = $url;
     if ( $url =~ /^\// ) {
       $fullUrl = $rootUrl . $url;
-    } elsif ( $url =~ /^\w/ ) {
+    } elsif ( $url =~ /^[\w\.]/ ) {
       $fullUrl = $relUrl . "/" . $url;
     }
     `wget -q -O $dir/$filename "$fullUrl"`;
+
   }
   return %localFiles;
 }
@@ -93,8 +94,15 @@ sub getUrlsFromHtml {
   open( FD, "<$filename" ) || die "Unable to open $filename";
   while( <FD> ) {
     if ( /(href|src)=\"[^\"]+\"/ ) {
-      my ( $junk, $url ) = $_ =~ /(href|src)=\"([^\"]+)\"/;
-      push( @urls, $url );
+      my ( @hrefs ) = $_ =~ /href=\"([^\"]+)\"/g;
+      my ( @srcs ) = $_ =~ /src=\"([^\"]+)\"/g;
+      for my $url ( @hrefs, @srcs ) {
+      if ( $url =~ /(\.png|\.css|\.js|\.gif|\.jpg)$/ ) {
+        push( @urls, $url );
+      } else {
+        print "Discarding url $url\n";
+      }
+      }
     }
   }
   close FD;
@@ -115,6 +123,7 @@ sub getUrlsFromHtml {
 #-----------------------------------------------------------------------------#
 sub replaceUrls {
   my $filename = shift;
+  my $rootUrl = shift;
   my %filemap = @_;
 
   open( FD, "<$filename") || die "Cannot open $filename";
@@ -130,6 +139,11 @@ sub replaceUrls {
     }
     my $result = $html =~ s/\Q$url\Q/$filemap{$url}/g;
   }
+
+  # delete jsession
+  $html =~ s/;jsessionid=\w+//g;
+  # replace instance.jsp
+  $html =~ s/instance\.jsp/$rootUrl\/inca\/jsp\/instance\.jsp/g;
 
   open( NEW_FD, ">$filename.tmp") || die "Cannot open $filename.tmp";
   print NEW_FD $html;
@@ -154,16 +168,16 @@ my ( $rootUrl ) = $url =~ /^(http:\/\/[^\/]+)/;
 # calculate start and end dates based on a weekly schedule calculated at
 # day $DAY
 my $date = ParseDate("today");
-my $lastThurs = Date_GetPrev($date,"Thu", 0);
+my $lastWeek = Date_GetPrev($date, $DAY, 0);
 if ( $url !~ /startDate/ ) {
-  my $startDate = UnixDate( $lastThurs, "%m%d%y");
+  my $startDate = UnixDate( $lastWeek, "%m%d%y");
   $url = $url . "&startDate=" . $startDate;
 }
 my ( $startDate ) = $url =~ /startDate=(\d+)/;
 if ( $url !~ /endDate/ ) {
-  # add 1 to get all of Thurs that we can
-  my $nextThursPlus1 = DateCalc( $lastThurs, "+7D" );
-  my $endDate = UnixDate( $nextThursPlus1, "%m%d%y");
+  # add 1 to get all of last day that we can
+  my $nextWeekPlus1 = DateCalc( $lastWeek, "+7D" );
+  my $endDate = UnixDate( $nextWeekPlus1, "%m%d%y");
   $url = $url . "&endDate=" . $endDate;
 }
 my ( $endDate ) = $url =~ /endDate=(\d+)/;
@@ -175,17 +189,25 @@ if ( ! -d $dir && ! mkdir($dir) ) {
 }
 
 # download html
-`wget -T 7200 -q -O $dir/$INDEX_FILENAME.tmp '$url'`;
+`wget -T 7200 -q -O $dir/$INDEX_FILENAME.tmp --header='Accept-Language: en-us,en' '$url'`;
 die "Unable to fetch '$url'" if $? != 0;
 die "No error but file not written to disk" if ! -f "$dir/$INDEX_FILENAME.tmp";
-
-my @urls = getUrlsFromHtml( "$dir/$INDEX_FILENAME.tmp" );
-my %localFiles = downloadFiles( $dir, $relUrl, $rootUrl, @urls );
-replaceUrls( "$dir/$INDEX_FILENAME.tmp", %localFiles );
-`mv $dir/$INDEX_FILENAME.tmp $dir/$INDEX_FILENAME`;
 
 # log time
 my $loadTime = time() - $startTime;
 open( FD, ">> $ENV{HOME}/lead.log" ) || die "Cannot open log";
 print FD time() . " " . $loadTime . "\n";
 close FD;
+
+# check results
+`grep 'Error occured in page: java.lang.IllegalStateException' $dir/$INDEX_FILENAME.tmp`;
+if ( $? ==  0 ) {
+  `date | mail -s "lead summary page failed" inca\@sdsc.edu`;
+  exit( 0 );
+}
+
+my @urls = getUrlsFromHtml( "$dir/$INDEX_FILENAME.tmp" );
+my %localFiles = downloadFiles( $dir, $relUrl, $rootUrl, @urls );
+replaceUrls( "$dir/$INDEX_FILENAME.tmp", $rootUrl, %localFiles );
+`mv $dir/$INDEX_FILENAME.tmp $dir/$INDEX_FILENAME`;
+
