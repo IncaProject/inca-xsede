@@ -46,7 +46,7 @@
               <li><h2>Reports</h2>
                 <ul>
                   <li>
-                    <a href="http://cuzco.sdsc.edu:8085/lead/042408-050108/">
+                    <a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">
                       Gateway Debug (LEAD Testbed)
                     </a>
                   </li>
