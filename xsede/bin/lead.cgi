@@ -6,8 +6,6 @@ use CGI;
 use Data::Dumper;
 use Date::Manip;
 
-my $THU_START_DATE = "29-Nov-2007"; 
-my $DAY = "Thu";
 my $LEAD_DIR = "/misc/inca/local/packages/apache/1.3.26/htdocs/lead";
 my $LEAD_URL = "/lead";
 
@@ -19,25 +17,29 @@ print $q->start_html(
   -style => { src => 'http://sapa.sdsc.edu:8080/inca/css/inca.css' }
 );
 print $q->h1( $TITLE );
-my @thursdays = ParseRecur
-  ( "0:0:1:0:0:0:0",$THU_START_DATE,$THU_START_DATE, "next friday" );
-for ( my $i = 0; $i < $#thursdays; $i++ ) {
-  my $endDate = DateCalc($thursdays[$i], "+8D" );
-  my $displayEndDate = DateCalc($thursdays[$i], "+7D" );
-  my $dir = UnixDate( $thursdays[$i], "%m%d%y" ) . "-" . 
-            UnixDate($endDate, "%m%d%y");
-  my $altDir = UnixDate( $thursdays[$i], "%m%d%y" ) . "-" . 
-            UnixDate($displayEndDate, "%m%d%y");
-  if ( -d "$LEAD_DIR/$altDir" ) {
-    $dir = $altDir;
+
+opendir(DIR, $LEAD_DIR);
+  my @files = grep(/\d{4}-\d{4}/,readdir(DIR));
+closedir(DIR);
+
+my $dates;
+foreach my $file (@files) {
+  my ($beginDate, $endDate) = split(/-/, $file);
+  my ($bmonth, $bday, $byear) = $beginDate =~ m/(\d{2})(\d{2})(\d{2})/;
+  my ($emonth, $eday, $eyear) = $endDate =~ m/(\d{2})(\d{2})(\d{2})/;
+  my $sortDate = $byear . $bmonth . $bday;
+  $dates->{$sortDate} = {'file'=>$file, 'begin'=>"$bmonth-$bday-$byear",'end'=>"$emonth-$eday-$eyear"};
+}
+print "<br/>";
+my $i = 0;
+foreach my $date (sort {$b<=>$a} keys %$dates) {
+  my $printDate = $dates->{$date}->{'begin'}." to ".$dates->{$date}->{'end'};  
+  my $url = $LEAD_URL."/".$dates->{$date}->{'file'}."/index.html";
+  if ($i==0){
+    print "<h1>Current report: <a href=\"$url\">$printDate</a></h1><br/><h1>Past reports:</h1>";
+  }else{
+    print "<p><a href=\"$url\">$printDate</a></p>";
   }
-  if ( -d "$LEAD_DIR/$dir" ) {
-    my $desc = UnixDate( $thursdays[$i], "%m-%d-%y" ) . " to " . 
-                UnixDate($displayEndDate, "%m-%d-%y");
-    print $q->p( $q->a( 
-      { -href => "$LEAD_URL/$dir/index.html" },
-      $desc
-    ) );
-  }
+  $i++;
 }
 print $q->end_html; 
