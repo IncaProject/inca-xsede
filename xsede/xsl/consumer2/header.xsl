@@ -71,6 +71,11 @@
                       Weekly Status Report
                     </a>
                   </li>
+                  <li>
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=seriesSummary.xsl&amp;xml=weekSummary.xml&amp;queryNames=incaQueryStatus')}">
+                      Series Error Summary
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
