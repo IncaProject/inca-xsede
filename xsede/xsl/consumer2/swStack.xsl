@@ -264,6 +264,9 @@
                and string($comparitor)='' )"> 
               <xsl:value-of select="'pass'" />
             </xsl:when>
+            <xsl:when test="$errMsg[matches(., 'soft-msc: command not found')]">
+              <xsl:value-of select="'noSoftenv'" />
+            </xsl:when>
             <xsl:when test="$errMsg[matches(., 'Inca error')]">
               <xsl:value-of select="'incaErr'" />
             </xsl:when>

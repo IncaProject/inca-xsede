@@ -40,6 +40,12 @@
                   <td class="error"><font color="black">error</font></td>
                   <td class="clear"><font color="black">error</font></td>
                 </tr>
+                <tr valign="top">
+                  <td class="error"><font color="black">noSoftenv</font></td>
+                  <td class="clear">
+                    <font color="black">missing softenv</font>
+                  </td>
+                </tr>
               </table></td>
               <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
