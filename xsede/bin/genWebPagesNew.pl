@@ -22,14 +22,9 @@ my %pages = (
   'ctssv4.html' => "$c4jsp$c4xml&xsl=swStack.xsl&noCategoryHeaders",
   'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&resourceIds=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&xml=core.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders",
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
-  'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl"
+  'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&resourceIds=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&xml=core.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
-
-#c4map=$webdir/ctssv4-map.html
-#c4maptmp=$webdir/ctssv4-map.html.tmp
-#c4url=$c4jsp$c4xml
-#
-# get instance
 
 my $errors = "";
 for my $page ( keys %pages ) {
