@@ -5,10 +5,10 @@ use warnings;
 
 my $err = "";
 my $date = `date`;
-my $webdir = "/misc/inca/2.4testss/webapps/inca/html";
-my $hostport = "sapa.sdsc.edu:6080";
-my $log = "$ENV{HOME}/logs/genWebPagesNew.log";
-my $timeLog = "$ENV{HOME}/logs/genWebPagesNewTimes.log";
+my $webdir = "/misc/inca/install-2r5/webapps/inca/html";
+my $hostport = "sapa.sdsc.edu:8080";
+my $log = "$ENV{HOME}/logs/genWebPages.log";
+my $timeLog = "$ENV{HOME}/logs/genWebPagesTimes.log";
 
 my $c3jsp = "http://$hostport/inca/jsp/status.jsp?resourceIds=teragrid-login&suiteNames=ctss";
 my $c4jsp = "http://$hostport/inca/jsp/status.jsp?suiteNames=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0&resourceIds=core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0";
@@ -52,11 +52,3 @@ for my $page ( keys %pages ) {
   }
 }
 print "$errors\n";
-#
-#countPostgres=`ps awwx | grep postgres | wc -l`
-#echo $countPostgres >> ${HOME}/logs/postgresCount.log
-#maxPostgres=60
-#if ( test $countPostgres -gt $maxPostgres ); then
-#  date | mail -s "postgres count is $countPostgres (over $maxPostgres processes)" inca@sdsc.edu
-#fi
-#
