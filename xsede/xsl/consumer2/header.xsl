@@ -43,22 +43,6 @@
               </li>
             </ul>
             <ul>
-              <li><h2>Query</h2>
-                <ul>
-                  <li>
-                    <a href="'status.jsp?xsl=create-query.xsl&amp;suiteNames=login.teragrid.org-4.0.0,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.0&amp;resourceIds=teragrid'">
-                      Create stored query
-                    </a>
-                  </li>
-                  <li>
-                    <a href="query.jsp">
-                      View query cache
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <ul>
               <li><h2>Reports</h2>
                 <ul>
                   <li>
