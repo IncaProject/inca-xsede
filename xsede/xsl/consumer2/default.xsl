@@ -151,10 +151,19 @@
     <xsl:choose>
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
+        <xsl:variable name="resourceName">
+          <xsl:choose>
+            <!-- in tg-mds suite -->
+            <xsl:when test="name[matches(., '^(info|info1\.dyn|info2\.dyn|mds)\.teragrid\.org$')]">
+              <xsl:value-of select="'repo'" />
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="name"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="normRef" 
             select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
             $instance, '&amp;configId=', $result/seriesConfigId,
-            '&amp;resourceId=', name)"/>
+            '&amp;resourceId=', $resourceName)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
