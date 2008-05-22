@@ -23,7 +23,7 @@ my %pages = (
   'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&resourceIds=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&xml=core.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders",
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
   'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
-  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&resourceIds=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&xml=core.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&resourceIds=core.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,remote-compute.teragrid.org-4.0.0,login.teragrid.org-4.0.0,app-support.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.0,workflow.teragrid.org-4.0.0&xml=core.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,remote-compute.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
 
 my $errors = "";
@@ -31,7 +31,7 @@ for my $page ( keys %pages ) {
   my $startTime = time();
   my $tmpPage = "/tmp/" . $page . ".tmp";
   my $command = "wget -o /dev/null -O $tmpPage --header='Accept-Language: en-us,en' \"$pages{$page}\"";
-  print "$command\n";
+  #print "$command\n";
   `$command`;
   my $endTime = time();
   my $loadTime = $endTime - $startTime; 
@@ -51,4 +51,6 @@ for my $page ( keys %pages ) {
     }
   }
 }
-print "$errors\n";
+if ($errors ne ""){
+  print "$errors\n";
+}
