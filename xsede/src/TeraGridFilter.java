@@ -1,12 +1,8 @@
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.Vector;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
-import java.net.URL;
 import org.apache.log4j.Logger;
-import edu.sdsc.inca.depot.util.DowntimeFilter;
+import edu.sdsc.inca.util.CachedProperties;
 
 /**
  * Prefixes error messages in depot reports with "DOWNTIME: +optionalString+: "
@@ -20,67 +16,11 @@ import edu.sdsc.inca.depot.util.DowntimeFilter;
  * @author Shava Smallen &lt;ssmallen@sdsc.edu&gt;
  */
 public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
-  private static Logger logger = Logger.getLogger(DowntimeFilter.class);
+  private static Logger logger = Logger.getLogger(TeraGridFilter.class);
   private static CachedProperties cacheDown =
       new CachedProperties("downtime", "15");
   private static CachedProperties cacheFilter =
       new CachedProperties("filter", "1440");
-
-  /**
-   * Creates cached Properties fetched according to refreshMins.
-   */
-  private static class CachedProperties {
-    private Properties prop = new Properties();
-    private long lastRefresh = 0;
-    private String fileName;
-    private String defaultRefresh;
-
-    /**
-     * Sets the name of the properties file in the classpath and the default
-     * number of minutes to fetch it if not specified as a system property.
-     */
-    public CachedProperties(String fileName, String defaultRefresh){
-      this.fileName = fileName;
-      this.defaultRefresh = defaultRefresh;
-    }
-
-    /**
-     * Gets property list from file in classpath if cache has expired
-     * according to refreshMins.
-     *
-     * @return  cached Properties
-     */
-    synchronized Properties getProperties()  {
-      String propFile = System.getProperty("inca.depot."+fileName+"File");
-      if(propFile == null) {
-        propFile  = fileName+".properties";
-      }
-      String refresh = System.getProperty("inca.depot."+fileName+"Refresh");
-      if(refresh == null) {
-        refresh  = defaultRefresh;
-      }
-      Integer refreshMins = Integer.parseInt(refresh);
-      long minSinceLastRefresh = (System.currentTimeMillis()-lastRefresh)/60000;
-      if (minSinceLastRefresh >= refreshMins){
-        URL url = ClassLoader.getSystemClassLoader().getResource(propFile);
-        if(url == null) {
-          logger.error( propFile + " not found in classpath" );
-        }
-        logger.debug( "Located file " + url.getFile()
-            + " refresh every " + refreshMins + " min.");
-        prop.clear();
-        try {
-          InputStream is = url.openStream();
-          prop.load(is);
-          is.close();
-        } catch (IOException e){
-          logger.error( "Can't load "+fileName+" properties file" );
-        }
-        lastRefresh = System.currentTimeMillis();
-      }
-      return prop;
-    }
-  }
 
   /**
    * Checks context to see if matches regex string for a down resource
