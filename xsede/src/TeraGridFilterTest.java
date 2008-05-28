@@ -29,8 +29,8 @@ public class TeraGridFilterTest extends TestCase {
     downProp.createNewFile();
     if ( filterProp.exists() ) filterProp.delete();
     filterProp.createNewFile();
-    System.setProperty("inca.depot.downtimeRefresh", "1");
-    System.setProperty("inca.depot.filterRefresh", "1");
+    System.setProperty("inca.downtimeRefresh", "1");
+    System.setProperty("inca.filterRefresh", "1");
   }
 
   /**
