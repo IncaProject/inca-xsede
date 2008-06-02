@@ -367,6 +367,28 @@
         </macros>
       </resource>
       <resource>
+        <name>NICS</name>
+        <xpath>//resource[matches(name, '^(nics-kraken)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>NICS</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>nics-kraken</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>ORNL</name>
         <xpath>//resource[matches(name, 'ornl-login')]</xpath>
         <macros>
@@ -652,6 +674,14 @@
             <name>__groupname__</name>
             <value>anl-grid</value>
           </macro>
+          <macro>
+            <name>maxMan</name>
+            <value>1</value>
+          </macro>
+          <macro>
+            <name>maxSched</name>
+            <value>1</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -836,241 +866,13 @@
             <name>remote3.0.0-mds-port</name>
             <value>8446</value>
           </macro>
-        </macros>
-      </resource>
-      <resource>
-        <name>anl-ia64-rhel</name>
-        <xpath>//resource[matches(name, '^(tg-login2\.uc\.teragrid\.org)$')]</xpath>
-        <macros>
           <macro>
-            <name>login4.0.0-tgproxy-key</name>
-            <value>@keyPre@tgproxy-0.9.1-r1 @keyPost@</value>
+            <name>maxMan</name>
+            <value>1</value>
           </macro>
           <macro>
-            <name>hostCountSuffix</name>
-            <value>:ia64-compute</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-port</name>
-            <value>2812</value>
-          </macro>
-          <macro>
-            <name>remote3.0.0-mds-port</name>
-            <value>8446</value>
-          </macro>
-          <macro>
-            <name>__regexpTmp__</name>
-            <value>tg-login2.uc.teragrid.org tg-login.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>remote3.0.0-gatekeeper-host</name>
-            <value>tg-grid1.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>remote3.0.0-mds</name>
-            <value>tg-grid1.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-srb-key</name>
-            <value/>
-          </macro>
-          <macro>
-            <name>apps4.0.0-hdf5-key</name>
-            <value>@keyPre@hdf5-1.6.5-gcc-3.4 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>mpichG2LibKeys</name>
-            <value>globus-mpicc64-4.0.1-mpich-gm-intel81</value>
-            <value>globus-mpicc64dbg-4.0.1-mpich-gm-intel81</value>
-            <value>globus-mpicc64-4.0.1-mpich-gm-gcc32</value>
-            <value>globus-mpicc64dbg-4.0.1-mpich-gm-gcc32</value>
-          </macro>
-          <macro>
-            <name>real-time-gridftp-port</name>
-            <value>2811</value>
-          </macro>
-          <macro>
-            <name>mpich-g2-intel-key</name>
-            <value>@keyPre@mpich-g2-intel @keyPost@</value>
-          </macro>
-          <macro>
-            <name>real-time-fs</name>
-            <value>/disks/scratchgpfs1</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-tgcp-key</name>
-            <value/>
-          </macro>
-          <macro>
-            <name>remote3.0.0-mds-auth</name>
-            <value>tg-mayor1.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>perl5</name>
-            <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install-ia64/lib/perl &amp;&amp;</value>
-          </macro>
-          <macro>
-            <name>prews-gram-pbs</name>
-            <value>tg-grid2.uc.teragrid.org:2119/jobmanager-pbs</value>
-          </macro>
-          <macro>
-            <name>mpichG2Keys</name>
-            <value>mpich-g2-1.2.6e-mpich-gm-intel81</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-intel81-dbg</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-gcc32</value>
-            <value>mpich-g2-1.2.6e-mpich-gm-gcc32-dbg</value>
-          </macro>
-          <macro>
-            <name>real-time-gridftp-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-condor-key</name>
-            <value>@keyPre@condor-6.9.3 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-pacman-key</name>
-            <value>@keyPre@pacman-3.20 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-mds-info-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-ant-key</name>
-            <value>@keyPre@apache-ant-1.6.5 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-blas-key</name>
-            <value>@keyPre@intel-mkl-9.1.021 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-compiler-intel-key</name>
-            <value>@keyPre@intel-c-9.1.051-f-9.1.051 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-compiler-intel-version</name>
-            <value>9.1</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-java-key</name>
-            <value>@keyPre@java-sun-1.4.2 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>apps4.0.0-java-version</name>
-            <value>1.4.2</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-rft-host</name>
-            <value>tg-grid2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>parallelApp4.0.0-mpi-key</name>
-            <value>@keyPre@mpich2-1.0.6p1-gcc3.4 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>workflow4.0.0-condorg-key</name>
-            <value>@keyPre@condor-g-6.8.4 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>workflow4.0.0-condor-key</name>
-            <value>@keyPre@condor-6.8.4 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>workflow4.0.0-gridshell-key</name>
-            <value>@keyPre@gridshell-1.0 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-gridftp-host</name>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-ssh-host</name>
-            <value>tg-login2.uc.teragrid.org -p 22</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-default-host</name>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-host</name>
-            <value>tg-gridftp.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__groupname__</name>
-            <value>anl-ia64-rhel</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>tg-login2.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyFile__</name>
-            <value>/users/u3/inca/.ssh/id_dsa</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyPassword__</name>
-            <value>HmAnvxgybtpDlSORFSej3A==</value>
-          </macro>
-          <macro>
-            <name>__myproxyHost__</name>
-            <value>myproxy.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__myproxyLifetime__</name>
-            <value>1440</value>
-          </macro>
-          <macro>
-            <name>__myproxyPassword__</name>
-            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
-          </macro>
-          <macro>
-            <name>__myproxyUsername__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>true</value>
-          </macro>
-          <macro>
-            <name>__incaReporterManagerLocation__</name>
-            <value>/home/inca/inca2install-ia64-rhel</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
-            <value>4.0.7</value>
-          </macro>
-          <macro>
-            <name>remote3.0.0-prews-gram-port</name>
-            <value>2119</value>
-          </macro>
-          <macro>
-            <name>remote3.0.0-wsgram-port</name>
-            <value>8443</value>
-          </macro>
-          <macro>
-            <name>login4.0.0-ssh-host</name>
-            <value>tg-login2.uc.teragrid.org -p 22</value>
-          </macro>
-          <macro>
-            <name>c-plus-gcc-compiler</name>
-            <value>g++</value>
-          </macro>
-          <macro>
-            <name>c-gcc-compiler</name>
-            <value>gcc</value>
+            <name>maxSched</name>
+            <value>1</value>
           </macro>
         </macros>
       </resource>
@@ -1231,11 +1033,19 @@
             <name>remote3.0.0-mds-port</name>
             <value>8446</value>
           </macro>
+          <macro>
+            <name>maxMan</name>
+            <value>1</value>
+          </macro>
+          <macro>
+            <name>maxSched</name>
+            <value>1</value>
+          </macro>
         </macros>
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-ant-key</name>
@@ -1267,7 +1077,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1281,7 +1091,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-blas</name>
-        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|dtf\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|dtf\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-blas-key</name>
@@ -1293,7 +1103,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org dtf.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org dtf.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1307,7 +1117,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-compiler-gnu</name>
-        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|abe\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|abe\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-compiler-gnu-key</name>
@@ -1335,7 +1145,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigben.psc.teragrid.org datastar.sdsc.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org abe.ncsa.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org cobalt.ncsa.teragrid.org rachel.psc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org condor.purdue.teragrid.org</value>
+            <value>bigben.psc.teragrid.org datastar.sdsc.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org abe.ncsa.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org cobalt.ncsa.teragrid.org rachel.psc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1349,7 +1159,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-compiler-gnu-fortran</name>
-        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|abe\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|abe\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>fortran-gcc-compiler</name>
@@ -1361,7 +1171,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigben.psc.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org abe.ncsa.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org cobalt.ncsa.teragrid.org rachel.psc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org condor.purdue.teragrid.org</value>
+            <value>bigben.psc.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org abe.ncsa.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org intimidata.sdsc.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org cobalt.ncsa.teragrid.org rachel.psc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1443,7 +1253,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-compiler-intel</name>
-        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|nstg\.ornl\.teragrid\.org|lonestar\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|nstg\.ornl\.teragrid\.org|lonestar\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-compiler-intel-key</name>
@@ -1467,7 +1277,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>dtf.sdsc.teragrid.org dtf.uc.teragrid.org nstg.ornl.teragrid.org lonestar.tacc.teragrid.org dtf.ncsa.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org dtf-rhel4.uc.teragrid.org condor.purdue.teragrid.org</value>
+            <value>dtf.sdsc.teragrid.org dtf.uc.teragrid.org nstg.ornl.teragrid.org lonestar.tacc.teragrid.org dtf.ncsa.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1507,7 +1317,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-hdf5</name>
-        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|dtf\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|dtf\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-hdf5-key</name>
@@ -1519,7 +1329,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org dtf.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org dtf.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1533,7 +1343,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-python</name>
-        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-python-key</name>
@@ -1545,7 +1355,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1559,7 +1369,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.0.0-tcl</name>
-        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(maverick\.tacc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|datastar\.sdsc\.teragrid\.org|bigben\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.uc\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>apps4.0.0-srb-key</name>
@@ -1591,7 +1401,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>maverick.tacc.teragrid.org lonestar.tacc.teragrid.org datastar.sdsc.teragrid.org bigben.psc.teragrid.org intimidata.sdsc.teragrid.org dtf.sdsc.teragrid.org dtf.ncsa.teragrid.org dtf.uc.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org bigred.iu.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1883,7 +1693,7 @@
       </resource>
       <resource>
         <name>core.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|bigben\.psc\.teragrid\.org|frost\.ncar\.teragrid\.org|lonestar\.tacc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|abe\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(datastar\.sdsc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.uc\.teragrid\.org|bigred\.iu\.teragrid\.org|bigben\.psc\.teragrid\.org|frost\.ncar\.teragrid\.org|lonestar\.tacc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|abe\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|kraken\.nics\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.0.0-condor-key</name>
@@ -1911,7 +1721,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>datastar.sdsc.teragrid.org maverick.tacc.teragrid.org dtf.sdsc.teragrid.org nstg.ornl.teragrid.org dtf.uc.teragrid.org bigred.iu.teragrid.org bigben.psc.teragrid.org frost.ncar.teragrid.org lonestar.tacc.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org abe.ncsa.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org dtf-rhel4.uc.teragrid.org condor.purdue.teragrid.org</value>
+            <value>datastar.sdsc.teragrid.org maverick.tacc.teragrid.org dtf.sdsc.teragrid.org nstg.ornl.teragrid.org dtf.uc.teragrid.org bigred.iu.teragrid.org bigben.psc.teragrid.org frost.ncar.teragrid.org lonestar.tacc.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org abe.ncsa.teragrid.org rachel.psc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org kraken.nics.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1947,7 +1757,7 @@
       </resource>
       <resource>
         <name>data-movement.teragrid.org-4.1.0</name>
-        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMove4.0.0-ssh-host</name>
@@ -1967,7 +1777,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org frost.ncar.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org nstg.ornl.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org frost.ncar.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1981,7 +1791,7 @@
       </resource>
       <resource>
         <name>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</name>
-        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMove4.1.0-gridftp-nonstriped-host</name>
@@ -2001,7 +1811,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2049,7 +1859,7 @@
       </resource>
       <resource>
         <name>data-movement.teragrid.org-4.1.0-rft</name>
-        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|dtf\.uc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|frost\.ncar\.teragrid\.org|bigben\.psc\.teragrid\.org|rachel\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMove4.0.0-rft-host</name>
@@ -2065,7 +1875,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org frost.ncar.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org nstg.ornl.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>bigred.iu.teragrid.org lonestar.tacc.teragrid.org maverick.tacc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org dtf.ncsa.teragrid.org tungsten.ncsa.teragrid.org datastar.sdsc.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org dtf.uc.teragrid.org intimidata.sdsc.teragrid.org frost.ncar.teragrid.org bigben.psc.teragrid.org rachel.psc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2220,28 +2030,6 @@
           <macro>
             <name>__regexp__</name>
             <value>sdsc-datastar</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>globus2</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-        </macros>
-      </resource>
-      <resource>
-        <name>dtf-rhel4.uc.teragrid.org</name>
-        <xpath>//resource[matches(name, '^(anl-ia64-rhel)$')]</xpath>
-        <macros>
-          <macro>
-            <name>__groupname__</name>
-            <value>dtf-rhel4.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>anl-ia64-rhel</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2657,6 +2445,28 @@
           <macro>
             <name>__regexp__</name>
             <value>sdsc-bg</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>kraken.nics.teragrid.org</name>
+        <xpath>//resource[matches(name, '^(nics-kraken)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>kraken.nics.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>nics-kraken</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4314,6 +4124,72 @@
         </macros>
       </resource>
       <resource>
+        <name>nics-kraken</name>
+        <xpath>//resource[matches(name, '^(kraken-pwd3\.nics\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>nics-kraken</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>kraken-pwd3.nics.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/nics/a/home/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-condor-key</name>
+            <value>@keyPre@condor-6.9.3 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-mds-info-host</name>
+            <value>kraken-pwd1.nics.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-pacman-key</name>
+            <value>@keyPre@pacman-3.20 @keyPost@</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>nstg.ornl.teragrid.org</name>
         <xpath>//resource[matches(name, '^(ornl-login)$')]</xpath>
         <macros>
@@ -4487,7 +4363,7 @@
       </resource>
       <resource>
         <name>parallel-app.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigben\.psc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|bigred\.iu\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigben\.psc\.teragrid\.org|dtf\.ncsa\.teragrid\.org|rachel\.psc\.teragrid\.org|dtf\.uc\.teragrid\.org|abe\.ncsa\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|bigred\.iu\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.sdsc\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>parallelApp4.0.0-mpi-key</name>
@@ -4499,7 +4375,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigben.psc.teragrid.org dtf.ncsa.teragrid.org rachel.psc.teragrid.org dtf.uc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org bigred.iu.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigben.psc.teragrid.org dtf.ncsa.teragrid.org rachel.psc.teragrid.org dtf.uc.teragrid.org abe.ncsa.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org bigred.iu.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org dtf.sdsc.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5428,16 +5304,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
+        <name>real-time-prewsgram</name>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram-4.0.0</value>
+            <value>real-time-prewsgram</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5450,16 +5326,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|ncsa-grid-hg|ncsa-grid-abe|anl-grid|Indiana)$')]</xpath>
+        <name>real-time-prewsgram-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-grid-hg|ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-abe|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram</value>
+            <value>real-time-prewsgram-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten ncsa-grid-hg ncsa-grid-abe anl-grid Indiana</value>
+            <value>ncsa-grid-hg ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-abe ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -7590,16 +7466,8 @@
             <value>gatekeeper.ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
-            <name>remote4.0.0-mds</name>
-            <value>tg-login.ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>remote4.0.0-mds-port</name>
             <value>8444</value>
-          </macro>
-          <macro>
-            <name>remote4.0.0-gatekeeper-host</name>
-            <value>tg-login.ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>remote4.0.0-prews-gram-port</name>
@@ -7620,10 +7488,6 @@
           <macro>
             <name>dataMove4.1.1-rft-port</name>
             <value>8444</value>
-          </macro>
-          <macro>
-            <name>remote4.0.0-mds-auth</name>
-            <value>tg-login.ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>remote4.0.2-mds-auth-port</name>
@@ -7648,6 +7512,18 @@
           <macro>
             <name>dataMove4.1.0-gridftp-striped-host</name>
             <value>ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-mds</name>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-mds-auth</name>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-gatekeeper-host</name>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -7880,7 +7756,7 @@
       </resource>
       <resource>
         <name>teragrid</name>
-        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC|LONI|anl-ia64-rhel)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC|LONI|NICS)$')]</xpath>
         <macros>
           <macro>
             <name>keyPre</name>
@@ -8056,7 +7932,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC LONI anl-ia64-rhel</value>
+            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC LONI NICS</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8262,7 +8138,7 @@
       </resource>
       <resource>
         <name>workflow.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|frost\.ncar\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|dtf-rhel4\.uc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|abe\.ncsa\.teragrid\.org|dtf\.ncsa\.teragrid\.org|dtf\.sdsc\.teragrid\.org|dtf\.uc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|datastar\.sdsc\.teragrid\.org|intimidata\.sdsc\.teragrid\.org|tungsten\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|frost\.ncar\.teragrid\.org|viz\.uc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>workflow4.0.0-condor-key</name>
@@ -8282,7 +8158,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org dtf.sdsc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org frost.ncar.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org dtf-rhel4.uc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org maverick.tacc.teragrid.org bigred.iu.teragrid.org abe.ncsa.teragrid.org dtf.ncsa.teragrid.org dtf.sdsc.teragrid.org dtf.uc.teragrid.org cobalt.ncsa.teragrid.org datastar.sdsc.teragrid.org intimidata.sdsc.teragrid.org tungsten.ncsa.teragrid.org nstg.ornl.teragrid.org frost.ncar.teragrid.org viz.uc.teragrid.org queenbee.loni-lsu.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8323,6 +8199,9 @@
       </resource>
       <resource>
         <name>honest3.ncsa.uiuc.edu</name>
+      </resource>
+      <resource>
+        <name>kraken-pwd3.nics.teragrid.org</name>
       </resource>
       <resource>
         <name>login.bigred.iu.teragrid.org</name>
@@ -8371,9 +8250,6 @@
       </resource>
       <resource>
         <name>tg-login1.sdsc.teragrid.org</name>
-      </resource>
-      <resource>
-        <name>tg-login2.uc.teragrid.org</name>
       </resource>
       <resource>
         <name>tg-steele.purdue.teragrid.org</name>
