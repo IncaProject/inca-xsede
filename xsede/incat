@@ -1947,6 +1947,10 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>core4.0.0-mds-info-port</name>
+            <value>8446</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -6487,7 +6491,7 @@
       </resource>
       <resource>
         <name>remote-compute.teragrid.org-4.0.2-wsgram</name>
-        <xpath>//resource[matches(name, '^(frost\.ncar\.teragrid\.org|anl-grid|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(frost\.ncar\.teragrid\.org|anl-grid|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -6495,7 +6499,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>frost.ncar.teragrid.org anl-grid lonestar.tacc.teragrid.org maverick.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>frost.ncar.teragrid.org anl-grid lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -7485,10 +7489,6 @@
             <value>jobmanager-fork</value>
           </macro>
           <macro>
-            <name>remote4.0.2-prews-gram-port</name>
-            <value>2120</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
             <value>4.0.7</value>
           </macro>
@@ -7523,6 +7523,10 @@
           <macro>
             <name>remote3.0.0-gatekeeper-host</name>
             <value>tg-login.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>remote4.0.2-prews-gram-port</name>
+            <value>2119</value>
           </macro>
         </macros>
       </resource>
@@ -7742,10 +7746,6 @@
             <value>gatekeeper.ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
-            <name>remote4.0.0-prews-gram-port</name>
-            <value>2120</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
             <value>4.0.7</value>
           </macro>
@@ -7800,6 +7800,10 @@
           <macro>
             <name>dataMove4.1.1-rft-port</name>
             <value>8443</value>
+          </macro>
+          <macro>
+            <name>remote4.0.0-prews-gram-port</name>
+            <value>2119</value>
           </macro>
         </macros>
       </resource>
@@ -8026,6 +8030,10 @@
           </macro>
           <macro>
             <name>dataMove4.1.1-rft-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-mds-info-port</name>
             <value>8443</value>
           </macro>
         </macros>
@@ -10685,7 +10693,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>8446</value>
+                <value>@core4.0.0-mds-info-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -10716,13 +10724,7 @@
           <nickname>globus-mds-info</nickname>
           <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*/24</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? */24 * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
