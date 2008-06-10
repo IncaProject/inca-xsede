@@ -22,7 +22,7 @@ my %pages = (
   'ctssv4.html' => "$c4jsp$c4xml&xsl=swStack.xsl&noCategoryHeaders",
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
   'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
-  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=data-movement.teragrid.org-4.1.1,remote-compute.teragrid.org-4.0.0,remote-compute.teragrid.org-4.0.2&resourceIds=data-movement.teragrid.org-4.1.1,remote-compute.teragrid.org-4.0.0,remote-compute.teragrid.org-4.0.2&xml=data-movement.teragrid.org-4.1.1.xml,remote-compute.teragrid.org-4.0.0.xml,remote-compute.teragrid.org-4.0.2.xml&xsl=swStack.xsl&noCategoryHeaders"
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=remote-compute.teragrid.org-4.0.0&resourceIds=remote-compute.teragrid.org-4.0.0&xml=remote-compute.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
 
 my $errors = "";
