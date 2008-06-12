@@ -8034,7 +8034,7 @@
           </macro>
           <macro>
             <name>core4.0.0-mds-info-port</name>
-            <value>8443</value>
+            <value>8446</value>
           </macro>
         </macros>
       </resource>
@@ -10742,7 +10742,7 @@
       <name>core.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.0.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>58</version>
+      <version>71</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17629,6 +17629,97 @@
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
       <version>91</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>cluster.batch.wrapper</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.batch.wrapper</uri>
+            <args>
+              <arg>
+                <name>walllimit</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>/users/inca/inca2install/var/reporter-packages/bin/cluster.math.blas.unit.level1-9 -compiler=blrts_f77 -link='-L/opt/ibmmath/lib -lesslbg' -queue=yes</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>loadleveler</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>normal</value>
+              </arg>
+              <arg>
+                <name>showscript</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>shell</name>
+                <value>/bin/sh</value>
+              </arg>
+              <arg>
+                <name>account</name>
+                <value>TG-STA060008N</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>poll</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>submitparam</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>var</name>
+                <value/>
+              </arg>
+            </args>
+            <context>@@ -submitparam=bg_partition=bot64-1 -submitparam=job_type=BLUEGENE</context>
+          </series>
+          <nickname>cluster.batch.wrapper</nickname>
+          <resourceSetName>sdsc-bg</resourceSetName>
+          <schedule>
+            <crontime>? ? */59 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>test-batch-wrapper</name>
+      <guid>incas://sapa.sdsc.edu:6323/test-batch-wrapper</guid>
+      <description>testing batch wrapper reporter</description>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
