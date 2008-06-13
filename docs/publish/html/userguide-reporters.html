@@ -150,7 +150,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1077"
+NAME="AEN1087"
 ></A
 ><P
 ><B
@@ -739,8 +739,10 @@ TARGET="_top"
 >Inca::Reporter::GridProxy</A
 ></P
 ><P
->The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a perl reporter that requires a proxy.  Python reporters should
-use the equivalent, reporter.addDependency('Inca::Reporter::GridProxy').
+>  The Inca::Reporter::GridProxy package is a pseudo-module indicating that a
+  reporter requires a proxy credential in order to execute.  The following is
+  an example of a perl reporter that requires a proxy.  Python reporters should
+  use the equivalent, reporter.addDependency('inca.GridProxyReporter').
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -941,14 +943,13 @@ additional code to remove temporary files or directories (e.g. unlink or rm)
 is not required.  The reporter below uses the tempFile function to remove 
 the temp $scratchDir it creates.  </P
 ><P
->If a reporter changes directories to one whose name is variable, like the one below that includes a PID, it's good practice 
-to have the reporter change back to the original directory before exiting.  If 
-the reporter does not return to the original directory and the directory it changes to contains 
-a PID, for example, a report will be created in the database each time the reporter runs (one 
-for each reporter working dirctory).  For similar reasons, it's best practice never to use a 
-PID or variable information as a reporter argument value or to include PIDs or timestamps in 
-error messages.  If a reporter error message may contain variable information, a function to replace 
-the variable can be written to normalize the error (like the "failClean" function in the reporter below).</P
+>It's best practice never to use a PID or variable information as a reporter
+argument value or to include PIDs or timestamps in error messages.  Reporters
+that incorporate this sort of information will create a new report in the Inca
+database each time the reporter runs, which may slow query response.  If a
+reporter error message may contain variable information, a function to replace 
+the variable can be written to normalize the error (like the "failClean"
+function in the reporter below).</P
 ><P
 > <TABLE
 BORDER="1"
@@ -977,7 +978,6 @@ my $reporter = new Inca::Reporter::SimpleUnit(
 
  ...
 
-my $origDir = getcwd();
 my $scratchDir = "/tmp/security.ca.unit.$$";
 if ( ! mkdir($scratchDir) ) {
   failClean("Cannot mkdir scratch dir $scratchDir"); 
@@ -993,7 +993,6 @@ if ($err ne ""){
   failClean($err);
 } else {
   $reporter-&#62;unitSuccess();
-  chdir($origDir);
   $reporter-&#62;print();
 }
 
@@ -1001,7 +1000,6 @@ sub failClean {
   my $err = shift;
   $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
   $err =~ s/$$/PID/g;
-  chdir($origDir);
   $reporter-&#62;failPrintAndExit($err);
 }</PRE
 ></FONT
