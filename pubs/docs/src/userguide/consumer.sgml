@@ -11,20 +11,37 @@
     and Java client APIs for its pre-defined queries (see <xref linkend="userguide-apis">). </para>
 
   <para>The default data consumer is a <ulink
-        url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
-      file</ulink> that contains a collection of <ulink
-        url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
-      their associated files.  The WAR file is initially installed as
-      <filename>$INCA_DIST/webapps/war/inca.war</filename> and is deployed with <ulink
-        url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
-      ./bin/inca start consumer).  The default consumer creates a Jetty directory
-      like <filename>$INCA_DIST/var/jetty*/webapp</filename> for each WAR file in
-      <filename>$INCA_DIST/webapps/war</filename> - custom WAR files can be dropped into
-      the <filename>$INCA_DIST/webapps/war</filename> directory and deployed by
-      restarting the consumer.  Currently Inca WAR files cannot be deployed outside
-      of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
-      on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename> is edited
-      as described in <xref linkend="consumer-port">.</para>
+url="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29">Web ARchive (WAR)
+file</ulink> that contains a collection of <ulink
+url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink> and
+their associated files.  The WAR file is initially installed as
+<filename>$INCA_DIST/webapps/inca.war</filename> and is deployed with <ulink
+url="http://www.mortbay.org/">Jetty</ulink> when the consumer is started (e.g.
+./bin/inca start consumer).  The consumer will start on port 8080 unless the
+<filename>$INCA_DIST/etc/jetty.xml</filename> is edited as described in <xref
+linkend="consumer-port">.</para>
+      
+<para> The default consumer <filename>inca.war</filename> file can also be unwarred in
+<filename>$INCA_DIST/webapps</filename> for dynamic editing.  A dynamic
+consumer deployment requires the development version of java, i.e. javac, in
+order for Jetty to compile the files (otherwise only the java binaries are
+required).  To create a dynamic deployment, use the following comands:
+<screen>
+% cd $INCA_DIST/webapps; mkdir inca; cd inca; jar xvf ../inca.war; rm ../inca.war
+
+% cd WEB-INF; mv web.xml web.xml~; cp web.dyn.xml web.xml; cd ../../../; bin/inca restart consumer
+</screen></para>
+
+<para> Custom WAR files can be dropped into the
+<filename>$INCA_DIST/webapps</filename> directory and deployed by restarting
+the consumer.  As an alternative to using the consumer, the default WAR files
+can also be dropped into an existing Tomcat installation. </para>
+
+<para> In general, the default consumer's JSP query the depot for XML
+results and apply XSL to them in order to display HTML status pages.  The basic
+JSP are described in subsequent sections - they show current and historical data,
+historical reports, deployment information, and allow the configuration of
+custom depot queries.</para>
 
     <section id="current-data">
       <title>Current Data Pages</title>
@@ -470,6 +487,17 @@
     </section>
   
   </section>
+  
+  <section id="query-pages">
+      <title>Query Pages</title>
+      <section id="create-query">
+          <title>Create Stored Query</title>
+      </section>
+      <section id="view-query">
+          <title>View Query Cache</title>
+      </section>
+  </section>
+
 
   <section id="info">
       <title>Info Pages</title>

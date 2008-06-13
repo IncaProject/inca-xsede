@@ -170,55 +170,74 @@ HREF="#SUMMARY-REPORT"
 ></DD
 ><DT
 >6.3. <A
+HREF="#QUERY-PAGES"
+>Query Pages</A
+></DT
+><DD
+><DL
+><DT
+>6.3.1. <A
+HREF="#CREATE-QUERY"
+>Create Stored Query</A
+></DT
+><DT
+>6.3.2. <A
+HREF="#VIEW-QUERY"
+>View Query Cache</A
+></DT
+></DL
+></DD
+><DT
+>6.4. <A
 HREF="#INFO"
 >Info Pages</A
 ></DT
 ><DT
->6.4. <A
+>6.5. <A
 HREF="#FILE-DESC"
 >Description of Data Consumer Files</A
 ></DT
 ><DT
->6.5. <A
+>6.6. <A
 HREF="#CUSTOM-DISPLAY"
 >Changing the Look</A
 ></DT
 ><DD
 ><DL
 ><DT
->6.5.1. <A
+>6.6.1. <A
 HREF="#CUSTOM-COLOR"
 >Colors and Fonts</A
 ></DT
 ><DT
->6.5.2. <A
+>6.6.2. <A
 HREF="#CUSTOM-HTML"
 >HTML Layout</A
 ></DT
 ><DT
->6.5.3. <A
+>6.6.3. <A
 HREF="#CUSTOM-HTML-HEADER"
 >Custom Page Header</A
 ></DT
 ></DL
 ></DD
 ><DT
->6.6. <A
+>6.7. <A
 HREF="#CONSUMER-ALT-LOCATION"
 >Changing the Installation Location</A
 ></DT
 ><DT
->6.7. <A
+>6.8. <A
 HREF="#CONSUMER-PORT"
 >Changing the Port</A
 ></DT
 ><DT
->6.8. <A
+>6.9. <A
 HREF="#HTTPS-CONSUMER"
 >Enabling https</A
 ></DT
 ><DT
->6.9. <A
+>6.10. <A
 HREF="#PASSWORD-CONSUMER"
 >Adding Password Protection</A
 ></DT
@@ -2494,44 +2513,73 @@ HREF="#USERGUIDE-APIS"
 HREF="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29"
 TARGET="_top"
 >Web ARchive (WAR)
-      file</A
+file</A
 > that contains a collection of <A
 HREF="http://java.sun.com/products/jsp/"
 TARGET="_top"
 >JavaServer Pages (JSP)</A
 > and
-      their associated files.  The WAR file is initially installed as
-      <TT
+their associated files.  The WAR file is initially installed as
+<TT
 CLASS="FILENAME"
->$INCA_DIST/webapps/war/inca.war</TT
+>$INCA_DIST/webapps/inca.war</TT
 > and is deployed with <A
 HREF="http://www.mortbay.org/"
 TARGET="_top"
 >Jetty</A
 > when the consumer is started (e.g.
-      ./bin/inca start consumer).  The default consumer creates a Jetty directory
-      like <TT
-CLASS="FILENAME"
->$INCA_DIST/var/jetty*/webapp</TT
-> for each WAR file in
-      <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/war</TT
-> - custom WAR files can be dropped into
-      the <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/war</TT
-> directory and deployed by
-      restarting the consumer.  Currently Inca WAR files cannot be deployed outside
-      of the Inca consumer server (e.g. in Apache Tomcat).  The consumer will start
-      on port 8080 unless the <TT
+./bin/inca start consumer).  The consumer will start on port 8080 unless the
+<TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
-> is edited
-      as described in <A
+> is edited as described in <A
 HREF="#CONSUMER-PORT"
->Section 6.7</A
+>Section 6.8</A
 >.</P
+><P
+> The default consumer <TT
+CLASS="FILENAME"
+>inca.war</TT
+> file can also be unwarred in
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps</TT
+> for dynamic editing.  A dynamic
+consumer deployment requires the development version of java, i.e. javac, in
+order for Jetty to compile the files (otherwise only the java binaries are
+required).  To create a dynamic deployment, use the following comands:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/webapps; mkdir inca; cd inca; jar xvf ../inca.war; rm ../inca.war
+
+% cd WEB-INF; mv web.xml web.xml~; cp web.dyn.xml web.xml; cd ../../../; bin/inca restart consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+> Custom WAR files can be dropped into the
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps</TT
+> directory and deployed by restarting
+the consumer.  As an alternative to using the consumer, the default WAR files
+can also be dropped into an existing Tomcat installation. </P
+><P
+> In general, the default consumer's JSP query the depot for XML
+results and apply XSL to them in order to display HTML status pages.  The basic
+JSP are described in subsequent sections - they show current and historical data,
+historical reports, deployment information, and allow the configuration of
+custom depot queries.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -2552,7 +2600,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.5.3</A
+>Section 6.6.3</A
 >.</P
 ><DIV
 CLASS="SECTION"
@@ -2577,7 +2625,7 @@ CLASS="FILENAME"
       More information about the consumer's JSP and XSL files is
       provided in <A
 HREF="#FILE-DESC"
->Section 6.4</A
+>Section 6.5</A
 >.  For example,
       <A
 HREF="http://localhost:8080/inca/xslt.jsp?xsl=default.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid"
@@ -3275,7 +3323,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.5.3</A
+>Section 6.6.3</A
 >.</P
 ><DIV
 CLASS="SECTION"
@@ -3409,7 +3457,7 @@ CLASS="FILENAME"
 >.  
        See <A
 HREF="#FILE-DESC"
->Section 6.4</A
+>Section 6.5</A
 > for more
        details.  Depending on database size and the number of series
        included, summary reports may benefit from being pre-generated.
@@ -3428,8 +3476,35 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
+NAME="QUERY-PAGES"
+>6.3. Query Pages</A
+></H3
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="CREATE-QUERY"
+>6.3.1. Create Stored Query</A
+></H4
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="VIEW-QUERY"
+>6.3.2. View Query Cache</A
+></H4
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
 NAME="INFO"
->6.3. Info Pages</A
+>6.4. Info Pages</A
 ></H3
 ><P
 >Currently the only informational page is a list of
@@ -3441,7 +3516,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.5.3</A
+>Section 6.6.3</A
 >.</P
 ><P
 ><IMG
@@ -3454,7 +3529,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="FILE-DESC"
->6.4. Description of Data Consumer Files</A
+>6.5. Description of Data Consumer Files</A
 ></H3
 ><P
 >      There are five main JSP contained in the
@@ -3469,7 +3544,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN649"
+NAME="AEN659"
 ></A
 ><P
 ><B
@@ -3893,7 +3968,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN803"
+NAME="AEN813"
 ></A
 ><P
 ><B
@@ -4259,7 +4334,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-DISPLAY"
->6.5. Changing the Look</A
+>6.6. Changing the Look</A
 ></H3
 ><DIV
 CLASS="SECTION"
@@ -4267,7 +4342,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-COLOR"
->6.5.1. Colors and Fonts</A
+>6.6.1. Colors and Fonts</A
 ></H4
 ><P
 >        Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in
@@ -4321,7 +4396,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML"
->6.5.2. HTML Layout</A
+>6.6.2. HTML Layout</A
 ></H4
 ><P
 >        To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
@@ -4332,7 +4407,7 @@ CLASS="FILENAME"
       The default JSP and XSL files are described in
       <A
 HREF="#FILE-DESC"
->Section 6.4</A
+>Section 6.5</A
 >.</P
 ><P
 >For general information about editing stylesheets,
@@ -4347,7 +4422,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-VALUES"
->6.5.2.1. Custom Values in HTML Table Cells</A
+>6.6.2.1. Custom Values in HTML Table Cells</A
 ></H5
 ><P
 >To display report values other
@@ -4423,7 +4498,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-HEADER"
->6.5.3. Custom Page Header</A
+>6.6.3. Custom Page Header</A
 ></H4
 ><P
 >The default page header is generated by the inclusion of the
@@ -4584,7 +4659,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-ALT-LOCATION"
->6.6. Changing the Installation Location</A
+>6.7. Changing the Installation Location</A
 ></H3
 ><P
 >You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
@@ -4736,7 +4811,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-PORT"
->6.7. Changing the Port</A
+>6.8. Changing the Port</A
 ></H3
 ><P
 >      By default, the consumer is started on port 8080.  To change this, edit
@@ -4784,7 +4859,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="HTTPS-CONSUMER"
->6.8. Enabling https</A
+>6.9. Enabling https</A
 ></H3
 ><P
 >      By default, the consumer is configured as an http server.  To
@@ -5063,7 +5138,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PASSWORD-CONSUMER"
->6.9. Adding Password Protection</A
+>6.10. Adding Password Protection</A
 ></H3
 ><P
 >      By default, a password is not required for a user to access the status pages
@@ -5118,7 +5193,7 @@ CLASS="FILENAME"
       username and password for your installation.  If you do not want to store the
       password in plain text, use Jetty's password utility described in <A
 HREF="#HTTPS-CONSUMER"
->Section 6.8</A
+>Section 6.9</A
 >.</P
 ><P
 >Then restart the consumer. </P
@@ -5219,7 +5294,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1077"
+NAME="AEN1087"
 ></A
 ><P
 ><B
@@ -5808,8 +5883,10 @@ TARGET="_top"
 >Inca::Reporter::GridProxy</A
 ></P
 ><P
->The Inca::Reporter::GridProxy package is a pseudo-module indicating that a reporter requires a proxy credential in order to execute.  The following is an example of a perl reporter that requires a proxy.  Python reporters should
-use the equivalent, reporter.addDependency('Inca::Reporter::GridProxy').
+>  The Inca::Reporter::GridProxy package is a pseudo-module indicating that a
+  reporter requires a proxy credential in order to execute.  The following is
+  an example of a perl reporter that requires a proxy.  Python reporters should
+  use the equivalent, reporter.addDependency('inca.GridProxyReporter').
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -6010,14 +6087,13 @@ additional code to remove temporary files or directories (e.g. unlink or rm)
 is not required.  The reporter below uses the tempFile function to remove 
 the temp $scratchDir it creates.  </P
 ><P
->If a reporter changes directories to one whose name is variable, like the one below that includes a PID, it's good practice 
-to have the reporter change back to the original directory before exiting.  If 
-the reporter does not return to the original directory and the directory it changes to contains 
-a PID, for example, a report will be created in the database each time the reporter runs (one 
-for each reporter working dirctory).  For similar reasons, it's best practice never to use a 
-PID or variable information as a reporter argument value or to include PIDs or timestamps in 
-error messages.  If a reporter error message may contain variable information, a function to replace 
-the variable can be written to normalize the error (like the "failClean" function in the reporter below).</P
+>It's best practice never to use a PID or variable information as a reporter
+argument value or to include PIDs or timestamps in error messages.  Reporters
+that incorporate this sort of information will create a new report in the Inca
+database each time the reporter runs, which may slow query response.  If a
+reporter error message may contain variable information, a function to replace 
+the variable can be written to normalize the error (like the "failClean"
+function in the reporter below).</P
 ><P
 > <TABLE
 BORDER="1"
@@ -6046,7 +6122,6 @@ my $reporter = new Inca::Reporter::SimpleUnit(
 
  ...
 
-my $origDir = getcwd();
 my $scratchDir = "/tmp/security.ca.unit.$$";
 if ( ! mkdir($scratchDir) ) {
   failClean("Cannot mkdir scratch dir $scratchDir"); 
@@ -6062,7 +6137,6 @@ if ($err ne ""){
   failClean($err);
 } else {
   $reporter-&#62;unitSuccess();
-  chdir($origDir);
   $reporter-&#62;print();
 }
 
@@ -6070,7 +6144,6 @@ sub failClean {
   my $err = shift;
   $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
   $err =~ s/$$/PID/g;
-  chdir($origDir);
   $reporter-&#62;failPrintAndExit($err);
 }</PRE
 ></FONT
@@ -6616,7 +6689,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1366"
+NAME="AEN1376"
 ></A
 ><P
 ><B
@@ -6838,7 +6911,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1413"
+NAME="AEN1423"
 ></A
 ><P
 ><B
@@ -7274,7 +7347,7 @@ HREF="#USERGUIDE-MAN"
 ><P
 >Note:  To change the port of the consumer, see <A
 HREF="#CONSUMER-PORT"
->Section 6.7</A
+>Section 6.8</A
 >.</P
 ><P
 >Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
@@ -7343,7 +7416,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1520"
+NAME="AEN1530"
 ></A
 ><P
 ><B
@@ -9313,7 +9386,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1915"
+NAME="AEN1925"
 ></A
 ><P
 ><B
