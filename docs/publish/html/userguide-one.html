@@ -2612,25 +2612,26 @@ NAME="TABLE-SUMMARY"
 ></H4
 ><P
 >A summary table of suite results is created by
-      passing the suiteName (e.g. sampleSuite) and resourceID
-        (e.g. defaultGrid) parameters to
+      passing the suiteNames (e.g. sampleSuite) and resourceIds
+        (e.g. defaultGrid) comma delimited parameters to
       <TT
 CLASS="FILENAME"
->xslt.jsp</TT
-> and adding
+>status.jsp</TT
+>.  An xsl parameter is optional and the 
       <TT
 CLASS="FILENAME"
 >default.xsl</TT
-> as the xsl parameter.
-      More information about the consumer's JSP and XSL files is
+> stylesheet is applied to the XML results if no xsl
+      parameter is supplied.  The XML results can be viewed by adding "debug=1" to the JSP 
+      URL.  More information about the consumer's JSP and XSL files is
       provided in <A
 HREF="#FILE-DESC"
 >Section 6.5</A
 >.  For example,
       <A
-HREF="http://localhost:8080/inca/xslt.jsp?xsl=default.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid"
+HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
->http://localhost:8080/inca/xslt.jsp?xsl=default.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid</A
+>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
 >
       produces the following image:
       <P
@@ -2704,7 +2705,7 @@ CLASS="FILENAME"
 > stylesheet over the XML collected by
           <TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 >.  To load the Google map for your Inca
           default deployment, click on the "map of sampleSuite results" link
           underneath the "CURRENT DATA" menu item in the navigation bar.
@@ -2730,14 +2731,14 @@ CLASS="SCREEN"
 COLOR="RED"
 >yourhost</FONT
 ></STRONG
->:8080/inca/xslt.jsp?xsl=google.xsl&#38;xmlFile=google.xml&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid
+>:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid
         </PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->          The tags "suiteName" and "resourceID" can be a comma delimited list to show
+>          The tags "suiteNames" and "resourceIds" can be a comma delimited list to show
           the resource status for multiple suites.
         </P
 ><P
@@ -2843,10 +2844,25 @@ NAME="GOOGLE-CUSTOM"
 >6.1.2.3. Customizing the Google Map View</A
 ></H5
 ><P
->          The configuration information for the Google Map View is located in a
-          XML file at <TT
+>          The configuration information for the Google Map View is located in an
+          XML file in <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps/xml/google.xml</TT
+>inca.war</TT
+>.  To customize the XML file you can either 
+          unwar <TT
+CLASS="FILENAME"
+>inca.war</TT
+> and edit the <TT
+CLASS="FILENAME"
+>xml/google.xml</TT
+>
+          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
+          described in <A
+HREF="#USERGUIDE-CONSUMER"
+>Section 6</A
+> and edit the file in <TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps/inca/xml/google.xml</TT
 >.
           Below is a list of customizations you can make to your Google display.
         </P
@@ -3342,13 +3358,13 @@ CLASS="FILENAME"
 > is used as the xsl parameter for the
         <TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 > script that displays suite results,
         a form will be generated to select suite series to graph.  For
         example, <A
-HREF="http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid"
+HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
->http://localhost:8080/inca/xslt.jsp?xsl=graph.xsl&#38;suiteName=sampleSuite&#38;resourceID=defaultGrid</A
+>http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
 > will generate:
         <P
 ><IMG
@@ -3426,11 +3442,27 @@ NAME="SUMMARY-REPORT"
         with <TT
 CLASS="FILENAME"
 >report.jsp</TT
-> and configured by default with 
+> and configured by default with the
        <TT
 CLASS="FILENAME"
->webapps/xml/statusReport.xml</TT
->.  
+>statusReport.xml</TT
+> file.  To customize the XML file you can either 
+          unwar <TT
+CLASS="FILENAME"
+>inca.war</TT
+> and edit the <TT
+CLASS="FILENAME"
+>xml/statusReport.xml</TT
+>
+          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
+          described in <A
+HREF="#USERGUIDE-CONSUMER"
+>Section 6</A
+> and edit the file in 
+          <TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps/inca/xml/google.xml</TT
+>.
        </P
 ><P
 ><IMG
@@ -3453,7 +3485,7 @@ CLASS="FILENAME"
        the groupings and titles.  The width and height of the graphs can also
        be adjusted in <TT
 CLASS="FILENAME"
->webapps/xml/statusReport.xml</TT
+>statusReport.xml</TT
 >.  
        See <A
 HREF="#FILE-DESC"
@@ -3532,19 +3564,20 @@ NAME="FILE-DESC"
 >6.5. Description of Data Consumer Files</A
 ></H3
 ><P
->      There are five main JSP contained in the
+>      The following table describes the main JSP contained in the
       <TT
 CLASS="FILENAME"
 >inca.war</TT
 >.
       The JSP generally return XML from depot and agent functions and
-      apply XSL stylesheets to display HTML.  If the "xsl" parameter
-      for the JSP is removed, the JSP prints the XML returned.
+      apply XSL stylesheets to display HTML.  If the "debug=1" parameter
+      for the JSP is used, the JSP prints the XML returned. Parameters marked with 
+      an asterisk (*) are optional.
     </P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN659"
+NAME="AEN667"
 ></A
 ><P
 ><B
@@ -3621,14 +3654,14 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->xsl: stylesheet to format returned XML</P
+>xsl *: stylesheet to format returned XML [default: index.xsl]</P
 ></LI
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/index.jsp"
+HREF="http://localhost:8080/inca/jsp/index.jsp"
 TARGET="_top"
->http://localhost:8080/inca/index.jsp</A
+>http://localhost:8080/inca/jsp/index.jsp</A
 ></P
 ></TD
 ></TR
@@ -3678,14 +3711,14 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->xsl: stylesheet to format returned XML</P
+>xsl *: stylesheet to format returned XML [default: config.xsl]</P
 ></LI
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/config.jsp?xsl=config.xsl"
+HREF="http://localhost:8080/inca/jsp/config.jsp"
 TARGET="_top"
->http://localhost:8080/inca/config.jsp?xsl=config.xsl</A
+>http://localhost:8080/inca/jsp/config.jsp</A
 ></P
 ></TD
 ></TR
@@ -3695,7 +3728,7 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 >
                 <P
 ><IMG
@@ -3706,11 +3739,11 @@ ALIGN="CENTER"></P
 ></TD
 ><TD
 ><P
->                Displays current results for a set of suites or reporter details.
+>                Displays current results for a set of suites or cached queries.
                 This page is the action of the <TT
 CLASS="FILENAME"
 >index.jsp</TT
-> form to display a single suite's results.
+> form to display suite results.
               </P
 ></TD
 ><TD
@@ -3735,37 +3768,92 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->suiteName: comma separated list of test suite
-                    names to get data for</P
+>suiteNames: a comma separated list of suite names.  At least one suite name
+    is required if queryNames is empty and the number of suite names
+    should match the number of resourceIds.  A suite name is optional if 
+    queryNames is provided.</P
 ></LI
 ><LI
 ><P
->resourceID: comma separated list of resource group
-                    names to get data for</P
+>queryNames: a comma separated list of cached query names.  At least one name
+    is required if suiteNames is empty.</P
 ></LI
 ><LI
 ><P
->instanceID: test instance ID number to get data for</P
+>resourceIds: a comma separated list of resource group ids.  At least one
+    resource id is required if suiteNames is not empty and the number of
+    resourceIds should match the number of suiteNames.  A resource id is 
+    optional if queryNames is provided.  </P
 ></LI
 ><LI
 ><P
->configID: test configuration ID number to get data for</P
+>xml *: a comma separated list of xml files to include.  Can be empty, contain
+    one xml file or must match number of suiteNames and resourceIds if
+    queryNames is empty. </P
 ></LI
 ><LI
 ><P
->xmlFile: name of XML file whose contents will be appended to
-                  cached depot results</P
-></LI
-><LI
-><P
->xsl: name of stylesheet to format returned XML</P
+>xsl *: name of stylesheet to format returned XML [default: default.xsl]</P
 ></LI
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xsl=default.xsl"
+HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
->http://localhost:8080/inca/xslt.jsp?suiteName=sampleSuite&#38;resourceID=defaultGrid&#38;xsl=default.xsl</A
+>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
+></P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>instance.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/inst_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Queries depot for report instance and invokes the specified xsl stylesheet on it.
+              </P
+></TD
+><TD
+><P
+> </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>instanceId: the id of the particular report instance</P
+></LI
+><LI
+><P
+>configId: the id of the series config the instance belongs to</P
+></LI
+><LI
+><P
+>resourceId: the resource id for series config (for history link)</P
+></LI
+><LI
+><P
+>xsl *: name of stylesheet to format returned XML [default: instance.xsl]</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource</A
 ></P
 ></TD
 ></TR
@@ -3805,92 +3893,46 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->testName: comma separated list of series nicknames to
-                  get data for</P
+>series: a series nickname and resource separated by a comma and an optional label</P
 ></LI
 ><LI
 ><P
->resourceName: comma separated list of resources to
-                  get data for</P
+>legend *: boolean for showing legend</P
 ></LI
 ><LI
 ><P
->seriesLabel: comma separated list of legend labels</P
+>legendAnchor *: position of legend</P
 ></LI
 ><LI
 ><P
->title: title of pass/fail status graph</P
+>height *: graph height in pixels</P
 ></LI
 ><LI
 ><P
->alias: boolean for image anti-aliasing</P
+>width *: graph width in pixels</P
 ></LI
 ><LI
 ><P
->legend: boolean for showing legend</P
+>startDate *: date to start querying data for</P
 ></LI
 ><LI
 ><P
->legendAnchor: position of legend</P
+>endDate *: date to stop querying data for</P
 ></LI
 ><LI
 ><P
->height: graph height in pixels</P
+>bgcolor *: background color of graph images</P
 ></LI
 ><LI
 ><P
->width: graph width in pixels</P
-></LI
-><LI
-><P
->mime: boolean for image MIME</P
-></LI
-><LI
-><P
->xaxislabel: label for x-axis of pass/fail graph</P
-></LI
-><LI
-><P
->xmin: date to start querying data for</P
-></LI
-><LI
-><P
->xmax: date to stop querying data for</P
-></LI
-><LI
-><P
->start: boolean for getting only past two weeks of data</P
-></LI
-><LI
-><P
->yaxislabel: label for y-axis of pass/fail graph</P
-></LI
-><LI
-><P
->ymin: y-axi4s min for pass/fail graph</P
-></LI
-><LI
-><P
->ymax: y-axis max for pass/fail graph</P
-></LI
-><LI
-><P
->ytick: tick increment for y-axis pass/fail graph</P
-></LI
-><LI
-><P
->bgcolor: background color of graph images</P
-></LI
-><LI
-><P
->map: boolean for showing graph links and mouseovers</P
+>map *: boolean for showing graph links and mouseovers</P
 ></LI
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/graph.jsp?testName=ant_version&#38;resourceName=localResource"
+HREF="http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource"
 TARGET="_top"
->http://localhost:8080/inca/graph.jsp?testName=ant_version&#38;resourceName=localResource</A
+>http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource</A
 ></P
 ></TD
 ></TR
@@ -3930,15 +3972,15 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->startDate: start date for summary report (gets complete history by default)</P
+>startDate *: start date for summary report (gets complete history by default)</P
 ></LI
 ><LI
 ><P
->endDate: end date for summary report (current date by default)</P
+>endDate *: end date for summary report (current date by default)</P
 ></LI
 ><LI
 ><P
->xmlFile: name of xml file to configure report (<TT
+>xml *: name of xml file to configure report (<TT
 CLASS="FILENAME"
 >webapps/xml/statusReport.xml</TT
 > by default)</P
@@ -3946,9 +3988,9 @@ CLASS="FILENAME"
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/report.jsp"
+HREF="http://localhost:8080/inca/jsp/report.jsp"
 TARGET="_top"
->http://localhost:8080/inca/report.jsp</A
+>http://localhost:8080/inca/jsp/report.jsp</A
 ></P
 ></TD
 ></TR
@@ -3968,7 +4010,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN813"
+NAME="AEN818"
 ></A
 ><P
 ><B
@@ -4071,7 +4113,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4098,7 +4140,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4126,7 +4168,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4162,7 +4204,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4189,7 +4231,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4216,7 +4258,7 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->xslt.jsp</TT
+>status.jsp</TT
 ></P
 ></TD
 ><TD
@@ -4539,7 +4581,7 @@ CLASS="SCREEN"
 >57  &#60;li&#62;&#60;h2&#62;Current Data&#60;/h2&#62;
 58    &#60;ul&#62;
 59      &#60;li&#62;
-60        &#60;a href="'xslt.jsp?xsl=default.xsl&#38;amp;suiteName=newSuite&#38;amp;resourceID=newResource'"&#62;
+60        &#60;a href="'status.jsp?xsl=default.xsl&#38;amp;suiteNames=newSuite&#38;amp;resourceIds=newResource'"&#62;
 61           table of newSuite results&#60;/a&#62;
 62      &#60;/li&#62;</PRE
 ></FONT
@@ -5294,7 +5336,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1087"
+NAME="AEN1092"
 ></A
 ><P
 ><B
@@ -6689,7 +6731,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1376"
+NAME="AEN1381"
 ></A
 ><P
 ><B
@@ -6911,7 +6953,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1423"
+NAME="AEN1428"
 ></A
 ><P
 ><B
@@ -7416,7 +7458,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1530"
+NAME="AEN1535"
 ></A
 ><P
 ><B
@@ -9386,7 +9428,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1925"
+NAME="AEN1930"
 ></A
 ><P
 ><B
