@@ -496,13 +496,47 @@ custom depot queries.</para>
   
   </section>
   
+  <section id="report-pages">
+      <title>Report Pages</title>
+      <section id="report-summary">
+          <title>Summary Status Report</title>
+       <para>
+        <graphic fileref="figures/consumer/summaryJsp.gif" align="center"></graphic>
+       </para>
+      </section>
+      <section id="report-summary-details">
+          <title>Summary Status Report Details</title>
+       <para>
+        <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center"></graphic>
+       </para>
+      </section>
+      <section id="report-error-summary">
+          <title>Summary of Errors Report</title>
+       <para>
+        <graphic fileref="figures/consumer/error-summary.gif" align="center"></graphic>
+       </para>
+      </section>
+      <section id="report-summary-history">
+          <title>Summary Status Report History</title>
+       <para>
+        <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center"></graphic>
+       </para>
+      </section>
+  </section>
+  
   <section id="query-pages">
       <title>Query Pages</title>
       <section id="create-query">
           <title>Create Stored Query</title>
+       <para>
+        <graphic fileref="figures/consumer/create-query.gif" align="center"></graphic>
+       </para>
       </section>
       <section id="view-query">
           <title>View Query Cache</title>
+       <para>
+        <graphic fileref="figures/consumer/query.gif" align="center"></graphic>
+       </para>
       </section>
   </section>
 
@@ -537,31 +571,10 @@ custom depot queries.</para>
           <row valign="top">
             <entry><para>Name</para></entry>
             <entry><para>Purpose</para></entry>
-            <entry><para>Server Functions Called</para></entry>
             <entry><para>Parameters</para></entry>
           </row>
         </thead>
         <tbody>
-
-          <row valign="top">
-            <entry><para><filename>index.jsp</filename>
-                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Lists an installation's configured suites and resource
-                names in an HTML form whose action is to display results
-                for the selected suite and resource.  The consumer
-                initially redirects to this page.
-              </para></entry>
-            <entry><para>Depot's
-                <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()">queryGuids()</ulink>
-                function for current suite configuration
-                and agent's <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached resource configuration information.
-              </para></entry>
-            <entry><itemizedList><listItem><para>xsl *: stylesheet to format returned XML [default: index.xsl]</para></listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/index.jsp">http://localhost:8080/inca/jsp/index.jsp</ulink></para></entry>
-          </row>
 
           <row valign="top">
             <entry><para><filename>config.jsp</filename>
@@ -571,90 +584,30 @@ custom depot queries.</para>
                 Prints description of deployed suites and series.
                 Linked at the bottom of <filename>index.jsp</filename>
               </para></entry>
-            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
-                function for current catalog configuration and
-                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached suite configuration infomation.
-              </para></entry>
             <entry><itemizedList>
                 <listItem><para>xsl *: stylesheet to format returned XML [default: config.xsl]</para>
                 </listItem></itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/config.jsp">http://localhost:8080/inca/jsp/config.jsp</ulink></para></entry>
           </row>
-
+          
           <row valign="top">
-            <entry><para><filename>status.jsp</filename>
-                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+            <entry><para><filename>error.jsp</filename>
+                <graphic fileref="figures/consumer/errorJsp_sm.gif" align="center"></graphic>
               </para></entry>
             <entry><para>
-                Displays current results for a set of suites or cached queries.
-                This page is the action of the <filename>index.jsp</filename> form to display suite results.
-              </para></entry>
-            <entry><para>Agent's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()">getCatalogAsXml()</ulink>
-                function for current catalog configuration and
-                <ulink url="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()">getConfig()</ulink>
-                function for cached suite configuration infomation.
+                Prints Inca error message page.
               </para></entry>
             <entry><itemizedList>
-                <listItem>
-                  <para>suiteNames: a comma separated list of suite names.  At least one suite name
-    is required if queryNames is empty and the number of suite names
-    should match the number of resourceIds.  A suite name is optional if 
-    queryNames is provided.</para>
-                </listItem>
-                <listItem>
-                  <para>queryNames: a comma separated list of cached query names.  At least one name
-    is required if suiteNames is empty.</para>
-                </listItem>
-                <listItem>
-                  <para>resourceIds: a comma separated list of resource group ids.  At least one
-    resource id is required if suiteNames is not empty and the number of
-    resourceIds should match the number of suiteNames.  A resource id is 
-    optional if queryNames is provided.  </para>
-                </listItem>
-                <listItem>
-                  <para>xml *: a comma separated list of xml files to include.  Can be empty, contain
-    one xml file or must match number of suiteNames and resourceIds if
-    queryNames is empty. </para>
-                </listItem>
-                <listItem>
-                  <para>xsl *: name of stylesheet to format returned XML [default: default.xsl]</para>
-                </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink></para></entry>
+                <listItem><para>msg: error message from another JSP</para></listItem>
+                <listItem><para>usage: correct usage of the JSP</para></listItem>
+	    </itemizedList></entry>
           </row>
-
-          <row valign="top">
-            <entry><para><filename>instance.jsp</filename>
-                <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
-              </para></entry>
-            <entry><para>
-                Queries depot for report instance and invokes the specified xsl stylesheet on it.
-              </para></entry>
-            <entry><para> </para></entry>
-            <entry><itemizedList>
-                <listItem>
-                  <para>instanceId: the id of the particular report instance</para>
-                </listItem>
-                <listItem>
-                  <para>configId: the id of the series config the instance belongs to</para>
-                </listItem>
-                <listItem>
-                  <para>resourceId: the resource id for series config (for history link)</para>
-                </listItem>
-                <listItem>
-                  <para>xsl *: name of stylesheet to format returned XML [default: instance.xsl]</para>
-                </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&amp;configId=1&amp;resourceId=localResource">http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&amp;configId=1&amp;resourceId=localResource</ulink></para></entry>
-          </row>
-
+          
           <row valign="top">
             <entry><para><filename>graph.jsp</filename>
                 <graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic>
               </para></entry>
             <entry><para>
                 Historical graphs of pass/fail status and error frequency.
-              </para></entry>
-            <entry><para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
-                function to query for historical infomation.
               </para></entry>
             <entry><itemizedList>
                 <listItem>
@@ -687,15 +640,69 @@ custom depot queries.</para>
               </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource">http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource</ulink></para></entry>
           </row>
           
+	<row valign="top">
+            <entry><para><filename>index.jsp</filename>
+                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Lists an installation's configured suites and resource
+                names in an HTML form whose action is to display results
+                for the selected suite and resource.  The consumer
+                initially redirects to this page.
+              </para></entry>
+            <entry><itemizedList><listItem><para>xsl *: stylesheet to format returned XML [default: index.xsl]</para></listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/index.jsp">http://localhost:8080/inca/jsp/index.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>instance.jsp</filename>
+                <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Queries depot for report instance and invokes the specified xsl stylesheet on it.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>instanceId: the id of the particular report instance</para>
+                </listItem>
+                <listItem>
+                  <para>configId: the id of the series config the instance belongs to</para>
+                </listItem>
+                <listItem>
+                  <para>resourceId: the resource id for series config (for history link)</para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: instance.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&amp;configId=1&amp;resourceId=localResource">http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&amp;configId=1&amp;resourceId=localResource</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>query.jsp</filename>
+                <graphic fileref="figures/consumer/query_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Page for managing stored queries in the Consumer.  Queries
+  can be added, deleted, changed, viewed or executed (and return XML).
+  This jsp page manages the query manipulation via jsp tags and leaves the
+  display of the current queries to a stylesheet.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>action: an action to take on the query (see JSP usage for more information)</para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: query.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/query.jsp">http://localhost:8080/inca/jsp/query.jsp</ulink></para></entry>
+          </row>
+          
           <row valign="top">
             <entry><para><filename>report.jsp</filename>
                 <graphic fileref="figures/consumer/summary_report_sm.jpg" align="center"></graphic>
               </para></entry>
             <entry><para>
                 Summary report with graphs of pass/fail status and error frequency.
-              </para></entry>
-            <entry><para>Depot's <ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)">queryHql()</ulink>
-                function to query for historical infomation.
               </para></entry>
             <entry><itemizedList>
                 <listItem>
@@ -709,6 +716,95 @@ custom depot queries.</para>
                 </listItem>
               </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/report.jsp">http://localhost:8080/inca/jsp/report.jsp</ulink></para></entry>
           </row>
+         
+	<row valign="top">
+            <entry><para><filename>status.jsp</filename>
+                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays current results for a set of suites or cached queries.
+                This page is the action of the <filename>index.jsp</filename> form to display suite results.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>suiteNames *: a comma separated list of suite names.  At least one suite name
+    is required if queryNames is empty and the number of suite names
+    should match the number of resourceIds.  A suite name is optional if 
+    queryNames is provided.</para>
+                </listItem>
+                <listItem>
+                  <para>queryNames *: a comma separated list of cached query names.  At least one name
+    is required if suiteNames is empty.</para>
+                </listItem>
+                <listItem>
+                  <para>resourceIds *: a comma separated list of resource group ids.  At least one
+    resource id is required if suiteNames is not empty and the number of
+    resourceIds should match the number of suiteNames.  A resource id is 
+    optional if queryNames is provided.  </para>
+                </listItem>
+                <listItem>
+                  <para>xml *: a comma separated list of xml files to include.  Can be empty, contain
+    one xml file or must match number of suiteNames and resourceIds if
+    queryNames is empty. </para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: default.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink></para></entry>
+          </row>
+          
+         <row valign="top">
+            <entry><para><filename>summary.jsp</filename>
+                <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Shows the average series pass rate by resource and by suite for a given time period.  Uses 
+		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> 
+		to calculate statistics.
+              </para></entry>
+            <entry><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summary.jsp">http://localhost:8080/inca/jsp/summary.jsp</ulink></para></entry>
+          </row>
+
+         <row valign="top">
+            <entry><para><filename>summaryDetails.jsp</filename>
+                <graphic fileref="figures/consumer/summaryDetailsJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays summary statistic details for resource or suite.  Linked from <filename>summary.jsp</filename>.
+		Uses <filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
+                to calculate statistics.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>resource *: resource to get summary stats for (e.g. localResource)</para>
+                </listItem>
+                <listItem>
+                  <para>guid *: suite guid to get summary stats for (e.g. incas://localhost:6323/sampleSuite)</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource">http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource</ulink></para></entry>
+          </row>
+
+         <row valign="top">
+            <entry><para><filename>summaryHistory.jsp</filename>
+                <graphic fileref="figures/consumer/summaryHistoryJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays average series pass rate by filter. Uses
+                <filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
+                to calculate statistics.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>filterResource *: if true displays history grouped by resource or if a resource
+                id is specified, displays history grouped by suite for that resource</para>
+                </listItem>
+                <listItem>
+                  <para>filterSuite *: if true displays history grouped by suite or if a suite guid
+             is specified, displays history grouped by resource for that suite</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true">http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true</ulink></para></entry>
+          </row>
+
 
         </tbody>
       </tgroup>
@@ -735,23 +831,19 @@ custom depot queries.</para>
           <tbody>
 
             <row valign="top">
-              <entry><para><filename>index.xsl</filename>
-                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>index.jsp</filename></para></entry>
-              <entry><para>
-                  Lists all configured suite and resource names in an
-                  HTML form whose action is to display results for the
-                  selected suite and resource.
-                </para></entry>
-            </row>
-
-            <row valign="top">
               <entry><para><filename>config.xsl</filename>
                   <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
                 </para></entry>
                <entry><para><filename>config.jsp</filename></para></entry>
               <entry><para>Prints description of deployed suites and series.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>create-query.xsl</filename>
+                  <graphic fileref="figures/consumer/create-query_sm.jpg" align="center"></graphic>
+                </para></entry>
+               <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints form to select series and resources to query.</para></entry>
             </row>
 
             <row valign="top">
@@ -763,26 +855,19 @@ custom depot queries.</para>
             </row>
 
             <row valign="top">
-              <entry><para><filename>swStack.xsl</filename>
-                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
+              <entry><para><filename>error.xsl</filename>
+                  <graphic fileref="figures/consumer/errorJsp_sm.gif" align="center"></graphic>
                 </para></entry>
-              <entry><para><filename>status.jsp</filename></para></entry>
-              <entry><para>Prints table of suite(s) results.  Uses XML file
-                  to format table rows by software categories and packages.</para></entry>
+              <entry><para><filename>error.jsp</filename></para></entry>
+              <entry><para>Displays JSP error message and usage information.</para></entry>
             </row>
 
             <row valign="top">
-              <entry><para><filename>summary.xsl</filename>
-                  <graphic fileref="figures/consumer/summary_sm.jpg" align="center"></graphic>
+              <entry><para><filename>footer.xsl</filename>
+                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
                 </para></entry>
-              <entry><para><filename>status.jsp</filename></para></entry>
-              <entry><para>Prints summary results table with a list of
-                  resources in the left column and
-                  a list of the suite tests each resource is failing
-                  in the right column.  Failing tests are listed by name
-                  and by overall percentage passing in suite.
-                  Uses XML file (<filename>swStack.xml</filename> by default) to get test groups.
-                </para></entry>
+              <entry><para>(included in most other xsl files)</para></entry>
+              <entry><para>Prints HTML page footer with the Inca logo.</para></entry>
             </row>
 
             <row valign="top">
@@ -802,14 +887,6 @@ custom depot queries.</para>
             </row>
 
             <row valign="top">
-              <entry><para><filename>instance.xsl</filename>
-                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
-                </para></entry>
-              <entry><para><filename>status.jsp</filename></para></entry>
-              <entry><para>Prints HTML table with report details.</para></entry>
-            </row>
-
-            <row valign="top">
               <entry><para><filename>header.xsl</filename>
                   <graphic fileref="figures/consumer/header_sm.jpg" align="center"></graphic>
                 </para></entry>
@@ -818,11 +895,29 @@ custom depot queries.</para>
             </row>
 
             <row valign="top">
-              <entry><para><filename>footer.xsl</filename>
-                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
+              <entry><para><filename>inca-common.xsl</filename></para></entry>
+              <entry><para>(included in most other stylesheets)</para></entry>
+              <entry><para>Common templates for use in Inca stylesheets.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>index.xsl</filename>
+                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
                 </para></entry>
-              <entry><para>(included in most other xsl files)</para></entry>
-              <entry><para>Prints HTML page footer with the Inca logo.</para></entry>
+              <entry><para><filename>index.jsp</filename></para></entry>
+              <entry><para>
+                  Lists all configured suite and resource names in an
+                  HTML form whose action is to display results for the
+                  selected suite and resource.
+                </para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>instance.xsl</filename>
+                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>instance.jsp</filename></para></entry>
+              <entry><para>Prints HTML table with report details.</para></entry>
             </row>
 
             <row valign="top">
@@ -835,10 +930,49 @@ custom depot queries.</para>
             </row>
 
             <row valign="top">
-              <entry><para><filename>inca-common.xsl</filename></para></entry>
-              <entry><para>(included in most other stylesheets)</para></entry>
-              <entry><para>Common templates for use in Inca stylesheets.</para></entry>
+              <entry><para><filename>periodAverages.xsl</filename>
+                  <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>summary.jsp</filename>, <filename>summaryDetails.jsp</filename>, 
+		<filename>summaryHistory.jsp</filename></para></entry>
+              <entry><para>Computes pass percentage for suites and resources for a given period.</para></entry>
             </row>
+
+            <row valign="top">
+              <entry><para><filename>query.xsl</filename>
+                  <graphic fileref="figures/consumer/query_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>query.jsp</filename></para></entry>
+              <entry><para>Creates form to manipulate hql queries.</para></entry>
+            </row>
+            
+            <row valign="top">
+              <entry><para><filename>seriesAverages.xsl</filename>
+                  <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>summary.jsp</filename>, <filename>summaryDetails.jsp</filename>, 
+		<filename>summaryHistory.jsp</filename></para></entry>
+              <entry><para>Computes series pass percentages.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>seriesSummary.xsl</filename>
+                  <graphic fileref="figures/consumer/error-summary_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Print out a table of stats for individual series.
+                </para></entry>
+            </row>
+	
+	<row valign="top">
+              <entry><para><filename>swStack.xsl</filename>
+                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints table of suite(s) results.  Uses XML file
+                  to format table rows by software categories and packages.</para></entry>
+            </row>
+
 
           </tbody>
         </tgroup>
