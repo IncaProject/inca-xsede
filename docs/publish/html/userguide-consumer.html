@@ -125,7 +125,7 @@ CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
 > is edited as described in <A
 HREF="userguide-consumer.html#CONSUMER-PORT"
->Section 6.8</A
+>Section 6.9</A
 >.</P
 ><P
 > The default consumer <TT
@@ -191,7 +191,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
->Section 6.6.3</A
+>Section 6.7.3</A
 >.</P
 ><DIV
 CLASS="SECTION"
@@ -217,7 +217,7 @@ CLASS="FILENAME"
       URL.  More information about the consumer's JSP and XSL files is
       provided in <A
 HREF="userguide-consumer.html#FILE-DESC"
->Section 6.5</A
+>Section 6.6</A
 >.  For example,
       <A
 HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
@@ -930,7 +930,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
->Section 6.6.3</A
+>Section 6.7.3</A
 >.</P
 ><DIV
 CLASS="SECTION"
@@ -1080,7 +1080,7 @@ CLASS="FILENAME"
 >.  
        See <A
 HREF="userguide-consumer.html#FILE-DESC"
->Section 6.5</A
+>Section 6.6</A
 > for more
        details.  Depending on database size and the number of series
        included, summary reports may benefit from being pre-generated.
@@ -1099,8 +1099,81 @@ CLASS="SECTION"
 ><H2
 CLASS="SECTION"
 ><A
+NAME="REPORT-PAGES"
+>6.3. Report Pages</A
+></H2
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORT-SUMMARY"
+>6.3.1. Summary Status Report</A
+></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summaryJsp.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORT-SUMMARY-DETAILS"
+>6.3.2. Summary Status Report Details</A
+></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summaryDetailsJsp.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORT-ERROR-SUMMARY"
+>6.3.3. Summary of Errors Report</A
+></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/error-summary.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REPORT-SUMMARY-HISTORY"
+>6.3.4. Summary Status Report History</A
+></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summaryHistoryJsp.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
 NAME="QUERY-PAGES"
->6.3. Query Pages</A
+>6.4. Query Pages</A
 ></H2
 ><DIV
 CLASS="SECTION"
@@ -1108,8 +1181,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CREATE-QUERY"
->6.3.1. Create Stored Query</A
+>6.4.1. Create Stored Query</A
 ></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/create-query.gif"
+ALIGN="CENTER"></P
+>
+       </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1117,8 +1197,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="VIEW-QUERY"
->6.3.2. View Query Cache</A
+>6.4.2. View Query Cache</A
 ></H3
+><P
+>        <P
+><IMG
+SRC="figures/consumer/query.gif"
+ALIGN="CENTER"></P
+>
+       </P
 ></DIV
 ></DIV
 ><DIV
@@ -1127,7 +1214,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INFO"
->6.4. Info Pages</A
+>6.5. Info Pages</A
 ></H2
 ><P
 >Currently the only informational page is a list of
@@ -1139,7 +1226,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
->Section 6.6.3</A
+>Section 6.7.3</A
 >.</P
 ><P
 ><IMG
@@ -1152,7 +1239,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="FILE-DESC"
->6.5. Description of Data Consumer Files</A
+>6.6. Description of Data Consumer Files</A
 ></H2
 ><P
 >      The following table describes the main JSP contained in the
@@ -1168,7 +1255,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN667"
+NAME="AEN689"
 ></A
 ><P
 ><B
@@ -1190,72 +1277,13 @@ VALIGN="TOP"
 ></TH
 ><TH
 ><P
->Server Functions Called</P
-></TH
-><TH
-><P
 >Parameters</P
 ></TH
+><TD
+>&nbsp;</TD
 ></TR
 ></THEAD
 ><TBODY
-><TR
-VALIGN="TOP"
-><TD
-><P
-><TT
-CLASS="FILENAME"
->index.jsp</TT
->
-                <P
-><IMG
-SRC="figures/consumer/index_sm.jpg"
-ALIGN="CENTER"></P
->
-              </P
-></TD
-><TD
-><P
->                Lists an installation's configured suites and resource
-                names in an HTML form whose action is to display results
-                for the selected suite and resource.  The consumer
-                initially redirects to this page.
-              </P
-></TD
-><TD
-><P
->Depot's
-                <A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/DepotClient.html#queryGuids()"
-TARGET="_top"
->queryGuids()</A
->
-                function for current suite configuration
-                and agent's <A
-HREF="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()"
-TARGET="_top"
->getConfig()</A
->
-                function for cached resource configuration information.
-              </P
-></TD
-><TD
-><P
-></P
-><UL
-><LI
-><P
->xsl *: stylesheet to format returned XML [default: index.xsl]</P
-></LI
-></UL
-><P
->e.g. <A
-HREF="http://localhost:8080/inca/jsp/index.jsp"
-TARGET="_top"
->http://localhost:8080/inca/jsp/index.jsp</A
-></P
-></TD
-></TR
 ><TR
 VALIGN="TOP"
 ><TD
@@ -1282,22 +1310,6 @@ CLASS="FILENAME"
 ></TD
 ><TD
 ><P
->Agent's <A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()"
-TARGET="_top"
->getCatalogAsXml()</A
->
-                function for current catalog configuration and
-                <A
-HREF="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()"
-TARGET="_top"
->getConfig()</A
->
-                function for cached suite configuration infomation.
-              </P
-></TD
-><TD
-><P
 ></P
 ><UL
 ><LI
@@ -1312,6 +1324,8 @@ TARGET="_top"
 >http://localhost:8080/inca/jsp/config.jsp</A
 ></P
 ></TD
+><TD
+>&nbsp;</TD
 ></TR
 ><TR
 VALIGN="TOP"
@@ -1319,38 +1333,18 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->status.jsp</TT
+>error.jsp</TT
 >
                 <P
 ><IMG
-SRC="figures/consumer/sum_page2_sm.jpg"
+SRC="figures/consumer/errorJsp_sm.gif"
 ALIGN="CENTER"></P
 >
               </P
 ></TD
 ><TD
 ><P
->                Displays current results for a set of suites or cached queries.
-                This page is the action of the <TT
-CLASS="FILENAME"
->index.jsp</TT
-> form to display suite results.
-              </P
-></TD
-><TD
-><P
->Agent's <A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/AgentClient.html#getCatalogAsXml()"
-TARGET="_top"
->getCatalogAsXml()</A
->
-                function for current catalog configuration and
-                <A
-HREF="http://inca.sdsc.edu/releases/2.1/javawsdocs/edu/sdsc/inca/AgentClient.html#getConfig()"
-TARGET="_top"
->getConfig()</A
->
-                function for cached suite configuration infomation.
+>                Prints Inca error message page.
               </P
 ></TD
 ><TD
@@ -1359,94 +1353,16 @@ TARGET="_top"
 ><UL
 ><LI
 ><P
->suiteNames: a comma separated list of suite names.  At least one suite name
-    is required if queryNames is empty and the number of suite names
-    should match the number of resourceIds.  A suite name is optional if 
-    queryNames is provided.</P
+>msg: error message from another JSP</P
 ></LI
 ><LI
 ><P
->queryNames: a comma separated list of cached query names.  At least one name
-    is required if suiteNames is empty.</P
-></LI
-><LI
-><P
->resourceIds: a comma separated list of resource group ids.  At least one
-    resource id is required if suiteNames is not empty and the number of
-    resourceIds should match the number of suiteNames.  A resource id is 
-    optional if queryNames is provided.  </P
-></LI
-><LI
-><P
->xml *: a comma separated list of xml files to include.  Can be empty, contain
-    one xml file or must match number of suiteNames and resourceIds if
-    queryNames is empty. </P
-></LI
-><LI
-><P
->xsl *: name of stylesheet to format returned XML [default: default.xsl]</P
+>usage: correct usage of the JSP</P
 ></LI
 ></UL
-><P
->e.g. <A
-HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
-TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
-></P
-></TD
-></TR
-><TR
-VALIGN="TOP"
-><TD
-><P
-><TT
-CLASS="FILENAME"
->instance.jsp</TT
->
-                <P
-><IMG
-SRC="figures/consumer/inst_sm.jpg"
-ALIGN="CENTER"></P
->
-              </P
 ></TD
 ><TD
-><P
->                Queries depot for report instance and invokes the specified xsl stylesheet on it.
-              </P
-></TD
-><TD
-><P
-> </P
-></TD
-><TD
-><P
-></P
-><UL
-><LI
-><P
->instanceId: the id of the particular report instance</P
-></LI
-><LI
-><P
->configId: the id of the series config the instance belongs to</P
-></LI
-><LI
-><P
->resourceId: the resource id for series config (for history link)</P
-></LI
-><LI
-><P
->xsl *: name of stylesheet to format returned XML [default: instance.xsl]</P
-></LI
-></UL
-><P
->e.g. <A
-HREF="http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource"
-TARGET="_top"
->http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource</A
-></P
-></TD
+>&nbsp;</TD
 ></TR
 ><TR
 VALIGN="TOP"
@@ -1466,16 +1382,6 @@ ALIGN="CENTER"></P
 ><TD
 ><P
 >                Historical graphs of pass/fail status and error frequency.
-              </P
-></TD
-><TD
-><P
->Depot's <A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)"
-TARGET="_top"
->queryHql()</A
->
-                function to query for historical infomation.
               </P
 ></TD
 ><TD
@@ -1526,6 +1432,147 @@ TARGET="_top"
 >http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource</A
 ></P
 ></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>index.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/index_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Lists an installation's configured suites and resource
+                names in an HTML form whose action is to display results
+                for the selected suite and resource.  The consumer
+                initially redirects to this page.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>xsl *: stylesheet to format returned XML [default: index.xsl]</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/index.jsp"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/index.jsp</A
+></P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>instance.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/inst_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Queries depot for report instance and invokes the specified xsl stylesheet on it.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>instanceId: the id of the particular report instance</P
+></LI
+><LI
+><P
+>configId: the id of the series config the instance belongs to</P
+></LI
+><LI
+><P
+>resourceId: the resource id for series config (for history link)</P
+></LI
+><LI
+><P
+>xsl *: name of stylesheet to format returned XML [default: instance.xsl]</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/instance.jsp?instanceId=1&#38;configId=1&#38;resourceId=localResource</A
+></P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>query.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/query_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Page for managing stored queries in the Consumer.  Queries
+  can be added, deleted, changed, viewed or executed (and return XML).
+  This jsp page manages the query manipulation via jsp tags and leaves the
+  display of the current queries to a stylesheet.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>action: an action to take on the query (see JSP usage for more information)</P
+></LI
+><LI
+><P
+>xsl *: name of stylesheet to format returned XML [default: query.xsl]</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/query.jsp"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/query.jsp</A
+></P
+></TD
+><TD
+>&nbsp;</TD
 ></TR
 ><TR
 VALIGN="TOP"
@@ -1545,16 +1592,6 @@ ALIGN="CENTER"></P
 ><TD
 ><P
 >                Summary report with graphs of pass/fail status and error frequency.
-              </P
-></TD
-><TD
-><P
->Depot's <A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/DepotClient.html#queryHql(java.lang.String)"
-TARGET="_top"
->queryHql()</A
->
-                function to query for historical infomation.
               </P
 ></TD
 ><TD
@@ -1584,6 +1621,222 @@ TARGET="_top"
 >http://localhost:8080/inca/jsp/report.jsp</A
 ></P
 ></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>status.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/sum_page2_sm.jpg"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Displays current results for a set of suites or cached queries.
+                This page is the action of the <TT
+CLASS="FILENAME"
+>index.jsp</TT
+> form to display suite results.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>suiteNames *: a comma separated list of suite names.  At least one suite name
+    is required if queryNames is empty and the number of suite names
+    should match the number of resourceIds.  A suite name is optional if 
+    queryNames is provided.</P
+></LI
+><LI
+><P
+>queryNames *: a comma separated list of cached query names.  At least one name
+    is required if suiteNames is empty.</P
+></LI
+><LI
+><P
+>resourceIds *: a comma separated list of resource group ids.  At least one
+    resource id is required if suiteNames is not empty and the number of
+    resourceIds should match the number of suiteNames.  A resource id is 
+    optional if queryNames is provided.  </P
+></LI
+><LI
+><P
+>xml *: a comma separated list of xml files to include.  Can be empty, contain
+    one xml file or must match number of suiteNames and resourceIds if
+    queryNames is empty. </P
+></LI
+><LI
+><P
+>xsl *: name of stylesheet to format returned XML [default: default.xsl]</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
+></P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>summary.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/summaryJsp_sm.gif"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Shows the average series pass rate by resource and by suite for a given time period.  Uses 
+		<TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+> 
+		to calculate statistics.
+              </P
+></TD
+><TD
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/summary.jsp"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/summary.jsp</A
+></P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>summaryDetails.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/summaryDetailsJsp_sm.gif"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Displays summary statistic details for resource or suite.  Linked from <TT
+CLASS="FILENAME"
+>summary.jsp</TT
+>.
+		Uses <TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+>
+                to calculate statistics.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>resource *: resource to get summary stats for (e.g. localResource)</P
+></LI
+><LI
+><P
+>guid *: suite guid to get summary stats for (e.g. incas://localhost:6323/sampleSuite)</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource</A
+></P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>summaryHistory.jsp</TT
+>
+                <P
+><IMG
+SRC="figures/consumer/summaryHistoryJsp_sm.gif"
+ALIGN="CENTER"></P
+>
+              </P
+></TD
+><TD
+><P
+>                Displays average series pass rate by filter. Uses
+                <TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+>
+                to calculate statistics.
+              </P
+></TD
+><TD
+><P
+></P
+><UL
+><LI
+><P
+>filterResource *: if true displays history grouped by resource or if a resource
+                id is specified, displays history grouped by suite for that resource</P
+></LI
+><LI
+><P
+>filterSuite *: if true displays history grouped by suite or if a suite guid
+             is specified, displays history grouped by resource for that suite</P
+></LI
+></UL
+><P
+>e.g. <A
+HREF="http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true</A
+></P
+></TD
+><TD
+>&nbsp;</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -1601,7 +1854,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN818"
+NAME="AEN893"
 ></A
 ><P
 ><B
@@ -1634,36 +1887,6 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->index.xsl</TT
->
-                  <P
-><IMG
-SRC="figures/consumer/index_sm.jpg"
-ALIGN="CENTER"></P
->
-                </P
-></TD
-><TD
-><P
-><TT
-CLASS="FILENAME"
->index.jsp</TT
-></P
-></TD
-><TD
-><P
->                  Lists all configured suite and resource names in an
-                  HTML form whose action is to display results for the
-                  selected suite and resource.
-                </P
-></TD
-></TR
-><TR
-VALIGN="TOP"
-><TD
-><P
-><TT
-CLASS="FILENAME"
 >config.xsl</TT
 >
                   <P
@@ -1683,6 +1906,33 @@ CLASS="FILENAME"
 ><TD
 ><P
 >Prints description of deployed suites and series.</P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>create-query.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/create-query_sm.jpg"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>status.jsp</TT
+></P
+></TD
+><TD
+><P
+>Prints form to select series and resources to query.</P
 ></TD
 ></TR
 ><TR
@@ -1718,11 +1968,11 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->swStack.xsl</TT
+>error.xsl</TT
 >
                   <P
 ><IMG
-SRC="figures/consumer/swstack_sm.jpg"
+SRC="figures/consumer/errorJsp_sm.gif"
 ALIGN="CENTER"></P
 >
                 </P
@@ -1731,13 +1981,12 @@ ALIGN="CENTER"></P
 ><P
 ><TT
 CLASS="FILENAME"
->status.jsp</TT
+>error.jsp</TT
 ></P
 ></TD
 ><TD
 ><P
->Prints table of suite(s) results.  Uses XML file
-                  to format table rows by software categories and packages.</P
+>Displays JSP error message and usage information.</P
 ></TD
 ></TR
 ><TR
@@ -1746,34 +1995,22 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->summary.xsl</TT
+>footer.xsl</TT
 >
                   <P
 ><IMG
-SRC="figures/consumer/summary_sm.jpg"
+SRC="figures/consumer/footer_sm.jpg"
 ALIGN="CENTER"></P
 >
                 </P
 ></TD
 ><TD
 ><P
-><TT
-CLASS="FILENAME"
->status.jsp</TT
-></P
+>(included in most other xsl files)</P
 ></TD
 ><TD
 ><P
->Prints summary results table with a list of
-                  resources in the left column and
-                  a list of the suite tests each resource is failing
-                  in the right column.  Failing tests are listed by name
-                  and by overall percentage passing in suite.
-                  Uses XML file (<TT
-CLASS="FILENAME"
->swStack.xml</TT
-> by default) to get test groups.
-                </P
+>Prints HTML page footer with the Inca logo.</P
 ></TD
 ></TR
 ><TR
@@ -1836,33 +2073,6 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->instance.xsl</TT
->
-                  <P
-><IMG
-SRC="figures/consumer/inst_sm.jpg"
-ALIGN="CENTER"></P
->
-                </P
-></TD
-><TD
-><P
-><TT
-CLASS="FILENAME"
->status.jsp</TT
-></P
-></TD
-><TD
-><P
->Prints HTML table with report details.</P
-></TD
-></TR
-><TR
-VALIGN="TOP"
-><TD
-><P
-><TT
-CLASS="FILENAME"
 >header.xsl</TT
 >
                   <P
@@ -1890,22 +2100,73 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->footer.xsl</TT
+>inca-common.xsl</TT
+></P
+></TD
+><TD
+><P
+>(included in most other stylesheets)</P
+></TD
+><TD
+><P
+>Common templates for use in Inca stylesheets.</P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>index.xsl</TT
 >
                   <P
 ><IMG
-SRC="figures/consumer/footer_sm.jpg"
+SRC="figures/consumer/index_sm.jpg"
 ALIGN="CENTER"></P
 >
                 </P
 ></TD
 ><TD
 ><P
->(included in most other xsl files)</P
+><TT
+CLASS="FILENAME"
+>index.jsp</TT
+></P
 ></TD
 ><TD
 ><P
->Prints HTML page footer with the Inca logo.</P
+>                  Lists all configured suite and resource names in an
+                  HTML form whose action is to display results for the
+                  selected suite and resource.
+                </P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>instance.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/inst_sm.jpg"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>instance.jsp</TT
+></P
+></TD
+><TD
+><P
+>Prints HTML table with report details.</P
 ></TD
 ></TR
 ><TR
@@ -1945,16 +2206,149 @@ VALIGN="TOP"
 ><P
 ><TT
 CLASS="FILENAME"
->inca-common.xsl</TT
+>periodAverages.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/summaryJsp_sm.gif"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>summary.jsp</TT
+>, <TT
+CLASS="FILENAME"
+>summaryDetails.jsp</TT
+>, 
+		<TT
+CLASS="FILENAME"
+>summaryHistory.jsp</TT
 ></P
 ></TD
 ><TD
 ><P
->(included in most other stylesheets)</P
+>Computes pass percentage for suites and resources for a given period.</P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>query.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/query_sm.jpg"
+ALIGN="CENTER"></P
+>
+                </P
 ></TD
 ><TD
 ><P
->Common templates for use in Inca stylesheets.</P
+><TT
+CLASS="FILENAME"
+>query.jsp</TT
+></P
+></TD
+><TD
+><P
+>Creates form to manipulate hql queries.</P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/summaryJsp_sm.gif"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>summary.jsp</TT
+>, <TT
+CLASS="FILENAME"
+>summaryDetails.jsp</TT
+>, 
+		<TT
+CLASS="FILENAME"
+>summaryHistory.jsp</TT
+></P
+></TD
+><TD
+><P
+>Computes series pass percentages.</P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>seriesSummary.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/error-summary_sm.gif"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>status.jsp</TT
+></P
+></TD
+><TD
+><P
+>Print out a table of stats for individual series.
+                </P
+></TD
+></TR
+><TR
+VALIGN="TOP"
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>swStack.xsl</TT
+>
+                  <P
+><IMG
+SRC="figures/consumer/swstack_sm.jpg"
+ALIGN="CENTER"></P
+>
+                </P
+></TD
+><TD
+><P
+><TT
+CLASS="FILENAME"
+>status.jsp</TT
+></P
+></TD
+><TD
+><P
+>Prints table of suite(s) results.  Uses XML file
+                  to format table rows by software categories and packages.</P
 ></TD
 ></TR
 ></TBODY
@@ -1967,7 +2361,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-DISPLAY"
->6.6. Changing the Look</A
+>6.7. Changing the Look</A
 ></H2
 ><DIV
 CLASS="SECTION"
@@ -1975,7 +2369,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-COLOR"
->6.6.1. Colors and Fonts</A
+>6.7.1. Colors and Fonts</A
 ></H3
 ><P
 >        Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) located in
@@ -2029,7 +2423,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML"
->6.6.2. HTML Layout</A
+>6.7.2. HTML Layout</A
 ></H3
 ><P
 >        To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
@@ -2040,7 +2434,7 @@ CLASS="FILENAME"
       The default JSP and XSL files are described in
       <A
 HREF="userguide-consumer.html#FILE-DESC"
->Section 6.5</A
+>Section 6.6</A
 >.</P
 ><P
 >For general information about editing stylesheets,
@@ -2055,7 +2449,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-VALUES"
->6.6.2.1. Custom Values in HTML Table Cells</A
+>6.7.2.1. Custom Values in HTML Table Cells</A
 ></H4
 ><P
 >To display report values other
@@ -2131,7 +2525,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-HEADER"
->6.6.3. Custom Page Header</A
+>6.7.3. Custom Page Header</A
 ></H3
 ><P
 >The default page header is generated by the inclusion of the
@@ -2292,7 +2686,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-ALT-LOCATION"
->6.7. Changing the Installation Location</A
+>6.8. Changing the Installation Location</A
 ></H2
 ><P
 >You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
@@ -2444,7 +2838,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-PORT"
->6.8. Changing the Port</A
+>6.9. Changing the Port</A
 ></H2
 ><P
 >      By default, the consumer is started on port 8080.  To change this, edit
@@ -2492,7 +2886,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="HTTPS-CONSUMER"
->6.9. Enabling https</A
+>6.10. Enabling https</A
 ></H2
 ><P
 >      By default, the consumer is configured as an http server.  To
@@ -2771,7 +3165,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PASSWORD-CONSUMER"
->6.10. Adding Password Protection</A
+>6.11. Adding Password Protection</A
 ></H2
 ><P
 >      By default, a password is not required for a user to access the status pages
@@ -2826,7 +3220,7 @@ CLASS="FILENAME"
       username and password for your installation.  If you do not want to store the
       password in plain text, use Jetty's password utility described in <A
 HREF="userguide-consumer.html#HTTPS-CONSUMER"
->Section 6.9</A
+>Section 6.10</A
 >.</P
 ><P
 >Then restart the consumer. </P
