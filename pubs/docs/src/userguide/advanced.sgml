@@ -732,6 +732,119 @@ restart the reporter manager.</para>
 
 </section>
 
+<section id="userguide-advanced-batch">
+<title>Inca on Batch Systems</title>
+
+  <para>
+  The cluster.batch.wrapper reporter can be useful when running Inca on batch
+  systems.  Without an --exec argument, this reporter submits a trivial program
+  to the batch scheduler and reporters the amount of time it spends in the queue
+  before executing.  If given an --exec argument, cluster.batch.wrapper instead
+  submits the argument value (which should contain a reporter invocation) and
+  collects and reports it output.  This use allows reporters to be executed on
+  batch nodes, rather than on the submission host.  For example, this command
+  will report the version of gcc that is installed on the batch nodes of a PBS
+  cluster.
+  </para>
+  <screen>
+% cluster.batch.wrapper --scheduler=pbs --exec=cluster.compiler.gcc.version
+  </screen>
+  <para>
+  The --scheduler argument is the only one required; valid values are cobalt,
+  dqs, loadleveler, lsf, pbs, and sge.  Additional recognized arguments are as
+  follows.
+  </para>
+
+  <table><title>cluster.batch.wrapper options</title>
+  <tgroup cols="3">
+  <thead>
+    <row>
+      <entry><para>Name</para></entry>
+      <entry><para>Meaning</para></entry>
+      <entry><para>Default value</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para>account</para></entry>
+      <entry><para>User account to charge</para></entry>
+      <entry><para>none</para></entry>
+    </row>
+    <row>
+      <entry><para>nodes</para></entry>
+      <entry><para>Number of batch nodes to request</para></entry>
+      <entry><para>1</para></entry>
+    </row>
+    <row>
+      <entry><para>poll</para></entry>
+      <entry><para>How often (in seconds) to check for job completion</para></entry>
+      <entry><para>10</para></entry>
+    </row>
+    <row>
+      <entry><para>queue</para></entry>
+      <entry><para>The name of the queue to submit to</para></entry>
+      <entry><para>none</para></entry>
+    </row>
+    <row>
+      <entry><para>shell</para></entry>
+      <entry><para>The shell to use to run the batch job</para></entry>
+      <entry><para>/bin/sh</para></entry>
+    </row>
+    <row>
+      <entry><para>submitparam</para></entry>
+      <entry><para>Additional batch-scheduler-specific parameters to use in the submission</para></entry>
+      <entry><para>none</para></entry>
+    </row>
+    <row>
+      <entry><para>timeout</para></entry>
+      <entry><para>The maximum time (in minutes) the job may wait in the batch queue</para></entry>
+      <entry><para>0 (unlimited)</para></entry>
+    </row>
+    <row>
+      <entry><para>type</para></entry>
+      <entry><para>Submission type, used with LoadLeveler (job_type parameter), PBS (-l nodes parameter) and SGE (-pe parameter)</para></entry>
+      <entry><para>none</para></entry>
+    </row>
+    <row>
+      <entry><para>var</para></entry>
+      <entry><para>Path to a temp file directory</para></entry>
+      <entry><para>Current working directory</para></entry>
+    </row>
+    <row>
+      <entry><para>walllimit</para></entry>
+      <entry><para>The amount of time (in minutes) to request for the job </para></entry>
+      <entry><para>10</para></entry>
+    </row>
+  </tbody>
+  </tgroup>
+  </table>
+
+  <para>
+  Here are some additional examples of using cluster.batch.wrapper to submit
+  Inca reporters to a batch queue.
+  </para>
+
+  <screen>
+% cluster.batch.wrapper --scheduler=pbs --account=alf63 \
+  --exec=cluster.compiler.gcc.version
+
+% cluster.batch.wrapper --scheduler=loadleveler --queue=normal --type=parallel \
+  --exec='network.ping.unit --host=ufo.edu'
+
+% cluster.batch.wrapper --scheduler=sge --submitparam='-js 1' \
+  --submitparam='-l h_vmem=600' \
+  --exec='cluster.ps.unit --process=init --psargs=-x'
+  </screen>
+
+  <para>
+  In incat, you can specify that cluster.batch.wrapper should be used to submit
+  a series by including its name and arguments in the series context string.
+  For example, the context string for the network.ping.unit series above would
+  be "cluster.batch.wrapper --scheduler=loadleveler --queue=normal --type=parallel --exec='<emphasis>network.ping.unit -args</emphasis>'"
+  </para>
+
+</section>
+
 <section id="userguide-advanced-runnow">
 <title>Manual Run Now</title>
  
