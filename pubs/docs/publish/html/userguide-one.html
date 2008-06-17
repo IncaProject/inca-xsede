@@ -133,7 +133,7 @@ HREF="#USERGUIDE-CONSUMER"
 ><DT
 >6.1. <A
 HREF="#CURRENT-DATA"
->Current Data Pages</A
+>Current Data</A
 ></DT
 ><DD
 ><DL
@@ -151,122 +151,108 @@ HREF="#GOOGLE"
 ></DD
 ><DT
 >6.2. <A
-HREF="#HISTORICAL-DATA"
->Historical Data Pages</A
+HREF="#REPORTS"
+>Reports</A
 ></DT
 ><DD
 ><DL
 ><DT
 >6.2.1. <A
-HREF="#GRAPH-SERIES"
->Graph Series Result History</A
+HREF="#PASS-FAIL-REPORT"
+>Pass/Fail Graphs and Error Messages</A
 ></DT
 ><DT
 >6.2.2. <A
-HREF="#SUMMARY-REPORT"
->Summary Reports</A
+HREF="#AVE-PASS-REPORT"
+>Average Pass Rate by Resource/Suite</A
+></DT
+><DT
+>6.2.3. <A
+HREF="#SERIES-REPORT"
+>Series Error Summary</A
+></DT
+><DT
+>6.2.4. <A
+HREF="#AVE-PASS-HISTORY-REPORT"
+>Average Pass History</A
 ></DT
 ></DL
 ></DD
 ><DT
 >6.3. <A
-HREF="#REPORT-PAGES"
->Report Pages</A
+HREF="#QUERY-PAGES"
+>Query</A
 ></DT
 ><DD
 ><DL
 ><DT
 >6.3.1. <A
-HREF="#REPORT-SUMMARY"
->Summary Status Report</A
+HREF="#GRAPH-SERIES"
+>Create Graph</A
 ></DT
 ><DT
 >6.3.2. <A
-HREF="#REPORT-SUMMARY-DETAILS"
->Summary Status Report Details</A
+HREF="#CREATE-QUERY"
+>Create Stored Query</A
 ></DT
 ><DT
 >6.3.3. <A
-HREF="#REPORT-ERROR-SUMMARY"
->Summary of Errors Report</A
-></DT
-><DT
->6.3.4. <A
-HREF="#REPORT-SUMMARY-HISTORY"
->Average Series Pass Rate History</A
+HREF="#VIEW-QUERY"
+>Manage Stored Queries</A
 ></DT
 ></DL
 ></DD
 ><DT
 >6.4. <A
-HREF="#QUERY-PAGES"
->Query Pages</A
+HREF="#INFO"
+>Info</A
 ></DT
-><DD
-><DL
-><DT
->6.4.1. <A
-HREF="#VIEW-QUERY"
->Query Cache</A
-></DT
-><DT
->6.4.2. <A
-HREF="#CREATE-QUERY"
->Create Cached Query</A
-></DT
-></DL
-></DD
 ><DT
 >6.5. <A
-HREF="#INFO"
->Info Pages</A
-></DT
-><DT
->6.6. <A
 HREF="#FILE-DESC"
 >Description of Data Consumer Files</A
 ></DT
 ><DT
->6.7. <A
+>6.6. <A
 HREF="#CUSTOM-DISPLAY"
 >Changing the Look</A
 ></DT
 ><DD
 ><DL
 ><DT
->6.7.1. <A
+>6.6.1. <A
 HREF="#CUSTOM-COLOR"
 >Colors and Fonts</A
 ></DT
 ><DT
->6.7.2. <A
+>6.6.2. <A
 HREF="#CUSTOM-HTML"
 >HTML Layout</A
 ></DT
 ><DT
->6.7.3. <A
+>6.6.3. <A
 HREF="#CUSTOM-HTML-HEADER"
 >Custom Page Header</A
 ></DT
 ></DL
 ></DD
 ><DT
->6.8. <A
+>6.7. <A
 HREF="#CONSUMER-ALT-LOCATION"
 >Changing the Installation Location</A
 ></DT
 ><DT
->6.9. <A
+>6.8. <A
 HREF="#CONSUMER-PORT"
 >Changing the Port</A
 ></DT
 ><DT
->6.10. <A
+>6.9. <A
 HREF="#HTTPS-CONSUMER"
 >Enabling https</A
 ></DT
 ><DT
->6.11. <A
+>6.10. <A
 HREF="#PASSWORD-CONSUMER"
 >Adding Password Protection</A
 ></DT
@@ -2539,7 +2525,7 @@ HREF="#USERGUIDE-APIS"
 >). 
    Depot queries can also be cached to improve speed of data display (see <A
 HREF="#VIEW-QUERY"
->Section 6.4.1</A
+>Section 6.3.3</A
 >).</P
 ><P
 >The default data consumer is a <A
@@ -2567,7 +2553,7 @@ CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
 > is edited as described in <A
 HREF="#CONSUMER-PORT"
->Section 6.9</A
+>Section 6.8</A
 >.</P
 ><P
 > The default consumer <TT
@@ -2619,7 +2605,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CURRENT-DATA"
->6.1. Current Data Pages</A
+>6.1. Current Data</A
 ></H3
 ><P
 >The default page header navigation contains
@@ -2633,7 +2619,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.7.3</A
+>Section 6.6.3</A
 >.</P
 ><DIV
 CLASS="SECTION"
@@ -2659,7 +2645,7 @@ CLASS="FILENAME"
       URL.  More information about the consumer's JSP and XSL files is
       provided in <A
 HREF="#FILE-DESC"
->Section 6.6</A
+>Section 6.5</A
 >.  For example,
       <A
 HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
@@ -3335,12 +3321,12 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="HISTORICAL-DATA"
->6.2. Historical Data Pages</A
+NAME="REPORTS"
+>6.2. Reports</A
 ></H3
 ><P
 >All reporter data collected by Inca is stored in the depot.
-        The depot can then be queried to produce graphs of historical information.
+        The depot can then be queried to produce graphs and reports.
         Inca's default data consumer uses
         <A
 HREF="http://cewolf.sourceforge.net/"
@@ -3353,39 +3339,216 @@ HREF="http://www.object-refinery.com/jfreechart/"
 TARGET="_top"
 >JFreeChart</A
 >.
-        The default consumer includes a basic graph of the historical pass/fail status of
-        reporter series and a graph of error message counts if there are
-        any reporter errors.  The pass/fail status is either the
-        comparitor status (if the series
-        has a comparitor) or the reporter's exit status.
-      </P
+        </P
 ><P
->The section for historical data in the
-        default page header has links to a series graphing form
-         and a sample summary report for sampleSuite series.  
-       To link other historical
-      pages under this heading (e.g. forms to select series from
-        other suites, customize the
-      <TT
+>The section for reports in the default page header links to a
+set of default reports.  To link other reports in the page header, customize
+the <TT
 CLASS="FILENAME"
 >header.xsl</TT
-> file as described in
-      <A
+> file as described in <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.7.3</A
->.</P
+>Section 6.6.3</A
+>.  Some of the default reports require the
+"incaQueryStatus" query to have executed, which is scheduled to run once a day
+by default.  More information about queries can be found in <A
+HREF="#QUERY-PAGES"
+>Section 6.3</A
+>.  </P
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="PASS-FAIL-REPORT"
+>6.2.1. Pass/Fail Graphs and Error Messages</A
+></H4
+><P
+>Historical summary reports with pass/fail status and error information 
+          can also be created for sets of series.  Summary reports are generated 
+        with <TT
+CLASS="FILENAME"
+>report.jsp</TT
+> and configured by default with the
+       <TT
+CLASS="FILENAME"
+>statusReport.xml</TT
+> file.  To customize the XML file you can either 
+          unwar <TT
+CLASS="FILENAME"
+>inca.war</TT
+> and edit the <TT
+CLASS="FILENAME"
+>xml/statusReport.xml</TT
+>
+          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
+          described in <A
+HREF="#USERGUIDE-CONSUMER"
+>Section 6</A
+> and edit the file in 
+          <TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps/inca/xml/google.xml</TT
+>.
+       </P
+><P
+>As a summary report example, the default consumer groups
+        different combinations of sampleSuite series in
+        <TT
+CLASS="FILENAME"
+>statusReport.xml</TT
+> and displays the past two weeks 
+       of results using <TT
+CLASS="FILENAME"
+>report.jsp</TT
+>'s startDate param.
+       Each set of series has a title (e.g. Software Deployment Tests) for its
+       grouping and the series nickname, resource name, and report label for
+       each series in the group.  Create one or more custom reports by editing
+       the groupings and titles.  The width and height of the graphs can also
+       be adjusted in <TT
+CLASS="FILENAME"
+>statusReport.xml</TT
+>.  
+       See <A
+HREF="#FILE-DESC"
+>Section 6.5</A
+> for more
+       details.  Depending on database size and the number of series
+       included, summary reports may benefit from being pre-generated.
+       </P
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summary_report.jpg"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AVE-PASS-REPORT"
+>6.2.2. Average Pass Rate by Resource/Suite</A
+></H4
+><P
+>A summary status report shows the average series pass rate by resource and suite for the 
+	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</P
+><P
+>The statistics for this report are calculated by <TT
+CLASS="FILENAME"
+>summary.jsp</TT
+> using the 
+		<TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+> stylesheets.</P
+><P
+> <P
+><IMG
+SRC="figures/consumer/summaryJsp.gif"
+ALIGN="CENTER"></P
+> </P
+><P
+>The summary report described above links to more detailed reports like the image below which
+		summarize the average pass rates for a suite or resource.</P
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summaryDetailsJsp.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="SERIES-REPORT"
+>6.2.3. Series Error Summary</A
+></H4
+><P
+>The summary details reports described in <A
+HREF="#AVE-PASS-REPORT"
+>Section 6.2.2</A
+> link to these more detailed reports which
+		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</P
+><P
+>The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</P
+><P
+>The statistics for these reports are generated by <TT
+CLASS="FILENAME"
+>status.jsp</TT
+> using the 
+		<TT
+CLASS="FILENAME"
+>seriesSummary.xsl</TT
+> stylesheet.</P
+><P
+>        <P
+><IMG
+SRC="figures/consumer/error-summary.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AVE-PASS-HISTORY-REPORT"
+>6.2.4. Average Pass History</A
+></H4
+><P
+>The average series pass rate reports show the average series pass rate over time grouped by resource or suite.</P
+><P
+>The statistics for these reports are generated by <TT
+CLASS="FILENAME"
+>summaryHistory.jsp</TT
+> using the 
+		<TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+> stylesheets.</P
+><P
+>        <P
+><IMG
+SRC="figures/consumer/summaryHistoryJsp.gif"
+ALIGN="CENTER"></P
+>
+       </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="QUERY-PAGES"
+>6.3. Query</A
+></H3
+><P
+>The query pages allow users to generate graphs and cache queries to improve data display.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
 NAME="GRAPH-SERIES"
->6.2.1. Graph Series Result History</A
+>6.3.1. Create Graph</A
 ></H4
 ><P
->Historical pass/fail status graphs and error frequency information can be 
-       displayed by the default consumer.
-       If <TT
+>       If <TT
 CLASS="FILENAME"
 >graph.xsl</TT
 > is used as the xsl parameter for the
@@ -3466,180 +3629,26 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="SUMMARY-REPORT"
->6.2.2. Summary Reports</A
+NAME="CREATE-QUERY"
+>6.3.2. Create Stored Query</A
 ></H4
 ><P
->Historical summary reports with pass/fail status and error information 
-          can also be created for sets of series.  Summary reports are generated 
-        with <TT
-CLASS="FILENAME"
->report.jsp</TT
-> and configured by default with the
-       <TT
-CLASS="FILENAME"
->statusReport.xml</TT
-> file.  To customize the XML file you can either 
-          unwar <TT
-CLASS="FILENAME"
->inca.war</TT
-> and edit the <TT
-CLASS="FILENAME"
->xml/statusReport.xml</TT
+>Cached queries can be created using the query management page described in <A
+HREF="#VIEW-QUERY"
+>Section 6.3.3</A
 >
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
-          described in <A
-HREF="#USERGUIDE-CONSUMER"
->Section 6</A
-> and edit the file in 
-          <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca/xml/google.xml</TT
->.
-       </P
-><P
-><IMG
-SRC="figures/consumer/menu_summaryreport.png"
-ALIGN="CENTER"></P
-><P
->As a summary report example, the default consumer groups
-        different combinations of sampleSuite series in
-        <TT
-CLASS="FILENAME"
->statusReport.xml</TT
-> and displays the past two weeks 
-       of results using <TT
-CLASS="FILENAME"
->report.jsp</TT
->'s startDate param.
-       Each set of series has a title (e.g. Software Deployment Tests) for its
-       grouping and the series nickname, resource name, and report label for
-       each series in the group.  Create one or more custom reports by editing
-       the groupings and titles.  The width and height of the graphs can also
-       be adjusted in <TT
-CLASS="FILENAME"
->statusReport.xml</TT
->.  
-       See <A
-HREF="#FILE-DESC"
->Section 6.6</A
-> for more
-       details.  Depending on database size and the number of series
-       included, summary reports may benefit from being pre-generated.
-       </P
-><P
->        <P
-><IMG
-SRC="figures/consumer/summary_report.jpg"
-ALIGN="CENTER"></P
->
-       </P
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="REPORT-PAGES"
->6.3. Report Pages</A
-></H3
-><P
->A set of historical reports are available for summarizing status information 
-	by resource and suite.  The next sections describe the default reports.</P
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="REPORT-SUMMARY"
->6.3.1. Summary Status Report</A
-></H4
-><P
->A summary status report shows the average series pass rate by resource and suite for the 
-	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</P
-><P
->The statistics for this report are calculated by <TT
-CLASS="FILENAME"
->summary.jsp</TT
-> using the 
-		<TT
-CLASS="FILENAME"
->seriesAverages.xsl</TT
-> and <TT
-CLASS="FILENAME"
->periodAverages.xsl</TT
-> stylesheets.</P
-><P
-> <P
-><IMG
-SRC="figures/consumer/summaryJsp.gif"
-ALIGN="CENTER"></P
-> </P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="REPORT-SUMMARY-DETAILS"
->6.3.2. Summary Status Report Details</A
-></H4
-><P
->The summary report described in <A
-HREF="#REPORT-SUMMARY"
->Section 6.3.1</A
-> links to these more detailed reports which
-		summarize the average pass rates for a suite or resource.</P
-><P
->The statistics for this report are calculated by <TT
-CLASS="FILENAME"
->summaryDetails.jsp</TT
-> using the 
-		<TT
-CLASS="FILENAME"
->seriesAverages.xsl</TT
-> and <TT
-CLASS="FILENAME"
->periodAverages.xsl</TT
-> stylesheets.</P
-><P
->        <P
-><IMG
-SRC="figures/consumer/summaryDetailsJsp.gif"
-ALIGN="CENTER"></P
->
-       </P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="REPORT-ERROR-SUMMARY"
->6.3.3. Summary of Errors Report</A
-></H4
-><P
->The summary details reports described in <A
-HREF="#REPORT-SUMMARY-DETAILS"
->Section 6.3.2</A
-> link to these more detailed reports which
-		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</P
-><P
->The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</P
-><P
->The statistics for these reports are generated by <TT
+	or by checking boxes in the form generated by <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> using the 
-		<TT
+> and <TT
 CLASS="FILENAME"
->seriesSummary.xsl</TT
-> stylesheet.</P
+>create-query.xsl</TT
+>.
+	The checkbox form builds a query from selected series.</P
 ><P
 >        <P
 ><IMG
-SRC="figures/consumer/error-summary.gif"
+SRC="figures/consumer/create-query.gif"
 ALIGN="CENTER"></P
 >
        </P
@@ -3647,49 +3656,10 @@ ALIGN="CENTER"></P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
-CLASS="SECTION"
-><A
-NAME="REPORT-SUMMARY-HISTORY"
->6.3.4. Average Series Pass Rate History</A
-></H4
-><P
->The average series pass rate reports show the average series pass rate over time grouped by resource or suite.</P
-><P
->The statistics for these reports are generated by <TT
-CLASS="FILENAME"
->summaryHistory.jsp</TT
-> using the 
-		<TT
-CLASS="FILENAME"
->seriesAverages.xsl</TT
-> and <TT
-CLASS="FILENAME"
->periodAverages.xsl</TT
-> stylesheets.</P
-><P
->        <P
-><IMG
-SRC="figures/consumer/summaryHistoryJsp.gif"
-ALIGN="CENTER"></P
->
-       </P
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="QUERY-PAGES"
->6.4. Query Pages</A
-></H3
-><DIV
-CLASS="SECTION"
-><H4
 CLASS="SECTION"
 ><A
 NAME="VIEW-QUERY"
->6.4.1. Query Cache</A
+>6.3.3. Manage Stored Queries</A
 ></H4
 ><P
 >The consumer can cache frequently executed depot queries in order to improve 
@@ -3713,35 +3683,6 @@ ALIGN="CENTER"></P
 >
        </P
 ></DIV
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="CREATE-QUERY"
->6.4.2. Create Cached Query</A
-></H4
-><P
->Cached queries can be created using the query management page described in <A
-HREF="#VIEW-QUERY"
->Section 6.4.1</A
->
-	or by checking boxes in the form generated by <TT
-CLASS="FILENAME"
->status.jsp</TT
-> and <TT
-CLASS="FILENAME"
->create-query.xsl</TT
->.
-	The checkbox form builds a query from selected series.</P
-><P
->        <P
-><IMG
-SRC="figures/consumer/create-query.gif"
-ALIGN="CENTER"></P
->
-       </P
-></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3749,7 +3690,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="INFO"
->6.5. Info Pages</A
+>6.4. Info</A
 ></H3
 ><P
 >Currently the only informational page is a list of
@@ -3761,7 +3702,7 @@ CLASS="FILENAME"
 > file as described in
       <A
 HREF="#CUSTOM-HTML-HEADER"
->Section 6.7.3</A
+>Section 6.6.3</A
 >.</P
 ><P
 ><IMG
@@ -3774,7 +3715,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="FILE-DESC"
->6.6. Description of Data Consumer Files</A
+>6.5. Description of Data Consumer Files</A
 ></H3
 ><P
 >      The following table describes the main JSP contained in the
@@ -3790,7 +3731,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN720"
+NAME="AEN711"
 ></A
 ><P
 ><B
@@ -4389,7 +4330,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN924"
+NAME="AEN915"
 ></A
 ><P
 ><B
@@ -4896,7 +4837,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-DISPLAY"
->6.7. Changing the Look</A
+>6.6. Changing the Look</A
 ></H3
 ><DIV
 CLASS="SECTION"
@@ -4904,7 +4845,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-COLOR"
->6.7.1. Colors and Fonts</A
+>6.6.1. Colors and Fonts</A
 ></H4
 ><P
 >        Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) called
@@ -4976,7 +4917,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML"
->6.7.2. HTML Layout</A
+>6.6.2. HTML Layout</A
 ></H4
 ><P
 >        To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
@@ -4991,7 +4932,7 @@ CLASS="FILENAME"
       The default JSP and XSL files are described in
       <A
 HREF="#FILE-DESC"
->Section 6.6</A
+>Section 6.5</A
 >.</P
 ><P
 >For general information about editing stylesheets,
@@ -5006,7 +4947,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-VALUES"
->6.7.2.1. Custom Values in HTML Table Cells</A
+>6.6.2.1. Custom Values in HTML Table Cells</A
 ></H5
 ><P
 >To display report values other
@@ -5082,7 +5023,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CUSTOM-HTML-HEADER"
->6.7.3. Custom Page Header</A
+>6.6.3. Custom Page Header</A
 ></H4
 ><P
 >The default page header is generated by the inclusion of the
@@ -5243,7 +5184,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-ALT-LOCATION"
->6.8. Changing the Installation Location</A
+>6.7. Changing the Installation Location</A
 ></H3
 ><P
 >You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
@@ -5395,7 +5336,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-PORT"
->6.9. Changing the Port</A
+>6.8. Changing the Port</A
 ></H3
 ><P
 >      By default, the consumer is started on port 8080.  To change this, edit
@@ -5443,7 +5384,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="HTTPS-CONSUMER"
->6.10. Enabling https</A
+>6.9. Enabling https</A
 ></H3
 ><P
 >      By default, the consumer is configured as an http server.  To
@@ -5722,7 +5663,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PASSWORD-CONSUMER"
->6.11. Adding Password Protection</A
+>6.10. Adding Password Protection</A
 ></H3
 ><P
 >      By default, a password is not required for a user to access the status pages
@@ -5777,7 +5718,7 @@ CLASS="FILENAME"
       username and password for your installation.  If you do not want to store the
       password in plain text, use Jetty's password utility described in <A
 HREF="#HTTPS-CONSUMER"
->Section 6.10</A
+>Section 6.9</A
 >.</P
 ><P
 >Then restart the consumer. </P
@@ -5878,7 +5819,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1257"
+NAME="AEN1248"
 ></A
 ><P
 ><B
@@ -7273,7 +7214,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1546"
+NAME="AEN1537"
 ></A
 ><P
 ><B
@@ -7495,7 +7436,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1593"
+NAME="AEN1584"
 ></A
 ><P
 ><B
@@ -7931,7 +7872,7 @@ HREF="#USERGUIDE-MAN"
 ><P
 >Note:  To change the port of the consumer, see <A
 HREF="#CONSUMER-PORT"
->Section 6.9</A
+>Section 6.8</A
 >.</P
 ><P
 >Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
@@ -8000,7 +7941,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1700"
+NAME="AEN1691"
 ></A
 ><P
 ><B
@@ -9970,7 +9911,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2095"
+NAME="AEN2086"
 ></A
 ><P
 ><B
