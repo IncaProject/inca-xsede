@@ -45,7 +45,7 @@ historical reports, deployment information, and allow the configuration of
 custom depot queries.</para>
 
     <section id="current-data">
-      <title>Current Data Pages</title>
+      <title>Current Data</title>
 
       <para>The default page header navigation contains
         links to tabular and map view result summaries for
@@ -394,34 +394,102 @@ custom depot queries.</para>
     </section>
     </section>
 
-    <section id="historical-data">
-      <title>Historical Data Pages</title>
+    <section id="reports">
+      <title>Reports</title>
 
       <para>All reporter data collected by Inca is stored in the depot.
-        The depot can then be queried to produce graphs of historical information.
+        The depot can then be queried to produce graphs and reports.
         Inca's default data consumer uses
         <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
         a JSP tag library for graphing based on
         <ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
-        The default consumer includes a basic graph of the historical pass/fail status of
-        reporter series and a graph of error message counts if there are
-        any reporter errors.  The pass/fail status is either the
-        comparitor status (if the series
-        has a comparitor) or the reporter's exit status.
-      </para>
-      <para>The section for historical data in the
-        default page header has links to a series graphing form
-         and a sample summary report for sampleSuite series.  
-       To link other historical
-      pages under this heading (e.g. forms to select series from
-        other suites, customize the
-      <filename>header.xsl</filename> file as described in
-      <xref linkend="custom-html-header">.</para>
+        </para>
 
-    <section id="graph-series">
-      <title>Graph Series Result History</title>
-      <para>Historical pass/fail status graphs and error frequency information can be 
-       displayed by the default consumer.
+      <para>The section for reports in the default page header links to a
+set of default reports.  To link other reports in the page header, customize
+the <filename>header.xsl</filename> file as described in <xref
+linkend="custom-html-header">.  Some of the default reports require the
+"incaQueryStatus" query to have executed, which is scheduled to run once a day
+by default.  More information about queries can be found in <xref
+linkend="query-pages">.  </para>
+
+    
+    <section id="pass-fail-report">
+      <title>Pass/Fail Graphs and Error Messages</title>
+      <para>Historical summary reports with pass/fail status and error information 
+          can also be created for sets of series.  Summary reports are generated 
+        with <filename>report.jsp</filename> and configured by default with the
+       <filename>statusReport.xml</filename> file.  To customize the XML file you can either 
+          unwar <filename>inca.war</filename> and edit the <filename>xml/statusReport.xml</filename>
+          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
+          described in <xref linkend="userguide-consumer"> and edit the file in 
+          <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
+       </para>
+        <para>As a summary report example, the default consumer groups
+        different combinations of sampleSuite series in
+        <filename>statusReport.xml</filename> and displays the past two weeks 
+       of results using <filename>report.jsp</filename>'s startDate param.
+       Each set of series has a title (e.g. Software Deployment Tests) for its
+       grouping and the series nickname, resource name, and report label for
+       each series in the group.  Create one or more custom reports by editing
+       the groupings and titles.  The width and height of the graphs can also
+       be adjusted in <filename>statusReport.xml</filename>.  
+       See <xref linkend="file-desc"> for more
+       details.  Depending on database size and the number of series
+       included, summary reports may benefit from being pre-generated.
+       </para>
+       <para>
+        <graphic fileref="figures/consumer/summary_report.jpg" align="center"></graphic>
+       </para>
+    </section>
+  
+    <section id="ave-pass-report">
+      <title>Average Pass Rate by Resource/Suite</title>
+  
+	<para>A summary status report shows the average series pass rate by resource and suite for the 
+	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</para>
+	<para>The statistics for this report are calculated by <filename>summary.jsp</filename> using the 
+		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
+       <para> <graphic fileref="figures/consumer/summaryJsp.gif" align="center"></graphic> </para>
+	
+       <para>The summary report described above links to more detailed reports like the image below which
+		summarize the average pass rates for a suite or resource.</para>
+       <para>
+        <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center"></graphic>
+       </para>
+      </section>
+
+      <section id="series-report">
+          <title>Series Error Summary</title>
+	<para>The summary details reports described in <xref linkend="ave-pass-report"> link to these more detailed reports which
+		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</para>
+
+<para>The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</para>
+	<para>The statistics for these reports are generated by <filename>status.jsp</filename> using the 
+		<filename>seriesSummary.xsl</filename> stylesheet.</para>
+       <para>
+        <graphic fileref="figures/consumer/error-summary.gif" align="center"></graphic>
+       </para>
+      </section>
+
+      <section id="ave-pass-history-report">
+          <title>Average Pass History</title>
+	<para>The average series pass rate reports show the average series pass rate over time grouped by resource or suite.</para>
+	<para>The statistics for these reports are generated by <filename>summaryHistory.jsp</filename> using the 
+		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
+       <para>
+        <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center"></graphic>
+       </para>
+      </section>
+  </section>
+  
+  <section id="query-pages">
+      <title>Query</title>
+	<para>The query pages allow users to generate graphs and cache queries to improve data display.</para>
+    
+   <section id="graph-series">
+      <title>Create Graph</title>
+      <para>
        If <filename>graph.xsl</filename> is used as the xsl parameter for the
         <filename>status.jsp</filename> script that displays suite results,
         a form will be generated to select suite series to graph.  For
@@ -463,89 +531,21 @@ custom depot queries.</para>
       <para>Graph pages for individual series are also linked from the report details pages.
         <graphic fileref="figures/consumer/details_graph.png" align="center"></graphic>
        </para>
-    </section>
-    
-    <section id="summary-report">
-      <title>Summary Reports</title>
-      <para>Historical summary reports with pass/fail status and error information 
-          can also be created for sets of series.  Summary reports are generated 
-        with <filename>report.jsp</filename> and configured by default with the
-       <filename>statusReport.xml</filename> file.  To customize the XML file you can either 
-          unwar <filename>inca.war</filename> and edit the <filename>xml/statusReport.xml</filename>
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
-          described in <xref linkend="userguide-consumer"> and edit the file in 
-          <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
-       </para>
-        <graphic fileref="figures/consumer/menu_summaryreport.png" align="center"></graphic>
-        <para>As a summary report example, the default consumer groups
-        different combinations of sampleSuite series in
-        <filename>statusReport.xml</filename> and displays the past two weeks 
-       of results using <filename>report.jsp</filename>'s startDate param.
-       Each set of series has a title (e.g. Software Deployment Tests) for its
-       grouping and the series nickname, resource name, and report label for
-       each series in the group.  Create one or more custom reports by editing
-       the groupings and titles.  The width and height of the graphs can also
-       be adjusted in <filename>statusReport.xml</filename>.  
-       See <xref linkend="file-desc"> for more
-       details.  Depending on database size and the number of series
-       included, summary reports may benefit from being pre-generated.
-       </para>
-       <para>
-        <graphic fileref="figures/consumer/summary_report.jpg" align="center"></graphic>
-       </para>
-    </section>
-  
-  </section>
-  
-  <section id="report-pages">
-      <title>Report Pages</title>
-	<para>A set of historical reports are available for summarizing status information 
-	by resource and suite.  The next sections describe the default reports.</para>
-      <section id="report-summary">
-          <title>Summary Status Report</title>
-	<para>A summary status report shows the average series pass rate by resource and suite for the 
-	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</para>
-	<para>The statistics for this report are calculated by <filename>summary.jsp</filename> using the 
-		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
-       <para> <graphic fileref="figures/consumer/summaryJsp.gif" align="center"></graphic> </para>
-      </section>
-      <section id="report-summary-details">
-          <title>Summary Status Report Details</title>
-	<para>The summary report described in <xref linkend="report-summary"> links to these more detailed reports which
-		summarize the average pass rates for a suite or resource.</para>
-	<para>The statistics for this report are calculated by <filename>summaryDetails.jsp</filename> using the 
-		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
-       <para>
-        <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center"></graphic>
-       </para>
-      </section>
-      <section id="report-error-summary">
-          <title>Summary of Errors Report</title>
-	<para>The summary details reports described in <xref linkend="report-summary-details"> link to these more detailed reports which
-		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</para>
 
-<para>The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</para>
-	<para>The statistics for these reports are generated by <filename>status.jsp</filename> using the 
-		<filename>seriesSummary.xsl</filename> stylesheet.</para>
+     </section>
+
+      <section id="create-query">
+          <title>Create Stored Query</title>
+	<para>Cached queries can be created using the query management page described in <xref linkend="view-query">
+	or by checking boxes in the form generated by <filename>status.jsp</filename> and <filename>create-query.xsl</filename>.
+	The checkbox form builds a query from selected series.</para>
        <para>
-        <graphic fileref="figures/consumer/error-summary.gif" align="center"></graphic>
+        <graphic fileref="figures/consumer/create-query.gif" align="center"></graphic>
        </para>
       </section>
-      <section id="report-summary-history">
-          <title>Average Series Pass Rate History</title>
-	<para>The average series pass rate reports show the average series pass rate over time grouped by resource or suite.</para>
-	<para>The statistics for these reports are generated by <filename>summaryHistory.jsp</filename> using the 
-		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
-       <para>
-        <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center"></graphic>
-       </para>
-      </section>
-  </section>
-  
-  <section id="query-pages">
-      <title>Query Pages</title>
+
       <section id="view-query">
-          <title>Query Cache</title>
+          <title>Manage Stored Queries</title>
 	<para>The consumer can cache frequently executed depot queries in order to improve 
 	 data display speed.   For example, the latest results for a suite can be cached 
          in order to quickly display a suite status page.  By default the latest results 
@@ -555,25 +555,16 @@ custom depot queries.</para>
 	<filename>query.jsp</filename> page.  Click on one of the pre-defined queries to see its
 	parameters.  Each query has a name, execution schedule, depot command it executes and the 
 	parameters for the depot command executed.  </para>
-  
        <para>
         <graphic fileref="figures/consumer/query.gif" align="center"></graphic>
        </para>
       </section>
-      <section id="create-query">
-          <title>Create Cached Query</title>
-	<para>Cached queries can be created using the query management page described in <xref linkend="view-query">
-	or by checking boxes in the form generated by <filename>status.jsp</filename> and <filename>create-query.xsl</filename>.
-	The checkbox form builds a query from selected series.</para>
-       <para>
-        <graphic fileref="figures/consumer/create-query.gif" align="center"></graphic>
-       </para>
-      </section>
+
   </section>
 
 
   <section id="info">
-      <title>Info Pages</title>
+      <title>Info</title>
       <para>Currently the only informational page is a list of
       all running reporters in an inca deployment.  To link other informational
       pages under this heading, customize the
