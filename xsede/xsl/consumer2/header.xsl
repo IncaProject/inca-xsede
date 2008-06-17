@@ -30,7 +30,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/config.jsp?xsl=config.xsl')}">
+                    <a href="{concat($url, '/jsp/config.jsp')}">
                       List Running Tests
                     </a>
                   </li>
@@ -43,42 +43,52 @@
               </li>
             </ul>
             <ul>
-              <li><h2>Reports</h2>
+              <li><h2>Query</h2>
                 <ul>
                   <li>
-                    <a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">
-                      Gateway Debug (LEAD Testbed)
+                    <a href="{concat($url, '/html/ctssv4-graph.html')}">
+                      Create CTSSv4 graph
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/summary.jsp')}">
-                      Weekly Status Report
+                    <a href="{concat($url, '/html/ctssv3-graph.html')}">
+                      Create CTSSv3 and Cross-Site graph
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=seriesSummary.xsl&amp;xml=weekSummary.xml&amp;queryNames=incaQueryStatus')}">
-                      Series Error Summary
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl&amp;resourceIds=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers')}">
+                      Create other test suite graph
                     </a>
                   </li>
                 </ul>
               </li>
             </ul>
             <ul>
-              <li><h2>Historical Data</h2>
+              <li><h2>Reports</h2>
                 <ul>
                   <li>
-                    <a href="{concat($url, '/html/ctssv4-graph.html')}">
-                      CTSSv4 Graph
+                    <a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">
+                      LEAD Testbed
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/html/ctssv3-graph.html')}">
-                      CTSSv3 and Cross-Site Graph
+                    <a href="{concat($url, '/jsp/summary.jsp')}">
+                      Past week: ave pass rate by resource/suite
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl&amp;resourceIds=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers')}">
-                      Other Test Suites Graph
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=seriesSummary.xsl&amp;xml=weekSummary.xml&amp;queryNames=incaQueryStatus')}">
+                      Past 10 weeks: series error summary
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{concat($url, '/jsp/summaryHistory.jsp?filterResource=true')}">
+                      Resource ave pass history
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{concat($url, '/jsp/summaryHistory.jsp?filterSuite=true')}">
+                      Suite ave pass history
                     </a>
                   </li>
                 </ul>
