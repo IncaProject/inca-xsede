@@ -40,6 +40,10 @@
             <name>maxMan</name>
             <value>1</value>
           </macro>
+          <macro>
+            <name>tgContact</name>
+            <value>FailTo:inca@sdsc.edu</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -245,6 +249,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>tgContact</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:dsk@cct.lsu.edu</value>
           </macro>
         </macros>
       </resource>
@@ -4453,7 +4461,7 @@
           </macro>
           <macro>
             <name>pre</name>
-            <value>@bash@ 'set -a; cd @__incaReporterManagerLocation__@; @perl5@ module load CTSSV4 &amp;&amp; </value>
+            <value>@bash@ 'set -a; cd @__incaReporterManagerLocation__@; @perl5@ module load CTSSV4 &amp;&amp;</value>
           </macro>
         </macros>
       </resource>
@@ -5114,11 +5122,6 @@
             <value>1.4.2</value>
           </macro>
           <macro>
-            <name>apps4.0.0-tgcp-key</name>
-            <value/>
-            <value>@keyPre@tgcp-1.0.0-r2 @keyPost@</value>
-          </macro>
-          <macro>
             <name>apps4.0.0-compiler-intel-key</name>
             <value>@keyPre@intel-8.1 @keyPost@</value>
           </macro>
@@ -5157,6 +5160,10 @@
           <macro>
             <name>core4.0.0-condor-key</name>
             <value>@keyPre@condor-current @keyPost@</value>
+          </macro>
+          <macro>
+            <name>apps4.0.0-tgcp-key</name>
+            <value>@keyPre@tgcp-1.0.0-r2 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -7715,21 +7722,6 @@
             <value>@keyPre@ mycluster @keyPost@</value>
           </macro>
           <macro>
-            <name>login4.0.0-gsissh-key</name>
-            <value/>
-            <value>@keyPre@ gsissh/4.1 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>login4.0.0-myproxy-key</name>
-            <value/>
-            <value>@keyPre@ globus/4.0.1 @keyPost@</value>
-          </macro>
-          <macro>
-            <name>login4.0.0-uberftp-key</name>
-            <value/>
-            <value>@keyPre@ globus/4.0.1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>gatekeeperlog</name>
             <value>/share/apps/teragrid/prews-gram-4.0.5-r1/var/globus-gatekeeper.log</value>
           </macro>
@@ -7804,6 +7796,18 @@
           <macro>
             <name>remote4.0.0-prews-gram-port</name>
             <value>2119</value>
+          </macro>
+          <macro>
+            <name>login4.0.0-gsissh-key</name>
+            <value>@keyPre@ gsissh/4.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>login4.0.0-myproxy-key</name>
+            <value>@keyPre@ globus/4.0.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>login4.0.0-uberftp-key</name>
+            <value>@keyPre@ globus/4.0.1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -8554,186 +8558,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.transfer.tgcp.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.tgcp.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-tgcp-key@@@@post@</context>
-          </series>
-          <nickname>tgcp-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tgcp==1.0.0</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>javac</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>java</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-java-key@@@@post@</context>
-          </series>
-          <nickname>java-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.python.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-python-key@@@@post@</context>
-          </series>
-          <nickname>python-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-python</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>python>=2.2</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
@@ -8769,1046 +8593,6 @@
           </series>
           <nickname>compiler-ibm-c++</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@c-xlc-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>c</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-ibm-key@@@@post@</context>
-          </series>
-          <nickname>compiler-ibm-c</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@fortran-xlc-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>fortran</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-ibm-fortran-key@@@@post@</context>
-          </series>
-          <nickname>compiler-ibm-fortran</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.xlc.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.xlc.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-ibm-key@@@@post@</context>
-          </series>
-          <nickname>compiler-ibm-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>xlc=~".*"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.format.hdf4.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-hdf4-key@@@@post@</context>
-          </series>
-          <nickname>hdf4-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-hdf4</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf4=="4.2 Release 1"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.format.hdf5.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-hdf5-key@@@@post@</context>
-          </series>
-          <nickname>hdf5-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-hdf5</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf5=="1.6.5"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>cxx</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>c++</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
-          </series>
-          <nickname>compiler-hp-c++</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>f90</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>fortran</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
-          </series>
-          <nickname>compiler-hp-fortran</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>cc</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>c</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
-          </series>
-          <nickname>compiler-hp-c</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.tcl.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.tcl.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>tcl-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tcl=~"8.*"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@apps4.0.0-c-intel-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>c++</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-c++</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@apps4.0.0-c-intel-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>c</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-c</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@apps4.0.0-fortran-intel-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>fortran</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-fortran</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.math.blas.unit.level3</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level3</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>compiler_opts</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@nativeFortranCompiler@</value>
-              </arg>
-              <arg>
-                <name>link</name>
-                <value>@blasLink@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>7200.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-blas-key@@@@post@</context>
-          </series>
-          <nickname>blas-level3</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-blas</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.math.blas.unit.level2</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level2</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>compiler_opts</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
-                <value>@nativeFortranCompiler@</value>
-              </arg>
-              <arg>
-                <name>link</name>
-                <value>@blasLink@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>7200.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-blas-key@@@@post@</context>
-          </series>
-          <nickname>blas-level2</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-blas</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
-            <args>
-              <arg>
-                <name>interpreter</name>
-                <value>python</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-python-key@@@@post@</context>
-          </series>
-          <nickname>python-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-python</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.ant.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>ant==@apps4.0.0-ant-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.intel.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.intel.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>intel-compiler==@apps4.0.0-compiler-intel-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.ant.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.java.sun.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-java-key@@@@post@</context>
-          </series>
-          <nickname>java-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>java>=@apps4.0.0-java-version@</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.tg.softenv.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.access.srb.unit.sls</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.srb.unit.sls</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-srb-key@@@@post@</context>
-          </series>
-          <nickname>sls</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.access.srb.unit.sput_sget</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.srb.unit.sput_sget</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-srb-key@@@@post@</context>
-          </series>
-          <nickname>sput-sget</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.gridproxyinit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gridproxyinit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>grid-proxy-init-patched</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
           <schedule>
             <cron>
               <min>?</min>
@@ -9866,6 +8650,94 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>cluster.admin.ant.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-ant-key@@@@post@</context>
+          </series>
+          <nickname>ant-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.ant.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-ant-key@@@@post@</context>
+          </series>
+          <nickname>ant-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>ant==@apps4.0.0-ant-version@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>cluster.math.blas.unit.level1</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level1</uri>
             <args>
@@ -9910,25 +8782,25 @@
           <nickname>blas-level1</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0-blas</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.scripting.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
+            <name>cluster.math.blas.unit.level2</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level2</uri>
             <args>
-              <arg>
-                <name>interpreter</name>
-                <value>tcl</value>
-              </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
@@ -9942,26 +8814,98 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>compiler_opts</name>
+                <value/>
+              </arg>
+              <arg>
                 <name>log</name>
-                <value>5</value>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@nativeFortranCompiler@</value>
+              </arg>
+              <arg>
+                <name>link</name>
+                <value>@blasLink@</value>
               </arg>
             </args>
             <limits>
-              <wallClockTime>600.0</wallClockTime>
+              <wallClockTime>7200.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@apps4.0.0-blas-key@@@@post@</context>
           </series>
-          <nickname>tcl-unit</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
+          <nickname>blas-level2</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-blas</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.math.blas.unit.level3</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.math.blas.unit.level3</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>compiler_opts</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@nativeFortranCompiler@</value>
+              </arg>
+              <arg>
+                <name>link</name>
+                <value>@blasLink@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>7200.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-blas-key@@@@post@</context>
+          </series>
+          <nickname>blas-level3</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-blas</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -10002,14 +8946,18 @@
           <nickname>compiler-gnu-c++</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0-compiler-gnu</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -10050,57 +8998,17 @@
           <nickname>compiler-gnu-c</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0-compiler-gnu</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.gcc.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.0-compiler-c-gnu-key@@@@post@</context>
-          </series>
-          <nickname>compiler-gnu-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-gnu</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>gcc=~".*"</comparison>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -10142,14 +9050,346 @@
           <nickname>compiler-gnu-fortran</nickname>
           <resourceSetName>app-support.teragrid.org-4.0.0-compiler-gnu-fortran</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.gcc.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-c-gnu-key@@@@post@</context>
+          </series>
+          <nickname>compiler-gnu-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-gnu</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gcc=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>cc</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-c</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>f90</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>fortran</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-fortran</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.tgcp.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.tgcp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-tgcp-key@@@@post@</context>
+          </series>
+          <nickname>tgcp-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tgcp==1.0.0</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.scripting.tcl.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.tcl.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tcl-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tcl=~"8.*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.scripting.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
+            <args>
+              <arg>
+                <name>interpreter</name>
+                <value>tcl</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>tcl-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-tcl</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.access.srb.unit.sput_sget</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.srb.unit.sput_sget</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-srb-key@@@@post@</context>
+          </series>
+          <nickname>sput-sget</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -10187,6 +9427,864 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>srb>=3.4.1</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv==1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.tg.softenv.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.access.srb.unit.sls</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.srb.unit.sls</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-srb-key@@@@post@</context>
+          </series>
+          <nickname>sls</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.scripting.python.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-python-key@@@@post@</context>
+          </series>
+          <nickname>python-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-python</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>python>=2.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.scripting.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.any.unit</uri>
+            <args>
+              <arg>
+                <name>interpreter</name>
+                <value>python</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-python-key@@@@post@</context>
+          </series>
+          <nickname>python-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-python</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>javac</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>java</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-java-key@@@@post@</context>
+          </series>
+          <nickname>java-unit</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.java.sun.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-java-key@@@@post@</context>
+          </series>
+          <nickname>java-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>java>=@apps4.0.0-java-version@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.format.hdf4.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-hdf4-key@@@@post@</context>
+          </series>
+          <nickname>hdf4-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-hdf4</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf4=="4.2 Release 1"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.format.hdf5.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-hdf5-key@@@@post@</context>
+          </series>
+          <nickname>hdf5-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-hdf5</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf5=="1.6.5"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gridproxyinit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gridproxyinit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>grid-proxy-init-patched</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@apps4.0.0-fortran-intel-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>fortran</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
+          </series>
+          <nickname>compiler-intel-fortran</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.intel.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.intel.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
+          </series>
+          <nickname>compiler-intel-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>intel-compiler==@apps4.0.0-compiler-intel-version@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@apps4.0.0-c-intel-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
+          </series>
+          <nickname>compiler-intel-c</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@apps4.0.0-c-intel-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c++</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-intel-key@@@@post@</context>
+          </series>
+          <nickname>compiler-intel-c++</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-intel</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@fortran-xlc-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>fortran</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-ibm-fortran-key@@@@post@</context>
+          </series>
+          <nickname>compiler-ibm-fortran</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.xlc.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.xlc.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-ibm-key@@@@post@</context>
+          </series>
+          <nickname>compiler-ibm-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>xlc=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@c-xlc-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-ibm-key@@@@post@</context>
+          </series>
+          <nickname>compiler-ibm-c</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-ibm</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>cxx</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>c++</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.0-compiler-hp-key@@@@post@</context>
+          </series>
+          <nickname>compiler-hp-c++</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0-compiler-hp</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -10194,7 +10292,7 @@
       <name>app-support.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>74</version>
+      <version>106</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -10372,102 +10470,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.admin.tgpolicy.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-tgpolicy-key@@@@post@</context>
-          </series>
-          <nickname>tgpolicy-version</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tg-policy==0.2</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>user.search.output.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>com</name>
-                <value>tg-policy -a</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>search</name>
-                <value>TG_CLUSTER_SCRATCH</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>delim</name>
-                <value>\\|</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-tgpolicy-key@@@@post@</context>
-          </series>
-          <nickname>tgpolicy-unit</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.scheduling.condorg.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.version</uri>
             <args>
@@ -10496,185 +10498,17 @@
           <nickname>condor-version</nickname>
           <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>condor-g>=6.9.1</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.pacman.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-pacman-key@@@@post@</context>
-          </series>
-          <nickname>pacman-version</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>pacman>=3.14.1</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.tgresid.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-tgresid-key@@@@post@</context>
-          </series>
-          <nickname>tgresid-unit</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.pacman.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-pacman-key@@@@post@</context>
-          </series>
-          <nickname>pacman-unit</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.tgresid.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.0.0-tgresid-key@@@@post@</context>
-          </series>
-          <nickname>tgresid-version</nickname>
-          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tgwhatami>=2.3.0  &amp;&amp; tgwhereami>=1.0.0</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -10732,7 +10566,283 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu</target>
+                <target>@tgContact@, FailTo:maytal@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.pacman.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-pacman-key@@@@post@</context>
+          </series>
+          <nickname>pacman-version</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>pacman>=3.14.1</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.pacman.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-pacman-key@@@@post@</context>
+          </series>
+          <nickname>pacman-unit</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgpolicy.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgpolicy.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-tgpolicy-key@@@@post@</context>
+          </series>
+          <nickname>tgpolicy-version</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tg-policy==0.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>tg-policy -a</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>TG_CLUSTER_SCRATCH</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-tgpolicy-key@@@@post@</context>
+          </series>
+          <nickname>tgpolicy-unit</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgresid.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-tgresid-key@@@@post@</context>
+          </series>
+          <nickname>tgresid-unit</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgresid.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.0.0-tgresid-key@@@@post@</context>
+          </series>
+          <nickname>tgresid-version</nickname>
+          <resourceSetName>core.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tgwhatami>=2.3.0  &amp;&amp; tgwhereami>=1.0.0</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -10742,7 +10852,7 @@
       <name>core.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.0.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>71</version>
+      <version>76</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -11884,154 +11994,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.interactive_access.openssh.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>login</name>
-                <value>inca</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>gsissh</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dataMove4.0.0-ssh-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>900.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gsi-openssh-unit</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.rftversion</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.rftversion</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dataMove4.0.0-rft-host@:@dataMove4.0.0-rft-port@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>rft-version</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0-rft</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.rft</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.rft</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>gridftpPort</name>
-                <value>@dataMove4.1.0-gridftp-default-port@</value>
-              </arg>
-              <arg>
-                <name>rftHost</name>
-                <value>@dataMove4.0.0-rft-host@ -r @dataMove4.0.0-rft-port@</value>
-              </arg>
-              <arg>
-                <name>gridftpHost</name>
-                <value>@dataMove4.1.0-gridftp-default-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>3600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>rft-unit</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0-rft</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>data.transfer.gridftp.unit.copy-dns</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy-dns</uri>
             <args>
@@ -12164,17 +12126,17 @@
           <nickname>gridftp-nonstriped-registered-version</nickname>
           <resourceSetName>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gridftp=~@dataMove4.1.0-gridftp-nonstriped-registered-version@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -12216,17 +12178,177 @@
           <nickname>gridftp-striped-registered-version</nickname>
           <resourceSetName>data-movement.teragrid.org-4.1.0-gridftp-striped</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gridftp=~@dataMove4.1.0-gridftp-striped-registered-version@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>login</name>
+                <value>inca</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dataMove4.0.0-ssh-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>900.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gsi-openssh-unit</nickname>
+          <resourceSetName>data-movement.teragrid.org-4.1.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.rft</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.rft</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>gridftpPort</name>
+                <value>@dataMove4.1.0-gridftp-default-port@</value>
+              </arg>
+              <arg>
+                <name>rftHost</name>
+                <value>@dataMove4.0.0-rft-host@ -r @dataMove4.0.0-rft-port@</value>
+              </arg>
+              <arg>
+                <name>gridftpHost</name>
+                <value>@dataMove4.1.0-gridftp-default-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>rft-unit</nickname>
+          <resourceSetName>data-movement.teragrid.org-4.1.0-rft</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.rftversion</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.rftversion</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dataMove4.0.0-rft-host@:@dataMove4.0.0-rft-port@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>rft-version</nickname>
+          <resourceSetName>data-movement.teragrid.org-4.1.0-rft</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -12234,7 +12356,7 @@
       <name>data-movement.teragrid.org-4.1.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>53</version>
+      <version>66</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12554,310 +12676,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.accounting.tgusage.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
-          </series>
-          <nickname>tgusage-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tgusage>=2.9</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.admin.tgproxy.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgproxy.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-tgproxy-key@@@@post@</context>
-          </series>
-          <nickname>tgproxy-unit</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.tg.softenv.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-unit</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.security.gx-map.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-gxmap-key@@@@post@</context>
-          </series>
-          <nickname>gxmap-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0-gxmap</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.interactive_access.openssh.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>ssh</name>
-                <value>gsissh</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-gsissh-key@@@@post@</context>
-          </series>
-          <nickname>gsissh-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>openssh>=3.9</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>data.transfer.uberftp.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-uberftp-key@@@@post@</context>
-          </series>
-          <nickname>uberftp-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>uberftp>=1.18</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.interactive_access.openssh.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
             <args>
@@ -12898,14 +12716,110 @@
           <nickname>gsissh-unit</nickname>
           <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.interactive_access.openssh.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-gsissh-key@@@@post@</context>
+          </series>
+          <nickname>gsissh-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>openssh>=3.9</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.security.gx-map.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-gxmap-key@@@@post@</context>
+          </series>
+          <nickname>gxmap-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0-gxmap</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
@@ -12938,17 +12852,149 @@
           <nickname>myproxy-version</nickname>
           <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>myproxy>=3.4</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.tg.softenv.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-unit</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv==1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.tgproxy.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgproxy.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-tgproxy-key@@@@post@</context>
+          </series>
+          <nickname>tgproxy-unit</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -12994,21 +13040,113 @@
           <nickname>tgusage-unit</nickname>
           <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.accounting.tgusage.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
+          </series>
+          <nickname>tgusage-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tgusage>=2.9</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.uberftp.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.uberftp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-uberftp-key@@@@post@</context>
+          </series>
+          <nickname>uberftp-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>uberftp>=1.18</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>43</version>
+      <version>59</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13054,21 +13192,25 @@
           <nickname>mpi-unit</nickname>
           <resourceSetName>parallel-app.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>parallel-app.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>30</version>
+      <version>37</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15926,197 +16068,89 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
               </arg>
               <arg>
                 <name>verbose</name>
                 <value>1</value>
               </arg>
               <arg>
-                <name>port</name>
-                <value>@remote4.0.0-prews-gram-port@</value>
+                <name>log</name>
+                <value>5</value>
               </arg>
               <arg>
                 <name>help</name>
                 <value>no</value>
               </arg>
               <arg>
-                <name>log</name>
-                <value>5</value>
+                <name>memory</name>
+                <value>@memory@</value>
               </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-netstat</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-netstat</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
+              </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
               </arg>
               <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>delWait</name>
+                <value>00:00:60</value>
               </arg>
               <arg>
-                <name>port</name>
-                <value>@remote4.0.0-wsgram-port@</value>
+                <name>type</name>
+                <value>globusrun</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>project</name>
+                <value>@chargeProject@</value>
               </arg>
               <arg>
-                <name>log</name>
-                <value>5</value>
+                <name>checkWait</name>
+                <value>00:00:60</value>
               </arg>
             </args>
             <limits>
-              <wallClockTime>600.0</wallClockTime>
+              <wallClockTime>39600.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>wsgram-netstat</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-netstat</resourceSetName>
+          <nickname>prews-gram-batch</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-batch</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.gatekeeper</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gatekeeper</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-gatekeeper-ping</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.globus.unit.gramversion</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gramversion</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>scheduler</name>
-                <value>@gridScheduler@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-wsgram-port@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-wsrf-get-property</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -16194,105 +16228,213 @@
           <nickname>prews-gram-fork</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>user.basicFunctionality.gridJobSubmission.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
             <args>
               <arg>
-                <name>maxRun</name>
-                <value>00:05:00</value>
-              </arg>
-              <arg>
-                <name>nodes</name>
-                <value>@nodeCount@</value>
-              </arg>
-              <arg>
-                <name>maxWait</name>
-                <value>10:00:00</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>@real_time_script@</value>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>verbose</name>
                 <value>1</value>
               </arg>
               <arg>
-                <name>log</name>
-                <value>5</value>
+                <name>port</name>
+                <value>@remote4.0.0-prews-gram-port@</value>
               </arg>
               <arg>
                 <name>help</name>
                 <value>no</value>
               </arg>
               <arg>
-                <name>memory</name>
-                <value>@memory@</value>
+                <name>log</name>
+                <value>5</value>
               </arg>
-              <arg>
-                <name>queue</name>
-                <value>@jobQueue@</value>
-              </arg>
-              <arg>
-                <name>contact</name>
-                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@/@remote4.0.0-prews-batch-job-manager@</value>
-              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-netstat</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-netstat</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gatekeeper</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gatekeeper</uri>
+            <args>
               <arg>
                 <name>version</name>
                 <value>no</value>
               </arg>
               <arg>
-                <name>delWait</name>
-                <value>00:00:60</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
-                <name>type</name>
-                <value>globusrun</value>
+                <name>help</name>
+                <value>no</value>
               </arg>
               <arg>
-                <name>project</name>
-                <value>@chargeProject@</value>
+                <name>log</name>
+                <value>5</value>
               </arg>
               <arg>
-                <name>checkWait</name>
-                <value>00:00:60</value>
+                <name>host</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-prews-gram-port@</value>
               </arg>
             </args>
             <limits>
-              <wallClockTime>39600.0</wallClockTime>
+              <wallClockTime>600.0</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>prews-gram-batch</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram-batch</resourceSetName>
+          <nickname>prews-gram-gatekeeper-ping</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-prewsgram</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.netstat.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@remote4.0.0-wsgram-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-netstat</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-netstat</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gramversion</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gramversion</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@gridScheduler@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@remote4.0.0-gatekeeper-host@:@remote4.0.0-wsgram-port@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-wsrf-get-property</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -16354,17 +16496,17 @@
           <nickname>wsgram-batch-submit</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-batch</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -16426,17 +16568,17 @@
           <nickname>wsgram-batch</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram-batch</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -16498,17 +16640,17 @@
           <nickname>wsgram-fork</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-wsgram</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -16558,13 +16700,7 @@
           <nickname>wsrf-query-mds-auth-LoadRP</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-mds-auth</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -16572,7 +16708,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu</target>
+                <target>@tgContact@, FailTo:maytal@tacc.utexas.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -16624,13 +16760,7 @@
           <nickname>wsrf-query-mds-auth-JobsRP</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-mds-auth</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -16638,7 +16768,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu</target>
+                <target>@tgContact@, FailTo:maytal@tacc.utexas.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -16678,13 +16808,7 @@
           <nickname>wsrf-query-mds</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.0.0-mds</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -16692,7 +16816,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu</target>
+                <target>@tgContact@, FailTo:maytal@tacc.utexas.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -16702,7 +16826,7 @@
       <name>remote-compute.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>77</version>
+      <version>85</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17520,6 +17644,62 @@
         </seriesConfig>
         <seriesConfig>
           <series>
+            <name>security.ca.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>14</value>
+              </arg>
+              <arg>
+                <name>certUrl</name>
+                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>security.ca.unit</nickname>
+          <resourceSetName>teragrid</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
             <name>security.hostcert.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.hostcert.unit</uri>
             <args>
@@ -17552,13 +17732,7 @@
           <nickname>hostcert_valid</nickname>
           <resourceSetName>teragrid</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -17566,61 +17740,9 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu, FailTo:help@teragrid.org,FailTo:tony@ncsa.uiuc.edu,FailTo:kericson@sdsc.edu</target>
+                <target>@tgContact@, FailTo:help@teragrid.org,FailTo:tony@ncsa.uiuc.edu,FailTo:kericson@sdsc.edu</target>
               </notification>
             </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>security.ca.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>minimum</name>
-                <value>14</value>
-              </arg>
-              <arg>
-                <name>certUrl</name>
-                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>security.ca.unit</nickname>
-          <resourceSetName>teragrid</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -17628,7 +17750,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>91</version>
+      <version>105</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18994,50 +19116,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>grid.scheduling.gridshell.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.gridshell.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@workflow4.0.0-gridshell-key@@@@post@</context>
-          </series>
-          <nickname>gridshell-version</nickname>
-          <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gridshell>=0.9.9-4</comparison>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.scheduling.condorg.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.version</uri>
             <args>
@@ -19066,17 +19144,17 @@
           <nickname>condor-version</nickname>
           <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>condor-g>=6.7.18</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -19110,17 +19188,17 @@
           <nickname>condorg-version</nickname>
           <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>condor-g>=6.7.18</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
@@ -19154,21 +19232,69 @@
           <nickname>condorg-condorq</nickname>
           <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>?</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.scheduling.gridshell.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.gridshell.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@workflow4.0.0-gridshell-key@@@@post@</context>
+          </series>
+          <nickname>gridshell-version</nickname>
+          <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gridshell>=0.9.9-4</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>workflow.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.0.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>29</version>
+      <version>38</version>
     </suite>
   </suites>
 </inca:inca>
