@@ -19,8 +19,7 @@
   and associated files.  The WAR file is installed initially as
   <filename>$INCA_DIST/webapps/inca.war</filename> and is deployed with
   <ulink url="http://www.mortbay.org/">Jetty</ulink> when the consumer is
-  started (e.g., ./bin/inca start consumer).  (Alternatively, the default WAR
-  file can be dropped into an existing Tomcat installation.) The consumer
+  started (e.g., ./bin/inca start consumer).  The consumer
   starts on port 8080 unless the <filename>$INCA_DIST/etc/jetty.xml</filename>
   is edited as described in <xref linkend="consumer-port">.
   </para>
@@ -28,8 +27,8 @@
   <para>
   The default consumer <filename>inca.war</filename> file can be unwarred into
   <filename>$INCA_DIST/webapps</filename> for customization.  (A custom
-  consumer deployment requires the javac compiler in order for Jetty to compile
-  the files; The default WAR requires only the java binaries.)  To create a
+  consumer requires the javac compiler in order for Jetty to compile
+  the files; the default WAR requires only the java binaries.)  To create a
   custom deployment, use the following comands:
 <screen>
 % cd $INCA_DIST/webapps; mkdir inca; cd inca; jar xvf ../inca.war; rm ../inca.war
@@ -41,9 +40,9 @@
   </para>
 
   <para>
-  In general, the default consumer's JSPs query the depot for XML results and
+  The default consumer's JSPs query the depot for XML results and
   apply XSL to them in order to display HTML status pages.  The basic JSPs are
-  described in subsequent sections - they show current and historical data,
+  described in subsequent sections; they show current and historical data,
   historical reports, deployment information, and allow the configuration of
   custom depot queries.  Depot queries can be cached to improve speed of data
   display (see <xref linkend="view-query">).
@@ -69,7 +68,7 @@
       (e.g., status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid). Adding
       a value for the xsl parameter is optional; the
       <filename>default.xsl</filename> stylesheet is applied by default.  The
-      unformatted XML results can be viewed by passing a non-zero value for the
+      unformatted XML can be viewed by passing a non-zero value for the
       optional debug parameter.  (More information about the consumer's JSP and
       XSL files is provided in <xref linkend="file-desc">.) For example,
       <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>
@@ -83,15 +82,17 @@
 
       <section id="google-overview">
         <title>Overview</title>
-        <para>The map view provides a summary view of the current status
-          of resources on a Google map.  For each resource, the summary view
-          provides the percentage of reports passed, number of passed reports, number
-          of failed reports, and a list of the failed tests (with a link to the report
-          details page).  A resource is represented on the map as a marker and colored
-          red, green, or orange based on the number of tests that have passed and/or
-          failed.  The figure below shows the Inca Google map view for the NEON
-          testbed (four resources at SDSC and one resource at James Reserve).  All
-          resources are passing their tests so every resource marker is green.
+        <para>
+        The map view provides a summary view of the current status of resources
+        on a Google map.  For each resource, the summary view gives the
+        percentage of reports passed, number of passed reports, number of
+        failed reports, and a list of the failed tests with a link to each
+        report details page.  A resource is represented on the map as a marker
+        and colored red, green, or orange based on the number of tests that
+        have passed and/or failed.  The figure below shows the Inca Google map
+        view for the NEON testbed (four resources at SDSC and one resource at
+        James Reserve).  All resources are passing their tests, so every
+        resource marker is green.
         </para>
         <graphic fileref="figures/consumer/googleNeon.png" align="center"></graphic>
         <para>
@@ -111,17 +112,15 @@
       <section id="google-setup">
         <title>Setting up Google Map View</title>
         <para>
-          To utilize the map view, you need a Google Maps API key for
-          your Inca consumer.  To generate one, go the Google Maps API web page at
-          <ulink
-              url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>,
-          type "http://<emphasis role="red">yourHost</emphasis>:8080 in the
-          "My web site URL" text box and click the "Generate API key" button.  A
-          page will be generated displaying a new key for your server that looks
-          something like this:
-          ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ.
-          Next, edit <filename>$INCA_DIST/webapps/xml/google.xml</filename> and
-          go to line 12.
+        To access the map view, you need to install a Google Maps API key in
+        your Inca consumer.  To generate one, go the Google Maps API web page at
+        <ulink url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>,
+        type "http://<emphasis role="red">yourHost</emphasis>:8080 in the "My
+        web site URL" text box and click the "Generate API key" button.  A new
+        page will display a key for your server that looks something like
+        "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
+        Copy this key, then edit line 12 of
+        <filename>$INCA_DIST/webapps/xml/google.xml</filename>.
         </para>
         <screen>
           ...
@@ -156,16 +155,18 @@
           http://<emphasis role="red">yourhost</emphasis>:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid
         </screen>
         <para>
-          This will show one resource (indicated by the orange marker) and the
-          Inca logo as below.  The resource status for multiple suites can be
-          shown by providing comma-delimited lists for the suiteNames and
-          resourceIds parameters.
+        This will show one resource and the Inca logo, simlar to the map
+        below.  The resource status for multiple suites can be shown by
+        providing comma-delimited lists for the suiteNames and resourceIds
+        parameters.
         </para>
         <graphic fileref="figures/consumer/googleDefaultMap.jpg" align="center">
         </graphic>
-        <para>Clicking on the orange marker will display an info box as below
-          indicating "vtk-ngl_version" as the only test that has failed. Clicking on
-          "vtk-ngl_version" will take you to the reporter details page.</para>
+        <para>
+        Clicking on the resource marker will display an info box as below.
+        Clicking on the name of any failed test will take you to the reporter
+        details page.
+        </para>
         <graphic fileref="figures/consumer/googleDefaultMapInfo.jpg" align="center">
         </graphic>
       </section>
@@ -174,10 +175,12 @@
         <title>Customizing the Google Map View</title>
         <para>
           The configuration information for the Google Map View is located in an
-          XML file in <filename>inca.war</filename>.  To customize the XML file you can either
-          unwar <filename>inca.war</filename> and edit the <filename>xml/google.xml</filename>
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as
-          described in <xref linkend="userguide-consumer"> and edit the file in <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
+          XML file in <filename>inca.war</filename>.  To customize the XML
+          file, you can unwar <filename>inca.war</filename> and edit
+          <filename>xml/google.xml</filename>, then rewar and restart the
+          consumer, or you can set up a dynamic consumer as described in
+          <xref linkend="userguide-consumer"> and edit the file in
+          <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
           Below is a list of customizations you can make to your Google display.
         </para>
         <variablelist><title>Customizations</title>
@@ -215,15 +218,15 @@
           <varlistentry><term><filename>magnification level</filename></term>
             <listitem>
               <para>
-                The initial magnification or zoom level of the map is expressed as
-                a number between 1 and 12 and is located on line 24.  A zoom level of 1
-                will give you the entire world and a zoom level of 12 will allow you to
-                read street names.  By default the initial zoom level is 4 which allows
-                most of the U.S. to be viewed.
-                <screen>
-                  23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
-                  24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
-                </screen>
+              The initial magnification, or zoom level, of the map is expressed
+              as a number between 1 and 12, located on line 24.
+              Zoom level 1 displays you the entire world, while zoom level 12
+              allows you to read street names.  The default initial zoom level
+              of 4 allows most of the U.S. to be viewed.
+              <screen>
+                23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
+                24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
+              </screen>
               </para>
             </listitem>
           </varlistentry>
@@ -231,19 +234,20 @@
           <varlistentry><term><filename>marker distance</filename></term>
             <listitem>
               <para>
-                If there is more than one resource at a particular site, the resources
-                will be layed in a circle around the site center.  By default, the
-                distance between the markers will be determined by the chosen
-                magnificationLevel so that the markers do not overlap each other.  To
-                increase or decrease the distance in between the markers (expressed in
-                latitude/longitude), uncomment the &lt;markerDist&gt; tag on line 29.
-                <screen>
-                  26   &lt;!-- The distance in between resource markers at a site.  A default value
-                  27        is available based on the magnificationLevel.  To override the default,
-                  28        uncommment the line below and set a new value
-                  29   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
-                  30   --&gt;
-                </screen>
+              If there is more than one resource at a particular site, the
+              resource markers will be arranged in a circle around the site
+              center.  By default, the distance between the markers will be
+              determined so that the markers do not overlap each other.  To
+              change the distance between the markers (expressed in
+              latitude/longitude), uncomment the &lt;markerDist&gt; tag on line
+              29.
+              <screen>
+                26   &lt;!-- The distance in between resource markers at a site.  A default value
+                27        is available based on the magnificationLevel.  To override the default,
+                28        uncommment the line below and set a new value
+                29   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
+                30   --&gt;
+              </screen>
               </para>
             </listitem>
           </varlistentry>
@@ -294,7 +298,7 @@
                 all tests failed = <inlinegraphic fileref="figures/consumer/mm_20_red.png" align="center">
               </inlinegraphic>.  Suppose you wanted to change the icons displayed to
                 weather icons found at <ulink
-                  url="http://econym.googlepages.com/geicons.htm">http://econym.googlepages.com/geicons.htm</ulink> such as follows:
+                  url="http://econym.googlepages.com/geicons.htm">http://econym.googlepages.com/geicons.htm</ulink> so that
                 all tests passed = <inlinegraphic fileref="figures/consumer/icon33.png" align="center"></inlinegraphic>, at least one test failed = <inlinegraphic fileref="figures/consumer/icon34.png" align="center"> </inlinegraphic>,
                 all tests failed = <inlinegraphic fileref="figures/consumer/icon36.png" align="center"></inlinegraphic>.  Use the following steps:
 
@@ -320,7 +324,7 @@
                     </para>
                   </listitem>
                   <listitem>
-                    <para>Then we also need to determine the anchor point for the info
+                    <para>We also need to determine the anchor point for the info
                       window to pop up relative to the icon.  Since we want the info window
                       to appear in the top middle, we choose the coordinates (16, 10) and
                       modify line 54 as follows:
@@ -378,7 +382,7 @@
                 <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>,
                 to help convert the IP addresses of your resources to latitude/longitude.
                 Specify a list of resource names at a site using the &lt;resource&gt; tag.
-                Optionally you can specify a logo for the site
+                Optionally, you can specify a logo for the site
                 using the &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt;
                 and &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo
                 anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
@@ -398,34 +402,33 @@
     <section id="reports">
       <title>Reports</title>
 
-      <para>All reporter data collected by Inca is stored in the depot.
-        The depot can then be queried to produce graphs and reports.
-        Inca's default data consumer uses
-        <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
-        a JSP tag library for graphing based on
-        <ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
-        </para>
-
-      <para>The section for reports in the default page header links to a
-set of default reports.  To link other reports in the page header, customize
-the <filename>header.xsl</filename> file as described in <xref
-linkend="custom-html-header">.  Some of the default reports require the
-"incaQueryStatus" query to have executed, which is scheduled to run once a day
-by default.  More information about queries can be found in <xref
-linkend="query-pages">.  </para>
-
+      <para>
+      Inca's default data consumer uses
+      <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
+      a JSP tag library for graphing based on
+      <ulink url="http://www.object-refinery.com/jfreechart/">JFreeChart</ulink>.
+      The section for reports in the default page header links to a set of
+      default reports.  To link other reports in the page header, customize
+      the <filename>header.xsl</filename> file as described in
+      <xref linkend="custom-html-header">.  Some of the default reports require
+      the "incaQueryStatus" query to have previously executed.  By default,
+      this query is scheduled to run once a day.  More information about
+      queries can be found in <xref linkend="query-pages">.
+      </para>
 
     <section id="pass-fail-report">
       <title>Pass/Fail Graphs and Error Messages</title>
-      <para>Historical summary reports with pass/fail status and error information
-          can also be created for sets of series.  Summary reports are generated
-        with <filename>report.jsp</filename> and configured by default with the
-       <filename>statusReport.xml</filename> file.  To customize the XML file you can either
-          unwar <filename>inca.war</filename> and edit the <filename>xml/statusReport.xml</filename>
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as
-          described in <xref linkend="userguide-consumer"> and edit the file in
-          <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
-       </para>
+      <para>
+      Historical summary reports with pass/fail status and error information
+      can also be created for sets of series.  Summary reports are generated
+      with <filename>report.jsp</filename> and configured by default with the
+      <filename>statusReport.xml</filename> file.  To customize the XML file,
+      you can unwar <filename>inca.war</filename> and edit
+      <filename>xml/statusReport.xml</filename>, then rewar and restart the
+      consumer, or you can set up a dynamic consumer as described in
+      <xref linkend="userguide-consumer"> and edit the file in
+      <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
+      </para>
         <para>As a summary report example, the default consumer groups
         different combinations of sampleSuite series in
         <filename>statusReport.xml</filename> and displays the past two weeks
@@ -453,8 +456,11 @@ linkend="query-pages">.  </para>
 		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
        <para> <graphic fileref="figures/consumer/summaryJsp.gif" align="center"></graphic> </para>
 	
-       <para>The summary report described above links to more detailed reports like the image below which
-		summarize the average pass rates for a suite or resource.</para>
+       <para>
+       The summary report described above links to more detailed reports, like
+       the image below that summarizes the average pass rates for a suite or
+       resource.
+       </para>
        <para>
         <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center"></graphic>
        </para>
@@ -462,8 +468,13 @@ linkend="query-pages">.  </para>
 
       <section id="series-report">
           <title>Series Error Summary</title>
-	<para>The summary details reports described in <xref linkend="ave-pass-report"> link to these more detailed reports which
-		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</para>
+	<para>
+  The summary details reports described in <xref linkend="ave-pass-report">
+  link to more detailed reports that summarize test series errors by time
+  period.  Each time period includes the number of errors for the series during
+  the time period, the number of unique or distinct errors during the period,
+  and the percentage of the total results that passed during the period.
+  </para>
 
 <para>The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</para>
 	<para>The statistics for these reports are generated by <filename>status.jsp</filename> using the
