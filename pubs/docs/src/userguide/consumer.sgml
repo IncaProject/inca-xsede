@@ -12,13 +12,13 @@
   <graphic fileref="figures/arch-consumer.jpg" align="center"></graphic>
 
   <para>
-  The data consumer is packaged with Inca is a collection of
+  The data consumer packaged with Inca is a collection of
   <ulink url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink>
   and associated files.  The consumer is installed in
   <filename>$INCA_DIST/webapps/inca</filename> and is deployed with
   <ulink url="http://www.mortbay.org/">Jetty</ulink> when the consumer is
   started (e.g., ./bin/inca start consumer).  The consumer
-  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless the
+  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless
   <filename>$INCA_DIST/etc/jetty.xml</filename> is edited as described in
   <xref linkend="consumer-port">.  
   </para>
@@ -27,40 +27,36 @@
   The default consumer's JSPs query the depot for XML results and
   either apply XSL to them in order to display HTML status pages or 
   parse out data and display it in graphs.  The figure below shows
-  the default menu header.  
+  the default menu header.  Each menu item generates invokes a JSP as
+  described in the sections below.
   </para>
   
-  <graphic fileref="figures/consumer/menuOverview.png" align="center"></graphic>
+  <graphic fileref="figures/consumer/menuOverview.png" align="center">
+  </graphic>
 
-  <para>
-  Each menu item is driven by JSPs described further in the sections below.
-  </para>
+  <section id="current-data">
+    <title>Current Data</title>
 
-    <section id="current-data">
-      <title>Current Data</title>
-
-      <para>The default page header navigation contains
-        links to tabular and map view result summaries for
-        the sample suite.  To add other current
-      pages under this heading (e.g., result summary tables for
-        other suites), customize the
-      <filename>header.xsl</filename> file as described in
-      <xref linkend="custom-html-header">.</para>
+    <para>
+    The default page header navigation contains links to tabular and map view
+    result summaries for the sample suite.  To add other current data pages
+    under this heading (e.g., result summary tables for additional suites),
+    customize the <filename>header.xsl</filename> file as described in
+    <xref linkend="custom-html-header">.
+    </para>
 
     <section id="table-summary">
       <title>Tabular Suite Summary View</title>
       <para>
-      A summary table of suite results is created by passing comma-delimited
-      lists in the suiteNames and resourceIds parameters of
-      <filename>status.jsp</filename>
-      (e.g., status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid). Adding
-      a value for the xsl parameter is optional; the
-      <filename>default.xsl</filename> stylesheet is applied by default.  The
-      unformatted XML can be viewed by passing a non-zero value for the
-      optional debug parameter.  (More information about the consumer's JSP and
-      XSL files is provided in <xref linkend="file-desc">.) For example,
-      <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>
-      produces the following image:
+      The first item in the CURRENT DATA menu applies
+      <filename>default.xsl</filename> to the output of
+      <filename>status.jsp</filename> to create a summary table of suite
+      results.  This JSP takes comma-delimited lists in its suiteNames and
+      resourceIds parameters that specify the suites and resources to be shown.
+      The default installation invokes
+      <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">
+      http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>,
+      producing an image similar to this one:
       <graphic fileref="figures/consumer/sum_page2.jpg" align="center"></graphic>
       </para>
     </section>
@@ -71,27 +67,30 @@
       <section id="google-overview">
         <title>Overview</title>
         <para>
-        The map view provides a summary view of the current status of resources
-        on a Google map.  For each resource, the summary view gives the
-        percentage of reports passed, number of passed reports, number of
-        failed reports, and a list of the failed tests with a link to each
-        report details page.  A resource is represented on the map as a marker
-        and colored red, green, or orange based on the number of tests that
-        have passed and/or failed.  The figure below shows the Inca Google map
-        view for the NEON testbed (four resources at SDSC and one resource at
-        James Reserve).  All resources are passing their tests, so every
+        The second item in the CURRENT DATA menu applies
+        <filename>google.xsl</filename> to the output of
+        <filename>status.jsp</filename> to display a map that provides a
+        summary of the current status of resources.  For each resource, the map
+        view gives the percentage of reports passed, number of passed reports,
+        number of failed reports, and a list of the failed tests with a link to
+        each report details page.  A resource is represented on the map as a
+        marker and colored red, green, or orange based on the number of tests
+        that have passed and/or failed.  The figure below shows the Inca Google
+        map view for the NEON testbed (four resources at SDSC and one resource
+        at James Reserve).  All resources are passing their tests, so every
         resource marker is green.
         </para>
-        <graphic fileref="figures/consumer/googleNeon.png" align="center"></graphic>
+        <graphic fileref="figures/consumer/googleNeon.png" align="center">
+        </graphic>
         <para>
-          Clicking on a marker displays a pop-up with the name of the
-          resource and its status information as show below.
+        Clicking on a marker displays a pop-up with the name of the
+        resource and its status information as show below.
         </para>
         <graphic fileref="figures/consumer/googleNeonInfo.png" align="center">
         </graphic>
         <para>
-          Clicking on the "Toggle ping status" button displays the status of the
-          cross-site ping test as show below.
+        Clicking on the "Toggle ping status" button displays the status of the
+        cross-site ping test as show below.
         </para>
         <graphic fileref="figures/consumer/googleNeonPing.png" align="center">
         </graphic>
@@ -111,41 +110,61 @@
         <filename>$INCA_DIST/webapps/xml/google.xml</filename>.
         </para>
         <screen>
-          ...
-          &lt;!-- Google key for your Inca server.  Go to the following website and put
-          http://yourservername:8080 in the "My web site URL" textbox at:
-          http://www.google.com/apis/maps/signup.html --&gt;
-          &lt;key&gt;Insert key here&lt;/key&gt;
-          ...
-        </screen>
-        <para>Replace "Insert key here" with your new Google Maps API key as below
-          and save the file.
-        </para>
-        <screen>
-          ...
-          &lt;!-- Google key for your Inca server.  Go to the following website and put
-          http://yourservername:8080 in the "My web site URL" textbox at:
-          http://www.google.com/apis/maps/signup.html --&gt;
-          &lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
-          ...
+...
+&lt;!-- Google key for your Inca server.  Go to the following website and put
+http://yourservername:8080 in the "My web site URL" textbox at:
+http://www.google.com/apis/maps/signup.html --&gt;
+&lt;key&gt;Insert key here&lt;/key&gt;
+...
         </screen>
         <para>
-          The Google Map View is generated by running the
-          <filename>google.xsl</filename> stylesheet over the XML collected by
-          <filename>status.jsp</filename>.  To load the Google map for your Inca
-          default deployment, click on the "map of sampleSuite results" link
-          underneath the "CURRENT DATA" menu item in the navigation bar.
+        Replace "Insert key here" with your new Google Maps API key as below
+        and save the file.
+        </para>
+        <screen>
+...
+&lt;!-- Google key for your Inca server.  Go to the following website and put
+http://yourservername:8080 in the "My web site URL" textbox at:
+http://www.google.com/apis/maps/signup.html --&gt;
+&lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
+...
+        </screen>
+        <para>
+        The second step in preparing the map view is to tell the map
+        generator the locations of your resources.  Edit
+        <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename> and find
+        the &lt;site&gt; tag on lines 80 to 111.  For each resource, provide
+        a site name using the &lt;name&gt; tag, latitude/longitude
+        coordinates using the &lt;latitude&gt; and &lt;longitude&gt; tags,
+        and a list of resource names at a site using the &lt;resource&gt; tag.
+        Online tools like
+        <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>
+        can convert the IP addresses of your resources to latitude/longitude.
+        Optionally, you can also specify a logo for the site using the
+        &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt; and
+        &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo
+        anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
+        shown in the figure below.
+        <graphic fileref="figures/consumer/googleSite.png" align="center">
+        </graphic>
+        </para>
+      </section>
+
+      <section id="google-access">
+        <title>Accessing the Google Map View</title>
+        <para>
+        Once setup is complete, load the map view by clicking on the Map of
+        sampleSuite results item of the CURRENT DATA menu in
+        the navigation bar.  In the default installation, this links to
+        <ulink url="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>
         </para>
         <graphic fileref="figures/consumer/googleMapMenu.png" align="center">
         </graphic>
-        <para>Or you can view the map using the following url:  </para>
-        <screen>
-          http://<emphasis role="red">yourhost</emphasis>:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid
-        </screen>
         <para>
-        This will show one resource and the Inca logo, simular to the map
+        This shows one resource and the Inca logo, similar to the map
         below.  The resource status for multiple suites can be shown by
-        providing comma-delimited lists for the suiteNames and resourceIds
+        editing <filename>header.xsl</filename> to provide comma-delimited
+        lists for <filename>status.jsp</filename>'s suiteNames and resourceIds
         parameters.
         </para>
         <graphic fileref="figures/consumer/googleDefaultMap.jpg" align="center">
@@ -204,7 +223,7 @@
               <para>
               The initial magnification, or zoom level, of the map is expressed
               as a number between 1 and 12, located on line 24.
-              Zoom level 1 displays you the entire world, while zoom level 12
+              Zoom level 1 displays the entire world, while zoom level 12
               allows you to read street names.  The default initial zoom level
               of 4 allows most of the U.S. to be viewed.
               <screen>
@@ -355,170 +374,138 @@
             </listitem>
           </varlistentry>
 
-          <varlistentry><term><filename>sites</filename></term>
-            <listitem>
-              <para>
-                By default, resources will be displayed around in the map center.
-                To specify a site (i.e., a location on the map with its resources), use
-                the &lt;site&gt; tag from lines 80 to 111.  Provide a site name using the
-                &lt;name&gt; tag, latitude/longitude coordinates using the &lt;latitude&gt;
-                and &lt;longitude&gt; tags.  There are online tools, like
-                <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>,
-                to help convert the IP addresses of your resources to latitude/longitude.
-                Specify a list of resource names at a site using the &lt;resource&gt; tag.
-                Optionally, you can specify a logo for the site
-                using the &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt;
-                and &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo
-                anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
-                shown in the below figure.
-                <graphic fileref="figures/consumer/googleSite.png" align="center">
-                </graphic>
-              </para>
-            </listitem>
-          </varlistentry>
-
         </variablelist>
       </section>
 
     </section>
-    </section>
 
-    <section id="reports">
-      <title>Reports</title>
+  </section>
 
-      <para>
-      Inca's default data consumer uses
-      <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
-      a JSP tag library for graphing based on
-      <ulink url="http://www.jfree.org/jfreechart/">JFreeChart</ulink>.
-      The section for reports in the default page header links to a set of
-      default reports.  To link other reports in the page header, customize
-      the <filename>header.xsl</filename> file as described in
-      <xref linkend="custom-html-header">.  Some of the default reports require
-      the "incaQueryStatus" query to have previously executed.  By default,
-      this query is scheduled to run once a day.  More information about
-      queries can be found in <xref linkend="view-query">.
-      </para>
+  <section id="reports">
+    <title>Reports</title>
+
+    <para>
+    The items in the REPORTS menu display graphic reports of current Inca
+    data and series histories.  These graphs are generated using
+    <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
+    a JSP tag library for graphing based on
+    <ulink url="http://www.jfree.org/jfreechart/">JFreeChart</ulink>.
+    Some reports require the "incaQueryStatus" query to have run previously;
+    information about queries can be found in <xref linkend="view-query">.
+    </para>
 
     <section id="pass-fail-report">
       <title>Pass/Fail Graphs and Error Messages</title>
       <para>
-      Historical summary reports with pass/fail status and error information
-      can also be created for sets of series.  Summary reports are generated
-      with <filename>report.jsp</filename> and configured by default with the
-      <filename>statusReport.xml</filename> file.  To customize the XML file,
-      you can edit the file
-      <filename>$INCA_DIST/webapps/inca/xml/statusReport.xml</filename>.
+      The first item in the REPORTS menu invokes
+      <filename>report.jsp</filename> to generate historical summary reports
+      with pass/fail status and error information.  You can edit the file
+      <filename>$INCA_DIST/webapps/inca/xml/statusReport.xml</filename> to
+      change the look and contents of this report; see
+      <xref linkend="file-desc"> for details.  The default consumer groups
+      different combinations of sampleSuite series and displays the past two
+      weeks of results.  Each set of series has a title (e.g., Software
+      Deployment Tests) for its grouping and the series nickname, resource
+      name, and report label for each series in the group.
       </para>
-        <para>As a summary report example, the default consumer groups
-        different combinations of sampleSuite series in
-        <filename>statusReport.xml</filename> and displays the past two weeks
-       of results using <filename>report.jsp</filename>'s startDate param.
-       Each set of series has a title (e.g. Software Deployment Tests) for its
-       grouping and the series nickname, resource name, and report label for
-       each series in the group.  Create one or more custom reports by editing
-       the groupings and titles.  The width and height of the graphs can also
-       be adjusted in <filename>statusReport.xml</filename>.
-       See <xref linkend="file-desc"> for more
-       details.  Depending on database size and the number of series
-       included, summary reports may benefit from being pre-generated.
-       </para>
-       <para>
-        <graphic fileref="figures/consumer/summary_report.jpg" align="center"></graphic>
-       </para>
+      <graphic fileref="figures/consumer/summary_report.jpg" align="center">
+      </graphic>
     </section>
 
     <section id="ave-pass-report">
       <title>Average Pass Rate by Resource/Suite</title>
 
-	<para>A summary status report shows the average series pass rate by resource and suite for the
-	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</para>
-	<para>The statistics for this report are calculated by <filename>summary.jsp</filename> using the
-		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
-       <para> <graphic fileref="figures/consumer/summaryJsp.gif" align="center"></graphic> </para>
-	
-       <para>
-       Click on any bar to view a more detailed report for that resource or
-       suite.  For example, clicking on the bar for the
-       'app-support.teragrid.org-4.0.0' suite above shows the average pass
-       rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
-       (figure below).
-       </para>
-       <para>
-        <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center"></graphic>
-       </para>
+      <para>
+      The second item in the REPORTS menu applies
+      <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename> to the output of
+      <filename>summary.jsp</filename> to show the average series pass rate by
+      resource and suite for the past week.  Each bar label shows the value of
+      the average series pass rate for the last week and the difference in
+      percentage from the previous week. The color is green if the average pass
+      rate is better than the previous week, red if the average pass rate is
+      worse, and gray if there was no change. Individual bars can be clicked on
+      to show the percentages broken down further for each individual resource
+      or suite.
+      </para>
+      <graphic fileref="figures/consumer/summaryJsp.gif" align="center">
+      </graphic>
+      <para>
+      Click on any bar to view a more detailed report for that resource or
+      suite.  For example, clicking on the bar for the
+      'app-support.teragrid.org-4.0.0' suite above shows the average pass
+      rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
+      (figure below).
+      </para>
+      <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center">
+      </graphic>
+
+    </section>
+
+    <section id="series-report">
+      <title>Series Error Summary</title>
 
       <para>
-      Click on any bar in the above graph and it will show the errors that
-      occurred during that week as described in the following section.
+      The third item in the REPORTS menu applies
+      <filename>seriesSummary.xsl</filename> to the output of
+      <filename>status.jsp</filename> to summarize test series errors by time
+      period.  Each time period includes the number of errors for the series
+      during the time period, the number of unique or distinct errors during
+      the period, and the percentage of the total results that passed during
+      the period.
       </para>
-      </section>
+      <para>
+      The change between the total number of errors in the most recent period
+      and the total number of errors in the period before it is also given. If
+      the number of errors in the most recent period is greater than the number
+      of errors in the previous period (+), the number appears in red. If the
+      number of errors in the most recent period is less than the number in the
+      previous period (-), the number is green.
+      </para>
+      <para>
+      The time periods and titles (i.e., PAST 4 WEEKS) can be customized in 
+      $INCA_DIST/webapps/xml/weekSummary.xml.
+      </para>
+      <graphic fileref="figures/consumer/error-summary.gif" align="center">
+      </graphic>
 
-      <section id="series-report">
-          <title>Series Error Summary</title>
-	<para>
-  The summary details reports described in <xref linkend="ave-pass-report">
-  link to more detailed reports that summarize test series errors by time
-  period.  Each time period includes the number of errors for the series during
-  the time period, the number of unique or distinct errors during the period,
-  and the percentage of the total results that passed during the period.
-  </para>
+    </section>
 
-<para>The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</para>
-	<para>The statistics for these reports are generated by <filename>status.jsp</filename> using the
-		<filename>seriesSummary.xsl</filename> stylesheet.</para>
+    <section id="ave-pass-history-report">
+      <title>Average Pass History</title>
+      <para>
+      The fourth and fifth items in the REPORTS menu apply
+      <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename> to the output of
+      <filename>summaryHistory.jsp</filename> to show the average series pass
+      rate over time grouped by resource and suite.  The amount of history shown
+      is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
+      query parameters described in <xref linkend="view-query">. 
+      </para>
+      <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center">
+      </graphic>
+    </section>
 
-<para>
-The time periods and titles (i.e., PAST 4 WEEKS) can be customized in 
-$INCA_DIST/webapps/xml/weekSummary.xml.
-</para>
-       <para>
-        <graphic fileref="figures/consumer/error-summary.gif" align="center"></graphic>
-       </para>
-      </section>
-
-      <section id="ave-pass-history-report">
-          <title>Average Pass History</title>
-	<para>
-  The average series pass rate reports show the average series pass rate over
-  time grouped by resource or suite.  The amount of history shown is 4 weeks by
-  default but can be modified by editing the 'incaQueryStatus' query
-  parameters described in <xref linkend="view-query">. 
-  </para>
-	<para>The statistics for these reports are generated by <filename>summaryHistory.jsp</filename> using the
-		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename> stylesheets.</para>
-       <para>
-        <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center"></graphic>
-       </para>
-      </section>
   </section>
 
   <section id="query-pages">
-      <title>Query</title>
-	<para>The query pages allow users to generate graphs and cache queries to improve data display.</para>
+    <title>Query</title>
+    <para>
+    The query pages allow users to generate graphs and cache queries to improve
+    data display.
+    </para>
 
    <section id="graph-series">
       <title>Create Graph</title>
       <para>
-      To query the history of more than one series on graphs similar to the
-      report described in <xref linkend="pass-fail-report">, click on the
-      "create sampleSuite graph" link underneath the "QUERY" menu or use
-      the link below to display a form. 
+      The first item of the QUERY menu applies
+      <filename>graph.xsl</filename> to the output of
+      <filename>status.jsp</filename> to create a form that allows you to
+      graph the history of more than one series.  The form allows you select
+      the set of series of interest via a set of checkboxes.
       </para>
-
-      <para>
-      <ulink url="http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink> 
-      </para>
-
-      <para>
-      The form will display all of the series names and checkboxes.  
-      This page is generated when <filename>graph.xsl</filename> is used as
-      the xsl parameter for <filename>status.jsp</filename> along with a list
-      of
-      resourceIds and suiteNames similar to <xref
-      linkend="table-summary">.
-        <graphic fileref="figures/consumer/graphForm.jpg" align="center"></graphic>
-      </para>
+      <graphic fileref="figures/consumer/graphForm.jpg" align="center">
+      </graphic>
       <para>
         After selecting the "vtk-nvgl_version" series and
         clicking on the "graph" button in the form above,
@@ -555,34 +542,37 @@ $INCA_DIST/webapps/xml/weekSummary.xml.
         <graphic fileref="figures/consumer/details_graph.png" align="center"></graphic>
        </para>
 
-     </section>
+      </section>
 
       <section id="create-query">
         <title>Create Stored Query</title>
-	      <para>
-        The consumer can cache frequently executed depot queries in order to
-        improve data display speed.   For example, the latest results for a
-        suite can be cached in order to quickly display a suite status page.
-        By default the latest results for the sampleSuite are cached every 15
-        minutes.  Results are also cached each day for historical reports.
+        <para>
+        The second item in the QUERY menu appies
+        <filename>create-query.xsl</filename> to the output of
+        <filename>status.jsp</filename> to provide a form for creating a cached
+        query.  The consumer can cache frequently executed depot queries in
+        order to improve data display speed.   For example, the latest results
+        for a suite can be cached in order to quickly display a suite status
+        page.  By default the latest results for the sampleSuite are cached
+        every 2 minutes.  Results are also cached each day for historical
+        reports.
         </para>
         <para>
-        Cached queries can be created using the query management page described
-        in <xref linkend="view-query"> or by checking boxes in the form
-        generated by <filename>status.jsp</filename> and
-        <filename>create-query.xsl</filename>.  The checkbox form builds a
-        query from selected series.
+        Unless password protection has been disabled as described in
+        <xref linkend="password-consumer">, pressing the "STORE QUERY" button
+        on this page causes the consumer to prompt for an id and password.
         </para>
-        <para>
         <graphic fileref="figures/consumer/create-query.gif" align="center"></graphic>
-        </para>
       </section>
 
       <section id="view-query">
         <title>Manage Stored Queries</title>
         <para>
-        Default cached queries can be managed via the
-        <filename>query.jsp</filename> page.  Click on one of the pre-defined
+        The third item in the QUERY menu invokes <filename>query.jsp</filename>
+        to allow management of cached queries.  Unless password protection has
+        been disabled as described in <xref linkend="password-consumer">,
+        selecting this item causes the consumer to prompt for an id and
+        password.  Click on one of the pre-defined
         queries to see its parameters.  Each query has a name, execution
         schedule, depot command it executes and the parameters for the depot
         command executed.
@@ -593,15 +583,16 @@ $INCA_DIST/webapps/xml/weekSummary.xml.
 
         <para>
         By default, the latest instances of all suites are cached every
-        15 minutes named as incaQueryLatest+agentUri_suiteName.  These
-        cached suites are used to for the "CURRENT DATA" views described in
+        2 minutes named as incaQueryLatest+agentUri_suiteName.  These
+        cached suites are used to for the CURRENT DATA menu views described in
         <xref linkend="current-data">.  Another default query is
         "incaQueryStatus" which retrieves a summary of the number of successes
         and failures for each series for the past 4 weeks.  This cached query
         is used for the several of the reports described in <xref
-        linkend="reports">.  To display say 10 weeks of history, modify "28"
-        days to "70" and click "Change".  Note, if any of these default queries
-        are deleted, they will be re-added by the consumer.
+        linkend="reports">.  To display, say, 10 weeks of history, modify "28"
+        days to "70" and click "Change".  Note that the consumer will
+        automatically re-create any of these default queries that are deleted.
+        </para>
       </section>
 
   </section>
@@ -609,7 +600,7 @@ $INCA_DIST/webapps/xml/weekSummary.xml.
 
   <section id="info">
       <title>Info</title>
-      <para>Currently the only informational page is a list of
+      <para>Currently the only INFO menu item displays a list of
       all running reporters in an inca deployment.  To link other informational
       pages under this heading, customize the
       <filename>header.xsl</filename> file as described in
@@ -617,8 +608,8 @@ $INCA_DIST/webapps/xml/weekSummary.xml.
       <graphic fileref="figures/consumer/running-reporters.jpg" align="center"></graphic>
 
     <para>
-    Note, that the links to the reporter scripts rely on a CGI script and will
-    not work if you have a local repository (as deployed in the default
+    Note that the links to the reporter scripts rely on a CGI script and so
+    will not work if you have a local repository (as deployed in the default
     installation).  You will need to a web accessible reporter repository as
     described in <xref linkend="reporter-repositories"> to activate the reporter
     links.
