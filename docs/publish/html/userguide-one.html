@@ -2519,97 +2519,61 @@ NAME="USERGUIDE-CONSUMER"
 >6. Data Display (Data Consumers)</A
 ></H2
 ><P
->The data that the Inca depot stores, as with all database data, can be
-    displayed in many ways.  An Inca data consumer is anything that retrieves data
-    from the depot and displays it (e.g. a JSP, SQL query, CGI, etc.).</P
+>  The data that the Inca depot stores can be displayed in many ways, such as
+  current status reports, historical graphs, and customized status information.
+  An Inca data consumer is anything that
+  retrieves data from the depot and displays it (e.g. a JSP, SQL query, CGI,
+  etc.).  The Inca depot provides access to stored data via Perl and Java
+  client APIs (see <A
+HREF="#USERGUIDE-APIS"
+>Section 8</A
+>).
+  </P
 ><P
 ><IMG
 SRC="figures/arch-consumer.jpg"
 ALIGN="CENTER"></P
 ><P
->Data consumers can query the Inca depot to produce current and historical
-    reports and graphs or customized status information.  The Inca depot has Perl
-    and Java client APIs for its pre-defined queries (see <A
-HREF="#USERGUIDE-APIS"
->Section 8</A
->). 
-   Depot queries can also be cached to improve speed of data display (see <A
-HREF="#VIEW-QUERY"
->Section 6.3.3</A
->).</P
-><P
->The default data consumer is a <A
-HREF="http://en.wikipedia.org/wiki/Sun_WAR_%28file_format%29"
-TARGET="_top"
->Web ARchive (WAR)
-file</A
-> that contains a collection of <A
+>  The data consumer is packaged with Inca is a collection of
+  <A
 HREF="http://java.sun.com/products/jsp/"
 TARGET="_top"
 >JavaServer Pages (JSP)</A
-> and
-their associated files.  The WAR file is initially installed as
-<TT
+>
+  and associated files.  The consumer is installed in
+  <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps/inca.war</TT
-> and is deployed with <A
+>$INCA_DIST/webapps/inca</TT
+> and is deployed with
+  <A
 HREF="http://www.mortbay.org/"
 TARGET="_top"
 >Jetty</A
-> when the consumer is started (e.g.
-./bin/inca start consumer).  The consumer will start on port 8080 (HTTP) and 
-port 8443 (HTTPS) unless the
-<TT
+> when the consumer is
+  started (e.g., ./bin/inca start consumer).  The consumer
+  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless the
+  <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
-> is edited as described in <A
+> is edited as described in
+  <A
 HREF="#CONSUMER-PORT"
 >Section 6.8</A
->.</P
+>.  
+  </P
 ><P
-> The default consumer <TT
-CLASS="FILENAME"
->inca.war</TT
-> file can also be unwarred in
-<TT
-CLASS="FILENAME"
->$INCA_DIST/webapps</TT
-> for dynamic editing.  A dynamic
-consumer deployment requires the development version of java, i.e. javac, in
-order for Jetty to compile the files (otherwise only the java binaries are
-required).  To create a dynamic deployment, use the following comands:
-<TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cd $INCA_DIST/webapps; mkdir inca; cd inca; jar xvf ../inca.war; rm ../inca.war
-
-% cd WEB-INF; mv web.xml web.xml~; cp web.dyn.xml web.xml; cd ../../../; bin/inca restart consumer</PRE
-></FONT
-></TD
-></TR
-></TABLE
-></P
+>  The default consumer's JSPs query the depot for XML results and
+  either apply XSL to them in order to display HTML status pages or 
+  parse out data and display it in graphs.  The figure below shows
+  the default menu header.  
+  </P
 ><P
-> Custom WAR files can be dropped into the
-<TT
-CLASS="FILENAME"
->$INCA_DIST/webapps</TT
-> directory and deployed by restarting
-the consumer.  As an alternative to using the consumer, the default WAR files
-can also be dropped into an existing Tomcat installation. </P
+><IMG
+SRC="figures/consumer/menuOverview.png"
+ALIGN="CENTER"></P
 ><P
-> In general, the default consumer's JSP query the depot for XML
-results and apply XSL to them in order to display HTML status pages.  The basic
-JSP are described in subsequent sections - they show current and historical data,
-historical reports, deployment information, and allow the configuration of
-custom depot queries.</P
+>  Each menu item is driven by JSPs described further in the sections below.
+  </P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -2622,8 +2586,8 @@ NAME="CURRENT-DATA"
 >The default page header navigation contains
         links to tabular and map view result summaries for
         the sample suite.  To add other current
-      pages under this heading (e.g. result summary tables for
-        other suites, customize the
+      pages under this heading (e.g., result summary tables for
+        other suites), customize the
       <TT
 CLASS="FILENAME"
 >header.xsl</TT
@@ -2641,23 +2605,24 @@ NAME="TABLE-SUMMARY"
 >6.1.1. Tabular Suite Summary View</A
 ></H4
 ><P
->A summary table of suite results is created by
-      passing the suiteNames (e.g. sampleSuite) and resourceIds
-        (e.g. defaultGrid) comma delimited parameters to
+>      A summary table of suite results is created by passing comma-delimited
+      lists in the suiteNames and resourceIds parameters of
       <TT
 CLASS="FILENAME"
 >status.jsp</TT
->.  An xsl parameter is optional and the 
+>
+      (e.g., status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid). Adding
+      a value for the xsl parameter is optional; the
       <TT
 CLASS="FILENAME"
 >default.xsl</TT
-> stylesheet is applied to the XML results if no xsl
-      parameter is supplied.  The XML results can be viewed by adding "debug=1" to the JSP 
-      URL.  More information about the consumer's JSP and XSL files is
-      provided in <A
+> stylesheet is applied by default.  The
+      unformatted XML can be viewed by passing a non-zero value for the
+      optional debug parameter.  (More information about the consumer's JSP and
+      XSL files is provided in <A
 HREF="#FILE-DESC"
 >Section 6.5</A
->.  For example,
+>.) For example,
       <A
 HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
@@ -2688,30 +2653,31 @@ NAME="GOOGLE-OVERVIEW"
 >6.1.2.1. Overview</A
 ></H5
 ><P
->The map view provides a summary view of the current status
-          of resources on a Google map.  For each resource, the summary view will
-          provide the percentage of reports passed, number of passed reports, number
-          of failed reports, and a list of the failed tests (with a link to the report
-          details page).  A resource is represented on the map as a marker and colored
-          red, green, or orange based on the number of tests that have passed and/or
-          failed.  The figure below shows the Inca Google map view for the NEON
-          testbed (four resources at SDSC and one resource at James Reserve).  All
-          resources are passing their tests so every resource marker is green.
+>        The map view provides a summary view of the current status of resources
+        on a Google map.  For each resource, the summary view gives the
+        percentage of reports passed, number of passed reports, number of
+        failed reports, and a list of the failed tests with a link to each
+        report details page.  A resource is represented on the map as a marker
+        and colored red, green, or orange based on the number of tests that
+        have passed and/or failed.  The figure below shows the Inca Google map
+        view for the NEON testbed (four resources at SDSC and one resource at
+        James Reserve).  All resources are passing their tests, so every
+        resource marker is green.
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleNeon.png"
 ALIGN="CENTER"></P
 ><P
->          Clicking on a marker will display an info window with the name of the
-          resource and the status information as show below.
+>          Clicking on a marker displays a pop-up with the name of the
+          resource and its status information as show below.
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleNeonInfo.png"
 ALIGN="CENTER"></P
 ><P
->          Clicking on the "Toggle ping status" button will display the status of the
+>          Clicking on the "Toggle ping status" button displays the status of the
           cross-site ping test as show below.
         </P
 ><P
@@ -2728,79 +2694,27 @@ NAME="GOOGLE-SETUP"
 >6.1.2.2. Setting up Google Map View</A
 ></H5
 ><P
->          The Google Map View is generated by running the
-          <TT
-CLASS="FILENAME"
->google.xsl</TT
-> stylesheet over the XML collected by
-          <TT
-CLASS="FILENAME"
->status.jsp</TT
->.  To load the Google map for your Inca
-          default deployment, click on the "map of sampleSuite results" link
-          underneath the "CURRENT DATA" menu item in the navigation bar.
-        </P
-><P
-><IMG
-SRC="figures/consumer/googleMapMenu.png"
-ALIGN="CENTER"></P
-><P
->Or you can view the map using the following url:  </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->          http://<STRONG
-><FONT
-COLOR="RED"
->yourhost</FONT
-></STRONG
->:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid
-        </PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->          The tags "suiteNames" and "resourceIds" can be a comma delimited list to show
-          the resource status for multiple suites.
-        </P
-><P
->          If this is your first time loading the page, you will see
-          a Javascript alert box such as that below.</P
-><P
-><IMG
-SRC="figures/consumer/googlePopUp.png"
-ALIGN="CENTER"></P
-><P
->          To utilize the Google map server, you need a "Google Maps API key" for
-          your Inca consumer.  To generate one, go the Google Maps API web page at
-          <A
+>        To access the map view, you need to install a Google Maps API key in
+        your Inca consumer.  To generate one, go the Google Maps API web page at
+        <A
 HREF="http://www.google.com/apis/maps/signup.html"
 TARGET="_top"
 >http://www.google.com/apis/maps/signup.html</A
->
-          and type in "http://<STRONG
+>,
+        type "http://<STRONG
 ><FONT
 COLOR="RED"
 >yourHost</FONT
 ></STRONG
->:8080 in the
-          "My web site URL" text box and click the "Generate API key" button.  A
-          page will be generated displaying a new key for your server that looks
-          something like this:
-          ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ.
-          Next, open <TT
+>:8080 in the "My
+        web site URL" text box and click the "Generate API key" button.  A new
+        page will display a key for your server that looks something like
+        "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
+        Copy this key, then edit line 12 of
+        <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/xml/google.xml</TT
-> and go to
-          line 12.
+>.
         </P
 ><TABLE
 BORDER="1"
@@ -2849,17 +2763,60 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->Next, reload the web page and the default configuration will show
-          one resource (indicated by the orange marker) and the Inca logo as below.
+>          The Google Map View is generated by running the
+          <TT
+CLASS="FILENAME"
+>google.xsl</TT
+> stylesheet over the XML collected by
+          <TT
+CLASS="FILENAME"
+>status.jsp</TT
+>.  To load the Google map for your Inca
+          default deployment, click on the "map of sampleSuite results" link
+          underneath the "CURRENT DATA" menu item in the navigation bar.
+        </P
+><P
+><IMG
+SRC="figures/consumer/googleMapMenu.png"
+ALIGN="CENTER"></P
+><P
+>Or you can view the map using the following url:  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>          http://<STRONG
+><FONT
+COLOR="RED"
+>yourhost</FONT
+></STRONG
+>:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid
+        </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>        This will show one resource and the Inca logo, simular to the map
+        below.  The resource status for multiple suites can be shown by
+        providing comma-delimited lists for the suiteNames and resourceIds
+        parameters.
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleDefaultMap.jpg"
 ALIGN="CENTER"></P
 ><P
->Clicking on the orange marker will display an info box as below
-          indicating "vtk-ngl_version" as the only test that has failed. Clicking on
-          "vtk-ngl_version" will take you to the reporter details page.</P
+>        Clicking on the resource marker will display an info box as below.
+        Clicking on the name of any failed test will take you to the reporter
+        details page.
+        </P
 ><P
 ><IMG
 SRC="figures/consumer/googleDefaultMapInfo.jpg"
@@ -2874,27 +2831,13 @@ NAME="GOOGLE-CUSTOM"
 >6.1.2.3. Customizing the Google Map View</A
 ></H5
 ><P
->          The configuration information for the Google Map View is located in an
-          XML file in <TT
-CLASS="FILENAME"
->inca.war</TT
->.  To customize the XML file you can either 
-          unwar <TT
-CLASS="FILENAME"
->inca.war</TT
-> and edit the <TT
-CLASS="FILENAME"
->xml/google.xml</TT
->
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
-          described in <A
-HREF="#USERGUIDE-CONSUMER"
->Section 6</A
-> and edit the file in <TT
+>          The configuration information for the Google Map View is located in
+          <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xml/google.xml</TT
->.
-          Below is a list of customizations you can make to your Google display.
+>; you can
+          edit this file to customize your Google display.
+          Below is a list of customizations you can make.
         </P
 ><P
 ></P
@@ -2975,12 +2918,12 @@ CLASS="FILENAME"
 ></DT
 ><DD
 ><P
->                The initial magnification or zoom level of the map is expressed as
-                a number between 1 and 12 and is located on line 24.  A zoom level of 1
-                will give you the entire world and a zoom level of 12 will allow you to
-                read street names.  By default the initial zoom level is 4 which allows
-                most of the U.S. to be viewed.
-                <TABLE
+>              The initial magnification, or zoom level, of the map is expressed
+              as a number between 1 and 12, located on line 24.
+              Zoom level 1 displays you the entire world, while zoom level 12
+              allows you to read street names.  The default initial zoom level
+              of 4 allows most of the U.S. to be viewed.
+              <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
 WIDTH="90%"
@@ -2990,9 +2933,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  23   &#60;!-- The initial zoom level of the map (higher is closer up) --&#62;
-                  24   &#60;magnificationLevel&#62;4&#60;/magnificationLevel&#62;
-                </PRE
+>                23   &#60;!-- The initial zoom level of the map (higher is closer up) --&#62;
+                24   &#60;magnificationLevel&#62;4&#60;/magnificationLevel&#62;
+              </PRE
 ></FONT
 ></TD
 ></TR
@@ -3007,13 +2950,14 @@ CLASS="FILENAME"
 ></DT
 ><DD
 ><P
->                If there is more than one resource at a particular site, the resources
-                will be layed in a circle around the site center.  By default, the
-                distance between the markers will be determined by the chosen
-                magnificationLevel so that the markers do not overlap each other.  To
-                increase or decrease the distance in between the markers (expressed in
-                latitude/longitude), uncomment the &#60;markerDist&#62; tag on line 29.
-                <TABLE
+>              If there is more than one resource at a particular site, the
+              resource markers will be arranged in a circle around the site
+              center.  By default, the distance between the markers will be
+              determined so that the markers do not overlap each other.  To
+              change the distance between the markers (expressed in
+              latitude/longitude), uncomment the &#60;markerDist&#62; tag on line
+              29.
+              <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
 WIDTH="90%"
@@ -3023,12 +2967,12 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  26   &#60;!-- The distance in between resource markers at a site.  A default value
-                  27        is available based on the magnificationLevel.  To override the default,
-                  28        uncommment the line below and set a new value
-                  29   &#60;markerDist&#62;1.00&#60;/markerDist&#62;
-                  30   --&#62;
-                </PRE
+>                26   &#60;!-- The distance in between resource markers at a site.  A default value
+                27        is available based on the magnificationLevel.  To override the default,
+                28        uncommment the line below and set a new value
+                29   &#60;markerDist&#62;1.00&#60;/markerDist&#62;
+                30   --&#62;
+              </PRE
 ></FONT
 ></TD
 ></TR
@@ -3126,7 +3070,7 @@ ALIGN="CENTER">.  Suppose you wanted to change the icons displayed to
 HREF="http://econym.googlepages.com/geicons.htm"
 TARGET="_top"
 >http://econym.googlepages.com/geicons.htm</A
-> such as follows:
+> so that
                 all tests passed = <IMG
 SRC="figures/consumer/icon33.png"
 ALIGN="CENTER">, at least one test failed = <IMG
@@ -3192,7 +3136,7 @@ CLASS="SCREEN"
 ></LI
 ><LI
 ><P
->Then we also need to determine the anchor point for the info
+>We also need to determine the anchor point for the info
                       window to pop up relative to the icon.  Since we want the info window
                       to appear in the top middle, we choose the coordinates (16, 10) and
                       modify line 54 as follows:
@@ -3310,7 +3254,7 @@ TARGET="_top"
 >,
                 to help convert the IP addresses of your resources to latitude/longitude.
                 Specify a list of resource names at a site using the &#60;resource&#62; tag.
-                Optionally you can specify a logo for the site
+                Optionally, you can specify a logo for the site
                 using the &#60;logo&#62; tag.  Specify the size of the logo (&#60;width&#62;
                 and &#60;height&#62;), angle from 0 degrees (&#60;angle&#62;), and logo
                 anchor coordinates (&#60;logoAnchorX&#62;, &#60;logoAnchorY&#62;) as
@@ -3336,36 +3280,35 @@ NAME="REPORTS"
 >6.2. Reports</A
 ></H3
 ><P
->All reporter data collected by Inca is stored in the depot.
-        The depot can then be queried to produce graphs and reports.
-        Inca's default data consumer uses
-        <A
+>      Inca's default data consumer uses
+      <A
 HREF="http://cewolf.sourceforge.net/"
 TARGET="_top"
 >Cewolf</A
 >,
-        a JSP tag library for graphing based on
-        <A
-HREF="http://www.object-refinery.com/jfreechart/"
+      a JSP tag library for graphing based on
+      <A
+HREF="http://www.jfree.org/jfreechart/"
 TARGET="_top"
 >JFreeChart</A
 >.
-        </P
-><P
->The section for reports in the default page header links to a
-set of default reports.  To link other reports in the page header, customize
-the <TT
+      The section for reports in the default page header links to a set of
+      default reports.  To link other reports in the page header, customize
+      the <TT
 CLASS="FILENAME"
 >header.xsl</TT
-> file as described in <A
+> file as described in
+      <A
 HREF="#CUSTOM-HTML-HEADER"
 >Section 6.6.3</A
->.  Some of the default reports require the
-"incaQueryStatus" query to have executed, which is scheduled to run once a day
-by default.  More information about queries can be found in <A
-HREF="#QUERY-PAGES"
->Section 6.3</A
->.  </P
+>.  Some of the default reports require
+      the "incaQueryStatus" query to have previously executed.  By default,
+      this query is scheduled to run once a day.  More information about
+      queries can be found in <A
+HREF="#VIEW-QUERY"
+>Section 6.3.3</A
+>.
+      </P
 ><DIV
 CLASS="SECTION"
 ><HR><H4
@@ -3375,40 +3318,29 @@ NAME="PASS-FAIL-REPORT"
 >6.2.1. Pass/Fail Graphs and Error Messages</A
 ></H4
 ><P
->Historical summary reports with pass/fail status and error information 
-          can also be created for sets of series.  Summary reports are generated 
-        with <TT
+>      Historical summary reports with pass/fail status and error information
+      can also be created for sets of series.  Summary reports are generated
+      with <TT
 CLASS="FILENAME"
 >report.jsp</TT
 > and configured by default with the
-       <TT
+      <TT
 CLASS="FILENAME"
 >statusReport.xml</TT
-> file.  To customize the XML file you can either 
-          unwar <TT
+> file.  To customize the XML file,
+      you can edit the file
+      <TT
 CLASS="FILENAME"
->inca.war</TT
-> and edit the <TT
-CLASS="FILENAME"
->xml/statusReport.xml</TT
->
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
-          described in <A
-HREF="#USERGUIDE-CONSUMER"
->Section 6</A
-> and edit the file in 
-          <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca/xml/google.xml</TT
+>$INCA_DIST/webapps/inca/xml/statusReport.xml</TT
 >.
-       </P
+      </P
 ><P
 >As a summary report example, the default consumer groups
         different combinations of sampleSuite series in
         <TT
 CLASS="FILENAME"
 >statusReport.xml</TT
-> and displays the past two weeks 
+> and displays the past two weeks
        of results using <TT
 CLASS="FILENAME"
 >report.jsp</TT
@@ -3420,7 +3352,7 @@ CLASS="FILENAME"
        be adjusted in <TT
 CLASS="FILENAME"
 >statusReport.xml</TT
->.  
+>.
        See <A
 HREF="#FILE-DESC"
 >Section 6.5</A
@@ -3445,13 +3377,13 @@ NAME="AVE-PASS-REPORT"
 >6.2.2. Average Pass Rate by Resource/Suite</A
 ></H4
 ><P
->A summary status report shows the average series pass rate by resource and suite for the 
+>A summary status report shows the average series pass rate by resource and suite for the
 	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</P
 ><P
 >The statistics for this report are calculated by <TT
 CLASS="FILENAME"
 >summary.jsp</TT
-> using the 
+> using the
 		<TT
 CLASS="FILENAME"
 >seriesAverages.xsl</TT
@@ -3466,8 +3398,12 @@ SRC="figures/consumer/summaryJsp.gif"
 ALIGN="CENTER"></P
 > </P
 ><P
->The summary report described above links to more detailed reports like the image below which
-		summarize the average pass rates for a suite or resource.</P
+>       Click on any bar to view a more detailed report for that resource or
+       suite.  For example, clicking on the bar for the
+       'app-support.teragrid.org-4.0.0' suite above shows the average pass
+       rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
+       (figure below).
+       </P
 ><P
 >        <P
 ><IMG
@@ -3475,6 +3411,10 @@ SRC="figures/consumer/summaryDetailsJsp.gif"
 ALIGN="CENTER"></P
 >
        </P
+><P
+>      Click on any bar in the above graph and it will show the errors that
+      occurred during that week as described in the following section.
+      </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3485,22 +3425,29 @@ NAME="SERIES-REPORT"
 >6.2.3. Series Error Summary</A
 ></H4
 ><P
->The summary details reports described in <A
+>  The summary details reports described in <A
 HREF="#AVE-PASS-REPORT"
 >Section 6.2.2</A
-> link to these more detailed reports which
-		summarize test series errors by time period.  Each time period includes the number of errors for the series during the time period, the number of unique or distinct errors during the period and the percentage of the total results that passed during the period.</P
+>
+  link to more detailed reports that summarize test series errors by time
+  period.  Each time period includes the number of errors for the series during
+  the time period, the number of unique or distinct errors during the period,
+  and the percentage of the total results that passed during the period.
+  </P
 ><P
 >The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</P
 ><P
 >The statistics for these reports are generated by <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> using the 
+> using the
 		<TT
 CLASS="FILENAME"
 >seriesSummary.xsl</TT
 > stylesheet.</P
+><P
+>The time periods and titles (i.e., PAST 4 WEEKS) can be customized in 
+$INCA_DIST/webapps/xml/weekSummary.xml.</P
 ><P
 >        <P
 ><IMG
@@ -3518,12 +3465,19 @@ NAME="AVE-PASS-HISTORY-REPORT"
 >6.2.4. Average Pass History</A
 ></H4
 ><P
->The average series pass rate reports show the average series pass rate over time grouped by resource or suite.</P
+>  The average series pass rate reports show the average series pass rate over
+  time grouped by resource or suite.  The amount of history shown is 4 weeks by
+  default but can be modified by editing the 'incaQueryStatus' query
+  parameters described in <A
+HREF="#VIEW-QUERY"
+>Section 6.3.3</A
+>. 
+  </P
 ><P
 >The statistics for these reports are generated by <TT
 CLASS="FILENAME"
 >summaryHistory.jsp</TT
-> using the 
+> using the
 		<TT
 CLASS="FILENAME"
 >seriesAverages.xsl</TT
@@ -3559,20 +3513,36 @@ NAME="GRAPH-SERIES"
 >6.3.1. Create Graph</A
 ></H4
 ><P
->       If <TT
-CLASS="FILENAME"
->graph.xsl</TT
-> is used as the xsl parameter for the
-        <TT
-CLASS="FILENAME"
->status.jsp</TT
-> script that displays suite results,
-        a form will be generated to select suite series to graph.  For
-        example, <A
+>      To query the history of more than one series on graphs similar to the
+      report described in <A
+HREF="#PASS-FAIL-REPORT"
+>Section 6.2.1</A
+>, click on the
+      "create sampleSuite graph" link underneath the "QUERY" menu or use
+      the link below to display a form. 
+      </P
+><P
+>      <A
 HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
 >http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
-> will generate:
+> 
+      </P
+><P
+>      The form will display all of the series names and checkboxes.  
+      This page is generated when <TT
+CLASS="FILENAME"
+>graph.xsl</TT
+> is used as
+      the xsl parameter for <TT
+CLASS="FILENAME"
+>status.jsp</TT
+> along with a list
+      of
+      resourceIds and suiteNames similar to <A
+HREF="#TABLE-SUMMARY"
+>Section 6.1.1</A
+>.
         <P
 ><IMG
 SRC="figures/consumer/graphForm.jpg"
@@ -3644,25 +3614,35 @@ NAME="CREATE-QUERY"
 >6.3.2. Create Stored Query</A
 ></H4
 ><P
->Cached queries can be created using the query management page described in <A
+>        The consumer can cache frequently executed depot queries in order to
+        improve data display speed.   For example, the latest results for a
+        suite can be cached in order to quickly display a suite status page.
+        By default the latest results for the sampleSuite are cached every 15
+        minutes.  Results are also cached each day for historical reports.
+        </P
+><P
+>        Cached queries can be created using the query management page described
+        in <A
 HREF="#VIEW-QUERY"
 >Section 6.3.3</A
->
-	or by checking boxes in the form generated by <TT
+> or by checking boxes in the form
+        generated by <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> and <TT
+> and
+        <TT
 CLASS="FILENAME"
 >create-query.xsl</TT
->.
-	The checkbox form builds a query from selected series.</P
+>.  The checkbox form builds a
+        query from selected series.
+        </P
 ><P
 >        <P
 ><IMG
 SRC="figures/consumer/create-query.gif"
 ALIGN="CENTER"></P
 >
-       </P
+        </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3673,26 +3653,39 @@ NAME="VIEW-QUERY"
 >6.3.3. Manage Stored Queries</A
 ></H4
 ><P
->The consumer can cache frequently executed depot queries in order to improve 
-	 data display speed.   For example, the latest results for a suite can be cached 
-         in order to quickly display a suite status page.  By default the latest results 
-	for the sampleSuite are cached every 15 minutes.  Results are also cached each day 
-	for historical reports.</P
-><P
->Default cached queries can be managed via the 
-	<TT
+>        Default cached queries can be managed via the
+        <TT
 CLASS="FILENAME"
 >query.jsp</TT
-> page.  Click on one of the pre-defined queries to see its
-	parameters.  Each query has a name, execution schedule, depot command it executes and the 
-	parameters for the depot command executed.  </P
+> page.  Click on one of the pre-defined
+        queries to see its parameters.  Each query has a name, execution
+        schedule, depot command it executes and the parameters for the depot
+        command executed.
+        </P
 ><P
 >        <P
 ><IMG
 SRC="figures/consumer/query.gif"
 ALIGN="CENTER"></P
 >
-       </P
+        </P
+><P
+>        By default, the latest instances of all suites are cached every
+        15 minutes named as incaQueryLatest+agentUri_suiteName.  These
+        cached suites are used to for the "CURRENT DATA" views described in
+        <A
+HREF="#CURRENT-DATA"
+>Section 6.1</A
+>.  Another default query is
+        "incaQueryStatus" which retrieves a summary of the number of successes
+        and failures for each series for the past 4 weeks.  This cached query
+        is used for the several of the reports described in <A
+HREF="#REPORTS"
+>Section 6.2</A
+>.  To display say 10 weeks of history, modify "28"
+        days to "70" and click "Change".  Note, if any of these default queries
+        are deleted, they will be re-added by the consumer.
+      </P
 ></DIV
 ></DIV
 ><DIV
@@ -3719,6 +3712,16 @@ HREF="#CUSTOM-HTML-HEADER"
 ><IMG
 SRC="figures/consumer/running-reporters.jpg"
 ALIGN="CENTER"></P
+><P
+>    Note, that the links to the reporter scripts rely on a CGI script and will
+    not work if you have a local repository (as deployed in the default
+    installation).  You will need to a web accessible reporter repository as
+    described in <A
+HREF="#REPORTER-REPOSITORIES"
+>Section 7.3</A
+> to activate the reporter
+    links.
+    </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -3729,20 +3732,17 @@ NAME="FILE-DESC"
 >6.5. Description of Data Consumer Files</A
 ></H3
 ><P
->      The following table describes the main JSP contained in the
-      <TT
-CLASS="FILENAME"
->inca.war</TT
->.
-      The JSP generally return XML from depot and agent functions and
+>      The following table describes the main JSPs contained in the
+      default consumer.
+      The JSPs generally retrieve XML from depot and agent functions and
       apply XSL stylesheets to display HTML.  If the "debug=1" parameter
-      for the JSP is used, the JSP prints the XML returned. Parameters marked with 
+      for a JSP is used, the JSP displays the XML. Parameters marked with
       an asterisk (*) are optional.
     </P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN711"
+NAME="AEN704"
 ></A
 ><P
 ><B
@@ -4143,7 +4143,7 @@ CLASS="FILENAME"
 ><P
 >suiteNames *: a comma separated list of suite names.  At least one suite name
     is required if queryNames is empty and the number of suite names
-    should match the number of resourceIds.  A suite name is optional if 
+    should match the number of resourceIds.  A suite name is optional if
     queryNames is provided.</P
 ></LI
 ><LI
@@ -4155,7 +4155,7 @@ CLASS="FILENAME"
 ><P
 >resourceIds *: a comma separated list of resource group ids.  At least one
     resource id is required if suiteNames is not empty and the number of
-    resourceIds should match the number of suiteNames.  A resource id is 
+    resourceIds should match the number of suiteNames.  A resource id is
     optional if queryNames is provided.  </P
 ></LI
 ><LI
@@ -4196,14 +4196,14 @@ ALIGN="CENTER"></P
 ></TD
 ><TD
 ><P
->                Shows the average series pass rate by resource and by suite for a given time period.  Uses 
+>                Shows the average series pass rate by resource and by suite for a given time period.  Uses
 		<TT
 CLASS="FILENAME"
 >seriesAverages.xsl</TT
 > and <TT
 CLASS="FILENAME"
 >periodAverages.xsl</TT
-> 
+>
 		to calculate statistics.
               </P
 ></TD
@@ -4329,19 +4329,18 @@ TARGET="_top"
 ></TABLE
 ></DIV
 ><P
->        The default JSP scripts retrieve XML data from the
-        agent and depot and then use the XSL stylesheets in
+>        The default JSPs use the XSL stylesheets in
         <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/xsl</TT
-> are used
+>
            to transform the XML into HTML.
            The following stylesheets are installed
         with the default consumer:</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN915"
+NAME="AEN908"
 ></A
 ><P
 ><B
@@ -4710,7 +4709,7 @@ CLASS="FILENAME"
 >, <TT
 CLASS="FILENAME"
 >summaryDetails.jsp</TT
->, 
+>,
 		<TT
 CLASS="FILENAME"
 >summaryHistory.jsp</TT
@@ -4771,7 +4770,7 @@ CLASS="FILENAME"
 >, <TT
 CLASS="FILENAME"
 >summaryDetails.jsp</TT
->, 
+>,
 		<TT
 CLASS="FILENAME"
 >summaryHistory.jsp</TT
@@ -4859,35 +4858,20 @@ NAME="CUSTOM-COLOR"
 >6.6.1. Colors and Fonts</A
 ></H4
 ><P
->        Properties such as colors and fonts are controlled by the default CSS (Cascading Style Sheet) called
-        <TT
+>      Properties such as colors and fonts are controlled by the default CSS
+      (Cascading Style Sheet) file
+      <TT
 CLASS="FILENAME"
->inca.css</TT
->.  The drop down nav bar in the header is controlled by <TT
+>$INCA_DIST/webapps/inca/css/inca.css</TT
+>.  The drop
+      down nav bar in the header is controlled by
+      <TT
 CLASS="FILENAME"
->nav.css</TT
->.
-          The CSS are located in <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca.war</TT
-> - to customize them you can either 
-          unwar <TT
-CLASS="FILENAME"
->inca.war</TT
-> and edit the <TT
-CLASS="FILENAME"
->css/*.css</TT
->
-          inside and rewar and restart the consumer, or you can set up a dynamic consumer as 
-          described in <A
-HREF="#USERGUIDE-CONSUMER"
->Section 6</A
-> and edit the files in <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca/css</TT
->.
-        For example, to change the color in the reporter detail pages header bar
-        open <TT
+>$INCA_DIST/webapps/inca/css/nav.css</TT
+>.  You can edit
+      these files to customize the consumer display.
+      For example, to change the color in the reporter detail pages header bar,
+      edit <TT
 CLASS="FILENAME"
 >inca.css</TT
 > and change lines 111-112 to:
@@ -4931,15 +4915,13 @@ NAME="CUSTOM-HTML"
 >6.6.2. HTML Layout</A
 ></H4
 ><P
->        To modify the default HTML layout, edit the XSL stylesheet that is being applied to the JSP or create a new stylesheet
-        in the <TT
-CLASS="FILENAME"
->inca.war</TT
-> (or in <TT
+>      To modify the default HTML layout, edit the XSL stylesheet that is
+      being applied to the JSP or create a new stylesheet in
+      in <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xsl</TT
-> if using a dynamic consumer) 
-	and pass it to the JSP as the "xsl" parameter.
+> and pass it in the
+      JSP "xsl" parameter.
       The default JSP and XSL files are described in
       <A
 HREF="#FILE-DESC"
@@ -5474,7 +5456,7 @@ NAME="DISABLE-HTTP-CONSUMER"
 ></H3
 ><P
 >      By default, the consumer is configured as both an HTTP and HTTPS server.
-      To disable HTTP, edit 
+      To disable HTTP, edit
       <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
@@ -5562,8 +5544,8 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% rm -f etc/consumerKeystore; keytool -keystore etc/consumerKeystore \
-      -alias jetty -genkey -keyalg RSA -dname <STRONG
+>% rm -f etc/consumerKeystore
+% keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname <STRONG
 ><FONT
 COLOR="RED"
 >your_DN</FONT
@@ -5575,7 +5557,7 @@ COLOR="RED"
 ></TR
 ></TABLE
 ><P
->It will prompt you for a keystore password and a key password.  You can
+>keytool will prompt you for a keystore password and a key password.  You can
       either make them different or use the same one.  If you use the password
       "consumer", no further changes are needed.  Otherwise, you will have to modify
       &#60;Set name="keyPassword"&#62;, &#60;Set name="password"&#62;, and
@@ -5632,7 +5614,7 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->Open <TT
+>Edit <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
 > and replace the
@@ -5673,12 +5655,8 @@ NAME="PASSWORD-CONSUMER"
 CLASS="FILENAME"
 >query.jsp</TT
 > page.  To expand or remove password
-      protection, follow the step in 
-      <A
-HREF="#USERGUIDE-CONSUMER"
->Section 6</A
-> to set up a dynamic consumer.
-      Edit the section 'require authentication on specific status pages'
+      protection,
+      edit the section 'require authentication on specific status pages'
       in <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/WEB-INF/web.xml</TT
@@ -5732,7 +5710,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->        ... 
+>        ...
         &#60;url-pattern&#62;/*&#60;/url-pattern&#62;
         ...
     </PRE
@@ -5741,7 +5719,7 @@ CLASS="SCREEN"
 ></TR
 ></TABLE
 ><P
->Or to add password protection to another JSP page like 
+>Or to add password protection to another JSP page like
     <TT
 CLASS="FILENAME"
 >config.jsp</TT
@@ -5880,7 +5858,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1257"
+NAME="AEN1243"
 ></A
 ><P
 ><B
@@ -7275,7 +7253,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1546"
+NAME="AEN1532"
 ></A
 ><P
 ><B
@@ -7497,7 +7475,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1593"
+NAME="AEN1579"
 ></A
 ><P
 ><B
@@ -8002,7 +7980,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1700"
+NAME="AEN1686"
 ></A
 ><P
 ><B
@@ -9550,7 +9528,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2041"
+NAME="AEN2027"
 ></A
 ><P
 ><B
@@ -10225,7 +10203,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2186"
+NAME="AEN2172"
 ></A
 ><P
 ><B
