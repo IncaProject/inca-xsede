@@ -100,7 +100,7 @@ HREF="userguide-apis.html"
 SRC="figures/arch-consumer.jpg"
 ALIGN="CENTER"></P
 ><P
->  The data consumer is packaged with Inca is a collection of
+>  The data consumer packaged with Inca is a collection of
   <A
 HREF="http://java.sun.com/products/jsp/"
 TARGET="_top"
@@ -117,7 +117,7 @@ TARGET="_top"
 >Jetty</A
 > when the consumer is
   started (e.g., ./bin/inca start consumer).  The consumer
-  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless the
+  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless
   <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/jetty.xml</TT
@@ -131,15 +131,13 @@ HREF="userguide-consumer.html#CONSUMER-PORT"
 >  The default consumer's JSPs query the depot for XML results and
   either apply XSL to them in order to display HTML status pages or 
   parse out data and display it in graphs.  The figure below shows
-  the default menu header.  
+  the default menu header.  Each menu item generates invokes a JSP as
+  described in the sections below.
   </P
 ><P
 ><IMG
 SRC="figures/consumer/menuOverview.png"
 ALIGN="CENTER"></P
-><P
->  Each menu item is driven by JSPs described further in the sections below.
-  </P
 ><DIV
 CLASS="SECTION"
 ><H2
@@ -149,19 +147,18 @@ NAME="CURRENT-DATA"
 >6.1. Current Data</A
 ></H2
 ><P
->The default page header navigation contains
-        links to tabular and map view result summaries for
-        the sample suite.  To add other current
-      pages under this heading (e.g., result summary tables for
-        other suites), customize the
-      <TT
+>    The default page header navigation contains links to tabular and map view
+    result summaries for the sample suite.  To add other current data pages
+    under this heading (e.g., result summary tables for additional suites),
+    customize the <TT
 CLASS="FILENAME"
 >header.xsl</TT
 > file as described in
-      <A
+    <A
 HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
 >Section 6.6.3</A
->.</P
+>.
+    </P
 ><DIV
 CLASS="SECTION"
 ><H3
@@ -171,30 +168,24 @@ NAME="TABLE-SUMMARY"
 >6.1.1. Tabular Suite Summary View</A
 ></H3
 ><P
->      A summary table of suite results is created by passing comma-delimited
-      lists in the suiteNames and resourceIds parameters of
+>      The first item in the CURRENT DATA menu executes
       <TT
 CLASS="FILENAME"
 >status.jsp</TT
->
-      (e.g., status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid). Adding
-      a value for the xsl parameter is optional; the
-      <TT
+> with <TT
 CLASS="FILENAME"
 >default.xsl</TT
-> stylesheet is applied by default.  The
-      unformatted XML can be viewed by passing a non-zero value for the
-      optional debug parameter.  (More information about the consumer's JSP and
-      XSL files is provided in <A
-HREF="userguide-consumer.html#FILE-DESC"
->Section 6.5</A
->.) For example,
+> to
+      create a summary table of suite results. 
+      This JSP takes comma-delimited lists in its suiteNames and
+      resourceIds parameters that specify the suites and resources to be shown.
+      The default installation invokes
       <A
 HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
 TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
->
-      produces the following image:
+>      http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
+>,
+      producing an image similar to this one:
       <P
 ><IMG
 SRC="figures/consumer/sum_page2.jpg"
@@ -219,15 +210,23 @@ NAME="GOOGLE-OVERVIEW"
 >6.1.2.1. Overview</A
 ></H4
 ><P
->        The map view provides a summary view of the current status of resources
-        on a Google map.  For each resource, the summary view gives the
-        percentage of reports passed, number of passed reports, number of
-        failed reports, and a list of the failed tests with a link to each
-        report details page.  A resource is represented on the map as a marker
-        and colored red, green, or orange based on the number of tests that
-        have passed and/or failed.  The figure below shows the Inca Google map
-        view for the NEON testbed (four resources at SDSC and one resource at
-        James Reserve).  All resources are passing their tests, so every
+>        The second item in the CURRENT DATA menu executes
+        <TT
+CLASS="FILENAME"
+>status.jsp</TT
+> using <TT
+CLASS="FILENAME"
+>google.xsl</TT
+> 
+        to display a map that provides a
+        summary of the current status of resources.  For each resource, the map
+        view gives the percentage of reports passed, number of passed reports,
+        number of failed reports, and a list of the failed tests with a link to
+        each report details page.  A resource is represented on the map as a
+        marker and colored red, green, or orange based on the number of tests
+        that have passed and/or failed.  The figure below shows the Inca Google
+        map view for the NEON testbed (four resources at SDSC and one resource
+        at James Reserve).  All resources are passing their tests, so every
         resource marker is green.
         </P
 ><P
@@ -235,16 +234,16 @@ NAME="GOOGLE-OVERVIEW"
 SRC="figures/consumer/googleNeon.png"
 ALIGN="CENTER"></P
 ><P
->          Clicking on a marker displays a pop-up with the name of the
-          resource and its status information as show below.
+>        Clicking on a marker displays a pop-up with the name of the
+        resource and its status information as show below.
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleNeonInfo.png"
 ALIGN="CENTER"></P
 ><P
->          Clicking on the "Toggle ping status" button displays the status of the
-          cross-site ping test as show below.
+>        Clicking on the "Toggle ping status" button displays the status of the
+        cross-site ping test as show below.
         </P
 ><P
 ><IMG
@@ -292,20 +291,20 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->          ...
-          &#60;!-- Google key for your Inca server.  Go to the following website and put
-          http://yourservername:8080 in the "My web site URL" textbox at:
-          http://www.google.com/apis/maps/signup.html --&#62;
-          &#60;key&#62;Insert key here&#60;/key&#62;
-          ...
+>...
+&#60;!-- Google key for your Inca server.  Go to the following website and put
+http://yourservername:8080 in the "My web site URL" textbox at:
+http://www.google.com/apis/maps/signup.html --&#62;
+&#60;key&#62;Insert key here&#60;/key&#62;
+...
         </PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->Replace "Insert key here" with your new Google Maps API key as below
-          and save the file.
+>        Replace "Insert key here" with your new Google Maps API key as below
+        and save the file.
         </P
 ><TABLE
 BORDER="1"
@@ -317,61 +316,80 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->          ...
-          &#60;!-- Google key for your Inca server.  Go to the following website and put
-          http://yourservername:8080 in the "My web site URL" textbox at:
-          http://www.google.com/apis/maps/signup.html --&#62;
-          &#60;key&#62;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&#60;/key&#62;
-          ...
+>...
+&#60;!-- Google key for your Inca server.  Go to the following website and put
+http://yourservername:8080 in the "My web site URL" textbox at:
+http://www.google.com/apis/maps/signup.html --&#62;
+&#60;key&#62;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&#60;/key&#62;
+...
         </PRE
 ></FONT
 ></TD
 ></TR
 ></TABLE
 ><P
->          The Google Map View is generated by running the
-          <TT
+>        The second step in preparing the map view is to tell the map
+        generator the locations of your resources.  Edit
+        <TT
 CLASS="FILENAME"
->google.xsl</TT
-> stylesheet over the XML collected by
-          <TT
-CLASS="FILENAME"
->status.jsp</TT
->.  To load the Google map for your Inca
-          default deployment, click on the "map of sampleSuite results" link
-          underneath the "CURRENT DATA" menu item in the navigation bar.
+>$INCA_DIST/webapps/inca/xml/google.xml</TT
+> and find
+        the &#60;site&#62; tag on lines 80 to 111.  For each resource, provide
+        a site name using the &#60;name&#62; tag, latitude/longitude
+        coordinates using the &#60;latitude&#62; and &#60;longitude&#62; tags,
+        and a list of resource names at a site using the &#60;resource&#62; tag.
+        Online tools like
+        <A
+HREF="http://netgeo.caida.org/perl/netgeo.cgi/"
+TARGET="_top"
+>CAIDA's NetGeo script</A
+>
+        can convert the IP addresses of your resources to latitude/longitude.
+        Optionally, you can also specify a logo for the site using the
+        &#60;logo&#62; tag.  Specify the size of the logo (&#60;width&#62; and
+        &#60;height&#62;), angle from 0 degrees (&#60;angle&#62;), and logo
+        anchor coordinates (&#60;logoAnchorX&#62;, &#60;logoAnchorY&#62;) as
+        shown in the figure below.
+        <P
+><IMG
+SRC="figures/consumer/googleSite.png"
+ALIGN="CENTER"></P
+>
+        </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="GOOGLE-ACCESS"
+>6.1.2.3. Accessing the Google Map View</A
+></H4
+><P
+>        Once setup is complete, load the map view by clicking on the Map of
+        sampleSuite results item of the CURRENT DATA menu in
+        the navigation bar.  In the default installation, this links to
+        <A
+HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
+>
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleMapMenu.png"
 ALIGN="CENTER"></P
 ><P
->Or you can view the map using the following url:  </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->          http://<STRONG
-><FONT
-COLOR="RED"
->yourhost</FONT
-></STRONG
->:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid
-        </PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->        This will show one resource and the Inca logo, simular to the map
+>        This shows one resource and the Inca logo, similar to the map
         below.  The resource status for multiple suites can be shown by
-        providing comma-delimited lists for the suiteNames and resourceIds
+        editing <TT
+CLASS="FILENAME"
+>header.xsl</TT
+> to provide comma-delimited
+        lists for <TT
+CLASS="FILENAME"
+>status.jsp</TT
+>'s suiteNames and resourceIds
         parameters.
         </P
 ><P
@@ -394,7 +412,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-CUSTOM"
->6.1.2.3. Customizing the Google Map View</A
+>6.1.2.4. Customizing the Google Map View</A
 ></H4
 ><P
 >          The configuration information for the Google Map View is located in
@@ -486,7 +504,7 @@ CLASS="FILENAME"
 ><P
 >              The initial magnification, or zoom level, of the map is expressed
               as a number between 1 and 12, located on line 24.
-              Zoom level 1 displays you the entire world, while zoom level 12
+              Zoom level 1 displays the entire world, while zoom level 12
               allows you to read street names.  The default initial zoom level
               of 4 allows most of the U.S. to be viewed.
               <TABLE
@@ -801,37 +819,6 @@ CLASS="SCREEN"
 >
               </P
 ></DD
-><DT
-><TT
-CLASS="FILENAME"
->sites</TT
-></DT
-><DD
-><P
->                By default, resources will be displayed around in the map center.
-                To specify a site (i.e., a location on the map with its resources), use
-                the &#60;site&#62; tag from lines 80 to 111.  Provide a site name using the
-                &#60;name&#62; tag, latitude/longitude coordinates using the &#60;latitude&#62;
-                and &#60;longitude&#62; tags.  There are online tools, like
-                <A
-HREF="http://netgeo.caida.org/perl/netgeo.cgi/"
-TARGET="_top"
->CAIDA's NetGeo script</A
->,
-                to help convert the IP addresses of your resources to latitude/longitude.
-                Specify a list of resource names at a site using the &#60;resource&#62; tag.
-                Optionally, you can specify a logo for the site
-                using the &#60;logo&#62; tag.  Specify the size of the logo (&#60;width&#62;
-                and &#60;height&#62;), angle from 0 degrees (&#60;angle&#62;), and logo
-                anchor coordinates (&#60;logoAnchorX&#62;, &#60;logoAnchorY&#62;) as
-                shown in the below figure.
-                <P
-><IMG
-SRC="figures/consumer/googleSite.png"
-ALIGN="CENTER"></P
->
-              </P
-></DD
 ></DL
 ></DIV
 ></DIV
@@ -846,35 +833,25 @@ NAME="REPORTS"
 >6.2. Reports</A
 ></H2
 ><P
->      Inca's default data consumer uses
-      <A
+>    The items in the REPORTS menu display graphic reports of current Inca
+    data and series histories.  These graphs are generated using
+    <A
 HREF="http://cewolf.sourceforge.net/"
 TARGET="_top"
 >Cewolf</A
 >,
-      a JSP tag library for graphing based on
-      <A
+    a JSP tag library for graphing based on
+    <A
 HREF="http://www.jfree.org/jfreechart/"
 TARGET="_top"
 >JFreeChart</A
 >.
-      The section for reports in the default page header links to a set of
-      default reports.  To link other reports in the page header, customize
-      the <TT
-CLASS="FILENAME"
->header.xsl</TT
-> file as described in
-      <A
-HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
->Section 6.6.3</A
->.  Some of the default reports require
-      the "incaQueryStatus" query to have previously executed.  By default,
-      this query is scheduled to run once a day.  More information about
-      queries can be found in <A
+    Some reports require the "incaQueryStatus" query to have run previously;
+    information about queries can be found in <A
 HREF="userguide-consumer.html#VIEW-QUERY"
 >Section 6.3.3</A
 >.
-      </P
+    </P
 ><DIV
 CLASS="SECTION"
 ><H3
@@ -884,55 +861,29 @@ NAME="PASS-FAIL-REPORT"
 >6.2.1. Pass/Fail Graphs and Error Messages</A
 ></H3
 ><P
->      Historical summary reports with pass/fail status and error information
-      can also be created for sets of series.  Summary reports are generated
-      with <TT
-CLASS="FILENAME"
->report.jsp</TT
-> and configured by default with the
+>      The first item in the REPORTS menu invokes 
       <TT
 CLASS="FILENAME"
->statusReport.xml</TT
-> file.  To customize the XML file,
-      you can edit the file
+>report.jsp</TT
+>, which uses CeWolf/JfreeChart, to
+      generate historical summary reports with pass/fail status and error
+      information.  You can edit the file
       <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xml/statusReport.xml</TT
->.
+> to
+      change the look and contents of this report; see
+      $INCA_DIST/webapps/inca/xml/statusReport.xml for details on the format.
+      The default consumer groups different combinations of sampleSuite series
+      and displays the past two
+      weeks of results.  Each set of series has a title (e.g., Software
+      Deployment Tests) for its grouping and the series nickname, resource
+      name, and report label for each series in the group.
       </P
 ><P
->As a summary report example, the default consumer groups
-        different combinations of sampleSuite series in
-        <TT
-CLASS="FILENAME"
->statusReport.xml</TT
-> and displays the past two weeks
-       of results using <TT
-CLASS="FILENAME"
->report.jsp</TT
->'s startDate param.
-       Each set of series has a title (e.g. Software Deployment Tests) for its
-       grouping and the series nickname, resource name, and report label for
-       each series in the group.  Create one or more custom reports by editing
-       the groupings and titles.  The width and height of the graphs can also
-       be adjusted in <TT
-CLASS="FILENAME"
->statusReport.xml</TT
->.
-       See <A
-HREF="userguide-consumer.html#FILE-DESC"
->Section 6.5</A
-> for more
-       details.  Depending on database size and the number of series
-       included, summary reports may benefit from being pre-generated.
-       </P
-><P
->        <P
 ><IMG
 SRC="figures/consumer/summary_report.jpg"
 ALIGN="CENTER"></P
->
-       </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -943,44 +894,43 @@ NAME="AVE-PASS-REPORT"
 >6.2.2. Average Pass Rate by Resource/Suite</A
 ></H3
 ><P
->A summary status report shows the average series pass rate by resource and suite for the
-	past week.  The bars show the average pass rate for the previous week. The bar label shows the value of the average series pass rate for the last week and the difference in percentage from the previous week. The bar label text color is green if the average pass rate is better, red if the average pass rate is worse, and gray if there was no change. Individual bars can be clicked on to show the percentages broken down further for each individual resource or suite.</P
-><P
->The statistics for this report are calculated by <TT
+>      The second item in the REPORTS menu executes
+      <TT
 CLASS="FILENAME"
 >summary.jsp</TT
-> using the
-		<TT
+>, which uses CeWolf/JfreeChart and
+      stylesheets <TT
 CLASS="FILENAME"
 >seriesAverages.xsl</TT
-> and <TT
+> and
+      <TT
 CLASS="FILENAME"
 >periodAverages.xsl</TT
-> stylesheets.</P
+>, to show the average series pass
+      rate by resource and suite for the past week.  Each bar label shows the
+      value of
+      the average series pass rate for the last week and the difference in
+      percentage from the previous week. The color is green if the average pass
+      rate is better than the previous week, red if the average pass rate is
+      worse, and gray if there was no change. Individual bars can be clicked on
+      to show the percentages broken down further for each individual resource
+      or suite.
+      </P
 ><P
-> <P
 ><IMG
 SRC="figures/consumer/summaryJsp.gif"
 ALIGN="CENTER"></P
-> </P
 ><P
->       Click on any bar to view a more detailed report for that resource or
-       suite.  For example, clicking on the bar for the
-       'app-support.teragrid.org-4.0.0' suite above shows the average pass
-       rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
-       (figure below).
-       </P
+>      Click on any bar to view a more detailed report for that resource or
+      suite.  For example, clicking on the bar for the
+      'app-support.teragrid.org-4.0.0' suite above shows the average pass
+      rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
+      (figure below).
+      </P
 ><P
->        <P
 ><IMG
 SRC="figures/consumer/summaryDetailsJsp.gif"
 ALIGN="CENTER"></P
->
-       </P
-><P
->      Click on any bar in the above graph and it will show the errors that
-      occurred during that week as described in the following section.
-      </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -991,36 +941,37 @@ NAME="SERIES-REPORT"
 >6.2.3. Series Error Summary</A
 ></H3
 ><P
->  The summary details reports described in <A
-HREF="userguide-consumer.html#AVE-PASS-REPORT"
->Section 6.2.2</A
->
-  link to more detailed reports that summarize test series errors by time
-  period.  Each time period includes the number of errors for the series during
-  the time period, the number of unique or distinct errors during the period,
-  and the percentage of the total results that passed during the period.
-  </P
-><P
->The change between the total number of errors in the most recent period and the total number of errors in the period before it is also given. If the number of errors in the most recent period is greater than the number of errors in the previous period (+), the number appears in red. If the number of errors in the most recent period is less than the number in the previous period (-), the number is green.</P
-><P
->The statistics for these reports are generated by <TT
+>      The third item in the REPORTS menu executes
+      <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> using the
-		<TT
+> with
+      <TT
 CLASS="FILENAME"
 >seriesSummary.xsl</TT
-> stylesheet.</P
+> to summarize test series errors
+      by time
+      period.  Each time period includes the number of errors for the series
+      during the time period, the number of unique or distinct errors during
+      the period, and the percentage of the total results that passed during
+      the period.
+      </P
 ><P
->The time periods and titles (i.e., PAST 4 WEEKS) can be customized in 
-$INCA_DIST/webapps/xml/weekSummary.xml.</P
+>      The change between the total number of errors in the most recent period
+      and the total number of errors in the period before it is also given. If
+      the number of errors in the most recent period is greater than the number
+      of errors in the previous period (+), the number appears in red. If the
+      number of errors in the most recent period is less than the number in the
+      previous period (-), the number is green.
+      </P
 ><P
->        <P
+>      The time periods and titles (i.e., PAST 4 WEEKS) can be customized in 
+      $INCA_DIST/webapps/xml/weekSummary.xml.
+      </P
+><P
 ><IMG
 SRC="figures/consumer/error-summary.gif"
 ALIGN="CENTER"></P
->
-       </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1031,33 +982,30 @@ NAME="AVE-PASS-HISTORY-REPORT"
 >6.2.4. Average Pass History</A
 ></H3
 ><P
->  The average series pass rate reports show the average series pass rate over
-  time grouped by resource or suite.  The amount of history shown is 4 weeks by
-  default but can be modified by editing the 'incaQueryStatus' query
-  parameters described in <A
+>      The fourth and fifth items in the REPORTS menu execute
+      <TT
+CLASS="FILENAME"
+>summaryHistory.jsp</TT
+>, which uses CeWolf/JfreeChart
+      and stylesheets <TT
+CLASS="FILENAME"
+>seriesAverages.xsl</TT
+> and
+      <TT
+CLASS="FILENAME"
+>periodAverages.xsl</TT
+>, to show the average series pass
+      rate over time grouped by resource and suite.  The amount of history shown
+      is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
+      query parameters described in <A
 HREF="userguide-consumer.html#VIEW-QUERY"
 >Section 6.3.3</A
 >. 
-  </P
+      </P
 ><P
->The statistics for these reports are generated by <TT
-CLASS="FILENAME"
->summaryHistory.jsp</TT
-> using the
-		<TT
-CLASS="FILENAME"
->seriesAverages.xsl</TT
-> and <TT
-CLASS="FILENAME"
->periodAverages.xsl</TT
-> stylesheets.</P
-><P
->        <P
 ><IMG
 SRC="figures/consumer/summaryHistoryJsp.gif"
 ALIGN="CENTER"></P
->
-       </P
 ></DIV
 ></DIV
 ><DIV
@@ -1069,7 +1017,9 @@ NAME="QUERY-PAGES"
 >6.3. Query</A
 ></H2
 ><P
->The query pages allow users to generate graphs and cache queries to improve data display.</P
+>    The query pages allow users to generate graphs and cache queries to improve
+    data display.
+    </P
 ><DIV
 CLASS="SECTION"
 ><H3
@@ -1079,42 +1029,22 @@ NAME="GRAPH-SERIES"
 >6.3.1. Create Graph</A
 ></H3
 ><P
->      To query the history of more than one series on graphs similar to the
-      report described in <A
-HREF="userguide-consumer.html#PASS-FAIL-REPORT"
->Section 6.2.1</A
->, click on the
-      "create sampleSuite graph" link underneath the "QUERY" menu or use
-      the link below to display a form. 
-      </P
-><P
->      <A
-HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
-TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?xsl=graph.xsl&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
-> 
-      </P
-><P
->      The form will display all of the series names and checkboxes.  
-      This page is generated when <TT
-CLASS="FILENAME"
->graph.xsl</TT
-> is used as
-      the xsl parameter for <TT
+>      The first item of the QUERY menu executes
+      <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> along with a list
-      of
-      resourceIds and suiteNames similar to <A
-HREF="userguide-consumer.html#TABLE-SUMMARY"
->Section 6.1.1</A
->.
-        <P
+> with <TT
+CLASS="FILENAME"
+>graph.xsl</TT
+> 
+      to create a form that allows you to
+      graph the history of more than one series.  The form allows you select
+      the set of series of interest via a set of checkboxes.
+      </P
+><P
 ><IMG
 SRC="figures/consumer/graphForm.jpg"
 ALIGN="CENTER"></P
->
-      </P
 ><P
 >        After selecting the "vtk-nvgl_version" series and
         clicking on the "graph" button in the form above,
@@ -1180,35 +1110,35 @@ NAME="CREATE-QUERY"
 >6.3.2. Create Stored Query</A
 ></H3
 ><P
->        The consumer can cache frequently executed depot queries in order to
-        improve data display speed.   For example, the latest results for a
-        suite can be cached in order to quickly display a suite status page.
-        By default the latest results for the sampleSuite are cached every 15
-        minutes.  Results are also cached each day for historical reports.
-        </P
-><P
->        Cached queries can be created using the query management page described
-        in <A
-HREF="userguide-consumer.html#VIEW-QUERY"
->Section 6.3.3</A
-> or by checking boxes in the form
-        generated by <TT
+>        The second item in the QUERY menu executes
+        <TT
 CLASS="FILENAME"
 >status.jsp</TT
-> and
+> with
         <TT
 CLASS="FILENAME"
 >create-query.xsl</TT
->.  The checkbox form builds a
-        query from selected series.
+> to provide a form for creating a
+        cached
+        query.  The consumer can cache frequently executed depot queries in
+        order to improve data display speed.   For example, the latest results
+        for a suite can be cached in order to quickly display a suite status
+        page.  By default the latest results for the sampleSuite are cached
+        every 2 minutes.  Results are also cached each day for historical
+        reports.
         </P
 ><P
->        <P
+>        Unless password protection has been disabled as described in
+        <A
+HREF="userguide-consumer.html#PASSWORD-CONSUMER"
+>Section 6.11</A
+>, pressing the "STORE QUERY" button
+        on this page causes the consumer to prompt for an id and password.
+        </P
+><P
 ><IMG
 SRC="figures/consumer/create-query.gif"
 ALIGN="CENTER"></P
->
-        </P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1219,11 +1149,17 @@ NAME="VIEW-QUERY"
 >6.3.3. Manage Stored Queries</A
 ></H3
 ><P
->        Default cached queries can be managed via the
-        <TT
+>        The third item in the QUERY menu invokes <TT
 CLASS="FILENAME"
 >query.jsp</TT
-> page.  Click on one of the pre-defined
+>
+        to allow management of cached queries.  Unless password protection has
+        been disabled as described in <A
+HREF="userguide-consumer.html#PASSWORD-CONSUMER"
+>Section 6.11</A
+>,
+        selecting this item causes the consumer to prompt for an id and
+        password.  Click on one of the pre-defined
         queries to see its parameters.  Each query has a name, execution
         schedule, depot command it executes and the parameters for the depot
         command executed.
@@ -1237,8 +1173,8 @@ ALIGN="CENTER"></P
         </P
 ><P
 >        By default, the latest instances of all suites are cached every
-        15 minutes named as incaQueryLatest+agentUri_suiteName.  These
-        cached suites are used to for the "CURRENT DATA" views described in
+        2 minutes named as incaQueryLatest+agentUri_suiteName.  These
+        cached suites are used for the CURRENT DATA menu views described in
         <A
 HREF="userguide-consumer.html#CURRENT-DATA"
 >Section 6.1</A
@@ -1248,10 +1184,10 @@ HREF="userguide-consumer.html#CURRENT-DATA"
         is used for the several of the reports described in <A
 HREF="userguide-consumer.html#REPORTS"
 >Section 6.2</A
->.  To display say 10 weeks of history, modify "28"
-        days to "70" and click "Change".  Note, if any of these default queries
-        are deleted, they will be re-added by the consumer.
-      </P
+>.  To display 10 weeks of history instead, modify "28"
+        days to "70" and click "Change".  Note that the consumer will
+        automatically re-create any of these default queries that are deleted.
+        </P
 ></DIV
 ></DIV
 ><DIV
@@ -1263,7 +1199,7 @@ NAME="INFO"
 >6.4. Info</A
 ></H2
 ><P
->Currently the only informational page is a list of
+>Currently the only INFO menu item displays a list of
       all running reporters in an inca deployment.  To link other informational
       pages under this heading, customize the
       <TT
@@ -1279,8 +1215,8 @@ HREF="userguide-consumer.html#CUSTOM-HTML-HEADER"
 SRC="figures/consumer/running-reporters.jpg"
 ALIGN="CENTER"></P
 ><P
->    Note, that the links to the reporter scripts rely on a CGI script and will
-    not work if you have a local repository (as deployed in the default
+>    Note that the links to the reporter scripts rely on a CGI script and so
+    will not work if you have a local repository (as deployed in the default
     installation).  You will need to a web accessible reporter repository as
     described in <A
 HREF="userguide-reporters.html#REPORTER-REPOSITORIES"
@@ -1308,7 +1244,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN704"
+NAME="AEN678"
 ></A
 ><P
 ><B
@@ -1906,7 +1842,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN908"
+NAME="AEN882"
 ></A
 ><P
 ><B
