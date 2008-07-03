@@ -2565,7 +2565,7 @@ HREF="#CONSUMER-PORT"
 >  The default consumer's JSPs query the depot for XML results and
   either apply XSL to them in order to display HTML status pages or 
   parse out data and display it in graphs.  The figure below shows
-  the default menu header.  Each menu item generates invokes a JSP as
+  the default menu header.  Each menu item invokes a JSP as
   described in the sections below.
   </P
 ><P
@@ -2705,9 +2705,9 @@ TARGET="_top"
 COLOR="RED"
 >yourHost</FONT
 ></STRONG
->:8080 in the "My
-        web site URL" text box and click the "Generate API key" button.  A new
-        page will display a key for your server that looks something like
+>:8080" in the "My
+        web site URL" text box, then click the "Generate API key" button.  A
+        new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
         Copy this key, then edit line 12 of
         <TT
@@ -2800,21 +2800,22 @@ NAME="GOOGLE-ACCESS"
 >6.1.2.3. Accessing the Google Map View</A
 ></H5
 ><P
->        Once setup is complete, load the map view by clicking on the Map of
-        sampleSuite results item of the CURRENT DATA menu in
-        the navigation bar.  In the default installation, this links to
-        <A
-HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
-TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
->
+>        Once setup is complete, load the map view by selecting the "Map of
+        sampleSuite results" item of the CURRENT DATA menu in
+        the navigation bar.
         </P
 ><P
 ><IMG
 SRC="figures/consumer/googleMapMenu.png"
 ALIGN="CENTER"></P
 ><P
->        This shows one resource and the Inca logo, similar to the map
+>        In the default installation, this links to
+        <A
+HREF="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&#38;xml=google.xml&#38;suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
+>.
+        This shows one resource and the Inca logo, similar to the map
         below.  The resource status for multiple suites can be shown by
         editing <TT
 CLASS="FILENAME"
@@ -2939,8 +2940,7 @@ CLASS="FILENAME"
 >              The initial magnification, or zoom level, of the map is expressed
               as a number between 1 and 12, located on line 24.
               Zoom level 1 displays the entire world, while zoom level 12
-              allows you to read street names.  The default initial zoom level
-              of 4 allows most of the U.S. to be viewed.
+              allows you to read street names.
               <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3295,7 +3295,7 @@ NAME="PASS-FAIL-REPORT"
 >6.2.1. Pass/Fail Graphs and Error Messages</A
 ></H4
 ><P
->      The first item in the REPORTS menu invokes 
+>      The first item in the REPORTS menu executes 
       <TT
 CLASS="FILENAME"
 >report.jsp</TT
@@ -3306,8 +3306,7 @@ CLASS="FILENAME"
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xml/statusReport.xml</TT
 > to
-      change the look and contents of this report; see
-      $INCA_DIST/webapps/inca/xml/statusReport.xml for details on the format.
+      change the look and contents of this report.
       The default consumer groups different combinations of sampleSuite series
       and displays the past two
       weeks of results.  Each set of series has a title (e.g., Software
@@ -3340,7 +3339,7 @@ CLASS="FILENAME"
       <TT
 CLASS="FILENAME"
 >periodAverages.xsl</TT
->, to show the average series pass
+> to show the average series pass
       rate by resource and suite for the past week.  Each bar label shows the
       value of
       the average series pass rate for the last week and the difference in
@@ -3428,7 +3427,7 @@ CLASS="FILENAME"
       <TT
 CLASS="FILENAME"
 >periodAverages.xsl</TT
->, to show the average series pass
+> to show the average series pass
       rate over time grouped by resource and suite.  The amount of history shown
       is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
       query parameters described in <A
@@ -3482,17 +3481,12 @@ ALIGN="CENTER"></P
 ><P
 >        After selecting the "vtk-nvgl_version" series and
         clicking on the "graph" button in the form above,
-        a graph page is shown with
+        a graph page similar to the one below is shown with
         an XY plot of the pass/fail status of the selected
         series, a series pass/fail summary table, a bar graph of
         error message frequency (if the selected series have errors),
         a summary table of error messages, and a form to customize the graph
-        further (as in the image below).
-        This graph page is generated by the <TT
-CLASS="FILENAME"
->graph.jsp</TT
->
-        script with Cewolf tags.
+        further.
         <P
 ><IMG
 SRC="figures/consumer/graph1.jpg"
@@ -3553,8 +3547,13 @@ CLASS="FILENAME"
 CLASS="FILENAME"
 >create-query.xsl</TT
 > to provide a form for creating a
-        cached
-        query.  The consumer can cache frequently executed depot queries in
+        cached query.  Unless password protection has been disabled as
+        described in <A
+HREF="#PASSWORD-CONSUMER"
+>Section 6.11</A
+>, selecting this item
+        causes the consumer to prompt for an id and password.
+        The consumer can cache frequently executed depot queries in
         order to improve data display speed.   For example, the latest results
         for a suite can be cached in order to quickly display a suite status
         page.  By default the latest results for the sampleSuite are cached
@@ -3562,16 +3561,34 @@ CLASS="FILENAME"
         reports.
         </P
 ><P
->        Unless password protection has been disabled as described in
-        <A
-HREF="#PASSWORD-CONSUMER"
->Section 6.11</A
->, pressing the "STORE QUERY" button
-        on this page causes the consumer to prompt for an id and password.
+><IMG
+SRC="figures/consumer/create-query.gif"
+ALIGN="CENTER"></P
+><P
+>        Cached queries can be used to display custom tables of latest results,
+        using the queryNames parameter to <TT
+CLASS="FILENAME"
+>status.jsp</TT
+>
+        For example, the image below shows the creation of a cached query,
+        named gccTests, for two series in the default installation.
         </P
 ><P
 ><IMG
-SRC="figures/consumer/create-query.gif"
+SRC="figures/ug-query-create.png"
+ALIGN="CENTER"></P
+><P
+>        Once this query has been stored and executed, the table shown below can
+        be viewed via
+        <A
+HREF="http://localhost:8080/inca/jsp/status.jsp?queryNames=gccTests&#38;resourceIds=defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/status.jsp?queryNames=gccTests&#38;resourceIds=defaultGrid</A
+>
+        </P
+><P
+><IMG
+SRC="figures/ug-query-table.png"
 ALIGN="CENTER"></P
 ></DIV
 ><DIV
@@ -3583,7 +3600,7 @@ NAME="VIEW-QUERY"
 >6.3.3. Manage Stored Queries</A
 ></H4
 ><P
->        The third item in the QUERY menu invokes <TT
+>        The third item in the QUERY menu executes <TT
 CLASS="FILENAME"
 >query.jsp</TT
 >
@@ -3607,8 +3624,20 @@ ALIGN="CENTER"></P
         </P
 ><P
 >        By default, the latest instances of all suites are cached every
-        2 minutes named as incaQueryLatest+agentUri_suiteName.  These
-        cached suites are used for the CURRENT DATA menu views described in
+        2 minutes by predefined queries named
+        incaQueryLatest+<STRONG
+><FONT
+COLOR="RED"
+>agentUri</FONT
+></STRONG
+>_<STRONG
+><FONT
+COLOR="RED"
+>suiteName</FONT
+></STRONG
+>.
+        These
+        cached queries are used for the CURRENT DATA menu views described in
         <A
 HREF="#CURRENT-DATA"
 >Section 6.1</A
@@ -3678,7 +3707,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN678"
+NAME="AEN684"
 ></A
 ><P
 ><B
@@ -4276,7 +4305,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN882"
+NAME="AEN888"
 ></A
 ><P
 ><B
@@ -5005,12 +5034,12 @@ CLASS="SCREEN"
 ><P
 >Any other link can be added or removed as a list element.  The
           stylesheet supports additional levels of nested list links.  Note that
-          the top level list elements are displayed from bottom to top (i.e. "Current Data"
+          the top level list elements are displayed from bottom to top (i.e., CURRENT DATA
           is listed last in <TT
 CLASS="FILENAME"
 >header.xsl</TT
 > but it is displayed
-          further left than "Historical Data" and "Info" in the navigation bar).
+          further left than REPORTS and INFO in the navigation bar).
         </P
 ><P
 >Another example of customizing the HTML header would be to add a call to a custom header stylesheet in the
@@ -5116,7 +5145,7 @@ NAME="CONSUMER-ALT-LOCATION"
 >6.7. Changing the Installation Location</A
 ></H3
 ><P
->You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </P
+>You can install the data consumer in a non-default location (e.g., on a machine where the depot and agent are not running) if you: </P
 ><P
 ></P
 ><UL
@@ -5590,8 +5619,11 @@ NAME="PASSWORD-CONSUMER"
       <TT
 CLASS="FILENAME"
 >query.jsp</TT
-> page.  To expand or remove password
-      protection,
+> and <TT
+CLASS="FILENAME"
+>status-auth.jsp</TT
+>
+      pages.  To expand or remove password protection,
       edit the section 'require authentication on specific status pages'
       in <TT
 CLASS="FILENAME"
@@ -5612,6 +5644,7 @@ CLASS="SCREEN"
       &#60;web-resource-collection&#62;
         &#60;web-resource-name&#62;Inca Status Pages&#60;/web-resource-name&#62;
         &#60;url-pattern&#62;/jsp/query.jsp&#60;/url-pattern&#62;
+        &#60;url-pattern&#62;/jsp/status-auth.jsp&#60;/url-pattern&#62;
       &#60;/web-resource-collection&#62;
       &#60;auth-constraint&#62;
         &#60;role-name&#62;*&#60;/role-name&#62;
@@ -5794,7 +5827,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1217"
+NAME="AEN1224"
 ></A
 ><P
 ><B
@@ -7189,7 +7222,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1506"
+NAME="AEN1513"
 ></A
 ><P
 ><B
@@ -7411,7 +7444,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1553"
+NAME="AEN1560"
 ></A
 ><P
 ><B
@@ -7916,7 +7949,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1660"
+NAME="AEN1667"
 ></A
 ><P
 ><B
@@ -9464,7 +9497,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2001"
+NAME="AEN2008"
 ></A
 ><P
 ><B
@@ -10139,7 +10172,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2146"
+NAME="AEN2153"
 ></A
 ><P
 ><B
