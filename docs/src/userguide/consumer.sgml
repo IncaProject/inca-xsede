@@ -48,10 +48,10 @@
     <section id="table-summary">
       <title>Tabular Suite Summary View</title>
       <para>
-      The first item in the CURRENT DATA menu applies
-      <filename>default.xsl</filename> to the output of
-      <filename>status.jsp</filename> to create a summary table of suite
-      results.  This JSP takes comma-delimited lists in its suiteNames and
+      The first item in the CURRENT DATA menu executes
+      <filename>status.jsp</filename> with <filename>default.xsl</filename> to
+      create a summary table of suite results. 
+      This JSP takes comma-delimited lists in its suiteNames and
       resourceIds parameters that specify the suites and resources to be shown.
       The default installation invokes
       <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">
@@ -67,9 +67,9 @@
       <section id="google-overview">
         <title>Overview</title>
         <para>
-        The second item in the CURRENT DATA menu applies
-        <filename>google.xsl</filename> to the output of
-        <filename>status.jsp</filename> to display a map that provides a
+        The second item in the CURRENT DATA menu executes
+        <filename>status.jsp</filename> using <filename>google.xsl</filename> 
+        to display a map that provides a
         summary of the current status of resources.  For each resource, the map
         view gives the percentage of reports passed, number of passed reports,
         number of failed reports, and a list of the failed tests with a link to
@@ -397,13 +397,15 @@ http://www.google.com/apis/maps/signup.html --&gt;
     <section id="pass-fail-report">
       <title>Pass/Fail Graphs and Error Messages</title>
       <para>
-      The first item in the REPORTS menu invokes
-      <filename>report.jsp</filename> to generate historical summary reports
-      with pass/fail status and error information.  You can edit the file
+      The first item in the REPORTS menu invokes 
+      <filename>report.jsp</filename>, which uses CeWolf/JfreeChart, to
+      generate historical summary reports with pass/fail status and error
+      information.  You can edit the file
       <filename>$INCA_DIST/webapps/inca/xml/statusReport.xml</filename> to
       change the look and contents of this report; see
-      <xref linkend="file-desc"> for details.  The default consumer groups
-      different combinations of sampleSuite series and displays the past two
+      $INCA_DIST/webapps/inca/xml/statusReport.xml for details on the format.
+      The default consumer groups different combinations of sampleSuite series
+      and displays the past two
       weeks of results.  Each set of series has a title (e.g., Software
       Deployment Tests) for its grouping and the series nickname, resource
       name, and report label for each series in the group.
@@ -416,11 +418,12 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <title>Average Pass Rate by Resource/Suite</title>
 
       <para>
-      The second item in the REPORTS menu applies
-      <filename>seriesAverages.xsl</filename> and
-      <filename>periodAverages.xsl</filename> to the output of
-      <filename>summary.jsp</filename> to show the average series pass rate by
-      resource and suite for the past week.  Each bar label shows the value of
+      The second item in the REPORTS menu executes
+      <filename>summary.jsp</filename>, which uses CeWolf/JfreeChart and
+      stylesheets <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename>, to show the average series pass
+      rate by resource and suite for the past week.  Each bar label shows the
+      value of
       the average series pass rate for the last week and the difference in
       percentage from the previous week. The color is green if the average pass
       rate is better than the previous week, red if the average pass rate is
@@ -446,9 +449,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <title>Series Error Summary</title>
 
       <para>
-      The third item in the REPORTS menu applies
-      <filename>seriesSummary.xsl</filename> to the output of
-      <filename>status.jsp</filename> to summarize test series errors by time
+      The third item in the REPORTS menu executes
+      <filename>status.jsp</filename> with
+      <filename>seriesSummary.xsl</filename> to summarize test series errors
+      by time
       period.  Each time period includes the number of errors for the series
       during the time period, the number of unique or distinct errors during
       the period, and the percentage of the total results that passed during
@@ -474,10 +478,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
     <section id="ave-pass-history-report">
       <title>Average Pass History</title>
       <para>
-      The fourth and fifth items in the REPORTS menu apply
-      <filename>seriesAverages.xsl</filename> and
-      <filename>periodAverages.xsl</filename> to the output of
-      <filename>summaryHistory.jsp</filename> to show the average series pass
+      The fourth and fifth items in the REPORTS menu execute
+      <filename>summaryHistory.jsp</filename>, which uses CeWolf/JfreeChart
+      and stylesheets <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename>, to show the average series pass
       rate over time grouped by resource and suite.  The amount of history shown
       is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
       query parameters described in <xref linkend="view-query">. 
@@ -498,9 +502,9 @@ http://www.google.com/apis/maps/signup.html --&gt;
    <section id="graph-series">
       <title>Create Graph</title>
       <para>
-      The first item of the QUERY menu applies
-      <filename>graph.xsl</filename> to the output of
-      <filename>status.jsp</filename> to create a form that allows you to
+      The first item of the QUERY menu executes
+      <filename>status.jsp</filename> with <filename>graph.xsl</filename> 
+      to create a form that allows you to
       graph the history of more than one series.  The form allows you select
       the set of series of interest via a set of checkboxes.
       </para>
@@ -547,9 +551,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <section id="create-query">
         <title>Create Stored Query</title>
         <para>
-        The second item in the QUERY menu appies
-        <filename>create-query.xsl</filename> to the output of
-        <filename>status.jsp</filename> to provide a form for creating a cached
+        The second item in the QUERY menu executes
+        <filename>status.jsp</filename> with
+        <filename>create-query.xsl</filename> to provide a form for creating a
+        cached
         query.  The consumer can cache frequently executed depot queries in
         order to improve data display speed.   For example, the latest results
         for a suite can be cached in order to quickly display a suite status
@@ -584,12 +589,12 @@ http://www.google.com/apis/maps/signup.html --&gt;
         <para>
         By default, the latest instances of all suites are cached every
         2 minutes named as incaQueryLatest+agentUri_suiteName.  These
-        cached suites are used to for the CURRENT DATA menu views described in
+        cached suites are used for the CURRENT DATA menu views described in
         <xref linkend="current-data">.  Another default query is
         "incaQueryStatus" which retrieves a summary of the number of successes
         and failures for each series for the past 4 weeks.  This cached query
         is used for the several of the reports described in <xref
-        linkend="reports">.  To display, say, 10 weeks of history, modify "28"
+        linkend="reports">.  To display 10 weeks of history instead, modify "28"
         days to "70" and click "Change".  Note that the consumer will
         automatically re-create any of these default queries that are deleted.
         </para>
