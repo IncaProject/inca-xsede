@@ -551,20 +551,18 @@ http://www.google.com/apis/maps/signup.html --&gt;
         The second item in the QUERY menu executes
         <filename>status.jsp</filename> with
         <filename>create-query.xsl</filename> to provide a form for creating a
-        cached
-        query.  The consumer can cache frequently executed depot queries in
+        cached query.  Unless password protection has been disabled as
+        described in <xref linkend="password-consumer">, selecting this item
+        causes the consumer to prompt for an id and password.
+        The consumer can cache frequently executed depot queries in
         order to improve data display speed.   For example, the latest results
         for a suite can be cached in order to quickly display a suite status
         page.  By default the latest results for the sampleSuite are cached
         every 2 minutes.  Results are also cached each day for historical
         reports.
         </para>
-        <para>
-        Unless password protection has been disabled as described in
-        <xref linkend="password-consumer">, pressing the "STORE QUERY" button
-        on this page causes the consumer to prompt for an id and password.
-        </para>
-        <graphic fileref="figures/consumer/create-query.gif" align="center"></graphic>
+        <graphic fileref="figures/consumer/create-query.gif" align="center">
+        </graphic>
       </section>
 
       <section id="view-query">
@@ -1372,8 +1370,8 @@ http://www.google.com/apis/maps/signup.html --&gt;
     <title>Adding Password Protection</title>
     <para>
       By default, a password is only required on the
-      <filename>query.jsp</filename> page.  To expand or remove password
-      protection,
+      <filename>query.jsp</filename> and <filename>status-auth.jsp</filename>
+      pages.  To expand or remove password protection,
       edit the section 'require authentication on specific status pages'
       in <filename>$INCA_DIST/webapps/inca/WEB-INF/web.xml</filename>.
     </para>
@@ -1383,6 +1381,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
       &lt;web-resource-collection&gt;
         &lt;web-resource-name&gt;Inca Status Pages&lt;/web-resource-name&gt;
         &lt;url-pattern&gt;/jsp/query.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/status-auth.jsp&lt;/url-pattern&gt;
       &lt;/web-resource-collection&gt;
       &lt;auth-constraint&gt;
         &lt;role-name&gt;*&lt;/role-name&gt;
