@@ -27,7 +27,7 @@
   The default consumer's JSPs query the depot for XML results and
   either apply XSL to them in order to display HTML status pages or 
   parse out data and display it in graphs.  The figure below shows
-  the default menu header.  Each menu item generates invokes a JSP as
+  the default menu header.  Each menu item invokes a JSP as
   described in the sections below.
   </para>
   
@@ -102,9 +102,9 @@
         To access the map view, you need to install a Google Maps API key in
         your Inca consumer.  To generate one, go the Google Maps API web page at
         <ulink url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>,
-        type "http://<emphasis role="red">yourHost</emphasis>:8080 in the "My
-        web site URL" text box and click the "Generate API key" button.  A new
-        page will display a key for your server that looks something like
+        type "http://<emphasis role="red">yourHost</emphasis>:8080" in the "My
+        web site URL" text box, then click the "Generate API key" button.  A
+        new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
         Copy this key, then edit line 12 of
         <filename>$INCA_DIST/webapps/xml/google.xml</filename>.
@@ -153,14 +153,15 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <section id="google-access">
         <title>Accessing the Google Map View</title>
         <para>
-        Once setup is complete, load the map view by clicking on the Map of
-        sampleSuite results item of the CURRENT DATA menu in
-        the navigation bar.  In the default installation, this links to
-        <ulink url="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>
+        Once setup is complete, load the map view by selecting the "Map of
+        sampleSuite results" item of the CURRENT DATA menu in
+        the navigation bar.
         </para>
         <graphic fileref="figures/consumer/googleMapMenu.png" align="center">
         </graphic>
         <para>
+        In the default installation, this links to
+        <ulink url="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>.
         This shows one resource and the Inca logo, similar to the map
         below.  The resource status for multiple suites can be shown by
         editing <filename>header.xsl</filename> to provide comma-delimited
@@ -224,8 +225,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
               The initial magnification, or zoom level, of the map is expressed
               as a number between 1 and 12, located on line 24.
               Zoom level 1 displays the entire world, while zoom level 12
-              allows you to read street names.  The default initial zoom level
-              of 4 allows most of the U.S. to be viewed.
+              allows you to read street names.
               <screen>
                 23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
                 24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
@@ -397,13 +397,12 @@ http://www.google.com/apis/maps/signup.html --&gt;
     <section id="pass-fail-report">
       <title>Pass/Fail Graphs and Error Messages</title>
       <para>
-      The first item in the REPORTS menu invokes 
+      The first item in the REPORTS menu executes 
       <filename>report.jsp</filename>, which uses CeWolf/JfreeChart, to
       generate historical summary reports with pass/fail status and error
       information.  You can edit the file
       <filename>$INCA_DIST/webapps/inca/xml/statusReport.xml</filename> to
-      change the look and contents of this report; see
-      $INCA_DIST/webapps/inca/xml/statusReport.xml for details on the format.
+      change the look and contents of this report.
       The default consumer groups different combinations of sampleSuite series
       and displays the past two
       weeks of results.  Each set of series has a title (e.g., Software
@@ -421,7 +420,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
       The second item in the REPORTS menu executes
       <filename>summary.jsp</filename>, which uses CeWolf/JfreeChart and
       stylesheets <filename>seriesAverages.xsl</filename> and
-      <filename>periodAverages.xsl</filename>, to show the average series pass
+      <filename>periodAverages.xsl</filename> to show the average series pass
       rate by resource and suite for the past week.  Each bar label shows the
       value of
       the average series pass rate for the last week and the difference in
@@ -481,7 +480,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
       The fourth and fifth items in the REPORTS menu execute
       <filename>summaryHistory.jsp</filename>, which uses CeWolf/JfreeChart
       and stylesheets <filename>seriesAverages.xsl</filename> and
-      <filename>periodAverages.xsl</filename>, to show the average series pass
+      <filename>periodAverages.xsl</filename> to show the average series pass
       rate over time grouped by resource and suite.  The amount of history shown
       is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
       query parameters described in <xref linkend="view-query">. 
@@ -513,14 +512,12 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <para>
         After selecting the "vtk-nvgl_version" series and
         clicking on the "graph" button in the form above,
-        a graph page is shown with
+        a graph page similar to the one below is shown with
         an XY plot of the pass/fail status of the selected
         series, a series pass/fail summary table, a bar graph of
         error message frequency (if the selected series have errors),
         a summary table of error messages, and a form to customize the graph
-        further (as in the image below).
-        This graph page is generated by the <filename>graph.jsp</filename>
-        script with Cewolf tags.
+        further.
         <graphic fileref="figures/consumer/graph1.jpg" align="center"></graphic>
       </para>
       <para>Only two weeks of data are returned
@@ -573,7 +570,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
       <section id="view-query">
         <title>Manage Stored Queries</title>
         <para>
-        The third item in the QUERY menu invokes <filename>query.jsp</filename>
+        The third item in the QUERY menu executes <filename>query.jsp</filename>
         to allow management of cached queries.  Unless password protection has
         been disabled as described in <xref linkend="password-consumer">,
         selecting this item causes the consumer to prompt for an id and
@@ -588,8 +585,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
 
         <para>
         By default, the latest instances of all suites are cached every
-        2 minutes named as incaQueryLatest+agentUri_suiteName.  These
-        cached suites are used for the CURRENT DATA menu views described in
+        2 minutes by predefined queries named
+        incaQueryLatest+<emphasis role="red">agentUri</emphasis>_<emphasis role="red">suiteName</emphasis>.
+        These
+        cached queries are used for the CURRENT DATA menu views described in
         <xref linkend="current-data">.  Another default query is
         "incaQueryStatus" which retrieves a summary of the number of successes
         and failures for each series for the past 4 weeks.  This cached query
@@ -1147,9 +1146,9 @@ http://www.google.com/apis/maps/signup.html --&gt;
         </para>
         <para>Any other link can be added or removed as a list element.  The
           stylesheet supports additional levels of nested list links.  Note that
-          the top level list elements are displayed from bottom to top (i.e. "Current Data"
+          the top level list elements are displayed from bottom to top (i.e., CURRENT DATA
           is listed last in <filename>header.xsl</filename> but it is displayed
-          further left than "Historical Data" and "Info" in the navigation bar).
+          further left than REPORTS and INFO in the navigation bar).
         </para>
 
         <para>Another example of customizing the HTML header would be to add a call to a custom header stylesheet in the
@@ -1197,7 +1196,7 @@ http://www.google.com/apis/maps/signup.html --&gt;
 
   <section id="consumer-alt-location">
     <title>Changing the Installation Location</title>
-    <para>You can install the data consumer in a non-default location (e.g. on a machine where the depot and agent are not running) if you: </para>
+    <para>You can install the data consumer in a non-default location (e.g., on a machine where the depot and agent are not running) if you: </para>
     <itemizedList>
       <listItem>
         <para>
