@@ -18,11 +18,13 @@ my %pages = (
   'summary.html' => "http://$hostport/inca/jsp/status.jsp?xml=ctssv3.xml&xsl=summary.xsl&resourceIds=teragrid-login&suiteNames=ctss",
   'ctssv3-expanded.html' => "$c3jsp&xml=ctssv3.xml&xsl=swStack.xsl",
   'ctssv3-graph.html' => "$c3jsp&xml=ctssv3.xml&xsl=graph.xsl",
+  'ctssv3-query.html' => "$c3jsp&xml=ctssv3.xml&xsl=create-query.xsl",
   'ctssv3-map.html' => "$c3jsp&xml=google.xml&xsl=google.xsl",
   'ctssv4.html' => "$c4jsp$c4xml&xsl=swStack.xsl&noCategoryHeaders",
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
+  'ctssv4-query.html' => "$c4jsp$c4xml&xsl=create-query.xsl",
   'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
-  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=remote-compute.teragrid.org-4.0.0&resourceIds=remote-compute.teragrid.org-4.0.0&xml=remote-compute.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=remote-compute.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0&resourceIds=remote-compute.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0&xml=remote-compute.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
 
 my $errors = "";
@@ -35,7 +37,7 @@ for my $page ( keys %pages ) {
   my $endTime = time();
   my $loadTime = $endTime - $startTime; 
   if ( $? != 0 || ! -f $tmpPage ) { 
-    $errors .= " $page"; 
+    $errors .= " $page=$pages{$page}"; 
   } else {
     open( FD, "<$tmpPage" );
     local $/; 
