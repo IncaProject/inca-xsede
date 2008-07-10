@@ -5765,16 +5765,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|anl-grid|Indiana)$')]</xpath>
+        <name>real-time-prewsgram-4.0.0</name>
+        <xpath>//resource[matches(name, '^(ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram</value>
+            <value>real-time-prewsgram-4.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ncsa-tungsten anl-grid Indiana</value>
+            <value>ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-tun ncsa-ia64</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5787,16 +5787,16 @@
         </macros>
       </resource>
       <resource>
-        <name>real-time-prewsgram-4.0.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-tungsten|cobalt\.ncsa\.teragrid\.org|ncsa-grid-tun|ncsa-ia64)$')]</xpath>
+        <name>real-time-prewsgram</name>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ncsa-tungsten|anl-grid|Indiana)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
-            <value>real-time-prewsgram-4.0.0</value>
+            <value>real-time-prewsgram</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-tungsten cobalt.ncsa.teragrid.org ncsa-grid-tun ncsa-ia64</value>
+            <value>SDSC ncsa-cobalt ncsa-tungsten anl-grid Indiana</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6575,6 +6575,32 @@
           <macro>
             <name>__regexp__</name>
             <value>anl-ia64 anl-viz lonestar.tacc.teragrid.org ranger.tacc.teragrid.org ncsa-grid-hg frost.ncar.teragrid.org bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>remote-compute.teragrid.org-4.0.2-ogsadai</name>
+        <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-hg|lonestar\.tacc\.teragrid\.org|maverick\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|dtf\.uc\.teragrid\.org|viz\.uc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>remote4.0.2-ogsadai</name>
+            <value>https://@remote4.0.2-gatekeeper-host@:8443/wsrf/services/ogsadai/Teragrid</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>remote-compute.teragrid.org-4.0.2-ogsadai</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>bigred.iu.teragrid.org queenbee.loni-lsu.teragrid.org frost.ncar.teragrid.org ncsa-grid-hg lonestar.tacc.teragrid.org maverick.tacc.teragrid.org ranger.tacc.teragrid.org dtf.uc.teragrid.org viz.uc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -17442,6 +17468,96 @@
                 <target>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu</target>
               </notification>
             </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.ogsadai</name>
+            <args>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.2-ogsadai@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>account</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ogsadai-account</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.2-ogsadai</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.ogsadai</name>
+            <args>
+              <arg>
+                <name>contact</name>
+                <value>@remote4.0.2-ogsadai@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>audit</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ogsadai-audit</nickname>
+          <resourceSetName>remote-compute.teragrid.org-4.0.2-ogsadai</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
