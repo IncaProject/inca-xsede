@@ -6,7 +6,7 @@
     <resources>
       <resource>
         <name>ALL-RM</name>
-        <xpath>//resource[matches(name, '^(teragrid|NCSA-gatekeepers|repo|sapa)$')]</xpath>
+        <xpath>//resource[matches(name, '^(teragrid|NCSA-gatekeepers|repo|sapa|anl-build)$')]</xpath>
         <macros>
           <macro>
             <name>psArgs</name>
@@ -15,22 +15,6 @@
           <macro>
             <name>psMax</name>
             <value>40</value>
-          </macro>
-          <macro>
-            <name>__groupname__</name>
-            <value>ALL-RM</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>teragrid NCSA-gatekeepers repo sapa</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>globus2</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
           </macro>
           <macro>
             <name>maxSched</name>
@@ -43,6 +27,22 @@
           <macro>
             <name>tgContact</name>
             <value>FailTo:inca@sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>ALL-RM</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>teragrid NCSA-gatekeepers repo sapa anl-build</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
           </macro>
         </macros>
       </resource>
@@ -683,6 +683,64 @@
         </macros>
       </resource>
       <resource>
+        <name>anl-build</name>
+        <xpath>//resource[matches(name, '^(build\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__regexpTmp__</name>
+            <value>tg-login2.uc.teragrid.org tg-login.uc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>anl-build</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>build.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_dsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>HmAnvxgybtpDlSORFSej3A==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/home/inca/inca2install-build</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>anl-grid</name>
         <xpath>//resource[matches(name, '^(tg-grid1.uc.teragrid.org)$')]</xpath>
         <macros>
@@ -829,10 +887,6 @@
           <macro>
             <name>remote3.0.0-gatekeeper-host</name>
             <value>tg-grid1.uc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>real-time-fs</name>
-            <value>/disks/scratchgpfs1</value>
           </macro>
           <macro>
             <name>real-time-gridftp-host</name>
@@ -1001,6 +1055,10 @@
           <macro>
             <name>apps4.0.0-hdf4-key</name>
             <value>@keyPre@hdf4-4.2r1-gcc3.4 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>real-time-fs</name>
+            <value>/scratch/gpfs/local</value>
           </macro>
         </macros>
       </resource>
@@ -8170,7 +8228,7 @@
       </resource>
       <resource>
         <name>teragrid</name>
-        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC|LONI|NICS)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL|Indiana|ORNL|Purdue|PSC|TACC|LONI|NICS|anl-build)$')]</xpath>
         <macros>
           <macro>
             <name>keyPre</name>
@@ -8344,7 +8402,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC LONI NICS</value>
+            <value>NCAR SDSC NCSA ANL Indiana ORNL Purdue PSC TACC LONI NICS anl-build</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8635,6 +8693,9 @@
       </resource>
       <resource>
         <name>bglogin.sdsc.edu</name>
+      </resource>
+      <resource>
+        <name>build.teragrid.org</name>
       </resource>
       <resource>
         <name>co-login1.ncsa.uiuc.edu</name>
