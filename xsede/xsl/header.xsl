@@ -47,18 +47,55 @@
                 <ul>
                   <li>
                     <a href="{concat($url, '/html/ctssv4-graph.html')}">
-                      Create CTSSv4 graph
+                      CTSSv4
                     </a>
+		    <ul>
+                      <li>
+                        <a href="{concat($url, '/html/ctssv4-graph.html')}">
+                          Create historical graph
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{concat($url, '/html/ctssv4-query.html')}">
+                          Create stored query (login required)
+                        </a>
+                      </li>
+		    </ul>
                   </li>
                   <li>
                     <a href="{concat($url, '/html/ctssv3-graph.html')}">
-                      Create CTSSv3 and Cross-Site graph
+                      CTSSv3 and Cross-Site
                     </a>
+		    <ul>
+                      <li>
+                        <a href="{concat($url, '/html/ctssv3-graph.html')}">
+                          Create historical graph
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{concat($url, '/html/ctssv3-query.html')}">
+                          Create stored query (login required)
+                        </a>
+                      </li>
+		    </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl&amp;resourceIds=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers')}">
-                      Create other test suite graph
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers'"/>
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
+                      Other test suites
                     </a>
+		    <ul>
+                      <li>
+                        <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
+                          Create historical graph
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{concat($url, '/jsp/status.jsp?xsl=create-query.xsl', $other)}">
+                          Create stored query (login required)
+                        </a>
+                      </li>
+		    </ul>
                   </li>
                 </ul>
               </li>
