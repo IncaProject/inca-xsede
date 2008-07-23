@@ -2545,7 +2545,7 @@
       </resource>
       <resource>
         <name>gt4-seven-step</name>
-        <xpath>//resource[matches(name, '^(ANL-login|ncsa-cobalt|ncsa-ia64|sdsc-ia64|ornl-login|tacc-lonestar)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ANL-login|ncsa-ia64|sdsc-ia64|ornl-login|tacc-lonestar)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -2553,7 +2553,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ANL-login ncsa-cobalt ncsa-ia64 sdsc-ia64 ornl-login tacc-lonestar</value>
+            <value>ANL-login ncsa-ia64 sdsc-ia64 ornl-login tacc-lonestar</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5593,7 +5593,7 @@
       </resource>
       <resource>
         <name>real-time</name>
-        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|ANL|Indiana|ncsa-grid-hg|ncsa-grid-abe|repo|ncsa-ia64)$')]</xpath>
+        <xpath>//resource[matches(name, '^(SDSC|ncsa-cobalt|anl-ia64|Indiana|ncsa-grid-hg|repo)$')]</xpath>
         <macros>
           <macro>
             <name>real_time_email</name>
@@ -5605,7 +5605,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>SDSC ncsa-cobalt ANL Indiana ncsa-grid-hg ncsa-grid-abe repo ncsa-ia64</value>
+            <value>SDSC ncsa-cobalt anl-ia64 Indiana ncsa-grid-hg repo</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -11198,50 +11198,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>data.format.phdf5.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.phdf5.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@phdf5-key@@@@post@</context>
-          </series>
-          <nickname>phdf5-unit</nickname>
-          <resourceSetName>phdf5</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>grid.middleware.globus.mpiring.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.mpiring.unit</uri>
             <args>
@@ -14404,7 +14360,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>183</version>
+      <version>184</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16332,7 +16288,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@service_hosts@</value>
+                <value>@info_service_hosts@</value>
               </arg>
               <arg>
                 <name>path</name>
@@ -16348,16 +16304,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@service_hosts@:80 (Apache)</nickname>
+          <nickname>@info_service_hosts@:80 (Apache)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
