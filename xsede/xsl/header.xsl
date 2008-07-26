@@ -57,7 +57,7 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/html/ctssv4-query.html')}">
-                          Create stored query (login required)
+                          Create stored query
                         </a>
                       </li>
 		    </ul>
@@ -74,7 +74,7 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/html/ctssv3-query.html')}">
-                          Create stored query (login required)
+                          Create stored query
                         </a>
                       </li>
 		    </ul>
@@ -92,7 +92,7 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xsl=create-query.xsl', $other)}">
-                          Create stored query (login required)
+                          Create stored query
                         </a>
                       </li>
 		    </ul>
