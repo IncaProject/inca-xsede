@@ -14,8 +14,6 @@
   Description:  Emails inca with form contents
 </c:set>
 
-<inca:getUrl var="url"/>
-<inca:getUrl var="queryStr" query="1"/>
 <br/><p>Thank you for requesting a custom query.  The following query parameters have been emailed 
 to inca administrators:</p>
 <table border="1" cellpadding="10">
@@ -26,13 +24,19 @@ to inca administrators:</p>
 </table>
 <p>Please email inca@sdsc.edu with any questions or problems with your custom query.</p>
 
+<inca:getUrl var="url"/>
 <c:set var="emailBody">
   The following params were requested:
-  <c:forEach items="${param}" var="par" varStatus="i">
-    ${par.key}: ${par.value}
-  </c:forEach>
+    
+  Stored query name: ${param.qname}
+    
+  Fetch every (secs): ${param.period}
+    
+  Series hql: ${param.qparams}
+    
+  Submitted by: ${param.email}
 
-TO APPROVE, visit ${url}/jsp/query.jsp?${queryStr}
+TO APPROVE, visit ${url}/jsp/query.jsp?<c:forEach items="${param}" var="par" varStatus="i">${par.key}=${par.value}&</c:forEach>
 </c:set>
 <c:set var="email" value="echo \"${emailBody}\" | mail -s \"TeraGrid Custom Query Request\" inca@sdsc.edu"/>
 <% String emailStr = (String)pageContext.getAttribute("email");
