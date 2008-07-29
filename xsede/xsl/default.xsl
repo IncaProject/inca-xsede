@@ -27,6 +27,8 @@
     <xsl:call-template name="printLegend"/>
     <!-- printSuiteInfo -->
     <xsl:apply-templates select="suites/suite" />
+    <!-- printSuiteInfo -->
+    <xsl:apply-templates select="queries/query" />
   </xsl:template>
 
   <!-- ==================================================================== -->
@@ -34,7 +36,7 @@
   <!--                                                                      -->
   <!-- Calls printSeriesNamesTable and printSeriesResultsTable              -->
   <!-- ==================================================================== -->
-  <xsl:template name="printSuiteInfo" match="suite">
+  <xsl:template name="printSuiteInfo" match="suite|query">
     <xsl:variable name="name" select="name"/>
     <xsl:choose>
     <xsl:when test="name[matches(., '^tg-mds$')]">
