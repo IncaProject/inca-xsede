@@ -26,9 +26,7 @@
     <!-- legend.xsl -->
     <xsl:call-template name="printLegend"/>
     <!-- printSuiteInfo -->
-    <xsl:apply-templates select="suites/suite" />
-    <!-- printSuiteInfo -->
-    <xsl:apply-templates select="queries/query" />
+    <xsl:apply-templates select="suites/suite|queries/query" />
   </xsl:template>
 
   <!-- ==================================================================== -->
