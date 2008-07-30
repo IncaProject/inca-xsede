@@ -14,6 +14,7 @@
       <link href="{concat($url, '/css/inca.css')}" rel="stylesheet" type="text/css"/>
     </head>
 
+    <xsl:variable name="map" select="'http://sapa.sdsc.edu:8080/inca'"/>
     <table width="100%" class="subheader">
       <tr>
         <td><b><a href="http://www.teragrid.org/">
@@ -145,7 +146,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/html/ctssv4-map.html')}">
+                        <a href="{concat($map, '/html/ctssv4-map.html')}">
                           google map
                         </a>
                       </li>
@@ -167,7 +168,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/html/ctssv3-map.html')}">
+                        <a href="{concat($map, '/html/ctssv3-map.html')}">
                           google map
                         </a>
                       </li>
