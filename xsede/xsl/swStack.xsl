@@ -57,6 +57,8 @@
       <xsl:call-template name="tg-menu"/>
     </xsl:if>
     </td></tr></table>
+    <xsl:variable name="summaries" 
+     select="suites/suite/quer:object//rs:reportSummary[matches(uri,'/summary\.successpct\.performance$')]/body/performance/benchmark/statistics/statistic"/>
     <xsl:for-each select="suites/suite">
       <xsl:variable name="testResources" 
                   select="string(/combo/stack/testing/resource|stack/testing/resource)"/>
@@ -78,6 +80,7 @@
                   |resources/resource[name and matches(name, $matchResources)]"/>
             <xsl:with-param name="cats" 
                 select="/combo/stack/category|stack/category" />
+            <xsl:with-param name="summaries" select="$summaries" />
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -87,6 +90,7 @@
                   |resources/resource[name and not(matches(name, $matchResources))]"/>
             <xsl:with-param name="cats" 
                 select="/combo/stack/category|stack/category" />
+            <xsl:with-param name="summaries" select="$summaries" />
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
@@ -101,6 +105,7 @@
   <xsl:template name="printAllPackages">
     <xsl:param name="resources"/>
     <xsl:param name="cats"/>
+    <xsl:param name="summaries"/>
     <xsl:variable name="suite" select="."/>
     <h1 class="body"><xsl:value-of select="$cats/../id"/></h1>
     <!-- inca-common.xsl -->
@@ -113,6 +118,7 @@
         <xsl:sort/>
         <xsl:with-param name="resources" select="$resources"/>
         <xsl:with-param name="suite" select="$suite" />
+        <xsl:with-param name="summaries" select="$summaries" />
       </xsl:apply-templates>
     </table>
   </xsl:template>
@@ -125,7 +131,17 @@
   <xsl:template name="resultsAllPackages" match="category">
     <xsl:param name="resources"/>
     <xsl:param name="suite"/>
-    <xsl:variable name="span" select="count($resources)+1" />
+    <xsl:param name="summaries"/>
+    <xsl:variable name="span">
+      <xsl:choose>
+        <xsl:when test="$summaries">
+          <xsl:value-of select="count($resources)+2" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="count($resources)+1" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:if test="$queryStr[not(matches(., 'noCategoryHeaders'))]">
     <tr><td colspan="{$span}" class="header">
       <xsl:value-of select="upper-case(id)"/>
@@ -136,6 +152,7 @@
       <xsl:sort/>
       <xsl:with-param name="resources" select="$resources"/>
       <xsl:with-param name="suite" select="$suite" />
+      <xsl:with-param name="summaries" select="$summaries" />
     </xsl:apply-templates>
   </xsl:template>
 
@@ -147,6 +164,7 @@
   <xsl:template name="printPackage" match="package">
     <xsl:param name="resources"/>
     <xsl:param name="suite"/>
+    <xsl:param name="summaries"/>
     <xsl:variable name="package" select="id"/>
     <!-- print subheader row for package with package name
     and each resource name -->
@@ -154,6 +172,9 @@
       <td class="subheader"><a name="{$package}">
         <xsl:value-of select="$package"/>
       </a></td>
+      <xsl:if test="$summaries">
+        <td>SUMMARY</td> 
+      </xsl:if>
       <!-- inca-common.xsl printResourceNameCell -->
       <xsl:apply-templates select="$resources" mode="name">
         <xsl:sort/>
@@ -163,6 +184,7 @@
     <xsl:apply-templates select="tests/unitalias|tests/version">
       <xsl:with-param name="resources" select="$resources"/>
       <xsl:with-param name="suite" select="$suite" />
+      <xsl:with-param name="summaries" select="$summaries" />
     </xsl:apply-templates>
   </xsl:template>
 
@@ -174,6 +196,7 @@
   <xsl:template name="printResultsRow" match="unitalias|version">
     <xsl:param name="resources"/>
     <xsl:param name="suite"/>
+    <xsl:param name="summaries"/>
     <xsl:variable name="testname" select="id" />
     <xsl:variable name="package" select="../.." />
     <xsl:variable name="rowlabel">
@@ -192,6 +215,43 @@
         <td class="clear">
           <xsl:value-of select="replace($rowlabel, '^all2all:.*_to_', '')" />
         </td>
+        <xsl:if test="$summaries">
+          <xsl:variable name="numPassRegex" select="concat('^', $testname, '-success$')"/>
+          <xsl:variable name="numPass" 
+              select="$summaries[ID[matches(., $numPassRegex)]]/value"/>
+          <xsl:variable name="numFailRegex" select="concat('^', $testname, '-fail$')"/>
+          <xsl:variable name="numFail" 
+              select="$summaries[ID[matches(., $numFailRegex)]]/value"/>
+          <xsl:variable name="numTotal" select="$numPass+$numFail"/>
+          <xsl:variable name="sumReport" select="$numPass/../../../../../.."/>
+          <xsl:variable name="sumLink" 
+              select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
+              $sumReport/instanceId, '&amp;configId=', $sumReport/seriesConfigId,
+              '&amp;resourceId=', $sumReport/hostname)"/>
+          <xsl:choose>
+            <xsl:when test="$numTotal>1">
+              <xsl:variable name="sumClass">
+                <xsl:choose>
+                  <xsl:when test="$numPass>1">
+                    <xsl:value-of select="'pass'"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="'fail'"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <td class="{$sumClass}"><a href="{$sumLink}">
+                <xsl:value-of select="$numPass"/>/<xsl:value-of select="$numTotal"/>
+              </a></td>
+            </xsl:when>
+            <xsl:when test="$numTotal=0">
+              <td class="clear"><xsl:value-of select="' '" /></td>
+            </xsl:when>
+            <xsl:otherwise>
+              <td class="na"><xsl:text>n/a</xsl:text></td>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
         <!-- printResourceResultCell -->
         <xsl:apply-templates select="$resources" mode="result">
           <xsl:sort/>
