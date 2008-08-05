@@ -244,11 +244,11 @@
                 <xsl:value-of select="$numPass"/>/<xsl:value-of select="$numTotal"/>
               </a></td>
             </xsl:when>
-            <xsl:when test="$numTotal=0">
+            <xsl:when test="$numTotal=0 or $numTotal=1">
               <td class="clear"><xsl:value-of select="' '" /></td>
             </xsl:when>
             <xsl:otherwise>
-              <td class="na"><xsl:text>n/a</xsl:text></td>
+              <td class="na">n/a</td>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
