@@ -305,6 +305,9 @@
             <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
               <xsl:value-of select="'down'" />
             </xsl:when>
+            <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
+              <xsl:value-of select="'noFault'" />
+            </xsl:when>
             <xsl:when test="$tickets/ticket[matches(resource, $thisResource)]">
               <xsl:value-of select="'tkt-'" />
               <xsl:value-of select="$tickets/ticket[matches(resource,
