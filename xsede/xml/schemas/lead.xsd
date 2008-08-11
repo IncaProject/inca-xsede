@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<schema xmlns = "http://www.w3.org/2001/XMLSchema"
+        targetNamespace = "http://mds.teragrid.org/2007/02/lead"
+        xmlns:ld = "http://mds.teragrid.org/2007/02/lead"
+        xmlns:xsd = "http://www.w3.org/2001/XMLSchema"
+        elementFormDefault = "unqualified">
+
+  <element name = "leadDefinition" type="ld:leadDefinition"/>
+  
+  <complexType name="leadDefinition">
+    <sequence>
+      <element name = "leadDeveloperName" type = "string"/>
+      <element name = "leadDeveloperEmail" type = "string" minOccurs = "0"/>
+      <element name = "services">
+        <complexType>
+          <sequence>
+            <element name = "service" type = "ld:leadEndpoint" minOccurs = "0" maxOccurs = "unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="leadEndpoint">
+    <sequence>
+      <element name = "endpoint" type = "string"/>
+      <element name = "isProduction" type = "boolean"/>
+      <element name = "associatedFileSystem" type = "string" minOccurs = "0"/>
+      <element name = "fromKitName" type = "string" minOccurs = "0"/>
+      <element name = "fromKitVersion" type = "string" minOccurs = "0"/>
+      <element name = "accessedFrom">
+        <complexType>
+          <sequence>
+            <element name = "hostname" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+</schema>
