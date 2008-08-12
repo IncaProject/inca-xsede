@@ -668,25 +668,21 @@ Note: Appending to existing Packages.gz file
 bin/cluster.math.blas.unit.level1</screen></para>
 </listItem>
 </orderedList>
-<para>The agent propagates package dependencies to the reporter managers under 
-<filename>$RM_INSTALL_DIR/var/reporter-packages/build</filename> (reporters are 
-installed under <filename>$RM_INSTALL_DIR/var/reporter-packages/bin</filename>).
-Then the .tar.gz package dependency files are unzipped and untarred and configured 
-according to what files are contained in the tar ball.  If the tar ball contains a 
-<filename>configure</filename> file, like <filename>blasTestSuite</filename>,
-then then the following commands are executed inside the reporter dependency directory once 
-it's untarred:
-<screen>% ./configure
+<para>
+After unzipping and untarring the package file, the reporter manager builds
+the package in one of several ways, depending on the contents of the package
+directory.  If a <filename>configure</filename> is present, the reporter
+manager executes these commands to build the package:
+<screen>% ./configure --prefix=$RM_INSTALL_DIR/var/reporter-packages
 % [g]make
 % [g]make install</screen>
-</para>
-<para>
-If a <filename>[M|m]akefile</filename> file
-is found, then the following is executed:
+</para><para>
+Otherwise, if a <filename>[Mm]akefile</filename> is present, then the reporter
+manager executes these commands:
 <screen>% [g]make INSTALL_DIR=$RM_INSTALL_DIR/var/reporter-packages 
 % [g]make INSTALL_DIR=$RM_INSTALL_DIR=/var/reporter-packages</screen>
 </para><para>
-If a <filename>Makefile.PL</filename> file (i.e., Perl package)
+Otherwise, if a <filename>Makefile.PL</filename> file (i.e., Perl package)
 is found, then the following is executed:
 <screen>% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl  Makefile.PL \
   PREFIX=$RM_INSTALL_DIR/var/reporter-packages/lib/perl \
@@ -698,8 +694,8 @@ is found, then the following is executed:
 % [g]make
 % [g]make install</screen>
 </para><para>
-If a <filename>Build.PL</filename> file
-is found, then the following is executed:
+Otherwise, if a <filename>Build.PL</filename> file is found, then the
+following commands are executed:
 <screen>% perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build.PL \
   --install_path lib=$RM_INSTALL_DIR/var/reporter-packages/lib/perl \
   --install_path libdoc=$RM_INSTALL_DIR/var/reporter-packages/man/man3 \
@@ -710,12 +706,16 @@ is found, then the following is executed:
 % perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build
 % perl -I$RM_INSTALL_DIR/var/reporter-packages/lib/perl Build install</screen>
 </para><para>
-If <filename>configure</filename>, <filename>[M|m]akefile</filename>, <filename>Makefile.PL</filename> 
-and <filename>Build.PL</filename> files aren't found, 
-then the package dependency .tar.gz file is just 
-unzipped and untarred in the <filename>build</filename> directory.</para>
+If none of the files listed above are present, the reporter manager assumes
+that no build step is needed for the package.
+</para><para>
+The reporter manager sets the <filename>INSTALL_DIR</filename> environment
+variable before running a reporter.  Reporters that depend on other packages
+can use this variable to locate the package files--libraries in
+<filename>$INSTALL_DIR/lib</filename>, binaries in
+<filename>$INSTALL_DIR/bin</filename>, etc.
+</para>
 </section>
-
 
 <section id="update-repository">
 <title>Updating Reporter Repositories</title>
