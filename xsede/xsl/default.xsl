@@ -50,11 +50,11 @@
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
     </xsl:call-template>
     </xsl:if>
+    <xsl:variable name="resources" select="/combo/resources/resource |
+               /combo/suites/suite[matches(name, $name)]/resources/resource" />
     <xsl:call-template name="printSeriesResultsTable">
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
-      <xsl:with-param name="resources"
-       select="/combo/resources/resource[name]|/combo/suites/suite[matches(name, 
-        $name)]/resources/resource[name]"/>
+      <xsl:with-param name="resources" select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
     </xsl:call-template>
     </xsl:otherwise>
     </xsl:choose>

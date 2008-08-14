@@ -59,7 +59,7 @@
     </td></tr></table>
     <xsl:variable name="summaries" 
      select="suites/suite/quer:object//rs:reportSummary[matches(uri,'/summary\.successpct\.performance$')]/body/performance/benchmark/statistics/statistic"/>
-    <xsl:for-each select="suites/suite">
+    <xsl:for-each select="suites/suite|queries/query">
       <xsl:variable name="testResources" 
                   select="string(/combo/stack/testing/resource|stack/testing/resource)"/>
       <xsl:variable name="matchResources">
@@ -74,20 +74,24 @@
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="$queryStr[matches(., 'supportLevel=testing')]">
+          <xsl:variable name="resources" 
+               select="/combo/resources/resource[matches(name, $matchResources)]
+                       |resources/resource[matches(name, $matchResources)]"/>
           <xsl:call-template name="printAllPackages">
             <xsl:with-param name="resources"
-              select="/combo/resources/resource[name and matches(name, $matchResources)]
-                  |resources/resource[name and matches(name, $matchResources)]"/>
+              select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
             <xsl:with-param name="cats" 
                 select="/combo/stack/category|stack/category" />
             <xsl:with-param name="summaries" select="$summaries" />
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:variable name="resources" 
+               select="/combo/resources/resource[not(matches(name, $matchResources))]
+                       |resources/resource[not(matches(name, $matchResources))]"/>
           <xsl:call-template name="printAllPackages">
             <xsl:with-param name="resources"
-              select="/combo/resources/resource[name and not(matches(name, $matchResources))]
-                  |resources/resource[name and not(matches(name, $matchResources))]"/>
+              select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
             <xsl:with-param name="cats" 
                 select="/combo/stack/category|stack/category" />
             <xsl:with-param name="summaries" select="$summaries" />

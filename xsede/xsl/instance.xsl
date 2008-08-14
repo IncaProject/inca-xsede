@@ -87,7 +87,7 @@
             <tr>
               <td>
                 <a href="{$graphUrl}">
-                  <img src="../img/chart.gif" alt="graph history" border="0"/>
+                  <img src="/inca/img/chart.gif" alt="graph history" border="0"/>
                 </a>
               </td>
               <td>
