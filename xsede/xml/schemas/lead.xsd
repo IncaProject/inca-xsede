@@ -9,12 +9,15 @@
   
   <complexType name="leadDefinition">
     <sequence>
-      <element name = "leadDeveloperName" type = "string"/>
-      <element name = "leadDeveloperEmail" type = "string" minOccurs = "0"/>
+      <!-- Name of LEAD developer to contact regarding this schema -->
+      <element name = "developerName" type = "string"/>
+      <!-- Email address of LEAD developer to contact regarding this schema -->
+      <element name = "developerEmail" type = "string" minOccurs = "0"/>
+      <!-- LEAD services, e.g. wgram, gridftp -->
       <element name = "services">
         <complexType>
           <sequence>
-            <element name = "service" type = "ld:leadEndpoint" minOccurs = "0" maxOccurs = "unbounded"/>
+            <element name = "service" type = "ld:leadEndpoint" minOccurs = "1" maxOccurs = "unbounded"/>
           </sequence>
         </complexType>
       </element>
@@ -23,15 +26,29 @@
 
   <complexType name="leadEndpoint">
     <sequence>
+      <!-- Registered endpoint, e.g. gsiftp://gridftp-abe.ncsa.teragrid.org:2812 -->
       <element name = "endpoint" type = "string"/>
+      <!-- Is service registered as production in MDS? -->
       <element name = "isProduction" type = "boolean"/>
-      <element name = "associatedFileSystem" type = "string" minOccurs = "0"/>
-      <element name = "fromKitName" type = "string" minOccurs = "0"/>
-      <element name = "fromKitVersion" type = "string" minOccurs = "0"/>
-      <element name = "accessedFrom">
+      <!-- Name of CTSS kit that contains this service -->
+      <element name = "kitName" type = "string" minOccurs = "0"/>
+      <!-- Version of CTSS kit that contains this service -->
+      <element name = "kitVersion" type = "string" minOccurs = "0"/>
+      <!-- Destination file system for transfer, e.g. /cfs/scratch/ -->
+      <element name = "destFileSystem" type = "string" minOccurs = "0"/>
+      <!-- Source file system(s) for transfer, e.g. /gpfs_scratch1/, /N/dc/scratch/ -->
+      <element name = "sourceFileSystem">
         <complexType>
           <sequence>
-            <element name = "hostname" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
+            <element name = "sourceFileSystem" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+      <!-- Source endpoint(s) for transfer, e.g. gridftp-hg.ncsa.teragrid.org:2812, gridftp.bigred.iu.teragrid.org:2812 -->
+      <element name = "sourceEndpoint">
+        <complexType>
+          <sequence>
+            <element name = "sourceEndpoint" type = "string" minOccurs = "0" maxOccurs = "unbounded"/>
           </sequence>
         </complexType>
       </element>
