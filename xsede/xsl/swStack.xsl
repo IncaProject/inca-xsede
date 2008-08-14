@@ -229,7 +229,7 @@
           <xsl:variable name="numTotal" select="$numPass+$numFail"/>
           <xsl:variable name="sumReport" select="$numPass/../../../../../.."/>
           <xsl:variable name="sumLink" 
-              select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
+              select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
               $sumReport/instanceId, '&amp;configId=', $sumReport/seriesConfigId,
               '&amp;resourceId=', $sumReport/hostname)"/>
           <xsl:choose>
@@ -291,7 +291,7 @@
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
         <xsl:variable name="normRef" 
-                  select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
+                  select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
                   $instance, '&amp;configId=', $result/seriesConfigId,
                   '&amp;resourceId=', name)"/>
         <xsl:variable name="href">

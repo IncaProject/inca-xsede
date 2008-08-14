@@ -161,7 +161,7 @@
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="normRef" 
-            select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
+            select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
             $instance, '&amp;configId=', $result/seriesConfigId,
             '&amp;resourceId=', $resourceName)"/>
         <xsl:variable name="href">
