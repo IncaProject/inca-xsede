@@ -111,7 +111,7 @@
                   </li>
                   <li>
                     <a href="{concat($url, '/jsp/summary.jsp')}">
-                      Past week: ave pass rate by resource/suite
+                      Past week: avg pass rate by resource/suite
                     </a>
                   </li>
                   <li>
@@ -121,12 +121,12 @@
                   </li>
                   <li>
                     <a href="{concat($url, '/jsp/summaryHistory.jsp?filterResource=true')}">
-                      Resource ave pass history
+                      Resource avg pass history
                     </a>
                   </li>
                   <li>
                     <a href="{concat($url, '/jsp/summaryHistory.jsp?filterSuite=true')}">
-                      Suite ave pass history
+                      Suite avg pass history
                     </a>
                   </li>
                 </ul>
