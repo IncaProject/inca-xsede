@@ -5761,12 +5761,12 @@
             <value>1.4.2_11</value>
           </macro>
           <macro>
-            <name>core4.0.0-pacman-key</name>
-            <value>@keyPre@pacman-3.20 @keyPost@</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-rft-host</name>
             <value>gt4-submit.psc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-pacman-key</name>
+            <value>@keyPre@pacman-3.15 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -5891,10 +5891,6 @@
             <value>&amp;&amp;</value>
           </macro>
           <macro>
-            <name>core4.0.0-condor-key</name>
-            <value/>
-          </macro>
-          <macro>
             <name>core4.0.0-mds-info-host</name>
             <value>gram.pople.psc.teragrid.org</value>
           </macro>
@@ -5989,6 +5985,10 @@
           <macro>
             <name>dataMove4.1.2-ssh-host</name>
             <value>tg-login.pople.psc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.0.0-condor-key</name>
+            <value>@keyPre@ condor @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -19868,21 +19868,25 @@
           <nickname>all2all:gridftp_to_@parse-log-hosts@</nickname>
           <resourceSetName>sdsc-ia64</resourceSetName>
           <schedule>
-            <cron>
-              <min>30</min>
-              <hour>*/4</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>30 */4 * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:tgpt@sdsc.edu, FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>sdsc-ops</name>
       <guid>incas://sapa.sdsc.edu:6323/sdsc-ops</guid>
       <description>suite for sdsc admins</description>
-      <version>3</version>
+      <version>4</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20034,7 +20038,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>@tgContact@, FailTo:help@teragrid.org,FailTo:tony@ncsa.uiuc.edu,FailTo:kericson@sdsc.edu</target>
+                <target>@tgContact@, FailTo:help@teragrid.org,FailTo:tony@ncsa.uiuc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -20044,7 +20048,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>105</version>
+      <version>113</version>
     </suite>
     <suite>
       <seriesConfigs>
