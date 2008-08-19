@@ -19,7 +19,7 @@
   <h1>Reports</h1>
                         <table cellpadding="6" class="subheader" border="0">
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summary.jsp">Past week: ave pass rate by resource/suite </a></td>
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summary.jsp">Past week: avg pass rate by resource/suite </a></td>
                             <td class="clear">Bar graphs of the average test series pass rate by resource and by suite for the past week as compared to the week before last. </td>
                           </tr>
                           <tr valign="top">
@@ -27,11 +27,11 @@
                             <td class="clear">A summary of test series errors by time period and the change between the total number of errors in the most recent period and the total number of errors in the period.</td>
                           </tr>
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?filterResource=true">Resource ave pass history </a> </td>
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?filterResource=true">Resource avg pass history </a> </td>
                             <td class="clear">XY plot of the average series pass rate over time by resource. </td>
                           </tr>
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?filterSuite=true">Suite ave pass history </a></td>
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?filterSuite=true">Suite avg pass history </a></td>
                             <td class="clear">XY plot of the average series pass rate over time by test suite. </td>
                           </tr>
                           <tr valign="top">
