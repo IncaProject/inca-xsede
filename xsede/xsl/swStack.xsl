@@ -216,41 +216,10 @@
           <xsl:value-of select="replace($rowlabel, '^all2all:.*_to_', '')" />
         </td>
         <xsl:if test="$summaries">
-          <xsl:variable name="numPassRegex" select="concat('^', $testname, '-success$')"/>
-          <xsl:variable name="numPass" 
-              select="$summaries[ID[matches(., $numPassRegex)]]/value"/>
-          <xsl:variable name="numFailRegex" select="concat('^', $testname, '-fail$')"/>
-          <xsl:variable name="numFail" 
-              select="$summaries[ID[matches(., $numFailRegex)]]/value"/>
-          <xsl:variable name="numTotal" select="$numPass+$numFail"/>
-          <xsl:variable name="sumReport" select="$numPass/../../../../../.."/>
-          <xsl:variable name="sumLink" 
-              select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
-              $sumReport/instanceId, '&amp;configId=', $sumReport/seriesConfigId,
-              '&amp;resourceId=', $sumReport/hostname)"/>
-          <xsl:choose>
-            <xsl:when test="$numTotal>1">
-              <xsl:variable name="sumClass">
-                <xsl:choose>
-                  <xsl:when test="$numPass>1">
-                    <xsl:value-of select="'pass'"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="'fail'"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <td class="{$sumClass}"><a href="{$sumLink}">
-                <xsl:value-of select="$numPass"/>/<xsl:value-of select="$numTotal"/>
-              </a></td>
-            </xsl:when>
-            <xsl:when test="$numTotal=0 or $numTotal=1">
-              <td class="clear"><xsl:value-of select="' '" /></td>
-            </xsl:when>
-            <xsl:otherwise>
-              <td class="na">n/a</td>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:call-template name="printSummaryValue">
+            <xsl:with-param name="test" select="$testname"/>
+            <xsl:with-param name="summaries" select="$summaries"/>
+          </xsl:call-template>
         </xsl:if>
         <!-- printResourceResultCell -->
         <xsl:apply-templates select="$resources" mode="result">
