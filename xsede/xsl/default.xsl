@@ -188,6 +188,9 @@
             <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
               <xsl:value-of select="'down'" />
             </xsl:when>
+            <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
+              <xsl:value-of select="'noFault'" />
+            </xsl:when>
             <xsl:when test="$comparitor='Success' or 
               (string($result/body)!=''
                and string($errMsg)=''
