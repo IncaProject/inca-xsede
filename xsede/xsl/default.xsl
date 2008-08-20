@@ -12,7 +12,6 @@
 
   <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:include href="../xsl/legend.xsl"/>
-
   <!-- ==================================================================== -->
   <!-- generateHTML                                                         -->
   <!--                                                                      -->
@@ -50,10 +49,13 @@
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
     </xsl:call-template>
     </xsl:if>
+    <xsl:variable name="summaries" select="quer:object//rs:reportSummary[matches(uri,
+     '/summary\.successpct\.performance$')]/body/performance/benchmark/statistics/statistic"/>
     <xsl:variable name="resources" select="/combo/resources/resource |
                /combo/suites/suite[matches(name, $name)]/resources/resource" />
     <xsl:call-template name="printSeriesResultsTable">
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
+      <xsl:with-param name="summaries" select="$summaries"/>
       <xsl:with-param name="resources" select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
     </xsl:call-template>
     </xsl:otherwise>
@@ -103,6 +105,7 @@
   <!-- ==================================================================== -->
   <xsl:template name="printSeriesResultsTable">
     <xsl:param name="seriesNames"/>
+    <xsl:param name="summaries"/>
     <xsl:param name="resources"/>
     <xsl:variable name="suite" select="."/>
     <table class="subheader">
@@ -111,6 +114,7 @@
         <xsl:if test="position() mod 20 = 1">
           <tr>
             <td class="subheader"/>
+            <xsl:if test="$summaries"><td class="subheader">SUMMARY</td></xsl:if>
             <!-- inca-common.xsl printResourceNameCell -->
             <xsl:apply-templates select="$resources" mode="name">
               <xsl:sort/>
@@ -121,6 +125,12 @@
           <td class="clear"><a name="{.}">
             <xsl:value-of select="replace(., '^all2all:gridftp_to_', '')" />
           </a></td>
+          <xsl:if test="$summaries">
+            <xsl:call-template name="printSummaryValue">
+              <xsl:with-param name="test" select="."/>
+              <xsl:with-param name="summaries" select="$summaries"/>
+            </xsl:call-template>
+          </xsl:if>
           <xsl:variable name="series" select="."/>
           <xsl:for-each select="$resources">
             <xsl:sort/>
