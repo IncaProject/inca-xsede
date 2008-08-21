@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
->Inca 2.4 User's Guide</TITLE
+>Inca 2.5 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -24,7 +24,7 @@ CLASS="TITLEPAGE"
 CLASS="TITLE"
 ><A
 NAME="AEN1"
->Inca 2.4 User's Guide</A
+>Inca 2.5 User's Guide</A
 ></H1
 ><H2
 CLASS="SUBTITLE"
@@ -238,26 +238,31 @@ HREF="#CUSTOM-HTML-HEADER"
 ></DD
 ><DT
 >6.7. <A
+HREF="#CONSUMER-NEUTRAL-ERRS"
+>Displaying Errors Neutrally</A
+></DT
+><DT
+>6.8. <A
 HREF="#CONSUMER-ALT-LOCATION"
 >Changing the Installation Location</A
 ></DT
 ><DT
->6.8. <A
+>6.9. <A
 HREF="#CONSUMER-PORT"
 >Changing Ports</A
 ></DT
 ><DT
->6.9. <A
+>6.10. <A
 HREF="#DISABLE-HTTP-CONSUMER"
 >Disabling HTTP</A
 ></DT
 ><DT
->6.10. <A
+>6.11. <A
 HREF="#HTTPS-CREDS"
 >Changing HTTPS credential</A
 ></DT
 ><DT
->6.11. <A
+>6.12. <A
 HREF="#PASSWORD-CONSUMER"
 >Adding Password Protection</A
 ></DT
@@ -384,7 +389,7 @@ HREF="#USERGUIDE-ADVANCED-MANUAL"
 ><DT
 >11.6. <A
 HREF="#USERGUIDE-ADVANCED-BATCH"
->Inca on Batch Systems</A
+>Batch Systems</A
 ></DT
 ><DT
 >11.7. <A
@@ -844,7 +849,7 @@ NAME="USERGUIDE-QUICKSTART"
 >4. Quick Start</A
 ></H2
 ><P
->This section describes how to download, install and verify the Inca 2.4 
+>This section describes how to download, install and verify the Inca 2.5 
 binary release. The figure below represents a typical installation. </P
 ><DIV
 CLASS="FIGURE"
@@ -943,7 +948,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% wget http://inca.sdsc.edu/releases/2.4/incaInstall.sh</PRE
+>% wget http://inca.sdsc.edu/releases/2.5/incaInstall.sh</PRE
 ></FONT
 ></TD
 ></TR
@@ -1070,7 +1075,7 @@ CLASS="SCREEN"
 COLOR="RED"
 >NOTE:</FONT
 ></STRONG
-> the default life of 2.4 
+> the default life of 2.5 
     certificates is 5 years (1 year in earlier releases).
     To replace expired certificates, execute "bin/inca createauth" again to 
     create new certificates and "bin/inca agent -u &#60;resource group&#62; 
@@ -1611,7 +1616,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% wget http://inca.sdsc.edu/releases/2.4/incaInstall.sh</PRE
+>% wget http://inca.sdsc.edu/releases/2.5/incaInstall.sh</PRE
 ></FONT
 ></TD
 ></TR
@@ -2558,7 +2563,7 @@ CLASS="FILENAME"
 > is edited as described in
   <A
 HREF="#CONSUMER-PORT"
->Section 6.8</A
+>Section 6.9</A
 >.  
   </P
 ><P
@@ -3550,7 +3555,7 @@ CLASS="FILENAME"
         cached query.  Unless password protection has been disabled as
         described in <A
 HREF="#PASSWORD-CONSUMER"
->Section 6.11</A
+>Section 6.12</A
 >, selecting this item
         causes the consumer to prompt for an id and password.
         The consumer can cache frequently executed depot queries in
@@ -3607,7 +3612,7 @@ CLASS="FILENAME"
         to allow management of cached queries.  Unless password protection has
         been disabled as described in <A
 HREF="#PASSWORD-CONSUMER"
->Section 6.11</A
+>Section 6.12</A
 >,
         selecting this item causes the consumer to prompt for an id and
         password.  Click on one of the pre-defined
@@ -5141,8 +5146,76 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
+NAME="CONSUMER-NEUTRAL-ERRS"
+>6.7. Displaying Errors Neutrally</A
+></H3
+><P
+>You may wish to display certain errors neutrally in historical reports.  For example, if an error message 
+        indicates that a machine was down when the report was collected, you may want to display that error neutrally 
+        (i.e. neither as a pass nor a fail).  By default, Inca marks error messages that start with "DOWNTIME" or "NOT_AT_FAULT" 
+        neutrally because they are generally the result of report filtering (see <A
+HREF="#REPORT-FILTERING"
+>Section 11.3</A
+>).  Errors that contain "Inca error" or "Unable to fetch proxy for reporter execution" are 
+        also marked neutrally since the error may be due to the Inca framework instead of the machine being tested.  To change the 
+        errors that are marked neutrally, edit the regular expression that is matched as follows:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>Open the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> local file and edit 
+          the inca.consumer.ignoreErrors property:
+          <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.consumer.ignoreErrors=(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*)</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+        </P
+></LI
+><LI
+><P
+>Restart the consumer: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca restart consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
 NAME="CONSUMER-ALT-LOCATION"
->6.7. Changing the Installation Location</A
+>6.8. Changing the Installation Location</A
 ></H3
 ><P
 >You can install the data consumer in a non-default location (e.g., on a machine where the depot and agent are not running) if you: </P
@@ -5166,7 +5239,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% wget http://inca.sdsc.edu/releases/2.4/incaInstall.sh</PRE
+>% wget http://inca.sdsc.edu/releases/2.5/incaInstall.sh</PRE
 ></FONT
 ></TD
 ></TR
@@ -5294,7 +5367,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-PORT"
->6.8. Changing Ports</A
+>6.9. Changing Ports</A
 ></H3
 ><P
 >      By default, the consumer is started on port 8080 (HTTP) and 8443
@@ -5417,7 +5490,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="DISABLE-HTTP-CONSUMER"
->6.9. Disabling HTTP</A
+>6.10. Disabling HTTP</A
 ></H3
 ><P
 >      By default, the consumer is configured as both an HTTP and HTTPS server.
@@ -5487,7 +5560,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="HTTPS-CREDS"
->6.10. Changing HTTPS credential</A
+>6.11. Changing HTTPS credential</A
 ></H3
 ><P
 >By default, the HTTPS server will use the credential stored in
@@ -5612,7 +5685,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PASSWORD-CONSUMER"
->6.11. Adding Password Protection</A
+>6.12. Adding Password Protection</A
 ></H3
 ><P
 >      By default, a password is only required on the
@@ -5726,7 +5799,7 @@ CLASS="FILENAME"
       username and password for your installation.  If you do not want to store the
       password in plain text, use Jetty's password utility described in <A
 HREF="#HTTPS-CREDS"
->Section 6.10</A
+>Section 6.11</A
 >.</P
 ><P
 >Then restart the consumer. </P
@@ -5827,7 +5900,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1224"
+NAME="AEN1236"
 ></A
 ><P
 ><B
@@ -6349,11 +6422,11 @@ NAME="REPORTER-API"
 ></H4
 ><P
 >The Inca release includes a set of <A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/perl.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/perl.html"
 TARGET="_top"
 >Perl modules</A
 > and a <A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/python.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/python.html"
 TARGET="_top"
 >Python package</A
 > that make it easier to
@@ -6373,13 +6446,13 @@ TYPE="1"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter.html"
 TARGET="_top"
 >Inca::Reporter</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.Reporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.Reporter-module.html"
 TARGET="_top"
 >inca.Reporter</A
 ></P
@@ -6393,13 +6466,13 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/GlobusUnit.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/GlobusUnit.html"
 TARGET="_top"
 >Inca::Reporter::GlobusUnit</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.GlobusUnitReporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.GlobusUnitReporter-module.html"
 TARGET="_top"
 >inca.GlobusUnitReporter</A
 ></P
@@ -6411,7 +6484,7 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/GridProxy.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/GridProxy.html"
 TARGET="_top"
 >Inca::Reporter::GridProxy</A
 ></P
@@ -6464,13 +6537,13 @@ $reporter-&#62;print();</PRE
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/Performance.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/Performance.html"
 TARGET="_top"
 >Inca::Reporter::Performance</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.PerformanceReporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.PerformanceReporter-module.html"
 TARGET="_top"
 >inca.PerformanceReporter</A
 ></P
@@ -6485,13 +6558,13 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/SimpleUnit.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/SimpleUnit.html"
 TARGET="_top"
 >Inca::Reporter::SimpleUnit</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.SimpleUnitReporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.SimpleUnitReporter-module.html"
 TARGET="_top"
 >inca.SimpleUnitReporter</A
 ></P
@@ -6504,13 +6577,13 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/Usage.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/Usage.html"
 TARGET="_top"
 >Inca::Reporter::Usage</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.UsageReporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.UsageReporter-module.html"
 TARGET="_top"
 >inca.UsageReporter</A
 ></P
@@ -6521,13 +6594,13 @@ TARGET="_top"
 ><LI
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/Inca/Reporter/Version.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/Inca/Reporter/Version.html"
 TARGET="_top"
 >Inca::Reporter::Version</A
 ></P
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/inca.VersionReporter-module.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/inca.VersionReporter-module.html"
 TARGET="_top"
 >inca.VersionReporter</A
 ></P
@@ -6806,7 +6879,7 @@ CLASS="SCREEN"
 ></TABLE
 ><P
 >For more information about incpack usage, click <A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/incpack.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/incpack.html"
 TARGET="_top"
 >here</A
 >.</P
@@ -6988,26 +7061,13 @@ bin/cluster.math.blas.unit.level1</PRE
 ></LI
 ></OL
 ><P
->The agent propagates package dependencies to the reporter managers under 
-<TT
-CLASS="FILENAME"
->$RM_INSTALL_DIR/var/reporter-packages/build</TT
-> (reporters are 
-installed under <TT
-CLASS="FILENAME"
->$RM_INSTALL_DIR/var/reporter-packages/bin</TT
->).
-Then the .tar.gz package dependency files are unzipped and untarred and configured 
-according to what files are contained in the tar ball.  If the tar ball contains a 
-<TT
+>After unzipping and untarring the package file, the reporter manager builds
+the package in one of several ways, depending on the contents of the package
+directory.  If a <TT
 CLASS="FILENAME"
 >configure</TT
-> file, like <TT
-CLASS="FILENAME"
->blasTestSuite</TT
->,
-then then the following commands are executed inside the reporter dependency directory once 
-it's untarred:
+> is present, the reporter
+manager executes these commands to build the package:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -7018,7 +7078,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% ./configure
+>% ./configure --prefix=$RM_INSTALL_DIR/var/reporter-packages
 % [g]make
 % [g]make install</PRE
 ></FONT
@@ -7027,11 +7087,11 @@ CLASS="SCREEN"
 ></TABLE
 ></P
 ><P
->If a <TT
+>Otherwise, if a <TT
 CLASS="FILENAME"
->[M|m]akefile</TT
-> file
-is found, then the following is executed:
+>[Mm]akefile</TT
+> is present, then the reporter
+manager executes these commands:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -7050,7 +7110,7 @@ CLASS="SCREEN"
 ></TABLE
 ></P
 ><P
->If a <TT
+>Otherwise, if a <TT
 CLASS="FILENAME"
 >Makefile.PL</TT
 > file (i.e., Perl package)
@@ -7080,11 +7140,11 @@ CLASS="SCREEN"
 ></TABLE
 ></P
 ><P
->If a <TT
+>Otherwise, if a <TT
 CLASS="FILENAME"
 >Build.PL</TT
-> file
-is found, then the following is executed:
+> file is found, then the
+following commands are executed:
 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -7110,25 +7170,23 @@ CLASS="SCREEN"
 ></TABLE
 ></P
 ><P
->If <TT
+>If none of the files listed above are present, the reporter manager assumes
+that no build step is needed for the package.</P
+><P
+>The reporter manager sets the <TT
 CLASS="FILENAME"
->configure</TT
->, <TT
+>INSTALL_DIR</TT
+> environment
+variable before running a reporter.  Reporters that depend on other packages
+can use this variable to locate the package files--libraries in
+<TT
 CLASS="FILENAME"
->[M|m]akefile</TT
->, <TT
+>$INSTALL_DIR/lib</TT
+>, binaries in
+<TT
 CLASS="FILENAME"
->Makefile.PL</TT
-> 
-and <TT
-CLASS="FILENAME"
->Build.PL</TT
-> files aren't found, 
-then the package dependency .tar.gz file is just 
-unzipped and untarred in the <TT
-CLASS="FILENAME"
->build</TT
-> directory.</P
+>$INSTALL_DIR/bin</TT
+>, etc.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -7159,7 +7217,7 @@ reporter (755 is the standard reporter permission)</P
 ><P
 >update your Packages.gz file using 
 <A
-HREF="http://inca.sdsc.edu/releases/2.4/repdocs/incpack.html"
+HREF="http://inca.sdsc.edu/releases/2.5/repdocs/incpack.html"
 TARGET="_top"
 >incpack</A
 >.  The command will
@@ -7222,7 +7280,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1513"
+NAME="AEN1521"
 ></A
 ><P
 ><B
@@ -7256,7 +7314,7 @@ CLASS="CALSTABLE"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/AgentClient.html"
+HREF="http://inca.sdsc.edu/releases/2.5/javawsdocs/edu/sdsc/inca/AgentClient.html"
 TARGET="_top"
 >edu.sdsc.inca.AgentClient</A
 ></P
@@ -7264,7 +7322,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/wsdocs/Inca/AgentClient.html"
+HREF="http://inca.sdsc.edu/releases/2.5/wsdocs/Inca/AgentClient.html"
 TARGET="_top"
 >Inca::AgentClient</A
 ></P
@@ -7278,7 +7336,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/javawsdocs/edu/sdsc/inca/DepotClient.html"
+HREF="http://inca.sdsc.edu/releases/2.5/javawsdocs/edu/sdsc/inca/DepotClient.html"
 TARGET="_top"
 >edu.sdsc.inca.DepotClient</A
 ></P
@@ -7286,7 +7344,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/wsdocs/Inca/DepotClient.html"
+HREF="http://inca.sdsc.edu/releases/2.5/wsdocs/Inca/DepotClient.html"
 TARGET="_top"
 >Inca::DepotClient</A
 ></P
@@ -7320,7 +7378,7 @@ WIDTH="100%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% wget http://inca.sdsc.edu/releases/2.4/incaInstall.sh
+>% wget http://inca.sdsc.edu/releases/2.5/incaInstall.sh
 % sh incaInstall.sh $INCA_DIST incaws</PRE
 ></FONT
 ></TD
@@ -7444,7 +7502,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1560"
+NAME="AEN1568"
 ></A
 ><P
 ><B
@@ -7880,7 +7938,7 @@ HREF="#USERGUIDE-MAN"
 ><P
 >Note:  To change the port of the consumer, see <A
 HREF="#CONSUMER-PORT"
->Section 6.8</A
+>Section 6.9</A
 >.</P
 ><P
 >Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
@@ -7949,7 +8007,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1667"
+NAME="AEN1675"
 ></A
 ><P
 ><B
@@ -8980,8 +9038,8 @@ COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
 >% cd $RM_INSTALL_DIR; \
-  wget http://inca.sdsc.edu/releases/2.4/Inca-ReporterManager.tar.gz; \
-  wget http://inca.sdsc.edu/releases/2.4/buildRM.sh</PRE
+  wget http://inca.sdsc.edu/releases/2.5/Inca-ReporterManager.tar.gz; \
+  wget http://inca.sdsc.edu/releases/2.5/buildRM.sh</PRE
 ></FONT
 ></TD
 ></TR
@@ -9045,7 +9103,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% cd $RM_INSTALL_DIR; wget http://inca.sdsc.edu/releases/2.4/Inca-Reporter.tar.gz
+>% cd $RM_INSTALL_DIR; wget http://inca.sdsc.edu/releases/2.5/Inca-Reporter.tar.gz
 % cd var; tar zxvf ../Inca-Reporter.tar.gz; cd Inca-Reporter-*
 % perl Makefile.PL PREFIX=${RM_INSTALL_DIR}/var/reporter-packages \
  INSTALLDIRS=perl LIB=${RM_INSTALL_DIR}/var/reporter-packages/lib/perl \
@@ -9460,7 +9518,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-BATCH"
->11.6. Inca on Batch Systems</A
+>11.6. Batch Systems</A
 ></H3
 ><P
 >  The cluster.batch.wrapper reporter can be useful when running Inca on batch
@@ -9497,7 +9555,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2008"
+NAME="AEN2016"
 ></A
 ><P
 ><B
@@ -9699,13 +9757,13 @@ CLASS="SCREEN"
   a series by including its name and arguments in the series context string.
   Inca stores installed reporters in the directory $INSTALL_DIR/bin, so the
   path to cluster.batch.wrapper will be $INSTALL_DIR/bin/cluster.batch.wrapper.
-  For example, the context string for the network.ping.unit series above would
-  be "$INSTALL_DIR/bin/cluster.batch.wrapper --scheduler=loadleveler --queue=normal --type=parallel --exec='<EM
-><FONT
->network.ping.unit -args</FONT
-></EM
->'"
+  The figure below shows the context string for the network.ping.unit series
+  mentioned above.
   </P
+><P
+><IMG
+SRC="figures/ug-incat-batch.png"
+ALIGN="CENTER"></P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -10172,7 +10230,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2153"
+NAME="AEN2161"
 ></A
 ><P
 ><B
@@ -10198,7 +10256,7 @@ CLASS="CALSTABLE"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/inca-agent-src.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/inca-agent-src.tar.gz"
 TARGET="_top"
 >agent</A
 ></P
@@ -10212,7 +10270,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/inca-common-java-src.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/inca-common-java-src.tar.gz"
 TARGET="_top"
 >common</A
 > (used by all Inca Java components)</P
@@ -10226,7 +10284,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/inca-consumers-src.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/inca-consumers-src.tar.gz"
 TARGET="_top"
 >consumer</A
 ></P
@@ -10240,7 +10298,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/inca-depot-src.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/inca-depot-src.tar.gz"
 TARGET="_top"
 >depot</A
 ></P
@@ -10254,7 +10312,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/incat-src.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/incat-src.tar.gz"
 TARGET="_top"
 >incat</A
 ></P
@@ -10268,7 +10326,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/Inca-Reporter.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/Inca-Reporter.tar.gz"
 TARGET="_top"
 >reporters</A
 ></P
@@ -10282,7 +10340,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/Inca-ReporterManager.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/Inca-ReporterManager.tar.gz"
 TARGET="_top"
 >reporter manager</A
 ></P
@@ -10296,7 +10354,7 @@ TARGET="_top"
 ><TD
 ><P
 ><A
-HREF="http://inca.sdsc.edu/releases/2.4/Inca-WS.tar.gz"
+HREF="http://inca.sdsc.edu/releases/2.5/Inca-WS.tar.gz"
 TARGET="_top"
 >web services</A
 ></P
