@@ -1,13 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
 >Data Display (Data Consumers)</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="HOME"
-TITLE="Inca 2.4 User's Guide"
+TITLE="Inca 2.5 User's Guide"
 HREF="index.html"><LINK
 REL="PREVIOUS"
 TITLE="Administering Inca with incat"
@@ -37,7 +37,7 @@ CELLSPACING="0"
 ><TH
 COLSPAN="3"
 ALIGN="center"
->Inca 2.4 User's Guide: [<A
+>Inca 2.5 User's Guide: [<A
 HREF="userguide-one.html"
 TARGET="_top"
 >Single page</A
@@ -124,7 +124,7 @@ CLASS="FILENAME"
 > is edited as described in
   <A
 HREF="userguide-consumer.html#CONSUMER-PORT"
->Section 6.8</A
+>Section 6.9</A
 >.  
   </P
 ><P
@@ -1116,7 +1116,7 @@ CLASS="FILENAME"
         cached query.  Unless password protection has been disabled as
         described in <A
 HREF="userguide-consumer.html#PASSWORD-CONSUMER"
->Section 6.11</A
+>Section 6.12</A
 >, selecting this item
         causes the consumer to prompt for an id and password.
         The consumer can cache frequently executed depot queries in
@@ -1173,7 +1173,7 @@ CLASS="FILENAME"
         to allow management of cached queries.  Unless password protection has
         been disabled as described in <A
 HREF="userguide-consumer.html#PASSWORD-CONSUMER"
->Section 6.11</A
+>Section 6.12</A
 >,
         selecting this item causes the consumer to prompt for an id and
         password.  Click on one of the pre-defined
@@ -2707,8 +2707,76 @@ CLASS="SECTION"
 ><H2
 CLASS="SECTION"
 ><A
+NAME="CONSUMER-NEUTRAL-ERRS"
+>6.7. Displaying Errors Neutrally</A
+></H2
+><P
+>You may wish to display certain errors neutrally in historical reports.  For example, if an error message 
+        indicates that a machine was down when the report was collected, you may want to display that error neutrally 
+        (i.e. neither as a pass nor a fail).  By default, Inca marks error messages that start with "DOWNTIME" or "NOT_AT_FAULT" 
+        neutrally because they are generally the result of report filtering (see <A
+HREF="userguide-advanced-config.html#REPORT-FILTERING"
+>Section 11.3</A
+>).  Errors that contain "Inca error" or "Unable to fetch proxy for reporter execution" are 
+        also marked neutrally since the error may be due to the Inca framework instead of the machine being tested.  To change the 
+        errors that are marked neutrally, edit the regular expression that is matched as follows:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>Open the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> local file and edit 
+          the inca.consumer.ignoreErrors property:
+          <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.consumer.ignoreErrors=(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*)</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+        </P
+></LI
+><LI
+><P
+>Restart the consumer: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca restart consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
 NAME="CONSUMER-ALT-LOCATION"
->6.7. Changing the Installation Location</A
+>6.8. Changing the Installation Location</A
 ></H2
 ><P
 >You can install the data consumer in a non-default location (e.g., on a machine where the depot and agent are not running) if you: </P
@@ -2732,7 +2800,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->% wget http://inca.sdsc.edu/releases/2.4/incaInstall.sh</PRE
+>% wget http://inca.sdsc.edu/releases/2.5/incaInstall.sh</PRE
 ></FONT
 ></TD
 ></TR
@@ -2860,7 +2928,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-PORT"
->6.8. Changing Ports</A
+>6.9. Changing Ports</A
 ></H2
 ><P
 >      By default, the consumer is started on port 8080 (HTTP) and 8443
@@ -2983,7 +3051,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="DISABLE-HTTP-CONSUMER"
->6.9. Disabling HTTP</A
+>6.10. Disabling HTTP</A
 ></H2
 ><P
 >      By default, the consumer is configured as both an HTTP and HTTPS server.
@@ -3053,7 +3121,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="HTTPS-CREDS"
->6.10. Changing HTTPS credential</A
+>6.11. Changing HTTPS credential</A
 ></H2
 ><P
 >By default, the HTTPS server will use the credential stored in
@@ -3178,7 +3246,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PASSWORD-CONSUMER"
->6.11. Adding Password Protection</A
+>6.12. Adding Password Protection</A
 ></H2
 ><P
 >      By default, a password is only required on the
@@ -3292,7 +3360,7 @@ CLASS="FILENAME"
       username and password for your installation.  If you do not want to store the
       password in plain text, use Jetty's password utility described in <A
 HREF="userguide-consumer.html#HTTPS-CREDS"
->Section 6.10</A
+>Section 6.11</A
 >.</P
 ><P
 >Then restart the consumer. </P
