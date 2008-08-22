@@ -112,7 +112,7 @@ HREF="#USERGUIDE-INCAT-MACROS"
 ><DT
 >5.7.1. <A
 HREF="#USERGUIDE-INCAT-ALL2ALL"
->Configuring "all2all" Series Using Macros</A
+>Configuring "all2all" Series</A
 ></DT
 ></DL
 ></DD
@@ -373,6 +373,16 @@ HREF="#REPORT-FILTERING"
 >11.3.1. <A
 HREF="#DOWNTIME-FILTER"
 >Downtime Filter</A
+></DT
+><DT
+>11.3.2. <A
+HREF="#ALL2ALL-FILTER"
+>All2All Filter</A
+></DT
+><DT
+>11.3.3. <A
+HREF="#MULTIPLE-FILTERS"
+>Mutiple Filters</A
 ></DT
 ></DL
 ></DD
@@ -2409,14 +2419,60 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-ALL2ALL"
->5.7.1. Configuring "all2all" Series Using Macros</A
+>5.7.1. Configuring "all2all" Series</A
 ></H4
 ><P
->The "all2all" test results are calculated by the consumer.  The image below 
-  illustrates how an "all2all" series would be configured. 
+>The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
+  are cross-site tests.  The images below illustrates an example of configuring an "all2all" ping series. 
+  </P
+><P
+>First a new suite called "cross-site" is added to contain the series for our "all2all" tests:
+  <P
+><IMG
+SRC="figures/incat/all2all-suite.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>Next we select the cross-site test that we'll execute (grid.benchmark.performance.ping) and configure 
+  the targets with a "pingHosts" macro.  The consumer detects that this is an all2all series
+  because the nickname and context contain all2all strings as described in the image below:
   <P
 ><IMG
 SRC="figures/incat/incat-annotated-all2all.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>In order to display a summary of how the hosts in the series are doing we 
+  add a summary series to calculate the pass/fail rate of the series overall.  The summary 
+  series is also used by the All2AllFilter described in <A
+HREF="#ALL2ALL-FILTER"
+>Section 11.3.2</A
+>.
+  <P
+><IMG
+SRC="figures/incat/incat-annotated-summary-reporter.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>The results of the cross-site test look like:
+  <P
+><IMG
+SRC="figures/consumer/all2all-suite-before-filter.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>After we add the All2AllFilter described in <A
+HREF="#ALL2ALL-FILTER"
+>Section 11.3.2</A
+> the results 
+  also show when an individual resource is not at fault for the error:
+  <P
+><IMG
+SRC="figures/consumer/all2all-suite-after-filter.jpg"
 ALIGN="CENTER"></P
 >
   </P
@@ -3712,7 +3768,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN684"
+NAME="AEN695"
 ></A
 ><P
 ><B
@@ -4310,7 +4366,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN888"
+NAME="AEN899"
 ></A
 ><P
 ><B
@@ -5208,6 +5264,14 @@ CLASS="SCREEN"
 ></TABLE
 ></LI
 ></UL
+><P
+>Now error messages matching the pattern you chose will be marked neutrally.  For example, the four reports that have 
+    error messages that begin with "NOT_AT_FAULT" are marked neutrally as "unknown" in the graph below:
+    <P
+><IMG
+SRC="figures/consumer/neutral-results.jpg"
+ALIGN="CENTER"></P
+></P
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -5900,7 +5964,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1236"
+NAME="AEN1249"
 ></A
 ><P
 ><B
@@ -7280,7 +7344,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1521"
+NAME="AEN1534"
 ></A
 ><P
 ><B
@@ -7502,7 +7566,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1568"
+NAME="AEN1581"
 ></A
 ><P
 ><B
@@ -8007,7 +8071,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1675"
+NAME="AEN1688"
 ></A
 ><P
 ><B
@@ -8735,6 +8799,103 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="ALL2ALL-FILTER"
+>11.3.2. All2All Filter</A
+></H4
+><P
+>The depot has a ready to use filter called "All2AllFilter" that prefixes
+error messages in depot reports with "NOT_AT_FAULT: " if the resource the 
+report ran on is not at fault for the "all2all" error and the
+report is not already prefixed with "DOWNTIME" (see <A
+HREF="#USERGUIDE-INCAT-ALL2ALL"
+>Section 5.7.1</A
+> 
+for more information about configuring "all2all" tests).  Resources are determined to
+not be at fault if the summary property that matches their nickname has failed. 
+Summary properties are written for any reports with the "summary.successpct.performance" reporter name.</P
+><P
+>By default, errors that begin with "NOT_AT_FAULT" are displayed neutrally 
+(see <A
+HREF="#CONSUMER-NEUTRAL-ERRS"
+>Section 6.7</A
+>). The all2all filter is included in the inca-depot.jar 
+and is configured by adding the inca.depot.reportFilter property to your 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.All2AllFilter
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>and restarting the depot.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca restart depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="MULTIPLE-FILTERS"
+>11.3.3. Mutiple Filters</A
+></H4
+><P
+>The depot can apply multiple filters to reports.  To specify more than one filter, use a comma 
+separated list for the inca.depot.reportFilter property in <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+>:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter, edu.sdsc.inca.depot.util.All2AllFilter</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+Filters are applied in the order they are listed.</P
 ></DIV
 ></DIV
 ><DIV
@@ -9555,7 +9716,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2016"
+NAME="AEN2044"
 ></A
 ><P
 ><B
@@ -10230,7 +10391,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2161"
+NAME="AEN2189"
 ></A
 ><P
 ><B

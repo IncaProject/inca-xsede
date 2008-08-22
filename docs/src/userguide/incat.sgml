@@ -366,11 +366,36 @@ reporter manager and agent over their SSL connection.
   <graphic fileref="figures/incat/macro3.jpg" align="center"></graphic>
   
   <section id="userguide-incat-all2all">
-  <title>Configuring "all2all" Series Using Macros</title>
-  <para>The "all2all" test results are calculated by the consumer.  The image below 
-  illustrates how an "all2all" series would be configured. 
-  <graphic fileref="figures/incat/incat-annotated-all2all.jpg" align="center"></graphic>
+  <title>Configuring "all2all" Series</title>
+  <para>The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
+  are cross-site tests.  The images below illustrates an example of configuring an "all2all" ping series. 
   </para>
+  
+  <para>First a new suite called "cross-site" is added to contain the series for our "all2all" tests:
+  <graphic fileref="figures/incat/all2all-suite.jpg" align="center"></graphic>
+  </para>
+ 
+  <para>Next we select the cross-site test that we'll execute (grid.benchmark.performance.ping) and configure 
+  the targets with a "pingHosts" macro.  The consumer detects that this is an all2all series
+  because the nickname and context contain all2all strings as described in the image below:
+  <graphic fileref="figures/incat/incat-annotated-all2all.jpg" align="center"></graphic>
+  </para> 
+
+  <para>In order to display a summary of how the hosts in the series are doing we 
+  add a summary series to calculate the pass/fail rate of the series overall.  The summary 
+  series is also used by the All2AllFilter described in <xref linkend="all2all-filter">.
+  <graphic fileref="figures/incat/incat-annotated-summary-reporter.jpg" align="center"></graphic>
+  </para>
+ 
+  <para>The results of the cross-site test look like:
+  <graphic fileref="figures/consumer/all2all-suite-before-filter.jpg" align="center"></graphic>
+  </para>
+
+  <para>After we add the All2AllFilter described in <xref linkend="all2all-filter"> the results 
+  also show when an individual resource is not at fault for the error:
+  <graphic fileref="figures/consumer/all2all-suite-after-filter.jpg" align="center"></graphic>
+  </para>
+
   </section>
   </section>
 
