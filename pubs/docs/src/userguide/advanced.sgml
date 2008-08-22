@@ -438,6 +438,37 @@ inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter
 <para>Finally, restart the depot.</para>
 <screen>% ./bin/inca restart depot</screen>
 </section>
+
+<section id="all2all-filter">
+<title>All2All Filter</title>
+<para>The depot has a ready to use filter called "All2AllFilter" that prefixes
+error messages in depot reports with "NOT_AT_FAULT: " if the resource the 
+report ran on is not at fault for the "all2all" error and the
+report is not already prefixed with "DOWNTIME" (see <xref linkend="userguide-incat-all2all"> 
+for more information about configuring "all2all" tests).  Resources are determined to
+not be at fault if the summary property that matches their nickname has failed. 
+Summary properties are written for any reports with the "summary.successpct.performance" reporter name.
+</para>
+<para>By default, errors that begin with "NOT_AT_FAULT" are displayed neutrally 
+(see <xref linkend="consumer-neutral-errs">). The all2all filter is included in the inca-depot.jar 
+and is configured by adding the inca.depot.reportFilter property to your 
+<filename>$INCA_DIST/etc/common/inca.properties</filename> file</para>
+<screen>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.All2AllFilter
+...
+</screen>
+<para>and restarting the depot.</para>
+<screen>% ./bin/inca restart depot</screen>
+</section>
+
+<section id="multiple-filters">
+<title>Mutiple Filters</title>
+<para>The depot can apply multiple filters to reports.  To specify more than one filter, use a comma 
+separated list for the inca.depot.reportFilter property in <filename>$INCA_DIST/etc/common/inca.properties</filename>:
+<screen>inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter, edu.sdsc.inca.depot.util.All2AllFilter</screen>
+Filters are applied in the order they are listed.</para>
+</section>
+
 </section>
 
 <section id="db-config">

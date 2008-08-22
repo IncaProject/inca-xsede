@@ -247,7 +247,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1675"
+NAME="AEN1688"
 ></A
 ><P
 ><B
@@ -975,6 +975,103 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="ALL2ALL-FILTER"
+>11.3.2. All2All Filter</A
+></H3
+><P
+>The depot has a ready to use filter called "All2AllFilter" that prefixes
+error messages in depot reports with "NOT_AT_FAULT: " if the resource the 
+report ran on is not at fault for the "all2all" error and the
+report is not already prefixed with "DOWNTIME" (see <A
+HREF="userguide-incat.html#USERGUIDE-INCAT-ALL2ALL"
+>Section 5.7.1</A
+> 
+for more information about configuring "all2all" tests).  Resources are determined to
+not be at fault if the summary property that matches their nickname has failed. 
+Summary properties are written for any reports with the "summary.successpct.performance" reporter name.</P
+><P
+>By default, errors that begin with "NOT_AT_FAULT" are displayed neutrally 
+(see <A
+HREF="userguide-consumer.html#CONSUMER-NEUTRAL-ERRS"
+>Section 6.7</A
+>). The all2all filter is included in the inca-depot.jar 
+and is configured by adding the inca.depot.reportFilter property to your 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.All2AllFilter
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>and restarting the depot.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca restart depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="MULTIPLE-FILTERS"
+>11.3.3. Mutiple Filters</A
+></H3
+><P
+>The depot can apply multiple filters to reports.  To specify more than one filter, use a comma 
+separated list for the inca.depot.reportFilter property in <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+>:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter, edu.sdsc.inca.depot.util.All2AllFilter</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+Filters are applied in the order they are listed.</P
 ></DIV
 ></DIV
 ><DIV
@@ -1795,7 +1892,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2016"
+NAME="AEN2044"
 ></A
 ><P
 ><B
@@ -2470,7 +2567,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2161"
+NAME="AEN2189"
 ></A
 ><P
 ><B
