@@ -55,6 +55,12 @@
                   <td class="clear"><font color="black">passed</font></td>
                 </tr>
                 <tr valign="top">
+                  <td class="proxyErr"><font color="black">proxyErr</font></td>
+                  <td class="clear">
+                    <font color="black">unable to fetch proxy for reporter</font>
+                  </td>
+                </tr>
+                <tr valign="top">
                   <td class="incaErr"><font color="black">incaErr</font></td>
                   <td class="clear">
                     <font color="black">inca framework error</font>
@@ -64,12 +70,12 @@
                   <td class="timeOut"><font color="black">timeOut</font></td>
                   <td class="clear"><font color="black">reporter timed out</font></td>
                 </tr>
+              </table></td>
+              <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
                   <td class="clear"><font color="black">*</font></td>
                   <td class="clear"><font color="black">result is stale</font></td>
                 </tr>
-              </table></td>
-              <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
                   <td class="dev"/>
                   <td class="clear">
