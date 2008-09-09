@@ -14,8 +14,11 @@
   <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:include href="../xsl/instance-extra.xsl"/>
 
-  <xsl:param name="resourceId" />
-  <xsl:param name="startDate" />
+  <xsl:param name="resourceId"/>
+  <xsl:param name="week"/>
+  <xsl:param name="month"/>
+  <xsl:param name="quarter"/>
+  <xsl:param name="year"/>
 
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
@@ -82,17 +85,14 @@
           <xsl:variable name="label"
                         select="concat($resourceId, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('graph.jsp?startDate=',$startDate, '&amp;series=', $nickName, ',', $resourceId, ',', $label)"/>
+                        select="concat('graph.jsp?series=', $nickName, ',', $resourceId, ',', $label, '&amp;startDate=')"/>
           <table>
             <tr>
-              <td>
-                <a href="{$graphUrl}">
-                  <img src="/inca/img/chart.gif" alt="graph history" border="0"/>
-                </a>
-              </td>
-              <td>
-                <a href="{$graphUrl}">view result history</a>
-              </td>
+              <td>view results for past: </td>
+              <td>    <a href="{$graphUrl}{$week}"><img src="/inca/img/week.gif"/></a>  </td>
+              <td>    <a href="{$graphUrl}{$month}"><img src="/inca/img/month.gif"/></a> </td>
+              <td>    <a href="{$graphUrl}{$quarter}"><img src="/inca/img/quarter.gif"/></a> </td>
+              <td>    <a href="{$graphUrl}{$year}"><img src="/inca/img/year.gif"/></a> </td>
             </tr>
           </table>
         </td>
