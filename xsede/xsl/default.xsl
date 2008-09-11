@@ -49,9 +49,9 @@
     <xsl:call-template name="printSeriesNamesTable">
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
     </xsl:call-template>
+    </xsl:if>
     <xsl:variable name="summaries" select="quer:object//rs:reportSummary[matches(uri,
      '/summary\.successpct\.performance$')]/body/performance/benchmark/statistics/statistic"/>
-    </xsl:if>
     <xsl:variable name="resources" select="/combo/resources/resource |
                /combo/suites/suite[matches(name, $name)]/resources/resource" />
     <xsl:call-template name="printSeriesResultsTable">
