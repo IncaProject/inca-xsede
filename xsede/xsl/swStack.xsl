@@ -266,8 +266,19 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="tickets" select="$test/tgTickets"/>
+        <xsl:variable name="stale">
+          <xsl:if test="$result/gmtExpires">
+            <!-- inca-common.xsl -->
+            <xsl:call-template name="markOld">
+              <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
+            </xsl:call-template>
+          </xsl:if>
+        </xsl:variable>
         <xsl:variable name="exit">
           <xsl:choose>
+            <xsl:when test="string($stale)!=''">
+              <xsl:value-of select="'stale'" />
+            </xsl:when>
             <xsl:when test="count($result/body)=0">
               <xsl:value-of select="''" />
             </xsl:when>
@@ -325,7 +336,7 @@
             <td class="{$class}">
               <a href="{$href}" title="{$errMsg}">
                 <xsl:choose>
-                  <xsl:when test="string($foundVersion)=''">
+                  <xsl:when test="string($foundVersion)='' or string($stale)!=''">
                     <xsl:value-of select="$exit"/>
                   </xsl:when>
                   <xsl:otherwise>
@@ -345,10 +356,6 @@
               <xsl:if test="$queryStr[matches(., 'suiteNames=real-time')]">
                 <xsl:value-of select="concat(' (',$age,' ago)')"/>
               </xsl:if>
-              <!-- inca-common.xsl -->
-              <xsl:call-template name="markOld">
-                <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
-              </xsl:call-template>
             </td>
           </xsl:when>
           <!-- missing data -->
