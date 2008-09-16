@@ -12,7 +12,7 @@
       function setResourceAndXml(){
         document.form.xml.value = document.form.suiteNames.value + '.xml';
         if (document.form.suiteNames.value.match(/,/)){
-          document.form.xml.value = "core.teragrid.org-4.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,data-movement.teragrid.org-4.1.1.xml,data-movement.teragrid.org-4.1.2.xml,remote-compute.teragrid.org-3.0.0.xml,remote-compute.teragrid.org-4.0.2.xml,login.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.2.xml,app-support.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.1.xml,app-support.teragrid.org-4.0.2.xml,parallel-app.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.1.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml";
+          document.form.xml.value = "core.teragrid.org-4.0.0.xml,core.teragrid.org-4.0.2.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.0.xml,data-movement.teragrid.org-4.1.1.xml,data-movement.teragrid.org-4.1.2.xml,remote-compute.teragrid.org-3.0.0.xml,remote-compute.teragrid.org-4.0.2.xml,login.teragrid.org-4.0.0.xml,login.teragrid.org-4.0.2.xml,app-support.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.0.1.xml,app-support.teragrid.org-4.0.2.xml,parallel-app.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.1.xml,workflow.teragrid.org-4.0.0.xml,vtss.teragrid.org-3.0.0.xml";
         }
         if (document.form.resource.value == "select"){
           document.form.resourceIds.value = document.form.suiteNames.value;
@@ -25,9 +25,10 @@
       <table cellpadding="2">
         <tr><td><p>KIT:<br/>
           <select name="suiteNames">
-            <option value="core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,data-movement.teragrid.org-4.1.1,data-movement.teragrid.org-4.1.2,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.2,login.teragrid.org-4.0.0,login.teragrid.org-4.0.2,app-support.teragrid.org-4.0.0,app-support.teragrid.org-4.0.1,app-support.teragrid.org-4.0.2,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">- Select One -</option>
-            <option value="core.teragrid.org-4.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,data-movement.teragrid.org-4.1.1,data-movement.teragrid.org-4.1.2,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.2,login.teragrid.org-4.0.0,login.teragrid.org-4.0.2,app-support.teragrid.org-4.0.0,app-support.teragrid.org-4.0.1,app-support.teragrid.org-4.0.2,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">ALL KITS</option>
+            <option value="core.teragrid.org-4.0.0,core.teragrid.org-4.0.2,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,data-movement.teragrid.org-4.1.1,data-movement.teragrid.org-4.1.2,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.2,login.teragrid.org-4.0.0,login.teragrid.org-4.0.2,app-support.teragrid.org-4.0.0,app-support.teragrid.org-4.0.1,app-support.teragrid.org-4.0.2,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">- Select One -</option>
+            <option value="core.teragrid.org-4.0.0,core.teragrid.org-4.0.2,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.0,data-movement.teragrid.org-4.1.1,data-movement.teragrid.org-4.1.2,remote-compute.teragrid.org-3.0.0,remote-compute.teragrid.org-4.0.2,login.teragrid.org-4.0.0,login.teragrid.org-4.0.2,app-support.teragrid.org-4.0.0,app-support.teragrid.org-4.0.1,app-support.teragrid.org-4.0.2,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,vtss.teragrid.org-3.0.0">ALL KITS</option>
             <option value="core.teragrid.org-4.0.0">Core Integration 4.0.0</option>
+            <option value="core.teragrid.org-4.0.2">Core Integration 4.0.2</option>
             <option value="data-management.teragrid.org-4.0.0">Data Management 4.0.0</option>
             <option value="data-movement.teragrid.org-4.1.0">Data Movement 4.1.0</option>
             <option value="data-movement.teragrid.org-4.1.1">Data Movement 4.1.1</option>
