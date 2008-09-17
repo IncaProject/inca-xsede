@@ -14,7 +14,6 @@
   <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:include href="../xsl/instance-extra.xsl"/>
 
-  <xsl:param name="resourceId"/>
   <xsl:param name="week"/>
   <xsl:param name="month"/>
   <xsl:param name="quarter"/>
@@ -42,6 +41,7 @@
     <xsl:variable name="complete" select="exitStatus/completed"/>
     <xsl:variable name="errMsg" select="exitStatus/errorMessage" />
     <xsl:variable name="package" select="body/package"/>
+    <xsl:variable name="resource" select="$config/resourceHostname"/>
 
 
     <xsl:variable name="resultText">
@@ -83,9 +83,9 @@
         <td><p><xsl:value-of select="$resultText"/></p></td>
         <td>
           <xsl:variable name="label"
-                        select="concat($resourceId, ' (',$nickName,')')"/>
+                        select="concat($resource, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('graph.jsp?series=', $nickName, ',', $resourceId, ',', $label, '&amp;startDate=')"/>
+                        select="concat('graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;startDate=')"/>
           <table>
             <tr>
               <td>view results for past: </td>

@@ -256,9 +256,8 @@
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
         <xsl:variable name="normRef" 
-                  select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
-                  $instance, '&amp;configId=', $result/seriesConfigId,
-                  '&amp;resourceId=', name)"/>
+                  select="concat('/inca/jsp/instance.jsp?instanceId=',
+                  $instance, '&amp;configId=', $result/seriesConfigId)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>

@@ -212,10 +212,8 @@
   <xsl:template name="printTestLink" match="failure|reportSummary">
     <xsl:param name="resourceName"/>
     <xsl:param name="reportSummary"/>
-    <xsl:variable name="href" 
-              select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
-              $reportSummary/instanceId,'&amp;configId=',$reportSummary/seriesConfigId,
-              '&amp;resourceId=',$resourceName)" />
+    <xsl:variable name="href" select="concat('../jsp/instance.jsp?instanceId=',
+              $reportSummary/instanceId,'&amp;configId=',$reportSummary/seriesConfigId)" />
     <li><a href="{$href}">
       <xsl:value-of select="replace($reportSummary/nickname, '^all2all:', '')" /></a></li>
   </xsl:template>

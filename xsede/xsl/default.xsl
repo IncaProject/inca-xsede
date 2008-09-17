@@ -171,10 +171,8 @@
             <xsl:otherwise><xsl:value-of select="name"/></xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="normRef" 
-            select="concat('/inca/jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
-            $instance, '&amp;configId=', $result/seriesConfigId,
-            '&amp;resourceId=', $resourceName)"/>
+        <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?instanceId=',
+            $instance, '&amp;configId=', $result/seriesConfigId)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>

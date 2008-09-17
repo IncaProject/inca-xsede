@@ -120,9 +120,8 @@
     <xsl:choose>
       <xsl:when test="$uri!=''">
         <!-- resource is not exempt -->
-        <xsl:variable name="href"
-            select="concat('../jsp/instance.jsp?xsl=instance.xsl&amp;instanceId=',
-            $instance,'&amp;configId=',$conf,'&amp;resourceId=', $machine)"/>
+        <xsl:variable name="href" select="concat('../jsp/instance.jsp?instanceId=',
+            $instance,'&amp;configId=',$conf)"/>
         <xsl:choose>
           <xsl:when test="$exit!=''">
             <td class="{$exit}">
