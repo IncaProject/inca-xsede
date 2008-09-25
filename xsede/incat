@@ -6686,6 +6686,14 @@
             <name>remote4.0.2-wsgram-port</name>
             <value>8443</value>
           </macro>
+          <macro>
+            <name>remote3.0.0-load-grep</name>
+            <value>PCGridGroups</value>
+          </macro>
+          <macro>
+            <name>remote4.0.2-load-grep</name>
+            <value>PCGridGroups</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -7345,6 +7353,10 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>remote3.0.0-load-grep</name>
+            <value>LoadInfo</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -7578,6 +7590,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>remote4.0.2-load-grep</name>
+            <value>LoadInfo</value>
           </macro>
         </macros>
       </resource>
@@ -15336,36 +15352,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://mds.teragrid.org/2007/02/ctss}V4KitsRP</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>@core4.0.0-mds-info-port@</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>@core4.0.0-mds-info-host@</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>KitRegistration(.|\\n)*ResourceName(.|\\n)*Kit(.|\\n)*Kit(.|\\n)*KitRegistration</value>
+                <value>KitRegistration</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://mds.teragrid.org/2007/02/ctss}V4KitsRP</value>
+                <name>host</name>
+                <value>@core4.0.0-mds-info-host@</value>
               </arg>
             </args>
             <limits>
@@ -15756,6 +15780,10 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
                 <name>service</name>
                 <value>DefaultIndexService</value>
               </arg>
@@ -15765,7 +15793,7 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>KitRegistration(.|\\n)*ResourceName(.|\\n)*Kit(.|\\n)*Kit(.|\\n)*KitRegistration</value>
+                <value>KitRegistration</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -21570,6 +21598,10 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
                 <name>service</name>
                 <value>DefaultIndexService</value>
               </arg>
@@ -21579,7 +21611,7 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>(PCGridGroups|LoadInfo) hostname</value>
+                <value>@remote3.0.0-load-grep@</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -21634,6 +21666,10 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
                 <name>service</name>
                 <value>DefaultIndexService</value>
               </arg>
@@ -21643,7 +21679,7 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>Jobs hostname</value>
+                <value>Jobs</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -22430,6 +22466,10 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
                 <name>service</name>
                 <value>DefaultIndexService</value>
               </arg>
@@ -22439,7 +22479,7 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>(PCGridGroups|LoadInfo) hostname</value>
+                <value>@remote4.0.2-load-grep@</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -22494,6 +22534,10 @@
                 <value>no</value>
               </arg>
               <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
                 <name>service</name>
                 <value>SecureIndexService</value>
               </arg>
@@ -22503,7 +22547,7 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>Jobs hostname</value>
+                <value>Jobs</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -23224,36 +23268,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8443</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>@info_service_hosts@</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>@info_service_hosts@</value>
               </arg>
             </args>
             <limits>
@@ -23264,13 +23316,7 @@
           <nickname>@info_service_hosts@:8443 (WS MDS; standard; globus-mds-auth)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -23290,36 +23336,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8448</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>mds.teragrid.org</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>mds.teragrid.org</value>
               </arg>
             </args>
             <limits>
@@ -23330,13 +23384,7 @@
           <nickname>mds.teragrid.org:8448 (WS MDS; globus-mds-auth)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -23356,36 +23404,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8443</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>mds.teragrid.org</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>mds.teragrid.org</value>
               </arg>
             </args>
             <limits>
@@ -23396,13 +23452,7 @@
           <nickname>mds.teragrid.org:8443 (WS MDS; standard MDS)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -23422,36 +23472,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8443</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>info.teragrid.org</value>
               </arg>
             </args>
             <limits>
@@ -23462,13 +23520,7 @@
           <nickname>info.teragrid.org:8443 (WS MDS; standard; globus-mds-auth)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>*/15</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>*/15 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -23488,36 +23540,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8446</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>info.teragrid.org</value>
               </arg>
             </args>
             <limits>
@@ -23528,13 +23588,7 @@
           <nickname>info.teragrid.org:8446 (WS MDS; globus-mds-info)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>*/15</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>*/15 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -23554,36 +23608,44 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
+                <name>prop</name>
+                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
               </arg>
               <arg>
                 <name>port</name>
                 <value>8446</value>
               </arg>
               <arg>
-                <name>help</name>
-                <value>no</value>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>log</name>
                 <value>5</value>
               </arg>
               <arg>
-                <name>host</name>
-                <value>@info_service_hosts@</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
               </arg>
               <arg>
                 <name>grep</name>
-                <value>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z</value>
+                <value>ns1:CurrentTime</value>
               </arg>
               <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
+                <name>host</name>
+                <value>@info_service_hosts@</value>
               </arg>
             </args>
             <limits>
@@ -23594,13 +23656,7 @@
           <nickname>@info_service_hosts@:8446 (WS MDS; globus-mds-info)</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
