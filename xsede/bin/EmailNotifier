@@ -34,10 +34,10 @@ my $err = $ENV{incaerrorMessage};
 my $noemail = defined($err) && $err =~ /(^DOWNTIME:|Inca error|^NOT_AT_FAULT:)/;
 
 if (!$noemail){
-my $name = $ENV{incanickname} || $ENV{incareporter};
-my $subject =
+  my $name = $ENV{incanickname} || $ENV{incareporter};
+  my $subject =
   "Inca TeraGrid Notification: $name on $ENV{incaresource} $ENV{incaresult}";
-my $body =
+  my $body =
   "The following Inca test has $ENV{incaresult}ED:\n\n" .
   "RAN AT:  $ENV{incacollected}\n\n" .
   "RAN ON:  $ENV{incahostname}\n\n" .
@@ -48,35 +48,68 @@ my $body =
   (defined($ENV{incastderr}) ? "STANDARD ERROR: $ENV{incastderr}\n\n" : "") .
   "\n\n" .
   "details at http://sapa.sdsc.edu:8080/inca/jsp/instance.jsp?xsl=instance.xsl" .
-  "&instanceId=$ENV{incainstanceId}&configId=$ENV{incaconfigId}" .
-  "&resourceId=$ENV{incaresource}\n\n";
+  "&instanceId=$ENV{incainstanceId}&configId=$ENV{incaconfigId}\n\n";
 
-my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
-my $baseDate = ParseDate( $baseDateString );
-my $date = ParseDate( $ENV{incacollected} );
-if ( Date_Cmp($date, $baseDate) < 0 ) {
+  my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
+  my $baseDate = ParseDate( $baseDateString );
+  my $date = ParseDate( $ENV{incacollected} );
+  if ( Date_Cmp($date, $baseDate) < 0 ) {
   `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
+    exit 0;
+  }
+
+  my $mailPath = "/usr/sbin/sendmail"; # or my $mailPath = `which mailx`;
+  my $subjectPrefix = 'Subject:'; # or my $subjectPrefix = '~s';
+ 
+  my $failed = defined($ENV{incacomparisonResult}) &&
+             $ENV{incacomparisonResult} =~ /^Failure/;
+  my @emails = @ARGV;
+  if ($emails[0] eq "externalEmail"){
+    @emails = getExternalEmail($name);
+  }
+  foreach my $email(split(/[\s,;]+/, join(' ', @emails))) {
+    my @pieces = split(/:/, $email);
+    if(scalar(@pieces) == 1 || ($failed && $pieces[0] =~ /^Fail/) ||
+     (!$failed && $pieces[0] !~ /^Fail/)) {
+      open(MAIL, "|$mailPath $pieces[$#pieces]");
+      print MAIL "$subjectPrefix$subject\n";
+      print MAIL "To:$pieces[$#pieces]\n" if $mailPath =~ /sendmail/;
+      print MAIL $body;
+      close(MAIL);
+    }
+  }
+}else{
+  `echo "No email for report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   exit 0;
 }
 
-my $mailPath = "/usr/sbin/sendmail"; # or my $mailPath = `which mailx`;
-my $subjectPrefix = 'Subject:'; # or my $subjectPrefix = '~s';
- 
-my $failed = defined($ENV{incacomparisonResult}) &&
-             $ENV{incacomparisonResult} =~ /^Failure/;
-foreach my $email(split(/[\s,;]+/, join(' ', @ARGV))) {
-  my @pieces = split(/:/, $email);
-  if(scalar(@pieces) == 1 || 
-     ($failed && $pieces[0] =~ /^Fail/) ||
-     (!$failed && $pieces[0] !~ /^Fail/)) {
-     open(MAIL, "|$mailPath $pieces[$#pieces]");
-     print MAIL "$subjectPrefix$subject\n";
-     print MAIL "To:$pieces[$#pieces]\n" if $mailPath =~ /sendmail/;
-     print MAIL $body;
-     close(MAIL);
+sub getExternalEmail {
+  my $name = shift;
+  my %map = ( 
+    "\.uc\.teragrid\.org" => "FailTo:leggett\@mcs.anl.gov",
+    "\.bigred\." => "FailTo:jomlowe\@iupui.edu, FailTo:jtillots\@indiana.edu",
+    "qb1\.lsu" => "FailTo:architk\@cct.lsu.edu",
+    "frost\.ncar" => "FailTo:jcope\@ucar.edu, FailTo:oberg\@ucar.edu",
+    "(abe|-w)\.ncsa" => "FailTo:fernsler\@ncsa.uiuc.edu",
+    "-co\.ncsa" => "FailTo:tbouvet\@ncsa.uiuc.edu",
+    "(tg-login|-hg)\.ncsa" => "FailTo:dlapine\@ncsa.uiuc.edu",
+    "kraken" => "FailTo:nmendoza\@utk.edu",
+    "ornl\." => "FailTo:gilesdc\@ornl.gov, FailTo:cobbjw\@ornl.gov",
+    "\.psc\." => "FailTo:rbudden\@psc.edu",
+    "\.purdue\." => "FailTo:psmith\@purdue.edu",
+    "\.sdsc\." => "FailTo:tgpt\@ucsd.edu, FailTo:kenneth\@sdsc.edu",
+    "ranger" => "FailTo:dcarver\@tacc.utexas.edu",
+    "lonestar" => "FailTo:dcarver\@tacc.utexas.edu, FailTo:timm\@tacc.utexas.edu",
+    "maverick" => "FailTo:dcarver\@tacc.utexas.edu, FailTo:dgignac\@tacc.utexas.edu"
+  );    
+  my @notify = ("FailTo:inca\@sdsc.edu");
+  for my $host ( keys %map ) {
+    my $adminEmail = $map{$host};
+    if ($name =~ /-external-.*_.*$host/){
+      push (@notify, $adminEmail);
+    }
   }
-}
-}else{
-  `echo "No email for report with error: $err" >> email.log`;
-  exit 0;
+  my $notify = join(", ", @notify);
+  `echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
+  return @notify;
 }
