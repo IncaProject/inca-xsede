@@ -109,6 +109,10 @@ sub getExternalEmail {
       push (@notify, $adminEmail);
     }
   }
+  my @stu = ("gridftp-external-ping-dm-4.1.2", "gridftp-striped-external-telnet-dm-4.1.2", "gridftp-nonstriped-external-telnet-dm-4.1.2", "wsgram-external-telnet-rc-4.0.2");
+  if (grep(/$name/, @stu)){
+    push (@notify, "FailTo:smartin\@mcs.anl.gov");
+  }
   my $notify = join(", ", @notify);
   `echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   return @notify;
