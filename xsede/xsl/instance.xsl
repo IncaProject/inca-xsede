@@ -115,9 +115,25 @@
         </xsl:if>
         <xsl:if test="$resultText='did not complete' or $resultText='unknown'
           or $resultText=$comp">
-          <p class="code"><xsl:apply-templates select="$errMsg"/></p>
+          <xsl:variable name="downErr">
+            <!-- inca-common.xsl -->
+            <xsl:call-template name="getDownErr">
+              <xsl:with-param name="errMsg" select="$errMsg"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <p class="code">
+          <!-- inca-common.xsl -->
+          <xsl:call-template name="replaceBreak">
+            <xsl:with-param name="text" select="$downErr"/>
+          </xsl:call-template>
+          </p>
           <xsl:if test="$errMsg=''">
-            <p class="code"><xsl:apply-templates  select="../stderr"/></p>
+            <p class="code">
+            <!-- inca-common.xsl -->
+            <xsl:call-template name="replaceBreak">
+              <xsl:with-param name="text" select="../stderr"/>
+            </xsl:call-template>
+            </p>
           </xsl:if>
         </xsl:if>
       </td>
@@ -243,30 +259,6 @@
   </xsl:template>
   <xsl:template name="printDebug" match="debug">
     <pre><p class="code"><xsl:value-of select="message"/></p></pre>
-  </xsl:template>
-
-  <!-- ==================================================================== -->
-  <!-- replaceBreak - replace symbol break with html break                  -->
-  <!-- ==================================================================== -->
-  <xsl:template name="replaceBreak" match="errorMessage|stderr">
-    <xsl:param name="text" select="."/>
-    <xsl:variable name="msg">
-      <xsl:choose>
-        <xsl:when test="contains($text, '&#xa;')">
-          <xsl:value-of select="substring-before($text, '&#xa;')"/> <br/>
-          <xsl:call-template name="replaceBreak">
-            <xsl:with-param name="text" select="substring-after($text, '&#xa;')"/>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$text"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <!-- inca-common.xsl -->
-    <xsl:call-template name="getDownErr">
-      <xsl:with-param name="errMsg" select="$msg"/>
-    </xsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>
