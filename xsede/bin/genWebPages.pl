@@ -24,7 +24,7 @@ my %pages = (
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
   'ctssv4-query.html' => "$c4jsp$c4xml&xsl=create-query.xsl",
   'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
-  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=remote-compute.teragrid.org-4.0.0&resourceIds=remote-compute.teragrid.org-4.0.0&xml=remote-compute.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=remote-compute.teragrid.org-4.0.2&resourceIds=remote-compute.teragrid.org-4.0.2&xml=remote-compute.teragrid.org-4.0.2.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
 
 my $errors = "";
