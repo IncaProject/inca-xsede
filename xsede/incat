@@ -3180,6 +3180,28 @@
         </macros>
       </resource>
       <resource>
+        <name>gig</name>
+        <xpath>//resource[matches(name, '^(sapa|repo)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>gig</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>sapa repo</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>gridshell</name>
         <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|TACC)$')]</xpath>
         <macros>
@@ -18554,6 +18576,100 @@
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
       <version>26</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>network.ping.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>repo.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>600</cpuTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>ping_repo</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.wget.performance</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value>--no-check-certificate</value>
+              </arg>
+              <arg>
+                <name>page</name>
+                <value>https://repo.teragrid.org</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>600</cpuTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>wget_repo</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>gig</name>
+      <guid/>
+      <description>tests to monitor gig servers and repo</description>
+      <version>1</version>
     </suite>
     <suite>
       <seriesConfigs>
