@@ -81,7 +81,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,security,usage,sdsc-ops,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,sdsc-ops,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -192,6 +192,11 @@
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xsl=swStack.xsl&amp;resourceIds=real-time&amp;suiteNames=real-time&amp;xml=real-time.xml')}">
                           real-time monitoring testbed
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{concat($url, '/jsp/status.jsp?xsl=swStack.xsl&amp;resourceIds=gig&amp;suiteNames=gig&amp;xml=gig.xml')}">
+                          gig
                         </a>
                       </li>
                       <li>
