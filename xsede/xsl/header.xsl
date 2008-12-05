@@ -116,7 +116,7 @@
                   </li>
                   <li>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=seriesSummary.xsl&amp;xml=weekSummary.xml&amp;queryNames=incaQueryStatus')}">
-                      Past 10 weeks: series error summary
+                      Past 12 weeks: series error summary
                     </a>
                   </li>
                   <li>
