@@ -295,19 +295,6 @@
             <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
               <xsl:value-of select="'noFault'" />
             </xsl:when>
-            <xsl:when test="$tickets/ticket[matches(resource, $thisResource)]">
-              <xsl:value-of select="'tkt-'" />
-              <xsl:value-of select="$tickets/ticket[matches(resource,
-              $thisResource)]/number" />
-            </xsl:when>
-            <xsl:when test="$package/packagewait[matches(resource,
-            $thisResource)]">
-              <xsl:value-of select="'pkgWait'" />
-            </xsl:when>
-            <xsl:when test="$package/incawait[matches(resource,
-            $thisResource)]">
-              <xsl:value-of select="'incaWait'" />
-            </xsl:when>
             <xsl:when test="$errMsg[matches(., 'soft-msc: command not found')]">
               <xsl:value-of select="'noSoftenv'" />
             </xsl:when>

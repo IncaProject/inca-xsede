@@ -73,31 +73,13 @@
               </table></td>
               <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
-                  <td class="clear"><font color="black">*</font></td>
+                  <td class="stale"><font color="black">stale</font></td>
                   <td class="clear"><font color="black">result is stale</font></td>
                 </tr>
                 <tr valign="top">
                   <td class="dev"/>
                   <td class="clear">
                     <font color="black">test under development</font>
-                  </td>
-                </tr>
-                <tr valign="top">
-                  <td class="tkt"><font color="black">tkt-#</font></td>
-                  <td class="clear">
-                    <font color="black">TeraGrid ticket number</font>
-                  </td>
-                </tr>
-                <tr valign="top">
-                  <td class="pkgWait"><font color="black">pkgWait</font></td>
-                  <td class="clear">
-                    <font color="black">waiting for package delivery</font>
-                  </td>
-                </tr>
-                <tr valign="top">
-                  <td class="incaWait"><font color="black">incaWait</font></td>
-                  <td class="clear">
-                    <font color="black">waiting for inca test change</font>
                   </td>
                 </tr>
               </table></td>
