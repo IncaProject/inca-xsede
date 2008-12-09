@@ -197,12 +197,11 @@
     <xsl:param name="resources"/>
     <xsl:param name="suite"/>
     <xsl:param name="summaries"/>
-    <xsl:variable name="testname" select="id" />
-    <xsl:variable name="endpoints" select="endpoints" />
+    <xsl:variable name="testname" select="." />
     <xsl:variable name="package" select="../.." />
     <xsl:variable name="rowlabel">
       <xsl:choose>
-        <xsl:when test="$package/tests/version[id=$testname]">
+        <xsl:when test="$package/tests[version=$testname]">
           <xsl:value-of select="concat('version: ' , $package/version)"/>
         </xsl:when>
         <xsl:otherwise>
@@ -225,10 +224,9 @@
         <!-- printResourceResultCell -->
         <xsl:apply-templates select="$resources" mode="result">
           <xsl:sort/>
-          <xsl:with-param name="test" select="."/>
+          <xsl:with-param name="test" select="$testname"/>
           <xsl:with-param name="package" select="$package"/>
           <xsl:with-param name="suite" select="$suite"/>
-          <xsl:with-param name="endpoints" select="$endpoints"/>
         </xsl:apply-templates>
       </tr>
     </xsl:if>
@@ -243,14 +241,13 @@
     <xsl:param name="test"/>
     <xsl:param name="package"/>
     <xsl:param name="suite"/>
-    <xsl:param name="endpoints"/>
-    <xsl:variable name="testname" select="$test/id"/>
+    <xsl:variable name="testname" select="$test"/>
     <xsl:variable name="thisResource" select="concat('^', name, '$')"/>
     <xsl:variable name="thisMacros" 
          select="replace(macros/macro[name='__regexp__']/value, ' ','|')"/>
     <xsl:variable name="regexHost" select="concat($thisResource, '|', $thisMacros)"/>
-    <xsl:variable name="endpoint" select="$endpoints/endpoint[
-         matches(nickname, $thisResource)]/resource"/>
+    <xsl:variable name="endpoint" select="/combo/stack/endpoint[
+         matches(nickname, $thisResource)]/regex"/>
     <xsl:variable name="testClean" select="replace($testname,'\+','.')"/>
     <xsl:variable name="regexTest" select="concat('^',$testClean,'_',$endpoint,'$')"/>
     <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
