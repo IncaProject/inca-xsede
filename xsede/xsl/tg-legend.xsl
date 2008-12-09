@@ -42,14 +42,14 @@
                     <font color="black">missing softenv</font>
                   </td>
                 </tr>
-              </table></td>
-              <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
                   <td class="clear"/>
                   <td class="clear">
                     <font color="black">missing (not yet executed)</font>
                   </td>
                 </tr>
+              </table></td>
+              <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
                   <td class="pass"><font color="black">pass</font></td>
                   <td class="clear"><font color="black">passed</font></td>
@@ -70,17 +70,9 @@
                   <td class="timeOut"><font color="black">timeOut</font></td>
                   <td class="clear"><font color="black">reporter timed out</font></td>
                 </tr>
-              </table></td>
-              <td><table cellpadding="1" class="subheader">
                 <tr valign="top">
                   <td class="stale"><font color="black">stale</font></td>
                   <td class="clear"><font color="black">result is stale</font></td>
-                </tr>
-                <tr valign="top">
-                  <td class="dev"/>
-                  <td class="clear">
-                    <font color="black">test under development</font>
-                  </td>
                 </tr>
               </table></td>
             </tr>
