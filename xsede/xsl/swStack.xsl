@@ -224,7 +224,7 @@
         <!-- printResourceResultCell -->
         <xsl:apply-templates select="$resources" mode="result">
           <xsl:sort/>
-          <xsl:with-param name="test" select="$testname"/>
+          <xsl:with-param name="testname" select="$testname"/>
           <xsl:with-param name="package" select="$package"/>
           <xsl:with-param name="suite" select="$suite"/>
         </xsl:apply-templates>
@@ -238,15 +238,14 @@
   <!-- Prints a table cell with resource result.                            -->
   <!-- ==================================================================== -->
   <xsl:template name="printResourceResultCell" match="resource" mode="result">
-    <xsl:param name="test"/>
+    <xsl:param name="testname"/>
     <xsl:param name="package"/>
     <xsl:param name="suite"/>
-    <xsl:variable name="testname" select="$test"/>
     <xsl:variable name="thisResource" select="concat('^', name, '$')"/>
     <xsl:variable name="thisMacros" 
          select="replace(macros/macro[name='__regexp__']/value, ' ','|')"/>
     <xsl:variable name="regexHost" select="concat($thisResource, '|', $thisMacros)"/>
-    <xsl:variable name="endpoint" select="/combo/stack/endpoint[
+    <xsl:variable name="endpoint" select="$testname/../../../../endpoint[
          matches(nickname, $thisResource)]/regex"/>
     <xsl:variable name="testClean" select="replace($testname,'\+','.')"/>
     <xsl:variable name="regexTest" select="concat('^',$testClean,'_',$endpoint,'$')"/>
@@ -269,7 +268,6 @@
             <xsl:with-param name="normRef" select="$normRef"/>
           </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="tickets" select="$test/tgTickets"/>
         <xsl:variable name="stale">
           <xsl:if test="$result/gmtExpires">
             <!-- inca-common.xsl -->
@@ -318,13 +316,7 @@
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$exit!=''">
-            <xsl:variable name="class">
-              <xsl:call-template name="getClass">
-                <xsl:with-param name="status" select="$test/status" />
-                <xsl:with-param name="result" select="$exit" />
-              </xsl:call-template>
-            </xsl:variable>
-            <td class="{$class}">
+            <td class="{$exit}">
               <a href="{$href}" title="{$errMsg}">
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)='' or string($stale)!=''">
@@ -360,27 +352,6 @@
         <td class="na">
           <xsl:text>n/a</xsl:text>
         </td>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <!-- ==================================================================== -->
-  <!-- getClass                                                             -->
-  <!--                                                                      -->
-  <!-- Get CSS class for table cell                                         -->
-  <!-- ==================================================================== -->
-  <xsl:template name="getClass">
-    <xsl:param name="status" />
-    <xsl:param name="result" />
-    <xsl:choose>
-      <xsl:when test="$status!=''">
-        <xsl:value-of select="$status" />
-      </xsl:when>
-      <xsl:when test="$result[matches(., 'tkt-')]">
-        <xsl:value-of select="'tkt'" />
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$result" />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
