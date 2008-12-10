@@ -59,7 +59,7 @@
     </td></tr></table>
     <xsl:for-each select="suites/suite|queries/query">
       <xsl:variable name="testResources" 
-                  select="string(/combo/stack/testing/resource|stack/testing/resource)"/>
+                  select="string(/combo/stack/testing|stack/testing)"/>
       <xsl:variable name="matchResources">
         <xsl:choose>
           <xsl:when test="$testResources!=''">
