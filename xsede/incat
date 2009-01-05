@@ -632,7 +632,7 @@
       </resource>
       <resource>
         <name>TACC</name>
-        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur|tacc-ranch)$')]</xpath>
+        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur)$')]</xpath>
         <macros>
           <macro>
             <name>siteName</name>
@@ -664,7 +664,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>tacc-lonestar tacc-ranger tacc-spur tacc-ranch</value>
+            <value>tacc-lonestar tacc-ranger tacc-spur</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2790,42 +2790,8 @@
         </macros>
       </resource>
       <resource>
-        <name>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</name>
-        <xpath>//resource[matches(name, '^(nstg\.ornl\.teragrid\.org)$')]</xpath>
-        <macros>
-          <macro>
-            <name>__groupname__</name>
-            <value>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>nstg.ornl.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>globus2</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
-            <value>tg-gridftp.@siteName@.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-port</name>
-            <value>2811</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
-            <value>4.0.5</value>
-          </macro>
-        </macros>
-      </resource>
-      <resource>
         <name>data-movement.teragrid.org-4.1.0-gridftp-striped</name>
-        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMove4.1.0-gridftp-striped-host</name>
@@ -2845,7 +2811,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>dtf.sdsc.teragrid.org</value>
+            <value>dtf.sdsc.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8198,14 +8164,6 @@
             <value>/home/inca/cog-4_1_6_rc2/lib/cog-jglobus-dev-080222.jar:/soft/java-1.5.0_16-sun/jre/lib/rt.jar:/soft/globus-4.0.1-r3/lib/cog-jglobus.jar:/home/inca/cog-4_1_6_rc2/lib/puretls.jar:/home/inca/cog-4_1_6_rc2/lib/commons-logging-1.1.jar:/home/inca/cog-4_1_6_rc2/lib/log4j-1.2.8.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix32.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix-asn1.jar:/home/inca/cog-4_1_6_rc2/lib/jce-jdk13-131.jar:../..</value>
           </macro>
           <macro>
-            <name>dm-4.1.0-gridftp-nonstriped-telnet-hosts</name>
-            <value>tg-gridftp.ornl.teragrid.org 2811</value>
-          </macro>
-          <macro>
-            <name>dm-4.1.0-gridftp-striped-telnet-hosts</name>
-            <value>tg-gridftp.sdsc.teragrid.org 2811</value>
-          </macro>
-          <macro>
             <name>dm-4.1.2-gridftp-nonstriped-telnet-hosts</name>
             <value>tg-gridftp2.lonestar.tacc.teragrid.org 2812</value>
             <value>gridftp.ranger.tacc.teragrid.org 2812</value>
@@ -8261,6 +8219,11 @@
             <value>gridftp-abe.ncsa.teragrid.org 2811</value>
             <value>gridftp-hg.ncsa.teragrid.org 2811</value>
             <value>gridftp-co.ncsa.teragrid.org 2811</value>
+          </macro>
+          <macro>
+            <name>dm-4.1.0-gridftp-striped-telnet-hosts</name>
+            <value>tg-gridftp.sdsc.teragrid.org 2811</value>
+            <value>tg-gridftp.ornl.teragrid.org 2811</value>
           </macro>
         </macros>
       </resource>
@@ -17258,110 +17221,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.transfer.gridftp.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@dataMove4.1.0-gridftp-nonstriped-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dataMove4.1.0-gridftp-nonstriped-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>1800.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-registered-version</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gridftp=~@dataMove4.1.0-gridftp-nonstriped-registered-version@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dm-4.1.0-gridftp-nonstriped-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-external-telnet-dm-4.1.0_@dm-4.1.0-gridftp-nonstriped-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>data.transfer.gridftp.unit.auth-dns</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.auth-dns</uri>
             <args>
@@ -17399,106 +17258,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>data.transfer.gridftp.unit.auth-dns</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.auth-dns</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>dest</name>
-                <value>@dataMove4.1.0-gridftp-nonstriped-host@:@dataMove4.1.0-gridftp-nonstriped-port@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-auth-dm-4.1.0</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>data.transfer.gridftp.unit.copy-dns</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy-dns</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>dest</name>
-                <value>gsiftp://@dataMove4.1.0-gridftp-nonstriped-host@:@dataMove4.1.0-gridftp-nonstriped-port@/~/inca.gridftp.test</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>source</name>
-                <value/>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>21600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-transfer-dm-4.1.0</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.0-gridftp-nonstriped</resourceSetName>
-          <schedule>
-            <crontime>? ?-23/12 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
