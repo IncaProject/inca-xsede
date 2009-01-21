@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
 >Inca 2.5 User's Guide</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -99,25 +99,30 @@ HREF="#ACCESS-METHODS"
 ></DT
 ><DT
 >5.6. <A
+HREF="#USERGUIDE-CHANGE-APPROVAL"
+>Requiring Resource Administrator Approval</A
+></DT
+><DT
+>5.7. <A
 HREF="#PROXIES"
 >Proxies</A
 ></DT
 ><DT
->5.7. <A
+>5.8. <A
 HREF="#USERGUIDE-INCAT-MACROS"
 >Using Resource Macros</A
 ></DT
 ><DD
 ><DL
 ><DT
->5.7.1. <A
+>5.8.1. <A
 HREF="#USERGUIDE-INCAT-ALL2ALL"
 >Configuring "all2all" Series</A
 ></DT
 ></DL
 ></DD
 ><DT
->5.8. <A
+>5.9. <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
 >Series Comparison and Notification</A
 ></DT
@@ -737,10 +742,10 @@ NAME="USERGUIDE-REQUIREMENTS"
 ><UL
 ><LI
 ><P
->           JDK or JRE 1.4.2_09 or greater.  When run with Java 1.4, the memory
-           usage of Inca components sometimes grows significantly over time.
-           This appears to be a problem in the Java run-time that is fixed in
-           Java 1.5 and 1.6, so use those versions if possible.
+>           Sun JDK or JRE 1.4.2_09 or greater.  When run with Java 1.4, the
+           memory usage of Inca components sometimes grows significantly over
+           time.  This appears to be a problem in the Java run-time that is
+           fixed in Sun Java 1.5 and 1.6, so use those versions if possible.
         </P
 ></LI
 ><LI
@@ -847,7 +852,7 @@ virtual organization's Certificate Authority (CA) and consult your
 organization's security policy regarding GSI credential use.  
 <A
 HREF="#PROXIES"
->Section 5.6</A
+>Section 5.7</A
 > describes using proxy credentials in the Inca framework.</P
 ></DIV
 ><DIV
@@ -1955,7 +1960,7 @@ ALIGN="CENTER"></P
   reporter and send email or take other actions if the test fails.  This is
   covered in <A
 HREF="#USERGUIDE-INCAT-COMPARISON"
->Section 5.8</A
+>Section 5.9</A
 > below; for this series
   leave this box blank.  Press the OK button, and incat will close the series
   dialog box and add the series to the Series list in the
@@ -2195,32 +2200,11 @@ NAME="ACCESS-METHODS"
 ><UL
 ><LI
 ><P
->manual:</P
-><P
->  Entering a manual resource group indicates that you want complete, direct
-  control over Inca execution on the group.  For a manual resource group you
-  must start the Reporter Manager on the command line and restart it any time
-  you want to change the reporter series configuration for the group.  The
-  Agent will NOT automatically start a Reporter Manager for a manual resource
-  as it will for local, ssh, or globus2 resources.  For a manual resource group,
-  incat provides a text box for you to enter an email that should be notified 
-  when the Inca configuration on the resource needs to be updated.
-  </P
-></LI
-><LI
-><P
->local:</P
-><P
->  The Agent starts a Reporter Manager on the same machine where the Agent is
-  running (localhost).  
-  </P
-></LI
-><LI
-><P
 >ssh:</P
 ><P
->  The Agent starts a Reporter Manager on a remote machine using ssh to access
-  the remote machine.  The Agent must have ssh key access to the remote machine.
+>  The most common access method.  The Agent starts a Reporter Manager on a
+  remote machine using ssh to access the remote machine.  The Agent must have
+  ssh key access to the remote machine.
   Reporter Manager files are copied from the Agent to the
   remote machine using sftp.  For ssh resource groups, incat provides text
   boxes for you to enter the login id, password, and path to the ssh key file
@@ -2245,6 +2229,30 @@ NAME="ACCESS-METHODS"
   below) so that the Agent can obtain one as needed.
   </P
 ></LI
+><LI
+><P
+>local:</P
+><P
+>  The Agent starts a Reporter Manager on the same machine where the Agent is
+  running (localhost).  
+  </P
+></LI
+><LI
+><P
+>manual:</P
+><P
+>  Entering a manual resource group indicates that you want complete, direct
+  control over Inca execution on the group.  For a manual resource group you
+  must start the Reporter Manager on the command line and restart it any time
+  you want to change the reporter series configuration for the group.  The
+  Agent will NOT automatically start a Reporter Manager for a manual resource
+  as it will for local, ssh, or globus2 resources.  See
+  <A
+HREF="#USERGUIDE-ADVANCED-MANUAL"
+>Section 11.5</A
+> for more details.
+  </P
+></LI
 ></UL
 ></DIV
 ><DIV
@@ -2252,8 +2260,64 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
+NAME="USERGUIDE-CHANGE-APPROVAL"
+>5.6. Requiring Resource Administrator Approval</A
+></H3
+><P
+>  By default, Inca installation changes take effect automatically once you
+  commit them to the Agent.  In circumstances where a resource administrator
+  requires greater control over Inca execution, you can enter an email address
+  in the Approval Email text box of the resource edit dialog.  When changes to
+  the Inca installation on this resource are committed, Inca will send email
+  to this address with instructions for running the approveChanges
+  command.  
+  </P
+><P
+><IMG
+SRC="figures/incat/approval.png"
+ALIGN="CENTER"></P
+><P
+>  This approveCommand allows the resource administrator to view and approve 
+  individual changes committed using incat.  The Agent will only transmit 
+  approved changes to the resource.  Once the resource administrator
+  invokes the approveCommand specified in the email notification, 
+  a text menu will be displayed showing the list of proposed changes.  An
+  administrator can view more information about a change by hitting ctrl-y.
+  By default all changes are checked.  If any proposed changes are incorrect
+  for their system, the administrator should uncheck the changes by hitting
+  space.  When done reviewing, the resource administrator should hit ctrl-s to
+  approve the selected changes.  The proposed changes not approved will remain
+  in the queue and indicate that the Inca administrator has incorrect
+  information about the resource.  The resource administrator should notify
+  their Inca administrator of the errors and when corrected, the proposed
+  changes will be corrected.
+  </P
+><P
+><IMG
+SRC="figures/ug-approve.png"
+ALIGN="CENTER"></P
+><P
+>To customize the email that gets sent to resource adminstrators,
+  edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/approveEmail.txt</TT
+>.  By default the
+  email will look something like below.  </P
+><P
+><IMG
+SRC="figures/ug-approvalEmail.png"
+ALIGN="CENTER"></P
+><P
+>Note the approval feature is an improvement of the previously known
+  "manual" reporter manager.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
 NAME="PROXIES"
->5.6. Proxies</A
+>5.7. Proxies</A
 ></H3
 ><P
 >For convenience, the Inca framework can be used to retrieve a proxy for the
@@ -2317,7 +2381,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-MACROS"
->5.7. Using Resource Macros</A
+>5.8. Using Resource Macros</A
 ></H3
 ><P
 >  Resource macros provide a shorthand for defining multiple, similar series.
@@ -2419,7 +2483,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-ALL2ALL"
->5.7.1. Configuring "all2all" Series</A
+>5.8.1. Configuring "all2all" Series</A
 ></H4
 ><P
 >The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
@@ -2484,7 +2548,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-INCAT-COMPARISON"
->5.8. Series Comparison and Notification</A
+>5.9. Series Comparison and Notification</A
 ></H3
 ><P
 >  For a particular series, the Inca system by default reports only whether or
@@ -2770,10 +2834,10 @@ COLOR="RED"
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then edit line 12 of
+        Copy this key, then edit line 9 of
         <TT
 CLASS="FILENAME"
->$INCA_DIST/webapps/xml/google.xml</TT
+>$INCA_DIST/webapps/inca/xml/google.xml</TT
 >.
         </P
 ><TABLE
@@ -3768,7 +3832,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN695"
+NAME="AEN706"
 ></A
 ><P
 ><B
@@ -4366,7 +4430,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN899"
+NAME="AEN910"
 ></A
 ><P
 ><B
@@ -5964,7 +6028,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1249"
+NAME="AEN1260"
 ></A
 ><P
 ><B
@@ -7344,7 +7408,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1534"
+NAME="AEN1545"
 ></A
 ><P
 ><B
@@ -7370,6 +7434,28 @@ CLASS="CALSTABLE"
 ></TR
 ></THEAD
 ><TBODY
+><TR
+><TD
+><P
+>client</P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.5/javawsdocs/edu/sdsc/inca/Client.html"
+TARGET="_top"
+>edu.sdsc.inca.Client</A
+></P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.5/wsdocs/Inca/Client.html"
+TARGET="_top"
+>Inca::Client</A
+></P
+></TD
+></TR
 ><TR
 ><TD
 ><P
@@ -7566,7 +7652,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1581"
+NAME="AEN1601"
 ></A
 ><P
 ><B
@@ -8071,7 +8157,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1688"
+NAME="AEN1708"
 ></A
 ><P
 ><B
@@ -8814,7 +8900,7 @@ error messages in depot reports with "NOT_AT_FAULT: " if the resource the
 report ran on is not at fault for the "all2all" error and the
 report is not already prefixed with "DOWNTIME" (see <A
 HREF="#USERGUIDE-INCAT-ALL2ALL"
->Section 5.7.1</A
+>Section 5.8.1</A
 > 
 for more information about configuring "all2all" tests).  Resources are determined to
 not be at fault if the summary property that matches their nickname has failed. 
@@ -9069,11 +9155,9 @@ NAME="USERGUIDE-ADVANCED-MANUAL"
 >11.5. Manual Access Method</A
 ></H3
 ><P
->A resource administrator may prefer to have local control of the
-reporter manager running on their resources rather than be controlled
-centrally by the Inca agent (similar to Inca 1).  In this case, an Inca
-administrator can add the resource using the access method 'manual' and 
-changes to the configuration will be emailed to the resource administrator.
+>A resource administrator may be unable to start a reporter manager
+using one of the automated methods (ssh, globus2, or local).  In this case, an
+Inca administrator can add the resource using the access method 'manual'. 
 The following steps will need to be taken by the Inca administrator and
 resource administrator:</P
 ><P
@@ -9086,20 +9170,8 @@ BORDER="0"
 ><TR
 ><TD
 >Step <A
-HREF="#MAN-ADMIN-OPT"
->1</A
->: <STRONG
-><FONT
-COLOR="RED"
->(optional -- one time only)</FONT
-></STRONG
-> Customize email message sent to resource administrators.</TD
-></TR
-><TR
-><TD
->Step <A
 HREF="#MAN-ADMIN-CERT"
->4</A
+>3</A
 >: Generate a certificate for the
 reporter manager.</TD
 ></TR
@@ -9107,7 +9179,7 @@ reporter manager.</TD
 ><TD
 >Step <A
 HREF="#MAN-ADMIN-ADD"
->5</A
+>4</A
 >: Add resource in incat with access method 'manual'</TD
 ></TR
 ></TBODY
@@ -9125,14 +9197,14 @@ BORDER="0"
 ><TD
 >Step <A
 HREF="#MAN-SYSADMIN-INSTALL"
->2</A
+>1</A
 >: Install reporter manager</TD
 ></TR
 ><TR
 ><TD
 >Step <A
 HREF="#MAN-SYSADMIN-CRED"
->3</A
+>2</A
 >: Generate private key and
 certificate request</TD
 ></TR
@@ -9140,7 +9212,7 @@ certificate request</TD
 ><TD
 >Step <A
 HREF="#MAN-SYSADMIN-CERT"
->6</A
+>5</A
 >: Install certificate and
 trusted certificate.</TD
 ></TR
@@ -9148,8 +9220,8 @@ trusted certificate.</TD
 ><TD
 >Step <A
 HREF="#MAN-SYSADMIN-START"
->7</A
->: Start and manually manage reporter manager</TD
+>6</A
+>: Start reporter manager</TD
 ></TR
 ></TBODY
 ></TABLE
@@ -9159,20 +9231,6 @@ HREF="#MAN-SYSADMIN-START"
 ></P
 ><OL
 TYPE="1"
-><LI
-><A
-NAME="MAN-ADMIN-OPT"
-></A
-><P
->INCA ADMIN: <STRONG
-><FONT
-COLOR="RED"
->(optional -- one time only)</FONT
-></STRONG
-> customize the email
-    message that gets sent to the resource administrators by editing the text in
-    $INCA_DIST/etc/manualEmail.txt.</P
-></LI
 ><LI
 ><A
 NAME="MAN-SYSADMIN-INSTALL"
@@ -9426,14 +9484,11 @@ SRC="figures/incat/manual.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ><P
->The "Resource Admin Email" field should be filled with the email
-    address of the resource administrator of the manual resource.  Make sure the 
+> Make sure the 
     "Equivalent" box is checked, otherwise the depot may discard reports with 
-    "unattached to any DB config" warnings.  The new "manualResource" will 
-     also need to be added to the "defaultGrid" resource in order to run the default sampleSuite.</P
-><P
->When suite changes are committed in incat, the agent will email the suite changes to
-    the resource administrator.  Select "Agent-&#62;Commit" from the menu to
+    "unattached to any DB config" warnings.  The new "manualResource" will
+    also need to be added to the "defaultGrid" resource in order to run the
+    default sampleSuite.  Select "Agent-&#62;Commit" from the menu to
     commit the changes.  
     </P
 ></LI
@@ -9482,92 +9537,13 @@ COLOR="RED"
 NAME="MAN-SYSADMIN-START"
 ></A
 ><P
->RESOURCE ADMIN: The suite and any changes to that suite are emailed to the resource
-    administrator specified by the Inca administrator in Step <A
-HREF="#MAN-ADMIN-ADD"
->5</A
->.  The changes will be attached in a file called
-    <TT
-CLASS="FILENAME"
->suiteChanges.xml</TT
-> and the updated configuration for
-    your resource (with the changes included) will be attached in a file
-    called <TT
-CLASS="FILENAME"
->updatedSuite.xml</TT
->.  View the add/delete changes
-    in <TT
-CLASS="FILENAME"
->suiteChange.xml</TT
->.  Then copy the
-    <TT
-CLASS="FILENAME"
->updatedSuite.xml</TT
-> to a file called
-    <TT
-CLASS="FILENAME"
->$RM_INSTALL_DIR/suite.xml</TT
->. 
-    <A
-HREF="#MANUALEMAIL.FIG"
->Figure 21</A
-> shows an example of a notification mail
-    viewed from Apple Mail.  
-    </P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="MANUALEMAIL.FIG"
-></A
-><P
-><B
->Figure 21. Example of Inca notification email upon suite change</B
-></P
-><P
-><IMG
-SRC="figures/ug-manualEmail.png"
-ALIGN="CENTER"></P
-></DIV
-><P
->Next, create a repository catalog file called 
-    <TT
-CLASS="FILENAME"
->$RM_INSTALL_DIR/var/reporter-packages/repository.xml</TT
-> to tell the reporter manager
-    where the reporters are installed (relative to $RM_INSTALL_DIR/var/reporter-packages).  The
-    <TT
-CLASS="FILENAME"
->repository.xml</TT
->  will need to contain every reporter
-    that is listed in suite.xml.  Currently, there are 2 types of entries in
-    the catalog: reporters and perl/python libraries.  Each package has 4 tags:
-    dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
-   it with any non-default reporters configured in the suite.xml file:
-    <TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="90%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
-  $RM_INSTALL_DIR/var/reporter-packages/repository.xml</PRE
-></FONT
-></TD
-></TR
-></TABLE
->
-   </P
-><P
->Finally, you can start up the reporter manager using the commands
+>RESOURCE ADMIN: 
+    Finally, you can start up the reporter manager using the commands
 below.  Replace "depotHost" with the hostname where the depot is running and
 replace "manualResource" with the manual resource group name added in step
 <A
 HREF="#MAN-ADMIN-ADD"
->5</A
+>4</A
 >: </P
 ><TABLE
 BORDER="1"
@@ -9659,17 +9635,6 @@ CLASS="SCREEN"
 ></TD
 ></TR
 ></TABLE
-><P
->NOTE: The resource administrator will need to replace
-<TT
-CLASS="FILENAME"
->suite.xml</TT
-> with any changes that are received by email,
-edit the <TT
-CLASS="FILENAME"
->repository.xml</TT
-> with any new reporters, and then
-restart the reporter manager.</P
 ></LI
 ></OL
 ></DIV
@@ -9716,7 +9681,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2044"
+NAME="AEN2039"
 ></A
 ><P
 ><B
@@ -10391,7 +10356,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2189"
+NAME="AEN2184"
 ></A
 ><P
 ><B
