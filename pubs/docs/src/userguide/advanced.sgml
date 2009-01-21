@@ -548,18 +548,15 @@ Database Initialization Completed</screen>
 <section id="userguide-advanced-manual">
 <title>Manual Access Method</title>
 
-<para>A resource administrator may prefer to have local control of the
-reporter manager running on their resources rather than be controlled
-centrally by the Inca agent (similar to Inca 1).  In this case, an Inca
-administrator can add the resource using the access method 'manual' and 
-changes to the configuration will be emailed to the resource administrator.
+<para>A resource administrator may be unable to start a reporter manager
+using one of the automated methods (ssh, globus2, or local).  In this case, an
+Inca administrator can add the resource using the access method 'manual'. 
 The following steps will need to be taken by the Inca administrator and
 resource administrator:
 </para>
 
 <para>Inca Administrator</para>
 <simplelist type=horiz columns=1>
-<member>Step <xref linkend="man-admin-opt">: <emphasis role="red">(optional -- one time only)</emphasis> Customize email message sent to resource administrators.</member>
 <member>Step <xref linkend="man-admin-cert">: Generate a certificate for the
 reporter manager.</member>
 <member>Step <xref linkend="man-admin-add">: Add resource in incat with access method 'manual'</member>
@@ -571,15 +568,10 @@ reporter manager.</member>
 certificate request</member>
 <member>Step <xref linkend="man-sysadmin-cert">: Install certificate and
 trusted certificate.</member>
-<member>Step <xref linkend="man-sysadmin-start">: Start and manually manage reporter manager</member>
+<member>Step <xref linkend="man-sysadmin-start">: Start reporter manager</member>
 </simpleList>
 
 <orderedList>
-  <listItem id="man-admin-opt">
-    <para>INCA ADMIN: <emphasis role="red">(optional -- one time only)</emphasis> customize the email
-    message that gets sent to the resource administrators by editing the text in
-    $INCA_DIST/etc/manualEmail.txt.</para>
-  </listItem>
   <listItem id="man-sysadmin-install">
     <para>RESOURCE ADMIN: install the reporter manager distribution on your resource using the following steps.</para>
     <orderedList>
@@ -666,13 +658,11 @@ agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
       <title>Add Resource Screen</title>
       <graphic fileref="figures/incat/manual.jpg" align="center"></graphic>
     </figure>
-    <para>The "Resource Admin Email" field should be filled with the email
-    address of the resource administrator of the manual resource.  Make sure the 
+    <para> Make sure the 
     "Equivalent" box is checked, otherwise the depot may discard reports with 
-    "unattached to any DB config" warnings.  The new "manualResource" will 
-     also need to be added to the "defaultGrid" resource in order to run the default sampleSuite.</para>
-    <para>When suite changes are committed in incat, the agent will email the suite changes to
-    the resource administrator.  Select "Agent->Commit" from the menu to
+    "unattached to any DB config" warnings.  The new "manualResource" will
+    also need to be added to the "defaultGrid" resource in order to run the
+    default sampleSuite.  Select "Agent->Commit" from the menu to
     commit the changes.  
     </para>
   </listItem>
@@ -690,38 +680,8 @@ agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
     </screen>
   </listItem>
   <listItem id="man-sysadmin-start">
-    <para>RESOURCE ADMIN: The suite and any changes to that suite are emailed to the resource
-    administrator specified by the Inca administrator in Step <xref
-    linkend="man-admin-add">.  The changes will be attached in a file called
-    <filename>suiteChanges.xml</filename> and the updated configuration for
-    your resource (with the changes included) will be attached in a file
-    called <filename>updatedSuite.xml</filename>.  View the add/delete changes
-    in <filename>suiteChange.xml</filename>.  Then copy the
-    <filename>updatedSuite.xml</filename> to a file called
-    <filename>$RM_INSTALL_DIR/suite.xml</filename>. 
-    <xref linkend="manualEmail.fig"> shows an example of a notification mail
-    viewed from Apple Mail.  
-    </para>
-
-    <figure id="manualEmail.fig">
-      <title>Example of Inca notification email upon suite change</title>
-      <graphic fileref="figures/ug-manualEmail.png" align="center">
-      </graphic>
-    </figure>
-
-    <para>Next, create a repository catalog file called 
-    <filename>$RM_INSTALL_DIR/var/reporter-packages/repository.xml</filename> to tell the reporter manager
-    where the reporters are installed (relative to $RM_INSTALL_DIR/var/reporter-packages).  The
-    <filename>repository.xml</filename>  will need to contain every reporter
-    that is listed in suite.xml.  Currently, there are 2 types of entries in
-    the catalog: reporters and perl/python libraries.  Each package has 4 tags:
-    dependency, name, path, and version.  You can copy the default repository catalog with the following command, but will need to update 
-   it with any non-default reporters configured in the suite.xml file:
-    <screen>% cp $RM_INSTALL_DIR/var/Inca-Reporter-*/etc/common/sampleRepository.xml \
-  $RM_INSTALL_DIR/var/reporter-packages/repository.xml</screen>
-   </para>
-    
-   <para>Finally, you can start up the reporter manager using the commands
+    <para>RESOURCE ADMIN: 
+    Finally, you can start up the reporter manager using the commands
 below.  Replace "depotHost" with the hostname where the depot is running and
 replace "manualResource" with the manual resource group name added in step
 <xref linkend="man-admin-add">: </para>
@@ -753,11 +713,6 @@ make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</pa
 </screen>
         <para>Make sure all reporter-manager ps are stopped</para>
         <screen> % ps | grep manager </screen>
-        
-<para>NOTE: The resource administrator will need to replace
-<filename>suite.xml</filename> with any changes that are received by email,
-edit the <filename>repository.xml</filename> with any new reporters, and then
-restart the reporter manager.</para>
 </listItem> 
 </orderedList>
 
