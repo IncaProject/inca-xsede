@@ -256,7 +256,8 @@
   must start the Reporter Manager on the command line and restart it any time
   you want to change the reporter series configuration for the group.  The
   Agent will NOT automatically start a Reporter Manager for a manual resource
-  as it will for local, ssh, or globus2 resources.
+  as it will for local, ssh, or globus2 resources.  See
+  <xref linkend="userguide-advanced-manual"> for more details.
   </para>
 </listItem>
 </itemizedList>
@@ -270,11 +271,39 @@
   requires greater control over Inca execution, you can enter an email address
   in the Approval Email text box of the resource edit dialog.  When changes to
   the Inca installation on this resource are committed, Inca will send email
-  to this address with instructions for running the inca-approve-changes
-  script.  This script allows the resource administrator to approve or reject
-  individual changes committed using incat.  The Inca Reporter Manager for that
-  resource will apply only approved changes.
+  to this address with instructions for running the approveChanges
+  command.  
   </para>
+  
+  <graphic fileref="figures/incat/approval.png" align="center"></graphic>
+
+  <para>
+  This approveCommand allows the resource administrator to view and approve 
+  individual changes committed using incat.  The Agent will only transmit 
+  approved changes to the resource.  Once the resource administrator
+  invokes the approveCommand specified in the email notification, 
+  a text menu will be displayed showing the list of proposed changes.  An
+  administrator can view more information about a change by hitting ctrl-y.
+  By default all changes are checked.  If any proposed changes are incorrect
+  for their system, the administrator should uncheck the changes by hitting
+  space.  When done reviewing, the resource administrator should hit ctrl-s to
+  approve the selected changes.  The proposed changes not approved will remain
+  in the queue and indicate that the Inca administrator has incorrect
+  information about the resource.  The resource administrator should notify
+  their Inca administrator of the errors and when corrected, the proposed
+  changes will be corrected.
+  </para>
+  
+  <graphic fileref="figures/ug-approve.png" align="center"></graphic>
+
+  <para>To customize the email that gets sent to resource adminstrators,
+  edit <filename>$INCA_DIST/etc/approveEmail.txt</filename>.  By default the
+  email will look something like below.  </para>
+  
+  <graphic fileref="figures/ug-approvalEmail.png" align="center"></graphic>
+
+  <para>Note the approval feature is an improvement of the previously known
+  "manual" reporter manager.</para>
 </section>
 
 <section id="proxies">
