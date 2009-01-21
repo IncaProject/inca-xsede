@@ -32,15 +32,15 @@ call the same functions as "openssl verify".
 <para>If you observe that a reporter manager on a resource is having trouble
 connecting to either the agent or depot, there could be a problem with either
 the installed SSL libraries or certificates.  To test, use the
-<filename>inca-ping-client</filename> script installed with the reporter
-manager as in the example below. Replace $RM_INSTALL_DIR with the path to the
+<filename>pingClient</filename> command as in the example below. 
+Replace $RM_INSTALL_DIR with the path to the
 directory where the reporter manager is installed. Supply the appropriate
 hostname and port for either the depot or agent.  After pressing return, type
 the password for the certificates.  </para>
 
 <screen>
 % cd <emphasis role="red">$RM_INSTALL_DIR</emphasis>
-% env PERL5LIB=lib/perl bin/inca-ping-client \
+% sbin/inca pingClient \
   -c etc/rmcert.pem \
   -k etc/rmkey.pem -P true -t etc/trusted \
   -uri incas://<emphasis role="red">&lt;agent or depot hostname&gt;</emphasis>:<emphasis role="red">&lt;port&gt;</emphasis>
