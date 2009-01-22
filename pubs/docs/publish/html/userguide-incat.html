@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML
 ><HEAD
 ><TITLE
 >Administering Inca with incat</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
 REL="HOME"
 TITLE="Inca 2.5 User's Guide"
 HREF="index.html"><LINK
@@ -578,6 +578,11 @@ NAME="ACCESS-METHODS"
 HREF="userguide-advanced-config.html#USERGUIDE-ADVANCED-MANUAL"
 >Section 11.5</A
 > for more details.
+Note the approval feature described in <A
+HREF="userguide-incat.html#USERGUIDE-CHANGE-APPROVAL"
+>Section 5.6</A
+> 
+is an improvement of the previously known "manual" reporter manager.
   </P
 ></LI
 ></UL
@@ -591,52 +596,55 @@ NAME="USERGUIDE-CHANGE-APPROVAL"
 >5.6. Requiring Resource Administrator Approval</A
 ></H2
 ><P
->  By default, Inca installation changes take effect automatically once you
-  commit them to the Agent.  In circumstances where a resource administrator
-  requires greater control over Inca execution, you can enter an email address
-  in the Approval Email text box of the resource edit dialog.  When changes to
-  the Inca installation on this resource are committed, Inca will send email
-  to this address with instructions for running the approveChanges
-  command.  
-  </P
+> By default, Inca installation changes take effect automatically once
+you commit them to the Agent.  In circumstances where Inca changes must be
+approved before they take effect, enter the approver's email address in the
+"Approval Email" text box of the resource edit dialog.  When changes to the
+Inca installation on this resource are committed, Inca will send approval
+instructions to the email specified in the resource dialog.</P
 ><P
 ><IMG
 SRC="figures/incat/approval.png"
 ALIGN="CENTER"></P
 ><P
->  This approveCommand allows the resource administrator to view and approve 
-  individual changes committed using incat.  The Agent will only transmit 
-  approved changes to the resource.  Once the resource administrator
-  invokes the approveCommand specified in the email notification, 
-  a text menu will be displayed showing the list of proposed changes.  An
-  administrator can view more information about a change by hitting ctrl-y.
-  By default all changes are checked.  If any proposed changes are incorrect
-  for their system, the administrator should uncheck the changes by hitting
-  space.  When done reviewing, the resource administrator should hit ctrl-s to
-  approve the selected changes.  The proposed changes not approved will remain
-  in the queue and indicate that the Inca administrator has incorrect
-  information about the resource.  The resource administrator should notify
-  their Inca administrator of the errors and when corrected, the proposed
-  changes will be corrected.
-  </P
-><P
-><IMG
-SRC="figures/ug-approve.png"
-ALIGN="CENTER"></P
-><P
->To customize the email that gets sent to resource adminstrators,
-  edit <TT
+>The emailed approval instructions will look like the image below by
+default and will describe how changes can be approved using Inca's
+<TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command.  To customize the approval
+instruction email edit <TT
 CLASS="FILENAME"
 >$INCA_DIST/etc/approveEmail.txt</TT
->.  By default the
-  email will look something like below.  </P
+>.</P
 ><P
 ><IMG
 SRC="figures/ug-approvalEmail.png"
 ALIGN="CENTER"></P
 ><P
->Note the approval feature is an improvement of the previously known
-  "manual" reporter manager.</P
+> The <TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command allows viewing and
+approval of the individual changes committed using incat.   After the
+<TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command is invoked, the approver will see a
+text menu like the one in the screen below with a list of proposed changes.
+More information about each change is viewable by hitting ctrl-y.  By default
+all changes are checked.  If any proposed changes are incorrect for their
+system, the approver should uncheck them by hitting space.  After checking only
+correct changes for their resource, the approver should hit ctrl-s to approve
+the selected changes.  The Agent will only transmit approved changes to the
+resource.   The proposed changes not approved will remain in the queue and
+indicate that the Inca administrator has incorrect information about the
+resource.  The approver should notify their Inca administrator of these errors
+to correct their proposed changes list.  </P
+><P
+><IMG
+SRC="figures/ug-approve.png"
+ALIGN="CENTER"></P
 ></DIV
 ><DIV
 CLASS="SECTION"
