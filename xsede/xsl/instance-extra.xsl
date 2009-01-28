@@ -44,7 +44,7 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:variable name="confid" select="../seriesConfigId" /><br/>
-      <form method="post" action="addDbCommentsForm.jsp">
+      <form method="get" action="addDbCommentsForm.jsp">
         <input type="hidden" name="series" value="{$confid}"/>
         <input type="hidden" name="host" value="{hostname}"/>
         <input type="hidden" name="nickname" value="{$config/nickname}"/>
