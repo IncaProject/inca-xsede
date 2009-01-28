@@ -4,12 +4,7 @@
 <%@ taglib prefix="inca" tagdir="/WEB-INF/tags/inca" %>
 
 
-<html>
-<head>
-  <link href="../css/inca.css" rel="stylesheet" type="text/css"/>
-</head>
-
-<body>
+<jsp:include page="header.jsp"/>
 <c:set var="usage">
   Description:  Emails inca with form contents
 </c:set>
@@ -42,5 +37,4 @@ TO APPROVE, visit ${url}/jsp/query.jsp?<c:forEach items="${param}" var="par" var
 <% String emailStr = (String)pageContext.getAttribute("email");
    String[] shmail = {"/bin/sh", "-c", emailStr};
    Runtime.getRuntime().exec(shmail); %>
-</body>
-</html> 
+<jsp:include page="footer.jsp"/>

@@ -2,16 +2,8 @@
 <%@ taglib prefix="inca" tagdir="/WEB-INF/tags/inca" %>
 
 
-<html>
+<jsp:include page="header.jsp"/>
 
-<head> 
-  <inca:getUrl var="url" />
-  <c:if test="${empty param.noHeader}">
-    <inca:executeXslTemplate name="header" url="${url}"/>
-  </c:if>
-</head> 
-
-<body>
 <table xmlns:sdf="java.text.SimpleDateFormat" xmlns:date="java.util.Date" xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes" width="100%" border="0"><tr align="left"><td><h1 class="body">Description of Status Pages </h1></td></tr></table>
 
                         <p>These status pages show TeraGrid's health as monitored using <a href="http://inca.sdsc.edu/">Inca</a>.  Pages are also linked from the drop down menu at the top right of the page. </p><br/>
@@ -97,13 +89,4 @@
                           </tr>
                         </table>
 
-
-  
-
-
-
-<c:if test="${empty param.noFooter}">
-  <inca:executeXslTemplate name="footer"/>
-</c:if>
-</body>
-</html>
+<jsp:include page="footer.jsp"/>
