@@ -9,11 +9,6 @@
   <xsl:param name="url" />
 
   <xsl:template name="header">
-    <head>
-      <link href="{concat($url, '/css/nav.css')}" rel="stylesheet" type="text/css"/>
-      <link href="{concat($url, '/css/inca.css')}" rel="stylesheet" type="text/css"/>
-    </head>
-
     <xsl:variable name="map" select="'http://sapa.sdsc.edu:8080/inca'"/>
     <table width="100%" class="subheader">
       <tr>
