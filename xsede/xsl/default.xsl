@@ -70,7 +70,6 @@
   <!-- ==================================================================== -->
   <xsl:template name="printMdsResultsTable">
     <xsl:variable name="seriesNames" select="/combo/tgwide/services/service"/>
-    <xsl:variable name="benchmarks" select="/combo/tgwide/benchmarks/benchmark"/>
     <xsl:variable name="resources" select="/combo/tgwide/resources/resource"/>
     <xsl:variable name="suite" select="."/>
     <h1><xsl:value-of select="/combo/tgwide/id"/></h1>
@@ -88,27 +87,13 @@
           <xsl:variable name="series" select="name"/>
           <xsl:for-each select="$resources">
             <xsl:sort/>
-            <xsl:variable name="regex" select="concat(name,'.*(',$series,')')"/>
+            <xsl:variable name="regex" select="concat('^',name,'.*(\(|_)',$series,'(\)|)$')"/>
             <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
                 matches(nickname, $regex)]"/>
             <xsl:call-template name="printResourceResultCell">
               <xsl:with-param name="result" select="$result"/>
-            </xsl:call-template>
-          </xsl:for-each>
-        </tr>
-      </xsl:for-each>
-      <xsl:for-each select="$benchmarks">
-        <xsl:variable name="benchmark" select="."/>
-        <tr>
-          <td class="clear"><xsl:value-of select="$benchmark"/></td>
-          <xsl:for-each select="$resources">
-            <xsl:sort/>
-            <xsl:variable name="resource" select="name"/>
-            <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
-               matches(nickname, concat('^benchmark_',$resource,'$'))]"/>
-            <xsl:call-template name="printResourceResultCell">
-              <xsl:with-param name="result" select="$result"/>
-              <xsl:with-param name="benchmark" select="$benchmark"/>
+              <xsl:with-param name="bench" 
+                select="$result/body/performance/benchmark/statistics/statistic[ID=$series]" />
             </xsl:call-template>
           </xsl:for-each>
         </tr>
@@ -172,13 +157,11 @@
   <!-- ==================================================================== -->
   <xsl:template name="printResourceResultCell">
     <xsl:param name="result"/>
-    <xsl:param name="benchmark"/>
+    <xsl:param name="bench"/>
     <xsl:variable name="instance" select="$result/instanceId" />
     <xsl:variable name="comparitor" select="$result/comparisonResult" />
     <xsl:variable name="foundVersion" select="$result/body/package/version" />
     <xsl:variable name="errMsg" select="$result/errorMessage" />
-    <xsl:variable name="bench" 
-      select="$result/body/performance/benchmark/statistics/statistic[ID=$benchmark]" />
     <xsl:choose>
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
