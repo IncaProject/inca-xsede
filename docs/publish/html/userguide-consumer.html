@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
 >Data Display (Data Consumers)</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
 REL="HOME"
 TITLE="Inca 2.5 User's Guide"
 HREF="index.html"><LINK
@@ -177,7 +177,7 @@ CLASS="FILENAME"
 >default.xsl</TT
 > to
       create a summary table of suite results. 
-      This JSP takes comma-delimited lists in its suiteNames and
+      This JSP takes comma-delimited lists in its suiteNames and optional
       resourceIds parameters that specify the suites and resources to be shown.
       The default installation invokes
       <A
@@ -191,6 +191,8 @@ TARGET="_top"
 SRC="figures/consumer/sum_page2.jpg"
 ALIGN="CENTER"></P
 >
+      If you omit resourceIds, then all resources will be displayed for each
+      suite.
       </P
 ></DIV
 ><DIV
@@ -198,8 +200,118 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
+NAME="REST"
+>6.1.2. REST Urls</A
+></H3
+><P
+>Inca also provides the ability to fetch data in XML or HTML
+      format using REST urls.  By default, the consumer recognizes a 
+      REST url using the following format:
+      </P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/[XML,HTML]/rest/&#60;suiteName&#62;[/&#60;resourceId&#62;]</TT
+></P
+><P
+>For example, the url</P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/rest/HTML/sampleSuite</TT
+></P
+><P
+>is equivalent to</P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite</TT
+>.</P
+><P
+>Likewise, the url </P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/rest/HTML/sampleSuite/defaultGrid</TT
+></P
+><P
+>is equivalent to</P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</TT
+>.</P
+><P
+>Specific resources can also be specified as resourceId, </P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/rest/HTML/sampleSuite/localResource</TT
+></P
+><P
+>If you want to fetch the data in XML, just replace HTML 
+      as below:</P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/rest/XML/sampleSuite/localResource</TT
+></P
+><P
+>If you would like to change the id 'rest' to a more transparent id
+      such as 'kit-status-v1', edit &#60;context-param&#62; in 
+      <TT
+CLASS="FILENAME"
+>$INCA_DIST/webapps/inca/WEB-INF/web.xml</TT
+>.  
+      For example, change </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>      &#60;context-param&#62;
+        &#60;param-name&#62;restId&#60;/param-name&#62;
+        &#60;param-value&#62;rest&#60;/param-value&#62;
+      &#60;/context-param&#62;
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>to</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>      &#60;context-param&#62;
+        &#60;param-name&#62;restId&#60;/param-name&#62;
+        &#60;param-value&#62;kit-status-v1&#60;/param-value&#62;
+      &#60;/context-param&#62;
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
 NAME="GOOGLE"
->6.1.2. Map View using Google Map API</A
+>6.1.3. Map View using Google Map API</A
 ></H3
 ><DIV
 CLASS="SECTION"
@@ -207,7 +319,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-OVERVIEW"
->6.1.2.1. Overview</A
+>6.1.3.1. Overview</A
 ></H4
 ><P
 >        The second item in the CURRENT DATA menu executes
@@ -256,7 +368,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-SETUP"
->6.1.2.2. Setting up Google Map View</A
+>6.1.3.2. Setting up Google Map View</A
 ></H4
 ><P
 >        To access the map view, you need to install a Google Maps API key in
@@ -363,7 +475,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-ACCESS"
->6.1.2.3. Accessing the Google Map View</A
+>6.1.3.3. Accessing the Google Map View</A
 ></H4
 ><P
 >        Once setup is complete, load the map view by selecting the "Map of
@@ -413,7 +525,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-CUSTOM"
->6.1.2.4. Customizing the Google Map View</A
+>6.1.3.4. Customizing the Google Map View</A
 ></H4
 ><P
 >          The configuration information for the Google Map View is located in
@@ -1273,7 +1385,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN718"
+NAME="AEN746"
 ></A
 ><P
 ><B
@@ -1871,7 +1983,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN922"
+NAME="AEN950"
 ></A
 ><P
 ><B
