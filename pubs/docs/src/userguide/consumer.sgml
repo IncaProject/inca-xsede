@@ -51,14 +51,73 @@
       The first item in the CURRENT DATA menu executes
       <filename>status.jsp</filename> with <filename>default.xsl</filename> to
       create a summary table of suite results. 
-      This JSP takes comma-delimited lists in its suiteNames and
+      This JSP takes comma-delimited lists in its suiteNames and optional
       resourceIds parameters that specify the suites and resources to be shown.
       The default installation invokes
       <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">
       http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>,
       producing an image similar to this one:
       <graphic fileref="figures/consumer/sum_page2.jpg" align="center"></graphic>
+      If you omit resourceIds, then all resources will be displayed for each
+      suite.
       </para>
+    </section>
+
+    <section id="rest">
+      <title>REST Urls</title>
+      <para>Inca also provides the ability to fetch data in XML or HTML
+      format using REST urls.  By default, the consumer recognizes a 
+      REST url using the following format:
+      </para>
+
+      <para><filename>http://localhost:8080/inca/[XML,HTML]/rest/&lt;suiteName&gt;[/&lt;resourceId&gt;]</filename></para>
+
+      <para>For example, the url</para>
+
+      <para><filename>http://localhost:8080/inca/rest/HTML/sampleSuite</filename></para>
+
+      <para>is equivalent to</para>
+
+      <para><filename>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite</filename>.</para>
+
+      <para>Likewise, the url </para>
+
+      <para><filename>http://localhost:8080/inca/rest/HTML/sampleSuite/defaultGrid</filename></para>
+
+      <para>is equivalent to</para>
+
+      <para><filename>http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</filename>.</para>
+
+      <para>Specific resources can also be specified as resourceId, </para>
+
+      <para><filename>http://localhost:8080/inca/rest/HTML/sampleSuite/localResource</filename></para>
+
+      <para>If you want to fetch the data in XML, just replace HTML 
+      as below:</para>
+
+      <para><filename>http://localhost:8080/inca/rest/XML/sampleSuite/localResource</filename></para>
+
+      <para>If you would like to change the id 'rest' to a more transparent id
+      such as 'kit-status-v1', edit &lt;context-param&gt; in 
+      <filename>$INCA_DIST/webapps/inca/WEB-INF/web.xml</filename>.  
+      For example, change </para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;rest&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+
+      <para>to</para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;kit-status-v1&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+      
     </section>
 
     <section id="google">
