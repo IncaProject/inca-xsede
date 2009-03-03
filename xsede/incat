@@ -568,7 +568,7 @@
       </resource>
       <resource>
         <name>Purdue-login</name>
-        <xpath>//resource[matches(name, '^(purdue-steele|purdue-condor|purdue-brutus)$')]</xpath>
+        <xpath>//resource[matches(name, '^(purdue-steele|purdue-condor)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -576,7 +576,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>purdue-steele purdue-condor purdue-brutus</value>
+            <value>purdue-steele purdue-condor</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3167,7 +3167,7 @@
       </resource>
       <resource>
         <name>data-movement.teragrid.org-4.1.0-gridftp-striped</name>
-        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(dtf\.sdsc\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMove4.1.0-gridftp-striped-host</name>
@@ -3187,7 +3187,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>dtf.sdsc.teragrid.org</value>
+            <value>dtf.sdsc.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5991,6 +5991,28 @@
         </macros>
       </resource>
       <resource>
+        <name>ncsa-lincoln</name>
+        <xpath>//resource[matches(name, '^(abe\.ncsa\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>ncsa-lincoln</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>abe.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>nics-kraken</name>
         <xpath>//resource[matches(name, '^(grid\.nics\.utk\.edu)$')]</xpath>
         <macros>
@@ -6023,24 +6045,12 @@
             <value>2</value>
           </macro>
           <macro>
-            <name>dataMove4.1.2-gridftp-default-host</name>
-            <value>gridftp.nics.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-host</name>
-            <value>gridftp.nics.teragrid.org</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-gridftp-default-port</name>
             <value>2811</value>
           </macro>
           <macro>
             <name>dataMove4.1.2-gridftp-striped-port</name>
             <value>2811</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
-            <value>4.0.7</value>
           </macro>
           <macro>
             <name>dataMove4.1.2-ssh-host</name>
@@ -6055,16 +6065,8 @@
             <value>@keyPre@ condor/6.9.3 @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.2-mds-info-host</name>
-            <value>kraken-pwd1.nics.teragrid.org</value>
-          </macro>
-          <macro>
             <name>core4.0.2-mds-info-port</name>
             <value>8446</value>
-          </macro>
-          <macro>
-            <name>core4.0.2-tgpolicy-key</name>
-            <value/>
           </macro>
           <macro>
             <name>core4.0.2-tgresid-key</name>
@@ -6077,10 +6079,6 @@
           <macro>
             <name>core4.0.0-mds-info-host</name>
             <value>@core4.0.2-mds-info-host@</value>
-          </macro>
-          <macro>
-            <name>core4.0.2-pacman-key</name>
-            <value>@keyPre@ pacman/3.26 @keyPost@</value>
           </macro>
           <macro>
             <name>__groupname__</name>
@@ -6129,6 +6127,30 @@
           <macro>
             <name>__incaReporterManagerLocation__</name>
             <value>/nics/a/home/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>core4.0.2-pacman-key</name>
+            <value>@keyPre@ pacman/3.26-r1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>core4.0.2-tgpolicy-key</name>
+            <value>@keyPre@ tg-policy/0.2-r1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>core4.0.2-mds-info-host</name>
+            <value>grid.nics.utk.edu</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-default-host</name>
+            <value>gridftp.nics.utk.edu</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-host</name>
+            <value>gridftp.nics.utk.edu</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
+            <value>4.0.8</value>
           </macro>
         </macros>
       </resource>
@@ -6342,11 +6364,19 @@
             <name>remote4.0.2-wsgram-port</name>
             <value>8444</value>
           </macro>
+          <macro>
+            <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
+            <value>4.0.8</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.0-gridftp-striped-registered-version</name>
+            <value>4.0.8</value>
+          </macro>
         </macros>
       </resource>
       <resource>
         <name>parallel-app.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|bigben\.psc\.teragrid\.org|ncsa-ia64|ncsa-abe|cobalt\.ncsa\.teragrid\.org|bigred\.iu\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.sdsc\.teragrid\.org|anl-viz|anl-ia64|ranger\.tacc\.teragrid\.org|kraken\.nics\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|bigben\.psc\.teragrid\.org|ncsa-ia64|anl-viz|anl-ia64|ncsa-abe|cobalt\.ncsa\.teragrid\.org|bigred\.iu\.teragrid\.org|frost\.ncar\.teragrid\.org|nstg\.ornl\.teragrid\.org|dtf\.sdsc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>parallelApp4.0.0-mpi-key</name>
@@ -6358,7 +6388,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org bigben.psc.teragrid.org ncsa-ia64 anl-viz anl-ia64 ncsa-abe cobalt.ncsa.teragrid.org bigred.iu.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org dtf.sdsc.teragrid.org ranger.tacc.teragrid.org kraken.nics.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org bigben.psc.teragrid.org ncsa-ia64 anl-viz anl-ia64 ncsa-abe cobalt.ncsa.teragrid.org bigred.iu.teragrid.org frost.ncar.teragrid.org nstg.ornl.teragrid.org dtf.sdsc.teragrid.org ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8598,9 +8628,13 @@
             <value>gridftp.ranch.tacc.teragrid.org</value>
           </macro>
           <macro>
+            <name>dm-4.1.1-gridftp-striped-telnet-hosts</name>
+            <value>gridftp.ranch.tacc.teragrid.org 2811</value>
+          </macro>
+          <macro>
             <name>dm-4.1.2-gridftp-ping-hosts</name>
             <value>gridftp.frost.ncar.teragrid.org</value>
-            <value>gridftp.nics.teragrid.org</value>
+            <value>gridftp.nics.utk.edu</value>
             <value>gridftp.bigben.psc.teragrid.org</value>
             <value>gridftp.pople.psc.teragrid.org</value>
             <value>tg-data.purdue.teragrid.org</value>
@@ -8614,13 +8648,9 @@
             <value>gridftp-co.ncsa.teragrid.org</value>
           </macro>
           <macro>
-            <name>dm-4.1.1-gridftp-striped-telnet-hosts</name>
-            <value>gridftp.ranch.tacc.teragrid.org 2811</value>
-          </macro>
-          <macro>
             <name>dm-4.1.2-gridftp-striped-telnet-hosts</name>
             <value>gridftp.frost.ncar.teragrid.org 2811</value>
-            <value>gridftp.nics.teragrid.org 2811</value>
+            <value>gridftp.nics.utk.edu 2811</value>
             <value>gridftp.bigben.psc.teragrid.org 2811</value>
             <value>gridftp.pople.psc.teragrid.org 2811</value>
             <value>tg-data.purdue.teragrid.org 2811</value>
@@ -10214,7 +10244,7 @@
             <value>tg-condor.purdue.teragrid.org</value>
             <value>tg-steele.purdue.teragrid.org</value>
             <value>tg-data.purdue.teragrid.org</value>
-            <value>gridftp.nics.teragrid.org</value>
+            <value>gridftp.nics.utk.edu</value>
           </macro>
         </macros>
       </resource>
