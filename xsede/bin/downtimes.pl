@@ -59,6 +59,7 @@ my $email = "";
 my @new = ();
 my %equivHosts = ( "anl-ia64" => "anl-grid",
     "ncsa-abe" => "ncsa-grid-abe",
+    "ncsa-abe" => "ncsa-lincoln",
     "ncsa-ia64" => "ncsa-grid-hg",
     "ncsa-tungsten" => "ncsa-grid-tun",
     "purdue-lear" => "purdue-grid",
