@@ -1,0 +1,30 @@
+#!/usr/local/bin/perl
+
+my $date = `date +%a`;
+chomp($date);
+
+#backup up teragrid dbs
+my $bin = "/misc/inca/postgresql-8.1.3/install/bin/";
+my @dbnames = ("teragrid");
+
+for my $dbname (@dbnames){
+  my $dbcopy = $date . "-dbbackup-" . $dbname;
+  my $dbfile = "/misc/inca/backups/" . $dbcopy;
+  unlink $dbfile;
+  `touch $dbfile`;
+  my $dbdump = $bin . "pg_dump -f " .  $dbfile . " " . $dbname;
+  `$dbdump`;
+  `gzip -f $dbfile`;
+}
+
+#backup var dir
+my $var = "/misc/inca/install-2r5/var";
+my $tmpvar = "/misc/inca/backups/" . $date . "-var-backup";
+`rm -rf $tmpvar`;
+`mkdir $tmpvar`;
+`cp -r $var/suites $tmpvar`;
+`cp -r $var/repository $tmpvar`;
+`cp -r $var/rm $tmpvar`;
+`cp $var/*.log $tmpvar`;
+`cp $var/*.xml $tmpvar`;
+`gzip $tmpvar/*.log`;
