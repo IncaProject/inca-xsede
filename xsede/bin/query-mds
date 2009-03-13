@@ -10,6 +10,7 @@ my $xml = $dir."/cache.xml.$$";
 my $cache = $dir."/cache.$$";
 my $new = $dir."/cache.new";
 `wget -o /dev/null -O $xml 'http://info.teragrid.org:8080/webmds/webmds?info=tgislocal'`;
+`perl -pi -e 's/^<.xml version="1.0" encoding="UTF-8".>/<\?xml version="1.0" encoding="iso-8859-1"\?>/' $xml`;
 `export CLASSPATH=$dir/lib/saxon8.jar; /soft/java-1.5.0_16-sun/bin/java net.sf.saxon.Transform -o $cache $xml $xsl`;
 my $diff = `diff $config $cache`;
 if ($diff eq ""){
