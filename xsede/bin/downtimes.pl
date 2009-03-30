@@ -57,21 +57,23 @@ if ( !defined $sth ) {
 $sth->execute();
 my $email = "";
 my @new = ();
-my %equivHosts = ( "anl-ia64" => "anl-grid",
-    "ncsa-abe" => "ncsa-grid-abe",
-    "ncsa-abe" => "ncsa-lincoln",
-    "ncsa-ia64" => "ncsa-grid-hg",
-    "ncsa-tungsten" => "ncsa-grid-tun",
-    "purdue-lear" => "purdue-grid",
-    "loni-lsu-queenbee" => "loni-lsu-qb");
+my %equivHosts = ( "anl-ia64" => ["anl-grid"],
+    "ncsa-abe" => ["ncsa-grid-abe"],
+    "ncsa-ia64" => ["ncsa-grid-hg"],
+    "ncsa-tungsten" => ["ncsa-grid-tun"],
+    "purdue-lear" => ["purdue-grid"],
+    "loni-lsu-queenbee" => ["loni-lsu-qb"] );
 open TMP,">$tmpFile";
 while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
-  my $startDate = convertToDateTime($start, $zone);
-  my $endDate = convertToDateTime($end, $zone);
+if ($id ne "3919"){
+  my $startDate = convertToDateTime($start, $zone, $id);
+  my $endDate = convertToDateTime($end, $zone, $id);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
     if (grep(/^$name$/, keys %equivHosts)){
-      print TMP "$equivHosts{$name}=$id\n";
+      for my $eqiv (@{$equivHosts{$name}}){
+        print TMP "$eqiv=$id\n";
+      }
     }
     my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
     if (!grep(/^$str$/, @past)){
@@ -79,6 +81,7 @@ while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $st
       push (@new, $str);
     }
   }
+}
 }
 close TMP;
 `mv $tmpFile $cacheFile`;
@@ -97,11 +100,13 @@ if ($email ne ""){
 sub convertToDateTime{
   my $date = shift;
   my $zone = shift;
+  my $id = shift;
 
   $zone =~ s/P(|.)T/America\/Los_Angeles/g;
   $zone =~ s/M(|.)T/America\/Denver/g;
   $zone =~ s/C(|.)T/America\/Chicago/g;
   $zone =~ s/E(|.)T/America\/New_York/g;
+  #print "Date: $date\nZone: $zone\nNews: http://news.teragrid.org/view-item.php?item=$id\n";
   my $parser = DateTime::Format::Strptime->new( 
                pattern => '%Y-%m-%d %l.%M.%S %p' ); # 2008-02-26 08.00.00 AM
   my $parseDate = $parser->parse_datetime($date);
