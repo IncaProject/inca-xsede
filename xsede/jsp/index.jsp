@@ -76,7 +76,7 @@
                             <td class="clear">Detailed tabular summary of pass/fail results for tests running at high frequency.</td>
                           </tr>
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=swStack.xsl&resourceIds=gig&suiteNames=gig&xml=gig.xml">grid infrastructure group (gig)</a></td>
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/HTML/kit-status-v1/gig/sapa">grid infrastructure group (gig)</a></td>
                             <td class="clear">Detailed tabular summary of pass/fail results for GIG related tests. </td>
                           </tr>
                           <tr valign="top">
