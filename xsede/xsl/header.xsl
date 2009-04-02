@@ -181,7 +181,7 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xml=tg-mds.xml&amp;resourceIds=repo&amp;suiteNames=tg-mds')}">
-                          tg wide mds
+                          tg wide information services
                         </a>
                       </li>
                       <li>
@@ -191,7 +191,12 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xsl=swStack.xsl&amp;resourceIds=gig&amp;suiteNames=gig&amp;xml=gig.xml')}">
-                          gig
+                          grid infrastructure group (gig)
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{concat($url, '/HTML/kit-status-v1/tgup/sapa')}">
+                          teragrid user portal (tgup)
                         </a>
                       </li>
                       <li>

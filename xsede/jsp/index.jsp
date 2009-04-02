@@ -11,11 +11,15 @@
   <h1>Reports</h1>
                         <table cellpadding="6" class="subheader" border="0">
                           <tr valign="top">
+                            <td class="clear"><a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">LEAD Testbed</a> </td>
+                            <td class="clear">Detailed tabular summary of pass/fail results by resource (column) and software category/package (row) for the services that <a href="http://www.teragridforum.org/mediawiki/index.php?title=LEAD">LEAD</a> uses. </td>
+                          </tr>
+                          <tr valign="top">
                             <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summary.jsp">Past week: avg pass rate by resource/suite </a></td>
                             <td class="clear">Bar graphs of the average test series pass rate by resource and by suite for the past week as compared to the week before last. </td>
                           </tr>
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=seriesSummary.xsl&xml=weekSummary.xml&queryNames=incaQueryStatus">Past 10 weeks: series error summary </a> </td>
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=seriesSummary.xsl&xml=weekSummary.xml&queryNames=incaQueryStatus">Past 12 weeks: series error summary </a> </td>
                             <td class="clear">A summary of test series errors by time period and the change between the total number of errors in the most recent period and the total number of errors in the period.</td>
                           </tr>
                           <tr valign="top">
@@ -25,10 +29,6 @@
                           <tr valign="top">
                             <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?filterSuite=true">Suite avg pass history </a></td>
                             <td class="clear">XY plot of the average series pass rate over time by test suite. </td>
-                          </tr>
-                          <tr valign="top">
-                            <td class="clear"><a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">LEAD Testbed</a> </td>
-                            <td class="clear">Detailed tabular summary of pass/fail results by resource (column) and software category/package (row) for the services that <a href="http://www.teragridforum.org/mediawiki/index.php?title=LEAD">LEAD</a> uses. </td>
                           </tr>
                         </table>
                         <p><br/>
@@ -74,6 +74,14 @@
                           <tr valign="top">
                             <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=swStack.xsl&resourceIds=real-time&suiteNames=real-time&xml=real-time.xml">real-time monitoring testbed</a> </td>
                             <td class="clear">Detailed tabular summary of pass/fail results for tests running at high frequency.</td>
+                          </tr>
+                          <tr valign="top">
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=swStack.xsl&resourceIds=gig&suiteNames=gig&xml=gig.xml">grid infrastructure group (gig)</a></td>
+                            <td class="clear">Detailed tabular summary of pass/fail results for GIG related tests. </td>
+                          </tr>
+                          <tr valign="top">
+                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/HTML/kit-status-v1/tgup/sapa">teragrid user portal (tgup)</a></td>
+                            <td class="clear">Detailed tabular summary of pass/fail results for TGUP related tests. </td>
                           </tr>
                           <tr valign="top">
                             <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/jsp/status.jsp?xsl=default.xsl&resourceIds=teragrid&suiteNames=security">security</a></td>
