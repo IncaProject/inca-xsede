@@ -618,15 +618,15 @@
           </macro>
           <macro>
             <name>real_time_email</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:jpg@sdsc.edu, FailTo:kenneth@sdsc.edu, FailTo:mahidhar@sdsc.edu</value>
-          </macro>
-          <macro>
-            <name>adminEmail</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:tgpt@ucsd.edu, FailTo:kenneth@sdsc.edu</value>
+            <value>FailTo:inca@sdsc.edu, FailTo:diegella@sdsc.edu, FailTo:kenneth@sdsc.edu, FailTo:mahidhar@sdsc.edu</value>
           </macro>
           <macro>
             <name>tgContact</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:tgpt@ucsd.edu</value>
+            <value>FailTo:inca@sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>adminEmail</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:diegella@sdsc.edu, FailTo:kenneth@sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -669,6 +669,36 @@
           <macro>
             <name>__remoteInvocationMethod__</name>
             <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>fake</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>TACC-login</name>
+        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>TACC-login</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>tacc-lonestar tacc-ranger tacc-spur</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
           </macro>
           <macro>
             <name>__equivalent__</name>
@@ -10187,7 +10217,7 @@
       </resource>
       <resource>
         <name>teragrid-login</name>
-        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC|LONI)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|SDSC|NCSA|ANL-login|Indiana-login|ORNL|Purdue-login|PSC|TACC-login|LONI)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -10195,7 +10225,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>NCAR SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC LONI</value>
+            <value>NCAR SDSC NCSA ANL-login Indiana-login ORNL Purdue-login PSC TACC-login LONI</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -18526,7 +18556,7 @@
               </arg>
               <arg>
                 <name>wgetArgs</name>
-                <value>--no-check-certificate</value>
+                <value/>
               </arg>
               <arg>
                 <name>log</name>
@@ -18543,6 +18573,10 @@
               <arg>
                 <name>version</name>
                 <value>no</value>
+              </arg>
+              <arg>
+                <name>restId</name>
+                <value>kit-status-v1</value>
               </arg>
               <arg>
                 <name>type</name>
@@ -18602,7 +18636,7 @@
               </arg>
               <arg>
                 <name>wgetArgs</name>
-                <value>--no-check-certificate</value>
+                <value/>
               </arg>
               <arg>
                 <name>log</name>
@@ -18619,6 +18653,10 @@
               <arg>
                 <name>version</name>
                 <value>no</value>
+              </arg>
+              <arg>
+                <name>restId</name>
+                <value>kit-status-v1</value>
               </arg>
               <arg>
                 <name>type</name>
@@ -18678,7 +18716,7 @@
               </arg>
               <arg>
                 <name>wgetArgs</name>
-                <value>--no-check-certificate</value>
+                <value/>
               </arg>
               <arg>
                 <name>log</name>
@@ -18695,6 +18733,10 @@
               <arg>
                 <name>version</name>
                 <value>no</value>
+              </arg>
+              <arg>
+                <name>restId</name>
+                <value>kit-status-v1</value>
               </arg>
               <arg>
                 <name>type</name>
@@ -18731,7 +18773,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>81</version>
+      <version>90</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24005,7 +24047,7 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>network.telnet.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
@@ -24057,7 +24099,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>network.telnet.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
@@ -24109,7 +24151,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.netstat.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
@@ -24157,7 +24199,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.gatekeeper</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gatekeeper</uri>
@@ -24205,7 +24247,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
@@ -24261,7 +24303,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.netstat.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
@@ -24309,7 +24351,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.gramversion</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gramversion</uri>
@@ -24361,7 +24403,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.wsgram.jobsubmit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram.jobsubmit</uri>
@@ -24433,7 +24475,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.basicFunctionality.gridJobSubmission.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
@@ -24525,7 +24567,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
@@ -24601,7 +24643,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.basicFunctionality.gridJobSubmission.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
@@ -24693,7 +24735,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
@@ -24769,7 +24811,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.wsrfquery</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsrfquery</uri>
@@ -24817,7 +24859,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.kitregistration.unit</uri>
@@ -24873,7 +24915,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
@@ -24961,7 +25003,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
@@ -25049,7 +25091,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
@@ -25137,7 +25179,7 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
@@ -25403,7 +25445,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:tgpt@sdsc.edu, FailTo:inca@sdsc.edu</target>
+                <target>FailTo:diegella@sdsc.edu, FailTo:inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -25413,7 +25455,7 @@
       <name>sdsc-ops</name>
       <guid>incas://sapa.sdsc.edu:6323/sdsc-ops</guid>
       <description>suite for sdsc admins</description>
-      <version>4</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26295,9 +26337,10 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.httpmds</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.httpmds</uri>
             <args>
               <arg>
                 <name>port</name>
@@ -26358,9 +26401,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.httpmds</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.httpmds</uri>
             <args>
               <arg>
                 <name>port</name>
@@ -26421,9 +26465,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -26476,9 +26521,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.wget.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.wget.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -26529,9 +26575,9 @@
         </seriesConfig>
       </seriesConfigs>
       <name>tgup</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/tgup</guid>
       <description>Tests for the TeraGrid User Portal (TGUP)</description>
-      <version>1</version>
+      <version>2</version>
     </suite>
     <suite>
       <seriesConfigs>
