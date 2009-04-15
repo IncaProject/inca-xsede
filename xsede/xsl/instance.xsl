@@ -31,6 +31,7 @@
   <!-- ==================================================================== -->
   <xsl:template name="printReport" match="report">
     <xsl:variable name="config" select="../seriesConfig"/>
+    <xsl:variable name="configId" select="../seriesConfigId"/>
     <xsl:variable
         name="cgi"
         select="concat(substring-before($config/series/uri, name),
@@ -211,6 +212,11 @@
         <xsl:value-of select="concat('% ',
         replace($config/series/context, $config/series/name, reporterPath))"/>
       </p></td></tr>
+      <tr><td colspan="2" align="left">
+        <form method="POST" action="runNow.jsp?configId={$configId}">
+          <input type="submit" value="Run Now" name="Run Now"/> (requires authentication)
+        </form>
+      </td></tr>
       <xsl:if test="count(log/system/message)>0">
         <tr><td colspan="2" class="header">
           <xsl:text>System commands executed by the reporter:</xsl:text>
