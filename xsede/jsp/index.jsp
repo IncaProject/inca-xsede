@@ -51,10 +51,6 @@
                             <td class="clear">Detailed tabular summary of pass/fail results by resource (column) and software category/package (row). </td>
                           </tr>
                           <tr valign="top">
-                            <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/html/summary.html">summary by resource </a></td>
-                            <td class="clear">Summary of failures by resource with links to test details. </td>
-                          </tr>
-                          <tr valign="top">
                             <td class="clear"><a href="http://sapa.sdsc.edu:8080/inca/html/ctssv3-map.html">google map</a> </td>
                             <td class="clear">Google map summary of pass/fail results by resource. Click on resource markers for pass/fail detail links. </td>
                           </tr></table>

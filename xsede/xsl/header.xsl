@@ -158,11 +158,6 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/html/summary.html')}">
-                          summary by resource
-                        </a>
-                      </li>
-                      <li>
                         <a href="{concat($map, '/html/ctssv3-map.html')}">
                           google map
                         </a>
