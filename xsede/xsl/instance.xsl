@@ -14,6 +14,7 @@
   <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:include href="../xsl/instance-extra.xsl"/>
 
+  <xsl:param name="printRunNow"/>
   <xsl:param name="week"/>
   <xsl:param name="month"/>
   <xsl:param name="quarter"/>
@@ -212,11 +213,13 @@
         <xsl:value-of select="concat('% ',
         replace($config/series/context, $config/series/name, reporterPath))"/>
       </p></td></tr>
+      <xsl:if test="$printRunNow='true'">
       <tr><td colspan="2" align="left">
         <form method="POST" action="runNow.jsp?configId={$configId}">
           <input type="submit" value="Run Now" name="Run Now"/> (requires authentication)
         </form>
       </td></tr>
+      </xsl:if>
       <xsl:if test="count(log/system/message)>0">
         <tr><td colspan="2" class="header">
           <xsl:text>System commands executed by the reporter:</xsl:text>
