@@ -2993,7 +2993,7 @@
       </resource>
       <resource>
         <name>core.teragrid.org-4.0.2</name>
-        <xpath>//resource[matches(name, '^(frost\.ncar\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|anl-viz|anl-ia64|dtf\.sdsc\.teragrid\.org|bigred\.iu\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|anl-viz|anl-ia64|dtf\.sdsc\.teragrid\.org|bigred\.iu\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.0.2-condor-key</name>
@@ -3025,7 +3025,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>frost.ncar.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org anl-viz anl-ia64 dtf.sdsc.teragrid.org bigred.iu.teragrid.org</value>
+            <value>bigben.psc.teragrid.org pople.psc.teragrid.org anl-viz anl-ia64 dtf.sdsc.teragrid.org bigred.iu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3039,7 +3039,7 @@
       </resource>
       <resource>
         <name>core.teragrid.org-4.2.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranch\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|kraken\.nics\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranch\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|kraken\.nics\.teragrid\.org|frost\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.2.0-mds-info-port</name>
@@ -3063,7 +3063,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org queenbee.loni-lsu.teragrid.org ranch.tacc.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org</value>
+            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org queenbee.loni-lsu.teragrid.org ranch.tacc.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org frost.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4970,24 +4970,28 @@
             <value/>
           </macro>
           <macro>
-            <name>kit-registration-host</name>
-            <value>@core4.0.2-mds-info-host@:@core4.0.2-mds-info-port@</value>
-          </macro>
-          <macro>
-            <name>core4.0.2-mds-info-host</name>
-            <value>gatekeeper.frost.ncar.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>core4.0.2-tgresid-key</name>
-            <value>@keyPre@tgresid-2.0.0-r1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>adminEmail</name>
             <value>FailTo:inca@sdsc.edu, FailTo:jcope@ucar.edu, FailTo:oberg@ucar.edu</value>
           </macro>
           <macro>
             <name>dataMove4.1.2-gridftp-striped-registered-version</name>
             <value>4.0.8</value>
+          </macro>
+          <macro>
+            <name>core4.2.0-pacman-key</name>
+            <value>@keyPre@pacman-3.15 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>core4.2.0-tgresid-key</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>core4.2.0-mds-info-host</name>
+            <value>fr0103ge.ncar.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>kit-registration-host</name>
+            <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
           </macro>
         </macros>
       </resource>
@@ -8756,6 +8760,14 @@
             <name>tgupContact</name>
             <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
           </macro>
+          <macro>
+            <name>post</name>
+            <value>';</value>
+          </macro>
+          <macro>
+            <name>pre</name>
+            <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+          </macro>
         </macros>
       </resource>
       <resource>
@@ -9212,40 +9224,12 @@
             <value>@keyPre@gridshell @keyPost@</value>
           </macro>
           <macro>
-            <name>dataMove4.0.0-gridftp-host</name>
-            <value>gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>workflow4.0.0-condor-key</name>
             <value>@keyPre@condor-6.7.18 @keyPost@</value>
           </macro>
           <macro>
             <name>prews-gram-pbs</name>
             <value>tg-login.tacc.teragrid.org:2119/jobmanager-lsf</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-rft-host</name>
-            <value>tg-login.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-ssh-host</name>
-            <value>tg-login.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-default-host</name>
-            <value>gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
-            <value>gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-host</name>
-            <value>gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-port</name>
-            <value>2812</value>
           </macro>
           <macro>
             <name>remote3.0.0-mds-auth</name>
@@ -9280,26 +9264,6 @@
             <value>jobmanager-fork</value>
           </macro>
           <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
-            <value>4.0.7</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-registered-version</name>
-            <value>4.0.7</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.1-gridftp-default-port</name>
-            <value>2811</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.1-gridftp-striped-port</name>
-            <value>2811</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.1-rft-port</name>
-            <value>8443</value>
-          </macro>
-          <macro>
             <name>remote4.0.2-mds-auth-port</name>
             <value>8443</value>
           </macro>
@@ -9320,36 +9284,12 @@
             <value>2119</value>
           </macro>
           <macro>
-            <name>dataMove4.1.1-gridftp-default-host</name>
-            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.1-gridftp-striped-host</name>
-            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-gridftp-default-host</name>
             <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
           </macro>
           <macro>
-            <name>dataMove4.1.2-gridftp-default-port</name>
-            <value>@dataMove4.1.1-gridftp-default-port@</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-gridftp-nonstriped-port</name>
             <value>2812</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-host</name>
-            <value>@dataMove4.1.1-gridftp-striped-host@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-port</name>
-            <value>@dataMove4.1.1-gridftp-striped-port@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-rft-port</name>
-            <value>@dataMove4.1.1-rft-port@</value>
           </macro>
           <macro>
             <name>dataMove4.1.2-gridftp-nonstriped-host</name>
@@ -9374,10 +9314,6 @@
           <macro>
             <name>__incaReporterManagerLocation__</name>
             <value>/home/utexas/staff/inca/inca2install</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-ssh-host</name>
-            <value>tg-login.lonestar.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>dataMove4.1.2-rft-host</name>
@@ -9462,6 +9398,26 @@
           <macro>
             <name>kit-registration-host</name>
             <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-default-port</name>
+            <value>2811</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-host</name>
+            <value>tg-gridftp.lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-port</name>
+            <value>2811</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-rft-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-ssh-host</name>
+            <value>gridftp.lonestar.tacc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -9604,18 +9560,6 @@
         <xpath>//resource[matches(name, '^(login3\.ranger\.tacc\.utexas\.edu)$')]</xpath>
         <macros>
           <macro>
-            <name>dataMove4.0.0-rft-host</name>
-            <value>ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.0.0-ssh-host</name>
-            <value>ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-port</name>
-            <value>2812</value>
-          </macro>
-          <macro>
             <name>post</name>
             <value>';</value>
           </macro>
@@ -9736,14 +9680,6 @@
             <value>gatekeeper.ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-registered-version</name>
-            <value>4.0.7</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-registered-version</name>
-            <value>4.0.7</value>
-          </macro>
-          <macro>
             <name>remote4.0.2-prews-batch-job-manager</name>
             <value>@remote3.0.0-prews-batch-job-manager@</value>
           </macro>
@@ -9773,10 +9709,6 @@
           </macro>
           <macro>
             <name>remote4.0.0-wsgram-port</name>
-            <value>8443</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.1-rft-port</name>
             <value>8443</value>
           </macro>
           <macro>
@@ -9814,18 +9746,6 @@
           <macro>
             <name>vtss3.0.0-vtk-key</name>
             <value>@keyPre@ vtk @keyPost@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-default-port</name>
-            <value>@dataMove4.1.1-gridftp-default-port@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-port</name>
-            <value>@dataMove4.1.1-gridftp-striped-port@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-rft-port</name>
-            <value>@dataMove4.1.1-rft-port@</value>
           </macro>
           <macro>
             <name>maxMan</name>
@@ -9888,18 +9808,6 @@
             <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu</value>
           </macro>
           <macro>
-            <name>dataMove4.1.0-gridftp-default-host</name>
-            <value>gridftp.ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-nonstriped-host</name>
-            <value>gridftp.ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.0-gridftp-striped-host</name>
-            <value>gridftp.ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-gridftp-nonstriped-registered-version</name>
             <value>4.0.8</value>
           </macro>
@@ -9938,6 +9846,42 @@
           <macro>
             <name>workflow4.0.0-condorg-key</name>
             <value>@keyPre@ condor-g/7.2.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-ssh-host</name>
+            <value>gridftp.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-rft-host</name>
+            <value>ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-rft-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-default-host</name>
+            <value>gridftp.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-default-port</name>
+            <value>2811</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-nonstriped-host</name>
+            <value>gridftp.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-nonstriped-port</name>
+            <value>2812</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-host</name>
+            <value>gridftp.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-gridftp-striped-port</name>
+            <value>2811</value>
           </macro>
         </macros>
       </resource>
@@ -10022,10 +9966,6 @@
             <value>2811</value>
           </macro>
           <macro>
-            <name>dataMove4.1.2-ssh-host</name>
-            <value>tg-login.spur.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>gatekeeperlog</name>
             <value>/usr/local/apps/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
           </macro>
@@ -10100,6 +10040,10 @@
           <macro>
             <name>kit-registration-host</name>
             <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-ssh-host</name>
+            <value>gridftp.spur.tacc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -10232,24 +10176,6 @@
             <value>&lt;ID>all2all:gsissh_to_@summary-login@-pct&lt;.ID>\\n\\s+&lt;value>100&lt;.value></value>
           </macro>
           <macro>
-            <name>sshHosts</name>
-            <value>tg-login.uc.teragrid.org</value>
-            <value>tg-viz-login.uc.teragrid.org</value>
-            <value>login.bigred.iu.teragrid.org</value>
-            <value>tg-login.frost.ncar.teragrid.org</value>
-            <value>login-abe.ncsa.teragrid.org</value>
-            <value>login-co.ncsa.teragrid.org</value>
-            <value>login-hg.ncsa.teragrid.org</value>
-            <value>tg-login.ornl.teragrid.org</value>
-            <value>tg-login.bigben.psc.teragrid.org</value>
-            <value>tg-login.purdue.teragrid.org</value>
-            <value>tg-login1.sdsc.teragrid.org</value>
-            <value>tg-login.lonestar.tacc.teragrid.org</value>
-            <value>qb1.loni.org</value>
-            <value>tg-steele.purdue.teragrid.org</value>
-            <value>ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>__groupname__</name>
             <value>teragrid</value>
           </macro>
@@ -10294,6 +10220,25 @@
             <value>false</value>
           </macro>
           <macro>
+            <name>gatekeepers</name>
+            <value>gatekeeper.bigred.iu.teragrid.org</value>
+            <value>grid-co.ncsa.teragrid.org</value>
+            <value>grid-hg.ncsa.teragrid.org</value>
+            <value>tg-login.ornl.teragrid.org</value>
+            <value>gram.bigben.psc.teragrid.org</value>
+            <value>gatekeeper.lonestar.tacc.teragrid.org</value>
+            <value>tg-grid.uc.teragrid.org</value>
+            <value>gatekeeper.frost.ncar.teragrid.org</value>
+            <value>grid-abe.ncsa.teragrid.org</value>
+            <value>tg-login1.sdsc.teragrid.org</value>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
+            <value>gram.pople.psc.teragrid.org</value>
+            <value>tg-condor.purdue.teragrid.org</value>
+            <value>tg-steele.purdue.teragrid.org</value>
+            <value>fpga.purdue.teragrid.org</value>
+          </macro>
+          <macro>
             <name>gridftpHosts</name>
             <value>gridftp.bigred.iu.teragrid.org</value>
             <value>gridftp-co.ncsa.teragrid.org</value>
@@ -10313,24 +10258,26 @@
             <value>tg-steele.purdue.teragrid.org</value>
             <value>tg-data.purdue.teragrid.org</value>
             <value>gridftp.nics.utk.edu</value>
+            <value>fpga.purdue.teragrid.org</value>
           </macro>
           <macro>
-            <name>gatekeepers</name>
-            <value>gatekeeper.bigred.iu.teragrid.org</value>
-            <value>grid-co.ncsa.teragrid.org</value>
-            <value>grid-hg.ncsa.teragrid.org</value>
+            <name>sshHosts</name>
+            <value>tg-login.uc.teragrid.org</value>
+            <value>tg-viz-login.uc.teragrid.org</value>
+            <value>login.bigred.iu.teragrid.org</value>
+            <value>tg-login.frost.ncar.teragrid.org</value>
+            <value>login-abe.ncsa.teragrid.org</value>
+            <value>login-co.ncsa.teragrid.org</value>
+            <value>login-hg.ncsa.teragrid.org</value>
             <value>tg-login.ornl.teragrid.org</value>
-            <value>gram.bigben.psc.teragrid.org</value>
-            <value>gatekeeper.lonestar.tacc.teragrid.org</value>
-            <value>tg-grid.uc.teragrid.org</value>
-            <value>gatekeeper.frost.ncar.teragrid.org</value>
-            <value>grid-abe.ncsa.teragrid.org</value>
+            <value>tg-login.bigben.psc.teragrid.org</value>
+            <value>tg-login.purdue.teragrid.org</value>
             <value>tg-login1.sdsc.teragrid.org</value>
-            <value>queenbee.loni-lsu.teragrid.org</value>
-            <value>gatekeeper.ranger.tacc.teragrid.org</value>
-            <value>gram.pople.psc.teragrid.org</value>
-            <value>tg-condor.purdue.teragrid.org</value>
+            <value>tg-login.lonestar.tacc.teragrid.org</value>
+            <value>qb1.loni.org</value>
             <value>tg-steele.purdue.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org</value>
+            <value>fpga.purdue.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -20354,9 +20301,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.interactive_access.openssh.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -20409,11 +20357,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.cvs.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.cvs.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>root</name>
+                <value>inca@gsirepo:/var/lib/cvs</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>file</name>
+                <value>gig-si/software/build/globus/4.0.1/README</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>TeraGrid 3.9.x striped gridFTP notes</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>600</cpuTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>cvs_repo</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:gig-info@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>1</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
