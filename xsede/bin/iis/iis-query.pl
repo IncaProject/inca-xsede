@@ -10,6 +10,7 @@ my $xsl = $dir."/iis-query.xsl";
 my $xml = $dir."/iis.xml.$$";
 my $out = $dir."/iis-resources.$$";
 `wget -o /dev/null -O $xml 'http://info.teragrid.org:8080/webmds/webmds?info=tgislocal'`;
+`perl -pi -e 's/^<.xml version="1.0" encoding="UTF-8".>/<\?xml version="1.0" encoding="iso-8859-1"\?>/' $xml`;
 `export CLASSPATH=$dir/saxon9.jar; /misc/inca/jdk1.5.0_14/bin/java net.sf.saxon.Transform -o $out $xml $xsl`;
 my @mapfile;
 open(FILE, $map) || die("Could not open $map!");
