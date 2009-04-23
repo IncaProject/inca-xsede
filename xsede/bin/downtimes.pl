@@ -11,6 +11,8 @@ my $dir = "/misc/inca/install-2r5/etc/";
 my $cacheFile = $dir . "downtime.properties";
 my $tmpFile = $dir . "downtime.properties.tmp";
 my $publicFile = $dir . "../webapps/inca/html/downtimes.txt";
+my $publicIISFile = $dir . "../webapps/inca/html/downtimes-iis.txt";
+my $map = $home."/bin/iis/nickname-iis-map";
 my $pastFile = "$home/logs/downtimes.log";
 my $pastDown = `cat $pastFile`;
 my @past = split("\n", $pastDown);
@@ -55,16 +57,16 @@ my @new = ();
 my %equivHosts = ( "anl-ia64" => ["anl-grid"],
     "ncsa-abe" => ["ncsa-grid-abe"],
     "ncsa-ia64" => ["ncsa-grid-hg"],
-    "ncsa-tungsten" => ["ncsa-grid-tun"],
-    "purdue-lear" => ["purdue-grid"],
     "loni-lsu-queenbee" => ["loni-lsu-qb"] );
 open TMP,">$tmpFile";
+open IIS,">$publicIISFile";
 while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
-if ($id ne "3919"){
   my $startDate = convertToDateTime($start, $zone, $id);
   my $endDate = convertToDateTime($end, $zone, $id);
   if ($startDate <= $now && $endDate >= $now){
     print TMP "$name=$id\n";
+    my $iis = getIIS($name);
+    print IIS "$iis=$id\n";
     if (grep(/^$name$/, keys %equivHosts)){
       for my $eqiv (@{$equivHosts{$name}}){
         print TMP "$eqiv=$id\n";
@@ -77,19 +79,39 @@ if ($id ne "3919"){
     }
   }
 }
-}
+close IIS;
 close TMP;
 `mv $tmpFile $cacheFile`;
 `cp $cacheFile $publicFile`;
 
 $dbh->disconnect();
 if ($email ne ""){
-  `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
-  #`echo "$email" | mail -s "TeraGrid News DB has new update or resource down" kericson\@sdsc.edu`;
+  #`echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
   my $newDown = join("\n", @new);
   open PF,">>$pastFile";
   print PF "\n$newDown\n";
   close PF;
+}
+
+sub getIIS{
+  my $name = shift;
+  my @mapfile;
+  open(FILE, $map) || die("Could not open $map!");
+  @mapfile=<FILE>;
+  close(FILE);
+  my $iis;
+  foreach my $mapline (@mapfile){
+    my ($mapnickname, $mapiis) = split("=",$mapline);
+    if($mapnickname eq $name){
+      $mapiis =~ s/\s+$//;
+      $iis = $mapiis;
+    }
+  }
+  if(!$iis){
+    `echo "Can't map \"$name\" in $map on sapa" | mail -s "Error in downtime.pl script" inca\@sdsc.edu`;
+    exit;
+  }
+  return $iis;
 }
 
 sub convertToDateTime{
