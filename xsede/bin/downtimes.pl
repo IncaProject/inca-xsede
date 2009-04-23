@@ -9,7 +9,6 @@ use DateTime::Format::Strptime;
 my $home = "$ENV{'HOME'}";
 my $dir = "/misc/inca/install-2r5/etc/";
 my $cacheFile = $dir . "downtime.properties";
-#my $cacheFile = $dir . "downtime.properties.test";
 my $tmpFile = $dir . "downtime.properties.tmp";
 my $publicFile = $dir . "../webapps/inca/html/downtimes.txt";
 my $pastFile = "$home/logs/downtimes.log";
@@ -28,10 +27,6 @@ my $service = "inca/". $pw . "@(DESCRIPTION =
 
 my $dbh = DBI->connect('dbi:Oracle:', $service, '') || die "Database connect err: $DBI::errstr";
 my $now = DateTime->now;
-#debug time that will get a down resource
-#$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-03-11 08.30.00 AM')->set_time_zone('America/Los_Angeles'); 
-#debug time that will get an update
-#$now = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d %l.%M.%S %p')->parse_datetime('2008-03-06 02.51.22 PM')->set_time_zone('America/Los_Angeles'); 
 my $nowMinusHour =  $now->clone->subtract( hours => 1 );
 
 my $query = "SELECT i.item_id, i.subject, i.content, 
@@ -77,7 +72,7 @@ if ($id ne "3919"){
     }
     my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
     if (!grep(/^$str$/, @past)){
-      $email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
+      #$email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
       push (@new, $str);
     }
   }
