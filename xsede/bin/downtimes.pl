@@ -28,12 +28,16 @@ my $service = "inca/". $pw . "@(DESCRIPTION =
           (FAILOVER_MODE = (TYPE = select)(METHOD = basic))))";
 
 my $dbh = DBI->connect('dbi:Oracle:', $service, '') || die "Database connect err: $DBI::errstr";
-my $now = DateTime->now;
-my $nowMinusHour =  $now->clone->subtract( hours => 1 );
-
-my $query = "SELECT i.item_id, i.subject, i.content, 
+my %resources = ( "inca_name" => $tmpFile,
+                  "system_name" => $publicIISFile );
+my $email = "";
+my @new = ();
+while (my ($resource, $file) = each(%resources)){
+  my $now = DateTime->now;
+  my $nowMinusHour =  $now->clone->subtract( hours => 1 );
+  my $query = "SELECT i.item_id, i.subject, i.content, 
                 s.event_start_time, s.event_end_time, s.event_time_zone, s.update_id,
-                ps.inca_name 
+                ps." . $resource . "
           FROM  user_news.item i, 
                 user_news.system_event s,
                 user_news.platform_system ps, 
@@ -46,72 +50,45 @@ my $query = "SELECT i.item_id, i.subject, i.content,
                 i.deleted IS NULL AND
                 s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id)
           ORDER BY s.event_start_time";
-#print $query;
-my $sth = $dbh->prepare($query);
-if ( !defined $sth ) {
-  die "Cannot prepare statement: $DBI::errstr\n";
-}
-$sth->execute();
-my $email = "";
-my @new = ();
-my %equivHosts = ( "anl-ia64" => ["anl-grid"],
+  #print $query;
+  my $sth = $dbh->prepare($query);
+  if ( !defined $sth ) {
+    die "Cannot prepare statement: $DBI::errstr\n";
+  }
+  $sth->execute();
+  my %equivHosts = ( "anl-ia64" => ["anl-grid"],
     "ncsa-abe" => ["ncsa-grid-abe"],
     "ncsa-ia64" => ["ncsa-grid-hg"],
     "loni-lsu-queenbee" => ["loni-lsu-qb"] );
-open TMP,">$tmpFile";
-open IIS,">$publicIISFile";
-while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
-  my $startDate = convertToDateTime($start, $zone, $id);
-  my $endDate = convertToDateTime($end, $zone, $id);
-  if ($startDate <= $now && $endDate >= $now){
-    print TMP "$name=$id\n";
-    my $iis = getIIS($name);
-    print IIS "$iis=$id\n";
-    if (grep(/^$name$/, keys %equivHosts)){
-      for my $eqiv (@{$equivHosts{$name}}){
-        print TMP "$eqiv=$id\n";
+  open TMP,">$file";
+  while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
+    my $startDate = convertToDateTime($start, $zone, $id);
+    my $endDate = convertToDateTime($end, $zone, $id);
+    if ($startDate <= $now && $endDate >= $now){
+      print TMP "$name=$id\n";
+      if (grep(/^$name$/, keys %equivHosts)){
+        for my $eqiv (@{$equivHosts{$name}}){
+          print TMP "$eqiv=$id\n";
+        }
+      }
+      my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
+      if (!grep(/^$str$/, @past)){
+        #$email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
+        push (@new, $str);
       }
     }
-    my $str = "$id\t$update\t$start\t$zone\t$end\t$zone";
-    if (!grep(/^$str$/, @past)){
-      #$email .= "New resource down: $name, http://news.teragrid.org/view-item.php?item=$id\n";
-      push (@new, $str);
-    }
   }
+  close TMP;
 }
-close IIS;
-close TMP;
+$dbh->disconnect();
 `mv $tmpFile $cacheFile`;
 `cp $cacheFile $publicFile`;
-
-$dbh->disconnect();
 if ($email ne ""){
-  #`echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
+  `echo "$email" | mail -s "TeraGrid News DB has new update or resource down" inca\@sdsc.edu`;
   my $newDown = join("\n", @new);
   open PF,">>$pastFile";
   print PF "\n$newDown\n";
   close PF;
-}
-
-sub getIIS{
-  my $name = shift;
-  my @mapfile;
-  open(FILE, $map) || die("Could not open $map!");
-  @mapfile=<FILE>;
-  close(FILE);
-  my $iis;
-  foreach my $mapline (@mapfile){
-    my ($mapnickname, $mapiis) = split("=",$mapline);
-    if($mapnickname eq $name){
-      $mapiis =~ s/\s+$//;
-      $iis = $mapiis;
-    }
-  }
-  if(!$iis){
-    `echo "Can't map \"$name\" in $map on sapa" | mail -s "Error in downtime.pl script" inca\@sdsc.edu`;
-    exit;
-  }
-  return $iis;
 }
 
 sub convertToDateTime{
