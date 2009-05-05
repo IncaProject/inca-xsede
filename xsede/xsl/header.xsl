@@ -76,7 +76,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-gridnodes,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,sdsc-ops,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-usage,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,sdsc-ops,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -165,12 +165,12 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-gridnodes&amp;suiteNames=usage')}">
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-usage&amp;suiteNames=usage')}">
                       Other Test Suites
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-gridnodes&amp;suiteNames=usage')}">
+                        <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-usage&amp;suiteNames=usage')}">
                           grid job usage
                         </a>
                       </li>
