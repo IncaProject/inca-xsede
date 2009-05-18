@@ -3281,7 +3281,7 @@
       </resource>
       <resource>
         <name>data-movement-servers.teragrid.org-4.2.0-rft</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMoveServer4.2.0-rft-port</name>
@@ -3297,7 +3297,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4606,6 +4606,26 @@
           <macro>
             <name>dataMoveServer4.2.0-ssh-host</name>
             <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-gatekeeper-host</name>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMoveServer4.2.0-rft-host</name>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMoveServer4.2.0-rft-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>dataMoveServer4.2.0-gridftp-default-host</name>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMoveServer4.2.0-gridftp-default-port</name>
+            <value>2811</value>
           </macro>
         </macros>
       </resource>
@@ -9048,7 +9068,7 @@
       </resource>
       <resource>
         <name>science-gateway.teragrid.org-4.2.0</name>
-        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|lonestar\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -9056,7 +9076,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>queenbee.loni-lsu.teragrid.org</value>
+            <value>queenbee.loni-lsu.teragrid.org lonestar.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -9066,11 +9086,189 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>gateway4.2.0-gatekeeper-host</name>
+            <value/>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>science-gateway.teragrid.org-4.2.0-mds</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>science-gateway.teragrid.org-4.2.0-mds</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-mds-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-mds</name>
+            <value>@gateway4.2.0-gatekeeper-host@</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>science-gateway.teragrid.org-4.2.0-mds-auth</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>science-gateway.teragrid.org-4.2.0-mds-auth</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-jobs-cache</name>
+            <value>ComputeResourceJobs</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-jobs-grep-cache</name>
+            <value>Jobs</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-jobs-grep</name>
+            <value>Jobs</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-load-cache</name>
+            <value>ComputeResourceLoad</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-load-grep-cache</name>
+            <value>LoadInfo</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-load-grep</name>
+            <value>LoadInfo</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-mds-auth-port</name>
+            <value>8443</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-mds-auth</name>
+            <value>@gateway4.2.0-gatekeeper-host@</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>science-gateway.teragrid.org-4.2.0-ogsadai</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>science-gateway.teragrid.org-4.2.0-ogsadai</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-ogsadai</name>
+            <value>https://@gateway4.2.0-gatekeeper-host@:8443/wsrf/services/ogsadai/Teragrid</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>science-gateway.teragrid.org-4.2.0-prewsgram</name>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>science-gateway.teragrid.org-4.2.0-prewsgram</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-prews-fork-job-manager</name>
+            <value>jobmanager-fork</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-prews-batch-job-manager</name>
+            <value>jobmanager-lsf</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-prews-gram-port</name>
+            <value>2119</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>science-gateway.teragrid.org-4.2.0-wsgram</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|lonestar\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>science-gateway.teragrid.org-4.2.0-wsgram</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org lonestar.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>wsgram-fork-exe</name>
+            <value>@real_time_script@</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-wsgram-port</name>
+            <value>8443</value>
+          </macro>
         </macros>
       </resource>
       <resource>
         <name>sdsc-ia64</name>
-        <xpath>//resource[matches(name, '^(tg-login1.sdsc.teragrid.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(tg-login1\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>compiler-intel-key</name>
@@ -9081,32 +9279,8 @@
             <value>@keyPre@mpich-gm-1.2.6..14b-intel-r2 @keyPost@</value>
           </macro>
           <macro>
-            <name>__regexp__</name>
-            <value>tg-login1.sdsc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>__regexpTmp__</name>
             <value>tg-login1.sdsc.teragrid.org tg-gridftp.sdsc.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>true</value>
-          </macro>
-          <macro>
-            <name>__incaReporterManagerLocation__</name>
-            <value>/users/inca/inca2install</value>
-          </macro>
-          <macro>
-            <name>__groupname__</name>
-            <value>sdsc-ia64</value>
           </macro>
           <macro>
             <name>mpich-p4-gcc-version</name>
@@ -9369,6 +9543,30 @@
           <macro>
             <name>apps4.0.2-compiler-intel-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>sdsc-ia64</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>tg-login1.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/users/inca/inca2install</value>
           </macro>
         </macros>
       </resource>
@@ -9644,6 +9842,10 @@
           <macro>
             <name>remote4.2.0-wsgram-port</name>
             <value>8443</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-gatekeeper-host</name>
+            <value>gatekeeper.lonestar.tacc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -26711,6 +26913,835 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.ogsadai</name>
+            <args>
+              <arg>
+                <name>contact</name>
+                <value>@gateway4.2.0-ogsadai@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>account</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ogsadai-account-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-ogsadai</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.ogsadai</name>
+            <args>
+              <arg>
+                <name>contact</name>
+                <value>@gateway4.2.0-ogsadai@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>audit</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ogsadai-audit-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-ogsadai</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-prews-gram-port@/@gateway4.2.0-prews-batch-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>nodeTag</name>
+                <value>@nodeTag@</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-batch-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-prewsgram</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-prews-gram-port@/@gateway4.2.0-prews-fork-job-manager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>nodeTag</name>
+                <value>hostCount</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-fork-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-prewsgram</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/4 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@gridScheduler@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>@maxMem@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>nodeTag</name>
+                <value>@nodeTag@</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@real_time_script@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-wsgram-port@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-batch-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, FailTo:smartin@mcs.anl.gov</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsgram</name>
+            <args>
+              <arg>
+                <name>nodes</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>maxMem</name>
+                <value>2048</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>nodeTag</name>
+                <value>hostCount</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value>@wsgram-fork-exe@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-wsgram-port@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-fork-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/4 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, FailTo:smartin@mcs.anl.gov</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@gateway4.2.0-jobs-cache@/@gateway4.2.0-jobs-grep-cache@[@timestamp]</value>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>yes</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@gateway4.2.0-mds-auth-port@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>SecureIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@remote4.2.0-jobs-cache@[@remote4.2.0-jobs-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>@gateway4.2.0-jobs-grep-cache@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-mds-auth@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-JobsRP-cache-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@gateway4.2.0-mds-auth-port@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>SecureIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>@gateway4.2.0-jobs-grep@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-mds-auth@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-JobsRP-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@remote4.2.0-load-cache@/@remote4.2.0-load-grep-cache@[@timestamp]</value>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>yes</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@gateway4.2.0-mds-auth-port@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@remote4.2.0-load-cache@[@remote4.2.0-load-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>@gateway4.2.0-load-grep-cache@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-mds-auth@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-LoadRP-cache-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@gateway4.2.0-mds-auth-port@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>@gateway4.2.0-load-grep@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-mds-auth@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-LoadRP-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.wsrfquery</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gateway4.2.0-mds@:@gateway4.2.0-mds-port@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsrf-query-mds-sg-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
