@@ -24,7 +24,7 @@ my %pages = (
   'ctssv4-graph.html' => "$c4jsp$c4xml&xsl=graph.xsl",
   'ctssv4-query.html' => "$c4jsp$c4xml&xsl=create-query.xsl",
   'ctssv4-map.html' => "$c4jsp&xml=google.xml&xsl=google.xsl",
-  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=metascheduling.teragrid.org-4.2.0,science-gateway.teragrid.org-4.1.0,wan-lustre.teragrid.org-4.0.0&resourceIds=metascheduling.teragrid.org-4.2.0,science-gateway.teragrid.org-4.1.0,wan-lustre.teragrid.org-4.0.0&xml=metascheduling.teragrid.org-4.2.0.xml,science-gateway.teragrid.org-4.1.0.xml,wan-lustre.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
+  'ctssv4-test.html' => "http://$hostport/inca/jsp/status.jsp?supportLevel=testing&suiteNames=science-gateway.teragrid.org-4.1.0,wan-lustre.teragrid.org-4.0.0&resourceIds=science-gateway.teragrid.org-4.1.0,wan-lustre.teragrid.org-4.0.0&xml=science-gateway.teragrid.org-4.1.0.xml,wan-lustre.teragrid.org-4.0.0.xml&xsl=swStack.xsl&noCategoryHeaders"
 );
 my $errors = "";
 for my $page ( keys %pages ) {
