@@ -56,4 +56,22 @@
     </td></tr>
   </xsl:template>
 
+  <xsl:template name="knowledgeBase">
+    <xsl:param name="nickName"/>
+    <xsl:param name="reporterName"/>
+    <xsl:param name="errMsg"/>
+    
+    <tr><td>
+    <form method="get" action="http://www.teragrid.org/cgi-bin/kb.cgi">
+      <input type="hidden" name="docid" value="aycv"/>
+      <input type="submit" value="search knowledge base"/>
+    </form></td><td>
+    <form method="get" action="addKnowledgeBase.jsp">
+      <input type="hidden" name="nickname" value="{$nickName}"/>
+      <input type="hidden" name="reporter" value="{$reporterName}"/>
+      <input type="hidden" name="error" value="{$errMsg}"/>
+      <input type="submit" value="add to knowledge base"/>
+    </form></td></tr>
+  </xsl:template>
+
 </xsl:stylesheet>

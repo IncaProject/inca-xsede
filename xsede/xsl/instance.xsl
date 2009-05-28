@@ -138,6 +138,12 @@
             </p>
           </xsl:if>
         </xsl:if>
+        <!-- instance-extra.xsl for knowledge base -->
+        <xsl:call-template name="knowledgeBase">
+          <xsl:with-param name="nickName" select="$nickName"/>
+          <xsl:with-param name="reporterName" select="name"/>
+          <xsl:with-param name="errMsg" select="$errMsg"/>
+        </xsl:call-template>
       </td>
       </tr>
       <tr><td colspan="2" class="header">
