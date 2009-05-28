@@ -47,11 +47,12 @@
         <tr><td class="header">Text:</td></tr>
         <tr>
           <td>
-            <c:set var="errorMessage">Error message:
+            <c:set var="printError">Error message:
 ------------
 ${param.error}
 ------------
             </c:set>
+            <c:set var="errorMessage">${empty param.error ? '': printError}</c:set>
             <textarea name="text" cols="50" rows="20">${empty param.text ? 
                  errorMessage : param.text}
             </textarea><br/>
@@ -75,7 +76,7 @@ ${param.error}
           <input type="hidden" name="nickname" value="${param.nickname}"/>
           <input type="hidden" name="reporter" value="${param.reporter}"/>
           <input type="hidden" name="error" value="${param.error}"/>
-          <input type="image" src="/inca/img/kb/kb-add.gif" alt="add to knowledge base"/>
+          <input type="submit" value="add to knowledge base"/>
         </td></tr>
       </form>
     </table>
@@ -96,7 +97,7 @@ Email: ${param.email}
 
 Text: ${param.text}
 
-Keywords: ${param.nickname} ${param.reporter} ${param.error}\" | mail -s \"${subject}\" ${initParam.dbEmail}"/>
+Keywords: ${param.nickname} ${param.reporter} ${param.error}\" | mail -s \"${subject}\" ${initParam.kbEmail}"/>
     <% String emailStr = (String)pageContext.getAttribute("email");
       String[] shmail = {"/bin/sh", "-c", emailStr};
       Runtime.getRuntime().exec(shmail); %>
