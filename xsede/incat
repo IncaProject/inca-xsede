@@ -3025,7 +3025,7 @@
       </resource>
       <resource>
         <name>core.teragrid.org-4.0.2</name>
-        <xpath>//resource[matches(name, '^(bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|anl-viz|anl-ia64|dtf\.sdsc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(anl-viz|anl-ia64|dtf\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.0.2-condor-key</name>
@@ -3057,7 +3057,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>bigben.psc.teragrid.org pople.psc.teragrid.org anl-viz anl-ia64 dtf.sdsc.teragrid.org</value>
+            <value>anl-viz anl-ia64 dtf.sdsc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3071,7 +3071,7 @@
       </resource>
       <resource>
         <name>core.teragrid.org-4.2.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranch\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|kraken\.nics\.teragrid\.org|frost\.ncar\.teragrid\.org|bigred\.iu\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|ranch\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|kraken\.nics\.teragrid\.org|frost\.ncar\.teragrid\.org|bigred\.iu\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.2.0-mds-info-port</name>
@@ -3095,7 +3095,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org queenbee.loni-lsu.teragrid.org ranch.tacc.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org frost.ncar.teragrid.org bigred.iu.teragrid.org</value>
+            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org queenbee.loni-lsu.teragrid.org ranch.tacc.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org frost.ncar.teragrid.org bigred.iu.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4420,10 +4420,6 @@
             <value/>
           </macro>
           <macro>
-            <name>workflow4.0.0-condorg-key</name>
-            <value>@keyPre@condor-g-6.8.4-r1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>apps4.0.1-ant-key</name>
             <value>@keyPre@apache-ant-1.6.5-r1 @keyPost@</value>
           </macro>
@@ -4626,6 +4622,10 @@
           <macro>
             <name>dataMoveServer4.2.0-gridftp-default-port</name>
             <value>2811</value>
+          </macro>
+          <macro>
+            <name>workflow4.0.0-condorg-key</name>
+            <value>@keyPre@condor-7.2.1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -6863,32 +6863,28 @@
             <value>1.4.2_11</value>
           </macro>
           <macro>
-            <name>dataMove4.1.2-rft-host</name>
-            <value>gt4-submit.psc.teragrid.org</value>
+            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
+            <value>4.0.8</value>
           </macro>
           <macro>
-            <name>core4.0.2-condor-key</name>
+            <name>kit-registration-host</name>
+            <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>core4.2.0-condor-key</name>
             <value>@keyPre@condor-6.9.1 @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.2-mds-info-host</name>
+            <name>core4.2.0-mds-info-host</name>
             <value>gram.bigben.psc.teragrid.org</value>
           </macro>
           <macro>
-            <name>core4.0.2-pacman-key</name>
+            <name>core4.2.0-pacman-key</name>
             <value>@keyPre@pacman-3.15 @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.0-mds-info-host</name>
-            <value>@core4.0.2-mds-info-host@</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-mds-info-port</name>
-            <value>@core4.0.2-mds-info-port@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
-            <value>4.0.8</value>
+            <name>dataMove4.1.2-rft-host</name>
+            <value>rft.psc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -7077,10 +7073,6 @@
             <value>2811</value>
           </macro>
           <macro>
-            <name>dataMove4.1.2-rft-host</name>
-            <value>gt4-submit.psc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-rft-port</name>
             <value>8443</value>
           </macro>
@@ -7089,36 +7081,36 @@
             <value>tg-login.pople.psc.teragrid.org</value>
           </macro>
           <macro>
-            <name>core4.0.2-condor-key</name>
+            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
+            <value>4.0.8</value>
+          </macro>
+          <macro>
+            <name>dataMove4.1.2-rft-host</name>
+            <value>rft.psc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>kit-registration-host</name>
+            <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>core4.2.0-condor-key</name>
             <value>@keyPre@ condor @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.2-mds-info-host</name>
+            <name>core4.2.0-mds-info-host</name>
             <value>gram.pople.psc.teragrid.org</value>
           </macro>
           <macro>
-            <name>core4.0.2-pacman-key</name>
+            <name>core4.2.0-pacman-key</name>
             <value>@keyPre@ pacman @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.2-tgpolicy-key</name>
+            <name>core4.2.0-tgpolicy-key</name>
             <value>@keyPre@ tg-policy @keyPost@</value>
           </macro>
           <macro>
-            <name>core4.0.2-tgresid-key</name>
+            <name>core4.2.0-tgresid-key</name>
             <value>@keyPre@ tgresid @keyPost@</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-mds-info-host</name>
-            <value>@core4.0.2-mds-info-host@</value>
-          </macro>
-          <macro>
-            <name>core4.0.0-mds-info-port</name>
-            <value>@core4.0.2-mds-info-port@</value>
-          </macro>
-          <macro>
-            <name>dataMove4.1.2-gridftp-striped-registered-version</name>
-            <value>4.0.8</value>
           </macro>
         </macros>
       </resource>
@@ -10240,10 +10232,6 @@
             <value>50</value>
           </macro>
           <macro>
-            <name>core4.2.0-mds-info-host</name>
-            <value>ranger.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>core4.2.0-pacman-key</name>
             <value>@keyPre@ pacman/3.26 @keyPost@</value>
           </macro>
@@ -10322,6 +10310,10 @@
           <macro>
             <name>dataMoveServer4.2.0-ssh-host</name>
             <value>gridftp.ranger.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.2.0-mds-info-host</name>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
           </macro>
         </macros>
       </resource>
@@ -11638,50 +11630,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.tg.softenv.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
             <args>
@@ -12256,11 +12204,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>137</version>
+      <version>139</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12847,50 +12839,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>srb>=3.4.1</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-as-4.0.1</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13612,11 +13560,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version-as-4.0.1</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.1</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.1</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>16</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15082,50 +15074,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-as-4.0.2</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.2-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.tg.softenv.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
             <args>
@@ -15168,11 +15116,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version-as-4.0.2</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.2-softenv</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.2</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>16</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16502,50 +16494,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-as-4.0.3</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.3-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.tg.softenv.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
             <args>
@@ -16588,11 +16536,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version-as-4.0.3</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.3-softenv</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.3</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.3</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>7</version>
+      <version>8</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22096,50 +22088,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-rl-4.0.0</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.accounting.tgusage.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
             <args>
@@ -22182,11 +22130,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version-rl-4.0.0</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0-softenv</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>83</version>
+      <version>84</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22628,50 +22620,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-rl-4.0.2</nickname>
-          <resourceSetName>login.teragrid.org-4.0.2-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv==1.6.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.accounting.tgusage.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
             <args>
@@ -22714,11 +22662,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.softenv.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>softenv-version-rl-4.0.2</nickname>
+          <resourceSetName>login.teragrid.org-4.0.2-softenv</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>softenv>=1.6.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.2</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>9</version>
+      <version>10</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24272,7 +24264,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>212</version>
+      <version>213</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -25584,7 +25576,7 @@
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>85</version>
+      <version>87</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26820,7 +26812,7 @@
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>4</version>
+      <version>5</version>
     </suite>
     <suite>
       <seriesConfigs>
