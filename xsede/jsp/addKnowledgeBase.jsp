@@ -89,7 +89,10 @@ ${param.error}
       <br><br><b>Text:</b> <pre> ${param.text} </pre></p>
     <c:set var="subject" 
            value="New knowledge base text for ${param.nickname} from Inca form"/>
-    <c:set var="email" value="echo \"AUTHOR: ${param.author}
+    <c:set var="email" value="echo \"Please email ${initParam.helpEmail} with questions regarding this information.
+
+
+AUTHOR: ${param.author}
 
 EMAIL: ${param.email}
 
