@@ -53,9 +53,7 @@ ${param.error}
 ------------
             </c:set>
             <c:set var="errorMessage">${empty param.error ? '': printError}</c:set>
-            <textarea name="text" cols="50" rows="20">${empty param.text ? 
-                 errorMessage : param.text}
-            </textarea><br/>
+            <textarea name="text" cols="50" rows="20">${empty param.text ?  errorMessage : param.text}</textarea><br/>
           </td>
         </tr>
         <tr><td class="header">Name:</td></tr>
@@ -91,13 +89,16 @@ ${param.error}
       <br><br><b>Text:</b> <pre> ${param.text} </pre></p>
     <c:set var="subject" 
            value="New knowledge base text for ${param.nickname} from Inca form"/>
-    <c:set var="email" value="echo \"Author: ${param.author}
+    <c:set var="email" value="echo \"AUTHOR: ${param.author}
 
-Email: ${param.email}
+EMAIL: ${param.email}
 
-Text: ${param.text}
 
-Keywords: ${param.nickname} ${param.reporter} ${param.error}\" | mail -s \"${subject}\" ${initParam.kbEmail}"/>
+KEYWORDS: ${param.nickname} ${param.reporter} ${param.error}
+
+
+TEXT: ${param.text} \" | mail -s \"${subject}\" \"${initParam.kbEmail}\""/>
+
     <% String emailStr = (String)pageContext.getAttribute("email");
       String[] shmail = {"/bin/sh", "-c", emailStr};
       Runtime.getRuntime().exec(shmail); %>
