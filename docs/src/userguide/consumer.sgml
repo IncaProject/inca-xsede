@@ -675,29 +675,36 @@ http://www.google.com/apis/maps/signup.html --&gt;
 
   <section id="admin">
       <title>Admin</title>
-      <para>The ADMIN menu item displays two views of the
+      <para>The ADMIN menu item offers two views of the
       running reporters in an Inca deployment and a configuration page.  To
       link other informational pages under this heading, customize the
       <filename>header.xsl</filename> file as described in
       <xref linkend="custom-html-header">. </para>
       
-      <para>The following view of running
-      reporters shows the series names by suite.</para>
+    <section id="running-reporters">
+      <title>List Running Reporters</title>
+      <para>The "Running Reporters" page displays running reporters series by suite.  
+    Each series lists its name, frequency of execution, whether email notification is
+    enabled, the reporter script used for the series, and a description of the reporter script.
+    Note that in this view, and in the more detailed running reporters view, the reporter names link to a CGI script 
+    that will not work for repositories that are not web accessible (like the local default repository).
+    Make your repository web accessible and add/commit the repository URL beginning with "http" in order to activate the reporter links.
+    </para>
       <graphic fileref="figures/consumer/running-reporters.jpg" align="center"></graphic>
 
-    <para>
-    Note that the links to the reporter scripts rely on a CGI script and so
-    will not work if you have a local repository (as deployed in the default
-    installation).  You will need to a web accessible reporter repository as
-    described in <xref linkend="reporter-repositories"> to activate the reporter
-    links.
-    </para>
-
+      <para>The detailed "Running Reporter Series" page below lists the running reporter series and the suite each belongs to, the machine 
+      each is scheduled to execute on, whether email notification is configured, and the recipient ("Target") 
+      of any notification.</para>
       <graphic fileref="figures/consumer/running-reporters-detail.jpg" align="center"></graphic>
 
-      <para>This more detailed view of running reporters shows each machine
-      the reporter series is configured on and whether email notification is
-      configured. </para>
+    </section>
+    
+    <section id="config-consumer">
+      <title>View/Change Configuration</title>
+      <para>Here Inca administrators can view and change the global configuration of status pages. 
+      </para>
+      <graphic fileref="figures/consumer/config-view-change.gif" align="center"></graphic>
+    </section>
 
   </section>
 
