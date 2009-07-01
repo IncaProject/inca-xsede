@@ -31,6 +31,11 @@
                     </a>
                   </li>
                   <li>
+                    <a href="{concat($url, '/jsp/seriesConfig.jsp')}">
+                      List Running Tests - Detail
+                    </a>
+                  </li>
+                  <li>
                     <a href="http://news.teragrid.org/">
                       User/System News
                     </a>
@@ -76,7 +81,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-usage,sdsc-ia64,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,sdsc-ops,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-usage,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -197,11 +202,6 @@
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xsl=default.xsl&amp;resourceIds=teragrid&amp;suiteNames=security')}">
                           security
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=default.xsl&amp;resourceIds=sdsc-ia64&amp;suiteNames=sdsc-ops')}">
-                          sdsc operations
                         </a>
                       </li>
                       <li>
