@@ -190,7 +190,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/gig/sapa')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/gig/gig')}">
                           grid infrastructure group (gig)
                         </a>
                       </li>
