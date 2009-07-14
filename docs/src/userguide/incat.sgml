@@ -456,18 +456,48 @@ reporter manager and agent over their SSL connection.
   <graphic fileref="figures/incat/incat-annotated-all2all.jpg" align="center"></graphic>
   </para> 
 
-  <para>In order to display a summary of how the hosts in the series are doing we 
-  add a summary series to calculate the pass/fail rate of the series overall.  The summary 
-  series is also used by the All2AllFilter described in <xref linkend="all2all-filter">.
+  <para>In addition to configuring the actual all2all tests, we also configure a summary series for the
+  latest pass/fail results of each all2all test.  This summary will be used by the All2AllFilter described in <xref linkend="all2all-filter"> to determine which resource is responsible for a failure.  For example, in the example above we created
+  an all2all ping test to be executed on the defaultGrid resource group.  Each of defaultGrid resources is pinging three other resources: cuzco.sdsc.edu, inca.sdsc.edu and badhost.sdsc.edu.  The summary series will find the latest results for each of the resources being pinged in order to assess whether a new failure is the fault of the resource doing the ping or the resource being pinged.  For example, if two of the three resources in the defaultGrid group are unable to ping badhost.sdsc.edu, when the third resource in defaultGrid goes to ping badhost.sdsc.edu and fails we know that it's the fault of badhost.sdsc.edu and not the third resource (or subsequently any other resource until badhost.sdsc.edu is fixed).  Based on the results of the summary series, the All2AllFilter would mark this third resource as "NOT_AT_FAULT" for failing to ping badhost.sdsc.edu.</para>
+  <para>To configure a summary series for all2all tests, make a new series that will execute the "summary.successpct.performance" reporter with the following parameters:</para>
+<itemizedList>
+<listItem>
+<para>
+"Context": contains a similar "nickname=all2all:testName_to_.*" string as the all2all tests being summarized. Note that ".*" replaces the "@pingHosts@" macro used above since we're only creating one series.  
+</para>
+</listItem>
+<listItem>
+<para>
+"filter": same as the Context string minus "nickname=".  The reporter will get the latest results for all series whose nickname matches this string.
+</para>
+</listItem>
+<listItem>
+<para>
+"ignoreErr": the regular expression that the summary reporter looks for in error strings when counting failures and if it finds it then the errors are marked neutrally.
+</para>
+</listItem>
+<listItem>
+<para>
+"server" and "type": tell the reporter where to get the latest test results (in this example via the consumer at client64-52.sdsc.edu).
+</para>
+</listItem>
+<listItem>
+<para>
+"suite": the suite the all2all tests being summarized can be found in.
+</para>
+</listItem>
+</itemizedList>
+<para>
   <graphic fileref="figures/incat/incat-annotated-summary-reporter.jpg" align="center"></graphic>
   </para>
  
-  <para>The results of the cross-site test look like:
+  <para>The results of the all2all tests configured above are shown in the following image.  Note that while the single summary series produces all the boxes in the "SUMMARY" column, each of the other boxes represents a unique series.
   <graphic fileref="figures/consumer/all2all-suite-before-filter.jpg" align="center"></graphic>
   </para>
 
   <para>After we add the All2AllFilter described in <xref linkend="all2all-filter"> the results 
-  also show when an individual resource is not at fault for the error:
+  also show when an individual resource is not at fault for the error.  Error messages are prefixed with 
+  "NOT_AT_FAULT" and marked neutrally in stylesheets ("noFault") and history graphs:
   <graphic fileref="figures/consumer/all2all-suite-after-filter.jpg" align="center"></graphic>
   </para>
 
