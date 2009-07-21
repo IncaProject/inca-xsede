@@ -1,0 +1,40 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use Time::HiRes qw( gettimeofday tv_interval sleep );
+
+my $reporter = new Inca::Reporter::Performance(
+  name => 'teragrid.info.performance',
+  version => 4,
+  description => 'Monitors responsiveness of TeraGrid information services',
+  measurement_name => 'info.teragrid.org'
+);
+$reporter->addArg('host', 'host to monitor', 'info1.dyn.teragrid.org');
+$reporter->addArg('stat', 'statistic to gather', 'Apache static');
+$reporter->processArgv(@ARGV);
+my $host = $reporter->argValue('host');
+my $stat = $reporter->argValue('stat');
+$ENV{'GLOBUS_OPTIONS'} = "-Xmx256M";
+my %bench = (
+  'Apache static' => 'wget -O /dev/null http://'.$host.'/',
+  'Apache CGI' => 'wget -O /dev/null http://'.$host.'/web-apps/csv/ctss-resources-v1/',
+  'Tomcat WebMDS' => 'wget -O /dev/null "http://'.$host.':8080/webmds/webmds?info=tgislocal&xsl=tgcdbresources"',
+  'Globus MDS' => 'wsrf-query -a -s https://'.$host.':8446/wsrf/services/DefaultIndexService ".//V4tgcdbRP"'
+);
+my $benchmark = $reporter->addNewBenchmark($host);
+my $cmd = "$bench{$stat}";
+my $t0 = [gettimeofday];
+my $output = $reporter->loggedCommand($cmd);
+if($?) {
+  my $err = "$cmd failed: $output $!";
+  $reporter->failPrintAndExit($err);
+} else {
+  my $t1 = [gettimeofday];
+  my $elapsed = tv_interval $t0,$t1;
+  $elapsed = sprintf("%.3f",$elapsed);
+  $benchmark->setStatistic($stat, $elapsed, 'secs');
+  $reporter->setResult(1);
+  $reporter->print();
+}
