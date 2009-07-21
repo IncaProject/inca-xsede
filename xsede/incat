@@ -10390,9 +10390,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10441,9 +10442,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10492,9 +10494,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.compiler.any.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10543,9 +10546,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.compiler.intel.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.intel.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -10590,7 +10594,7 @@
       <name>app-support.teragrid.org-4.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.1</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>19</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18392,11 +18396,71 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.db.postgres.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value>inca_checkpg</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>5426</value>
+              </arg>
+              <arg>
+                <name>db</name>
+                <value>tgcdb</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>azrael.sdsc.edu</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@ export PATH=${HOME}/postgresql-8.1.15/install/bin:${PATH} &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>postgres_connect_devel</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/15 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>11</version>
+      <version>13</version>
     </suite>
     <suite>
       <seriesConfigs>
