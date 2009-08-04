@@ -708,6 +708,47 @@ http://www.google.com/apis/maps/signup.html --&gt;
 
   </section>
 
+  <section id="consumer-report-details">
+    <title>Report Details</title>
+
+    <para>The Current Data, Reports, and Query views described in previous
+    sections provide links to a view that displays the individual report
+    details as shown in the figure below. </para>
+
+    <graphic fileref="figures/consumer/details_annotated.jpg"></graphic>
+
+    <para>If the "Allow Run Nows from web pages" option is checked 
+    (see <xref linkend="config-consumer">), a "Run
+    Now" button will appear under the "Command used to execute the reporter"
+    heading. This option is useful for system administrators who have fixed an
+    issue and want to see the updated result or want to verify a problem is 
+    still a problem.  A request to execute this reporter will be sent to
+    the local machine after clicking on the button.  Depending on the 
+    reporter execution time and cache frequency (see <xref
+    linkend="view-query">), results will may take a few minutes to propagate 
+    to the Inca web pages.</para>
+    
+    <graphic fileref="figures/consumer/run-now-button.png" align="center"></graphic>
+
+    <para>Since authentication is required based on the authentication setup (see
+    <xref linkend="password-consumer">), a box will popup such as follows:</para>
+
+    <graphic fileref="figures/consumer/security-popup.jpg" align="center"></graphic>
+
+    <para>Press 'Continue' and the security login window will display such as
+    follows:</para>
+
+    <graphic fileref="figures/consumer/security-login.jpg" align="center"></graphic>
+
+    <para>Use the username and password specified in
+    <filename>$INCA_DIST/etc/realm.properties</filename>.  By default, the
+    username and password are 'inca'. After the consumer submits the request, 
+    you will see a confirmation such as below: </para>
+
+    <graphic fileref="figures/consumer/run-now-confirm.jpg" align="center"></graphic>
+
+  </section>
+
 <section id="file-desc">
     <title>Description of Data Consumer Files</title>
 
@@ -1509,7 +1550,9 @@ http://www.google.com/apis/maps/signup.html --&gt;
     &lt;security-constraint&gt;
       &lt;web-resource-collection&gt;
         &lt;web-resource-name&gt;Inca Status Pages&lt;/web-resource-name&gt;
+        &lt;url-pattern&gt;/jsp/admin.jsp&lt;/url-pattern&gt;
         &lt;url-pattern&gt;/jsp/query.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/runNow.jsp&lt;/url-pattern&gt;
         &lt;url-pattern&gt;/jsp/status-auth.jsp&lt;/url-pattern&gt;
       &lt;/web-resource-collection&gt;
       &lt;auth-constraint&gt;
