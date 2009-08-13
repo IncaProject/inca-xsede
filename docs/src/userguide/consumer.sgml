@@ -164,14 +164,20 @@
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then edit line 9 of
+        Copy this key, then edit line 15 of
         <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
         </para>
         <screen>
 ...
 &lt;!-- Google key for your Inca server.  Go to the following website and put
 http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html --&gt;
+http://www.google.com/apis/maps/signup.html.  If you have more than
+one alias for your web server, uncomment below and add the appropriate
+hostname:port to the hostnamePort attribute.
+
+&lt;key hostnamePort="yourhost.edu:8080"&gt;Insert key here&lt;/key&gt;
+&lt;key hostnamePort="yourhost-alias.edu:8080"&gt;Insert key here&lt;/key&gt;
+--&gt;
 &lt;key&gt;Insert key here&lt;/key&gt;
 ...
         </screen>
@@ -183,15 +189,25 @@ http://www.google.com/apis/maps/signup.html --&gt;
 ...
 &lt;!-- Google key for your Inca server.  Go to the following website and put
 http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html --&gt;
+http://www.google.com/apis/maps/signup.html.  If you have more than
+one alias for your web server, uncomment below and add the appropriate
+hostname:port to the hostnamePort attribute.
+
+&lt;key hostnamePort="yourhost.edu:8080"&gt;Insert key here&lt;/key&gt;
+&lt;key hostnamePort="yourhost-alias.edu:8080"&gt;Insert key here&lt;/key&gt;
+--&gt;
 &lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
 ...
         </screen>
+        <para>If you have more than an alias for your Inca server, uncomment
+        the key tags with the <filename>hostnamePort</filename> attribute
+        and add the appropriate values.</para>
+
         <para>
         The second step in preparing the map view is to tell the map
         generator the locations of your resources.  Edit
         <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename> and find
-        the &lt;site&gt; tag on lines 80 to 111.  For each resource, provide
+        the &lt;site&gt; tag on lines 89 to 123.  For each resource, provide
         a site name using the &lt;name&gt; tag, latitude/longitude
         coordinates using the &lt;latitude&gt; and &lt;longitude&gt; tags,
         and a list of resource names at a site using the &lt;resource&gt; tag.
@@ -250,11 +266,11 @@ http://www.google.com/apis/maps/signup.html --&gt;
             <listitem>
               <para>
                 The size of the Google map can be customized using the &lt;width&gt; and
-                &lt;height&gt; tags on lines 14-15.  By default the map is 800x500.
+                &lt;height&gt; tags on lines 18-19.  By default the map is 800x500.
                 <screen>
-                  13  &lt;!-- The size of the map graphic (in pixels) that will be generated --&gt;
-                  14  &lt;width&gt;800&lt;/width&gt;
-                  15  &lt;height&gt;500&lt;/height&gt;
+                  17  &lt;!-- The size of the map graphic (in pixels) that will be generated --&gt;
+                  18  &lt;width&gt;800&lt;/width&gt;
+                  19  &lt;height&gt;500&lt;/height&gt;
                 </screen>
               </para>
             </listitem>
@@ -264,14 +280,32 @@ http://www.google.com/apis/maps/signup.html --&gt;
             <listitem>
               <para>
                 The center of the map is expressed in latitude/longitude coordinates on
-                lines 18-21.  By default, the center of the map corresponds to the
+                lines 23-24.  By default, the center of the map corresponds to the
                 center of the U.S.
                 <screen>
-                  17   &lt;!-- The center of the map in latitude/longitude coordinates --&gt;
-                  18   &lt;center&gt;
-                  19     &lt;latitude&gt;37&lt;/latitude&gt;
-                  20     &lt;longitude&gt;982&lt;/longitude&gt;
-                  21   &lt;/center&gt;
+                  21   &lt;!-- The center of the map in latitude/longitude coordinates --&gt;
+                  22   &lt;center&gt;
+                  23     &lt;latitude&gt;37&lt;/latitude&gt;
+                  24     &lt;longitude&gt;982&lt;/longitude&gt;
+                  25   &lt;/center&gt;
+                </screen>
+              </para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry><term><filename>map type</filename></term>
+            <listitem>
+              <para>
+                The type of the Google map can be customized using the 
+                &lt;mapType&gt; tag on line 32.  By default the map is
+                 G_NORMAL_MAP.  
+                <screen>
+                  27   &lt;!-- Type of map to display
+                  28    G_NORMAL_MAP - displays the default road map view
+                  29    G_SATELLITE_MAP - displays Google Earth satellite images
+                  30    G_HYBRID_MAP - displays a mixture of normal and satellite views
+                  31    G_PHYSICAL_MAP -displays a physical map based on terrain information. --&gt;
+                  32  &lt;mapType&gt;G_NORMAL_MAP&lt;/mapType&gt;
                 </screen>
               </para>
             </listitem>
@@ -281,12 +315,12 @@ http://www.google.com/apis/maps/signup.html --&gt;
             <listitem>
               <para>
               The initial magnification, or zoom level, of the map is expressed
-              as a number between 1 and 12, located on line 24.
+              as a number between 1 and 12, located on line 35.
               Zoom level 1 displays the entire world, while zoom level 12
               allows you to read street names.
               <screen>
-                23   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
-                24   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
+                34   &lt;!-- The initial zoom level of the map (higher is closer up) --&gt;
+                35   &lt;magnificationLevel&gt;4&lt;/magnificationLevel&gt;
               </screen>
               </para>
             </listitem>
@@ -301,13 +335,13 @@ http://www.google.com/apis/maps/signup.html --&gt;
               determined so that the markers do not overlap each other.  To
               change the distance between the markers (expressed in
               latitude/longitude), uncomment the &lt;markerDist&gt; tag on line
-              29.
+              40.
               <screen>
-                26   &lt;!-- The distance in between resource markers at a site.  A default value
-                27        is available based on the magnificationLevel.  To override the default,
-                28        uncommment the line below and set a new value
-                29   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
-                30   --&gt;
+                37   &lt;!-- The distance in between resource markers at a site.  A default value
+                38        is available based on the magnificationLevel.  To override the default,
+                39        uncommment the line below and set a new value
+                40   &lt;markerDist&gt;1.00&lt;/markerDist&gt;
+                41   --&gt;
               </screen>
               </para>
             </listitem>
@@ -319,10 +353,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
                 If there are more than fifteen errors at a resource, only the first fifteen
                 errors will be displayed in the info window that is displayed when a
                 resource is clicked.  To override, edit the &lt;maxErrors&gt; tag on line
-                33.
+                44.
                 <screen>
-                  32   &lt;!-- The maximum number of errors to display in the info window --&gt;
-                  33   &lt;maxErrors&gt;15&lt;/maxErrors&gt;
+                  43   &lt;!-- The maximum number of errors to display in the info window --&gt;
+                  44   &lt;maxErrors&gt;15&lt;/maxErrors&gt;
                 </screen>
               </para>
             </listitem>
@@ -337,14 +371,14 @@ http://www.google.com/apis/maps/signup.html --&gt;
                 a line in between the source resource and the destination resource.
                 The color of the line used to represent the test status can be customized.
                 By default, green represents the test passed and red represents the test
-                failed.  To change, edit lines 37-40.
+                failed.  To change, edit lines 48-51.
                 <screen>
-                  35   &lt;!-- For cross-site tests, a line will be displayed in between the 2 sites to
-                  36        indicate the test status.  Customize the colors for pass fail below. --&gt;
-                  37   &lt;line&gt;
-                  38     &lt;pass&gt;#228B22&lt;/pass&gt;
-                  39     &lt;fail&gt;#FF0000&lt;/fail&gt;
-                  40   &lt;/line&gt;
+                  46   &lt;!-- For cross-site tests, a line will be displayed in between the 2 sites to
+                  47        indicate the test status.  Customize the colors for pass fail below. --&gt;
+                  48   &lt;line&gt;
+                  49     &lt;pass&gt;#228B22&lt;/pass&gt;
+                  50     &lt;fail&gt;#FF0000&lt;/fail&gt;
+                  51   &lt;/line&gt;
                 </screen>
               </para>
             </listitem>
@@ -367,10 +401,10 @@ http://www.google.com/apis/maps/signup.html --&gt;
                   <listitem>
                     <para>Find the size of the icons and modify the tags &lt;iconWidth&gt; and
                       &lt;iconHeight&gt;.  These weather icons are 32x32 so we would change lines
-                      46 and 47 as follows:
+                      57 and 58 as follows:
                       <screen>
-                        46     &lt;iconWidth&gt;32&lt;/iconWidth&gt;
-                        47     &lt;iconHeight&gt;32&lt;/iconHeight&gt;
+                        57     &lt;iconWidth&gt;32&lt;/iconWidth&gt;
+                        58     &lt;iconHeight&gt;32&lt;/iconHeight&gt;
                       </screen>
                     </para>
                   </listitem>
@@ -378,9 +412,9 @@ http://www.google.com/apis/maps/signup.html --&gt;
                     <para>Pick the anchor point for the icon to be placed in relation to
                       the resource's place on the map.  Since we want the middle of
                       the icon to be placed on the map, we choose the coordinates (16, 16)
-                      and modify line 50 as follows:
+                      and modify line 61 as follows:
                       <screen>
-                        50     &lt;iconAnchorCoord&gt;16, 16&lt;/iconAnchorCoord&gt;
+                        61     &lt;iconAnchorCoord&gt;16, 16&lt;/iconAnchorCoord&gt;
                       </screen>
                     </para>
                   </listitem>
@@ -388,9 +422,9 @@ http://www.google.com/apis/maps/signup.html --&gt;
                     <para>We also need to determine the anchor point for the info
                       window to pop up relative to the icon.  Since we want the info window
                       to appear in the top middle, we choose the coordinates (16, 10) and
-                      modify line 54 as follows:
+                      modify line 65 as follows:
                       <screen>
-                        54     &lt;iconInfoWindowAnchorCoord&gt;16, 10&lt;/iconInfoWindowAnchorCoord&gt;
+                        65     &lt;iconInfoWindowAnchorCoord&gt;16, 10&lt;/iconInfoWindowAnchorCoord&gt;
                       </screen>
                     </para>
                   </listitem>
@@ -401,29 +435,29 @@ http://www.google.com/apis/maps/signup.html --&gt;
                       <ulink
                           url="http://maps.google.com/mapfiles/kml/pal4/icon34.png">http://maps.google.com/mapfiles/kml/pal4/icon34.png</ulink>,
                       <ulink
-                          url="http://maps.google.com/mapfiles/kml/pal4/icon36.png">http://maps.google.com/mapfiles/kml/pal4/icon36.png</ulink>.  Modify lines 61-67 as follows:
+                          url="http://maps.google.com/mapfiles/kml/pal4/icon36.png">http://maps.google.com/mapfiles/kml/pal4/icon36.png</ulink>.  Modify lines 72-78 as follows:
                       <screen>
-                        61  &lt;iconUrlPrefix&gt;http://maps.google.com/mapfiles/kml/pal4/icon&lt;/iconUrlPrefix&gt;
-                        62  &lt;iconStatus&gt;
-                        63    &lt;fail&gt;36&lt;/fail&gt;
-                        64    &lt;pass&gt;33&lt;/pass&gt;
-                        65    &lt;warn&gt;34&lt;/warn&gt;
-                        66  &lt;/iconStatus&gt;
-                        67  &lt;iconUrlSuffix&gt;.png&lt;/iconUrlSuffix&gt;
+                        72  &lt;iconUrlPrefix&gt;http://maps.google.com/mapfiles/kml/pal4/icon&lt;/iconUrlPrefix&gt;
+                        73  &lt;iconStatus&gt;
+                        74    &lt;fail&gt;36&lt;/fail&gt;
+                        75    &lt;pass&gt;33&lt;/pass&gt;
+                        76    &lt;warn&gt;34&lt;/warn&gt;
+                        77  &lt;/iconStatus&gt;
+                        78  &lt;iconUrlSuffix&gt;.png&lt;/iconUrlSuffix&gt;
                       </screen>
                     </para>
                   </listitem>
                   <listItem>
                     <para>Finally, we specify the url to the shadow icon using
                       &lt;shadowIconUrl&gt;, &lt;shadowIconWidth&gt;, and
-                      &lt;shadowIconHeight&gt; tags on lines 70-74 as follows:
+                      &lt;shadowIconHeight&gt; tags on lines 81-85 as follows:
                       <screen>
-                        69  &lt;!-- Url of a icon to use for the shadow of the resource icon --&gt;
-                        70  &lt;shadowIconUrl&gt;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&lt;/shadowIconUrl&gt;
-                        71
-                        72  &lt;!-- the size of the shadow icon --&gt;
-                        73  &lt;shadowIconWidth&gt;59&lt;/shadowIconWidth&gt;
-                        74  &lt;shadowIconHeight&gt;32&lt;/shadowIconHeight&gt;
+                        81  &lt;!-- Url of a icon to use for the shadow of the resource icon --&gt;
+                        82  &lt;shadowIconUrl&gt;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&lt;/shadowIconUrl&gt;
+                        83
+                        84  &lt;!-- the size of the shadow icon --&gt;
+                        85  &lt;shadowIconWidth&gt;59&lt;/shadowIconWidth&gt;
+                        86  &lt;shadowIconHeight&gt;32&lt;/shadowIconHeight&gt;
                       </screen>
                     </para>
                   </listItem>
