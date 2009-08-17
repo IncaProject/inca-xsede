@@ -1717,6 +1717,32 @@
         </macros>
       </resource>
       <resource>
+        <name>app-support.teragrid.org-4.2.0-tgcp</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>apps4.2.0-tgcp-key</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>app-support.teragrid.org-4.2.0-tgcp</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
         <name>bigben.psc.teragrid.org</name>
         <xpath>//resource[matches(name, '^(psc-bigben)$')]</xpath>
         <macros>
@@ -6383,10 +6409,6 @@
             <name>apps4.2.0-java-key</name>
             <value>@keyPre@java-1.6.0 @keyPost@</value>
           </macro>
-          <macro>
-            <name>apps4.2.0-tgcp-key</name>
-            <value/>
-          </macro>
         </macros>
       </resource>
       <resource>
@@ -6616,10 +6638,6 @@
           <macro>
             <name>apps4.2.0-compiler-intel-version</name>
             <value>10.1</value>
-          </macro>
-          <macro>
-            <name>apps4.2.0-tgcp-key</name>
-            <value/>
           </macro>
           <macro>
             <name>apps4.2.0-compiler-c-gnu-key</name>
@@ -10609,7 +10627,7 @@
       <name>app-support.teragrid.org-4.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.1</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>26</version>
+      <version>27</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14693,11 +14711,54 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.tgcp.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-tgcp-key@@@@post@</context>
+          </series>
+          <nickname>tgcp-version-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-tgcp</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>tgcp==1.0.0</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>5</version>
+      <version>7</version>
     </suite>
     <suite>
       <seriesConfigs>
