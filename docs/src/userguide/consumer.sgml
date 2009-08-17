@@ -573,11 +573,19 @@ hostname:port to the hostnamePort attribute.
       <filename>summaryHistory.jsp</filename>, which uses CeWolf/JfreeChart
       and stylesheets <filename>seriesAverages.xsl</filename> and
       <filename>periodAverages.xsl</filename> to show the average series pass
-      rate over time grouped by resource and suite.  The amount of history shown
-      is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
-      query parameters described in <xref linkend="view-query">. 
+      rate over time grouped by resource and suite.  I.e., When grouped by
+      suite, a history graph summarizing the average series pass rate is
+      displayed for each suite.  By default, multiple lines are used to show
+      the summary history on each resource.  To view the total summary history
+      percentages for all resources, click the <filename>total</filename>
+      checkbox in the top right corner and click the 'Filter' button.
+      Histories for either specific resources or suites can also be displayed
+      thru the form in the top right corner.  The amount of history shown is 4
+      weeks by default but can be modified by editing the 'incaQueryStatus'
+      query parameters described in
+      <xref linkend="view-query">.  
       </para>
-      <graphic fileref="figures/consumer/summaryHistoryJsp.gif" align="center">
+      <graphic fileref="figures/consumer/summaryHistoryJsp.jpg" align="center">
       </graphic>
     </section>
 
@@ -1032,20 +1040,27 @@ hostname:port to the hostnamePort attribute.
                 <graphic fileref="figures/consumer/summaryHistoryJsp_sm.gif" align="center"></graphic>
               </para></entry>
             <entry><para>
-                Displays average series pass rate by filter. Uses
+                Displays average series pass rate by resource or suite. Uses
                 <filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
                 to calculate statistics.
               </para></entry>
             <entry><itemizedList>
                 <listItem>
-                  <para>filterResource *: if true displays history grouped by resource or if a resource
-                id is specified, displays history grouped by suite for that resource</para>
+                  <para>groupBy *: if 'resource', displays history grouped by resource or if 'suite' is specified, displays history grouped by suite.  [Default: resource]</para>
                 </listItem>
                 <listItem>
-                  <para>filterSuite *: if true displays history grouped by suite or if a suite guid
-             is specified, displays history grouped by resource for that suite</para>
+                  <para>lines *: if 'multiple', displays individual histories (i.e., if groupBy = 'suite', displays a line for each resource).  If 'total', a single
+                  line is displayed representing all resources or suites.
+                  [Default: multiple]</para>
                 </listItem>
-              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true">http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true</ulink></para></entry>
+                <listItem>
+                  <para>filterResource*: if specified, only displays histories
+                  for specified resources (comma delimited).  </para>
+                </listItem>
+                <listItem>
+                  <para>filterSuite *: if specified, only displays histories for specified suites (comma delimited).  </para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource">http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource</ulink></para></entry>
           </row>
 
 
