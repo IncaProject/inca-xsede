@@ -14711,9 +14711,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>data.transfer.tgcp.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.tgcp.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14758,7 +14759,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>7</version>
+      <version>10</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14924,7 +14925,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>76</version>
+      <version>77</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15252,7 +15253,7 @@
       <name>core.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>38</version>
+      <version>39</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16508,7 +16509,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>112</version>
+      <version>113</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16768,7 +16769,7 @@
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>9</version>
+      <version>10</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17456,7 +17457,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>20</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18466,67 +18467,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tduff@sdsc.edu, FailTo:lcarson@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>data.db.postgres.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>user</name>
-                <value>inca_checkpg</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>5426</value>
-              </arg>
-              <arg>
-                <name>db</name>
-                <value>tgcdb</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>azrael.sdsc.edu</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@ export PATH=${HOME}/postgresql-8.1.15/install/bin:${PATH} &amp;&amp; @@@post@</context>
-          </series>
-          <nickname>TGCDB_connect_devel</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/5 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:tduff@sdsc.edu, FailTo:lcarson@sdsc.edu</target>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tgcdb-admin@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -19068,7 +19009,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>102</version>
+      <version>103</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19716,7 +19657,7 @@
       <name>metascheduling.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>14</version>
+      <version>15</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19780,7 +19721,7 @@
       <name>parallel-app.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>67</version>
+      <version>68</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24500,7 +24441,7 @@
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>162</version>
+      <version>163</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -25528,7 +25469,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>46</version>
+      <version>47</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26524,7 +26465,7 @@
       <name>workflow.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.2.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>6</version>
+      <version>7</version>
     </suite>
   </suites>
 </inca:inca>
