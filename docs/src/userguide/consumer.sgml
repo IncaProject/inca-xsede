@@ -164,48 +164,21 @@
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then edit line 15 of
-        <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename>.
+        Copy this key, then use the configuration page described in <xref linkend="config-consumer">
+        to replace "Insert key here" with your new Google Maps API key as shown below:
+        <graphic fileref="figures/consumer/google-keys.gif" align="center"></graphic>
         </para>
-        <screen>
-...
-&lt;!-- Google key for your Inca server.  Go to the following website and put
-http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html.  If you have more than
-one alias for your web server, uncomment below and add the appropriate
-hostname:port to the hostnamePort attribute.
-
-&lt;key hostnamePort="yourhost.edu:8080"&gt;Insert key here&lt;/key&gt;
-&lt;key hostnamePort="yourhost-alias.edu:8080"&gt;Insert key here&lt;/key&gt;
---&gt;
-&lt;key&gt;Insert key here&lt;/key&gt;
-...
-        </screen>
-        <para>
-        Replace "Insert key here" with your new Google Maps API key as below
-        and save the file.
+        
+        <para>If you have more than one alias for your Inca server, generate an API key for 
+        each alias, click on the "Add Alias Key" in the configuration page and add your host alias in 
+        hostname:port format.  Then expand the "keys" folder and complete the values 
+        for each "key" folder, using your google map keys and their corresponding hostname:port 
+        like the example below:
+        <graphic fileref="figures/consumer/google-keys.gif" align="center"></graphic>
         </para>
-        <screen>
-...
-&lt;!-- Google key for your Inca server.  Go to the following website and put
-http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html.  If you have more than
-one alias for your web server, uncomment below and add the appropriate
-hostname:port to the hostnamePort attribute.
-
-&lt;key hostnamePort="yourhost.edu:8080"&gt;Insert key here&lt;/key&gt;
-&lt;key hostnamePort="yourhost-alias.edu:8080"&gt;Insert key here&lt;/key&gt;
---&gt;
-&lt;key&gt;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&lt;/key&gt;
-...
-        </screen>
-        <para>If you have more than an alias for your Inca server, uncomment
-        the key tags with the <filename>hostnamePort</filename> attribute
-        and add the appropriate values.</para>
 
         <para>
-        The second step in preparing the map view is to tell the map
-        generator the locations of your resources.  Edit
+        Next give the map generator the locations of your resources.  Edit
         <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename> and find
         the &lt;site&gt; tag on lines 89 to 123.  For each resource, provide
         a site name using the &lt;name&gt; tag, latitude/longitude
