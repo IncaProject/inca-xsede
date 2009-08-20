@@ -236,6 +236,15 @@ HREF="#CONFIG-CONSUMER"
 HREF="#CONSUMER-REPORT-DETAILS"
 >Report Details</A
 ></DT
+><DD
+><DL
+><DT
+>6.5.1. <A
+HREF="#CONSUMER-RUN-NOW"
+>Run Nows</A
+></DT
+></DL
+></DD
 ><DT
 >6.6. <A
 HREF="#FILE-DESC"
@@ -3077,7 +3086,7 @@ COLOR="RED"
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then edit line 9 of
+        Copy this key, then edit line 15 of
         <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xml/google.xml</TT
@@ -3096,7 +3105,13 @@ CLASS="SCREEN"
 >...
 &#60;!-- Google key for your Inca server.  Go to the following website and put
 http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html --&#62;
+http://www.google.com/apis/maps/signup.html.  If you have more than
+one alias for your web server, uncomment below and add the appropriate
+hostname:port to the hostnamePort attribute.
+
+&#60;key hostnamePort="yourhost.edu:8080"&#62;Insert key here&#60;/key&#62;
+&#60;key hostnamePort="yourhost-alias.edu:8080"&#62;Insert key here&#60;/key&#62;
+--&#62;
 &#60;key&#62;Insert key here&#60;/key&#62;
 ...
         </PRE
@@ -3121,7 +3136,13 @@ CLASS="SCREEN"
 >...
 &#60;!-- Google key for your Inca server.  Go to the following website and put
 http://yourservername:8080 in the "My web site URL" textbox at:
-http://www.google.com/apis/maps/signup.html --&#62;
+http://www.google.com/apis/maps/signup.html.  If you have more than
+one alias for your web server, uncomment below and add the appropriate
+hostname:port to the hostnamePort attribute.
+
+&#60;key hostnamePort="yourhost.edu:8080"&#62;Insert key here&#60;/key&#62;
+&#60;key hostnamePort="yourhost-alias.edu:8080"&#62;Insert key here&#60;/key&#62;
+--&#62;
 &#60;key&#62;ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ&#60;/key&#62;
 ...
         </PRE
@@ -3130,13 +3151,20 @@ http://www.google.com/apis/maps/signup.html --&#62;
 ></TR
 ></TABLE
 ><P
+>If you have more than an alias for your Inca server, uncomment
+        the key tags with the <TT
+CLASS="FILENAME"
+>hostnamePort</TT
+> attribute
+        and add the appropriate values.</P
+><P
 >        The second step in preparing the map view is to tell the map
         generator the locations of your resources.  Edit
         <TT
 CLASS="FILENAME"
 >$INCA_DIST/webapps/inca/xml/google.xml</TT
 > and find
-        the &#60;site&#62; tag on lines 80 to 111.  For each resource, provide
+        the &#60;site&#62; tag on lines 89 to 123.  For each resource, provide
         a site name using the &#60;name&#62; tag, latitude/longitude
         coordinates using the &#60;latitude&#62; and &#60;longitude&#62; tags,
         and a list of resource names at a site using the &#60;resource&#62; tag.
@@ -3243,7 +3271,7 @@ CLASS="FILENAME"
 ><DD
 ><P
 >                The size of the Google map can be customized using the &#60;width&#62; and
-                &#60;height&#62; tags on lines 14-15.  By default the map is 800x500.
+                &#60;height&#62; tags on lines 18-19.  By default the map is 800x500.
                 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3254,9 +3282,9 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  13  &#60;!-- The size of the map graphic (in pixels) that will be generated --&#62;
-                  14  &#60;width&#62;800&#60;/width&#62;
-                  15  &#60;height&#62;500&#60;/height&#62;
+>                  17  &#60;!-- The size of the map graphic (in pixels) that will be generated --&#62;
+                  18  &#60;width&#62;800&#60;/width&#62;
+                  19  &#60;height&#62;500&#60;/height&#62;
                 </PRE
 ></FONT
 ></TD
@@ -3273,7 +3301,7 @@ CLASS="FILENAME"
 ><DD
 ><P
 >                The center of the map is expressed in latitude/longitude coordinates on
-                lines 18-21.  By default, the center of the map corresponds to the
+                lines 23-24.  By default, the center of the map corresponds to the
                 center of the U.S.
                 <TABLE
 BORDER="1"
@@ -3285,11 +3313,45 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  17   &#60;!-- The center of the map in latitude/longitude coordinates --&#62;
-                  18   &#60;center&#62;
-                  19     &#60;latitude&#62;37&#60;/latitude&#62;
-                  20     &#60;longitude&#62;982&#60;/longitude&#62;
-                  21   &#60;/center&#62;
+>                  21   &#60;!-- The center of the map in latitude/longitude coordinates --&#62;
+                  22   &#60;center&#62;
+                  23     &#60;latitude&#62;37&#60;/latitude&#62;
+                  24     &#60;longitude&#62;982&#60;/longitude&#62;
+                  25   &#60;/center&#62;
+                </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+              </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>map type</TT
+></DT
+><DD
+><P
+>                The type of the Google map can be customized using the 
+                &#60;mapType&#62; tag on line 32.  By default the map is
+                 G_NORMAL_MAP.  
+                <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>                  27   &#60;!-- Type of map to display
+                  28    G_NORMAL_MAP - displays the default road map view
+                  29    G_SATELLITE_MAP - displays Google Earth satellite images
+                  30    G_HYBRID_MAP - displays a mixture of normal and satellite views
+                  31    G_PHYSICAL_MAP -displays a physical map based on terrain information. --&#62;
+                  32  &#60;mapType&#62;G_NORMAL_MAP&#60;/mapType&#62;
                 </PRE
 ></FONT
 ></TD
@@ -3306,7 +3368,7 @@ CLASS="FILENAME"
 ><DD
 ><P
 >              The initial magnification, or zoom level, of the map is expressed
-              as a number between 1 and 12, located on line 24.
+              as a number between 1 and 12, located on line 35.
               Zoom level 1 displays the entire world, while zoom level 12
               allows you to read street names.
               <TABLE
@@ -3319,8 +3381,8 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                23   &#60;!-- The initial zoom level of the map (higher is closer up) --&#62;
-                24   &#60;magnificationLevel&#62;4&#60;/magnificationLevel&#62;
+>                34   &#60;!-- The initial zoom level of the map (higher is closer up) --&#62;
+                35   &#60;magnificationLevel&#62;4&#60;/magnificationLevel&#62;
               </PRE
 ></FONT
 ></TD
@@ -3342,7 +3404,7 @@ CLASS="FILENAME"
               determined so that the markers do not overlap each other.  To
               change the distance between the markers (expressed in
               latitude/longitude), uncomment the &#60;markerDist&#62; tag on line
-              29.
+              40.
               <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3353,11 +3415,11 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                26   &#60;!-- The distance in between resource markers at a site.  A default value
-                27        is available based on the magnificationLevel.  To override the default,
-                28        uncommment the line below and set a new value
-                29   &#60;markerDist&#62;1.00&#60;/markerDist&#62;
-                30   --&#62;
+>                37   &#60;!-- The distance in between resource markers at a site.  A default value
+                38        is available based on the magnificationLevel.  To override the default,
+                39        uncommment the line below and set a new value
+                40   &#60;markerDist&#62;1.00&#60;/markerDist&#62;
+                41   --&#62;
               </PRE
 ></FONT
 ></TD
@@ -3376,7 +3438,7 @@ CLASS="FILENAME"
 >                If there are more than fifteen errors at a resource, only the first fifteen
                 errors will be displayed in the info window that is displayed when a
                 resource is clicked.  To override, edit the &#60;maxErrors&#62; tag on line
-                33.
+                44.
                 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3387,8 +3449,8 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  32   &#60;!-- The maximum number of errors to display in the info window --&#62;
-                  33   &#60;maxErrors&#62;15&#60;/maxErrors&#62;
+>                  43   &#60;!-- The maximum number of errors to display in the info window --&#62;
+                  44   &#60;maxErrors&#62;15&#60;/maxErrors&#62;
                 </PRE
 ></FONT
 ></TD
@@ -3410,7 +3472,7 @@ CLASS="FILENAME"
                 a line in between the source resource and the destination resource.
                 The color of the line used to represent the test status can be customized.
                 By default, green represents the test passed and red represents the test
-                failed.  To change, edit lines 37-40.
+                failed.  To change, edit lines 48-51.
                 <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3421,12 +3483,12 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                  35   &#60;!-- For cross-site tests, a line will be displayed in between the 2 sites to
-                  36        indicate the test status.  Customize the colors for pass fail below. --&#62;
-                  37   &#60;line&#62;
-                  38     &#60;pass&#62;#228B22&#60;/pass&#62;
-                  39     &#60;fail&#62;#FF0000&#60;/fail&#62;
-                  40   &#60;/line&#62;
+>                  46   &#60;!-- For cross-site tests, a line will be displayed in between the 2 sites to
+                  47        indicate the test status.  Customize the colors for pass fail below. --&#62;
+                  48   &#60;line&#62;
+                  49     &#60;pass&#62;#228B22&#60;/pass&#62;
+                  50     &#60;fail&#62;#FF0000&#60;/fail&#62;
+                  51   &#60;/line&#62;
                 </PRE
 ></FONT
 ></TD
@@ -3474,7 +3536,7 @@ TYPE="i"
 ><P
 >Find the size of the icons and modify the tags &#60;iconWidth&#62; and
                       &#60;iconHeight&#62;.  These weather icons are 32x32 so we would change lines
-                      46 and 47 as follows:
+                      57 and 58 as follows:
                       <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3485,8 +3547,8 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                        46     &#60;iconWidth&#62;32&#60;/iconWidth&#62;
-                        47     &#60;iconHeight&#62;32&#60;/iconHeight&#62;
+>                        57     &#60;iconWidth&#62;32&#60;/iconWidth&#62;
+                        58     &#60;iconHeight&#62;32&#60;/iconHeight&#62;
                       </PRE
 ></FONT
 ></TD
@@ -3500,7 +3562,7 @@ CLASS="SCREEN"
 >Pick the anchor point for the icon to be placed in relation to
                       the resource's place on the map.  Since we want the middle of
                       the icon to be placed on the map, we choose the coordinates (16, 16)
-                      and modify line 50 as follows:
+                      and modify line 61 as follows:
                       <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3511,7 +3573,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                        50     &#60;iconAnchorCoord&#62;16, 16&#60;/iconAnchorCoord&#62;
+>                        61     &#60;iconAnchorCoord&#62;16, 16&#60;/iconAnchorCoord&#62;
                       </PRE
 ></FONT
 ></TD
@@ -3525,7 +3587,7 @@ CLASS="SCREEN"
 >We also need to determine the anchor point for the info
                       window to pop up relative to the icon.  Since we want the info window
                       to appear in the top middle, we choose the coordinates (16, 10) and
-                      modify line 54 as follows:
+                      modify line 65 as follows:
                       <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3536,7 +3598,7 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                        54     &#60;iconInfoWindowAnchorCoord&#62;16, 10&#60;/iconInfoWindowAnchorCoord&#62;
+>                        65     &#60;iconInfoWindowAnchorCoord&#62;16, 10&#60;/iconInfoWindowAnchorCoord&#62;
                       </PRE
 ></FONT
 ></TD
@@ -3562,7 +3624,7 @@ TARGET="_top"
 HREF="http://maps.google.com/mapfiles/kml/pal4/icon36.png"
 TARGET="_top"
 >http://maps.google.com/mapfiles/kml/pal4/icon36.png</A
->.  Modify lines 61-67 as follows:
+>.  Modify lines 72-78 as follows:
                       <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3573,13 +3635,13 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                        61  &#60;iconUrlPrefix&#62;http://maps.google.com/mapfiles/kml/pal4/icon&#60;/iconUrlPrefix&#62;
-                        62  &#60;iconStatus&#62;
-                        63    &#60;fail&#62;36&#60;/fail&#62;
-                        64    &#60;pass&#62;33&#60;/pass&#62;
-                        65    &#60;warn&#62;34&#60;/warn&#62;
-                        66  &#60;/iconStatus&#62;
-                        67  &#60;iconUrlSuffix&#62;.png&#60;/iconUrlSuffix&#62;
+>                        72  &#60;iconUrlPrefix&#62;http://maps.google.com/mapfiles/kml/pal4/icon&#60;/iconUrlPrefix&#62;
+                        73  &#60;iconStatus&#62;
+                        74    &#60;fail&#62;36&#60;/fail&#62;
+                        75    &#60;pass&#62;33&#60;/pass&#62;
+                        76    &#60;warn&#62;34&#60;/warn&#62;
+                        77  &#60;/iconStatus&#62;
+                        78  &#60;iconUrlSuffix&#62;.png&#60;/iconUrlSuffix&#62;
                       </PRE
 ></FONT
 ></TD
@@ -3592,7 +3654,7 @@ CLASS="SCREEN"
 ><P
 >Finally, we specify the url to the shadow icon using
                       &#60;shadowIconUrl&#62;, &#60;shadowIconWidth&#62;, and
-                      &#60;shadowIconHeight&#62; tags on lines 70-74 as follows:
+                      &#60;shadowIconHeight&#62; tags on lines 81-85 as follows:
                       <TABLE
 BORDER="1"
 BGCOLOR="#E0E0E0"
@@ -3603,12 +3665,12 @@ WIDTH="90%"
 COLOR="#000000"
 ><PRE
 CLASS="SCREEN"
->                        69  &#60;!-- Url of a icon to use for the shadow of the resource icon --&#62;
-                        70  &#60;shadowIconUrl&#62;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&#60;/shadowIconUrl&#62;
-                        71
-                        72  &#60;!-- the size of the shadow icon --&#62;
-                        73  &#60;shadowIconWidth&#62;59&#60;/shadowIconWidth&#62;
-                        74  &#60;shadowIconHeight&#62;32&#60;/shadowIconHeight&#62;
+>                        81  &#60;!-- Url of a icon to use for the shadow of the resource icon --&#62;
+                        82  &#60;shadowIconUrl&#62;http://maps.google.com/mapfiles/kml/pal4/icon36s.png&#60;/shadowIconUrl&#62;
+                        83
+                        84  &#60;!-- the size of the shadow icon --&#62;
+                        85  &#60;shadowIconWidth&#62;59&#60;/shadowIconWidth&#62;
+                        86  &#60;shadowIconHeight&#62;32&#60;/shadowIconHeight&#62;
                       </PRE
 ></FONT
 ></TD
@@ -3796,16 +3858,27 @@ CLASS="FILENAME"
 CLASS="FILENAME"
 >periodAverages.xsl</TT
 > to show the average series pass
-      rate over time grouped by resource and suite.  The amount of history shown
-      is 4 weeks by default but can be modified by editing the 'incaQueryStatus'
-      query parameters described in <A
+      rate over time grouped by resource and suite.  I.e., When grouped by
+      suite, a history graph summarizing the average series pass rate is
+      displayed for each suite.  By default, multiple lines are used to show
+      the summary history on each resource.  To view the total summary history
+      percentages for all resources, click the <TT
+CLASS="FILENAME"
+>total</TT
+>
+      checkbox in the top right corner and click the 'Filter' button.
+      Histories for either specific resources or suites can also be displayed
+      thru the form in the top right corner.  The amount of history shown is 4
+      weeks by default but can be modified by editing the 'incaQueryStatus'
+      query parameters described in
+      <A
 HREF="#VIEW-QUERY"
 >Section 6.3.3</A
->. 
+>.  
       </P
 ><P
 ><IMG
-SRC="figures/consumer/summaryHistoryJsp.gif"
+SRC="figures/consumer/summaryHistoryJsp.jpg"
 ALIGN="CENTER"></P
 ></DIV
 ></DIV
@@ -4102,6 +4175,14 @@ NAME="CONSUMER-REPORT-DETAILS"
 ><P
 ><IMG
 SRC="figures/consumer/details_annotated.jpg"></P
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="CONSUMER-RUN-NOW"
+>6.5.1. Run Nows</A
+></H4
 ><P
 >If the "Allow run nows from web pages" option is checked 
     (see <A
@@ -4151,6 +4232,7 @@ CLASS="FILENAME"
 SRC="figures/consumer/run-now-confirm.jpg"
 ALIGN="CENTER"></P
 ></DIV
+></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -4170,7 +4252,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN789"
+NAME="AEN800"
 ></A
 ><P
 ><B
@@ -4760,7 +4842,7 @@ ALIGN="CENTER"></P
 ></TD
 ><TD
 ><P
->                Displays average series pass rate by filter. Uses
+>                Displays average series pass rate by resource or suite. Uses
                 <TT
 CLASS="FILENAME"
 >seriesAverages.xsl</TT
@@ -4777,20 +4859,29 @@ CLASS="FILENAME"
 ><UL
 ><LI
 ><P
->filterResource *: if true displays history grouped by resource or if a resource
-                id is specified, displays history grouped by suite for that resource</P
+>groupBy *: if 'resource', displays history grouped by resource or if 'suite' is specified, displays history grouped by suite.  [Default: resource]</P
 ></LI
 ><LI
 ><P
->filterSuite *: if true displays history grouped by suite or if a suite guid
-             is specified, displays history grouped by resource for that suite</P
+>lines *: if 'multiple', displays individual histories (i.e., if groupBy = 'suite', displays a line for each resource).  If 'total', a single
+                  line is displayed representing all resources or suites.
+                  [Default: multiple]</P
+></LI
+><LI
+><P
+>filterResource*: if specified, only displays histories
+                  for specified resources (comma delimited).  </P
+></LI
+><LI
+><P
+>filterSuite *: if specified, only displays histories for specified suites (comma delimited).  </P
 ></LI
 ></UL
 ><P
 >e.g. <A
-HREF="http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true"
+HREF="http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource"
 TARGET="_top"
->http://localhost:8080/inca/jsp/summaryHistory.jsp?filterSuite=true</A
+>http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource</A
 ></P
 ></TD
 ><TD
@@ -4811,7 +4902,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1007"
+NAME="AEN1022"
 ></A
 ><P
 ><B
@@ -6411,7 +6502,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1357"
+NAME="AEN1372"
 ></A
 ><P
 ><B
@@ -7791,7 +7882,7 @@ depot.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1642"
+NAME="AEN1657"
 ></A
 ><P
 ><B
@@ -8035,7 +8126,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1698"
+NAME="AEN1713"
 ></A
 ><P
 ><B
@@ -8540,7 +8631,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1805"
+NAME="AEN1820"
 ></A
 ><P
 ><B
@@ -10064,7 +10155,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2136"
+NAME="AEN2151"
 ></A
 ><P
 ><B
@@ -10743,7 +10834,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2282"
+NAME="AEN2297"
 ></A
 ><P
 ><B
