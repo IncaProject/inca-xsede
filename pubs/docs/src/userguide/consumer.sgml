@@ -156,6 +156,8 @@
 
       <section id="google-setup">
         <title>Setting up Google Map View</title>
+        <para>The Inca map views can be configured using the page described in <xref linkend="config-consumer">.
+        Use the options in <xref linkend="google-config"> to configure maps for your site.</para>
         <para>
         To access the map view, you need to install a Google Maps API key in
         your Inca consumer.  To generate one, go the Google Maps API web page at
@@ -164,7 +166,7 @@
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then use the configuration page described in <xref linkend="config-consumer">
+        Copy this key, then use the configuration page 
         to replace "Insert key here" with your new Google Maps API key as shown below:
         <graphic fileref="figures/consumer/google-keys.gif" align="center"></graphic>
         </para>
@@ -174,28 +176,101 @@
         hostname:port format.  Then expand the "keys" folder and complete the values 
         for each "key" folder, using your google map keys and their corresponding hostname:port 
         like the example below:
-        <graphic fileref="figures/consumer/google-keys.gif" align="center"></graphic>
+        <graphic fileref="figures/consumer/google-alias-keys.gif" align="center"></graphic>
         </para>
 
         <para>
-        Next give the map generator the locations of your resources.  Edit
-        <filename>$INCA_DIST/webapps/inca/xml/google.xml</filename> and find
-        the &lt;site&gt; tag on lines 89 to 123.  For each resource, provide
-        a site name using the &lt;name&gt; tag, latitude/longitude
-        coordinates using the &lt;latitude&gt; and &lt;longitude&gt; tags,
-        and a list of resource names at a site using the &lt;resource&gt; tag.
-        Online tools like
-        <ulink url="http://netgeo.caida.org/perl/netgeo.cgi/">CAIDA's NetGeo script</ulink>
-        can convert the IP addresses of your resources to latitude/longitude.
-        Optionally, you can also specify a logo for the site using the
-        &lt;logo&gt; tag.  Specify the size of the logo (&lt;width&gt; and
-        &lt;height&gt;), angle from 0 degrees (&lt;angle&gt;), and logo
-        anchor coordinates (&lt;logoAnchorX&gt;, &lt;logoAnchorY&gt;) as
-        shown in the figure below.
+        Next give the map generator the locations of your resources.  Use the 
+        configuration page to add/edit sites and resource like the one below:
+        <graphic fileref="figures/consumer/google-sites.gif" align="center"></graphic>
+        </para>
+
+       <para>Provide a site name, latitude/longitude coordinates
+        and a list of resources for each site.  
+        Optionally, you can also specify a logo for the site. Specify the height and 
+        width of the logo in pixels, angle from 0 degrees, and logo
+        anchor coordinates (logoAnchorX/logoAnchorY) as
+        shown in the figure below:
         <graphic fileref="figures/consumer/googleSite.png" align="center">
         </graphic>
         </para>
+
+<section id="google-config">
+<title>Google Map Options</title>
+<itemizedList>
+<listItem><para>
+  <emphasis>key:</emphasis> Google key for your Inca server.  If you have more than one alias for your web server, add key aliases for your server.
+</para></listItem>
+<listItem><para>
+  <emphasis>width/height:</emphasis> The size of the map graphic (in pixels) that will be generated.
+</para></listItem>
+<listItem><para>
+  <emphasis>center:</emphasis> The center of the map in latitude/longitude coordinates.
+</para></listItem>
+<listItem><para>
+  <emphasis>mapType:</emphasis> Type of map to display.
+</para>
+<itemizedList>
+<listItem><para>
+  <emphasis>G_NORMAL_MAP:</emphasis> displays the default road map view.
+</para></listItem>
+<listItem><para>
+  <emphasis>G_SATELLITE_MAP:</emphasis> displays Google Earth satellite images.
+</para></listItem>
+<listItem><para>
+  <emphasis>G_HYBRID_MAP:</emphasis> displays a mixture of normal and satellite views.
+</para></listItem>
+<listItem><para>
+  <emphasis>G_PHYSICAL_MAP:</emphasis> displays a physical map based on terrain information.
+</para></listItem>
+</itemizedList>
+</listItem>
+<listItem><para>
+  <emphasis>magnificationLevel:</emphasis> The initial zoom level of the map (higher is closer up).
+</para></listItem>
+<listItem><para>
+  <emphasis>markerDist:</emphasis> The distance between resource markers at a site (default is based on the magnificationLevel).
+</para></listItem>
+<listItem><para>
+  <emphasis>maxErrors:</emphasis> The maximum number of errors to display in the info window.
+</para></listItem>
+<listItem><para>
+  <emphasis>line:</emphasis> For cross-site tests, a line will be displayed between the 2 sites to indicate the test status.  Customize the colors for pass/fail.
+</para></listItem>
+<listItem><para>
+  <emphasis>marker:</emphasis> Customize the look of the icon marker used to represent a resource on the map.
+</para>
+<itemizedList>
+<listItem><para>
+  <emphasis>iconWidth/iconHeight:</emphasis> size of icon in pixels.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconAnchorCoord:</emphasis> the coordinates of point inside the icon to be used for the anchor.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconInfoWindowAnchorCoord:</emphasis> where the anchor point for the info window should appear inside the icon.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconUrlPrefix/iconStatus/iconUrlSuffix:</emphasis> set of 3 icons to indicate the different resource status: pass/fail/warn based on the number of tests the resource passes.  The url for the 3 different images should have the same url pattern constructed by concatenating &lt;iconUrlPrefix&gt;, &lt;iconStatus&gt;/&lt;fail|pass|warn&gt;, and &lt;iconUrlSuffix&gt;.
+</para></listItem>
+<listItem><para>
+  <emphasis>shadowIconUrl:</emphasis> url of a icon to use for the shadow of the resource icon.
+</para></listItem>
+<listItem><para>
+  <emphasis>shadowIconWidth/shadowIconHeight:</emphasis>  the size of the shadow icon in pixels.
+</para></listItem>
+</itemizedList>
+</listItem>
+<listItem><para>
+  <emphasis>sites:</emphasis>  The information about where to place resources in a site.  Can have multiple logos and resources for a site.  The logo angle/logoAnchorX/logoAnchorY are placement relative to the latitude/longitude.  Angle is the degrees from the site center (latitude/longitude).  For example, an angle of 0 will place the logo to the right of the resources, 180 to the left, 90 to the top, and 270 to the bottom.  logoAnchorX and logoAnchorY are used to indicate the coordinates relative to the image that should be placed on the map. For example, if your image is 12x12, using logoAnchorX=6 and logoAnchorY=6 will place the image in the center.
+</para></listItem>
+<listItem><para>
+  <emphasis>debug:</emphasis>  For development purposes.  Will print out some log messages in a javascript window if greater than 0.
+</para></listItem>
+</itemizedList>
+
       </section>
+    </section>
 
       <section id="google-access">
         <title>Accessing the Google Map View</title>
