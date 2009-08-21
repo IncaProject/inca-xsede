@@ -377,6 +377,15 @@ NAME="GOOGLE-SETUP"
 >6.1.3.2. Setting up Google Map View</A
 ></H4
 ><P
+>The Inca map views can be configured using the page described in <A
+HREF="userguide-consumer.html#CONFIG-CONSUMER"
+>Section 6.4.2</A
+>.
+        Use the options in <A
+HREF="userguide-consumer.html#GOOGLE-CONFIG"
+>Section 6.1.3.2.1</A
+> to configure maps for your site.</P
+><P
 >        To access the map view, you need to install a Google Maps API key in
         your Inca consumer.  To generate one, go the Google Maps API web page at
         <A
@@ -393,10 +402,7 @@ COLOR="RED"
         web site URL" text box, then click the "Generate API key" button.  A
         new page will display a key for your server that looks something like
         "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then use the configuration page described in <A
-HREF="userguide-consumer.html#CONFIG-CONSUMER"
->Section 6.4.2</A
->
+        Copy this key, then use the configuration page 
         to replace "Insert key here" with your new Google Maps API key as shown below:
         <P
 ><IMG
@@ -412,38 +418,221 @@ ALIGN="CENTER"></P
         like the example below:
         <P
 ><IMG
-SRC="figures/consumer/google-keys.gif"
+SRC="figures/consumer/google-alias-keys.gif"
 ALIGN="CENTER"></P
 >
         </P
 ><P
->        Next give the map generator the locations of your resources.  Edit
-        <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca/xml/google.xml</TT
-> and find
-        the &#60;site&#62; tag on lines 89 to 123.  For each resource, provide
-        a site name using the &#60;name&#62; tag, latitude/longitude
-        coordinates using the &#60;latitude&#62; and &#60;longitude&#62; tags,
-        and a list of resource names at a site using the &#60;resource&#62; tag.
-        Online tools like
-        <A
-HREF="http://netgeo.caida.org/perl/netgeo.cgi/"
-TARGET="_top"
->CAIDA's NetGeo script</A
+>        Next give the map generator the locations of your resources.  Use the 
+        configuration page to add/edit sites and resource like the one below:
+        <P
+><IMG
+SRC="figures/consumer/google-sites.gif"
+ALIGN="CENTER"></P
 >
-        can convert the IP addresses of your resources to latitude/longitude.
-        Optionally, you can also specify a logo for the site using the
-        &#60;logo&#62; tag.  Specify the size of the logo (&#60;width&#62; and
-        &#60;height&#62;), angle from 0 degrees (&#60;angle&#62;), and logo
-        anchor coordinates (&#60;logoAnchorX&#62;, &#60;logoAnchorY&#62;) as
-        shown in the figure below.
+        </P
+><P
+>Provide a site name, latitude/longitude coordinates
+        and a list of resources for each site.  
+        Optionally, you can also specify a logo for the site. Specify the height and 
+        width of the logo in pixels, angle from 0 degrees, and logo
+        anchor coordinates (logoAnchorX/logoAnchorY) as
+        shown in the figure below:
         <P
 ><IMG
 SRC="figures/consumer/googleSite.png"
 ALIGN="CENTER"></P
 >
         </P
+><DIV
+CLASS="SECTION"
+><H5
+CLASS="SECTION"
+><A
+NAME="GOOGLE-CONFIG"
+>6.1.3.2.1. Google Map Options</A
+></H5
+><P
+></P
+><UL
+><LI
+><P
+>  <EM
+><FONT
+>key:</FONT
+></EM
+> Google key for your Inca server.  If you have more than one alias for your web server, add key aliases for your server.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>width/height:</FONT
+></EM
+> The size of the map graphic (in pixels) that will be generated.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>center:</FONT
+></EM
+> The center of the map in latitude/longitude coordinates.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>mapType:</FONT
+></EM
+> Type of map to display.</P
+><P
+></P
+><UL
+><LI
+><P
+>  <EM
+><FONT
+>G_NORMAL_MAP:</FONT
+></EM
+> displays the default road map view.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>G_SATELLITE_MAP:</FONT
+></EM
+> displays Google Earth satellite images.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>G_HYBRID_MAP:</FONT
+></EM
+> displays a mixture of normal and satellite views.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>G_PHYSICAL_MAP:</FONT
+></EM
+> displays a physical map based on terrain information.</P
+></LI
+></UL
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>magnificationLevel:</FONT
+></EM
+> The initial zoom level of the map (higher is closer up).</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>markerDist:</FONT
+></EM
+> The distance between resource markers at a site (default is based on the magnificationLevel).</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>maxErrors:</FONT
+></EM
+> The maximum number of errors to display in the info window.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>line:</FONT
+></EM
+> For cross-site tests, a line will be displayed between the 2 sites to indicate the test status.  Customize the colors for pass/fail.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>marker:</FONT
+></EM
+> Customize the look of the icon marker used to represent a resource on the map.</P
+><P
+></P
+><UL
+><LI
+><P
+>  <EM
+><FONT
+>iconWidth/iconHeight:</FONT
+></EM
+> size of icon in pixels.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>iconAnchorCoord:</FONT
+></EM
+> the coordinates of point inside the icon to be used for the anchor.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>iconInfoWindowAnchorCoord:</FONT
+></EM
+> where the anchor point for the info window should appear inside the icon.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>iconUrlPrefix/iconStatus/iconUrlSuffix:</FONT
+></EM
+> set of 3 icons to indicate the different resource status: pass/fail/warn based on the number of tests the resource passes.  The url for the 3 different images should have the same url pattern constructed by concatenating &#60;iconUrlPrefix&#62;, &#60;iconStatus&#62;/&#60;fail|pass|warn&#62;, and &#60;iconUrlSuffix&#62;.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>shadowIconUrl:</FONT
+></EM
+> url of a icon to use for the shadow of the resource icon.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>shadowIconWidth/shadowIconHeight:</FONT
+></EM
+>  the size of the shadow icon in pixels.</P
+></LI
+></UL
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>sites:</FONT
+></EM
+>  The information about where to place resources in a site.  Can have multiple logos and resources for a site.  The logo angle/logoAnchorX/logoAnchorY are placement relative to the latitude/longitude.  Angle is the degrees from the site center (latitude/longitude).  For example, an angle of 0 will place the logo to the right of the resources, 180 to the left, 90 to the top, and 270 to the bottom.  logoAnchorX and logoAnchorY are used to indicate the coordinates relative to the image that should be placed on the map. For example, if your image is 12x12, using logoAnchorX=6 and logoAnchorY=6 will place the image in the center.</P
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>debug:</FONT
+></EM
+>  For development purposes.  Will print out some log messages in a javascript window if greater than 0.</P
+></LI
+></UL
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1527,7 +1716,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN803"
+NAME="AEN873"
 ></A
 ><P
 ><B
@@ -2177,7 +2366,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1025"
+NAME="AEN1095"
 ></A
 ><P
 ><B
