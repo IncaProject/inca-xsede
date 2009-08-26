@@ -120,12 +120,12 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/summaryHistory.jsp?filterResource=true')}">
+                    <a href="{concat($url, '/jsp/summaryHistory.jsp?groupBy=resource')}">
                       Resource avg pass history
                     </a>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/summaryHistory.jsp?filterSuite=true')}">
+                    <a href="{concat($url, '/jsp/summaryHistory.jsp?groupBy=suite')}">
                       Suite avg pass history
                     </a>
                   </li>
