@@ -3,11 +3,8 @@
 use strict;
 use warnings;
 
-my $err = "";
-my $date = `date`;
 my $webdir = "/misc/inca/install-2r5/webapps/inca/html";
 my $hostport = "sapa.sdsc.edu:8080";
-my $log = "$ENV{HOME}/logs/genWebPages.log";
 my $timeLog = "$ENV{HOME}/logs/genWebPagesTimes.log";
 
 my $c3jsp = "http://$hostport/inca/jsp/status.jsp?resourceIds=teragrid-login&suiteNames=ctss";
