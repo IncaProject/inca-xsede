@@ -62,9 +62,14 @@ for my $log ( @ARGV ) {
           if ($qtime < $threads{$thread}->{minInTime}); 
         $threads{$thread}->{numIns} += 5;
         if ( ! exists $threads{$thread}->{elapsedDays} ) {
+print $previousLine, "\n";
           my ($sdate,$edate) = $previousLine =~ /(\w{3} \w{3} \d\d \d\d:\d\d:\d\d \w{3} \d{4})/g;
+print $sdate;
+print $edate, "\n";
           my $stime = parsedate( $sdate ); 
           my $etime = parsedate( $edate );
+   print "$stime ";
+   print " to $etime\n";
           $threads{$thread}->{elapsedDays} = ($etime - $stime) / (60 * 60 * 24);
         }
       }
@@ -78,7 +83,6 @@ for my $thread ( keys %threads ) {
   $threads{ $threads{$thread}->{startTime} } = $threads{$thread};
   delete $threads{$thread};
 }
-
 for my $thread ( sort(keys %threads) ) {
   my ($shour,$smin,$ssec) = $threads{$thread}->{startTime} =~ /(\d\d):(\d\d):(\d\d)/;
   $smin += $shour * 60;
@@ -91,7 +95,7 @@ for my $thread ( sort(keys %threads) ) {
                  $threads{$thread}->{total};
   }
   print "$thread TOTALS => " . ($emin-$smin)/60 . "h or " . ($emin-$smin) . "m = $fraction\n";
-  print $threads{$thread}->{elapsedDays} . ", " . $threads{$thread}->{query}, "\n";
+  #print $threads{$thread}->{elapsedDays} . ", " . $threads{$thread}->{query}, "\n";
   print $threads{$thread}->{config}, "\n";
   print "\n";        
   if ( $threads{$thread}->{numJoins} > 0 ) {
