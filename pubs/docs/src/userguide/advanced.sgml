@@ -545,6 +545,65 @@ Database Initialization Completed</screen>
 
 </section>
 
+<section id="peer-depots">
+<title>Depot Fault Tolerance</title>
+<para>In order to respond to unexpected depot failure, configure
+peer depots to mirror each other so that if one fails another can 
+take over.
+</para>
+<para>The steps for depots mirroring are as follows: </para>
+<orderedList>
+
+<listItem>
+<para>Install the software for each peer depot
+<screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST depot;
+</screen>
+</para>
+</listItem>
+
+<listItem>
+<para>Copy the <filename>$INCA_DIST/etc/depot.*pem</filename> and <filename>$INCA_DIST/etc/trusted/*</filename>
+ files from the original 
+depot to the peer depot <filename>$INCA_DIST/etc</filename> and <filename>$INCA_DIST/etc/trusted</filename>
+ directories respectively.</para>
+</listItem>
+
+<listItem>
+<para>
+Edit <filename>$INCA_DIST/etc/common/inca.properties</filename> on both the original and peer depot and 
+uncomment the blocks which specify the hosts for your depots.  For example, if your 
+orginal depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edits would look like:</para>
+<screen>...
+# URIs of peer depots
+inca.depot.peers=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+...</screen>
+</listItem>
+
+<listItem>
+<para>
+Edit <filename>$INCA_DIST/etc/common/inca.properties</filename> where the consumer is installed and
+uncomment the block which specifies the hosts for your depots.  For example, if your 
+orginal depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edit would look like:</para>
+<screen>...
+# URI to the depot -- use incas:// if auth is required and inca:// if not
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+...</screen>
+</listItem>
+
+<listItem>
+<para>Start the peer depot and look for "DB synchronization succeeded" in the 
+<filename>$INCA_DIST/var/depot.log</filename> of the peer depot:
+<screen>% cd $INCA_DIST; bin/inca start depot --sync</screen>
+</para>
+</listItem>
+
+</orderedList>
+
+</section>
+
 <section id="userguide-advanced-manual">
 <title>Manual Access Method</title>
 
