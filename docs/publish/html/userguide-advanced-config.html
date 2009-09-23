@@ -1241,8 +1241,148 @@ CLASS="SECTION"
 ><H2
 CLASS="SECTION"
 ><A
+NAME="PEER-DEPOTS"
+>11.5. Depot Fault Tolerance</A
+></H2
+><P
+>In order to respond to unexpected depot failure, configure
+peer depots to mirror each other so that if one fails another can 
+take over.</P
+><P
+>The steps for depots mirroring are as follows: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Install the software for each peer depot
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.6/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST depot;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/depot.*pem</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted/*</TT
+>
+ files from the original 
+depot to the peer depot <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+>
+ directories respectively.</P
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> on both the original and peer depot and 
+uncomment the blocks which specify the hosts for your depots.  For example, if your 
+orginal depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edits would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URIs of peer depots
+inca.depot.peers=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> where the consumer is installed and
+uncomment the block which specifies the hosts for your depots.  For example, if your 
+orginal depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edit would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URI to the depot -- use incas:// if auth is required and inca:// if not
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Start the peer depot and look for "DB synchronization succeeded" in the 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/var/depot.log</TT
+> of the peer depot:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; bin/inca start depot --sync</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
 NAME="USERGUIDE-ADVANCED-MANUAL"
->11.5. Manual Access Method</A
+>11.6. Manual Access Method</A
 ></H2
 ><P
 >A resource administrator may be unable to start a reporter manager
@@ -1734,7 +1874,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-BATCH"
->11.6. Batch Systems</A
+>11.7. Batch Systems</A
 ></H2
 ><P
 >  The cluster.batch.wrapper reporter can be useful when running Inca on batch
@@ -1771,7 +1911,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2157"
+NAME="AEN2183"
 ></A
 ><P
 ><B
@@ -1987,7 +2127,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW"
->11.7. Manual Run Now</A
+>11.8. Manual Run Now</A
 ></H2
 ><P
 >Oftentimes resource or system administrators will want to show that a
@@ -2007,7 +2147,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-CONFIG"
->11.7.1. Configuring the Manual Run Now Script</A
+>11.8.1. Configuring the Manual Run Now Script</A
 ></H3
 ><P
 >The instructions below need to be done *once* by the Inca administrator on each 
@@ -2186,7 +2326,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-RUNNOW-USING"
->11.7.2. Using the Manual Run Now Script</A
+>11.8.2. Using the Manual Run Now Script</A
 ></H3
 ><P
 ></P
@@ -2436,7 +2576,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-ADVANCED-SRCDIST"
->11.8. Source Distributions</A
+>11.9. Source Distributions</A
 ></H2
 ><P
 >  Source distributions of the Inca components are also available.  The 
@@ -2450,7 +2590,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2303"
+NAME="AEN2329"
 ></A
 ><P
 ><B
