@@ -1486,7 +1486,7 @@
       </resource>
       <resource>
         <name>app-support.teragrid.org-4.2.0-compiler-gnu-fortran</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|ornl-login2)$')]</xpath>
         <macros>
           <macro>
             <name>fortran-gcc-compiler</name>
@@ -1498,7 +1498,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org</value>
+            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org ornl-login2</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1597,6 +1597,36 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>app-support.teragrid.org-4.2.0-mcp</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>app-support.teragrid.org-4.2.0-mcp</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>apps4.2.0-mcp-key</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>apps4.2.0-fullauto</name>
+            <value>fullauto.py</value>
           </macro>
         </macros>
       </resource>
@@ -3507,6 +3537,10 @@
           <macro>
             <name>gram5-port</name>
             <value>2120</value>
+          </macro>
+          <macro>
+            <name>apps4.2.0-mcp-key</name>
+            <value>@keyPre@mcp-200903171442 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -5644,6 +5678,22 @@
           <macro>
             <name>apps4.2.0-srb-key</name>
             <value>@keyPre@srb-client-3.4.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>blasQueue</name>
+            <value>no</value>
+          </macro>
+          <macro>
+            <name>gatekeeperlog</name>
+            <value>/local/teragrid/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
+          </macro>
+          <macro>
+            <name>blasLink</name>
+            <value>-L${ATLAS_LOCATION}/lib -lf77blas -latlas</value>
+          </macro>
+          <macro>
+            <name>nativeFortranCompiler</name>
+            <value>ifort</value>
           </macro>
         </macros>
       </resource>
@@ -11484,50 +11534,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.format.hdf5.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.2-hdf5-key@@@@post@</context>
-          </series>
-          <nickname>hdf5-version-as-4.0.2</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.2-hdf5</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf5=="1.6.5"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.gridproxyinit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.gridproxyinit</uri>
             <args>
@@ -12050,11 +12056,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.format.hdf5.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.2-hdf5-key@@@@post@</context>
+          </series>
+          <nickname>hdf5-version-as-4.0.2</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.2-hdf5</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf5=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.2</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>28</version>
+      <version>30</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12960,50 +13010,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.format.hdf4.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.3-hdf4-key@@@@post@</context>
-          </series>
-          <nickname>hdf4-version-as-4.0.3</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.3-hdf4</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf4=="4.2 Release 1"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.java.sun.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
             <args>
@@ -13284,50 +13290,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.format.hdf5.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.3-hdf5-key@@@@post@</context>
-          </series>
-          <nickname>hdf5-version-as-4.0.3</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.3-hdf5</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf5=="1.6.5"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.kitregistration.unit</uri>
             <args>
@@ -13470,11 +13432,99 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.format.hdf4.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.3-hdf4-key@@@@post@</context>
+          </series>
+          <nickname>hdf4-version-as-4.0.3</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.3-hdf4</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf4=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.format.hdf5.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.3-hdf5-key@@@@post@</context>
+          </series>
+          <nickname>hdf5-version-as-4.0.3</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.3-hdf5</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf5=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.0.3</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.3</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>11</version>
+      <version>13</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14380,50 +14430,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.format.hdf4.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.2.0-hdf4-key@@@@post@</context>
-          </series>
-          <nickname>hdf4-version-as-4.2.0</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0-hdf4</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf4=="4.2 Release 1"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.java.sun.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.java.sun.version</uri>
             <args>
@@ -14640,50 +14646,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.format.hdf5.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.2.0-hdf5-key@@@@post@</context>
-          </series>
-          <nickname>hdf5-version-as-4.2.0</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0-hdf5</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>hdf5=="1.6.5"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.kitregistration.unit</uri>
             <args>
@@ -14870,11 +14832,147 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.format.hdf4.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf4.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-hdf4-key@@@@post@</context>
+          </series>
+          <nickname>hdf4-version-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-hdf4</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf4=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.format.hdf5.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.format.hdf5.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-hdf5-key@@@@post@</context>
+          </series>
+          <nickname>hdf5-version-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-hdf5</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>hdf5=~".*"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.scheduling.mcp.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.mcp.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>fullauto_path</name>
+                <value>@apps4.2.0-fullauto@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-mcp-key@@@@post@</context>
+          </series>
+          <nickname>mcp-unit-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-mcp</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>15</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26038,7 +26136,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>50</version>
+      <version>51</version>
     </suite>
     <suite>
       <seriesConfigs>
