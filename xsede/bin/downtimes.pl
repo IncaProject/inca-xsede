@@ -57,6 +57,7 @@ while (my ($resource, $file) = each(%resources)){
   }
   $sth->execute();
   my %equivHosts = ( "anl-ia64" => ["anl-grid"],
+    "ornl-login" => ["ornl-login2"],
     "ncsa-abe" => ["ncsa-grid-abe"],
     "ncsa-ia64" => ["ncsa-grid-hg"],
     "loni-lsu-queenbee" => ["loni-lsu-qb"] );
