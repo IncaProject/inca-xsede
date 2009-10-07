@@ -1621,12 +1621,12 @@
             <value>false</value>
           </macro>
           <macro>
-            <name>apps4.2.0-mcp-key</name>
-            <value/>
-          </macro>
-          <macro>
             <name>apps4.2.0-fullauto</name>
             <value>fullauto.py</value>
+          </macro>
+          <macro>
+            <name>apps4.2.0-mcp-key</name>
+            <value>@keyPre@mcp @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -3537,10 +3537,6 @@
           <macro>
             <name>gram5-port</name>
             <value>2120</value>
-          </macro>
-          <macro>
-            <name>apps4.2.0-mcp-key</name>
-            <value>@keyPre@mcp-200903171442 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -14972,7 +14968,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>21</version>
+      <version>25</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18408,66 +18404,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.db.postgres.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>user</name>
-                <value>inca_checkpg</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>5432</value>
-              </arg>
-              <arg>
-                <name>db</name>
-                <value>teragrid</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>hogatha.sdsc.edu</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@ export PATH=${HOME}/postgresql-8.1.15/install/bin:${PATH} &amp;&amp; @@@post@</context>
-          </series>
-          <nickname>TGCDB_connect</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/5 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tgcdb-admin@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
@@ -18686,11 +18622,75 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.db.postgres.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
+            <args>
+              <arg>
+                <name>port</name>
+                <value>5432</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value>inca_checkpg</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>hogatha.sdsc.edu</value>
+              </arg>
+              <arg>
+                <name>db</name>
+                <value>teragrid</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@ export PATH=${HOME}/postgresql-8.1.15/install/bin:${PATH} &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>TGCDB_connect</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/5 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tgcdb-admin@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>25</version>
+      <version>27</version>
     </suite>
     <suite>
       <seriesConfigs>
