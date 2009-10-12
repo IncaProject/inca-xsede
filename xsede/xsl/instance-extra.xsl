@@ -63,7 +63,8 @@
     
     <tr><td>
     <form method="get" action="http://www.teragrid.org/cgi-bin/kb.cgi">
-      <input type="hidden" name="docid" value="aycv"/>
+      <input type="hidden" name="terms" 
+             value="{concat($errMsg,' or ',$nickName,' or ',$reporterName,' or Common Inca Errors')}"/>
       <input type="submit" value="search knowledge base"/>
     </form></td><td>
     <form method="get" action="addKnowledgeBase.jsp">
