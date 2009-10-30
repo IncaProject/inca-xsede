@@ -243,6 +243,12 @@
           </td>
         </tr>
       </xsl:if>
+      <xsl:if test="count(log/error/message)>0">
+        <tr><td colspan="2" class="header"><xsl:text>Additional error output:</xsl:text></td></tr>
+        <xsl:for-each select="log/error">
+          <tr><td colspan="2"><p class="code"><xsl:value-of select="message"/></p></td></tr>
+        </xsl:for-each>
+      </xsl:if>
       <!-- instance-extra.xsl for run-now and comment rows -->
       <xsl:call-template name="instanceExtra">
         <xsl:with-param name="nickName" select="$nickName"/>
