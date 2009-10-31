@@ -7980,6 +7980,28 @@
           </macro>
         </macros>
       </resource>
+      <resource>
+        <name>security</name>
+        <xpath>//resource[matches(name, '^(teragrid|sapa)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>security</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>teragrid sapa</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>spur.tacc.teragrid.org</name>
         <xpath>//resource[matches(name, '^(tacc-spur)$')]</xpath>
@@ -8919,7 +8941,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>teragrid</name>
-        <xpath>//resource[matches(name, '^(NCAR|NCSA|Indiana|ORNL|Purdue|PSC|TACC|LONI|NICS|anl-build)$')]</xpath>
+        <xpath>//resource[matches(name, '^(NCAR|NCSA|Indiana|ORNL|Purdue|PSC|TACC|LONI|NICS)$')]</xpath>
         <macros>
           <macro>
             <name>keyPre</name>
@@ -9046,50 +9068,6 @@
             <value>&lt;ID>all2all:gsissh_to_@summary-login@-pct&lt;.ID>\\n\\s+&lt;value>100&lt;.value></value>
           </macro>
           <macro>
-            <name>__groupname__</name>
-            <value>teragrid</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>NCAR NCSA Indiana ORNL Purdue PSC TACC LONI NICS anl-build</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__sshUserName__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyFile__</name>
-            <value>/users/u3/inca/.ssh/id_rsa</value>
-          </macro>
-          <macro>
-            <name>__sshPrivateKeyPassword__</name>
-            <value>fwm2eekO1/I1Pm49IclPwQ==</value>
-          </macro>
-          <macro>
-            <name>__myproxyHost__</name>
-            <value>myproxy.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>__myproxyLifetime__</name>
-            <value>1440</value>
-          </macro>
-          <macro>
-            <name>__myproxyPassword__</name>
-            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
-          </macro>
-          <macro>
-            <name>__myproxyUsername__</name>
-            <value>inca</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>false</value>
-          </macro>
-          <macro>
             <name>gatekeepers</name>
             <value>gatekeeper.bigred.iu.teragrid.org</value>
             <value>grid-co.ncsa.teragrid.org</value>
@@ -9143,6 +9121,50 @@
             <value>tg-login.ranger.tacc.teragrid.org</value>
             <value>fpga.purdue.teragrid.org</value>
             <value>tg-login.spur.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>teragrid</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>NCAR NCSA Indiana ORNL Purdue PSC TACC LONI NICS</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__sshUserName__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyFile__</name>
+            <value>/users/u3/inca/.ssh/id_rsa</value>
+          </macro>
+          <macro>
+            <name>__sshPrivateKeyPassword__</name>
+            <value>fwm2eekO1/I1Pm49IclPwQ==</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__myproxyLifetime__</name>
+            <value>1440</value>
+          </macro>
+          <macro>
+            <name>__myproxyPassword__</name>
+            <value>NLaT7Cz4EY3j+BNdcRzz+g==</value>
+          </macro>
+          <macro>
+            <name>__myproxyUsername__</name>
+            <value>inca</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
           </macro>
         </macros>
       </resource>
@@ -16744,7 +16766,7 @@
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>12</version>
+      <version>14</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16799,110 +16821,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dms-4.2.0-gridftp-striped-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-striped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-striped-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -17428,11 +17346,115 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dms-4.2.0-gridftp-striped-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-striped-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>26</version>
+      <version>30</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17487,110 +17509,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dm-4.1.2-gridftp-striped-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-striped-external-telnet-dm-4.1.2_@dm-4.1.2-gridftp-striped-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dm-4.1.2-gridftp-nonstriped-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-nonstriped-external-telnet-dm-4.1.2_@dm-4.1.2-gridftp-nonstriped-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -18116,11 +18034,115 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dm-4.1.2-gridftp-striped-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-external-telnet-dm-4.1.2_@dm-4.1.2-gridftp-striped-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dm-4.1.2-gridftp-nonstriped-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-external-telnet-dm-4.1.2_@dm-4.1.2-gridftp-nonstriped-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>data-movement.teragrid.org-4.1.2</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>109</version>
+      <version>113</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18460,58 +18482,6 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@gram5-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gram5-external-telnet_@gram5-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.gatekeeper</name>
@@ -18900,11 +18870,63 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@gram5-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram5-external-telnet_@gram5-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gram5</name>
       <guid>incas://sapa.sdsc.edu:6323/gram5</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>5</version>
+      <version>6</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20514,110 +20536,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@real-time-gridftp-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-external-telnet_@real-time-gridftp-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@real-time-wsgram-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-external-telnet_@real-time-wsgram-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
@@ -21186,11 +21104,115 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@real-time-gridftp-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-telnet_@real-time-gridftp-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@real-time-wsgram-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-external-telnet_@real-time-wsgram-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>226</version>
+      <version>227</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -21293,110 +21315,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.0.2-prews-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-external-telnet-rc-4.0.2_@rc-4.0.2-prews-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.0.2-wsgram-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-external-telnet-rc-4.0.2_@rc-4.0.2-wsgram-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -22498,118 +22416,118 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.0.2-prews-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-external-telnet-rc-4.0.2_@rc-4.0.2-prews-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.0.2-wsgram-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-external-telnet-rc-4.0.2_@rc-4.0.2-wsgram-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>126</version>
+      <version>127</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.2.0-prews-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>prews-gram-external-telnet-rc-4.2.0_@rc-4.2.0-prews-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.telnet.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.2.0-wsgram-telnet-hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-external-telnet-rc-4.2.0_@rc-4.2.0-wsgram-telnet-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.gatekeeper</name>
@@ -23734,11 +23652,115 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.2.0-prews-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>prews-gram-external-telnet-rc-4.2.0_@rc-4.2.0-prews-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.2.0-wsgram-telnet-hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-external-telnet-rc-4.2.0_@rc-4.2.0-wsgram-telnet-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>23</version>
+      <version>24</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24864,11 +24886,98 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.mapfile.verify</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.mapfile.verify</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>grid.mapfile.verify</nickname>
+          <resourceSetName>NCSA</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.db.tgcdb.verify</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>data.db.tgcdb.verify</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>security</name>
       <guid>incas://sapa.sdsc.edu:6323/security</guid>
       <description/>
-      <version>182</version>
+      <version>203</version>
     </suite>
     <suite>
       <seriesConfigs>
