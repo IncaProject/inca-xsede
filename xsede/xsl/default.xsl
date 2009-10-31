@@ -245,6 +245,23 @@
                         <xsl:if test="$erm>0"><xsl:value-of select="concat('redundant_mappings:_',$erm)"/><br/></xsl:if>
                         <xsl:value-of select="$exit"/>
                       </xsl:when>
+                      <xsl:when test="string($mapstats/statistic[ID='error-CommunityUser'])">
+                        <xsl:variable name="ecu" select="$mapstats/statistic[ID='error-CommunityUser']/value"/>
+                        <xsl:if test="$ecu>0"><xsl:value-of select="concat('community_user:_',$ecu)"/><br/></xsl:if>
+                        <xsl:variable name="ef" select="$mapstats/statistic[ID='error-DNtoMultiplePersonID']/value"/>
+                        <xsl:if test="$ef>0"><xsl:value-of select="concat('dn_to_mutiple_person_id:_',$ef)"/><br/></xsl:if>
+                        <xsl:variable name="egt" select="$mapstats/statistic[ID='error-NoGT4DN']/value"/>
+                        <xsl:if test="$egt>0"><xsl:value-of select="concat('no_gt4_dn:_',$egt)"/><br/></xsl:if>
+                        <xsl:variable name="emu" select="$mapstats/statistic[ID='error-NonCommunityUser']/value"/>
+                        <xsl:if test="$emu>0"><xsl:value-of select="concat('non_community_user:_',$emu)"/><br/></xsl:if>
+                        <xsl:variable name="enm" select="$mapstats/statistic[ID='error-OldDN']/value"/>
+                        <xsl:if test="$enm>0"><xsl:value-of select="concat('old_dn:_',$enm)"/><br/></xsl:if>
+                        <xsl:variable name="eog" select="$mapstats/statistic[ID='warn-DNtoMultiplePersonIDCommunityUser']/value"/>
+                        <xsl:if test="$eog>0"><xsl:value-of select="concat('dn_to_multiple_person_id_community_user:_',$eog)"/><br/></xsl:if>
+                        <xsl:variable name="epm" select="$mapstats/statistic[ID='warn-Proxy']/value"/>
+                        <xsl:if test="$epm>0"><xsl:value-of select="concat('proxy:_',$epm)"/><br/></xsl:if>
+                        <xsl:value-of select="$exit"/>
+                      </xsl:when>
                       <xsl:otherwise>
                         <xsl:value-of select="$exit"/>
                       </xsl:otherwise>
