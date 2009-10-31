@@ -81,7 +81,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,teragrid,teragrid-usage,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,security,teragrid-usage,ALL-RM&amp;suiteNames=tg-mds,real-time,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -200,12 +200,12 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=default.xsl&amp;resourceIds=teragrid&amp;suiteNames=security')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/security/security')}">
                           security
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=default.xsl&amp;resourceIds=ALL-RM&amp;suiteNames=check-reporter-managers')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/check-reporter-managers/ALL-RM')}">
                           inca self check
                         </a>
                       </li>
