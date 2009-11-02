@@ -313,7 +313,65 @@ HREF="userguide-reporters.html#REPORTER-API"
 >) 
 for printing XML according to our schema.</P
 ><P
->NOTE: Because some databases won't allow queries greater than 4kB, the XML portion of the report for logging/debugging and the error message must each be smaller than 4kB in size.  The body XML can be 12kB in size because it is queried in three parts.  If the report XML is greater than its limit, the depot truncates the oversized section from the beginning until it is the right size.  </P
+>NOTE: Because databases impose a 4000 character limit on text fields, the XML portion of the report for logging/debugging and the error message must each be smaller than 4000 characters.  The body XML can be 12000 characters because it is stored in three parts.  If the report XML is greater than its limit, the depot truncates the oversized section from the beginning until it is the right size.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN1436"
+></A
+><P
+><B
+>Table 5. Report Character Limits</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Report XML Section</P
+></TH
+><TH
+><P
+>Character limit</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>log</P
+></TD
+><TD
+><P
+>4000</P
+></TD
+></TR
+><TR
+><TD
+><P
+>error (exit) message</P
+></TD
+><TD
+><P
+>4000</P
+></TD
+></TR
+><TR
+><TD
+><P
+>body</P
+></TD
+><TD
+><P
+>12000</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
 ><DIV
 CLASS="SECTION"
 ><H3
