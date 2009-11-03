@@ -164,11 +164,15 @@ for my $errorCode (sort keys %errorlists) {
   }
 }
 
+my $totalErrors = 0;
 # Add the statistics to the reporter benchmarks
 my $benchmark = new Inca::Reporter::Performance::Benchmark();
 for my $errorCode (sort keys %errorlists) {
-  $benchmark->setStatistic($errorCode, $errortotals{$errorCode});
+  my $numErrors = $errortotals{$errorCode};
+  $benchmark->setStatistic($errorCode, $numErrors);
+  $totalErrors += $numErrors;
 }
+$benchmark->setStatistic('totalErrors', $totalErrors);
 $reporter->addBenchmark('error_quantity', $benchmark);
 
 $benchmark = new Inca::Reporter::Performance::Benchmark();

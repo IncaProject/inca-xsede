@@ -357,10 +357,14 @@ $reporter->addBenchmark('grid_size', $benchmark);
 
 $benchmark = new Inca::Reporter::Performance::Benchmark();
 
+my $totalErrors = 0;
 # For each type of error, add a statistic for a coherency benchmark
 for my $errorCode (@errorCodes) {
-  $benchmark->setStatistic($errorCode, scalar(@{$errorlists{$errorCode}}));
+  my $numErrors = scalar(@{$errorlists{$errorCode}});
+  $benchmark->setStatistic($errorCode, $numErrors);
+  $totalErrors += $numErrors;
 }
+$benchmark->setStatistic('totalErrors', $totalErrors);
 
 $reporter->addBenchmark('grid_coherency', $benchmark);
 
