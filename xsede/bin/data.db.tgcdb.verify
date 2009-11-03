@@ -1,0 +1,251 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use DBI;
+
+my %personmap;
+my %dnmap;
+my %errorlists;
+my %errordescs;
+my %errortotals;
+
+my $reporter = new Inca::Reporter::Performance(
+  name => 'data.db.tgcdb.verify',
+  version => 2,
+  description => 'Checks the TGCDB for Distinguished Name (DN) related errors',
+  measurement_name => 'tgcdb_DNs'
+);
+$reporter->addDependency('DBI');
+$reporter->addDependency('DBD::Pg');
+$reporter->processArgv(@ARGV);
+
+my $dbh = DBI->connect("DBI:Pg:dbname=teragrid;".
+                       "host=tgcdb.teragrid.org;".
+                       "port=5432",
+                       "readonly","readonly",
+                       { RaiseError=>1, PrintError=>1 }
+);
+if (!$dbh) {
+  failClean($reporter, "Unable to connect to TGCDB");
+}
+
+# Get a list of person_ids, their DNs, and their last/first names
+my $query = qq {
+  select dn.person_id, dn.dn, ap.last_name, ap.first_name
+  from acct.distinguished_names dn, acct.people ap
+  where dn.person_id=ap.person_id
+  and dn.is_active
+};
+
+my $sth = $dbh->prepare($query);
+$sth->execute();
+while (my @datarow = $sth->fetchrow()) {
+  my $person_id = strip_spaces($datarow[0]);
+  my $dn = strip_spaces($datarow[1]);
+  my $lastname = strip_spaces($datarow[2]);
+  my $firstname = strip_spaces($datarow[3]);
+  my $fullname = "$firstname $lastname";
+  if ((length($person_id) > 0) && (length($dn) > 0)) {
+    $personmap{$person_id}{$dn}{$fullname} += 1;
+    $dnmap{$dn}{$person_id} += 1;
+  }
+}
+
+$dbh->disconnect();
+
+# Create empty arrays for the various errorlists (e.g. vivify the hash keys)
+@{$errorlists{'error-CommunityUser'}} = ();
+@{$errorlists{'error-DNtoMultiplePersonID'}} = ();
+@{$errorlists{'error-NoGT4DN'}} = ();
+@{$errorlists{'error-NonCommunityUser'}} = ();
+@{$errorlists{'error-OldDN'}} = ();
+@{$errorlists{'warn-DNtoMultiplePersonIDCommunityUser'}} = ();
+@{$errorlists{'warn-Proxy'}} = ();
+
+$errordescs{'error-CommunityUser'} = "instances of a community user DN mapping to a non-comunity username";
+$errordescs{'error-DNtoMultiplePersonID'} = "instances of a DN mapping to multiple non-community person_ids";
+$errordescs{'error-NoGT4DN'} = "instances of a DN that has no corresponding GT4 standardized version";
+$errordescs{'error-NonCommunityUser'} = "instances of a non-community DN mapping to a community username";
+$errordescs{'error-OldDN'} = "instances of a GT2/GT3 style DN that uses 'userid', 'email', or 'e'";
+$errordescs{'warn-DNtoMultiplePersonIDCommunityUser'} = "instances of a DN mapping to multiple community person_ids";
+$errordescs{'warn-Proxy'} = "instances of a DN subject that indicates a proxy certificate";
+
+# Check to see if a DN maps to multiple names
+for my $dn (sort keys %dnmap) {
+  my @persons = sort keys %{$dnmap{$dn}};
+  
+  if (scalar(@persons) > 1) { # Join the person_id/names into a list
+    my $personnames;
+    my $noncommusers = 0;
+    for my $person (sort {$a <=> $b} @persons) {
+      my $fullnames = join(",",sort keys %{$personmap{$person}{$dn}});
+      if ($fullnames !~ /community\s+user/i) {
+        $noncommusers += 1;
+      }
+      $personnames .= "$person=$fullnames,";
+    }
+    chop($personnames);  # Remove trailing comma
+
+    if ($noncommusers > 1) {
+      push(@{$errorlists{'error-DNtoMultiplePersonID'}},
+           "The DN=\"$dn\" maps to multiple person_ids, $noncommusers " .
+           "are not Community Users: $personnames");
+    } else {
+      push(@{$errorlists{'warn-DNtoMultiplePersonIDCommunityUser'}},
+           "The DN=\"$dn\" maps to multiple person_ids: $personnames");
+    }
+  }
+}
+
+my $totalpersons = 0;
+my $totalmappings = 0;
+
+# Check for the rest of the errors
+for my $person (sort {$a <=> $b} keys %personmap) {
+  $totalpersons += 1;
+  
+  my @dns = sort keys %{$personmap{$person}};
+  for my $dn (@dns) {
+    $totalmappings += 1;
+
+    if (is_proxy($dn)) {
+      push(@{$errorlists{'warn-Proxy'}},
+           "For person_id=$person, proxy cert \"$dn\" found");
+    }
+
+    # If DN is community user, then last_name should be also
+    if (($dn =~ /community\s+user/i) || ($dn =~ /nanohub/i)) {
+      for my $fullname (sort keys %{$personmap{$person}{$dn}}) {
+        $fullname = strip_spaces($fullname);
+        if ((length($fullname) > 0) && ($fullname !~ /community\s+user/i)) {
+          push(@{$errorlists{'error-CommunityUser'}},
+               "For person_id=$person, the Community User DN \"$dn\" " .
+               " maps to a non-community user with name $fullname");
+        }
+      }
+    } else { 
+      # If DN is NOT community user, then last_name should not be as well
+      for my $fullname (sort keys %{$personmap{$person}{$dn}}) {
+        $fullname = strip_spaces($fullname);
+        if ((length($fullname) > 0) && ($fullname =~ /community\s+user/i)) {
+          push(@{$errorlists{'error-NonCommunityUser'}},
+               "For person_id=$person, the Non-Community User DN \"$dn\" " .
+               " maps to a community user with name $fullname");
+        }
+      }
+    }
+
+    if (is_oldDN($dn)) {
+      push(@{$errorlists{'error-OldDN'}},
+           "For person_id=$person, Old DN \"$dn\" found");
+    }
+
+    my $gt4dn = gt4_subject($dn);
+    if (!exists($personmap{$person}{$gt4dn})) {
+      push(@{$errorlists{'error-NoGT4DN'}},
+           "For person_id=$person, No GT4-ized DN \"$gt4dn\" found" .
+           " for DN \"$dn\"");
+    }
+
+  }
+}
+
+my @errorMessage = ();
+
+# Log all warning and error messages
+for my $errorCode (sort keys %errorlists) {
+  $errortotals{$errorCode} = 0;
+  for my $error (@{$errorlists{$errorCode}}) {
+    $errortotals{$errorCode} += 1;
+    $reporter->log("error", "$errorCode: $error");
+    #print "$errorCode: $error\n";
+  }
+  if ($errortotals{$errorCode} > 0) {
+    failClean($reporter, "DN related errors found in the TGCDB.");
+  }
+}
+
+# Add the statistics to the reporter benchmarks
+my $benchmark = new Inca::Reporter::Performance::Benchmark();
+for my $errorCode (sort keys %errorlists) {
+  $benchmark->setStatistic($errorCode, $errortotals{$errorCode});
+}
+$reporter->addBenchmark('error_quantity', $benchmark);
+
+$benchmark = new Inca::Reporter::Performance::Benchmark();
+$benchmark->setStatistic('total_persons', $totalpersons);
+$benchmark->setStatistic('total_mappings', $totalmappings);
+$reporter->addBenchmark('size', $benchmark);
+
+$reporter->setCompleted(1);
+$reporter->print();
+
+# Removes leading and trailing spaces from a string.
+sub strip_spaces {
+  my $string = shift;
+  $string =~ s/^\s*//;   # Remove leading spaces
+  $string =~ s/\s*$//;   # Remove trailing spaces
+  return $string;
+}
+
+# Return 1 if the input subject DN is a "proxy" certificate type.
+sub is_proxy {
+  my $string = shift;
+  my $retval = 0;
+  if ($string =~ m{/CN=limited\s+proxy$} || 
+      $string =~ m{/CN=proxy$} || 
+      $string =~ m{/CN=[0-9]+$}) {
+    $retval = 1;
+  }
+  return $retval;
+}
+
+# Takes a DN and "normalizes" it by removing leading/trailing spaces as well
+# as any proxy certificate extensions.  Borrowed from gx-map.
+sub normalize_dn {
+  my $string = shift;
+  $string = strip_spaces($string);
+  # Remove any proxy certificate extensions
+  while (is_proxy($string)) {
+    $string =~ s{/[^/]*$}{};
+  }
+  return $string;
+}
+
+# Return 1 if the DN is an "old" GT2/GT3 style
+sub is_oldDN {
+  my $string = shift;
+  my $retval = 0;
+  if (($string =~ m{/0\.9\.2342\.19200300\.100\.1\.1=}) ||
+      ($string =~ m{/USERID=}i) ||
+      ($string =~ m{/EMAIL=}i) ||
+      ($string =~ m{/E=}i)) {
+    $retval = 1;
+  }
+  return $retval;
+}
+
+# Takes a DN and GT4-izes it by changing all "old" extensions to the GT4
+# standard extensions.  Borrowed from gx-map.
+sub gt4_subject {
+  my $string = shift;
+  while (is_oldDN($string)) {
+    $string =~ s{/0\.9\.2342\.19200300\.100\.1\.1=}{/UID=}g;
+    $string =~ s{/USERID=}{/UID=}gi;
+    $string =~ s{/EMAIL=}{/emailAddress=}gi;
+    $string =~ s{/E=}{/emailAddress=}gi;
+  }
+  return $string;
+}
+
+# If there is a significant error, print a fatal error message.
+sub failClean {
+  my $reporter = shift;
+  my $err = shift;
+  $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}
+
