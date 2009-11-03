@@ -13,7 +13,7 @@ my %errortotals;
 
 my $reporter = new Inca::Reporter::Performance(
   name => 'data.db.tgcdb.verify',
-  version => 2,
+  version => 3,
   description => 'Checks the TGCDB for Distinguished Name (DN) related errors',
   measurement_name => 'tgcdb_DNs'
 );
@@ -162,9 +162,6 @@ for my $errorCode (sort keys %errorlists) {
     $reporter->log("error", "$errorCode: $error");
     #print "$errorCode: $error\n";
   }
-  if ($errortotals{$errorCode} > 0) {
-    failClean($reporter, "DN related errors found in the TGCDB.");
-  }
 }
 
 # Add the statistics to the reporter benchmarks
@@ -219,7 +216,7 @@ sub is_oldDN {
   my $string = shift;
   my $retval = 0;
   if (($string =~ m{/0\.9\.2342\.19200300\.100\.1\.1=}) ||
-      ($string =~ m{/USERID=}i) ||
+      ($string =~ m{/UID=}i) ||
       ($string =~ m{/EMAIL=}i) ||
       ($string =~ m{/E=}i)) {
     $retval = 1;
@@ -232,8 +229,8 @@ sub is_oldDN {
 sub gt4_subject {
   my $string = shift;
   while (is_oldDN($string)) {
-    $string =~ s{/0\.9\.2342\.19200300\.100\.1\.1=}{/UID=}g;
-    $string =~ s{/USERID=}{/UID=}gi;
+    $string =~ s{/0\.9\.2342\.19200300\.100\.1\.1=}{/userid=}g;
+    $string =~ s{/UID=}{/userid=}gi;
     $string =~ s{/EMAIL=}{/emailAddress=}gi;
     $string =~ s{/E=}{/emailAddress=}gi;
   }
@@ -248,4 +245,3 @@ sub failClean {
   $err =~ s/$$/PID/g;
   $reporter->failPrintAndExit($err);
 }
-
