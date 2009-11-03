@@ -43,7 +43,7 @@ for my $errorCode (@errorCodes) {
 
 my $reporter = new Inca::Reporter::Performance(
   name => 'grid.mapfile.verify',
-  version => 2,
+  version => 3,
   description => 'Verifies the local system grid-mapfile against TGCDB',
   measurement_name => 'grid-mapfile'
 );
@@ -132,7 +132,9 @@ if (!$dbh) {
 # Find all the usernames and DNs for the local resource_name
 my $query = qq {
   select sa.username, dn.dn, al.end_date, al.remaining_allocation
-  from acct.resources r, acct.system_accounts sa, acct.distinguished_names dn, acct.accounts_access aa, acct.allocation_states ax, acct.accounts a, acct.allocations al
+  from acct.resources r, acct.system_accounts sa, acct.distinguished_names dn,
+acct.accounts_access aa, acct.allocation_states ax, acct.accounts a,
+acct.allocations al
   where sa.resource_id=r.resource_id
   and sa.person_id=dn.person_id
   and dn.is_active
@@ -229,7 +231,8 @@ foreach my $line (@lines) {
 # (1a, errorNotMapped) The TGCDB username has zero DN/username mappings.
 # (1b, errorPartiallyMapped) The DN/username mapping doesn't exist,
 #      but there are other mappings for the given TGCDB username.
-# (1b', errorLocalGT4ized) For (1b) the DN can be GT4-ized to a shorter version and THAT
+# (1b', errorLocalGT4ized) For (1b) the DN can be GT4-ized to a shorter
+# version and THAT
 #       shorter DN/username mapping appears in the grid-mapfile.
 
 my %errorNotMapped;
@@ -273,8 +276,10 @@ for my $user (sort keys %errorNotMapped) {
 # Scan through the grid-mapfile DN->username hashmap, check for problems:
 # (1, errorMultipleUsernames) DN maps to multiple usernames
 # (2, errorRedundantMappings) the DN->username mapping occurs more than once
-# (3, errorOnlyInGridmap) The DN->username mapping does not appear in the TGCDB
-# (4, errorCommunityUser) Community account credentials map only to community account users
+# (3, errorOnlyInGridmap) The DN->username mapping does not appear in the
+# TGCDB
+# (4, errorCommunityUser) Community account credentials map only to community
+# account users
 
 for my $dn (sort keys %dnmapF) {
   my @users = sort keys %{$dnmapF{$dn}};
@@ -366,13 +371,6 @@ for my $errorCode (@errorCodes) {
   }
 }
 
-# If there are any errors, set a failure message
-for my $errorCode (@errorCodes) {
-  if (scalar(@{$errorlists{$errorCode}}) > 0) {
-    failClean($reporter, "Errors found in the grid-mapfile.");
-  }
-}
-
 $reporter->setCompleted(1);
 $reporter->print();
 
@@ -400,10 +398,9 @@ sub normalize_dn {
 # standard extensions.  Borrowed from gx-map.
 sub gt4_subject {
   my $string = shift;
-  $string =~ s(/0\.9\.2342\.19200300\.100\.1\.1=)(/UID=)g;
-  $string =~ s(/USERID=)(/UID=)g;
-  $string =~ s(/Email=)(/emailAddress=)g;
-  $string =~ s(/EMAIL=)(/emailAddress=)g;
+  $string =~ s(/0\.9\.2342\.19200300\.100\.1\.1=)(/userid=)g;
+  $string =~ s(/UID=)(/userid=)gi;
+  $string =~ s(/EMAIL=)(/emailAddress=)gi;
   $string =~ s(/E=)(/emailAddress=)g;
   return $string;
 }
@@ -416,5 +413,3 @@ sub failClean {
   $err =~ s/$$/PID/g;
   $reporter->failPrintAndExit($err);
 }
-
-
