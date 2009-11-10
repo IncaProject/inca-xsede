@@ -87,7 +87,7 @@
           <xsl:variable name="label"
                         select="concat($resource, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;startDate=')"/>
+                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;startDate=')"/>
           <table>
             <tr>
               <td>view results for past: </td>
