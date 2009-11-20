@@ -1216,7 +1216,10 @@ NAME="CONFIG-CONSUMER"
 >Here Inca administrators can view and change the global configuration of status pages. Determine whether to allow run nows or the execution of tests via the detailed status pages (see <A
 HREF="userguide-consumer.html#CONSUMER-RUN-NOW"
 >Section 6.5.2</A
->) and configure the google map (<A
+>) and configure the knowledge base (<A
+HREF="userguide-consumer.html#CONSUMER-KB"
+>Section 6.5.3</A
+>), google map (<A
 HREF="userguide-consumer.html#GOOGLE-SETUP"
 >Section 6.1.3.2</A
 >) and series summary (<A
@@ -1525,6 +1528,120 @@ CLASS="FILENAME"
 SRC="figures/consumer/run-now-confirm.jpg"
 ALIGN="CENTER"></P
 ></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="CONSUMER-KB"
+>6.5.3. Knowledge Base</A
+></H3
+><P
+>The Inca default knowledge base is designed to collect problem resolution information 
+    for tests.  System administrators may use solutions stored in the knowledge base when debugging
+    issues on their resources. The knowledge base can be configured using the admin page 
+    described in <A
+HREF="userguide-consumer.html#CONFIG-CONSUMER"
+>Section 6.4.2</A
+> with the options described after the configuration image below:
+    <P
+><IMG
+SRC="figures/consumer/kb-config.gif"
+ALIGN="CENTER"></P
+>
+    <P
+></P
+><UL
+><LI
+><P
+>enable:</P
+><P
+>   If the "enable" value is set to "true" then a "search knowledge base" button
+and an "add to knowledge base" button will appear under the "Result" heading of
+the reporter details status pages.  If "enable" is set to "false" then the
+knowledge base buttons will be hidden and inaccessible.
+        </P
+></LI
+><LI
+><P
+>searchString:</P
+><P
+>   The URL that will be visited after clicking on the "search knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&#38;".
+        </P
+></LI
+><LI
+><P
+>submitString:</P
+><P
+>   The URL that will be visited after clicking on the "add to knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&#38;".
+        </P
+></LI
+><LI
+><P
+>submitEmailNotification:</P
+><P
+>   The email address to send new, changed, and removed knowledge base articles to.
+By default no email notifications are sent and the "submitEmailNotifications" value
+is set to "none".  To add email notifications, change this value to an email address or
+a list of email addresses separated by commas (e.g. "email1@loc.edu, email2@loc.edu").
+        </P
+></LI
+></UL
+>
+    </P
+><P
+>Once the knowledge base is enabled, two buttons to search and add to the 
+    knowledge base will appear on the report details pages:</P
+><P
+><IMG
+SRC="figures/consumer/kb-annotated-details.jpg"
+ALIGN="CENTER"></P
+><P
+>Clicking on the "search knowledge base" button will lead to the URL set as the 
+    "searchString" value.  By default, this returns all of the knowledge base articles related to 
+    the series:</P
+><P
+><IMG
+SRC="figures/consumer/kb-search.gif"
+ALIGN="CENTER"></P
+><P
+>Clicking on the "add to knowledge base" button will lead to the URL set as the 
+    "submitString" value.  By default, this is a form for entering article information.
+    Since authentication is required for this form based on the authentication setup (see
+    <A
+HREF="userguide-consumer.html#PASSWORD-CONSUMER"
+>Section 6.14</A
+>), a box will popup such as follows:</P
+><P
+><IMG
+SRC="figures/consumer/security-popup.jpg"
+ALIGN="CENTER"></P
+><P
+>Press 'Continue' and the security login window will display such as
+    follows:</P
+><P
+><IMG
+SRC="figures/consumer/security-login.jpg"
+ALIGN="CENTER"></P
+><P
+>Use the username and password specified in
+    <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/realm.properties</TT
+>.  By default, the
+    username and password are 'inca'. After the consumer submits the request, 
+    a form will appear to complete like the one below: </P
+><P
+><IMG
+SRC="figures/consumer/kb-add.gif"
+ALIGN="CENTER"></P
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -1708,7 +1825,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN929"
+NAME="AEN960"
 ></A
 ><P
 ><B
@@ -2358,7 +2475,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1151"
+NAME="AEN1182"
 ></A
 ><P
 ><B

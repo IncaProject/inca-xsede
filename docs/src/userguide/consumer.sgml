@@ -594,7 +594,7 @@ using the three weather icons located on the Google server at: <ulink url="http:
     
     <section id="config-consumer">
       <title>View/Change Configuration</title>
-      <para>Here Inca administrators can view and change the global configuration of status pages. Determine whether to allow run nows or the execution of tests via the detailed status pages (see <xref linkend="consumer-run-now">) and configure the google map (<xref linkend="google-setup">) and series summary (<xref linkend="series-report">) status pages.
+      <para>Here Inca administrators can view and change the global configuration of status pages. Determine whether to allow run nows or the execution of tests via the detailed status pages (see <xref linkend="consumer-run-now">) and configure the knowledge base (<xref linkend="consumer-kb">), google map (<xref linkend="google-setup">) and series summary (<xref linkend="series-report">) status pages.
       </para>
       <graphic fileref="figures/consumer/config-view-change.gif" align="center"></graphic>
     </section>
@@ -792,6 +792,85 @@ The following tags are defined within a &lt;reportDetails&gt;:
     you will see a confirmation such as below: </para>
 
     <graphic fileref="figures/consumer/run-now-confirm.jpg" align="center"></graphic>
+
+    </section>
+   
+    <section id="consumer-kb">
+    <title>Knowledge Base</title>
+    <para>The Inca default knowledge base is designed to collect problem resolution information 
+    for tests.  System administrators may use solutions stored in the knowledge base when debugging
+    issues on their resources. The knowledge base can be configured using the admin page 
+    described in <xref linkend="config-consumer"> with the options described after the configuration image below:
+    <graphic fileref="figures/consumer/kb-config.gif" align="center"></graphic>
+    <itemizedList>
+      <listItem>
+        <para>enable:</para>
+        <para>
+   If the "enable" value is set to "true" then a "search knowledge base" button
+and an "add to knowledge base" button will appear under the "Result" heading of
+the reporter details status pages.  If "enable" is set to "false" then the
+knowledge base buttons will be hidden and inaccessible.
+        </para>
+      </listItem>
+      <listItem>
+        <para>searchString:</para>
+        <para>
+   The URL that will be visited after clicking on the "search knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&".
+        </para>
+      </listItem>
+      <listItem>
+        <para>submitString:</para>
+        <para>
+   The URL that will be visited after clicking on the "add to knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&".
+        </para>
+      </listItem>
+      <listItem>
+        <para>submitEmailNotification:</para>
+        <para>
+   The email address to send new, changed, and removed knowledge base articles to.
+By default no email notifications are sent and the "submitEmailNotifications" value
+is set to "none".  To add email notifications, change this value to an email address or
+a list of email addresses separated by commas (e.g. "email1@loc.edu, email2@loc.edu").
+        </para>
+      </listItem>
+    </itemizedList>
+    </para>
+
+    <para>Once the knowledge base is enabled, two buttons to search and add to the 
+    knowledge base will appear on the report details pages:</para>
+    
+    <graphic fileref="figures/consumer/kb-annotated-details.jpg" align="center"></graphic>
+    
+    <para>Clicking on the "search knowledge base" button will lead to the URL set as the 
+    "searchString" value.  By default, this returns all of the knowledge base articles related to 
+    the series:</para>
+    
+    <graphic fileref="figures/consumer/kb-search.gif" align="center"></graphic>
+
+    <para>Clicking on the "add to knowledge base" button will lead to the URL set as the 
+    "submitString" value.  By default, this is a form for entering article information.
+    Since authentication is required for this form based on the authentication setup (see
+    <xref linkend="password-consumer">), a box will popup such as follows:</para>
+
+    <graphic fileref="figures/consumer/security-popup.jpg" align="center"></graphic>
+
+    <para>Press 'Continue' and the security login window will display such as
+    follows:</para>
+
+    <graphic fileref="figures/consumer/security-login.jpg" align="center"></graphic>
+
+    <para>Use the username and password specified in
+    <filename>$INCA_DIST/etc/realm.properties</filename>.  By default, the
+    username and password are 'inca'. After the consumer submits the request, 
+    a form will appear to complete like the one below: </para>
+
+    <graphic fileref="figures/consumer/kb-add.gif" align="center"></graphic>
 
     </section>
   </section>
