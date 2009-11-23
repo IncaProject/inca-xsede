@@ -466,7 +466,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>TACC</name>
-        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur|tacc-ranch)$')]</xpath>
+        <xpath>//resource[matches(name, '^(TACC-login|tacc-ranch)$')]</xpath>
         <macros>
           <macro>
             <name>siteName</name>
@@ -481,12 +481,16 @@
             <value>mpicc32dbg</value>
           </macro>
           <macro>
+            <name>securityContact</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:ca@tacc.utexas.edu</value>
+          </macro>
+          <macro>
             <name>__groupname__</name>
             <value>TACC</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>tacc-lonestar tacc-ranger tacc-spur tacc-ranch</value>
+            <value>TACC-login tacc-ranch</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -500,15 +504,11 @@
             <name>__incaReporterManagerLocation__</name>
             <value>fake</value>
           </macro>
-          <macro>
-            <name>securityContact</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:ca@tacc.utexas.edu</value>
-          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>TACC-login</name>
-        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur)$')]</xpath>
+        <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-ranger|tacc-spur|tacc-longhorn)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -516,7 +516,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>tacc-lonestar tacc-ranger tacc-spur</value>
+            <value>tacc-lonestar tacc-ranger tacc-spur tacc-longhorn</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1976,7 +1976,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>core.teragrid.org-4.2.1</name>
-        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.2.1-mds-info-host</name>
@@ -2000,7 +2000,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>queenbee.loni-lsu.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org</value>
+            <value>queenbee.loni-lsu.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org longhorn.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3215,6 +3215,28 @@
           <macro>
             <name>__regexp__</name>
             <value>tacc-lonestar</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>longhorn.tacc.teragrid.org</name>
+        <xpath>//resource[matches(name, '^(tacc-longhorn)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>longhorn.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>tacc-longhorn</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -8227,6 +8249,52 @@
           </macro>
         </macros>
       </resource>
+      <resource>
+        <name>tacc-longhorn</name>
+        <xpath>//resource[matches(name, '^(login2\.longhorn\.tacc\.utexas\.edu)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>tacc-longhorn</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>login2.longhorn.tacc.utexas.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__myproxyHost__</name>
+            <value>myproxy.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/home/00500/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>core4.2.1-mds-info-host</name>
+            <value>login2.longhorn.tacc.utexas.edu</value>
+          </macro>
+          <macro>
+            <name>core4.2.1-pacman-key</name>
+            <value>@keyPre@pacman-3.26 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>kit-registration-host</name>
+            <value>@core4.2.1-mds-info-host@:@core4.2.1-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>adminEmail</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu, FailTo:timm@tacc.utexas.edu</value>
+          </macro>
+        </macros>
+      </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>tacc-ranch</name>
         <xpath>//resource[matches(name, '^(ranch\.tacc\.utexas\.edu)$')]</xpath>
@@ -9484,6 +9552,9 @@
       </resource>
       <resource>
         <name>login.bigred.iu.teragrid.org</name>
+      </resource>
+      <resource>
+        <name>login2.longhorn.tacc.utexas.edu</name>
       </resource>
       <resource>
         <name>login3.ranger.tacc.utexas.edu</name>
@@ -14926,7 +14997,7 @@
       <name>core.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>55</version>
+      <version>58</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15254,7 +15325,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>18</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
