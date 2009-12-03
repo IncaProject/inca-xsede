@@ -1938,7 +1938,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>core.teragrid.org-4.2.0</name>
-        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|ranch\.tacc\.teragrid\.org|kraken\.nics\.teragrid\.org|frost\.ncar\.teragrid\.org|bigred\.iu\.teragrid\.org|brutus\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ncsa-abe|cobalt\.ncsa\.teragrid\.org|ncsa-ia64|ranch\.tacc\.teragrid\.org|kraken\.nics\.teragrid\.org|frost\.ncar\.teragrid\.org|bigred\.iu\.teragrid\.org|brutus\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.2.0-mds-info-port</name>
@@ -1962,7 +1962,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 ranch.tacc.teragrid.org kraken.nics.teragrid.org frost.ncar.teragrid.org bigred.iu.teragrid.org brutus.purdue.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org nstg.ornl.teragrid.org</value>
+            <value>ncsa-abe cobalt.ncsa.teragrid.org ncsa-ia64 ranch.tacc.teragrid.org kraken.nics.teragrid.org frost.ncar.teragrid.org bigred.iu.teragrid.org brutus.purdue.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1976,7 +1976,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>core.teragrid.org-4.2.1</name>
-        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|bigben\.psc\.teragrid\.org|pople\.psc\.teragrid\.org|lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|spur\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>core4.2.1-mds-info-host</name>
@@ -2000,7 +2000,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>queenbee.loni-lsu.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org longhorn.tacc.teragrid.org</value>
+            <value>queenbee.loni-lsu.teragrid.org bigben.psc.teragrid.org pople.psc.teragrid.org lonestar.tacc.teragrid.org ranger.tacc.teragrid.org spur.tacc.teragrid.org longhorn.tacc.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5200,18 +5200,6 @@
         <xpath>//resource[matches(name, '^(tg-login2\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>kit-registration-host</name>
-            <value>@core4.2.0-mds-info-host@:@core4.2.0-mds-info-port@</value>
-          </macro>
-          <macro>
-            <name>core4.2.0-mds-info-host</name>
-            <value>tg-login2.ornl.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>core4.2.0-pacman-key</name>
-            <value>@keyPre@pacman-3.26-r1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>dataMove4.1.2-gridftp-default-host</name>
             <value>tg-gridftp.ornl.teragrid.org</value>
           </macro>
@@ -5374,6 +5362,18 @@
           <macro>
             <name>remote4.2.0-gatekeeper-host</name>
             <value>tg-login.ornl.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.2.1-mds-info-host</name>
+            <value>tg-login2.ornl.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>core4.2.1-pacman-key</name>
+            <value>@keyPre@pacman-3.26-r1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>kit-registration-host</name>
+            <value>@core4.2.1-mds-info-host@:@core4.2.1-mds-info-port@</value>
           </macro>
         </macros>
       </resource>
@@ -19950,9 +19950,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -20009,7 +20010,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>134</version>
+      <version>137</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20625,9 +20626,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -20684,7 +20686,7 @@
       <name>login.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.2</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>18</version>
+      <version>19</version>
     </suite>
     <suite>
       <seriesConfigs>
