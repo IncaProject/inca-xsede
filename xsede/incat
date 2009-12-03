@@ -4104,6 +4104,10 @@
             <name>adminEmail</name>
             <value>FailTo:inca@sdsc.edu, FailTo:paul.marshall@colorado.edu, FailTo:oberg@ucar.edu</value>
           </macro>
+          <macro>
+            <name>wg4.0.0-fs</name>
+            <value>/mnt/gpfs-wan</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -9553,6 +9557,10 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>wg4.0.0-fs</name>
+            <value>/N/gpfswan</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -9574,6 +9582,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>wl4.0.0-fs</name>
+            <value>/N/dcwan</value>
           </macro>
         </macros>
       </resource>
@@ -15226,7 +15238,7 @@
       <name>core.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>72</version>
+      <version>73</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15658,7 +15670,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>46</version>
+      <version>47</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27106,6 +27118,61 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wg4.0.0-fs@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wg-4.0.0</nickname>
+          <resourceSetName>wan-gpfs.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>wan-gpfs.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/wan-gpfs.teragrid.org-4.0.0</guid>
@@ -27157,6 +27224,61 @@
           <resourceSetName>wan-lustre.teragrid.org-4.0.0</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wl4.0.0-fs@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-4.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
