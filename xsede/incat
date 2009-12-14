@@ -14656,9 +14656,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.admin.tginfo.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.admin.tginfo.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14703,7 +14704,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>34</version>
+      <version>38</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15780,6 +15781,69 @@
           <resourceSetName>coscheduling.teragrid.org-1.0.0</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.kitregistration.unit</name>
+            <args>
+              <arg>
+                <name>kitversion</name>
+                <value>1.0.0</value>
+              </arg>
+              <arg>
+                <name>kitname</name>
+                <value>coscheduling.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>gur</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>software</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@kit-registration-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gur-registration-1.0.0</nickname>
+          <resourceSetName>coscheduling.teragrid.org-1.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -20857,6 +20921,69 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>glue2-4.2.0</nickname>
+          <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.kitregistration.unit</name>
+            <args>
+              <arg>
+                <name>kitversion</name>
+                <value>4.2.0</value>
+              </arg>
+              <arg>
+                <name>kitname</name>
+                <value>metascheduling.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>mcp</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>software</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@kit-registration-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mcp-registration-4.2.0</nickname>
           <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
