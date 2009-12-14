@@ -6,7 +6,7 @@ use Inca::Reporter::SimpleUnit;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.kitregistration.unit',
-  version => 2,
+  version => 3,
   description => 'Tests whether a kit registration exists and meets certain validity constraints.',
   url => 'http://www.globus.org/toolkit/docs/4.0/common/javawscore/rn01re07.html',
   unit_name => 'kit_registration'
@@ -15,10 +15,14 @@ $reporter->addDependency('Inca::Reporter::GridProxy');
 $reporter->addArg('host', 'Hostname (host:port) to query');
 $reporter->addArg('kitversion', 'Kit version number for query', '4.0.0');
 $reporter->addArg('kitname', 'Kit name number for query', 'core.teragrid.org');
+$reporter->addArg('software', 'Optional name of software to check for in the kit', '');
+$reporter->addArg('service', 'Optional name of service to check for in the kit', '');
 $reporter->processArgv(@ARGV);
 my $host = $reporter->argValue('host');
 my $version = $reporter->argValue('kitversion');
 my $name = $reporter->argValue('kitname');
+my $checkSoftware = $reporter->argValue('software');
+my $checkService = $reporter->argValue('service');
 
 $ENV{'GLOBUS_OPTIONS'} = "-Xmx256M";
 my $service = "https://" . $host . "/wsrf/services/DefaultIndexService";
@@ -29,7 +33,7 @@ if(!@output || $?) {
   $reporter->unitFailure("wsrf-query failed: $? " . join( "", @output));
 } else {
   if(!grep(/<Kit/, @output)){
-	  $reporter->unitFailure("wsrf-query returned: @output");
+    $reporter->unitFailure("wsrf-query returned: @output");
   }else{
     my %kitobj = parseKit(@output);
     my $failures = testKit(%kitobj);
@@ -68,6 +72,12 @@ sub testKit {
   if ($kitobj{'UserSupportOrganization'} ne 'TeraGrid') {
 	  $failures .= "UserSupportOrganization is $kitobj{'UserSupportOrganization'} when it should be 'TeraGrid'\n";
   }
+  if ($checkSoftware and !($kitobj{'Software'}{$checkSoftware})){
+    $failures .= " Did not find $checkSoftware software registered in kit.";
+  }
+  if ($checkService and !($kitobj{'Services'}{$checkService})){
+    $failures .= " Did not find $checkService service registered in kit.";
+  }
   return ($failures);
 }
 
@@ -97,23 +107,22 @@ sub parseElement {
 sub parseServices {
   my ($rawkit) = @_;
   my %serviceobj;
-  my @services;
 
-  foreach my $service (@services) {
-    my %servicehash;
+  while ($rawkit =~ m/<Service>(.*?)<\/Service>/g) {
+    my $service = $1;
     if ($service =~ m/<Name>(.*)<\/Name>/) {
-      $servicehash{'Name'} = $1;
+      my $name = $1;
+      $serviceobj{$name} = {};
+      if ($service =~ m/<Type>(.*)<\/Type>/) {
+        $serviceobj{$name}->{'Type'} = $1;
+      }
+      if ($service =~ m/<Version>(.*)<\/Version>/) {
+        $serviceobj{$name}->{'Version'} = $1;
+      }
+      if ($service =~ m/<Endpoint>(.*)<\/Endpoint>/) {
+        $serviceobj{$name}->{'Endpoint'} = $1;
+      }
     }
-    if ($service =~ m/<Type>(.*)<\/Type>/) {
-      $servicehash{'Type'} = $1;
-    }
-    if ($service =~ m/<Endpoint>(.*)<\/Endpoint>/) {
-      $servicehash{'Endpoint'} = $1;
-    }
-    if ($service =~ m/<Version>(.*)<\/Version>/) {
-      $servicehash{'Version'} = $1;
-    }
-    $serviceobj{$servicehash{'Name'}} = \%servicehash;
   }
   return \%serviceobj;
 }
@@ -121,26 +130,25 @@ sub parseServices {
 sub parseSoftware {
   my ($rawkit) = @_;
   my %softobj;
-  my @software;
 
-  foreach my $soft (@software) {
-    my %softhash;
+  while ($rawkit =~ m/<Software>(.*?)<\/Software>/g) {
+    my $soft = $1;
     if ($soft =~ m/<Name>(.*)<\/Name>/) {
-      $softhash{'Name'} = $1;
+      my $name = $1;
+      $softobj{$name} = {};
+      if ($soft =~ m/<Version>(.*)<\/Version>/) {
+        $softobj{$name}->{'Version'} = $1;
+      }
+      if ($soft =~ m/<HandleType>(.*)<\/HandleType>/) {
+        $softobj{$name}->{'HandleType'} = $1;
+      }
+      if ($soft =~ m/<HandleKey>(.*)<\/HandleKey>/) {
+        $softobj{$name}->{'HandleKey'} = $1;
+      }
+      if ($soft =~ m/<Default>(.*)<\/Default>/) {
+        $softobj{$name}->{'Type'} = $1;
+      }
     }
-    if ($soft =~ m/<Default>(.*)<\/Default>/) {
-      $softhash{'Type'} = $1;
-    }
-    if ($soft =~ m/<HandleType>(.*)<\/HandleType>/) {
-      $softhash{'HandleType'} = $1;
-    }
-    if ($soft =~ m/<HandleKey>(.*)<\/HandleKey>/) {
-      $softhash{'HandleKey'} = $1;
-    }
-    if ($soft =~ m/<Version>(.*)<\/Version>/) {
-      $softhash{'Version'} = $1;
-    }
-    $softobj{$softhash{'Name'}} = \%softhash;
   }
   return \%softobj;
 }
