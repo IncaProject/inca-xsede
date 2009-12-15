@@ -29,7 +29,7 @@
       </p></td>
     </tr>
     <tr><td colspan="2" class="header">
-      <xsl:text>Comments:</xsl:text>
+      <xsl:text>Test Configuration Comments:</xsl:text>
     </td></tr>
     <tr><td colspan="2">
       <xsl:choose>
