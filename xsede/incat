@@ -7799,6 +7799,22 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>gateway4.2.0-gridshib-key</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-metapath</name>
+            <value>/etc/grid-security/metadata</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-trustfile</name>
+            <value>tg-gateway-entity-map.txt</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-trustsite</name>
+            <value>https://info.teragrid.org/gateways</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -8281,6 +8297,10 @@
           <macro>
             <name>apps4.2.0-tginfo-key</name>
             <value>@keyPre@tginfo-1.0.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>gateway4.2.0-trustfile</name>
+            <value>trusted_authorities_entity_map.txt</value>
           </macro>
         </macros>
       </resource>
@@ -21010,7 +21030,7 @@
       <name>metascheduling.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>30</version>
+      <version>31</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -25587,11 +25607,11 @@
               </arg>
               <arg>
                 <name>trustsite</name>
-                <value>https://info.teragrid.org/gateways</value>
+                <value>@gateway4.2.0-trustsite@</value>
               </arg>
               <arg>
                 <name>trustfile</name>
-                <value>tg-gateway-entity-map.txt</value>
+                <value>@gateway4.2.0-trustfile@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -25599,7 +25619,7 @@
               </arg>
               <arg>
                 <name>metapath</name>
-                <value>/etc/grid-security/metadata</value>
+                <value>@gateway4.2.0-metapath@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -25609,7 +25629,7 @@
             <limits>
               <wallClockTime>600</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@gateway4.2.0-gridshib-key@@@@post@</context>
           </series>
           <nickname>gridshib-unit-4.2.0</nickname>
           <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
