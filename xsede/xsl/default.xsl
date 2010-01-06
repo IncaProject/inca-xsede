@@ -37,7 +37,7 @@
   <xsl:template name="printSuiteInfo" match="suite|query">
     <xsl:variable name="name" select="name"/>
     <xsl:choose>
-    <xsl:when test="name[matches(., '^tg-mds$')]">
+    <xsl:when test="name[matches(., '^tg-iis$')]">
     <xsl:call-template name="printMdsResultsTable"/>
     </xsl:when>
     <xsl:otherwise>
@@ -167,7 +167,7 @@
         <!-- resource is not exempt -->
         <xsl:variable name="resourceName">
           <xsl:choose>
-            <!-- in tg-mds suite -->
+            <!-- in tg-iis suite -->
             <xsl:when test="name[matches(., '^(info|info1\.dyn|info2\.dyn|mds)\.teragrid\.org$')]">
               <xsl:value-of select="'repo'" />
             </xsl:when>
