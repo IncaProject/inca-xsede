@@ -54,7 +54,8 @@ if (!$noemail){
   my $baseDate = ParseDate( $baseDateString );
   my $date = ParseDate( $ENV{incacollected} );
   if ( Date_Cmp($date, $baseDate) < 0 ) {
-  `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
+    `date >> email.log`;
+    `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
     exit 0;
   }
 
@@ -79,6 +80,7 @@ if (!$noemail){
     }
   }
 }else{
+  `date >> email.log`;
   `echo "No email for report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   exit 0;
 }
@@ -115,6 +117,7 @@ sub getExternalEmail {
     push (@notify, "FailTo:smartin\@mcs.anl.gov");
   }
   my $notify = join(", ", @notify);
-  `echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
+  #`date >> email.log`;
+  #`echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   return @notify;
 }
