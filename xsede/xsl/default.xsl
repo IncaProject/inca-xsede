@@ -226,25 +226,6 @@
                       <xsl:when test="string($bench)!=''">
                         <xsl:value-of select="concat($bench/value,' ',$bench/units)"/>
                       </xsl:when>
-                      <xsl:when test="string($mapstats/statistic[ID='errorCommunityUser'])">
-                        <xsl:variable name="ecu" select="$mapstats/statistic[ID='errorCommunityUser']/value"/>
-                        <xsl:if test="$ecu>0"><xsl:value-of select="concat('community_user:_',$ecu)"/><br/></xsl:if>
-                        <xsl:variable name="ef" select="$mapstats/statistic[ID='errorFormat']/value"/>
-                        <xsl:if test="$ef>0"><xsl:value-of select="concat('format:_',$ef)"/><br/></xsl:if>
-                        <xsl:variable name="egt" select="$mapstats/statistic[ID='errorLocalGT4ized']/value"/>
-                        <xsl:if test="$egt>0"><xsl:value-of select="concat('local_gt4:_',$egt)"/><br/></xsl:if>
-                        <xsl:variable name="emu" select="$mapstats/statistic[ID='errorMultipleUsernames']/value"/>
-                        <xsl:if test="$emu>0"><xsl:value-of select="concat('multiple_usernames:_',$emu)"/><br/></xsl:if>
-                        <xsl:variable name="enm" select="$mapstats/statistic[ID='errorNotMapped']/value"/>
-                        <xsl:if test="$enm>0"><xsl:value-of select="concat('not_mapped:_',$enm)"/><br/></xsl:if>
-                        <xsl:variable name="eog" select="$mapstats/statistic[ID='errorOnlyInGridmap']/value"/>
-                        <xsl:if test="$eog>0"><xsl:value-of select="concat('only_in_gridmap:_',$eog)"/><br/></xsl:if>
-                        <xsl:variable name="epm" select="$mapstats/statistic[ID='errorPartiallyMapped']/value"/>
-                        <xsl:if test="$epm>0"><xsl:value-of select="concat('partially_mapped:_',$epm)"/><br/></xsl:if>
-                        <xsl:variable name="erm" select="$mapstats/statistic[ID='errorRedundantMappings']/value"/>
-                        <xsl:if test="$erm>0"><xsl:value-of select="concat('redundant_mappings:_',$erm)"/><br/></xsl:if>
-                        <xsl:value-of select="$exit"/>
-                      </xsl:when>
                       <xsl:when test="string($mapstats/statistic[ID='error-CommunityUser'])">
                         <xsl:variable name="ecu" select="$mapstats/statistic[ID='error-CommunityUser']/value"/>
                         <xsl:if test="$ecu>0"><xsl:value-of select="concat('community_user:_',$ecu)"/><br/></xsl:if>
