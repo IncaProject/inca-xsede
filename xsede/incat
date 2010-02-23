@@ -3117,10 +3117,6 @@
         <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|ncsa-abe|ncsa-ia64|bigben\.psc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|spur\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|longhorn\.tacc\.teragrid\.org|kraken\.nics\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>login4.0.0-tgproxy-key</name>
-            <value>@keyPre@tgproxy-0.9.1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>login4.0.0-tgusage-key</name>
             <value/>
           </macro>
@@ -3210,6 +3206,32 @@
           </macro>
         </macros>
       </resource>
+      <resource>
+        <name>login.teragrid.org-4.0.0-tgproxy</name>
+        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|ncsa-abe|ncsa-ia64|bigben\.psc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|spur\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|longhorn\.tacc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>login4.0.0-tgproxy-key</name>
+            <value>@keyPre@tgproxy-0.9.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>login.teragrid.org-4.0.0-tgproxy</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lonestar.tacc.teragrid.org bigred.iu.teragrid.org ncsa-abe ncsa-ia64 bigben.psc.teragrid.org cobalt.ncsa.teragrid.org frost.ncar.teragrid.org ranger.tacc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org spur.tacc.teragrid.org nstg.ornl.teragrid.org longhorn.tacc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>login.teragrid.org-4.0.2</name>
         <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
@@ -3241,10 +3263,6 @@
           <macro>
             <name>login4.0.2-ssh-host</name>
             <value/>
-          </macro>
-          <macro>
-            <name>login4.0.2-tgproxy-key</name>
-            <value>@keyPre@tgproxy-0.9.1 @keyPost@</value>
           </macro>
           <macro>
             <name>login4.0.2-tgusage-key</name>
@@ -3293,6 +3311,32 @@
           <macro>
             <name>__groupname__</name>
             <value>login.teragrid.org-4.0.2-softenv</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>queenbee.loni-lsu.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>login.teragrid.org-4.0.2-tgproxy</name>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>login4.0.2-tgproxy-key</name>
+            <value>@keyPre@tgproxy-0.9.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>login.teragrid.org-4.0.2-tgproxy</value>
           </macro>
           <macro>
             <name>__regexp__</name>
@@ -14797,7 +14841,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>63</version>
+      <version>65</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19735,7 +19779,7 @@
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
       <description>Local Compute Capability Kit</description>
-      <version>21</version>
+      <version>22</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20191,7 +20235,7 @@
             <context>@pre@@login4.0.0-tgproxy-key@@@@post@</context>
           </series>
           <nickname>tgproxy-unit</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <resourceSetName>login.teragrid.org-4.0.0-tgproxy</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -20867,7 +20911,7 @@
             <context>@pre@@login4.0.2-tgproxy-key@@@@post@</context>
           </series>
           <nickname>tgproxy-unit-rl-4.0.2</nickname>
-          <resourceSetName>login.teragrid.org-4.0.2</resourceSetName>
+          <resourceSetName>login.teragrid.org-4.0.2-tgproxy</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
