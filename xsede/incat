@@ -20041,6 +20041,93 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://info.teragrid.org/2009/03/ctss}V4glue2RP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@localCompute4.2.1-glue-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>glue2-fresh-xml-lc-4.2.1</nickname>
+          <resourceSetName>local-compute.teragrid.org-4.2.1</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
@@ -27607,7 +27694,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>57</version>
+      <version>59</version>
     </suite>
     <suite>
       <seriesConfigs>
