@@ -72,16 +72,25 @@ if (!$noemail){
     my @pieces = split(/:/, $email);
     if(scalar(@pieces) == 1 || ($failed && $pieces[0] =~ /^Fail/) ||
      (!$failed && $pieces[0] !~ /^Fail/)) {
-      open(MAIL, "|$mailPath $pieces[$#pieces]");
+      my $to = $pieces[$#pieces];
+      if ($to eq "help\@teragrid.org"){
+        $subject = "Inca TeraGrid Notification: $name $ENV{incaresult}";
+        my $assign = getHelpAssignment($name);
+        my $newbody = "Ticket assignment group: $assign\n\n$body";
+        $body = $newbody;
+        `date >> email.log`;
+        `echo "Sending email for $name to $to ($subject\n$body)" >> email.log`;
+      }
+      open(MAIL, "|$mailPath $to");
       print MAIL "$subjectPrefix$subject\n";
-      print MAIL "To:$pieces[$#pieces]\n" if $mailPath =~ /sendmail/;
+      print MAIL "To:$to\n" if $mailPath =~ /sendmail/;
       print MAIL $body;
       close(MAIL);
     }
   }
 }else{
   `date >> email.log`;
-  `echo "No email for report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
+  `echo "No email for $name report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   exit 0;
 }
 
@@ -120,4 +129,22 @@ sub getExternalEmail {
   #`date >> email.log`;
   #`echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   return @notify;
+}
+
+sub getHelpAssignment{
+  my $name = shift;
+  my %map = ( 
+    "hostcert-check-" => "RP RESOURCE ADMIN",
+    "TGCDB_connect" => "TGCDB",
+    "myproxy_unit" => "TG GIG SERVICES",
+    "info.teragrid.org" => "TG GIG SERVICES"
+  );    
+  my $assign = "";
+  for my $test ( keys %map ) {
+    my $group = $map{$test};
+    if ($name =~ /^$test.*/){
+      $assign = $group;
+    }
+  }
+  return $assign;
 }
