@@ -1524,7 +1524,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>app-support.teragrid.org-4.2.0-compiler-pgi</name>
         <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|kraken\.nics\.teragrid\.org)$')]</xpath>
         <macros>
@@ -3248,7 +3248,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>login.teragrid.org-4.0.0-tgproxy</name>
         <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|bigred\.iu\.teragrid\.org|ncsa-abe|ncsa-ia64|bigben\.psc\.teragrid\.org|cobalt\.ncsa\.teragrid\.org|frost\.ncar\.teragrid\.org|ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org|spur\.tacc\.teragrid\.org|nstg\.ornl\.teragrid\.org|longhorn\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
@@ -3368,7 +3368,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>login.teragrid.org-4.0.2-tgproxy</name>
         <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
         <macros>
@@ -15591,62 +15591,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>security.ca.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>wgetArgs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>minimum</name>
-                <value>14</value>
-              </arg>
-              <arg>
-                <name>certUrl</name>
-                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ca-crl-check-4.2.0</nickname>
-          <resourceSetName>core.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@securityContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
             <args>
@@ -15745,11 +15689,71 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>security.ca.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>minCertDays</name>
+                <value>14</value>
+              </arg>
+              <arg>
+                <name>minCrlDays</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>certUrl</name>
+                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ca-crl-check-4.2.0</nickname>
+          <resourceSetName>core.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@securityContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>97</version>
+      <version>101</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16067,62 +16071,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>security.ca.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>wgetArgs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>minimum</name>
-                <value>14</value>
-              </arg>
-              <arg>
-                <name>certUrl</name>
-                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ca-crl-check-4.2.1</nickname>
-          <resourceSetName>core.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@securityContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
             <args>
@@ -16221,11 +16169,71 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>security.ca.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>minCertDays</name>
+                <value>14</value>
+              </arg>
+              <arg>
+                <name>minCrlDays</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>certUrl</name>
+                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ca-crl-check-4.2.1</nickname>
+          <resourceSetName>core.teragrid.org-4.2.1</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@securityContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>82</version>
+      <version>97</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27606,7 +27614,7 @@
             </limits>
             <context>@@</context>
           </series>
-          <nickname>portal.teragrid.org:8443</nickname>
+          <nickname>portal.teragrid.org:443</nickname>
           <resourceSetName>sapa</resourceSetName>
           <schedule>
             <crontime>?-59/15 * * * *</crontime>
@@ -27627,7 +27635,7 @@
       <name>tgup</name>
       <guid>incas://sapa.sdsc.edu:6323/tgup</guid>
       <description>Tests for the TeraGrid User Portal (TGUP)</description>
-      <version>8</version>
+      <version>10</version>
     </suite>
     <suite>
       <seriesConfigs>
