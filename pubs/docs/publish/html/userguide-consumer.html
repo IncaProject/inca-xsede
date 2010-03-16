@@ -1641,6 +1641,50 @@ CLASS="FILENAME"
 ><IMG
 SRC="figures/consumer/kb-add.gif"
 ALIGN="CENTER"></P
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="EXTERNAL-KB"
+>6.5.3.1. Using an External or Custom Knowledge Base</A
+></H4
+><P
+>To use an external or custom knowledge base instead of Inca's default internal knowledge base, 
+      configure the "searchString" and "submitString" parameters described in <A
+HREF="userguide-consumer.html#CONSUMER-KB"
+>Section 6.5.3</A
+>.  
+      For example, to add articles to an external knowledge base with a cgi submission form like</P
+><P
+><TT
+CLASS="FILENAME"
+>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=text</TT
+></P
+><P
+>change the "submitString" parameter to something like</P
+><P
+><TT
+CLASS="FILENAME"
+>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=@nickname@%20@error@</TT
+></P
+><P
+>Inca will replace the @nickname@ macro with the actual series nickname (e.g. gcc_version) and the @error@ macro with the series error message.  The "%20" represents a space since Inca replaces the "+" character with "&#38;".  Therefore, if the external knowledge base had a cgi submission form like</P
+><P
+><TT
+CLASS="FILENAME"
+>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=title&#38;articleText=text</TT
+></P
+><P
+>then the "submitString" parameter would be changed to something like</P
+><P
+><TT
+CLASS="FILENAME"
+>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=@nickname@+articleText=@error@</TT
+></P
+><P
+>The same syntax applies to the "searchString" parameter, which Inca uses to search for knowledge article and can be an external or custom URL.</P
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -1825,7 +1869,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN960"
+NAME="AEN976"
 ></A
 ><P
 ><B
@@ -2475,7 +2519,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1182"
+NAME="AEN1198"
 ></A
 ><P
 ><B

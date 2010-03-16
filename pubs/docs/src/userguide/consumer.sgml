@@ -872,6 +872,21 @@ a list of email addresses separated by commas (e.g. "email1@loc.edu, email2@loc.
 
     <graphic fileref="figures/consumer/kb-add.gif" align="center"></graphic>
 
+    <section id="external-kb">
+    <title>Using an External or Custom Knowledge Base</title>
+    <para>To use an external or custom knowledge base instead of Inca's default internal knowledge base, 
+      configure the "searchString" and "submitString" parameters described in <xref linkend="consumer-kb">.  
+      For example, to add articles to an external knowledge base with a cgi submission form like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=text</filename></para>
+   <para>change the "submitString" parameter to something like</para>
+   <para<filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=@nickname@%20@error@</filename></para>
+   <para>Inca will replace the @nickname@ macro with the actual series nickname (e.g. gcc_version) and the @error@ macro with the series error message.  The "%20" represents a space since Inca replaces the "+" character with "&amp;".  Therefore, if the external knowledge base had a cgi submission form like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=title&amp;articleText=text</filename></para>
+   <para>then the "submitString" parameter would be changed to something like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=@nickname@+articleText=@error@</filename></para>
+   <para>The same syntax applies to the "searchString" parameter, which Inca uses to search for knowledge article and can be an external or custom URL.</para> 
+   </para>
+    </section>
     </section>
   </section>
   
