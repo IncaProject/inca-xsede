@@ -70,9 +70,9 @@ if (!$noemail){
   }
   foreach my $email(split(/[\s,;]+/, join(' ', @emails))) {
     my @pieces = split(/:/, $email);
+    my $to = $pieces[$#pieces];
     if(scalar(@pieces) == 1 || ($failed && $pieces[0] =~ /^Fail/) ||
      (!$failed && $pieces[0] !~ /^Fail/)) {
-      my $to = $pieces[$#pieces];
       if ($to eq "help\@teragrid.org"){
         $subject = "Inca TeraGrid Notification: $name $ENV{incaresult}";
         my $assign = getHelpAssignment($name);
@@ -80,7 +80,7 @@ if (!$noemail){
         $body = $newbody;
         `date >> email.log`;
         `echo "Sending email for $name to $to ($subject\n$body)" >> email.log`;
-      }
+        }
       open(MAIL, "|$mailPath $to");
       print MAIL "$subjectPrefix$subject\n";
       print MAIL "To:$to\n" if $mailPath =~ /sendmail/;
@@ -89,8 +89,8 @@ if (!$noemail){
     }
   }
 }else{
-  `date >> email.log`;
-  `echo "No email for $ENV{incanickname} report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
+  #`date >> email.log`;
+  #`echo "No email for $ENV{incanickname} report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   exit 0;
 }
 
@@ -135,6 +135,7 @@ sub getHelpAssignment{
   my $name = shift;
   my %map = ( 
     "hostcert-check-" => "RP RESOURCE ADMIN",
+    "ca-crl-check-" => "If expired, contact the appropriate CA at http://security.teragrid.org/TG-CAs.html.  Otherwise assign to RP RESOURCE ADMIN",
     "TGCDB_connect" => "TGCDB",
     "myproxy_unit" => "TG GIG SERVICES",
     "info.teragrid.org" => "TG GIG SERVICES"
