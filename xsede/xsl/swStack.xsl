@@ -341,6 +341,12 @@
                         <xsl:if test="$erm>0"><xsl:value-of select="concat('redundant_mappings:_',$erm)"/><br/></xsl:if>
                         <xsl:value-of select="$exit"/>
                       </xsl:when>
+                      <xsl:when test="$result/body/stats//warn">
+                        <xsl:value-of select="'Near expiration:'" /><br/>
+                        <xsl:for-each select="$result/body/stats//warn">
+                          &#160;&#160;<xsl:value-of select="." /><br/>
+                        </xsl:for-each>
+                      </xsl:when>
                       <xsl:otherwise>
                         <xsl:value-of select="$exit"/>
                       </xsl:otherwise>
