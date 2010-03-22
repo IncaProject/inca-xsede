@@ -15753,7 +15753,7 @@
       <name>core.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>105</version>
+      <version>110</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16233,7 +16233,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>106</version>
+      <version>119</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26331,6 +26331,69 @@
             <context>@pre@@gateway4.2.0-gridshib-key@@@@post@</context>
           </series>
           <nickname>gridshib-unit-4.2.0</nickname>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>gs4gt.auditDB.unit</name>
+            <args>
+              <arg>
+                <name>gram_port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>gsst_conf</name>
+                <value>@__incaReporterManagerLocation__@/var/reporter-packages/build/gridshib-saml-tools-0_5_5-rc3/etc/GSST-config.properties</value>
+              </arg>
+              <arg>
+                <name>gsst_home</name>
+                <value>@__incaReporterManagerLocation__@/var/reporter-packages/build/gridshib-saml-tools-0_5_5-rc3</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>have_saml</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>gram_host</name>
+                <value>localhost</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200</wallClockTime>
+            </limits>
+            <context>@pre@@gateway4.2.0-gridshib-key@@@@post@</context>
+          </series>
+          <nickname>gram-audit-db-unit-4.2.0</nickname>
           <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
