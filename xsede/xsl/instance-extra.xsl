@@ -62,7 +62,15 @@
     <xsl:param name="errMsg"/>
     
     <tr><td>
-    <form method="get" action="http://www.teragrid.org/cgi-bin/kb.cgi">
+    <form method="get" action="https://www.teragrid.org/web/user-support/kb?p_p_id=knowledgebase_WAR_knowledgebaseportlet">
+      <input type="hidden" name="p_p_id" value="knowledgebase_WAR_knowledgebaseportlet"/>
+      <input type="hidden" name="p_p_lifecycle" value="0"/>
+      <input type="hidden" name="p_p_state" value="normal"/>
+      <input type="hidden" name="p_p_mode" value="view"/>
+      <input type="hidden" name="p_p_col_id" value="column-1"/>
+      <input type="hidden" name="p_p_col_pos" value="1"/>
+      <input type="hidden" name="p_p_col_count" value="2"/>
+      <input type="hidden" name="_knowledgebase_WAR_knowledgebaseportlet_docid" value="aycv#tabletop"/>
       <input type="hidden" name="terms" 
              value="{concat($errMsg,' or ',$nickName,' or ',$reporterName,' or Common Inca Errors')}"/>
       <input type="submit" value="search knowledge base"/>
