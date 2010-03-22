@@ -342,6 +342,7 @@
                         <xsl:value-of select="$exit"/>
                       </xsl:when>
                       <xsl:when test="$result/body/stats//warn">
+                        <xsl:value-of select="$errMsg" /><br/>
                         <xsl:value-of select="'Near expiration:'" /><br/>
                         <xsl:for-each select="$result/body/stats//warn">
                           &#160;&#160;<xsl:value-of select="." /><br/>
