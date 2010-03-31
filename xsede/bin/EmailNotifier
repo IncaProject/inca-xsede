@@ -79,7 +79,7 @@ if (!$noemail){
         my $newbody = "Ticket assignment group: $assign\n\n$body";
         $body = $newbody;
         `date >> email.log`;
-        `echo "Sending email for $name to $to ($subject\n$body)" >> email.log`;
+        `echo "Sending email for $name to $to ($subject)\n$body" >> email.log`;
         }
       open(MAIL, "|$mailPath $to");
       print MAIL "$subjectPrefix$subject\n";
@@ -103,7 +103,6 @@ sub getExternalEmail {
     "frost\.ncar" => "FailTo:paul.marshall\@colorado.edu, FailTo:oberg\@ucar.edu",
     "(abe|-w)\.ncsa" => "FailTo:abe-admin\@ncsa.uiuc.edu",
     "-co\.ncsa" => "FailTo:co-admin\@ncsa.uiuc.edu",
-    "(tg-login|-hg)\.ncsa" => "FailTo:hg-admin\@ncsa.uiuc.edu",
     "\.nics\." => "FailTo:nmendoza\@utk.edu",
     "ornl\." => "FailTo:gilesdc\@ornl.gov, FailTo:cobbjw\@ornl.gov",
     "\.psc\." => "FailTo:rbudden\@psc.edu",
