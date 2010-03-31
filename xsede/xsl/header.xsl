@@ -65,7 +65,7 @@
                   </li>
                   <li>
                     <a href="{concat($url, '/html/ctssv3-graph.html')}">
-                      CTSSv3 and Cross-Site
+                      Cross-Site
                     </a>
 		    <ul>
                       <li>
@@ -154,7 +154,7 @@
                   </li>
                   <li>
                     <a href="{concat($url, '/html/ctssv3-expanded.html')}">
-                      CTSSv3 and Cross-Site
+                      Cross-Site
                     </a>
                     <ul>
                       <li>
