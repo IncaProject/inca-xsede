@@ -549,7 +549,10 @@ Database Initialization Completed</screen>
 <title>Depot Fault Tolerance</title>
 <para>In order to respond to unexpected depot failure, configure
 peer depots to mirror each other so that if one fails another can 
-take over.
+take over.  NOTE: the depots must be using a database other than 
+the default hibernate database.  There's a bug in hibernate that
+prevents synchronization.  To configure the depot database see
+<xref linkend="db-config">. 
 </para>
 <para>The steps for depots mirroring are as follows: </para>
 <orderedList>
@@ -594,7 +597,8 @@ inca.consumer.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
 </listItem>
 
 <listItem>
-<para>Start the peer depot and look for "DB synchronization succeeded" in the 
+<para>Restart the original server components (depot, agent, consumer).  
+Start the peer depot and look for "DB synchronization succeeded" in the 
 <filename>$INCA_DIST/var/depot.log</filename> of the peer depot:
 <screen>% cd $INCA_DIST; bin/inca start depot --sync</screen>
 </para>
