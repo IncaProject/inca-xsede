@@ -2100,7 +2100,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>gram5-saga</name>
         <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
         <macros>
@@ -3031,10 +3031,6 @@
             <value>2811</value>
           </macro>
           <macro>
-            <name>workflow4.2.0-gridshell-key</name>
-            <value>@keyPre@gridshell-0.9.9-4 @keyPost@</value>
-          </macro>
-          <macro>
             <name>adminEmail</name>
             <value>FailTo:inca@sdsc.edu, FailTo:TG-Inca-Alerts@loni.org</value>
           </macro>
@@ -3173,6 +3169,10 @@
           <macro>
             <name>apps4.2.0-compiler-pgi-key</name>
             <value>@keyPre@portland-6.1 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>workflow4.2.0-gridshell-key</name>
+            <value>@keyPre@gridshell @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -6505,14 +6505,14 @@
             <name>gram5-ping-hosts</name>
             <value>grid-qb.loni-lsu.teragrid.org</value>
             <value>gatekeeper.ranger.tacc.teragrid.org</value>
-            <value>gatekeeper.longhorn.tacc.teragrid.org</value>
+            <value>login2.longhorn.tacc.utexas.edu</value>
             <value>gatekeeper.lonestar.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>gram5-telnet-hosts</name>
             <value>grid-qb.loni-lsu.teragrid.org 2120</value>
             <value>gatekeeper.lonestar.tacc.teragrid.org 2120</value>
-            <value>gatekeeper.longhorn.tacc.teragrid.org 2120</value>
+            <value>login2.longhorn.tacc.utexas.edu 2120</value>
             <value>gatekeeper.ranger.tacc.teragrid.org 2120</value>
           </macro>
         </macros>
@@ -7289,16 +7289,16 @@
             <value>2120</value>
           </macro>
           <macro>
-            <name>gram5-gatekeeper-host</name>
-            <value>gatekeeper.longhorn.tacc.teragrid.org</value>
-          </macro>
-          <macro>
             <name>gram5-batch-job-manager</name>
             <value>jobmanager-sge</value>
           </macro>
           <macro>
             <name>gram5-fork-job-manager</name>
             <value>jobmanager-fork</value>
+          </macro>
+          <macro>
+            <name>gram5-gatekeeper-host</name>
+            <value>login2.longhorn.tacc.utexas.edu</value>
           </macro>
         </macros>
       </resource>
@@ -11718,7 +11718,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>75</version>
+      <version>76</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -11884,7 +11884,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>114</version>
+      <version>115</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12844,7 +12844,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>132</version>
+      <version>133</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13248,7 +13248,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>169</version>
+      <version>170</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13464,7 +13464,7 @@
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>32</version>
+      <version>33</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14152,7 +14152,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>52</version>
+      <version>53</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15624,7 +15624,7 @@
       <name>gram5</name>
       <guid>incas://sapa.sdsc.edu:6323/gram5</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>8</version>
+      <version>66</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15818,7 +15818,7 @@
           <nickname>glue2-fresh-xml-lc-4.2.1</nickname>
           <resourceSetName>local-compute.teragrid.org-4.2.1</resourceSetName>
           <schedule>
-            <crontime>? ? ?-31 * *</crontime>
+            <crontime>? ?-23/2 * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -15836,7 +15836,7 @@
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
       <description>Local Compute Capability Kit</description>
-      <version>38</version>
+      <version>44</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16512,7 +16512,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>169</version>
+      <version>170</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17364,11 +17364,99 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
+            <args>
+              <arg>
+                <name>localquery</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>cache</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>prop</name>
+                <value>{http://info.teragrid.org/2009/03/ctss}V4glue2RP</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>secs</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>service</name>
+                <value>DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>cachesecs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>delta</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@meta4.2.0-glue-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>glue2-fresh-xml-meta-4.2.0</nickname>
+          <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/2 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>metascheduling.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>36</version>
+      <version>39</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17432,7 +17520,7 @@
       <name>parallel-app.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>91</version>
+      <version>92</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19570,7 +19658,7 @@
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>156</version>
+      <version>158</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23182,7 +23270,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>63</version>
+      <version>64</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23904,50 +23992,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.scheduling.condorg.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@workflow4.0.0-condorg-key@@@@post@</context>
-          </series>
-          <nickname>condorg-condorq</nickname>
-          <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.scheduling.gridshell.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.gridshell.version</uri>
             <args>
@@ -24046,6 +24090,61 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>condor_status -schedd</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>.*Name\\s+Machine\\s+TotalRunningJobs\\s+TotalIdleJobs\\s+TotalHeldJobs|.*Total\\s+\\d+</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@workflow4.0.0-condorg-key@@@@post@</context>
+          </series>
+          <nickname>condorg-status-sws-4.0.0</nickname>
+          <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>workflow.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.0.0</guid>
@@ -24089,50 +24188,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gridshell>=0.9.9-4</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.scheduling.condorg.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@workflow4.2.0-condorg-key@@@@post@</context>
-          </series>
-          <nickname>condorg-condorq-sws-4.2.0</nickname>
-          <resourceSetName>workflow.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -24242,11 +24297,66 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>condor_status -schedd</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>.*Name\\s+Machine\\s+TotalRunningJobs\\s+TotalIdleJobs\\s+TotalHeldJobs|.*Total\\s+\\d+</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@workflow4.2.0-condorg-key@@@@post@</context>
+          </series>
+          <nickname>condorg-status-sws-4.2.0</nickname>
+          <resourceSetName>workflow.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>workflow.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.2.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>35</version>
+      <version>37</version>
     </suite>
   </suites>
 </inca:inca>
