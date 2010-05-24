@@ -13277,11 +13277,27 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.scheduling.condorg.unit.matchmaking</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit.matchmaking</uri>
             <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
               <arg>
                 <name>machinequeue</name>
                 <value>@matchmakers@</value>
@@ -13290,15 +13306,11 @@
                 <name>project</name>
                 <value>TG-STA060008N</value>
               </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
             </args>
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@ nickname=all2all:condormatch_to_@matchmakers@ @@@post@</context>
+            <context>@pre@@workflow4.2.0-condorg-key@ export PYTHONPATH=@__incaReporterManagerLocation__@/var/reporter-packages/lib/python &amp;&amp; nickname=all2all:condormatch_to_@matchmakers@ @@@post@</context>
           </series>
           <nickname>all2all:condormatch_to_@matchmakers@</nickname>
           <resourceSetName>condor-matchmakers</resourceSetName>
@@ -13321,7 +13333,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>170</version>
+      <version>175</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24166,7 +24178,7 @@
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.scheduling.condorg.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -24211,7 +24223,7 @@
       <name>workflow.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.0.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>92</version>
+      <version>95</version>
     </suite>
     <suite>
       <seriesConfigs>
