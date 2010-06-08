@@ -13,8 +13,8 @@ REL="PREVIOUS"
 TITLE="Administering Inca with incat"
 HREF="userguide-incat.html"><LINK
 REL="NEXT"
-TITLE="Reporters and Repositories"
-HREF="userguide-reporters.html"><LINK
+TITLE="Writing Custom Data Consumers"
+HREF="userguide-writing-consumer.html"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -67,7 +67,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="userguide-reporters.html"
+HREF="userguide-writing-consumer.html"
 ACCESSKEY="N"
 >Next</A
 ></TD
@@ -91,8 +91,8 @@ NAME="USERGUIDE-CONSUMER"
   retrieves data from the depot and displays it (e.g. a JSP, SQL query, CGI,
   etc.).  The Inca depot provides access to stored data via Perl and Java
   client APIs (see <A
-HREF="userguide-apis.html"
->Section 8</A
+HREF="userguide-writing-consumer.html#USERGUIDE-APIS"
+>Section 7.1.2</A
 >).
   </P
 ><P
@@ -200,140 +200,8 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="REST"
->6.1.2. REST URLs</A
-></H3
-><P
->Inca also provides the ability to fetch data in XML or HTML
-      format using REST urls.  By default, the consumer recognizes a 
-      REST url using the following format:
-      </P
-><P
-><TT
-CLASS="FILENAME"
->http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/week|month|quarter|year]]]</TT
-></P
-><P
->For example, the url</P
-><P
-><A
-HREF="http://localhost:8080/inca/HTML/rest/sampleSuite"
-TARGET="_top"
->http://localhost:8080/inca/HTML/rest/sampleSuite</A
-></P
-><P
->is equivalent to</P
-><P
-><A
-HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite"
-TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite</A
->.</P
-><P
->Likewise, the url </P
-><P
-><A
-HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid"
-TARGET="_top"
->http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid</A
-></P
-><P
->is equivalent to</P
-><P
-><A
-HREF="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid"
-TARGET="_top"
->http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&#38;resourceIds=defaultGrid</A
->.</P
-><P
->Specific resources can also be specified as resourceId, </P
-><P
-><A
-HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource"
-TARGET="_top"
->http://localhost:8080/inca/HTML/rest/sampleSuite/localResource</A
-></P
-><P
->The latest instance of a test can also be retrieved as follows:</P
-><P
-><A
-HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version"
-TARGET="_top"
->http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version</A
-></P
-><P
->Historical results for a test can also be retrieved for a week, month, quarter or year.  For example:</P
-><P
-><A
-HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week"
-TARGET="_top"
->http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week</A
-></P
-><P
->If you want to fetch the data in XML, just replace HTML 
-      as below:</P
-><P
-><A
-HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource"
-TARGET="_top"
->http://localhost:8080/inca/XML/rest/sampleSuite/localResource</A
-></P
-><P
->If you would like to change the id 'rest' to a more transparent id
-      such as 'kit-status-v1', edit &#60;context-param&#62; in 
-      <TT
-CLASS="FILENAME"
->$INCA_DIST/webapps/inca/WEB-INF/web.xml</TT
-> and restart the consumer.
-      For example, change </P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->      &#60;context-param&#62;
-        &#60;param-name&#62;restId&#60;/param-name&#62;
-        &#60;param-value&#62;rest&#60;/param-value&#62;
-      &#60;/context-param&#62;
-      </PRE
-></FONT
-></TD
-></TR
-></TABLE
-><P
->to</P
-><TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->      &#60;context-param&#62;
-        &#60;param-name&#62;restId&#60;/param-name&#62;
-        &#60;param-value&#62;kit-status-v1&#60;/param-value&#62;
-      &#60;/context-param&#62;
-      </PRE
-></FONT
-></TD
-></TR
-></TABLE
-></DIV
-><DIV
-CLASS="SECTION"
-><H3
-CLASS="SECTION"
-><A
 NAME="GOOGLE"
->6.1.3. Map View using Google Map API</A
+>6.1.2. Map View using Google Map API</A
 ></H3
 ><DIV
 CLASS="SECTION"
@@ -341,7 +209,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-OVERVIEW"
->6.1.3.1. Overview</A
+>6.1.2.1. Overview</A
 ></H4
 ><P
 >        The second item in the CURRENT DATA menu executes
@@ -390,7 +258,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-SETUP"
->6.1.3.2. Setting up Google Map View</A
+>6.1.2.2. Setting up Google Map View</A
 ></H4
 ><P
 >The Inca map views can be configured using the page described in <A
@@ -399,7 +267,7 @@ HREF="userguide-consumer.html#CONFIG-CONSUMER"
 >.
         Use the options in <A
 HREF="userguide-consumer.html#GOOGLE-CONFIG"
->Section 6.1.3.2.1</A
+>Section 6.1.2.2.1</A
 > to configure maps for your site.</P
 ><P
 >        To access the map view, you need to install a Google Maps API key in
@@ -466,7 +334,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-CONFIG"
->6.1.3.2.1. Google Map Options</A
+>6.1.2.2.1. Google Map Options</A
 ></H5
 ><P
 ></P
@@ -694,7 +562,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GOOGLE-ACCESS"
->6.1.3.3. Accessing the Google Map View</A
+>6.1.2.3. Accessing the Google Map View</A
 ></H4
 ><P
 >        Once setup is complete, load the map view by selecting the "Map of
@@ -1215,13 +1083,13 @@ NAME="CONFIG-CONSUMER"
 ><P
 >Here Inca administrators can view and change the global configuration of status pages. Determine whether to allow run nows or the execution of tests via the detailed status pages (see <A
 HREF="userguide-consumer.html#CONSUMER-RUN-NOW"
->Section 6.5.2</A
+>Section 6.5.1</A
 >) and configure the knowledge base (<A
 HREF="userguide-consumer.html#CONSUMER-KB"
->Section 6.5.3</A
+>Section 6.5.2</A
 >), google map (<A
 HREF="userguide-consumer.html#GOOGLE-SETUP"
->Section 6.1.3.2</A
+>Section 6.1.2.2</A
 >) and series summary (<A
 HREF="userguide-consumer.html#SERIES-REPORT"
 >Section 6.2.3</A
@@ -1253,223 +1121,8 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
-NAME="CONSUMER-REPORT-DETAILS-XML"
->6.5.1. Report Details XML</A
-></H3
-><P
->The individual report details are generated by a depot query that returns XML formatted like the following (tags are described below):
-    <TABLE
-BORDER="1"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><FONT
-COLOR="#000000"
-><PRE
-CLASS="SCREEN"
->&#60;reportDetails xmlns="http://inca.sdsc.edu/dataModel/reportDetails_2.1"&#62;
-  &#60;suiteId xmlns=""&#62;8140012&#60;/suiteId&#62;
-  &#60;seriesConfigId xmlns=""&#62;8156370&#60;/seriesConfigId&#62;
-  &#60;seriesId xmlns=""&#62;1712066&#60;/seriesId&#62;
-  &#60;reportId xmlns=""&#62;28430963&#60;/reportId&#62;
-  &#60;instanceId xmlns=""&#62;30977056&#60;/instanceId&#62;
-  &#60;seriesConfig xmlns=""&#62;
-    &#60;series&#62;
-      &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
-      &#60;version&#62;2&#60;/version&#62;
-      &#60;uri&#62;http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version&#60;/uri&#62;
-      &#60;args&#62;
-        &#60;arg&#62;
-          &#60;name&#62;log&#60;/name&#62;
-          &#60;value&#62;5&#60;/value&#62;
-        &#60;/arg&#62;
-        &#60;arg&#62;
-          &#60;name&#62;version&#60;/name&#62;
-          &#60;value&#62;no&#60;/value&#62;
-        &#60;/arg&#62;
-        &#60;arg&#62;
-          &#60;name&#62;help&#60;/name&#62;
-          &#60;value&#62;no&#60;/value&#62;
-        &#60;/arg&#62;
-        &#60;arg&#62;
-          &#60;name&#62;verbose&#60;/name&#62;
-          &#60;value&#62;1&#60;/value&#62;
-        &#60;/arg&#62;
-      &#60;/args&#62;
-      &#60;limits&#62;
-        &#60;wallClockTime&#62;600.0&#60;/wallClockTime&#62;
-        &#60;memory&#62;-1.0&#60;/memory&#62;
-        &#60;cpuTime&#62;-1.0&#60;/cpuTime&#62;
-      &#60;/limits&#62;
-      &#60;context&#62;&#60;![CDATA[bash -l -c 'set -a; cd /usr/users/9/inca/inca2install; cp ~/.soft.v3 ~/.soft.v3.$$ &#38;&#38; soft-msc ~/.soft.v3.$$ &#38;&#38; source ~/.soft.v3.$$.cache.sh &#38;&#38; export PERL5LIB=/usr/users/9/inca/inca2install/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &#38;&#38;cluster.compiler.gcc.version -help="no" -log="5" -verbose="1" -version="no"; rm -f ~/.soft.v3.$$*';]]&#62;&#60;/context&#62;
-      &#60;nice&#62;false&#60;/nice&#62;
-    &#60;/series&#62;
-    &#60;nickname&#62;compiler-gnu-version-as-4.0.1&#60;/nickname&#62;
-    &#60;resourceHostname&#62;psc-bigben&#60;/resourceHostname&#62;
-    &#60;schedule&#62;
-      &#60;cron&#62;
-        &#60;min&#62;2&#60;/min&#62;
-        &#60;hour&#62;17&#60;/hour&#62;
-        &#60;mday&#62;*&#60;/mday&#62;
-        &#60;wday&#62;*&#60;/wday&#62;
-        &#60;month&#62;*&#60;/month&#62;
-      &#60;/cron&#62;
-      &#60;numOccurs&#62;-1&#60;/numOccurs&#62;
-      &#60;suspended&#62;false&#60;/suspended&#62;
-    &#60;/schedule&#62;
-    &#60;acceptedOutput&#62;
-      &#60;comparitor&#62;ExprComparitor&#60;/comparitor&#62;
-      &#60;comparison&#62;gcc=~".*"&#60;/comparison&#62;
-      &#60;notifications&#62;
-        &#60;notification&#62;
-          &#60;notifier&#62;EmailNotifier&#60;/notifier&#62;
-          &#60;target&#62;FailTo:inca@sdsc.edu&#60;/target&#62;
-        &#60;/notification&#62;
-      &#60;/notifications&#62;
-    &#60;/acceptedOutput&#62;
-    &#60;action&#62;add&#60;/action&#62;
-  &#60;/seriesConfig&#62;
-  &#60;report xmlns=""&#62;...&#60;/report&#62;
-  &#60;comparisonResult xmlns=""&#62;Success&#60;/comparisonResult&#62;
-  &#60;sysusage xmlns=""&#62;
-    &#60;wallClockTime&#62;0.929562&#60;/wallClockTime&#62;
-    &#60;memory&#62;0.0&#60;/memory&#62;
-    &#60;cpuTime&#62;0.556034&#60;/cpuTime&#62;
-  &#60;/sysusage&#62;
-  &#60;stderr xmlns=""/&#62;
-&#60;/reportDetails&#62;</PRE
-></FONT
-></TD
-></TR
-></TABLE
->
-  </P
-><P
->Report detail output is surrounded by &#60;reportDetails&#62; tags.
-A prefix with a tag name that references
-http://inca.sdsc.edu/dataModel/reportDetails_2.1, which is the namespace that defines
-the report schema, can also be used.</P
-><P
->The following tags are defined within a &#60;reportDetails&#62;:</P
-><P
-></P
-><DIV
-CLASS="VARIABLELIST"
-><DL
-><DT
-><TT
-CLASS="FILENAME"
->suiteId</TT
-></DT
-><DD
-><P
->  (internal) the database identifier for the suite id number this report series belongs to (used in further queries)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->seriesConfigId</TT
-></DT
-><DD
-><P
->  (internal) the database identifier for the series configuration information for this report series (used in futher queries)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->seriesId</TT
-></DT
-><DD
-><P
->  (internal) the database identifier for the series information for this report series (used in further queries)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->reportId</TT
-></DT
-><DD
-><P
->  (internal) the database identifier for the report information for the particular result from this report series (used in further queries)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->instanceId</TT
-></DT
-><DD
-><P
->  (internal) the database identifier for the instance information for the particular time this report series executed (used in futher queries)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->seriesConfig</TT
-></DT
-><DD
-><P
->  all of the configuration options for this report series: name (of reporter), version (of reporter), uri (for reporter), args, limits (for consumption of wall clock time, memory, and cpu time), context (command to execute series), nickname (of series), resourceHostname (where series will execute), schedule (cron for executing series), acceptedOutput (can include "comparison" string to match in the report and "notification" actions to take if the comparison fails)
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->report</TT
-></DT
-><DD
-><P
->  report XML like that described in <A
-HREF="userguide-reporters.html#REPORTER-OUTPUT"
->Section 7.2.2</A
->
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->comparisonResult</TT
-></DT
-><DD
-><P
->  if series was configured with a comparison, the result of the comparison for this particular report series execution
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->sysusage</TT
-></DT
-><DD
-><P
->  amount of wall clock time, memory and cpu time this particular report series execution consumed
-  </P
-></DD
-><DT
-><TT
-CLASS="FILENAME"
->stderr</TT
-></DT
-><DD
-><P
->  standard error, if any, for this particular report series execution 
-  </P
-></DD
-></DL
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><H3
-CLASS="SECTION"
-><A
 NAME="CONSUMER-RUN-NOW"
->6.5.2. Run Nows</A
+>6.5.1. Run Nows</A
 ></H3
 ><P
 >If the "Allow run nows from web pages" option is checked 
@@ -1534,7 +1187,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="CONSUMER-KB"
->6.5.3. Knowledge Base</A
+>6.5.2. Knowledge Base</A
 ></H3
 ><P
 >The Inca default knowledge base is designed to collect problem resolution information 
@@ -1647,13 +1300,13 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="EXTERNAL-KB"
->6.5.3.1. Using an External or Custom Knowledge Base</A
+>6.5.2.1. Using an External or Custom Knowledge Base</A
 ></H4
 ><P
 >To use an external or custom knowledge base instead of Inca's default internal knowledge base, 
       configure the "searchString" and "submitString" parameters described in <A
 HREF="userguide-consumer.html#CONSUMER-KB"
->Section 6.5.3</A
+>Section 6.5.2</A
 >.  
       For example, to add articles to an external knowledge base with a cgi submission form like</P
 ><P
@@ -1869,7 +1522,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN976"
+NAME="AEN884"
 ></A
 ><P
 ><B
@@ -2519,7 +2172,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1198"
+NAME="AEN1106"
 ></A
 ><P
 ><B
@@ -3364,7 +3017,7 @@ NAME="CONSUMER-NEUTRAL-ERRS"
         (i.e. neither as a pass nor a fail).  By default, Inca marks error messages that start with "DOWNTIME" or "NOT_AT_FAULT" 
         neutrally because they are generally the result of report filtering (see <A
 HREF="userguide-advanced-config.html#REPORT-FILTERING"
->Section 11.3</A
+>Section 10.3</A
 >).  Errors that contain "Inca error" or "Unable to fetch proxy for reporter execution" are 
         also marked neutrally since the error may be due to the Inca framework instead of the machine being tested.  To change the 
         errors that are marked neutrally, edit the regular expression that is matched as follows:
@@ -4079,7 +3732,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="userguide-reporters.html"
+HREF="userguide-writing-consumer.html"
 ACCESSKEY="N"
 >Next</A
 ></TD
@@ -4099,7 +3752,7 @@ VALIGN="top"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Reporters and Repositories</TD
+>Writing Custom Data Consumers</TD
 ></TR
 ></TABLE
 ></DIV
