@@ -10,11 +10,11 @@ REL="HOME"
 TITLE="Inca 2.6 User's Guide"
 HREF="index.html"><LINK
 REL="PREVIOUS"
-TITLE="Data Display (Data Consumers)"
-HREF="userguide-consumer.html"><LINK
+TITLE="Writing Custom Data Consumers"
+HREF="userguide-writing-consumer.html"><LINK
 REL="NEXT"
-TITLE="Inca Client APIs"
-HREF="userguide-apis.html"><LINK
+TITLE="Security"
+HREF="userguide-security.html"><LINK
 REL="STYLESHEET"
 TYPE="text/css"
 HREF="inca.css"></HEAD
@@ -53,7 +53,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="userguide-consumer.html"
+HREF="userguide-writing-consumer.html"
 ACCESSKEY="P"
 >Prev</A
 ></TD
@@ -67,7 +67,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="userguide-apis.html"
+HREF="userguide-security.html"
 ACCESSKEY="N"
 >Next</A
 ></TD
@@ -82,7 +82,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="USERGUIDE-REPORTERS"
->7. Reporters and Repositories</A
+>8. Reporters and Repositories</A
 ></H1
 ><P
 >Inca reporters are executable programs and scripts, generally small, that test
@@ -101,18 +101,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-CMDLINE"
->7.1. Executing Reporters</A
+>8.1. Executing Reporters</A
 ></H2
 ><P
 >Because they are executables, Inca reporters are independent of the rest of the Inca system.
 Reporters can be executed manually from a command line or automatically as part of an Inca installation.  
 Incorporating your own reporters into a running Inca installation requires only writing the reporters (<A
 HREF="userguide-reporters.html#REPORTER-WRITING"
->Section 7.2</A
+>Section 8.2</A
 >), 
 including them in a repository (<A
 HREF="userguide-reporters.html#REPORTER-REPOSITORIES"
->Section 7.3</A
+>Section 8.3</A
 >), 
 and configuring the repository's series using incat (<A
 HREF="userguide-incat.html"
@@ -141,7 +141,7 @@ CLASS="SCREEN"
 >
 You should now see XML output like that in <A
 HREF="userguide-reporters.html#REPORTER-OUTPUT"
->Section 7.2.2</A
+>Section 8.2.2</A
 >.</P
 ><P
 >All Inca reporters must support the command line arguments listed in the table
@@ -150,11 +150,11 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1548"
+NAME="AEN1680"
 ></A
 ><P
 ><B
->Table 4. Reporter Command Line Arguments</B
+>Table 6. Reporter Command Line Arguments</B
 ></P
 ><TABLE
 BORDER="1"
@@ -297,19 +297,19 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-WRITING"
->7.2. Writing Reporters</A
+>8.2. Writing Reporters</A
 ></H2
 ><P
 >Reporters can be written in any language as long as 
 they output XML according to the schema described in <A
 HREF="userguide-reporters.html#REPORTER-SCHEMA"
->Section 7.2.1</A
+>Section 8.2.1</A
 >.  
 New reporter developers may choose to write reporters in Perl or Python since 
 the Inca distribution includes sample reporters and API modules in those
 languages (<A
 HREF="userguide-reporters.html#REPORTER-API"
->Section 7.2.3</A
+>Section 8.2.3</A
 >) 
 for printing XML according to our schema.</P
 ><P
@@ -317,11 +317,11 @@ for printing XML according to our schema.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1606"
+NAME="AEN1738"
 ></A
 ><P
 ><B
->Table 5. Report Character Limits</B
+>Table 7. Report Character Limits</B
 ></P
 ><TABLE
 BORDER="1"
@@ -378,7 +378,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-SCHEMA"
->7.2.1. Reporter XML Schema</A
+>8.2.1. Reporter XML Schema</A
 ></H3
 ><P
 >In order to promote interoperability between reporters, we define a
@@ -422,7 +422,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-OUTPUT"
->7.2.2. Reporter XML Output</A
+>8.2.2. Reporter XML Output</A
 ></H3
 ><P
 >Here is the output from the successful run of a typical Inca reporter.  The
@@ -726,7 +726,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-API"
->7.2.3. Reporter APIs</A
+>8.2.3. Reporter APIs</A
 ></H3
 ><P
 >The Inca release includes a set of <A
@@ -740,11 +740,11 @@ TARGET="_top"
 > that make it easier to
 develop reporters that produce output as shown in <A
 HREF="userguide-reporters.html#REPORTER-OUTPUT"
->Section 7.2.2</A
+>Section 8.2.2</A
 >
  and conform to the schema described in <A
 HREF="userguide-reporters.html#REPORTER-SCHEMA"
->Section 7.2.1</A
+>Section 8.2.1</A
 >.  
 The following are a list of modules and their purpose (click on module names for manpages):</P
 ><P
@@ -966,13 +966,13 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="WRITING-TIPS"
->7.2.4. Reporter Writing Tips</A
+>8.2.4. Reporter Writing Tips</A
 ></H3
 ><P
 >In general using the reporter APIs described in 
 <A
 HREF="userguide-reporters.html#REPORTER-API"
->Section 7.2.3</A
+>Section 8.2.3</A
 > will help to produce the most 
 efficient reporter code.  There are additional considerations when
 writing reporters that:
@@ -1073,7 +1073,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="REPORTER-REPOSITORIES"
->7.3. Reporter Repositories</A
+>8.3. Reporter Repositories</A
 ></H2
 ><P
 >The Inca system retrieves reporters from external collections called
@@ -1129,7 +1129,7 @@ packages to execute, it should include a dependencies attribute with a
 semicolon-separated list of package names.  For more information about reporter 
 package dependencies see <A
 HREF="userguide-reporters.html#PACKAGE-DEPEND"
->Section 7.3.1</A
+>Section 8.3.1</A
 >.  The incat administration tool uses
 the Packages.gz file's arguments and description attributes as part of its series edit dialog.
 The value of the arguments attribute is a semicolon-separated list giving the
@@ -1197,7 +1197,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PACKAGE-DEPEND"
->7.3.1. Reporter Package Dependencies</A
+>8.3.1. Reporter Package Dependencies</A
 ></H3
 ><P
 >Some reporters may require a CPAN Perl module, C library, compiled executable, or 
@@ -1303,7 +1303,7 @@ CLASS="FILENAME"
 repository directory.   Then the dependency is added to the repository using
 incpack (see <A
 HREF="userguide-reporters.html#UPDATE-REPOSITORY"
->Section 7.3.2</A
+>Section 8.3.2</A
 >
 for more about repository updates):
 <TABLE
@@ -1502,7 +1502,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="UPDATE-REPOSITORY"
->7.3.2. Updating Reporter Repositories</A
+>8.3.2. Updating Reporter Repositories</A
 ></H3
 ><P
 >The Inca agent will detect changes to your reporter repository and
@@ -1590,7 +1590,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="userguide-consumer.html"
+HREF="userguide-writing-consumer.html"
 ACCESSKEY="P"
 >Prev</A
 ></TD
@@ -1608,7 +1608,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="userguide-apis.html"
+HREF="userguide-security.html"
 ACCESSKEY="N"
 >Next</A
 ></TD
@@ -1618,7 +1618,7 @@ ACCESSKEY="N"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Data Display (Data Consumers)</TD
+>Writing Custom Data Consumers</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -1628,7 +1628,7 @@ VALIGN="top"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Inca Client APIs</TD
+>Security</TD
 ></TR
 ></TABLE
 ></DIV

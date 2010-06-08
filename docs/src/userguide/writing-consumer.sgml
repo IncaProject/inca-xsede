@@ -1,0 +1,496 @@
+  <section id="userguide-writing-consumer">
+    <title>Writing Custom Data Consumers</title>
+    <para>
+    </para>
+    <section id="retrieving-xml">
+    <title>Retrieving XML</title>
+    <section id="rest">
+      <title>REST URLs</title>
+      <para>Inca also provides the ability to fetch data in XML or HTML
+      format using REST urls.  By default, the consumer recognizes a 
+      REST url using the following format:
+      </para>
+
+      <para><filename>http://localhost:8080/inca/XML|HTML/rest/&lt;suiteName&gt;[/&lt;resourceId&gt;[/&lt;seriesNickname&gt;[/week|month|quarter|year]]]</filename></para>
+
+      <para>For example, the url</para>
+
+      <para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite">http://localhost:8080/inca/HTML/rest/sampleSuite</ulink></para>
+
+      <para>is equivalent to</para>
+
+      <para><ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite</ulink>.</para>
+
+      <para>Likewise, the url </para>
+
+      <para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid">http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid</ulink></para> 
+      <para>is equivalent to</para>
+
+      <para><ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>.</para>
+
+      <para>Specific resources can also be specified as resourceId, </para>
+
+      <para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource</ulink></para>
+
+      <para>The latest instance of a test can also be retrieved as follows:</para>
+      <para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version</ulink></para>
+      
+      <para>Historical results for a test can also be retrieved for a week, month, quarter or year.  For example:</para>
+      <para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week</ulink></para>
+      
+     <para>If you want to fetch the data in XML, just replace HTML 
+      as below:</para>
+
+      <para><ulink url="http://localhost:8080/inca/XML/rest/sampleSuite/localResource">http://localhost:8080/inca/XML/rest/sampleSuite/localResource</ulink></para>
+
+      <para>If you would like to change the id 'rest' to a more transparent id
+      such as 'kit-status-v1', edit &lt;context-param&gt; in 
+      <filename>$INCA_DIST/webapps/inca/WEB-INF/web.xml</filename> and restart the consumer.
+      For example, change </para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;rest&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+
+      <para>to</para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;kit-status-v1&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+      
+    </section>
+<section id="userguide-apis">
+<title>Inca Client APIs</title>
+
+<para>Currently, we provide Perl and Java client APIs to the Inca agent and
+depot.</para>
+
+  <table><title>Inca client APIs</title>
+  <tgroup cols="3">
+  <thead>
+    <row>
+      <entry><para>Component</para></entry>
+      <entry><para>Java API</para></entry>
+      <entry><para>Perl API</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para>client</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/Client.html">edu.sdsc.inca.Client</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/Client.html">Inca::Client</ulink></para></entry>
+    </row>
+    <row>
+      <entry><para>agent</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html">edu.sdsc.inca.AgentClient</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/AgentClient.html">Inca::AgentClient</ulink></para></entry>
+    </row>
+    <row>
+      <entry><para>depot</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html">edu.sdsc.inca.DepotClient</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/DepotClient.html">Inca::DepotClient</ulink></para></entry>
+    </row>
+  </tbody>
+  </tgroup>
+</table>
+
+
+</section>
+<section id="userguide-webservices">
+<title>Web Services</title>
+
+<para>To access Inca from a Web services API, you will need to install the
+Inca web services component, <filename>incaws</filename>. </para>
+
+<screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh
+% sh incaInstall.sh $INCA_DIST incaws</screen>
+
+<para>The results should look similar to:</para>
+
+<screen>
+Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+--12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+           => `Inca-WS.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1,226,347 (1.2M) [application/x-tar]
+
+100%[====================================>] 1,226,347     --.--K/s             
+
+12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
+
+Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+Inca-WS-1.6421/
+Inca-WS-1.6421/lib/
+...
+Inca-WS-1.6421/etc/IncaWS.wsdl
+Inca-WS-1.6421/version.svn
+Will install Inca prerequisite Net::SSLeay
+Will install Inca prerequisite IO::Socket::SSL
+Will install Inca prerequisite Expat
+Will install Inca prerequisite LWP::UserAgent
+Will install Inca prerequisite MIME::Base64
+Will install Inca prerequisite SOAP::Lite
+Writing Makefile.perl.inc for Inca-WS
+Inca-WS installed
+</screen>
+
+<para>To start incaws, specify the port, credentials, and hostname/port for
+the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</para>
+
+<screen>
+% cd $INCA_DIST
+% ./bin/inca incaws \
+ --auth=yes \
+ --cert=etc/agentcert.pem \
+ --key=etc/agentkey.pem \
+ --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem \
+ --port=8001 \
+ --password=yes \
+ <emphasis role="red">depotHost</emphasis>:6324 \
+ <emphasis role="red">agentHost</emphasis>:6323
+<emphasis role="red">enter password (no prompt displayed)</emphasis>
+</screen> 
+
+<para>Check to make sure the incaws is running on port 8001:
+<screen>% netstat -an | grep 8001
+tcp4       0      0  *.8001                 *.*                    LISTEN
+</screen>
+Error logs are in $INCA_DIST/var.</para>
+
+<para>The WSDL file for the incaws component is in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  The following table summarizes the available functions. </para>
+
+  <table><title>Web services functions</title>
+  <tgroup cols="2">
+  <thead>
+    <row>
+      <entry><para>Function</para></entry>
+      <entry><para>Description</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para>getCatalog( [$url] )</para></entry>
+      <entry><para>Asks the agent to retrieve and return the package catalog
+      from the reporter repository accessed via $url.  An undefined $url
+      indicates that the agent should return a merged catalog for all known
+      repositories.</para></entry>
+    </row>
+    <row>
+      <entry><para>getConfig()</para></entry>
+      <entry><para>Asks the agent to return XML for the Inca deployment
+      configuration.  </para></entry>
+    </row>
+    <row>
+      <entry><para>pingAgent( $string )</para></entry>
+      <entry><para>Check that the Inca agent is accessible. </para></entry>
+    </row>
+    <row>
+      <entry><para>pingDepot( $string )</para></entry>
+      <entry><para>Check that the Inca depot is accessible. </para></entry>
+    </row>
+    <row>
+      <entry><para>queryGuids()</para></entry>
+      <entry><para>Asks the depot to return a space-separated list of known suite guids.  </para></entry>
+    </row>
+    <row>
+      <entry><para>queryHql($hql)</para></entry>
+      <entry><para>Asks the depot use the HQL select statement $hql to extract
+      and return information from the DB.  On success, returns a reference to
+      an array that contains the objects selected by the select
+      statement.</para></entry>
+    </row>
+    <row>
+      <entry><para>queryInstance($instanceId, $configId)</para></entry>
+      <entry><para>Asks the depot to report details about one particular
+      invocation of a reporter.  $instanceId is the DB id of the instance for
+      the invocation; $configId the related series configuration DB id.  On
+      success, returns a reference to a single-element array that contains a
+      ReportDetails document (described in <xref linkend="consumer-report-details-xml">) 
+      for the instance.</para></entry>
+    </row>
+    <row>
+      <entry><para>querySeries($configId)</para></entry>
+      <entry><para>Asks the depot to retrieve information about all instances
+      related to the series configuration identified by $configId.  On
+      success, returns a reference to an array that contains a set of
+      ReportDetail documents (described in <xref linkend="consumer-report-details-xml">) 
+      related to the series.
+      </para></entry>
+    </row>
+    <row>
+      <entry><para>querySuite($guid)</para></entry>
+      <entry><para>Asks the depot to retrieve information about all the series
+      of the suite identified by $guid.  On success, returns a reference to an
+      array that contains a set of ReportSummary documents (described in <xref linkend="consumer-report-summary-xml">) related to the
+      series configurations of the suite.  </para></entry>
+    </row>
+  </tbody>
+  </tgroup>  
+</table>
+
+<para>Below shows an example of how to access the Inca web services from Perl
+using SOAP::Lite.</para>
+
+<screen>
+use SOAP::Lite;
+use Cwd;
+
+my $cwd = getcwd();
+my $ws = SOAP::Lite->service("file:$cwd/etc/IncaWS.wsdl");
+
+# check agent and depot are available
+print $ws->pingAgent('hello agent'), "\n";
+print $ws->pingDepot('hello depot'), "\n";
+
+# get the Inca configuration
+print $ws->getConfig(), "\n";
+my $guid = $ws->queryGuids();
+
+# get the latest instances of a suite
+my $results = $ws->querySuite( $guid );
+for my $result ( @{$results} ) {
+  print $result;
+}
+</screen>
+
+<para>Place the above code in a file called <filename>$INCA_DIST/sampleWS.pl</filename>
+and set the environment variable PERL5LIB to
+<filename>$INCA_DIST/lib/perl</filename>.  Then type, </para>
+
+<screen>% perl sampleWS.pl</screen>
+
+<para>When run against the default installation, the results should look
+similar to below.</para>
+
+<screen>
+hello agent
+hello depot
+&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;
+&lt;repositories&gt;
+  &lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;
+&lt;/repositories&gt;
+&lt;resourceConfig&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+        &lt;name&gt;defaultGrid&lt;/name&gt;
+        &lt;xpath&gt;//resource[matches(name, "localSite")]&lt;/xpath&gt;
+      &lt;macros&gt;
+ ...
+  &lt;/resources&gt;
+&lt;/resourceConfig&gt;
+&lt;suites&gt;
+  &lt;suite&gt;
+    &lt;seriesConfigs&gt;
+      &lt;seriesConfig&gt;
+        &lt;series&gt;
+          &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
+          &lt;uri&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
+          &lt;args&gt;
+            &lt;arg&gt;
+              &lt;name&gt;cc&lt;/name&gt;
+              &lt;value&gt;cc&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;dir&lt;/name&gt;
+              &lt;value/&gt;&lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;help&lt;/name&gt;
+              &lt;value&gt;no&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;log&lt;/name&gt;
+              &lt;value&gt;3&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;verbose&lt;/name&gt;
+              &lt;value&gt;1&lt;/value&gt;
+            &lt;/arg&gt;
+ ...
+        &lt;action&gt;add&lt;/action&gt;
+      &lt;/seriesConfig&gt;
+    &lt;/seriesConfigs&gt;
+    &lt;name&gt;sampleSuite&lt;/name&gt;
+    &lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;
+    &lt;description/&gt;
+    &lt;version&gt;1&lt;/version&gt;
+  &lt;/suite&gt;
+&lt;/suites&gt;
+&lt;/inca:inca&gt;
+
+&lt;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
+  &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+  &lt;uri xmlns=""&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
+  &lt;nickname xmlns=""&gt;atlas_version&lt;/nickname&gt;
+  &lt;seriesConfigId xmlns=""&gt;1&lt;/seriesConfigId&gt;
+  &lt;instanceId xmlns=""&gt;24&lt;/instanceId&gt;
+  &lt;gmt xmlns=""&gt;2007-02-01T13:21:01.000-08:00&lt;/gmt&gt;
+  &lt;body xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1" xmlns=""/&gt;
+  &lt;errorMessage xmlns=""&gt;Cannot locate ATLAS installation; use
+-dir&lt;/errorMessage&gt;                    
+&lt;/reportSummary&gt;
+...
+</screen> 
+
+</section>
+   </section>
+   <section id="understanding-xml">
+    <title>Understanding XML Schemas</title>
+   <section id="consumer-report-details-xml">
+    <title>Report Details</title>
+    <para>The individual report details are generated by a depot query that returns XML formatted like the following (tags are described below):
+    <screen>&lt;reportDetails xmlns="http://inca.sdsc.edu/dataModel/reportDetails_2.1"&gt;
+  &lt;suiteId xmlns=""&gt;8140012&lt;/suiteId&gt;
+  &lt;seriesConfigId xmlns=""&gt;8156370&lt;/seriesConfigId&gt;
+  &lt;seriesId xmlns=""&gt;1712066&lt;/seriesId&gt;
+  &lt;reportId xmlns=""&gt;28430963&lt;/reportId&gt;
+  &lt;instanceId xmlns=""&gt;30977056&lt;/instanceId&gt;
+  &lt;seriesConfig xmlns=""&gt;
+    &lt;series&gt;
+      &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+      &lt;version&gt;2&lt;/version&gt;
+      &lt;uri&gt;http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version&lt;/uri&gt;
+      &lt;args&gt;
+        &lt;arg&gt;
+          &lt;name&gt;log&lt;/name&gt;
+          &lt;value&gt;5&lt;/value&gt;
+        &lt;/arg&gt;
+        &lt;arg&gt;
+          &lt;name&gt;version&lt;/name&gt;
+          &lt;value&gt;no&lt;/value&gt;
+        &lt;/arg&gt;
+        &lt;arg&gt;
+          &lt;name&gt;help&lt;/name&gt;
+          &lt;value&gt;no&lt;/value&gt;
+        &lt;/arg&gt;
+        &lt;arg&gt;
+          &lt;name&gt;verbose&lt;/name&gt;
+          &lt;value&gt;1&lt;/value&gt;
+        &lt;/arg&gt;
+      &lt;/args&gt;
+      &lt;limits&gt;
+        &lt;wallClockTime&gt;600.0&lt;/wallClockTime&gt;
+        &lt;memory&gt;-1.0&lt;/memory&gt;
+        &lt;cpuTime&gt;-1.0&lt;/cpuTime&gt;
+      &lt;/limits&gt;
+      &lt;context&gt;&lt;!&#91;CDATA&#91;bash -l -c 'set -a; cd /usr/users/9/inca/inca2install; cp ~/.soft.v3 ~/.soft.v3.$$ &amp;&amp; soft-msc ~/.soft.v3.$$ &amp;&amp; source ~/.soft.v3.$$.cache.sh &amp;&amp; export PERL5LIB=/usr/users/9/inca/inca2install/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &amp;&amp;cluster.compiler.gcc.version -help="no" -log="5" -verbose="1" -version="no"; rm -f ~/.soft.v3.$$*';&#93;&#93;&gt;&lt;/context&gt;
+      &lt;nice&gt;false&lt;/nice&gt;
+    &lt;/series&gt;
+    &lt;nickname&gt;compiler-gnu-version-as-4.0.1&lt;/nickname&gt;
+    &lt;resourceHostname&gt;psc-bigben&lt;/resourceHostname&gt;
+    &lt;schedule&gt;
+      &lt;cron&gt;
+        &lt;min&gt;2&lt;/min&gt;
+        &lt;hour&gt;17&lt;/hour&gt;
+        &lt;mday&gt;*&lt;/mday&gt;
+        &lt;wday&gt;*&lt;/wday&gt;
+        &lt;month&gt;*&lt;/month&gt;
+      &lt;/cron&gt;
+      &lt;numOccurs&gt;-1&lt;/numOccurs&gt;
+      &lt;suspended&gt;false&lt;/suspended&gt;
+    &lt;/schedule&gt;
+    &lt;acceptedOutput&gt;
+      &lt;comparitor&gt;ExprComparitor&lt;/comparitor&gt;
+      &lt;comparison&gt;gcc=~".*"&lt;/comparison&gt;
+      &lt;notifications&gt;
+        &lt;notification&gt;
+          &lt;notifier&gt;EmailNotifier&lt;/notifier&gt;
+          &lt;target&gt;FailTo:inca@sdsc.edu&lt;/target&gt;
+        &lt;/notification&gt;
+      &lt;/notifications&gt;
+    &lt;/acceptedOutput&gt;
+    &lt;action&gt;add&lt;/action&gt;
+  &lt;/seriesConfig&gt;
+  &lt;report xmlns=""&gt;...&lt;/report&gt;
+  &lt;comparisonResult xmlns=""&gt;Success&lt;/comparisonResult&gt;
+  &lt;sysusage xmlns=""&gt;
+    &lt;wallClockTime&gt;0.929562&lt;/wallClockTime&gt;
+    &lt;memory&gt;0.0&lt;/memory&gt;
+    &lt;cpuTime&gt;0.556034&lt;/cpuTime&gt;
+  &lt;/sysusage&gt;
+  &lt;stderr xmlns=""/&gt;
+&lt;/reportDetails&gt;</screen>
+  </para>
+<para>
+Report detail output is surrounded by &lt;reportDetails&gt; tags.
+A prefix with a tag name that references
+http://inca.sdsc.edu/dataModel/reportDetails_2.1, which is the namespace that defines
+the report schema, can also be used.
+</para><para>
+The following tags are defined within a &lt;reportDetails&gt;:
+</para>
+
+<variablelist>
+  <varlistentry><term><filename>suiteId</filename></term>
+  <listitem><para>
+  (internal) the database identifier for the suite id number this report series belongs to (used in further queries)
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>seriesConfigId</filename></term>
+  <listitem><para>
+  (internal) the database identifier for the series configuration information for this report series (used in futher queries)
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>seriesId</filename></term>
+  <listitem><para>
+  (internal) the database identifier for the series information for this report series (used in further queries)
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>reportId</filename></term>
+  <listitem><para>
+  (internal) the database identifier for the report information for the particular result from this report series (used in further queries)
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>instanceId</filename></term>
+  <listitem><para>
+  (internal) the database identifier for the instance information for the particular time this report series executed (used in futher queries)
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>seriesConfig</filename></term>
+  <listitem><para>
+  all of the configuration options for this report series: name (of reporter), version (of reporter), uri (for reporter), args, limits (for consumption of wall clock time, memory, and cpu time), context (command to execute series), nickname (of series), resourceHostname (where series will execute), schedule (cron for executing series), acceptedOutput (can include "comparison" string to match in the report and "notification" actions to take if the comparison fails)
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>report</filename></term>
+  <listitem><para>
+  report XML like that described in <xref linkend="reporter-output">
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>comparisonResult</filename></term>
+  <listitem><para>
+  if series was configured with a comparison, the result of the comparison for this particular report series execution
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>sysusage</filename></term>
+  <listitem><para>
+  amount of wall clock time, memory and cpu time this particular report series execution consumed
+  </para> </listitem>
+  </varlistentry>
+  
+  <varlistentry><term><filename>stderr</filename></term>
+  <listitem><para>
+  standard error, if any, for this particular report series execution 
+  </para> </listitem>
+  </varlistentry>
+</variablelist>
+    
+   </section>
+   
+   </section>
+
+  </section>
