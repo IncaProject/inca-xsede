@@ -296,11 +296,11 @@
           </macro>
           <macro>
             <name>adminEmail</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:nmendoza@utk.edu</value>
+            <value>FailTo:inca@sdsc.edu, FailTo:admin-core@utk.edu</value>
           </macro>
           <macro>
             <name>securityContact</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:nmendoza@utk.edu</value>
+            <value>FailTo:inca@sdsc.edu, FailTo:admin-core@utk.edu</value>
           </macro>
         </macros>
       </resource>
@@ -1516,7 +1516,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>condor-matchmakers</name>
         <xpath>//resource[matches(name, '^(tacc-lonestar|purdue-condor|loni-lsu-qb|tacc-ranger|purdue-steele)$')]</xpath>
         <macros>
@@ -11745,7 +11745,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>78</version>
+      <version>79</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -11911,7 +11911,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>116</version>
+      <version>118</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12871,7 +12871,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>133</version>
+      <version>135</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13327,7 +13327,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>179</version>
+      <version>185</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13543,7 +13543,7 @@
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>33</version>
+      <version>35</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14231,7 +14231,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>54</version>
+      <version>56</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15703,7 +15703,67 @@
       <name>gram5</name>
       <guid>incas://sapa.sdsc.edu:6323/gram5</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>66</version>
+      <version>67</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.wget.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.wget.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>page</name>
+                <value>http://karnak.teragrid.org:8080/karnak/index.html</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>wget-karnak</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>?-59/30 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:wsmith@tacc.utexas.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>karnak</name>
+      <guid>incas://sapa.sdsc.edu:6323/karnak</guid>
+      <description>Karnak testing</description>
+      <version>2</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15915,7 +15975,7 @@
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
       <description>Local Compute Capability Kit</description>
-      <version>44</version>
+      <version>45</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16591,7 +16651,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>177</version>
+      <version>179</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17535,7 +17595,7 @@
       <name>metascheduling.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>39</version>
+      <version>40</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17599,7 +17659,7 @@
       <name>parallel-app.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>92</version>
+      <version>93</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19737,7 +19797,7 @@
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>158</version>
+      <version>159</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20973,7 +21033,7 @@
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>34</version>
+      <version>35</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23349,7 +23409,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>64</version>
+      <version>66</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23737,7 +23797,7 @@
       <name>vtss.teragrid.org-3.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/vtss.teragrid.org-3.0.0</guid>
       <description>Vizualization software</description>
-      <version>38</version>
+      <version>39</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24425,7 +24485,7 @@
       <name>workflow.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.2.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>48</version>
+      <version>49</version>
     </suite>
   </suites>
 </inca:inca>
