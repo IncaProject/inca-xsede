@@ -19,15 +19,10 @@ my @past = split("\n", $pastDown);
 my $pw = `cat $home/bin/downtimes.db`;
 $pw =~ s/\n//g;
 
-my $service = "inca/". $pw . "@(DESCRIPTION =
-          (ADDRESS = (PROTOCOL = TCP)(HOST = spike-vip.sdsc.edu)(PORT = 1521))
-          (ADDRESS = (PROTOCOL = TCP)(HOST = jet-vip.sdsc.edu)(PORT = 1521))
-          (ADDRESS = (PROTOCOL = TCP)(HOST = faye-vip.sdsc.edu)(PORT = 1521))
-          (LOAD_BALANCE = on)(FAILOVER = on)(CONNECT_DATA =
-          (SID = NPACI_RAC)(SERVER = DEDICATED)(SERVICE_NAME = npaci.sdsc.edu)
-          (FAILOVER_MODE = (TYPE = select)(METHOD = basic))))";
 
-my $dbh = DBI->connect('dbi:Oracle:', $service, '') || die "Database connect err: $DBI::errstr";
+my $dbh = DBI->connect("DBI:Pg:dbname=user_news;host=azrael.sdsc.edu;port=5431", "inca", $pw);
+die "Unable to connect to db" if ! defined $dbh;
+
 my %resources = ( "inca_name" => $tmpFile,
                   "system_name" => $publicIISFile );
 my $email = "";
