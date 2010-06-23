@@ -553,6 +553,10 @@ take over.  NOTE: the depots must be using a database other than
 the default hibernate database.  There's a bug in hibernate that
 prevents synchronization.  To configure the depot database see
 <xref linkend="db-config">. 
+        <figure id="redundant-depot">
+          <title>Inca deployment with fault tolerant depot</title>
+          <graphic fileref="figures/depot/depot-enhancement.jpg" align="center"></graphic>
+        </figure>
 </para>
 <para>The steps for depots mirroring are as follows: </para>
 <orderedList>
@@ -569,7 +573,7 @@ prevents synchronization.  To configure the depot database see
 <para>Copy the <filename>$INCA_DIST/etc/depot.*pem</filename> and <filename>$INCA_DIST/etc/trusted/*</filename>
  files from the original 
 depot to the peer depot <filename>$INCA_DIST/etc</filename> and <filename>$INCA_DIST/etc/trusted</filename>
- directories respectively.</para>
+ directories respectively. Copy any custom notification scripts or filters from the original depot to the peer.</para>
 </listItem>
 
 <listItem>
@@ -606,6 +610,15 @@ Start the peer depot and look for "DB synchronization succeeded" in the
 </listItem>
 
 </orderedList>
+
+<para>In addition to a redundant depot, the consumer can also be configured for fault
+tolerance as shown in the figure below.
+        <figure id="redundant-depot-consumer">
+          <title>Inca deployment with fault tolerant depot and consumer</title>
+          <graphic fileref="figures/depot/depot-enhancement2.jpg" align="center"></graphic>
+        </figure>
+
+</para>
 
 </section>
 
