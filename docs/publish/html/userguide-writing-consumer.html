@@ -106,7 +106,7 @@ HREF="userguide-writing-consumer.html#USERGUIDE-WEBSERVICES"
 >.  The different types of XML returned from these methods are described in <A
 HREF="userguide-writing-consumer.html#UNDERSTANDING-XML"
 >Section 7.2</A
->.
+>.  
     </P
 ><P
 >Once custom XML is retrieved, new XSL can be created to display the results according to 
@@ -117,7 +117,50 @@ CLASS="FILENAME"
 > and <TT
 CLASS="FILENAME"
 >webapps/inca/jsp</TT
-> directories respectively.</P
+> directories respectively.  Below are 
+some examples of the way XML can be transformed to produce the basic status pages.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PASS-FAIL-TABLE"
+></A
+><P
+><B
+>Figure 18. Pass/Fail Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PERF-TABLE"
+></A
+><P
+><B
+>Figure 19. Performance Body Stats Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-perf.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="GRAPH-EXAMPLE"
+></A
+><P
+><B
+>Figure 20. Pass/Fail Graph</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-graph.jpg"
+ALIGN="CENTER"></P
+></DIV
 ><DIV
 CLASS="SECTION"
 ><H2
@@ -147,7 +190,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1462"
+NAME="AEN1471"
 ></A
 ><P
 ><B
@@ -372,7 +415,7 @@ HREF="userguide-writing-consumer.html#UNDERSTANDING-XML"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1532"
+NAME="AEN1541"
 ></A
 ><P
 ><B
@@ -620,7 +663,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1589"
+NAME="AEN1598"
 ></A
 ><P
 ><B
@@ -918,6 +961,105 @@ CLASS="SECTION"
 NAME="UNDERSTANDING-XML"
 >7.2. Understanding Inca XML Data</A
 ></H2
+><P
+>Inca reporters are executable programs that measure some aspect of the system or installed software. 
+Reporters support a set of command-line options and write XML reports to stdout.  The report schema is flexible and 
+can capture multiple types of data.
+<P
+><IMG
+SRC="figures/reporter/reporter-to-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>The Inca report has a header, body and footer.  The header contains metadata, the body contains the data
+collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or
+not.
+<P
+><IMG
+SRC="figures/reporter/reporter-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>Most of the Inca XML types relate to the basic report type.  Some definitions to help understand the XML schemas
+are:
+<P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>report series</TT
+></DT
+><DD
+><P
+>  set of reports collected at different points in time by executing a reporter with a 
+  set of arguments in a context on a particular resource
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>series config</TT
+></DT
+><DD
+><P
+>  creates the report series and has hostname, args, reporter name/version, context (optional execution string 
+can be used to set the context the reporter runs under
+e.g. run reporter under fresh shell: '/bin/sh -l -c net.benchmark.wget' -args
+e.g. softenv configuration: soft add +atlas; cluster.math.atlas.version -args), schedule, comparitor
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>suite</TT
+></DT
+><DD
+><P
+>  group of series configs that share a common theme, for example data management, job management, or file transfer.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>resource groups</TT
+></DT
+><DD
+><P
+>  shava has some slides on this with a good image
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>runtime data</TT
+></DT
+><DD
+><P
+>  comparison results, usage info
+  </P
+></DD
+></DL
+></DIV
+>
+
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="SCHEMAS"
+></A
+><P
+><B
+>Figure 21. Some Inca XML Types</B
+></P
+><P
+><IMG
+SRC="figures/arch/uml-schemas.jpg"
+ALIGN="CENTER"></P
+></DIV
+></P
 ><P
 >Inca depot query results are formatted as XML, most are an array of reporter execution <A
 HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
