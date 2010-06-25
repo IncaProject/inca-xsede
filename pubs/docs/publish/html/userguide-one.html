@@ -6477,7 +6477,7 @@ HREF="#USERGUIDE-WEBSERVICES"
 >.  The different types of XML returned from these methods are described in <A
 HREF="#UNDERSTANDING-XML"
 >Section 7.2</A
->.
+>.  
     </P
 ><P
 >Once custom XML is retrieved, new XSL can be created to display the results according to 
@@ -6488,7 +6488,50 @@ CLASS="FILENAME"
 > and <TT
 CLASS="FILENAME"
 >webapps/inca/jsp</TT
-> directories respectively.</P
+> directories respectively.  Below are 
+some examples of the way XML can be transformed to produce the basic status pages.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PASS-FAIL-TABLE"
+></A
+><P
+><B
+>Figure 18. Pass/Fail Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PERF-TABLE"
+></A
+><P
+><B
+>Figure 19. Performance Body Stats Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-perf.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="GRAPH-EXAMPLE"
+></A
+><P
+><B
+>Figure 20. Pass/Fail Graph</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-graph.jpg"
+ALIGN="CENTER"></P
+></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -6518,7 +6561,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1462"
+NAME="AEN1471"
 ></A
 ><P
 ><B
@@ -6743,7 +6786,7 @@ HREF="#UNDERSTANDING-XML"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1532"
+NAME="AEN1541"
 ></A
 ><P
 ><B
@@ -6991,7 +7034,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1589"
+NAME="AEN1598"
 ></A
 ><P
 ><B
@@ -7289,6 +7332,105 @@ CLASS="SECTION"
 NAME="UNDERSTANDING-XML"
 >7.2. Understanding Inca XML Data</A
 ></H3
+><P
+>Inca reporters are executable programs that measure some aspect of the system or installed software. 
+Reporters support a set of command-line options and write XML reports to stdout.  The report schema is flexible and 
+can capture multiple types of data.
+<P
+><IMG
+SRC="figures/reporter/reporter-to-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>The Inca report has a header, body and footer.  The header contains metadata, the body contains the data
+collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or
+not.
+<P
+><IMG
+SRC="figures/reporter/reporter-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>Most of the Inca XML types relate to the basic report type.  Some definitions to help understand the XML schemas
+are:
+<P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>report series</TT
+></DT
+><DD
+><P
+>  set of reports collected at different points in time by executing a reporter with a 
+  set of arguments in a context on a particular resource
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>series config</TT
+></DT
+><DD
+><P
+>  creates the report series and has hostname, args, reporter name/version, context (optional execution string 
+can be used to set the context the reporter runs under
+e.g. run reporter under fresh shell: '/bin/sh -l -c net.benchmark.wget' -args
+e.g. softenv configuration: soft add +atlas; cluster.math.atlas.version -args), schedule, comparitor
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>suite</TT
+></DT
+><DD
+><P
+>  group of series configs that share a common theme, for example data management, job management, or file transfer.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>resource groups</TT
+></DT
+><DD
+><P
+>  shava has some slides on this with a good image
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>runtime data</TT
+></DT
+><DD
+><P
+>  comparison results, usage info
+  </P
+></DD
+></DL
+></DIV
+>
+
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="SCHEMAS"
+></A
+><P
+><B
+>Figure 21. Some Inca XML Types</B
+></P
+><P
+><IMG
+SRC="figures/arch/uml-schemas.jpg"
+ALIGN="CENTER"></P
+></DIV
+></P
 ><P
 >Inca depot query results are formatted as XML, most are an array of reporter execution <A
 HREF="#CONSUMER-REPORT-SUMMARIES-XML"
@@ -7897,7 +8039,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1846"
+NAME="AEN1889"
 ></A
 ><P
 ><B
@@ -8064,7 +8206,7 @@ for printing XML according to our schema.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1904"
+NAME="AEN1947"
 ></A
 ><P
 ><B
@@ -8145,7 +8287,7 @@ groups provide for subclassing.  </P
 ><P
 >The reporter schema is visualized in <A
 HREF="#REPORTER-SCHEMA-FIG"
->Figure 18</A
+>Figure 22</A
 >.
 <DIV
 CLASS="FIGURE"
@@ -8154,7 +8296,7 @@ NAME="REPORTER-SCHEMA-FIG"
 ></A
 ><P
 ><B
->Figure 18. Inca Reporter Schema</B
+>Figure 22. Inca Reporter Schema</B
 ></P
 ><P
 ><IMG
@@ -8181,7 +8323,7 @@ NAME="SAMPLE-REPORT"
 ></A
 ><P
 ><B
->Figure 19. Example of Reporter Output</B
+>Figure 23. Example of Reporter Output</B
 ></P
 ><TABLE
 BORDER="1"
@@ -8237,7 +8379,7 @@ CLASS="SCREEN"
 ><P
 >As shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 19</A
+>Figure 23</A
 >, reporter output begins with an XML preamble and is surrounded by &#60;report&#62; tags.
 A prefix with a tag name that references
 http://inca.sdsc.edu/dataModel/report_2.1, which is the namespace that defines
@@ -8329,7 +8471,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 19</A
+>Figure 23</A
 > report). Log entries produced by the reporter.  This tag contains one or more
 &#60;debug&#62;, &#60;error&#62;, &#60;info&#62;, &#60;system&#62;, and/or &#60;warn&#62;
 tags, each of which gives the text of the message and the time it was produced.
@@ -8378,7 +8520,7 @@ CLASS="FILENAME"
 requirement for the contents of this tag is that they must be well-formed
 XML--tags balanced and no extraneous &#60;, &#62;, and &#38; characters.  <A
 HREF="#SAMPLE-REPORT"
->Figure 19</A
+>Figure 23</A
 >
 shows the conventional body for version reporters.
   </P
@@ -8404,7 +8546,7 @@ CLASS="FILENAME"
 ><P
 >    OPTIONAL TAG (not shown in <A
 HREF="#SAMPLE-REPORT"
->Figure 19</A
+>Figure 23</A
 > report).  The help tag describes the reporter and how to run it.  Contents include
 the reporter name, version, description, and url, detailed descriptions of each
 argument, and an optional list of dependencies that the reporter has on other
@@ -8670,7 +8812,7 @@ TARGET="_top"
 ><P
 >The following is the Perl code for a reporter that produces output like <A
 HREF="#SAMPLE-REPORT"
->Figure 19</A
+>Figure 23</A
 >.  This reporter 
 uses the Inca::Reporter::Version module to determine the version of gcc.  Examples of reporters that use the other modules are 
 located in $INCA_DIST/Inca-Reporter-*/bin.
@@ -9548,7 +9690,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2197"
+NAME="AEN2240"
 ></A
 ><P
 ><B
@@ -10562,7 +10704,7 @@ NAME="REDUNDANT-DEPOT"
 ></A
 ><P
 ><B
->Figure 20. Inca deployment with fault tolerant depot</B
+>Figure 24. Inca deployment with fault tolerant depot</B
 ></P
 ><P
 ><IMG
@@ -10709,7 +10851,7 @@ NAME="REDUNDANT-DEPOT-CONSUMER"
 ></A
 ><P
 ><B
->Figure 21. Inca deployment with fault tolerant depot and consumer</B
+>Figure 25. Inca deployment with fault tolerant depot and consumer</B
 ></P
 ><P
 ><IMG
@@ -11048,7 +11190,7 @@ NAME="MANUAL.FIG"
 ></A
 ><P
 ><B
->Figure 22. Add Resource Screen</B
+>Figure 26. Add Resource Screen</B
 ></P
 ><P
 ><IMG
@@ -11253,7 +11395,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2562"
+NAME="AEN2605"
 ></A
 ><P
 ><B
@@ -11932,7 +12074,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2708"
+NAME="AEN2751"
 ></A
 ><P
 ><B

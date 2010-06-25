@@ -3,10 +3,27 @@
     <para>The default Inca consumers described in <xref linkend="FILE-DESC"> are generally created by 
 fetching XML reporter information and applying XSL to produce HTML tables and graphs.  XML can be fetched for
 specific Inca suites (or stored queries), resources, series and time frames.  A number of methods are available
-for fetching Inca XML: <link linkend="rest">REST URLs</link>, <link linkend="FILE-DESC">JSPs</link> (using the "debug=1" parameter), <link linkend="USERGUIDE-APIS">Inca Client APIs</link>, and <link linkend="USERGUIDE-WEBSERVICES">Web Services</link>.  The different types of XML returned from these methods are described in <xref linkend="UNDERSTANDING-XML">.
+for fetching Inca XML: <link linkend="rest">REST URLs</link>, <link linkend="FILE-DESC">JSPs</link> (using the "debug=1" parameter), <link linkend="USERGUIDE-APIS">Inca Client APIs</link>, and <link linkend="USERGUIDE-WEBSERVICES">Web Services</link>.  The different types of XML returned from these methods are described in <xref linkend="UNDERSTANDING-XML">.  
     </para><para>Once custom XML is retrieved, new XSL can be created to display the results according to 
 individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and JSP are 
-located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.</para>
+located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.  Below are 
+some examples of the way XML can be transformed to produce the basic status pages.</para>
+<figure id="pass-fail-table">
+  <title>Pass/Fail Table</title>
+  <graphic fileref="figures/consumer/build-consumer.jpg" align="center">
+  </graphic>
+</figure>
+<figure id="perf-table">
+  <title>Performance Body Stats Table</title>
+  <graphic fileref="figures/consumer/build-consumer-perf.jpg" align="center">
+  </graphic>
+</figure>
+<figure id="graph-example">
+  <title>Pass/Fail Graph</title>
+  <graphic fileref="figures/consumer/build-consumer-graph.jpg" align="center">
+  </graphic>
+</figure>
+
     <section id="retrieving-data">
     <title>Retrieving Data</title>
     <section id="rest">
@@ -355,6 +372,53 @@ hello depot
    </section>
    <section id="understanding-xml">
     <title>Understanding Inca XML Data</title>
+    <para>Inca reporters are executable programs that measure some aspect of the system or installed software. 
+Reporters support a set of command-line options and write XML reports to stdout.  The report schema is flexible and 
+can capture multiple types of data.
+<graphic fileref="figures/reporter/reporter-to-xml.jpg" align="center"></graphic></para>
+    <para>The Inca report has a header, body and footer.  The header contains metadata, the body contains the data
+collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or
+not.
+<graphic fileref="figures/reporter/reporter-xml.jpg" align="center"></graphic></para>
+    <para>Most of the Inca XML types relate to the basic report type.  Some definitions to help understand the XML schemas
+are:
+<variablelist>
+  <varlistentry><term><filename>report series</filename></term>
+  <listitem><para>
+  set of reports collected at different points in time by executing a reporter with a 
+  set of arguments in a context on a particular resource
+  </para> </listitem>
+  </varlistentry>
+  <varlistentry><term><filename>series config</filename></term>
+  <listitem><para>
+  creates the report series and has hostname, args, reporter name/version, context (optional execution string 
+can be used to set the context the reporter runs under
+e.g. run reporter under fresh shell: '/bin/sh -l -c net.benchmark.wget' -args
+e.g. softenv configuration: soft add +atlas; cluster.math.atlas.version -args), schedule, comparitor
+  </para> </listitem>
+  </varlistentry>
+  <varlistentry><term><filename>suite</filename></term>
+  <listitem><para>
+  group of series configs that share a common theme, for example data management, job management, or file transfer.
+  </para> </listitem>
+  </varlistentry>
+  <varlistentry><term><filename>resource groups</filename></term>
+  <listitem><para>
+  shava has some slides on this with a good image
+  </para> </listitem>
+  </varlistentry>
+  <varlistentry><term><filename>runtime data</filename></term>
+  <listitem><para>
+  comparison results, usage info
+  </para> </listitem>
+  </varlistentry>
+</variablelist>
+
+  <figure id="schemas">
+  <title>Some Inca XML Types</title>
+<graphic fileref="figures/arch/uml-schemas.jpg" align="center"></graphic>
+</figure>
+</para>
     <para>Inca depot query results are formatted as XML, most are an array of reporter execution <link linkend="consumer-report-summaries-xml">summary</link>, <link linkend="consumer-graph-instance-xml">graph</link> or <link linkend="consumer-report-details-xml">detail</link> information. These results can be retrieved from the REST, JSP, Client and Web services interfaces described in the previous section.</para>
    <section id="consumer-report-summaries-xml">
     <title>Report Summaries</title>
