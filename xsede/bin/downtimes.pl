@@ -29,7 +29,6 @@ my $email = "";
 my @new = ();
 while (my ($resource, $file) = each(%resources)){
   my $now = DateTime->now;
-  my $nowMinusHour =  $now->clone->subtract( hours => 1 );
   my $query = "SELECT i.item_id, i.subject, i.content, 
                 s.event_start_time, s.event_end_time, s.event_time_zone, s.update_id,
                 ps." . $resource . "
@@ -98,7 +97,7 @@ sub convertToDateTime{
   $zone =~ s/E(|.)T/America\/New_York/g;
   #print "Date: $date\nZone: $zone\nNews: http://news.teragrid.org/view-item.php?item=$id\n";
   my $parser = DateTime::Format::Strptime->new( 
-               pattern => '%Y-%m-%d %l.%M.%S %p' ); # 2008-02-26 08.00.00 AM
+               pattern => '%Y-%m-%d %H:%M:%S' ); # 2010-07-02 23:55:00
   my $parseDate = $parser->parse_datetime($date);
   if ($? || !defined($parseDate)){
     die "Can't parse date: $!\n";
