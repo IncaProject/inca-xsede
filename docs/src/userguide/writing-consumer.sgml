@@ -4,25 +4,27 @@
 fetching XML reporter information and applying XSL to produce HTML tables and graphs.  XML can be fetched for
 specific Inca suites (or stored queries), resources, series and time frames.  A number of methods are available
 for fetching Inca XML: <link linkend="rest">REST URLs</link>, <link linkend="FILE-DESC">JSPs</link> (using the "debug=1" parameter), <link linkend="USERGUIDE-APIS">Inca Client APIs</link>, and <link linkend="USERGUIDE-WEBSERVICES">Web Services</link>.  The different types of XML returned from these methods are described in <xref linkend="UNDERSTANDING-XML">.  
-    </para><para>Once custom XML is retrieved, new XSL can be created to display the results according to 
-individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and JSP are 
-located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.  Below are 
+    </para><para>Once custom XML is retrieved (see <xref linkend="retrieving-data">), new XSL can be created to display the results according to individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and JSP are located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.  Below are 
 some examples of the way XML can be transformed to produce the basic status pages.</para>
+<para><xref linkend="pass-fail-table"> shows an example of XML that is transformed via XSL to produce a pass/fail table of test results. The XML is an array of <link linkend="consumer-report-summaries-xml">report summaries</link>, which are the result of querying for a suite or stored query.  The exit status or body of each report summary is matched to a resource by the XSL to show the latest result for each resource. If the report summary has a comparison result, it will be used instead of the exit status to determine whether the test passed or failed.  Comparison results are checks that are added before the report is stored - one example might be checking whether the software version found in the report was greater than a certain version number.</para>
 <figure id="pass-fail-table">
   <title>Pass/Fail Table</title>
   <graphic fileref="figures/consumer/build-consumer.jpg" align="center">
   </graphic>
 </figure>
+<para>Another consumer example using <link linkend="consumer-report-summaries-xml">report summaries</link> XML is shown in <xref linkend="perf-table">.  Here the XML is transformed via XSL to produce a table of performance results. Like the pass/fail table, the XSL matches results and resources, but here XPath is used to display a statistic in the body instead of a pass/fail exit status. </para>
 <figure id="perf-table">
   <title>Performance Body Stats Table</title>
   <graphic fileref="figures/consumer/build-consumer-perf.jpg" align="center">
   </graphic>
 </figure>
+<para>Simple pass/fail graphs are produced by transforming the <link linkend="consumer-graph-instance-xml">graph instance</link> XML as shown in <xref linkend="graph-example">.  The graph is produced by using the exit status values for the y-axis and the collected date values for the x-axis.</para>
 <figure id="graph-example">
   <title>Pass/Fail Graph</title>
   <graphic fileref="figures/consumer/build-consumer-graph.jpg" align="center">
   </graphic>
 </figure>
+<para>The w3schools site offers an <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> and an <ulink url="http://www.w3schools.com/xpath/xpath_intro.asp">XPath tutorial</ulink> for more general information about XSL and XPath.</para>
 
     <section id="retrieving-data">
     <title>Retrieving Data</title>
@@ -376,9 +378,8 @@ hello depot
 Reporters support a set of command-line options and write XML reports to stdout.  The report schema is flexible and 
 can capture multiple types of data.
 <graphic fileref="figures/reporter/reporter-to-xml.jpg" align="center"></graphic></para>
-    <para>The Inca report has a header, body and footer.  The header contains metadata, the body contains the data
-collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or
-not.
+    <para>The XML document produced by Inca reporters is called a report and it has a header, body and footer.  The header contains metadata, the body contains the data
+collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or not:
 <graphic fileref="figures/reporter/reporter-xml.jpg" align="center"></graphic></para>
     <para>Most of the Inca XML types relate to the basic report type.  Some definitions to help understand the XML schemas
 are:
@@ -391,25 +392,23 @@ are:
   </varlistentry>
   <varlistentry><term><filename>series config</filename></term>
   <listitem><para>
-  creates the report series and has hostname, args, reporter name/version, context (optional execution string 
-can be used to set the context the reporter runs under
-e.g. run reporter under fresh shell: '/bin/sh -l -c net.benchmark.wget' -args
-e.g. softenv configuration: soft add +atlas; cluster.math.atlas.version -args), schedule, comparitor
+  used to create the report series and has hostname, args, reporter name/version, schedule, comparitor (extra check to determine pass/fail), and context (optional string used when executing the reporter, e.g. to add a softenv key: "soft add +atlas; cluster.math.atlas.version -args")
   </para> </listitem>
   </varlistentry>
   <varlistentry><term><filename>suite</filename></term>
   <listitem><para>
-  group of series configs that share a common theme, for example data management, job management, or file transfer.
+  group of series configs that share a common theme, for example data management, job management, or file transfer
   </para> </listitem>
   </varlistentry>
-  <varlistentry><term><filename>resource groups</filename></term>
+  <varlistentry><term><filename>resource group</filename></term>
   <listitem><para>
-  shava has some slides on this with a good image
+  two or more related resources that share a characteristic like a site, architecture or virtual organization.  A resource can be a cluster, supercomputer, or server.  The resource group XML is returned along with queries so that they can be matched to test results.  Below is a figure to illustrate resource groups:
+<graphic fileref="figures/consumer/resource-groups.jpg" align="center"></graphic>
   </para> </listitem>
   </varlistentry>
   <varlistentry><term><filename>runtime data</filename></term>
   <listitem><para>
-  comparison results, usage info
+  in addition to the main body of data returned by reports, other runtime information is calculated after the report is executed and returned with it.  This data includes logged commands, usage information (how much memory, CPU and wallclock time a reporter consumes during execution) and comparison results (extra tests used to calculate whether a test passed or fails, e.g. whether the software version found matches a version requirement)
   </para> </listitem>
   </varlistentry>
 </variablelist>
