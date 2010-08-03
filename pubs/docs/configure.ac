@@ -67,6 +67,11 @@ else
 	#OUTPUT='-o $*'
 fi
 
+AC_PATH_PROG(XSLTPROC,xsltproc,xsltproc,no,)
+if test "$XSLTPROC" = "no"; then
+	AC_MSG_ERROR(Unable to locate xsltproc)
+fi
+
 dnl #########################################################################
 dnl get a list of possible documents
 dnl #########################################################################

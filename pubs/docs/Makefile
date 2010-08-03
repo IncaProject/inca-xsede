@@ -22,12 +22,15 @@ default:
 
 all: $(TARGETS)
 
+src/userguide/writing-consumer.sgml:
+	$(XSLTPROC) -o src/userguide/writing-consumer.sgml writing-consumer.xsl ../../devel/incaws/etc/IncaWS.wsdl
+
 $(TARGETS): 
 	make $@.html
 	make $@.pdf
 	make $@.rtf
 
-%.sgml %.html:
+%.sgml %.html: src/userguide/writing-consumer.sgml
 	doc=`echo userguide.html | sed 's/\.html//'`; \
 	mkdir -p publish/html/$$doc; \
 	$(DB2HTML) "$(TOP_DIR)/config/ldp.dsl$(HTML_MODE)" $(CATALOG) -o publish/html/$$doc src/$*.sgml; \
@@ -41,10 +44,10 @@ $(TARGETS):
 	rm -rf publish/html/figures; mkdir -p publish/html/figures; cp -r src/figures publish/html; \
 	mkdir -p publish/html/schemas; cp src/schemas/*.xsd publish/html/schemas
 
-%.sgml %.pdf:
+%.sgml %.pdf: src/userguide/writing-consumer.sgml
 	$(DB2PDF) "$(TOP_DIR)/config/ldp.dsl$(PDF_MODE)" $(CATALOG) -o publish/pdf src/$*.sgml
 
-%.sgml %.rtf:
+%.sgml %.rtf: src/userguide/writing-consumer.sgml
 	$(DB2RTF) "$(TOP_DIR)/config/ldp.dsl$(PDF_MODE)" $(CATALOG) -o publish/rtf src/$*.sgml
 
 clean:
