@@ -1,4 +1,11 @@
-  <section id="userguide-writing-consumer">
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:ws="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                version="1.0">
+  <xsl:output method="text"/>
+  <xsl:template match="/">
+  <![CDATA[<section id="userguide-writing-consumer">
     <title>Writing Custom Data Consumers</title>
     <para>The default Inca consumers described in <xref linkend="FILE-DESC"> are generally created by 
 fetching XML reporter information and applying XSL to produce HTML tables and graphs.  XML can be fetched for
@@ -206,64 +213,21 @@ tcp4       0      0  *.8001                 *.*                    LISTEN
       <entry><para>Description</para></entry>
     </row>
   </thead>
-  <tbody>
-    <row>
-      <entry><para>getCatalog( [$url] )</para></entry>
-      <entry><para>Asks the agent to retrieve and return the package catalog
-      from the reporter repository accessed via $url.  An undefined $url
-      indicates that the agent should return a merged catalog for all known
-      repositories.</para></entry>
-    </row>
-    <row>
-      <entry><para>getConfig()</para></entry>
-      <entry><para>Asks the agent to return XML for the Inca deployment
-      configuration.  </para></entry>
-    </row>
-    <row>
-      <entry><para>pingAgent( $string )</para></entry>
-      <entry><para>Check that the Inca agent is accessible. </para></entry>
-    </row>
-    <row>
-      <entry><para>pingDepot( $string )</para></entry>
-      <entry><para>Check that the Inca depot is accessible. </para></entry>
-    </row>
-    <row>
-      <entry><para>queryGuids()</para></entry>
-      <entry><para>Asks the depot to return a space-separated list of known suite guids.  </para></entry>
-    </row>
-    <row>
-      <entry><para>queryHql($hql)</para></entry>
-      <entry><para>Asks the depot use the HQL select statement $hql to extract
-      and return information from the DB.  On success, returns a reference to
-      an array that contains the objects selected by the select
-      statement.</para></entry>
-    </row>
-    <row>
-      <entry><para>queryInstance($instanceId, $configId)</para></entry>
-      <entry><para>Asks the depot to report details about one particular
-      invocation of a reporter.  $instanceId is the DB id of the instance for
-      the invocation; $configId the related series configuration DB id.  On
-      success, returns a reference to a single-element array that contains a
-      ReportDetails document (described in <xref linkend="consumer-report-details-xml">) 
-      for the instance.</para></entry>
-    </row>
-    <row>
-      <entry><para>querySeries($configId)</para></entry>
-      <entry><para>Asks the depot to retrieve information about all instances
-      related to the series configuration identified by $configId.  On
-      success, returns a reference to an array that contains a set of
-      ReportDetail documents (described in <xref linkend="consumer-report-details-xml">) 
-      related to the series.
-      </para></entry>
-    </row>
-    <row>
-      <entry><para>querySuite($guid)</para></entry>
-      <entry><para>Asks the depot to retrieve information about all the series
-      of the suite identified by $guid.  On success, returns a reference to an
-      array that contains a set of ReportSummary documents (described in <xref linkend="consumer-report-summaries-xml">) related to the
-      series configurations of the suite.  </para></entry>
-    </row>
-  </tbody>
+  <tbody>]]>
+    <xsl:for-each select="ws:definitions/ws:portType/ws:operation">
+      <xsl:variable name="message-name" select="substring-after(ws:input/@message, ':')"/>
+      <xsl:variable name="arg-list">
+        <xsl:for-each select="../../ws:message[@name = $message-name]/ws:part">
+					<xsl:value-of select="concat('$', @name)"/>
+          <xsl:if test="not(position() = last())">, </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      <![CDATA[<row>
+        <entry><para>]]><xsl:value-of select="@name"/><![CDATA[( ]]><xsl:value-of select="$arg-list"/><![CDATA[ )</para></entry>
+        <entry><para>]]><xsl:value-of select="ws:documentation"/><![CDATA[</para></entry>
+      </row>]]>
+      </xsl:for-each>
+  <![CDATA[</tbody>
   </tgroup>  
 </table>
 
@@ -745,4 +709,6 @@ The following tags are defined within a &lt;reportDetails&gt;:
    
    </section>
 
-  </section>
+  </section>]]>
+  </xsl:template>
+</xsl:stylesheet>
