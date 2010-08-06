@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ws="http://schemas.xmlsoap.org/wsdl/"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                version="1.0">
-  <xsl:output method="text"/>
-  <xsl:template match="/">
-  <![CDATA[<section id="userguide-writing-consumer">
+  <section id="userguide-writing-consumer">
     <title>Writing Custom Data Consumers</title>
     <para>The default Inca consumers described in <xref linkend="FILE-DESC"> are generally created by 
 fetching XML reporter information and applying XSL to produce HTML tables and graphs.  XML can be fetched for
@@ -203,33 +196,7 @@ tcp4       0      0  *.8001                 *.*                    LISTEN
 </screen>
 </para>
 
-<para>The WSDL file for the incaws component is in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  The following table summarizes the available functions. </para>
-
-  <table><title>Web services functions</title>
-  <tgroup cols="2">
-  <thead>
-    <row>
-      <entry><para>Function</para></entry>
-      <entry><para>Description</para></entry>
-    </row>
-  </thead>
-  <tbody>]]>
-    <xsl:for-each select="ws:definitions/ws:portType/ws:operation">
-      <xsl:variable name="message-name" select="substring-after(ws:input/@message, ':')"/>
-      <xsl:variable name="arg-list">
-        <xsl:for-each select="../../ws:message[@name = $message-name]/ws:part">
-					<xsl:value-of select="concat('$', @name)"/>
-          <xsl:if test="not(position() = last())">, </xsl:if>
-        </xsl:for-each>
-      </xsl:variable>
-      <![CDATA[<row>
-        <entry><para>]]><xsl:value-of select="@name"/><![CDATA[( ]]><xsl:value-of select="$arg-list"/><![CDATA[ )</para></entry>
-        <entry><para>]]><xsl:value-of select="ws:documentation"/><![CDATA[</para></entry>
-      </row>]]>
-      </xsl:for-each>
-  <![CDATA[</tbody>
-  </tgroup>  
-</table>
+<para>The WSDL file for the incaws component is	in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  Documentation	for the file can be found <ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">here</ulink>.
 
 <para>Below shows an example of how to access the Inca web services from Perl
 using SOAP::Lite.</para>
@@ -709,6 +676,4 @@ The following tags are defined within a &lt;reportDetails&gt;:
    
    </section>
 
-  </section>]]>
-  </xsl:template>
-</xsl:stylesheet>
+  </section>
