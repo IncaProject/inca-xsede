@@ -10740,6 +10740,90 @@ SRC="figures/depot/depot-enhancement2.jpg"
 ALIGN="CENTER"></P
 ></DIV
 >&#13;</P
+><P
+>The steps for adding a consumer for each peer depot is as follows: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Install a consumer for each peer depot
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.6/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST consumer;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/consumer.*pem</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted/*</TT
+>
+ files from the original 
+consumer to the peer consumer <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+>
+ directories respectively. Copy any custom xsl or tag files from the original consumer.</P
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> for each consumer and 
+configure one consumer per depot
+where each consumer/depot pair are usually on the same machine.  For example, if your 
+depot is on rocks-101.sdsc.edu:6324, your edit would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URI to the depot -- use incas:// if auth is required and inca:// if not
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Configure a proxy server to accept all traffic 
+and direct it to the appropriate consumer address on the internal network.</P
+></LI
+><LI
+><P
+>Restart each consumer. </P
+></LI
+></OL
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -11276,7 +11360,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2562"
+NAME="AEN2581"
 ></A
 ><P
 ><B
@@ -11955,7 +12039,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2708"
+NAME="AEN2727"
 ></A
 ><P
 ><B
