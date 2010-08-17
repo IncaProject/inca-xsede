@@ -619,6 +619,47 @@ tolerance as shown in the figure below.
         </figure>
 
 </para>
+<para>The steps for adding a consumer for each peer depot is as follows: </para>
+<orderedList>
+
+<listItem>
+<para>Install a consumer for each peer depot
+<screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST consumer;
+</screen>
+</para>
+</listItem>
+
+<listItem>
+<para>Copy the <filename>$INCA_DIST/etc/consumer.*pem</filename> and <filename>$INCA_DIST/etc/trusted/*</filename>
+ files from the original 
+consumer to the peer consumer <filename>$INCA_DIST/etc</filename> and <filename>$INCA_DIST/etc/trusted</filename>
+ directories respectively. Copy any custom xsl or tag files from the original consumer.</para>
+</listItem>
+
+<listItem>
+<para>
+Edit <filename>$INCA_DIST/etc/common/inca.properties</filename> for each consumer and 
+configure one consumer per depot
+where each consumer/depot pair are usually on the same machine.  For example, if your 
+depot is on rocks-101.sdsc.edu:6324, your edit would look like:</para>
+<screen>...
+# URI to the depot -- use incas:// if auth is required and inca:// if not
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324
+...</screen>
+</listItem>
+
+<listItem>
+<para>Configure a proxy server to accept all traffic 
+and direct it to the appropriate consumer address on the internal network.
+</para>
+</listItem>
+
+<listItem>
+<para>Restart each consumer. </para>
+</listItem>
+
+</orderedList>
 
 </section>
 
