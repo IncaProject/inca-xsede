@@ -30,6 +30,8 @@ use Date::Manip;
 
 exit if scalar(@ARGV) < 1;
 
+exit if $ENV{incaschedule} =~ /immediate/;
+
 my $err = $ENV{incaerrorMessage};
 my $noemail = defined($err) && $err =~ /(^DOWNTIME:|Inca error|^NOT_AT_FAULT:)/;
 
@@ -104,7 +106,7 @@ sub getExternalEmail {
     "(abe|-w)\.ncsa" => "FailTo:abe-admin\@ncsa.uiuc.edu",
     "-co\.ncsa" => "FailTo:co-admin\@ncsa.uiuc.edu",
     "\.nics\." => "FailTo:admin-core\@nics.utk.edu",
-    "ornl\." => "FailTo:gilesdc\@ornl.gov, FailTo:cobbjw\@ornl.gov",
+    "ornl\." => "FailTo:quigleyjf\@ornl.gov, FailTo:hamrickdk\@ornl.gov, FailTo:truanjc\@ornl.gov, FailTo:cobbjw\@ornl.gov",
     "\.psc\." => "FailTo:rbudden\@psc.edu",
     "\.purdue\." => "FailTo:psmith\@purdue.edu",
     "\.sdsc\." => "FailTo:diegella\@sdsc.edu, FailTo:kenneth\@sdsc.edu",
