@@ -1,10 +1,11 @@
   <section id="userguide-writing-consumer">
     <title>Writing Custom Data Consumers</title>
-    <para>The default Inca consumers described in <xref linkend="FILE-DESC"> are generally created by 
-fetching XML report data and applying XSL to produce HTML tables and graphs.  XML can be fetched for
+    <para>The default Inca consumers described in <xref linkend="FILE-DESC"> are created by 
+fetching XML report data from the Inca depot and applying XSL and JSP to produce HTML tables and graphs.  
+XML can be fetched for
 specific Inca suites (or stored queries), resources, series and time frames.  A number of methods are available
 for fetching Inca XML: <link linkend="rest">REST URLs</link>, <link linkend="USERGUIDE-APIS">Inca Client APIs</link>, and <link linkend="USERGUIDE-WEBSERVICES">Web Services</link>.  The different types of XML returned from these methods are described in <xref linkend="UNDERSTANDING-XML">.  
-    </para><para>Once custom XML is retrieved (see <xref linkend="retrieving-data">), new XSL can be created to display the results according to individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and <link linkend="FILE-DESC">JSPs</link> are located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.  Below are 
+    </para><para>Once custom XML is retrieved (see <xref linkend="retrieving-data">), addtional XSL can be created to display the results according to individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and <link linkend="FILE-DESC">JSPs</link> are located in the <filename>webapps/inca/xsl</filename> and <filename>webapps/inca/jsp</filename> directories respectively.  Below are 
 some examples of the way XML can be transformed to produce the basic status pages.</para>
 <para><xref linkend="pass-fail-table"> shows an example of XML that is transformed via XSL to produce a pass/fail table of test results. The XML is an array of <link linkend="consumer-report-summaries-xml">report summaries</link>, which are the result of querying for a suite or stored query.  The exit status or body of each report summary is matched to a resource by the XSL to show the latest result for each resource. If the report summary has a comparison result, it will be used instead of the exit status to determine whether the test passed or failed.  Comparison results are checks that are added before the report is stored - one example might be checking whether the software version found in the report was greater than a certain version number.</para>
 <figure id="pass-fail-table">
