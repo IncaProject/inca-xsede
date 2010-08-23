@@ -1,0 +1,68 @@
+<section id="userguide-webservices">
+<title>Web Services</title>
+
+<para>In oder to enable customized data consumers as described in 
+<xref linkend="userguide-writing-consumer"> that utilize the
+Web Services API, you will need to install the
+Inca web services component, <filename>incaws</filename>. </para>
+
+<screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh
+% sh incaInstall.sh $INCA_DIST incaws</screen>
+
+<para>The results should look similar to:</para>
+
+<screen>
+Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+--12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+           => `Inca-WS.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1,226,347 (1.2M) [application/x-tar]
+
+100%[====================================>] 1,226,347     --.--K/s             
+
+12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
+
+Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+Inca-WS-1.6421/
+Inca-WS-1.6421/lib/
+...
+Inca-WS-1.6421/etc/IncaWS.wsdl
+Inca-WS-1.6421/version.svn
+Will install Inca prerequisite Net::SSLeay
+Will install Inca prerequisite IO::Socket::SSL
+Will install Inca prerequisite Expat
+Will install Inca prerequisite LWP::UserAgent
+Will install Inca prerequisite MIME::Base64
+Will install Inca prerequisite SOAP::Lite
+Writing Makefile.perl.inc for Inca-WS
+Inca-WS installed
+</screen>
+
+<para>To start incaws, specify the port, credentials, and hostname/port for
+the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</para>
+
+<screen>
+% cd $INCA_DIST
+% ./bin/inca incaws \
+ --auth=yes \
+ --cert=etc/agentcert.pem \
+ --key=etc/agentkey.pem \
+ --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem \
+ --port=8001 \
+ --password=yes \
+ <emphasis role="red">depotHost</emphasis>:6324 \
+ <emphasis role="red">agentHost</emphasis>:6323
+<emphasis role="red">enter password (no prompt displayed)</emphasis>
+</screen> 
+
+<para>Check to make sure the incaws is running on port 8001 (error logs are in $INCA_DIST/var):
+<screen>% netstat -an | grep 8001
+tcp4       0      0  *.8001                 *.*                    LISTEN
+</screen>
+</para>
+
+<para>Please see <xref linkend="userguide-webservices-api"> for documentation and examples of how to use the Inca Web Services API.</para>
+
+</section>

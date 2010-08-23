@@ -132,74 +132,15 @@ depot. A number of the API functions return XML that can be used in custom Inca 
 
 
 </section>
-<section id="userguide-webservices">
-<title>Web Services</title>
+<section id="userguide-webservices-api">
+<title>Web Services API</title>
 
-<para>Like the <link linkend="userguide-apis">Inca Client APIs</link>, a number of Inca Web services functions
-return XML that can be used in custom Inca data consumers.
-To access Inca from a Web services API, you will need to install the
-Inca web services component, <filename>incaws</filename>. </para>
+<para>The WSDL file for the incaws component is	in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  The Web Services
+API documentation for the file can be found in the below link: </para>
 
-<screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh
-% sh incaInstall.sh $INCA_DIST incaws</screen>
+<para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">Inca Web Services API</ulink></para>
 
-<para>The results should look similar to:</para>
-
-<screen>
-Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
---12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
-           => `Inca-WS.tar.gz'
-Resolving inca.sdsc.edu... 198.202.75.28
-Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 1,226,347 (1.2M) [application/x-tar]
-
-100%[====================================>] 1,226,347     --.--K/s             
-
-12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
-
-Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
-Inca-WS-1.6421/
-Inca-WS-1.6421/lib/
-...
-Inca-WS-1.6421/etc/IncaWS.wsdl
-Inca-WS-1.6421/version.svn
-Will install Inca prerequisite Net::SSLeay
-Will install Inca prerequisite IO::Socket::SSL
-Will install Inca prerequisite Expat
-Will install Inca prerequisite LWP::UserAgent
-Will install Inca prerequisite MIME::Base64
-Will install Inca prerequisite SOAP::Lite
-Writing Makefile.perl.inc for Inca-WS
-Inca-WS installed
-</screen>
-
-<para>To start incaws, specify the port, credentials, and hostname/port for
-the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</para>
-
-<screen>
-% cd $INCA_DIST
-% ./bin/inca incaws \
- --auth=yes \
- --cert=etc/agentcert.pem \
- --key=etc/agentkey.pem \
- --trusted=etc/trusted/<emphasis role="red">origHost</emphasis>cert.pem \
- --port=8001 \
- --password=yes \
- <emphasis role="red">depotHost</emphasis>:6324 \
- <emphasis role="red">agentHost</emphasis>:6323
-<emphasis role="red">enter password (no prompt displayed)</emphasis>
-</screen> 
-
-<para>Check to make sure the incaws is running on port 8001 (error logs are in $INCA_DIST/var):
-<screen>% netstat -an | grep 8001
-tcp4       0      0  *.8001                 *.*                    LISTEN
-</screen>
-</para>
-
-<para>The WSDL file for the incaws component is	in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  Documentation	for the file can be found <ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">here</ulink>.</para>
-
-<para>Below shows an example of how to access the Inca web services from Perl
+<para>It encompasses a subset of the client APIs described in <xref linkend="userguide-apis">.  The following shows an example of how to access the Inca web services from Perl
 using SOAP::Lite.</para>
 
 <screen>
@@ -301,6 +242,9 @@ hello depot
 &lt;/reportSummary&gt;
 ...
 </screen> 
+
+<para>Please see the <link linkend="USERGUIDE-WEBSERVICES">Web Services</link> section for help on setting up
+Inca Web Services in your deployment.</para>
 
 </section>
    </section>
