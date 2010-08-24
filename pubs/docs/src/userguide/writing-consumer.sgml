@@ -73,7 +73,74 @@ are:
 <graphic fileref="figures/arch/uml-schemas.jpg" align="center"></graphic>
 </figure>
 </para>
-    <para>Inca depot query results are formatted as XML, most are an array of reporter execution <link linkend="consumer-report-summaries-xml">summary</link>, <link linkend="consumer-graph-instance-xml">graph</link> or <link linkend="consumer-report-details-xml">detail</link> information. These results can be retrieved from the REST, JSP, Client and Web services interfaces described in the previous section.</para>
+
+<para>An important concept within Inca is the comparitor.  As shown above,
+every report has an exitStatus to indicate whether an Inca reporter was able
+to complete successfully or not.  For reporters that are more complex, the
+exitStatus may not be sufficient.  For example, a version reporter may
+successfully collect the version of GCC but the version collected may be
+too old.  Or a performance reporter may successfully collect the bandwidth
+of a GridFTP transfer but the bandwidth is so low that it could be considered
+a failure.  In these cases, a comparitor can be used to interpret a reporter
+result.  For a version reporter, a simple comparitor would be for example:
+</para>
+
+<screen>
+gcc >= 3.1
+</screen>
+
+<para>For a performance reporter, a simple comparitor would be for example:
+</para>
+
+<screen>
+bandwidthMB >= 100
+</screen>
+
+<para>When a comparitor is specified by an Inca administrator, an additional
+field, <filename>comparisonResult</filename>, is returned with the Inca
+data and contains either a '<filename>Success</filename>' or
+'<filename>Failure:reasons</filename>' value.  The <filename>reason</filename>
+value will be the part of the comparitor that failed, e.g., gcc or
+bandwidthMB.  </para>
+
+<para>A comparitor is also specified when an Inca administrator
+sets up email notification on a series.  Therefore a common comparitor is
+to check that the errorMessage is empty or:</para>
+
+<screen>
+errorMessage==''
+</screen>
+
+<para>If a report with an error comes, the errorMessage will be set causing
+the comparitor to fail and an email notification to be sent.</para>
+
+<para>In summary, when interpreting the result of a report, first check to
+if a comparisonResult exists.  If it does, then use that value.  Otherwise,
+use the body or errorMessage to interpret the result.  Please see pseudo-code
+below for an example:</para>
+
+<screen>
+if ( exists comparisonResult ) {
+  if ( comparisonResult == 'Success' ) {
+    println "Pass"
+  } else {
+    println "Failed: " + comparisonResult; 
+    if ( exists errorMessage ) {
+      println errorMessage;
+    }
+  }
+} else {
+  if ( body != '' ) { // or you could use if ( errorMessage == '' )
+    println "Pass";
+  } else {
+    println errorMessage;
+  }
+}
+</screen>
+
+    <para>Inca depot query results are formatted as XML, most are an array of reporter execution <link linkend="consumer-report-summaries-xml">summary</link>, <link linkend="consumer-graph-instance-xml">graph</link> or <link linkend="consumer-report-details-xml">detail</link> information. These results can be retrieved from the REST, JSP, Client and Web services interfaces described in 
+    <xref linkend="retrieving-data">.</para>
+
    <section id="consumer-report-summaries-xml">
     <title>Report Summaries</title>
     <para>Report summaries return XML formatted like the following (tags are described below):
