@@ -95,60 +95,43 @@ some examples of the way XML can be transformed to produce the basic status page
       </screen>
       
     </section>
-<section id="userguide-apis">
-<title>Inca Client APIs</title>
-
-<para>Currently, we provide Perl and Java client APIs to the Inca agent and
-depot. A number of the API functions return XML that can be used in custom Inca data consumers. For example, the DepotClient's queryInstance, queryLatest, and queryPeriod functions respectively return the report details, report summary, and graph instance XML document types described in <xref linkend="UNDERSTANDING-XML">.</para>
-
-  <table><title>Inca client APIs</title>
-  <tgroup cols="3">
-  <thead>
-    <row>
-      <entry><para>Component</para></entry>
-      <entry><para>Java API</para></entry>
-      <entry><para>Perl API</para></entry>
-    </row>
-  </thead>
-  <tbody>
-    <row>
-      <entry><para>client</para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/Client.html">edu.sdsc.inca.Client</ulink></para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/Client.html">Inca::Client</ulink></para></entry>
-    </row>
-    <row>
-      <entry><para>agent</para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html">edu.sdsc.inca.AgentClient</ulink></para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/AgentClient.html">Inca::AgentClient</ulink></para></entry>
-    </row>
-    <row>
-      <entry><para>depot</para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html">edu.sdsc.inca.DepotClient</ulink></para></entry>
-      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/DepotClient.html">Inca::DepotClient</ulink></para></entry>
-    </row>
-  </tbody>
-  </tgroup>
-</table>
-
-
-</section>
 <section id="userguide-webservices-api">
 <title>Web Services API</title>
 
-<para>The WSDL file for the incaws component is	in <filename>$INCA_DIST/etc/IncaWS.wsdl</filename>.  The Web Services
-API documentation for the file can be found in the below link: </para>
+<para>To query the Inca data via an API interface, you can utilize the Inca Web Services
+API.  Please check with your Inca administrator first to check that the Web
+Services component is installed as described in 
+<xref linkend="userguide-webservices">.  Next either ask your Inca administrator for
+the WSDL file for their deployment or download it directly from the Inca
+releases directory <ulink
+url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">here</ulink>.  
+Then find the Inca Web Services hostname and port from your Inca
+administrator and edit the following portion of the file.</para>
 
-<para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">Inca Web Services API</ulink></para>
+<screen>
+      ...
+      &lt;port binding="tns:IncaWS_Binding" name="IncaWS_Port"&gt;
+        &lt;soap:address location="http://<emphasis role="red">localhost</emphasis>:<emphasis role="red">8001</emphasis>"/&gt;
+      &lt;/port&gt;
+      ...
+</screen>
 
-<para>It encompasses a subset of the client APIs described in <xref linkend="userguide-apis">.  The following shows an example of how to access the Inca web services from Perl
-using SOAP::Lite.</para>
+<para>The Web Services API encompasses a subset of the client APIs described
+in <xref linkend="userguide-apis">.  Documentation for the API can be found in
+the below link: </para>
+
+<para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html">http://inca.sdsc.edu/releases/&ugVersion/wsdocs/IncaWS_wsdl.html</ulink></para>
+
+<para>The following shows an example of how to access the Inca web services
+from Perl using the Perl module <ulink
+url="http://www.soaplite.com/">SOAP::Lite</ulink>.</para>
 
 <screen>
 use SOAP::Lite;
 use Cwd;
 
 my $cwd = getcwd();
-my $ws = SOAP::Lite->service("file:$cwd/etc/IncaWS.wsdl");
+my $ws = SOAP::Lite->service("file:<emphasis role="red">$cwd/etc/IncaWS.wsdl</emphasis>");
 
 # check agent and depot are available
 print $ws->pingAgent('hello agent'), "\n";
@@ -165,9 +148,11 @@ for my $result ( @{$results} ) {
 }
 </screen>
 
-<para>Place the above code in a file called <filename>$INCA_DIST/sampleWS.pl</filename>
-and set the environment variable PERL5LIB to
-<filename>$INCA_DIST/lib/perl</filename>.  Then type, </para>
+<para>Place the above code in a file called <filename>$INCA_DIST/sampleWS.pl</filename> and edit the highlighted portion to reflect the location of the
+<filename>IncaWS.wsdl</filename> file.  Set the environment variable PERL5LIB 
+reflect the location of the SOAP::Lite library if it is not installed in
+the default path.  Or if you are on the same machine as the Inca server, set
+it to <filename>$INCA_DIST/lib/perl</filename>.  Then type, </para>
 
 <screen>% perl sampleWS.pl</screen>
 
@@ -243,8 +228,355 @@ hello depot
 ...
 </screen> 
 
-<para>Please see the <link linkend="USERGUIDE-WEBSERVICES">Web Services</link> section for help on setting up
-Inca Web Services in your deployment.</para>
+</section>
+<section id="userguide-apis">
+<title>Inca Client APIs</title>
+
+<para>An alternate method of accessing Inca data is through the the Inca Agent
+and Depot Client APIs.  You can use this method if the Inca deployment is
+setup without authentication or by acquiring a set of credentials from your
+Inca administrator.  </para>
+
+<para>Currently, we provide Perl and Java client APIs to the Inca agent and
+depot. A number of the API functions return XML that can be used in custom Inca data consumers. For example, the DepotClient's queryInstance, queryLatest, and queryPeriod functions respectively return the report details, report summary, and graph instance XML document types described in <xref linkend="UNDERSTANDING-XML">.  A summary of the available APIs and links to further documentation is shown in the below table.</para>
+
+  <table><title>Inca client APIs</title>
+  <tgroup cols="3">
+  <thead>
+    <row>
+      <entry><para><emphasis role="strong">Component</emphasis></para></entry>
+      <entry><para><emphasis role="strong">Java API</emphasis> (<ulink
+      url="http://inca.sdsc.edu/releases/&ugVersion/inca-common-java-bin.tar.gz">download</ulink>)</para></entry>
+      <entry><para><emphasis role="strong">Perl API</emphasis> (<ulink url="http://inca.sdsc.edu/releases/&ugVersion/Inca-WS.tar.gz">download</ulink>)</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para>client</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/Client.html">edu.sdsc.inca.Client</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/Client.html">Inca::Client</ulink></para></entry>
+    </row>
+    <row>
+      <entry><para>agent</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/AgentClient.html">edu.sdsc.inca.AgentClient</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/AgentClient.html">Inca::AgentClient</ulink></para></entry>
+    </row>
+    <row>
+      <entry><para>depot</para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/javawsdocs/edu/sdsc/inca/DepotClient.html">edu.sdsc.inca.DepotClient</ulink></para></entry>
+      <entry><para><ulink url="http://inca.sdsc.edu/releases/&ugVersion/wsdocs/Inca/DepotClient.html">Inca::DepotClient</ulink></para></entry>
+    </row>
+  </tbody>
+  </tgroup>
+</table>
+
+<section id="userguide-apis-perl">
+<title>Inca Perl Client APIs</title>
+
+<para>The Perl Client API can be accessed on the Inca server at
+<filename>$INCA_DIST/lib/perl</filename> or by downloading the incaws tar
+ball,
+<ulink
+url="http://inca.sdsc.edu/releases/&ugVersion/Inca-WS.tar.gz">Inca-WS.tar.gz</ulink>.  To install <filename>Inca-WS.tar.gz</filename>, perform the following
+steps.</para>
+
+<orderedList>
+  <listItem>
+  <para>Untar the <filename>Inca-WS.tar.gz</filename> file 
+    <screen>% tar zxvf Inca-WS.tar.gz</screen></para>
+  </listItem>
+  <listItem>
+  <para>Install the module using the following command where <filename>$PREFIX</filename> indicates the desired destination directory.
+    <screen>% cd Inca-WS-*
+% perl Makefile.PL PREFIX=$PREFIX LIB=$PREFIX/lib/perl
+% make
+% make install</screen></para>
+  </listItem>
+  <listItem>
+  <para>Copy the credentials from your Inca administrator over to the new
+  installation.  The file <filename>trusted.0</filename> will actually be
+  the hash of the CA certificate and will look something like <filename>51b63f6c.0</filename>.
+    <screen>% mkdir $PREFIX/etc; mkdir $PREFIX/etc/trusted
+% cp <emphasis role="red">clientcert.pem</emphasis> $PREFIX/etc
+% cp <emphasis role="red">clientkey.pem</emphasis> $PREFIX/etc
+% cp <emphasis role="red">trusted.0</emphasis> $PREFIX/etc/trusted</screen>
+    </para>
+  </listItem>
+</orderedList>
+
+<para>Below is a sample of code using the Perl APIs that pings the Agent and
+queries for its configuration.</para>
+
+<screen>
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Inca::AgentClient;
+
+print "Please enter a password:  ";
+chomp( my $pass = &lt;STDIN&gt; );
+my $agentclient = new Inca::AgentClient(
+  host => '<emphasis role="red">localhost</emphasis>',
+  port => 6323,
+  auth => 1,
+  cert => '<emphasis role="red">etc/clientcert.pem</emphasis>',
+  key => '<emphasis role="red">etc/clientkey.pem</emphasis>',
+  password => $pass,
+  trusted => '<emphasis role="red">etc/trusted/51b63f6c.0</emphasis>'
+);
+if ( defined $agentclient->getError() ) {
+  die "Unable to connect:" . $agentclient->getError();
+}
+
+# check agent is available
+print $agentclient->ping('hello agent'), "\n";
+
+# get the Inca configuration
+print $agentclient->getConfig(), "\n";
+</screen>
+
+<para>Place the code in a file called <filename>inca-test-agent</filename>
+within the <filename>$INCA_DIST/bin</filename> directory and replace all of
+the highlighted areas with values appropriate to your installation.  To run
+the program, you will need to provide the path to the Inca Perl APIs which
+reside in <filename>$INCA_DIST/lib/perl</filename>.  One choice is to execute
+the 
+following:</para>
+
+<screen>
+env PERL5LIB=$PREFIX/lib/perl perl bin/inca-test-agent
+</screen>
+
+<para>Type in the password provided to you by your Inca administrator
+when prompted.  You should see something like this:</para> 
+
+<screen>
+hello agent
+&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;
+&lt;repositories&gt;
+  &lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;
+&lt;/repositories&gt;
+&lt;resourceConfig&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+        &lt;name&gt;defaultGrid&lt;/name&gt;
+        &lt;xpath&gt;//resource[matches(name, "localSite")]&lt;/xpath&gt;
+      &lt;macros&gt;
+ ...
+  &lt;/resources&gt;
+&lt;/resourceConfig&gt;
+&lt;suites&gt;
+  &lt;suite&gt;
+    &lt;seriesConfigs&gt;
+      &lt;seriesConfig&gt;
+        &lt;series&gt;
+          &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
+          &lt;uri&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
+          &lt;args&gt;
+            &lt;arg&gt;
+              &lt;name&gt;cc&lt;/name&gt;
+              &lt;value&gt;cc&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;dir&lt;/name&gt;
+              &lt;value/&gt;&lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;help&lt;/name&gt;
+              &lt;value&gt;no&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;log&lt;/name&gt;
+              &lt;value&gt;3&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;verbose&lt;/name&gt;
+              &lt;value&gt;1&lt;/value&gt;
+            &lt;/arg&gt;
+ ...
+        &lt;action&gt;add&lt;/action&gt;
+      &lt;/seriesConfig&gt;
+    &lt;/seriesConfigs&gt;
+    &lt;name&gt;sampleSuite&lt;/name&gt;
+    &lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;
+    &lt;description/&gt;
+    &lt;version&gt;1&lt;/version&gt;
+  &lt;/suite&gt;
+&lt;/suites&gt;
+&lt;/inca:inca&gt;
+</screen> 
+
+<para>Alternatively, you can leverage the <filename>inca</filename> script to
+set the path for you.  It looks for scripts that begin with
+<filename>inca-</filename> in the <filename>bin</filename> such as
+<filename>inca-some-command</filename>.  Then you can invoke your
+script by typing <filename>./sbin/inca someCommand</filename> which will 
+automatically set the PERL5LIB for you.  To execute the
+<filename>inca-test-agent</filename> script, type the following:
+</para>
+
+<screen>
+% cd $PREFIX; ./sbin/inca testAgent -P stdin:pass
+</screen>
+
+<para>Type in the password provided to you by your Inca administrator
+when prompted.  You should see the output as above.  </para>
+</section>
+
+<section id="userguide-apis-java">
+<title>Inca Java Client APIs</title>
+
+<para>The Java Client API can be accessed on the Inca server at
+<filename>$INCA_DIST/lib/inca-common.jar</filename> or by downloading the
+inca-common tar ball,
+<ulink
+url="http://inca.sdsc.edu/releases/&ugVersion/inca-common-java-bin.tar.gz">inca-common-java-bin.tar.gz</ulink>.
+To install <filename>inca-common-java-bin.tar.gz</filename> in a directory
+called <filename>$PREFIX</filename>, perform the following steps.</para>
+
+<orderedList>
+  <listItem>
+  <para>Untar the <filename>inca-common-java-bin.tar.gz</filename> file 
+    <screen>% mkdir $PREFIX; tar -C $PREFIX -zxvf inca-common-java-bin.tar.gz</screen></para>
+  </listItem>
+  <listItem>
+  <para>Copy the credentials from your Inca administrator over to the new
+  installation.  The file <filename>trusted.0</filename> will actually be
+  the hash of the CA certificate and will look something like <filename>51b63f6c.0</filename>.
+    <screen>% mkdir $PREFIX/etc; mkdir $PREFIX/etc/trusted
+% cp <emphasis role="red">clientcert.pem</emphasis> $PREFIX/etc
+% cp <emphasis role="red">clientkey.pem</emphasis> $PREFIX/etc
+% cp <emphasis role="red">trusted.0</emphasis> $PREFIX/etc/trusted</screen>
+    </para>
+  </listItem>
+</orderedList>
+
+<para>Below is a sample of code using the Java APIs that pings the Agent and
+queries for its configuration.</para>
+
+<screen>
+import edu.sdsc.inca.AgentClient;
+
+public class AgentClientTest {
+  public static void main(String args[]) {
+    AgentClient agentClient = new AgentClient();
+    agentClient.setServer("<emphasis role="red">rocks-101.sdsc.edu</emphasis>", <emphasis role="red">6323</emphasis>);
+    agentClient.setCertificatePath("<emphasis role="red">clientcert.pem</emphasis>");
+    agentClient.setKeyPath("<emphasis role="red">clientkey.pem</emphasis>");
+    agentClient.setTrustedPath("<emphasis role="red">trusted</emphasis>");
+    System.out.print( "Please enter a password: " );
+    try {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      String password = br.readLine();
+      agentClient.setPassword(password);
+    } catch ( IOException e  ) {
+      System.err.println( "Problems reading password" );
+      e.printStackTrace();
+    }
+    try {
+      agentClient.connect();
+      System.out.println( agentClient.commandPing("hello agent") );
+      System.out.println( agentClient.getConfig() );
+    } catch ( Exception e ) {
+      System.err.println( "Connection error to agent" );
+      e.printStackTrace();
+    }
+  }
+}
+</screen>
+
+<para>Place the code in a file called <filename>AgentClientTest.java</filename>
+within the <filename>$INCA_DIST</filename> directory and replace all of
+the highlighted areas with values appropriate to your installation.  Note that
+the API looks for certificate files in the classpath so just the name of
+the file needs to be specified rather than a complete path.  First
+set your classpath to include the jars in <filename>$INCA_DIST/lib</filename>
+as below: </para>
+
+<screen>
+% setenv CLASSPATH `perl -e "print join(':',glob('lib/*'))"`
+
+or
+
+% export CLASSPATH=`perl -e "print join(':',glob('lib/*'))"`
+</screen>
+
+<para>Then compile the program as below: </para>
+
+<screen>
+% javac AgentClientTest.java
+</screen>
+
+<para>This will create the file <filename>AgentClientTest.class</filename>.
+To run the program, you will also need to specify the directory
+where your credentials reside (specified below as <filename>etc</filename>),
+the <filename>etc/common</filename> directory, and <filename>.</filename>
+where the <filename>AgentClientTest.class</filename> resides.  Execute
+ as follows:</para>
+
+<screen>
+% java -cp .:etc:etc/common:$CLASSPATH AgentClientTest
+</screen>
+
+<para>Type in the password provided to you by your Inca administrator
+when prompted.  You should see something like this:</para> 
+
+<screen>
+hello agent
+&lt;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&gt;
+&lt;repositories&gt;
+  &lt;repository&gt;http://inca.sdsc.edu/repository/latest&lt;/repository&gt;
+&lt;/repositories&gt;
+&lt;resourceConfig&gt;
+  &lt;resources&gt;
+    &lt;resource&gt;
+        &lt;name&gt;defaultGrid&lt;/name&gt;
+        &lt;xpath&gt;//resource[matches(name, "localSite")]&lt;/xpath&gt;
+      &lt;macros&gt;
+ ...
+  &lt;/resources&gt;
+&lt;/resourceConfig&gt;
+&lt;suites&gt;
+  &lt;suite&gt;
+    &lt;seriesConfigs&gt;
+      &lt;seriesConfig&gt;
+        &lt;series&gt;
+          &lt;name&gt;cluster.math.atlas.version&lt;/name&gt;
+          &lt;uri&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
+          &lt;args&gt;
+            &lt;arg&gt;
+              &lt;name&gt;cc&lt;/name&gt;
+              &lt;value&gt;cc&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;dir&lt;/name&gt;
+              &lt;value/&gt;&lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;help&lt;/name&gt;
+              &lt;value&gt;no&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;log&lt;/name&gt;
+              &lt;value&gt;3&lt;/value&gt;
+            &lt;/arg&gt;
+            &lt;arg&gt;
+              &lt;name&gt;verbose&lt;/name&gt;
+              &lt;value&gt;1&lt;/value&gt;
+            &lt;/arg&gt;
+ ...
+        &lt;action&gt;add&lt;/action&gt;
+      &lt;/seriesConfig&gt;
+    &lt;/seriesConfigs&gt;
+    &lt;name&gt;sampleSuite&lt;/name&gt;
+    &lt;guid&gt;incas://rocks-101.sdsc.edu:6323/sampleSuite&lt;/guid&gt;
+    &lt;description/&gt;
+    &lt;version&gt;1&lt;/version&gt;
+  &lt;/suite&gt;
+&lt;/suites&gt;
+&lt;/inca:inca&gt;
+</screen> 
+
+</section>
 
 </section>
    </section>
