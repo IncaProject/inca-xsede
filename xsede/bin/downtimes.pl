@@ -20,7 +20,7 @@ my $pw = `cat $home/bin/downtimes.db`;
 $pw =~ s/\n//g;
 
 
-my $dbh = DBI->connect("DBI:Pg:dbname=user_news;host=azrael.sdsc.edu;port=5431", "inca", $pw);
+my $dbh = DBI->connect("DBI:Pg:dbname=user_news;host=hogatha.sdsc.edu;port=5432", "inca", $pw);
 die "Unable to connect to db" if ! defined $dbh;
 
 my %resources = ( "inca_name" => $tmpFile,
@@ -44,7 +44,7 @@ while (my ($resource, $file) = each(%resources)){
                 i.deleted IS NULL AND
                 s.update_id = (SELECT MAX(se.update_id) FROM user_news.system_event se WHERE se.item_id = i.item_id)
           ORDER BY s.event_start_time";
-  #print $query;
+  #print "$query\n";
   my $sth = $dbh->prepare($query);
   if ( !defined $sth ) {
     die "Cannot prepare statement: $DBI::errstr\n";
@@ -57,6 +57,7 @@ while (my ($resource, $file) = each(%resources)){
     "loni-lsu-queenbee" => ["loni-lsu-qb"] );
   open TMP,">$file";
   while ( my ($id, $subject, $content, $start, $end, $zone, $update, $name ) = $sth->fetchrow()){
+    #print "$subject: $content\n";
     my $startDate = convertToDateTime($start, $zone, $id);
     my $endDate = convertToDateTime($end, $zone, $id);
     if ($startDate <= $now && $endDate >= $now){
