@@ -1847,7 +1847,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>data-movement-servers.teragrid.org-4.2.0-rft</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>dataMoveServer4.2.0-rft-port</name>
@@ -1863,7 +1863,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org nstg.ornl.teragrid.org</value>
+            <value>queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4183,6 +4183,18 @@
           <macro>
             <name>__incaReporterManagerLocation__</name>
             <value>/gpfs1/u/ncsa/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>post</name>
+            <value>';</value>
+          </macro>
+          <macro>
+            <name>pre</name>
+            <value>@bash@ 'set -a; cd @__incaReporterManagerLocation__@;   @perl5@</value>
+          </macro>
+          <macro>
+            <name>perl5</name>
+            <value>export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &amp;&amp;</value>
           </macro>
         </macros>
       </resource>
@@ -6899,7 +6911,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>remote-compute.teragrid.org-5.0.1-wsgram</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>wsgram-fork-exe</name>
@@ -6911,7 +6923,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6925,7 +6937,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>remote-compute.teragrid.org-5.0.1-wsgram-batch</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -6933,7 +6945,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6947,7 +6959,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>remote-compute.teragrid.org-5.0.1-wsgram-netstat</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>__groupname__</name>
@@ -6955,7 +6967,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -7684,7 +7696,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>science-gateway.teragrid.org-5.0.1-wsgram</name>
-        <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>wsgram-fork-exe</name>
@@ -7700,7 +7712,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>lonestar.tacc.teragrid.org ranger.tacc.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -12675,7 +12687,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>125</version>
+      <version>126</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13635,7 +13647,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>160</version>
+      <version>161</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14091,7 +14103,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>201</version>
+      <version>202</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27357,7 +27369,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>70</version>
+      <version>71</version>
     </suite>
     <suite>
       <seriesConfigs>
