@@ -21,7 +21,7 @@
         }
       }
     </script>
-    <form method="get" action="../jsp/status.jsp" name="form">
+    <form method="get" action="/inca/jsp/status.jsp" name="form">
       <table cellpadding="2">
         <tr><td><p>KIT:<br/>
           <select name="suiteNames">
