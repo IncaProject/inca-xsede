@@ -4181,14 +4181,6 @@
         <xpath>//resource[matches(name, '^(ember\.ncsa\.illinois\.edu)$')]</xpath>
         <macros>
           <macro>
-            <name>adminEmail</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:tbouvet@ncsa.uiuc.edu</value>
-          </macro>
-          <macro>
-            <name>tgContact</name>
-            <value>FailTo:inca@sdsc.edu, FailTo:tbouvet@ncsa.uiuc.edu</value>
-          </macro>
-          <macro>
             <name>kit-registration-host</name>
             <value>grid-ember.ncsa.teragrid.org:8446</value>
           </macro>
@@ -4359,6 +4351,14 @@
           <macro>
             <name>apps4.2.0-tginfo-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>adminEmail</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:ember-admin@ncsa.illinois.edu</value>
+          </macro>
+          <macro>
+            <name>tgContact</name>
+            <value>FailTo:inca@sdsc.edu, FailTo:ember-admin@ncsa.illinois.edu</value>
           </macro>
         </macros>
       </resource>
@@ -13192,7 +13192,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>94</version>
+      <version>95</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17216,58 +17216,6 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>metascheduling.glue.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/metascheduling.glue.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8443</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@localCompute4.2.1-glue-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>glue2-lc-4.2.1</nickname>
-          <resourceSetName>local-compute.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
             <args>
@@ -17418,14 +17366,6 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>local-compute.teragrid.org-4.2.1</name>
-      <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
-      <description>Local Compute Capability Kit</description>
-      <version>56</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>metascheduling.glue.unit</name>
@@ -17453,7 +17393,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@localCompute4.2.2-glue-host@</value>
+                <value>@localCompute4.2.1-glue-host@</value>
               </arg>
             </args>
             <limits>
@@ -17461,8 +17401,8 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>glue2-lc-4.2.2</nickname>
-          <resourceSetName>local-compute.teragrid.org-4.2.2</resourceSetName>
+          <nickname>glue2-lc-4.2.1</nickname>
+          <resourceSetName>local-compute.teragrid.org-4.2.1</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -17478,6 +17418,14 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+      </seriesConfigs>
+      <name>local-compute.teragrid.org-4.2.1</name>
+      <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
+      <description>Local Compute Capability Kit</description>
+      <version>61</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
@@ -17630,11 +17578,63 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>metascheduling.glue.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/metascheduling.glue.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@localCompute4.2.2-glue-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>glue2-lc-4.2.2</nickname>
+          <resourceSetName>local-compute.teragrid.org-4.2.2</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>7</version>
+      <version>10</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18992,58 +18992,6 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>metascheduling.glue.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/metascheduling.glue.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8443</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@meta4.2.0-glue-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>glue2-4.2.0</nickname>
-          <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.kitregistration.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
             <args>
@@ -19250,14 +19198,6 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>metascheduling.teragrid.org-4.2.0</name>
-      <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
-      <description>Metascheduling Capability Kit</description>
-      <version>43</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>metascheduling.glue.unit</name>
@@ -19285,7 +19225,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@meta4.2.1-glue-host@</value>
+                <value>@meta4.2.0-glue-host@</value>
               </arg>
             </args>
             <limits>
@@ -19293,8 +19233,8 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>glue2-4.2.1</nickname>
-          <resourceSetName>metascheduling.teragrid.org-4.2.1</resourceSetName>
+          <nickname>glue2-4.2.0</nickname>
+          <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -19310,6 +19250,14 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+      </seriesConfigs>
+      <name>metascheduling.teragrid.org-4.2.0</name>
+      <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
+      <description>Metascheduling Capability Kit</description>
+      <version>47</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
@@ -19526,11 +19474,63 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>metascheduling.glue.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/metascheduling.glue.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>8443</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@meta4.2.1-glue-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>glue2-4.2.1</nickname>
+          <resourceSetName>metascheduling.teragrid.org-4.2.1</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>metascheduling.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.1</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>9</version>
+      <version>13</version>
     </suite>
     <suite>
       <seriesConfigs>
