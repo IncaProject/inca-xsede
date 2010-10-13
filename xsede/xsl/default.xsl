@@ -85,9 +85,10 @@
         <tr>
           <td class="clear"><xsl:value-of select="concat(name,' ',port)"/></td>
           <xsl:variable name="series" select="name"/>
+          <xsl:variable name="port" select="port"/>
           <xsl:for-each select="$resources">
             <xsl:sort/>
-            <xsl:variable name="regex" select="concat('^',name,'.*(\(|_)',$series,'(\)|)$')"/>
+            <xsl:variable name="regex" select="concat('^',name,'(|:',$port,')(| )(\(|_)',$series,'(\)|)$')"/>
             <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
                 matches(nickname, $regex)]"/>
             <xsl:call-template name="printResourceResultCell">
