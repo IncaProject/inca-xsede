@@ -15,6 +15,10 @@
   <xsl:include href="../xsl/instance-extra.xsl"/>
 
   <xsl:param name="printRunNow"/>
+  <xsl:param name="printKb"/>
+  <xsl:param name="kbSearch"/>
+  <xsl:param name="kbSubmit"/>
+  <xsl:param name="kbEmail"/>
   <xsl:param name="week"/>
   <xsl:param name="month"/>
   <xsl:param name="quarter"/>
@@ -33,10 +37,7 @@
   <xsl:template name="printReport" match="report">
     <xsl:variable name="config" select="../seriesConfig"/>
     <xsl:variable name="configId" select="../seriesConfigId"/>
-    <xsl:variable
-        name="cgi"
-        select="concat(substring-before($config/series/uri, name),
-        '../cgi-bin/reporters.cgi?reporter=', name, '&amp;action=help')"/>
+    <xsl:variable name="cgi" select="concat('http://inca.sdsc.edu/2.0/ctssv3/bin/cgi-bin/reporters.cgi?reporter=', name, '&amp;action=help')"/>
     <xsl:variable name="comp" select="../comparisonResult"/>
     <xsl:variable name="used" select="../sysusage"/>
     <xsl:variable name="gmt" select="gmt" as="xs:dateTime" />
@@ -79,6 +80,14 @@
       <xsl:with-param name="title" select="concat('Details for ',
       $nickName, ' series')" />
     </xsl:call-template>
+    <xsl:variable name="metrics">
+      <xsl:for-each select="body//statistics/statistic/ID">
+        <xsl:value-of select="concat(., ',')"/>
+      </xsl:for-each>
+      <xsl:for-each select="body//statistics/@*">
+        <xsl:value-of select="concat(name(), ',')"/>
+      </xsl:for-each>
+    </xsl:variable>
     <table width="600" cellpadding="4">
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
@@ -87,7 +96,7 @@
           <xsl:variable name="label"
                         select="concat($resource, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;startDate=')"/>
+                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;availMetrics=', $metrics, '&amp;startDate=')"/>
           <table>
             <tr>
               <td>view results for past: </td>
@@ -138,6 +147,23 @@
             </p>
           </xsl:if>
         </xsl:if>
+        <xsl:if test="$printKb='true'">
+          <tr><td>
+          <xsl:variable name="kb1" select="replace($kbSearch,'\+','&amp;')"/>
+          <xsl:variable name="kb2" select="replace($kb1,'@nickname@', $nickName)"/>
+          <xsl:variable name="kb3" select="replace($kb2,'@error@', $errMsg)"/>
+          <xsl:variable name="kb4" select="replace($kb3,'@reporter@', name)"/>
+          <form method="post" action="{$kb4}&amp;kbEmail={$kbEmail}">
+          <input type="submit" value="search knowledge base"/>
+          </form></td><td>
+          <xsl:variable name="ab1" select="replace($kbSubmit,'\+','&amp;')"/>
+          <xsl:variable name="ab2" select="replace($ab1,'@nickname@', $nickName)"/>
+          <xsl:variable name="ab3" select="replace($ab2,'@error@', $errMsg)"/>
+          <xsl:variable name="ab4" select="replace($ab3,'@reporter@', name)"/>
+          <form method="post" action="{$ab4}&amp;kbEmail={$kbEmail}">
+            <input type="submit" value="add to knowledge base"/>
+          </form></td></tr>
+        </xsl:if>
         <!-- instance-extra.xsl for knowledge base -->
         <xsl:call-template name="knowledgeBase">
           <xsl:with-param name="nickName" select="$nickName"/>
@@ -146,6 +172,14 @@
         </xsl:call-template>
       </td>
       </tr>
+      <xsl:if test="$metrics != ''">
+      <tr><td colspan="2" class="header">
+        Metrics collected:
+      </td></tr>
+          <xsl:call-template name="printBodyStats">
+            <xsl:with-param name="report" select="."/>
+          </xsl:call-template>
+      </xsl:if>
       <tr><td colspan="2" class="header">
         <xsl:text>Reporter details:</xsl:text>
       </td></tr>
