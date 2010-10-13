@@ -24360,7 +24360,7 @@
       <name>remote-compute.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>21</version>
+      <version>23</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27704,7 +27704,7 @@
       <name>science-gateway.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.1</guid>
       <description>Science gateway</description>
-      <version>14</version>
+      <version>15</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -29763,6 +29763,226 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>security.hostcert.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value>info.teragrid.org:443</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>2</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>7</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>info.teragrid.org:443 (Apache HTTPS certificate)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>security.hostcert.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value>@info_service_hosts@:443</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>2</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>7</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>@info_service_hosts@:443 (Apache HTTPS certificate)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>security.hostcert.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value>@info_service_hosts@:8444</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>2</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>7</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>@info_service_hosts@:8444 (Apache HTTPS certificate)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>security.hostcert.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value>info.teragrid.org:8444</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>2</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>7</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>info.teragrid.org:8444 (Apache HTTPS certificate)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
