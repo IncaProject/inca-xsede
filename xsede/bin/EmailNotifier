@@ -39,6 +39,9 @@ if (!$noemail){
   my $name = $ENV{incanickname} || $ENV{incareporter};
   my $subject =
   "Inca TeraGrid Notification: $name on $ENV{incaresource} $ENV{incaresult}";
+  my $date = ParseDate($ENV{incacollected});
+  my ($unixdate, $zone) = UnixDate($date, "%Y-%m-%dT%H:%M:%S.000","%z");
+  my $fmtdate = $unixdate . substr($zone, 0, 3) . ":" . substr($zone, 3, 2);
   my $body =
   "The following Inca test has $ENV{incaresult}ED:\n\n" .
   "RAN AT:  $ENV{incacollected}\n\n" .
@@ -50,7 +53,7 @@ if (!$noemail){
   (defined($ENV{incastderr}) ? "STANDARD ERROR: $ENV{incastderr}\n\n" : "") .
   "\n\n" .
   "details at http://sapa.sdsc.edu:8080/inca/jsp/instance.jsp?xsl=instance.xsl" .
-  "&instanceId=$ENV{incainstanceId}&configId=$ENV{incaconfigId}\n\n";
+  "&nickname=$ENV{incanickname}&resource=$ENV{incaresource}&collected=$fmtdate\n\n";
 
   my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
   my $baseDate = ParseDate( $baseDateString );
