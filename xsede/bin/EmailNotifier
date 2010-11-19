@@ -33,7 +33,7 @@ exit if scalar(@ARGV) < 1;
 exit if $ENV{incaschedule} =~ /immediate/;
 
 my $err = $ENV{incaerrorMessage};
-my $noemail = defined($err) && $err =~ /(^DOWNTIME:|Inca error|^NOT_AT_FAULT:)/;
+my $noemail = defined($err) && $err =~ /(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*|.*Execution of reporter skipped due to high load:.*)/;
 
 if (!$noemail){
   my $name = $ENV{incanickname} || $ENV{incareporter};
