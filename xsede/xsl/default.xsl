@@ -224,6 +224,9 @@
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)='' or string($stale)!=''">
                     <xsl:choose>
+                      <xsl:when test="$mapstats/@ip!=''">
+                        <xsl:value-of select="$mapstats/@ip"/>
+                      </xsl:when>
                       <xsl:when test="string($bench)!=''">
                         <xsl:value-of select="concat($bench/value,' ',$bench/units)"/>
                       </xsl:when>
