@@ -105,11 +105,6 @@
               <li><h2>Reports</h2>
                 <ul>
                   <li>
-                    <a href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi">
-                      LEAD Testbed
-                    </a>
-                  </li>
-                  <li>
                     <a href="{concat($url, '/jsp/summary.jsp')}">
                       Past week: avg pass rate by resource/suite
                     </a>
