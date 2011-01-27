@@ -3739,10 +3739,6 @@
             <value>2811</value>
           </macro>
           <macro>
-            <name>dataMoveServer4.2.0-gridftp-striped-registered-version</name>
-            <value>4.0.8</value>
-          </macro>
-          <macro>
             <name>dataMoveServer4.2.0-rft-host</name>
             <value>fr0103ge.ncar.teragrid.org</value>
           </macro>
@@ -3753,6 +3749,10 @@
           <macro>
             <name>dataMoveServer4.2.0-ssh-host</name>
             <value>tg-login.frost.ncar.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>dataMoveServer4.2.0-gridftp-striped-registered-version</name>
+            <value>5.0.2</value>
           </macro>
         </macros>
       </resource>
@@ -14717,62 +14717,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dms-4.2.0-gridftp-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-external-ping-dms-4.2.0_@dms-4.2.0-gridftp-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>data.transfer.gridftp.unit.copy-dns</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.copy-dns</uri>
             <args>
@@ -15347,11 +15291,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dms-4.2.0-gridftp-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-ping-dms-4.2.0_@dms-4.2.0-gridftp-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>103</version>
+      <version>105</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15406,62 +15406,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@dm-4.1.2-gridftp-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-external-ping-dm-4.1.2_@dm-4.1.2-gridftp-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -16043,11 +15987,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@dm-4.1.2-gridftp-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-ping-dm-4.1.2_@dm-4.1.2-gridftp-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>data-movement.teragrid.org-4.1.2</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>170</version>
+      <version>171</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16090,62 +16090,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>repo.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <cpuTime>60</cpuTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>ping_repo</nickname>
-          <resourceSetName>sapa</resourceSetName>
-          <schedule>
-            <crontime>? ?-23 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -16379,11 +16323,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>repo.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>60</cpuTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>ping_repo</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>31</version>
+      <version>32</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19137,118 +19137,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@real-time-gridftp-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gridftp-external-ping_@real-time-gridftp-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@real-time-wsgram-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>wsgram-external-ping_@real-time-wsgram-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -19647,11 +19535,123 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@real-time-gridftp-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-ping_@real-time-gridftp-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@real-time-wsgram-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>wsgram-external-ping_@real-time-wsgram-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>247</version>
+      <version>248</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19698,62 +19698,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.0.2-gram-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gram-external-ping-rc-4.0.2_@rc-4.0.2-gram-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -20987,11 +20931,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.0.2-gram-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram-external-ping-rc-4.0.2_@rc-4.0.2-gram-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>182</version>
+      <version>183</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -21038,62 +21038,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-4.2.0-gram-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gram-external-ping-rc-4.2.0_@rc-4.2.0-gram-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -22231,11 +22175,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-4.2.0-gram-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram-external-ping-rc-4.2.0_@rc-4.2.0-gram-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>49</version>
+      <version>50</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22282,62 +22282,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@rc-5.0.1-gram-ping-hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gram-external-ping-rc-5.0.1_@rc-5.0.1-gram-ping-hosts@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -23475,14 +23419,6 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>remote-compute.teragrid.org-5.0.1</name>
-      <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
-      <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>26</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>network.ping.unit</name>
@@ -23506,7 +23442,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@rc-5.0.2-gram-ping-hosts@</value>
+                <value>@rc-5.0.1-gram-ping-hosts@</value>
               </arg>
               <arg>
                 <name>count</name>
@@ -23522,7 +23458,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gram-external-ping-rc-5.0.2_@rc-5.0.2-gram-ping-hosts@</nickname>
+          <nickname>gram-external-ping-rc-5.0.1_@rc-5.0.1-gram-ping-hosts@</nickname>
           <resourceSetName>repo</resourceSetName>
           <schedule>
             <crontime>?-59/3 * * * *</crontime>
@@ -23539,6 +23475,14 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+      </seriesConfigs>
+      <name>remote-compute.teragrid.org-5.0.1</name>
+      <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
+      <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
+      <version>28</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.wsrfquery</name>
@@ -24719,11 +24663,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@rc-5.0.2-gram-ping-hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram-external-ping-rc-5.0.2_@rc-5.0.2-gram-ping-hosts@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/3 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>externalEmail</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>11</version>
+      <version>12</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26787,7 +26787,7 @@
       <name>science-gateway.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.1</guid>
       <description>Science gateway</description>
-      <version>37</version>
+      <version>38</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27875,118 +27875,6 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org (ping)</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@info_service_hosts@</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>@info_service_hosts@ (ping)</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>? ?-23 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>teragrid.info.performance</name>
@@ -29171,11 +29059,123 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>info.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>info.teragrid.org (ping)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>?-59/15 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@info_service_hosts@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>@info_service_hosts@ (ping)</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>tg-iis</name>
       <guid>incas://sapa.sdsc.edu:6323/tg-iis</guid>
       <description>TeraGrid IIS service availability</description>
-      <version>8</version>
+      <version>9</version>
     </suite>
     <suite>
       <seriesConfigs>
