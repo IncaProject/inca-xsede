@@ -1715,7 +1715,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>core.teragrid.org-5.0.0</name>
         <xpath>//resource[matches(name, '^(lonestar\.tacc\.teragrid\.org)$')]</xpath>
         <macros>
@@ -8388,26 +8388,6 @@
             <value>trusted_authorities_entity_map.txt</value>
           </macro>
           <macro>
-            <name>__groupname__</name>
-            <value>tacc-lonestar</value>
-          </macro>
-          <macro>
-            <name>__regexp__</name>
-            <value>login1.ls4.tacc.utexas.edu</value>
-          </macro>
-          <macro>
-            <name>__remoteInvocationMethod__</name>
-            <value>ssh</value>
-          </macro>
-          <macro>
-            <name>__equivalent__</name>
-            <value>true</value>
-          </macro>
-          <macro>
-            <name>__incaReporterManagerLocation__</name>
-            <value>/home/utexas/staff/inca/inca2install</value>
-          </macro>
-          <macro>
             <name>kit-registration-host</name>
             <value>@core5.0.0-mds-info-host@:@core5.0.0-mds-info-port@</value>
           </macro>
@@ -8543,6 +8523,38 @@
             <name>localCompute4.2.2-glue-host</name>
             <value>gridftp1.ls4.tacc.utexas.edu</value>
           </macro>
+          <macro>
+            <name>__groupname__</name>
+            <value>tacc-lonestar</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>login1.ls4.tacc.utexas.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+          <macro>
+            <name>__incaReporterManagerLocation__</name>
+            <value>/home1/00500/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>keyPre2</name>
+            <value>module add</value>
+          </macro>
+          <macro>
+            <name>pre</name>
+            <value>@bash@ 'set -a; cd @__incaReporterManagerLocation__@; @perl5@ module load CTSSV4 &amp;&amp;</value>
+          </macro>
+          <macro>
+            <name>post</name>
+            <value>';</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -8600,10 +8612,6 @@
           <macro>
             <name>pre</name>
             <value>@bash@ 'set -a; cd @__incaReporterManagerLocation__@; @perl5@ module load CTSSV4 &amp;&amp;</value>
-          </macro>
-          <macro>
-            <name>post</name>
-            <value>';</value>
           </macro>
           <macro>
             <name>vtss3.0.0-chromium-key</name>
@@ -8720,6 +8728,10 @@
           <macro>
             <name>dataMoveServer4.2.0-gridftp-striped-registered-version</name>
             <value>5.0.2</value>
+          </macro>
+          <macro>
+            <name>post</name>
+            <value>';</value>
           </macro>
         </macros>
       </resource>
@@ -12882,7 +12894,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>128</version>
+      <version>131</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13048,7 +13060,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>151</version>
+      <version>153</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14012,9 +14024,10 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.pacman.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14055,9 +14068,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.pacman.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14098,9 +14112,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.tgresid.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14141,9 +14156,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.tgresid.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14184,9 +14200,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
                 <name>localquery</name>
@@ -14271,9 +14288,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
             <args>
               <arg>
                 <name>kitversion</name>
@@ -14334,9 +14352,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>security.ca.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14393,9 +14412,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.mapfile.verify</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.mapfile.verify</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14436,9 +14456,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>security.hostcert.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.hostcert.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -14493,9 +14514,9 @@
         </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-5.0.0</name>
-      <guid/>
+      <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-5.0.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>1</version>
+      <version>3</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14951,7 +14972,7 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>245</version>
+      <version>248</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15167,7 +15188,7 @@
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>51</version>
+      <version>53</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15863,7 +15884,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>105</version>
+      <version>108</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17379,7 +17400,7 @@
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>15</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18055,7 +18076,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>402</version>
+      <version>404</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19275,7 +19296,7 @@
       <name>metascheduling.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.1</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>19</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19339,7 +19360,7 @@
       <name>parallel-app.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
       <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>98</version>
+      <version>100</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -25087,7 +25108,7 @@
       <name>remote-compute.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>12</version>
+      <version>15</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -28183,7 +28204,7 @@
       <name>science-gateway.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.2</guid>
       <description>Science gateway</description>
-      <version>15</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -29855,7 +29876,7 @@
       <name>usage</name>
       <guid>incas://sapa.sdsc.edu:6323/usage</guid>
       <description/>
-      <version>75</version>
+      <version>77</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -30931,7 +30952,7 @@
       <name>workflow.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.2.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>63</version>
+      <version>65</version>
     </suite>
   </suites>
 </inca:inca>
