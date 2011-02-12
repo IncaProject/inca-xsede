@@ -7,34 +7,36 @@ use Time::HiRes qw( gettimeofday tv_interval sleep );
 
 my $reporter = new Inca::Reporter::Performance(
   name => 'teragrid.info.performance',
-  version => 4,
+  version => 5,
   description => 'Monitors responsiveness of TeraGrid information services',
-  measurement_name => 'info.teragrid.org'
+  measurement_name => 'iis_services',
+  short => 1
 );
-$reporter->addArg('host', 'host to monitor', 'info1.dyn.teragrid.org');
-$reporter->addArg('stat', 'statistic to gather', 'Apache static');
+$reporter->addArg('host', 'host to monitor', 'info.teragrid.org');
 $reporter->processArgv(@ARGV);
 my $host = $reporter->argValue('host');
-my $stat = $reporter->argValue('stat');
 $ENV{'GLOBUS_OPTIONS'} = "-Xmx256M";
-my %bench = (
-  'Apache static' => 'wget -O /dev/null http://'.$host.'/',
-  'Apache CGI' => 'wget -O /dev/null http://'.$host.'/web-apps/csv/ctss-resources-v1/',
-  'Tomcat WebMDS' => 'wget -O /dev/null "http://'.$host.':8080/webmds/webmds?info=tgislocal&xsl=tgcdbresources"',
-  'Globus MDS' => 'wsrf-query -a -s https://'.$host.':8446/wsrf/services/DefaultIndexService ".//V4tgcdbRP"'
+my @bench = (
+  ['Apache_static', 'wget -O /dev/null http://'.$host.'/'],
+  ['Apache_CGI', 'wget -O /dev/null http://'.$host.'/web-apps/csv/ctss-resources-v1/'],
+  ['Tomcat_WebMDS', 'wget -O /dev/null "http://'.$host.':8080/webmds/webmds?info=tgislocal&xsl=tgcdbresources"'],
+  ['Globus_MDS', 'wsrf-query -a -s https://'.$host.':8446/wsrf/services/DefaultIndexService ".//V4tgcdbRP"']
 );
 my $benchmark = $reporter->addNewBenchmark($host);
-my $cmd = "$bench{$stat}";
-my $t0 = [gettimeofday];
-my $output = $reporter->loggedCommand($cmd);
-if($?) {
-  my $err = "$cmd failed: $output $!";
-  $reporter->failPrintAndExit($err);
-} else {
-  my $t1 = [gettimeofday];
-  my $elapsed = tv_interval $t0,$t1;
-  $elapsed = sprintf("%.3f",$elapsed);
-  $benchmark->setStatistic($stat, $elapsed, 'secs');
-  $reporter->setResult(1);
-  $reporter->print();
+for (my $i=0; $i<=$#bench; $i++){
+  my $statname = $bench[$i][0];
+  my $cmd = $bench[$i][1];
+  my $t0 = [gettimeofday];
+  my $output = $reporter->loggedCommand($cmd);
+  if($?) {
+    my $err = "$cmd failed: $output $!";
+    $reporter->failPrintAndExit($err);
+  } else {
+    my $t1 = [gettimeofday];
+    my $elapsed = tv_interval $t0,$t1;
+    $elapsed = sprintf("%.3f",$elapsed);
+    $benchmark->setStatistic($statname, $elapsed, 'secs');
+  }
 }
+$reporter->setResult(1);
+$reporter->print();
