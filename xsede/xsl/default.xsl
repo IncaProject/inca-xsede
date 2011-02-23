@@ -176,7 +176,7 @@
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?nickname=',
-            $result/nickname, '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
+            encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
@@ -224,8 +224,8 @@
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)='' or string($stale)!=''">
                     <xsl:choose>
-                      <xsl:when test="$mapstats/@ip!=''">
-                        <xsl:value-of select="$mapstats/@ip"/>
+                      <xsl:when test="$mapstats/@ip_!=''">
+                        <xsl:value-of select="$mapstats/@ip_"/>
                       </xsl:when>
                       <xsl:when test="string($bench)!=''">
                         <xsl:value-of select="concat($bench/value,' ',$bench/units)"/>
