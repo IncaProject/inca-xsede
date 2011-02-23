@@ -596,18 +596,19 @@ inca.depot.peers=incas://rocks-101.sdsc.edu:6324
 
 <listItem>
 <para>
-Edit <filename>$INCA_DIST/etc/common/inca.properties</filename> where the consumer is installed and
+Edit <filename>$INCA_DIST/etc/common/inca.properties</filename> where the consumer and agent are installed and
 uncomment the block which specifies the hosts for your depots.  For example, if your 
 original depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
-cuzco.sdsc.edu:6324, your edit would look like:</para>
+cuzco.sdsc.edu:6324, your edits would look like:</para>
 <screen>...
-# URI to the depot -- use incas:// if auth is required and inca:// if not
 inca.consumer.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+inca.agent.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
 ...</screen>
+<para>Restart the agent and consumer. </para>
 </listItem>
 
 <listItem>
-<para>Restart the agent and consumer. 
+<para>
 Start each new peer depot with the "sync" command below and look for "DB synchronization succeeded" in the 
 <filename>$INCA_DIST/var/depot.log</filename> files:
 <screen>% cd $INCA_DIST; bin/inca start depot --sync</screen>
