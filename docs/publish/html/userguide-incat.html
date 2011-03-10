@@ -905,8 +905,38 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
+NAME="USERGUIDE-INCAT-RESOURCE-MACROS"
+>5.9.1. Using Macros from Other Resources</A
+></H3
+><P
+>Sometimes it's useful to configure a series with macros from resource groups besides
+   the one the test will execute on.  For example, if a test will execute on a local resource to ping a group of 
+   remote resources, it would be helpful to use the macro for the hosts defined in the remote resource group.
+   In the image below, we add a new group
+   called "remoteGrid" to the default Inca configuration.  The "remoteGrid" group contains two resources "remoteResourceA"
+   and "remoteResourceB".  Each of these two resources has a macro called "pingHost" defined with its hostname.</P
+><P
+><IMG
+SRC="figures/incat/resource-macro1.gif"
+ALIGN="CENTER"></P
+><P
+>Now we set up a ping test that is scheduled to execute on the "localResource" group, but is configured using the 
+  "pingHost" macro from the "remoteGrid" group.  The only difference in syntax is to add the resource group name and an arrow
+  to the macro name as in the image below.  Since we're executing on "localResource", we have to add a "remoteGrid-&#62;"
+  to the front of the macro name in order to get that group's macro values.  In this example, the series will create two 
+  ping tests to execute on "localResource": one that pings the "pingHost" of "remoteResourceA" and one that pings the "pingHost" of "remoteResourceB".  This is because we're getting all the values of the "remoteGrid" group's "pingHost" macro, and the "remoteGrid" group contains "remoteResourceA" and "remoteResourceB".</P
+><P
+><IMG
+SRC="figures/incat/resource-macro2.gif"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
 NAME="USERGUIDE-INCAT-ALL2ALL"
->5.9.1. Configuring "all2all" Series</A
+>5.9.2. Configuring "all2all" Series</A
 ></H3
 ><P
 >The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
