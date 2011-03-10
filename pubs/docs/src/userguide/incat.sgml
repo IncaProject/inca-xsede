@@ -458,6 +458,23 @@ reporter manager and agent over their SSL connection.
   </para>
   <graphic fileref="figures/incat/macro3.jpg" align="center"></graphic>
   
+  <section id="userguide-incat-resource-macros">
+  <title>Using Macros from Other Resources</title>
+  <para>Sometimes it's useful to configure a series with macros from resource groups besides
+   the one the test will execute on.  For example, if a test will execute on a local resource to ping a group of 
+   remote resources, it would be helpful to use the macro for the hosts defined in the remote resource group.
+   In the image below, we add a new group
+   called "remoteGrid" to the default Inca configuration.  The "remoteGrid" group contains two resources "remoteResourceA"
+   and "remoteResourceB".  Each of these two resources has a macro called "pingHost" defined with its hostname.</para> 
+  <graphic fileref="figures/incat/resource-macro1.gif" align="center"></graphic>
+  <para>Now we set up a ping test that is scheduled to execute on the "localResource" group, but is configured using the 
+  "pingHost" macro from the "remoteGrid" group.  The only difference in syntax is to add the resource group name and an arrow
+  to the macro name as in the image below.  Since we're executing on "localResource", we have to add a "remoteGrid->"
+  to the front of the macro name in order to get that group's macro values.  In this example, the series will create two 
+  ping tests to execute on "localResource": one that pings the "pingHost" of "remoteResourceA" and one that pings the "pingHost" of "remoteResourceB".  This is because we're getting all the values of the "remoteGrid" group's "pingHost" macro, and the "remoteGrid" group contains "remoteResourceA" and "remoteResourceB".</para>
+  <graphic fileref="figures/incat/resource-macro2.gif" align="center"></graphic>
+  </section>
+
   <section id="userguide-incat-all2all">
   <title>Configuring "all2all" Series</title>
   <para>The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
