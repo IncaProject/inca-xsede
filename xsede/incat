@@ -6,7 +6,7 @@
     <resources>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>ALL-RM</name>
-        <xpath>//resource[matches(name, '^(teragrid|NCSA-gatekeepers|repo|SDSC|sapa|teragrid-build)$')]</xpath>
+        <xpath>//resource[matches(name, '^(teragrid|NCSA-gatekeepers|repo|sapa|teragrid-build)$')]</xpath>
         <macros>
           <macro>
             <name>psArgs</name>
@@ -42,7 +42,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>teragrid NCSA-gatekeepers repo SDSC sapa teragrid-build</value>
+            <value>teragrid NCSA-gatekeepers repo sapa teragrid-build</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1012,7 +1012,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>app-support.teragrid.org-4.2.0-compiler-ibm</name>
         <xpath>//resource[matches(name, '^(bigred\.iu\.teragrid\.org)$')]</xpath>
         <macros>
@@ -1326,7 +1326,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org lonestar4.tacc.teragrid.org bigred.iu.teragrid.org </value>
+            <value>ranger.tacc.teragrid.org queenbee.loni-lsu.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org nstg.ornl.teragrid.org kraken.nics.teragrid.org lonestar4.tacc.teragrid.org bigred.iu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -4766,10 +4766,6 @@
             <value>1.6.0_20</value>
           </macro>
           <macro>
-            <name>apps4.2.0-hdf5-key</name>
-            <value>@keyPre@ hdf5/1.8.5.0 @keyPost@</value>
-          </macro>
-          <macro>
             <name>apps4.2.0-compiler-pgi-version</name>
             <value>10.6-0</value>
           </macro>
@@ -4852,6 +4848,10 @@
           <macro>
             <name>kit-registration-host</name>
             <value>@core5.0.0-mds-info-host@:@core5.0.0-mds-info-port@</value>
+          </macro>
+          <macro>
+            <name>apps4.2.0-hdf5-key</name>
+            <value>@keyPre@ hdf5/1.8.6 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -7000,7 +7000,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ember.ncsa.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org ncsa-grid-abe pople.psc.teragrid.org bigred.iu.teragrid.org </value>
+            <value>ember.ncsa.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org ncsa-grid-abe pople.psc.teragrid.org bigred.iu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -11023,62 +11023,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.2</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>app-support.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-app-support-4.0.2-registration</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.devel.gmake.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.devel.gmake.version</uri>
             <args>
@@ -11213,7 +11157,7 @@
       <name>app-support.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.2</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>54</version>
+      <version>56</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -12088,62 +12032,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>tginfo>=1.0.2</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>app-support.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-app-support-4.2.0-registration</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13125,7 +13013,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>146</version>
+      <version>151</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13291,7 +13179,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>158</version>
+      <version>159</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13561,62 +13449,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.1</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>core.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-core-registration-4.2.1</nickname>
-          <resourceSetName>core.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>security.ca.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
             <args>
@@ -13771,338 +13603,10 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>214</version>
+      <version>218</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.pacman.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core5.0.0-pacman-key@@@@post@</context>
-          </series>
-          <nickname>pacman-version-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>pacman>=3.14.1</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.pacman.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core5.0.0-pacman-key@@@@post@</context>
-          </series>
-          <nickname>pacman-unit-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.tgresid.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core5.0.0-tgresid-key@@@@post@</context>
-          </series>
-          <nickname>tgresid-unit-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.tgresid.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgresid.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core5.0.0-tgresid-key@@@@post@</context>
-          </series>
-          <nickname>tgresid-version-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>tgwhatami>=2.3.0  &amp;&amp; tgwhereami>=1.0.0</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.middleware.globus.unit.securemds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-            <args>
-              <arg>
-                <name>localquery</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-              </arg>
-              <arg>
-                <name>cache</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>prop</name>
-                <value>{http://mds.teragrid.org/2007/02/ctss}V4KitsRP</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@core5.0.0-mds-info-port@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>secs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value>DefaultIndexService</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>query</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
-              </arg>
-              <arg>
-                <name>cachesecs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>delta</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value>KitRegistration</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@core5.0.0-mds-info-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>globus-mds-info-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? */24 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>5.0.0</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>core.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-core-registration-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>security.ca.unit</name>
@@ -14158,50 +13662,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@securityContact@, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.mapfile.verify</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.mapfile.verify</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>1200</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>grid-mapfile-verify-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>totalErrors == 0 || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -14267,7 +13727,7 @@
       <name>core.teragrid.org-5.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-5.0.0</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>20</version>
+      <version>26</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14723,66 +14183,10 @@
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>256</version>
+      <version>257</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>data-management.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-data-management-4.0.0-registration</nickname>
-          <resourceSetName>data-management.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>data.access.srb.unit.sput_sget</name>
@@ -14831,7 +14235,7 @@
       <name>data-management.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-management.teragrid.org-4.0.0</guid>
       <description>TeraGrid?s Data Management capabilities provide infrastructure in support of the management of data on the TeraGrid.ation and storage of data and its relevance to the TeraGrid project overall.</description>
-      <version>46</version>
+      <version>49</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14879,67 +14283,11 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>data-movement-clients.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-data-movement-clients-4.2.0-registration</nickname>
-          <resourceSetName>data-movement-clients.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-clients.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>64</version>
+      <version>72</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15417,62 +14765,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>data-movement-servers.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-data-movement-servers-4.2.0-registration</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>data.transfer.gridftp.unit.auth-dns</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.auth-dns</uri>
             <args>
@@ -15635,7 +14927,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>124</version>
+      <version>135</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16113,62 +15405,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.1.2</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>data-movement.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-data-movement-4.1.2-registration</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.2</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>data.transfer.gridftp.unit.auth-dns</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.transfer.gridftp.unit.auth-dns</uri>
             <args>
@@ -16331,7 +15567,7 @@
       <name>data-movement.teragrid.org-4.1.2</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>173</version>
+      <version>176</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16667,7 +15903,7 @@
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>32</version>
+      <version>33</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16731,70 +15967,6 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.1</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>local-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-local-compute-registration-4.2.1</nickname>
-          <resourceSetName>local-compute.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
@@ -16939,74 +16111,10 @@
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
       <description>Local Compute Capability Kit</description>
-      <version>74</version>
+      <version>76</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.2</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>local-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-local-compute-registration-4.2.2</nickname>
-          <resourceSetName>local-compute.teragrid.org-4.2.2</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
@@ -17151,7 +16259,7 @@
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>26</version>
+      <version>35</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17613,62 +16721,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>login.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-login-4.0.0-registration</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.admin.tgproxy.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgproxy.unit</uri>
             <args>
@@ -17827,7 +16879,7 @@
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>415</version>
+      <version>417</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18289,62 +17341,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.2</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>login.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-login-4.0.2-registration</nickname>
-          <resourceSetName>login.teragrid.org-4.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.admin.tgproxy.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.tgproxy.unit</uri>
             <args>
@@ -18503,66 +17499,10 @@
       <name>login.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.2</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>22</version>
+      <version>23</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>metascheduling.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-metascheduling-4.2.0-registration</nickname>
-          <resourceSetName>metascheduling.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
@@ -18771,74 +17711,10 @@
       <name>metascheduling.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.0</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>47</version>
+      <version>50</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.1</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>metascheduling.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-metascheduling-4.2.1-registration</nickname>
-          <resourceSetName>metascheduling.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.kitregistration.unit</name>
@@ -19047,135 +17923,7 @@
       <name>metascheduling.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/metascheduling.teragrid.org-4.2.1</guid>
       <description>Metascheduling Capability Kit</description>
-      <version>26</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>parallel-app.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-parallel-app-4.0.0-registration</nickname>
-          <resourceSetName>parallel-app.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-      </seriesConfigs>
-      <name>parallel-app.teragrid.org-4.0.0</name>
-      <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.0</guid>
-      <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>104</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.1</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>parallel-app.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-parallel-app-4.0.1-registration</nickname>
-          <resourceSetName>parallel-app.teragrid.org-4.0.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-      </seriesConfigs>
-      <name>parallel-app.teragrid.org-4.0.1</name>
-      <guid>incas://sapa.sdsc.edu:6323/parallel-app.teragrid.org-4.0.1</guid>
-      <description>The Parallel Application Support Kit provides the capability that TeraGrid users can use for developing and running science applications that execute on multiple processors and/or nodes within a single resource or cluster and that communicate between those processors and/or nodes using a message passing library.</description>
-      <version>11</version>
+      <version>30</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -19935,7 +18683,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>248</version>
+      <version>249</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -21153,70 +19901,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.2</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>remote-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-remote-compute-4.0.2-registration</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
@@ -21275,7 +19959,7 @@
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>185</version>
+      <version>188</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22397,70 +21081,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>remote-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-remote-compute-4.2.0-registration</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
@@ -22519,7 +21139,7 @@
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>54</version>
+      <version>59</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23261,70 +21881,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>5.0.1</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>remote-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-remote-compute-5.0.1-registration</nickname>
-          <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -23763,7 +22319,7 @@
       <name>remote-compute.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>35</version>
+      <version>41</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24162,70 +22718,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>5.0.2</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>remote-compute.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-remote-compute-5.0.2-registration</nickname>
-          <resourceSetName>remote-compute.teragrid.org-5.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -24859,7 +23351,7 @@
       <name>remote-compute.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>18</version>
+      <version>21</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -25823,75 +24315,11 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>science-gateway.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-science-gateway-4.2.0-registration</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>science-gateway.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-4.2.0</guid>
       <description>Science gateway</description>
-      <version>62</version>
+      <version>65</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26705,70 +25133,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>5.0.1</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>science-gateway.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-science-gateway-5.0.1-registration</nickname>
-          <resourceSetName>science-gateway.teragrid.org-5.0.1</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -26923,7 +25287,7 @@
       <name>science-gateway.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.1</guid>
       <description>Science gateway</description>
-      <version>45</version>
+      <version>48</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -27617,70 +25981,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>kitversion</name>
-                <value>5.0.2</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>science-gateway.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>software</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-science-gateway-5.0.2-registration</nickname>
-          <resourceSetName>science-gateway.teragrid.org-5.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.wsgram</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.wsgram</uri>
             <args>
@@ -27955,7 +26255,7 @@
       <name>science-gateway.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.2</guid>
       <description>Science gateway</description>
-      <version>26</version>
+      <version>28</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -29311,7 +27611,7 @@
       <name>tg-iis</name>
       <guid>incas://sapa.sdsc.edu:6323/tg-iis</guid>
       <description>TeraGrid IIS service availability</description>
-      <version>11</version>
+      <version>12</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -29909,62 +28209,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>3.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>vtss.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>vtss-visualization-3.0.0-registration</nickname>
-          <resourceSetName>vtss.teragrid.org-3.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>viz.lib.mesa.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/viz.lib.mesa.version</uri>
             <args>
@@ -30015,66 +28259,10 @@
       <name>vtss.teragrid.org-3.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/vtss.teragrid.org-3.0.0</guid>
       <description>Vizualization software</description>
-      <version>40</version>
+      <version>42</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>wan-gpfs.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-wan-gpfs-4.0.0-registration</nickname>
-          <resourceSetName>wan-gpfs.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
@@ -30135,66 +28323,10 @@
       <name>wan-gpfs.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/wan-gpfs.teragrid.org-4.0.0</guid>
       <description>GPFS WAN</description>
-      <version>21</version>
+      <version>23</version>
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>wan-lustre.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-wan-lustre-4.0.0-registration</nickname>
-          <resourceSetName>wan-lustre.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
@@ -30255,7 +28387,7 @@
       <name>wan-lustre.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/wan-lustre.teragrid.org-4.0.0</guid>
       <description>Lustre WAN</description>
-      <version>38</version>
+      <version>41</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -30393,62 +28525,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.0.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>workflow.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-workflow-4.0.0-registration</nickname>
-          <resourceSetName>workflow.teragrid.org-4.0.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.scheduling.condorg.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit</uri>
             <args>
@@ -30495,7 +28571,7 @@
       <name>workflow.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.0.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>95</version>
+      <version>97</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -30534,62 +28610,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gridshell>=0.9.9-4</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.kitregistration.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/grid.kitregistration.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>kitversion</name>
-                <value>4.2.0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@kit-registration-host@</value>
-              </arg>
-              <arg>
-                <name>kitname</name>
-                <value>workflow.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ctss-workflow-4.2.0-registration</nickname>
-          <resourceSetName>workflow.teragrid.org-4.2.0</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -30703,7 +28723,7 @@
       <name>workflow.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/workflow.teragrid.org-4.2.0</guid>
       <description>The Science Workflow Support kit defines capabilities that support workflow-based science activities.</description>
-      <version>71</version>
+      <version>76</version>
     </suite>
   </suites>
 </inca:inca>
