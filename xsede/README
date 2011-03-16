@@ -1,10 +1,21 @@
-- Status pages available from inca.teragrid.org
+Status pages
+  - Available from inca.teragrid.org
   - Some top-level pages are pregenerated from a cron script on sapa
-- Email notifications
+  - We store regular expressions for resources to show external tests and 
+    handle notifications correctly in a few places:
+    -- google.xml
+    -- files for kits that have external tests (data movement and remote compute)
+    -- repo runs most of the external tests and repeats some hostname macros, but 
+       this will be fixed once we implement Jen's resource->macro syntax on TG
+    -- etc/filter.properties is used for the downtime filter
+    -- sbin/EmailNotifier is used for external test notification
+
+Email notifications
   - Each account has cron scripts to make sure Inca is not out of control 
     (i.e., check for number of processes) - log in and kill all processes; 
     agent can then restart the reporter manager
-- Deployment Information
+
+Deployment Information
   - 'r5' is an alias to change to the deployment directory
   - web services directory is one directory up
   - 'pstart' start postgres database
@@ -13,5 +24,5 @@
     http://info.teragrid.org:8080/webmds/webmds?info=tgislocal&xsl=kitsregistration
   - Backups of db and var directory are stored in /misc/inca/backups if a
     restore is needed
-- Contacts:  Jeff Koerner (jkoerner@uchicago.edu, our direct boss on TG), JP Navarro and Lee Liming
-  (TG management)
+- Contacts:  Jeff Koerner (jkoerner@uchicago.edu, our direct boss on TG), 
+             JP Navarro and Lee Liming (TG management)
