@@ -94,7 +94,7 @@
             <xsl:call-template name="printResourceResultCell">
               <xsl:with-param name="result" select="$result"/>
               <xsl:with-param name="bench" 
-                select="$result/body/performance/benchmark/statistics/statistic[ID=$series]" />
+                select="$result/body/performance/benchmark" />
             </xsl:call-template>
           </xsl:for-each>
         </tr>
@@ -224,11 +224,18 @@
                 <xsl:choose>
                   <xsl:when test="string($foundVersion)='' or string($stale)!=''">
                     <xsl:choose>
-                      <xsl:when test="$mapstats/@ip_!=''">
-                        <xsl:value-of select="$mapstats/@ip_"/>
+                      <xsl:when test="$mapstats/@ip!=''">
+                        <xsl:value-of select="$mapstats/@ip"/>
                       </xsl:when>
-                      <xsl:when test="string($bench)!=''">
-                        <xsl:value-of select="concat($bench/value,' ',$bench/units)"/>
+                      <xsl:when test="$bench/statistics/@*">
+                          <xsl:value-of select="$bench"/>
+                          <xsl:for-each select="$bench/statistics/@*">
+                            <xsl:sort select="."/>
+                            <table><tr>
+                              <td><xsl:value-of select="name()"/></td>
+                              <td><xsl:value-of select="."/></td>
+                            </tr></table>
+                          </xsl:for-each>
                       </xsl:when>
                       <xsl:when test="string($mapstats/statistic[ID='error-CommunityUser'])">
                         <xsl:variable name="ecu" select="$mapstats/statistic[ID='error-CommunityUser']/value"/>
