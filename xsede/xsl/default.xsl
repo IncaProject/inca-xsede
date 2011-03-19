@@ -227,7 +227,7 @@
                       <xsl:when test="$mapstats/@ip!=''">
                         <xsl:value-of select="$mapstats/@ip"/>
                       </xsl:when>
-                      <xsl:when test="$bench/statistics/@*">
+                      <xsl:when test="string($bench)!='' and $bench/statistics/@*">
                           <xsl:value-of select="$bench"/>
                           <xsl:for-each select="$bench/statistics/@*">
                             <xsl:sort select="."/>
