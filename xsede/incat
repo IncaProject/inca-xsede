@@ -52,6 +52,14 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>MAX_DISK_USAGE_MB</name>
+            <value>2048</value>
+          </macro>
+          <macro>
+            <name>PROC_REGEX</name>
+            <value>reporter-manager ,Schedule::Cron Main,reporter-instance-manager,sshd,defunct</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -2763,7 +2771,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>local-compute.teragrid.org-4.2.2</name>
-        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>localCompute4.2.2-glue-host</name>
@@ -2775,7 +2783,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org nstg.ornl.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -7400,13 +7408,6 @@
             <value>/home/inca/cog-4_1_6_rc2/lib/cog-jglobus-dev-080222.jar:/soft/java-1.5.0_16-sun/jre/lib/rt.jar:/soft/globus-4.0.1-r3/lib/cog-jglobus.jar:/home/inca/cog-4_1_6_rc2/lib/puretls.jar:/home/inca/cog-4_1_6_rc2/lib/commons-logging-1.1.jar:/home/inca/cog-4_1_6_rc2/lib/log4j-1.2.8.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix32.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix-asn1.jar:/home/inca/cog-4_1_6_rc2/lib/jce-jdk13-131.jar:../..</value>
           </macro>
           <macro>
-            <name>info_service_stats</name>
-            <value>Apache static</value>
-            <value>Apache CGI</value>
-            <value>Tomcat WebMDS</value>
-            <value>Globus MDS</value>
-          </macro>
-          <macro>
             <name>real-time-gridftp-ping-hosts</name>
             <value>gridftp.bigred.iu.teragrid.org</value>
             <value>gridftp-abe.ncsa.teragrid.org</value>
@@ -7580,6 +7581,14 @@
             <value>grid-abe.ncsa.teragrid.org 8443</value>
             <value>g1.bigred.teragrid.iu.edu 8443</value>
           </macro>
+          <macro>
+            <name>info_service_stats</name>
+            <value>stats</value>
+          </macro>
+          <macro>
+            <name>MAX_DISK_USAGE_MB</name>
+            <value>3072</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -7637,6 +7646,10 @@
           <macro>
             <name>pre</name>
             <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+          </macro>
+          <macro>
+            <name>MAX_DISK_USAGE_MB</name>
+            <value>3072</value>
           </macro>
         </macros>
       </resource>
@@ -13082,12 +13095,24 @@
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.postgres.unit.connect</uri>
             <args>
               <arg>
+                <name>numTries</name>
+                <value>5</value>
+              </arg>
+              <arg>
                 <name>version</name>
                 <value>no</value>
               </arg>
               <arg>
                 <name>verbose</name>
                 <value>1</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>psql</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value/>
               </arg>
               <arg>
                 <name>help</name>
@@ -13103,16 +13128,10 @@
             </limits>
             <context>@@</context>
           </series>
-          <nickname>data.access.postgres.unit.connect</nickname>
+          <nickname>postgres-connect</nickname>
           <resourceSetName>sapa</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -13170,6 +13189,269 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>inca.memusage</name>
+            <args>
+              <arg>
+                <name>procPat</name>
+                <value>edu.sdsc.inca</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>namePat</name>
+                <value>([a-zA-Z]+)$</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>10</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>30</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>server-memusage</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[Consumer < 700 && Depot < 700 && Agent < 700]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>inca.cleanup</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>units</name>
+                <value>days</value>
+              </arg>
+              <arg>
+                <name>filePatterns</name>
+                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm*</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>time</name>
+                <value>1</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>leftoverFiles</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>inca.diskusage</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dir</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>300</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>diskUsage</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>usage &lt; @MAX_DISK_USAGE_MB@</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>inca.procs</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>procRegex</name>
+                <value>@PROC_REGEX@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>client-processes</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[ScheduleCron_Main <= @maxSched@ && reporter-manager_ <= @maxMan@ && Total <= @psMax@]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>inca.memusage</name>
+            <args>
+              <arg>
+                <name>procPat</name>
+                <value>Schedule::Cron Main|reporter-manager</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>namePat</name>
+                <value>(Schedule::Cron|reporter-manager)</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>10</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>30</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>client-memusage</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13603,7 +13885,7 @@
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>218</version>
+      <version>219</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16259,7 +16541,7 @@
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>35</version>
+      <version>37</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26329,10 +26611,6 @@
                 <value>no</value>
               </arg>
               <arg>
-                <name>stat</name>
-                <value>@info_service_stats@</value>
-              </arg>
-              <arg>
                 <name>log</name>
                 <value>3</value>
               </arg>
@@ -27571,10 +27849,6 @@
               <arg>
                 <name>help</name>
                 <value>no</value>
-              </arg>
-              <arg>
-                <name>stat</name>
-                <value>@info_service_stats@</value>
               </arg>
               <arg>
                 <name>log</name>
