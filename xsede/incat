@@ -2745,7 +2745,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>local-compute.teragrid.org-4.2.1</name>
-        <xpath>//resource[matches(name, '^(queenbee\.loni-lsu\.teragrid\.org|frost\.ncar\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(frost\.ncar\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>localCompute4.2.1-glue-host</name>
@@ -2757,7 +2757,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>queenbee.loni-lsu.teragrid.org frost.ncar.teragrid.org</value>
+            <value>frost.ncar.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -2771,7 +2771,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>local-compute.teragrid.org-4.2.2</name>
-        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>localCompute4.2.2-glue-host</name>
@@ -2783,7 +2783,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org nstg.ornl.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org nstg.ornl.teragrid.org queenbee.loni-lsu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -3285,10 +3285,6 @@
           </macro>
           <macro>
             <name>gateway4.2.0-gatekeeper-host</name>
-            <value>grid-qb.loni-lsu.teragrid.org</value>
-          </macro>
-          <macro>
-            <name>localCompute4.2.1-glue-host</name>
             <value>grid-qb.loni-lsu.teragrid.org</value>
           </macro>
           <macro>
@@ -4702,10 +4698,6 @@
             <value>@apps4.2.0-compiler-gnu-key@</value>
           </macro>
           <macro>
-            <name>apps4.2.0-hdf4-key</name>
-            <value>@keyPre@ hdf4/4.2r4 @keyPost@</value>
-          </macro>
-          <macro>
             <name>apps4.2.0-srb-key</name>
             <value>@keyPre@ srb-client/3.4.1-r3 @keyPost@</value>
           </macro>
@@ -4860,6 +4852,10 @@
           <macro>
             <name>apps4.2.0-hdf5-key</name>
             <value>@keyPre@ hdf5/1.8.6 @keyPost@</value>
+          </macro>
+          <macro>
+            <name>apps4.2.0-hdf4-key</name>
+            <value>@keyPre@ hdf4/4.2.5 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -7400,10 +7396,6 @@
             <value>info2.dyn.teragrid.org</value>
           </macro>
           <macro>
-            <name>psMax</name>
-            <value>75</value>
-          </macro>
-          <macro>
             <name>cogClasspath</name>
             <value>/home/inca/cog-4_1_6_rc2/lib/cog-jglobus-dev-080222.jar:/soft/java-1.5.0_16-sun/jre/lib/rt.jar:/soft/globus-4.0.1-r3/lib/cog-jglobus.jar:/home/inca/cog-4_1_6_rc2/lib/puretls.jar:/home/inca/cog-4_1_6_rc2/lib/commons-logging-1.1.jar:/home/inca/cog-4_1_6_rc2/lib/log4j-1.2.8.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix32.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix.jar:/home/inca/cog-4_1_6_rc2/lib/cryptix-asn1.jar:/home/inca/cog-4_1_6_rc2/lib/jce-jdk13-131.jar:../..</value>
           </macro>
@@ -7586,8 +7578,12 @@
             <value>stats</value>
           </macro>
           <macro>
+            <name>psMax</name>
+            <value>80</value>
+          </macro>
+          <macro>
             <name>MAX_DISK_USAGE_MB</name>
-            <value>3072</value>
+            <value>3584</value>
           </macro>
         </macros>
       </resource>
@@ -10136,50 +10132,6 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.admin.ant.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.2-ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-unit-as-4.0.2</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.2</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.admin.ant.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.version</uri>
             <args>
@@ -10413,50 +10365,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gcc=~".*"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.scripting.python.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.0.2-python-key@@@@post@</context>
-          </series>
-          <nickname>python-version-as-4.0.2</nickname>
-          <resourceSetName>app-support.teragrid.org-4.0.2-python</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>python>=2.2</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -11166,14 +11074,50 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>app-support.teragrid.org-4.0.2</name>
-      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.2</guid>
-      <description>Application Development and Runtime Support Capability</description>
-      <version>56</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.scripting.python.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.0.2-python-key@@@@post@</context>
+          </series>
+          <nickname>python-version-as-4.0.2</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.2-python</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>python>=2.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.ant.unit</name>
@@ -11199,10 +11143,10 @@
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@apps4.2.0-ant-key@@@@post@</context>
+            <context>@pre@@apps4.0.2-ant-key@@@@post@</context>
           </series>
-          <nickname>ant-unit-as-4.2.0</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0</resourceSetName>
+          <nickname>ant-unit-as-4.0.2</nickname>
+          <resourceSetName>app-support.teragrid.org-4.0.2</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -11218,6 +11162,14 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+      </seriesConfigs>
+      <name>app-support.teragrid.org-4.0.2</name>
+      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.0.2</guid>
+      <description>Application Development and Runtime Support Capability</description>
+      <version>59</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>cluster.admin.ant.version</name>
@@ -11453,50 +11405,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>gcc=~".*"</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.scripting.python.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.2.0-python-key@@@@post@</context>
-          </series>
-          <nickname>python-version-as-4.2.0</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0-python</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>python>=2.2</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13022,23 +12930,11 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-      </seriesConfigs>
-      <name>app-support.teragrid.org-4.2.0</name>
-      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
-      <description>Application Development and Runtime Support Capability</description>
-      <version>151</version>
-    </suite>
-    <suite>
-      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.rm.ps.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.rm.ps.unit</uri>
+            <name>cluster.scripting.python.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.scripting.python.version</uri>
             <args>
-              <arg>
-                <name>maxMan</name>
-                <value>@maxMan@</value>
-              </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
@@ -13048,8 +12944,48 @@
                 <value>1</value>
               </arg>
               <arg>
-                <name>maxSched</name>
-                <value>@maxSched@</value>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-python-key@@@@post@</context>
+          </series>
+          <nickname>python-version-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-python</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>python>=2.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.ant.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.ant.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -13057,25 +12993,18 @@
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>psArgs</name>
-                <value>@psArgs@</value>
+                <value>5</value>
               </arg>
             </args>
-            <context>@@</context>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-ant-key@@@@post@</context>
           </series>
-          <nickname>cluster.rm.ps.unit</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
+          <nickname>ant-unit-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0</resourceSetName>
           <schedule>
-            <cron>
-              <min>?</min>
-              <hour>*</hour>
-              <mday>*</mday>
-              <wday>*</wday>
-              <month>*</month>
-            </cron>
+            <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -13083,12 +13012,20 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
+                <target>@tgContact@</target>
               </notification>
             </notifications>
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+      </seriesConfigs>
+      <name>app-support.teragrid.org-4.2.0</name>
+      <guid>incas://sapa.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
+      <description>Application Development and Runtime Support Capability</description>
+      <version>158</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>data.access.postgres.unit.connect</name>
@@ -13147,13 +13084,9 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.ps.count.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.ps.count.unit</uri>
+            <name>inca.diskusage</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.diskusage</uri>
             <args>
-              <arg>
-                <name>max</name>
-                <value>@psMax@</value>
-              </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
@@ -13167,24 +13100,27 @@
                 <value>no</value>
               </arg>
               <arg>
-                <name>log</name>
-                <value>3</value>
+                <name>dir</name>
+                <value/>
               </arg>
               <arg>
-                <name>psArgs</name>
-                <value>@psArgs@</value>
+                <name>log</name>
+                <value>0</value>
               </arg>
             </args>
+            <limits>
+              <wallClockTime>300</wallClockTime>
+            </limits>
             <context>@@</context>
           </series>
-          <nickname>cluster.ps.count.unit</nickname>
+          <nickname>diskUsage</nickname>
           <resourceSetName>ALL-RM</resourceSetName>
           <schedule>
-            <crontime>? * * * *</crontime>
+            <crontime>? ? ?-31 * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
+            <comparison>usage &lt; @MAX_DISK_USAGE_MB@</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13194,64 +13130,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>inca.memusage</name>
-            <args>
-              <arg>
-                <name>procPat</name>
-                <value>edu.sdsc.inca</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>namePat</name>
-                <value>([a-zA-Z]+)$</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>sleep</name>
-                <value>10</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>30</wallClockTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>server-memusage</nickname>
-          <resourceSetName>sapa</resourceSetName>
-          <schedule>
-            <crontime>? ?-23 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[Consumer < 700 && Depot < 700 && Agent < 700]]></comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>inca.cleanup</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.cleanup</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -13304,56 +13186,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>inca.diskusage</name>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>dir</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>300</wallClockTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>diskUsage</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>usage &lt; @MAX_DISK_USAGE_MB@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>inca.procs</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.procs</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -13402,9 +13238,10 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>inca.memusage</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.memusage</uri>
             <args>
               <arg>
                 <name>procPat</name>
@@ -13457,11 +13294,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>inca.memusage</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.memusage</uri>
+            <args>
+              <arg>
+                <name>procPat</name>
+                <value>edu.sdsc.inca</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>namePat</name>
+                <value>([a-zA-Z]+)$</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>10</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>30</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>server-memusage</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[Consumer < 700 && Depot < 700 && Agent < 700]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>159</version>
+      <version>194</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -13500,50 +13393,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>pacman>=3.14.1</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.pacman.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@core4.2.1-pacman-key@@@@post@</context>
-          </series>
-          <nickname>pacman-unit-4.2.1</nickname>
-          <resourceSetName>core.teragrid.org-4.2.1</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13881,11 +13730,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.admin.pacman.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.pacman.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@core4.2.1-pacman-key@@@@post@</context>
+          </series>
+          <nickname>pacman-unit-4.2.1</nickname>
+          <resourceSetName>core.teragrid.org-4.2.1</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/core.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
-      <version>219</version>
+      <version>223</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14171,6 +14064,58 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>grid.scheduling.condorg.unit.matchmaking</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit.matchmaking</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>machinequeue</name>
+                <value>@matchmakers@</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>TG-STA060008N</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1800.0</wallClockTime>
+            </limits>
+            <context>@pre@@workflow4.2.0-condorg-key@ export PYTHONPATH=@__incaReporterManagerLocation__@/var/reporter-packages/lib/python &amp;&amp; nickname=all2all:condormatch_to_@matchmakers@ @@@post@</context>
+          </series>
+          <nickname>all2all:condormatch_to_@matchmakers@</nickname>
+          <resourceSetName>condor-matchmakers</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>summary.successpct.performance</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/summary.successpct.performance</uri>
             <args>
@@ -14409,63 +14354,11 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.scheduling.condorg.unit.matchmaking</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.scheduling.condorg.unit.matchmaking</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>machinequeue</name>
-                <value>@matchmakers@</value>
-              </arg>
-              <arg>
-                <name>project</name>
-                <value>TG-STA060008N</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>1800.0</wallClockTime>
-            </limits>
-            <context>@pre@@workflow4.2.0-condorg-key@ export PYTHONPATH=@__incaReporterManagerLocation__@/var/reporter-packages/lib/python &amp;&amp; nickname=all2all:condormatch_to_@matchmakers@ @@@post@</context>
-          </series>
-          <nickname>all2all:condormatch_to_@matchmakers@</nickname>
-          <resourceSetName>condor-matchmakers</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>ctss</name>
       <guid>incas://sapa.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>257</version>
+      <version>259</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15209,7 +15102,7 @@
       <name>data-movement-servers.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.0</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>135</version>
+      <version>136</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15849,7 +15742,7 @@
       <name>data-movement.teragrid.org-4.1.2</name>
       <guid>incas://sapa.sdsc.edu:6323/data-movement.teragrid.org-4.1.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
-      <version>176</version>
+      <version>177</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16185,7 +16078,7 @@
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>33</version>
+      <version>34</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16393,7 +16286,7 @@
       <name>local-compute.teragrid.org-4.2.1</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.1</guid>
       <description>Local Compute Capability Kit</description>
-      <version>76</version>
+      <version>77</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16541,7 +16434,7 @@
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>37</version>
+      <version>38</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -16640,50 +16533,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>openssh>=3.9</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.security.gx-map.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.0-gxmap-key@@@@post@</context>
-          </series>
-          <nickname>gxmap-version</nickname>
-          <resourceSetName>login.teragrid.org-4.0.0-gxmap</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -17157,11 +17006,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.security.gx-map.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.0-gxmap-key@@@@post@</context>
+          </series>
+          <nickname>gxmap-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0-gxmap</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.0</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.0</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>417</version>
+      <version>422</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -17260,50 +17153,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>openssh>=3.9</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.security.gx-map.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@login4.0.2-gxmap-key@@@@post@</context>
-          </series>
-          <nickname>gxmap-version-rl-4.0.2</nickname>
-          <resourceSetName>login.teragrid.org-4.0.2-gxmap</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -17777,11 +17626,55 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.security.gx-map.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.security.gx-map.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@login4.0.2-gxmap-key@@@@post@</context>
+          </series>
+          <nickname>gxmap-version-rl-4.0.2</nickname>
+          <resourceSetName>login.teragrid.org-4.0.2-gxmap</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gx-map=~"0.5.3.3|0.5.3.2p1"</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>login.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/login.teragrid.org-4.0.2</guid>
       <description>The Remote Login kit defines a secure capability that allows scientists to remotely login to a system and use a command shell interface.</description>
-      <version>23</version>
+      <version>24</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -18965,7 +18858,7 @@
       <name>real-time</name>
       <guid>incas://sapa.sdsc.edu:6323/real-time</guid>
       <description>real time monitoring</description>
-      <version>249</version>
+      <version>250</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20241,7 +20134,7 @@
       <name>remote-compute.teragrid.org-4.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>188</version>
+      <version>189</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -21421,7 +21314,7 @@
       <name>remote-compute.teragrid.org-4.2.0</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-4.2.0</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>59</version>
+      <version>60</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22601,7 +22494,7 @@
       <name>remote-compute.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>41</version>
+      <version>42</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23633,7 +23526,7 @@
       <name>remote-compute.teragrid.org-5.0.2</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.2</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>21</version>
+      <version>22</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -26595,54 +26488,6 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>teragrid.info.performance</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/teragrid.info.performance</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@info_service_hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>@info_service_hosts@_@info_service_stats@</nickname>
-          <resourceSetName>repo</resourceSetName>
-          <schedule>
-            <crontime>? ?-23/2 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
@@ -27836,7 +27681,55 @@
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>teragrid.info.performance</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/teragrid.info.performance</uri>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/teragrid.info.performance</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@info_service_hosts@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>@info_service_hosts@_@info_service_stats@</nickname>
+          <resourceSetName>repo</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/2 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>teragrid.info.performance</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/reporters/teragrid.info.performance</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -27885,7 +27778,7 @@
       <name>tg-iis</name>
       <guid>incas://sapa.sdsc.edu:6323/tg-iis</guid>
       <description>TeraGrid IIS service availability</description>
-      <version>12</version>
+      <version>18</version>
     </suite>
     <suite>
       <seriesConfigs>
