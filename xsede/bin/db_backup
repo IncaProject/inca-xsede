@@ -4,8 +4,8 @@ my $backupdir = "/misc/inca/backups/";
 my $date = `date +%a`; 
 chomp($date); 
 
-my $rm = $backupdir . $date . "-var-backup";
-`rm -rf $rm`;
+my $varbak = $backupdir . $date . "-var-backup";
+`rm -rf $varbak`;
 my $ulink = $backupdir . $date . "-dbbackup-teragrid.gz";
 unlink $ulink;
 
@@ -25,20 +25,18 @@ for my $dbname (@dbnames){
 
 #backup var dir
 my $var = "/misc/inca/install-2r5/var";
-my $tmpvar = $backupdir . $date . "-var-backup";
-`rm -rf $tmpvar`;
-`mkdir $tmpvar`;
-`cp -r $var/suites $tmpvar`;
-`cp -r $var/repository $tmpvar`;
-`cp -r $var/rm $tmpvar`;
-`cp $var/*.log $tmpvar`;
-`cp $var/*.xml $tmpvar`;
-`gzip $tmpvar/*.log`;
+`rm -rf $varbak`;
+`mkdir $varbak`;
+`cp -r $var/suites $varbak`;
+`cp -r $var/repository $varbak`;
+`cp -r $var/rm $varbak`;
+`cp $var/*.log $varbak`;
+`cp $var/*.xml $varbak`;
+`gzip $varbak/*.log`;
 
 #copy to cuzco
-# commands for ssh-agent: eval `ssh-agent`; ssh-add;
 my $cuzco = "cuzco.sdsc.edu:/misc/inca/backups";
-`scp -r $tmpvar $cuzco; scp $ulink $cuzco`;
-`scp -r $tmpvar $cuzco; "scp $dbfile.gz" $cuzco`;
-`rm -rf $rm`;
+my $scp = "/usr/sdsc/bin/scp -i ~/.ssh/id_rsa_for_cuzco";
+`$scp -r $varbak $cuzco; $scp $ulink $cuzco`;
+`rm -rf $varbak`;
 unlink $ulink;
