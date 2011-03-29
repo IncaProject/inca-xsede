@@ -5,7 +5,9 @@
 <!-- ==================================================================== -->
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:sdf="java.text.SimpleDateFormat"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xsl:param name="url" />
 
   <xsl:template name="header">
@@ -104,6 +106,18 @@
             <ul>
               <li><h2>Reports</h2>
                 <ul>
+                  <li>
+                    <xsl:variable name="three-days" select="xs:dayTimeDuration('P3D')"/>
+                    <xsl:variable name="now" select="xs:dateTime(current-date())"/>
+                    <xsl:variable name="minus" select="$now - $three-days"/>
+                    <xsl:variable name="start">
+                      <xsl:variable name="dateformat" select="sdf:new('MMddyy')"/>
+                      <xsl:value-of select="sdf:format($dateformat, $minus)"/>
+                    </xsl:variable>
+                    <a href="{concat($url, '/jsp/report.jsp?xml=infoPerf.xml&amp;startDate=', $start)}">
+                      Past 3 days: information services statistics
+                    </a>
+                  </li>
                   <li>
                     <a href="{concat($url, '/jsp/summary.jsp')}">
                       Past week: avg pass rate by resource/suite
