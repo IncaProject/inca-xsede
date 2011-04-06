@@ -48,11 +48,14 @@ while( ($host, $lastTS) = each %latestTimes ) {
   #print "$host $now $lastTS $timeDiff\n";
   if ( $timeDiff > $MAX_TIME ) {
     `grep $host $DOWNTIME_FILE`;
-    #if ( $? != 0 && $host !~ /psc-pople/ ) {
+    #if ( $? != 0 && $host !~ /tacc-lonestar/ ) {
     if ( $? != 0 ) {
       my $timeDiffMins = $timeDiff / 60.0;
-      notify( "$ID:  $host is down and not in downtime", 
-              "$host hasn't checked in for $timeDiffMins mins" );
+      `grep $host $ENV{HOME}/bin/ignoreHosts.txt 2>&1 >/dev/null`;
+      if ( $? != 0 ) {
+        notify( "$ID:  $host is down and not in downtime",
+                "$host hasn't checked in for $timeDiffMins mins" );
+      }
     } 
   } else {
     #print "OK $host\n";

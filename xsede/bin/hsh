@@ -40,7 +40,10 @@ else if ($#entries != 4) then
   exit 1
 endif
 
-set command = "$argv[2-]"
+set command = ""
+if ($#argv > 1) then
+  set command = "$argv[2-]"
+endif
 set exec = $entries[4]
 set login = $entries[3]
 set machine = $entries[2].$entries[1]
