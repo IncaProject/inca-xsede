@@ -83,7 +83,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,real-time,gig,sapa,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,real-time,gig,security,usage,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=repo,gig,sapa,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -191,11 +191,6 @@
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xml=tg-iis.xml&amp;resourceIds=repo&amp;suiteNames=tg-iis')}">
                           tg wide information services
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=swStack.xsl&amp;resourceIds=real-time&amp;suiteNames=real-time&amp;xml=real-time.xml')}">
-                          real-time monitoring testbed
                         </a>
                       </li>
                       <li>
