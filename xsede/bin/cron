@@ -1,6 +1,7 @@
-45 23 * * * ${HOME}/bin/db_backup
+49 15 * * * ${HOME}/bin/db_backup
 6 1 * * * ${HOME}/bin/logBackupDisk.pl
 30 14 * * * ${HOME}/bin/gzipLogs.sh
+51 * * * * ${HOME}/bin/checkProperties.pl
 5,25,45 * * * * ${HOME}/bin/checkConsumer.sh
 0,20,40 * * * * ${HOME}/bin/checkConsumer.pl
 1,16,31,55 * * * * perl ${HOME}/bin/checkWS.pl
@@ -8,11 +9,11 @@
 1,30,50 * * * * ${HOME}/bin/checkMemAll.pl
 */10 * * * * ${HOME}/bin/logMem.pl
 */5 * * * * ${HOME}/bin/genWebPages.pl
-0 5 * * * ${HOME}/bin/genWebReports.pl
+0 15 * * * ${HOME}/bin/genWebReports.pl
 */10 * * * * ${HOME}/bin/countPostgres.sh
 14 * * * * ${HOME}/bin/testRMs.pl TeraGrid 5000 /misc/inca/install-2r5/etc/downtime.properties 'https://sapa.sdsc.edu:8443'
 #34 * * * *  ${HOME}/bin/testRMsNew.pl ALL_RM 1800 sapa.sdsc.edu:8303 Info /misc/inca/install-2r5/etc/downtime.properties
 2,12,22,36,42,52 * * * * ${HOME}/bin/checkRestarts.pl
 3,13,23,33,43,53 * * * * ${HOME}/bin/checkAgentConnects.pl
-*/15 * * * * ${HOME}/bin/downtimes.sh
+*/5 * * * * ${HOME}/bin/downtimes.sh
 30 21 * * * ${HOME}/bin/vacuumdb.sh
