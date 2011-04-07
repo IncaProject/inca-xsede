@@ -155,6 +155,7 @@ a specific version of gcc (>=4.2).  The series fails until the comparitor requir
     <para>Report summaries return XML formatted like the following (tags are described below):
     <screen>&lt;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
  &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+ &lt;targetHostname xmlns=""/&gt;
  &lt;uri xmlns=""&gt;file:///Inca-Reporter-5.12450/bin/cluster.compiler.any.unit&lt;/uri&gt;
  &lt;nickname xmlns=""&gt;java_hello_world&lt;/nickname&gt;
  &lt;seriesConfigId xmlns=""&gt;5&lt;/seriesConfigId&gt;
@@ -181,6 +182,14 @@ The following tags are defined within query results:
   <varlistentry><term><filename>hostname</filename></term>
   <listitem><para>
   resource id where the reporter executed
+  </para> </listitem>
+  </varlistentry>
+
+  <varlistentry><term><filename>targetHostname</filename></term>
+  <listitem><para>
+  resource id of the resource group whose macros were used in configuring the report series.  For example, if a
+  reporter executes on resource A, but it uses macros from resource B to get a hostname parameter for the test, the
+  resource id for resource B will be the targetHostname.
   </para> </listitem>
   </varlistentry>
 
@@ -567,6 +576,7 @@ Length: 6,990 [text/xml]
 xmlns:quer="http://inca.sdsc.edu/dataModel/queryResults_2.0"&gt;&lt;row&gt;&lt;reportSummary
 xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
   &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+  &lt;targetHostname xmlns=""/&gt;
   &lt;uri
 xmlns=""&gt;file:///home/inca/2.6/./bin/../Inca-Reporter-5.13359/bin/grid.wget.unit&lt;/uri&gt;
   &lt;nickname xmlns=""&gt;wget_page_test&lt;/nickname&gt;
@@ -583,6 +593,7 @@ xmlns=""&gt;file:///home/inca/2.6/./bin/../Inca-Reporter-5.13359/bin/grid.wget.u
 &lt;/reportSummary&gt;&lt;/row&gt;...&lt;row&gt;&lt;reportSummary
 xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
   &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+  &lt;targetHostname xmlns=""/&gt;
   &lt;uri
 xmlns=""&gt;file:///home/inca/2.6/./bin/../Inca-Reporter-5.13359/bin/cluster.admin.ant.version&lt;/uri&gt;
   &lt;nickname xmlns=""&gt;ant_version&lt;/nickname&gt;
@@ -728,6 +739,7 @@ hello depot
 
 &lt;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&gt;
   &lt;hostname xmlns=""&gt;localResource&lt;/hostname&gt;
+  &lt;targetHostname xmlns=""/&gt;
   &lt;uri xmlns=""&gt;http:// ... cluster.math.atlas.version&lt;/uri&gt;
   &lt;nickname xmlns=""&gt;atlas_version&lt;/nickname&gt;
   &lt;seriesConfigId xmlns=""&gt;1&lt;/seriesConfigId&gt;
