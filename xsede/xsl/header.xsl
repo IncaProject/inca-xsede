@@ -83,7 +83,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=repo,gig,sapa,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,sapa,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -189,7 +189,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xml=tg-iis.xml&amp;resourceIds=repo&amp;suiteNames=tg-iis')}">
+                        <a href="{concat($url, '/jsp/status.jsp?xml=tg-iis.xml&amp;resourceIds=quarry&amp;suiteNames=tg-iis')}">
                           tg wide information services
                         </a>
                       </li>
