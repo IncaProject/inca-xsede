@@ -2745,7 +2745,7 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>local-compute.teragrid.org-4.2.2</name>
-        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-lincoln|blacklight\.psc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|condor\.purdue\.teragrid\.org|dash\.sdsc\.teragrid\.org|pople\.psc\.teragrid\.org|athena\.nics\.teragrid\.org|kraken\.nics\.teragrid\.org|ember\.ncsa\.teragrid\.org|nstg\.ornl\.teragrid\.org|frost\.ncar\.teragrid\.org|ncsa-grid-lincoln|blacklight\.psc\.teragrid\.org|queenbee\.loni-lsu\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
             <name>localCompute4.2.2-glue-host</name>
@@ -2757,7 +2757,7 @@
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org nstg.ornl.teragrid.org frost.ncar.teragrid.org ncsa-grid-lincoln blacklight.psc.teragrid.org trestles.sdsc.teragrid.org</value>
+            <value>ranger.tacc.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org condor.purdue.teragrid.org dash.sdsc.teragrid.org pople.psc.teragrid.org athena.nics.teragrid.org kraken.nics.teragrid.org ember.ncsa.teragrid.org nstg.ornl.teragrid.org frost.ncar.teragrid.org ncsa-grid-lincoln blacklight.psc.teragrid.org queenbee.loni-lsu.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -6204,10 +6204,6 @@
         <xpath>//resource[matches(name, '^(gw60\.quarry\.iu\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>MAX_DISK_USAGE_MB</name>
-            <value>3584</value>
-          </macro>
-          <macro>
             <name>rc-4.2.0-gram-ping-hosts</name>
             <value>grid-qb.loni-lsu.teragrid.org</value>
             <value>tg-login.ornl.teragrid.org</value>
@@ -6423,6 +6419,10 @@
             <value>grid-abe.ncsa.teragrid.org 8443</value>
             <value>g1.bigred.teragrid.iu.edu 8443</value>
             <value>grid-qb.loni-lsu.teragrid.org 8443</value>
+          </macro>
+          <macro>
+            <name>MAX_DISK_USAGE_MB</name>
+            <value>7168</value>
           </macro>
         </macros>
       </resource>
@@ -8046,10 +8046,6 @@
             <value/>
           </macro>
           <macro>
-            <name>core5.0.0-mds-info-port</name>
-            <value/>
-          </macro>
-          <macro>
             <name>dataMoveServer4.2.0-gridftp-default-host</name>
             <value>trestles.sdsc.edu</value>
           </macro>
@@ -8092,6 +8088,14 @@
           <macro>
             <name>wl4.0.0-fs</name>
             <value>/dcwan</value>
+          </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>trestles.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>core5.0.0-mds-info-port</name>
+            <value>8446</value>
           </macro>
         </macros>
       </resource>
@@ -13052,7 +13056,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>208</version>
+      <version>209</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15772,11 +15776,69 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.db.postgres.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
+            <args>
+              <arg>
+                <name>port</name>
+                <value>5432</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value>inca_checkpg</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>90</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>tgcdb.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>db</name>
+                <value>teragrid</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@ @@@post@</context>
+          </series>
+          <nickname>TGCDB_connect1</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>?-59/5 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>37</version>
+      <version>39</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15984,7 +16046,7 @@
       <name>local-compute.teragrid.org-4.2.2</name>
       <guid>incas://sapa.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
       <description>Local Compute Capability Kit</description>
-      <version>45</version>
+      <version>47</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -21284,7 +21346,7 @@
       <name>remote-compute.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>51</version>
+      <version>55</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -23220,7 +23282,7 @@
       <name>science-gateway.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/science-gateway.teragrid.org-5.0.1</guid>
       <description>Science gateway</description>
-      <version>51</version>
+      <version>54</version>
     </suite>
     <suite>
       <seriesConfigs>
