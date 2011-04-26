@@ -3937,6 +3937,18 @@
             <name>localCompute4.2.2-glue-host</name>
             <value>grid-ember.ncsa.teragrid.org</value>
           </macro>
+          <macro>
+            <name>remote5.0.1-gram5-mpicc</name>
+            <value>icc</value>
+          </macro>
+          <macro>
+            <name>remote5.0.1-gram5-mpicc-lib</name>
+            <value>-lmpi</value>
+          </macro>
+          <macro>
+            <name>remote5.0.1-gram5-hostcount</name>
+            <value>1</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -7100,6 +7112,18 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>remote5.0.1-gram5-hostcount</name>
+            <value>2</value>
+          </macro>
+          <macro>
+            <name>remote5.0.1-gram5-mpicc</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>remote5.0.1-gram5-mpicc-lib</name>
+            <value/>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -8011,12 +8035,28 @@
             <value>/dcwan</value>
           </macro>
           <macro>
-            <name>core5.0.0-mds-info-host</name>
-            <value>trestles.sdsc.edu</value>
-          </macro>
-          <macro>
             <name>core5.0.0-mds-info-port</name>
             <value>8446</value>
+          </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>dash-login.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>keyPre</name>
+            <value>module add</value>
+          </macro>
+          <macro>
+            <name>keyPre2</name>
+            <value>module add</value>
+          </macro>
+          <macro>
+            <name>keyPost</name>
+            <value>&amp;&amp;</value>
+          </macro>
+          <macro>
+            <name>dataMoveClient4.2.0-uberftp-key</name>
+            <value/>
           </macro>
         </macros>
       </resource>
@@ -12974,7 +13014,7 @@
       <name>check-reporter-managers</name>
       <guid>incas://sapa.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>209</version>
+      <version>210</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15576,6 +15616,62 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>repo.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>60</cpuTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>ping_repo</nickname>
+          <resourceSetName>sapa</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>data.db.postgres.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
             <args>
@@ -15638,67 +15734,11 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>repo.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <cpuTime>60</cpuTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>ping_repo</nickname>
-          <resourceSetName>sapa</resourceSetName>
-          <schedule>
-            <crontime>? ?-23 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://sapa.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>39</version>
+      <version>41</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -20890,11 +20930,87 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.parallel_tools.mpicc_compile_submit.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.parallel_tools.mpicc_compile_submit.unit</uri>
+            <args>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>mpicc</name>
+                <value>@remote5.0.1-gram5-mpicc@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>hostcount</name>
+                <value>@remote5.0.1-gram5-hostcount@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>taskcount</name>
+                <value>4</value>
+              </arg>
+              <arg>
+                <name>lib</name>
+                <value>@remote5.0.1-gram5-mpicc-lib@</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>600</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>endpoint</name>
+                <value>@remote5.0.1-gatekeeper-host@:@remote5.0.1-gram5-port@/@remote5.0.1-gram5-batch-job-manager@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1300</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram5-mpicc-rc-5.0.1</nickname>
+          <resourceSetName>remote-compute.teragrid.org-5.0.1-gram5-batch</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>remote-compute.teragrid.org-5.0.1</name>
       <guid>incas://sapa.sdsc.edu:6323/remote-compute.teragrid.org-5.0.1</guid>
       <description>The Remote Compute kit defines a secure capability that allows scientists to remotely submit and manage compute jobs.</description>
-      <version>59</version>
+      <version>69</version>
     </suite>
     <suite>
       <seriesConfigs>
