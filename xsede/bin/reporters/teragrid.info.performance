@@ -7,7 +7,7 @@ use Time::HiRes qw( gettimeofday tv_interval sleep );
 
 my $reporter = new Inca::Reporter::Performance(
   name => 'teragrid.info.performance',
-  version => 5,
+  version => 6,
   description => 'Monitors responsiveness of TeraGrid information services',
   measurement_name => 'iis_services',
   short => 1
@@ -30,6 +30,7 @@ for (my $i=0; $i<=$#bench; $i++){
   my $output = $reporter->loggedCommand($cmd);
   if($?) {
     my $err = "$cmd failed: $output $!";
+    $err =~ s/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/<timestamp>/g;
     $reporter->failPrintAndExit($err);
   } else {
     my $t1 = [gettimeofday];
