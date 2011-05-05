@@ -7,7 +7,7 @@ use Time::HiRes qw( gettimeofday tv_interval sleep );
 
 my $reporter = new Inca::Reporter::Performance(
   name => 'teragrid.info.performance',
-  version => 6,
+  version => 7,
   description => 'Monitors responsiveness of TeraGrid information services',
   measurement_name => 'iis_services',
   short => 1
@@ -19,7 +19,7 @@ $ENV{'GLOBUS_OPTIONS'} = "-Xmx256M";
 my @bench = (
   ['Apache_static', 'wget -O /dev/null http://'.$host.'/'],
   ['Apache_CGI', 'wget -O /dev/null http://'.$host.'/web-apps/csv/ctss-resources-v1/'],
-  ['Tomcat_WebMDS', 'wget -O /dev/null "http://'.$host.':8080/webmds/webmds?info=tgislocal&xsl=tgcdbresources"'],
+  ['Tomcat_WebMDS', 'wget -O /dev/null http://'.$host.'/web-apps/html/views/tgcdbresources'],
   ['Globus_MDS', 'wsrf-query -a -s https://'.$host.':8446/wsrf/services/DefaultIndexService ".//V4tgcdbRP"']
 );
 my $benchmark = $reporter->addNewBenchmark($host);
