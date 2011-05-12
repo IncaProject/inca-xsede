@@ -661,10 +661,11 @@ HREF="userguide-consumer.html#CONFIG-CONSUMER"
        represents a separate graph on the page and the series under it will appear in the graph.
        Series should be entered in the format "nickname,resource,label" and correspond to 
        the names and resources of committed series. Each graph has its own title.  The height and width 
-       of all the graphs can also be customized. 
+       of all the graphs can also be customized as well as the page
+       description and title. 
       <P
 ><IMG
-SRC="figures/consumer/status-report.gif"
+SRC="figures/consumer/status-report.jpg"
 ALIGN="CENTER"></P
 >
       </P
@@ -685,8 +686,76 @@ CLASS="SECTION"
 ><H3
 CLASS="SECTION"
 ><A
+NAME="METRIC-REPORT"
+>6.2.2. Metric Reports</A
+></H3
+><P
+>      Like above, the first item in the REPORTS menu executes 
+      <TT
+CLASS="FILENAME"
+>report.jsp</TT
+>, which uses CeWolf/JfreeChart, to
+      also generate historical summary reports graphing one or
+      more metrics.  </P
+><P
+>The graphed series can be customized
+       using the page described in <A
+HREF="userguide-consumer.html#CONFIG-CONSUMER"
+>Section 6.4.2</A
+>.  Each "graph" folder
+       represents a separate graph on the page and the series under it will appear in the graph.
+       Series should be entered in the format "nickname,resource,label" and correspond to 
+       the names and resources of committed series.  Below a single metric is graphed
+       called 'bandwidth' for the series
+       "wget_performance,localResource,wget test".  Additional metrics can be specified
+       as a comma separated list, e.g.,
+       "EP-STREAM_Triad_GB_s,G-STREAM_Triad_GB_s,Wall_Mins".  
+       <P
+><IMG
+SRC="figures/consumer/status-report-metric.jpg"
+ALIGN="CENTER"></P
+>
+       There are three different chart types that can be specified as defined
+       below.  By default, the chart type will be 'metric'.</P
+><P
+></P
+><UL
+><LI
+><P
+>metric: one graph containing all series will be printed per metric</P
+></LI
+><LI
+><P
+>series: one graph containing all metrics will be printed per series</P
+></LI
+><LI
+><P
+>single: all series and metrics will display on a single graph</P
+></LI
+></UL
+><P
+>       Each graph has its own title.  
+       description and title. 
+      </P
+><P
+>      The default consumer groups different combinations of sampleSuite series
+      and displays the past week of results.
+      Each set of series has a title (e.g., Software
+      Deployment Tests) for its grouping and the series nickname, resource
+      name, and report label for each series in the group.
+      </P
+><P
+><IMG
+SRC="figures/consumer/summary_report.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
 NAME="AVE-PASS-REPORT"
->6.2.2. Average Pass Rate by Resource/Suite</A
+>6.2.3. Average Pass Rate by Resource/Suite</A
 ></H3
 ><P
 >      The second item in the REPORTS menu executes
@@ -733,7 +802,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="SERIES-REPORT"
->6.2.3. Series Error Summary</A
+>6.2.4. Series Error Summary</A
 ></H3
 ><P
 >      The third item in the REPORTS menu executes
@@ -783,7 +852,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AVE-PASS-HISTORY-REPORT"
->6.2.4. Average Pass History</A
+>6.2.5. Average Pass History</A
 ></H3
 ><P
 >      The fourth and fifth items in the REPORTS menu execute
@@ -1394,7 +1463,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN845"
+NAME="AEN862"
 ></A
 ><P
 ><B
@@ -2044,7 +2113,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1067"
+NAME="AEN1084"
 ></A
 ><P
 ><B
@@ -2561,12 +2630,12 @@ NAME="REST"
 ><P
 ><TT
 CLASS="FILENAME"
->http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/week|month|quarter|year]]]</TT
+>http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/&#60;timestamp&#62;|week|month|quarter|year]]]</TT
 ></P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1256"
+NAME="AEN1273"
 ></A
 ><P
 ><B
@@ -2669,11 +2738,43 @@ TARGET="_top"
 ></TD
 ><TD
 ><P
->An HTML table of the latest <A
+>An HTML table of the *latest* <A
 HREF="userguide-writing-consumer.html#CONSUMER-REPORT-DETAILS-XML"
 >report details</A
 >
         for the specified suite, resource and series.</P
+><P
+> <P
+><IMG
+SRC="figures/consumer/inst_sm.jpg"
+ALIGN="CENTER"></P
+> </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00"
+TARGET="_top"
+>http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00</A
+></P
+><P
+>equivalent to:</P
+><P
+><A
+HREF="http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&#38;resource=localResource&#38;collected=2010-06-14T12:52:00.000-07:00"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&#38;resource=localResource&#38;collected=2010-06-14T12:52:00.000-07:00</A
+></P
+></TD
+><TD
+><P
+>An HTML table of the <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-DETAILS-XML"
+>report details</A
+>
+        for the specified suite, resource, series and timestamp.</P
 ><P
 > <P
 ><IMG
