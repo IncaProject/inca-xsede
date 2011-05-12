@@ -178,16 +178,21 @@ HREF="#PASS-FAIL-REPORT"
 ></DT
 ><DT
 >6.2.2. <A
+HREF="#METRIC-REPORT"
+>Metric Reports</A
+></DT
+><DT
+>6.2.3. <A
 HREF="#AVE-PASS-REPORT"
 >Average Pass Rate by Resource/Suite</A
 ></DT
 ><DT
->6.2.3. <A
+>6.2.4. <A
 HREF="#SERIES-REPORT"
 >Series Error Summary</A
 ></DT
 ><DT
->6.2.4. <A
+>6.2.5. <A
 HREF="#AVE-PASS-HISTORY-REPORT"
 >Average Pass History</A
 ></DT
@@ -3479,10 +3484,11 @@ HREF="#CONFIG-CONSUMER"
        represents a separate graph on the page and the series under it will appear in the graph.
        Series should be entered in the format "nickname,resource,label" and correspond to 
        the names and resources of committed series. Each graph has its own title.  The height and width 
-       of all the graphs can also be customized. 
+       of all the graphs can also be customized as well as the page
+       description and title. 
       <P
 ><IMG
-SRC="figures/consumer/status-report.gif"
+SRC="figures/consumer/status-report.jpg"
 ALIGN="CENTER"></P
 >
       </P
@@ -3503,8 +3509,76 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
+NAME="METRIC-REPORT"
+>6.2.2. Metric Reports</A
+></H4
+><P
+>      Like above, the first item in the REPORTS menu executes 
+      <TT
+CLASS="FILENAME"
+>report.jsp</TT
+>, which uses CeWolf/JfreeChart, to
+      also generate historical summary reports graphing one or
+      more metrics.  </P
+><P
+>The graphed series can be customized
+       using the page described in <A
+HREF="#CONFIG-CONSUMER"
+>Section 6.4.2</A
+>.  Each "graph" folder
+       represents a separate graph on the page and the series under it will appear in the graph.
+       Series should be entered in the format "nickname,resource,label" and correspond to 
+       the names and resources of committed series.  Below a single metric is graphed
+       called 'bandwidth' for the series
+       "wget_performance,localResource,wget test".  Additional metrics can be specified
+       as a comma separated list, e.g.,
+       "EP-STREAM_Triad_GB_s,G-STREAM_Triad_GB_s,Wall_Mins".  
+       <P
+><IMG
+SRC="figures/consumer/status-report-metric.jpg"
+ALIGN="CENTER"></P
+>
+       There are three different chart types that can be specified as defined
+       below.  By default, the chart type will be 'metric'.</P
+><P
+></P
+><UL
+><LI
+><P
+>metric: one graph containing all series will be printed per metric</P
+></LI
+><LI
+><P
+>series: one graph containing all metrics will be printed per series</P
+></LI
+><LI
+><P
+>single: all series and metrics will display on a single graph</P
+></LI
+></UL
+><P
+>       Each graph has its own title.  
+       description and title. 
+      </P
+><P
+>      The default consumer groups different combinations of sampleSuite series
+      and displays the past week of results.
+      Each set of series has a title (e.g., Software
+      Deployment Tests) for its grouping and the series nickname, resource
+      name, and report label for each series in the group.
+      </P
+><P
+><IMG
+SRC="figures/consumer/summary_report.jpg"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
 NAME="AVE-PASS-REPORT"
->6.2.2. Average Pass Rate by Resource/Suite</A
+>6.2.3. Average Pass Rate by Resource/Suite</A
 ></H4
 ><P
 >      The second item in the REPORTS menu executes
@@ -3551,7 +3625,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="SERIES-REPORT"
->6.2.3. Series Error Summary</A
+>6.2.4. Series Error Summary</A
 ></H4
 ><P
 >      The third item in the REPORTS menu executes
@@ -3601,7 +3675,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AVE-PASS-HISTORY-REPORT"
->6.2.4. Average Pass History</A
+>6.2.5. Average Pass History</A
 ></H4
 ><P
 >      The fourth and fifth items in the REPORTS menu execute
@@ -4212,7 +4286,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN845"
+NAME="AEN862"
 ></A
 ><P
 ><B
@@ -4862,7 +4936,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1067"
+NAME="AEN1084"
 ></A
 ><P
 ><B
@@ -5379,12 +5453,12 @@ NAME="REST"
 ><P
 ><TT
 CLASS="FILENAME"
->http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/week|month|quarter|year]]]</TT
+>http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/&#60;timestamp&#62;|week|month|quarter|year]]]</TT
 ></P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1256"
+NAME="AEN1273"
 ></A
 ><P
 ><B
@@ -5487,11 +5561,43 @@ TARGET="_top"
 ></TD
 ><TD
 ><P
->An HTML table of the latest <A
+>An HTML table of the *latest* <A
 HREF="#CONSUMER-REPORT-DETAILS-XML"
 >report details</A
 >
         for the specified suite, resource and series.</P
+><P
+> <P
+><IMG
+SRC="figures/consumer/inst_sm.jpg"
+ALIGN="CENTER"></P
+> </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00"
+TARGET="_top"
+>http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00</A
+></P
+><P
+>equivalent to:</P
+><P
+><A
+HREF="http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&#38;resource=localResource&#38;collected=2010-06-14T12:52:00.000-07:00"
+TARGET="_top"
+>http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&#38;resource=localResource&#38;collected=2010-06-14T12:52:00.000-07:00</A
+></P
+></TD
+><TD
+><P
+>An HTML table of the <A
+HREF="#CONSUMER-REPORT-DETAILS-XML"
+>report details</A
+>
+        for the specified suite, resource, series and timestamp.</P
 ><P
 > <P
 ><IMG
@@ -7556,7 +7662,7 @@ NAME="REST-API"
 ><P
 ><TT
 CLASS="FILENAME"
->http://hostname:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/week|month|quarter|year]]]</TT
+>http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/&#60;timestamp&#62;|week|month|quarter|year]]]</TT
 ></P
 ><P
 >Note the <TT
@@ -7568,7 +7674,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1755"
+NAME="AEN1784"
 ></A
 ><P
 ><B
@@ -7602,9 +7708,9 @@ CLASS="CALSTABLE"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite</A
+>http://localhost:8080/inca/XML/rest/sampleSuite</A
 ></P
 ></TD
 ><TD
@@ -7619,9 +7725,9 @@ HREF="#CONSUMER-REPORT-SUMMARIES-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/defaultGrid"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/defaultGrid"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/defaultGrid</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/defaultGrid</A
 ></P
 ></TD
 ><TD
@@ -7637,9 +7743,9 @@ HREF="#CONSUMER-REPORT-SUMMARIES-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version</A
 ></P
 ></TD
 ><TD
@@ -7657,9 +7763,29 @@ HREF="#CONSUMER-REPORT-DETAILS-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/2011-05-11T16:04:00.000-07:00"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/2011-05-11T16:04:00.000-07:00</A
+></P
+></TD
+><TD
+><P
+>Returns the details of the instance executed at the given timestamp for a specific series within the
+      specified suite and resource according to the 
+      <A
+HREF="#CONSUMER-REPORT-DETAILS-XML"
+>report details schema</A
+> 
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week</A
 ></P
 ></TD
 ><TD
@@ -7675,9 +7801,9 @@ HREF="#CONSUMER-GRAPH-INSTANCE-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month</A
 ></P
 ></TD
 ><TD
@@ -7695,9 +7821,9 @@ HREF="#CONSUMER-GRAPH-INSTANCE-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter</A
 ></P
 ></TD
 ><TD
@@ -7715,9 +7841,9 @@ HREF="#CONSUMER-GRAPH-INSTANCE-XML"
 ><TD
 ><P
 ><A
-HREF="http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year"
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year"
 TARGET="_top"
->http://hostname:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year</A
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year</A
 ></P
 ></TD
 ><TD
@@ -8057,7 +8183,7 @@ HREF="#UNDERSTANDING-XML"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1847"
+NAME="AEN1883"
 ></A
 ><P
 ><B
@@ -8916,7 +9042,7 @@ specific to that reporter's task.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1992"
+NAME="AEN2028"
 ></A
 ><P
 ><B
@@ -9083,7 +9209,7 @@ for printing XML according to our schema.</P
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2050"
+NAME="AEN2086"
 ></A
 ><P
 ><B
@@ -10717,7 +10843,7 @@ CLASS="SCREEN"
   <DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2361"
+NAME="AEN2397"
 ></A
 ><P
 ><B
@@ -12527,7 +12653,7 @@ CLASS="SCREEN"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2750"
+NAME="AEN2786"
 ></A
 ><P
 ><B
@@ -13206,7 +13332,7 @@ TARGET="_top"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN2896"
+NAME="AEN2932"
 ></A
 ><P
 ><B
