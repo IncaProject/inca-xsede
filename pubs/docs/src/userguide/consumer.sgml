@@ -313,8 +313,8 @@ using the three weather icons located on the Google server at: <ulink url="http:
        using the page described in <xref linkend="config-consumer">.  Each "graph" folder
        represents a separate graph on the page and the series under it will appear in the graph.
        Series should be entered in the format "nickname,resource,label" and correspond to 
-       the names and resources of committed series.  Below a single metric is graphed
-       called 'bandwidth' for the series
+       the names and resources of committed series.  The default consumer graphs
+       a single metric called 'bandwidth' for the series
        "wget_performance,localResource,wget test".  Additional metrics can be specified
        as a comma separated list, e.g.,
        "EP-STREAM_Triad_GB_s,G-STREAM_Triad_GB_s,Wall_Mins".  </para>
@@ -334,18 +334,21 @@ using the three weather icons located on the Google server at: <ulink url="http:
         </listItem>
         </itemizedList>
 
-       <para>
-       Each graph has its own title.  
-       description and title. 
-      </para><para>
-      The default consumer groups different combinations of sampleSuite series
-      and displays the past week of results.
-      Each set of series has a title (e.g., Software
-      Deployment Tests) for its grouping and the series nickname, resource
-      name, and report label for each series in the group.
-      </para>
-      <graphic fileref="figures/consumer/summary_report.jpg" align="center">
-      </graphic>
+       <para>Below is the graph configuration for two series, one connecting to the alamo 
+       resource and the other to the foxtrot resource.  Each series collects two metrics - ping and ssh.  There 
+       are two graphs that are identically configured except that the first one uses the "single" 
+       chart type so that all series and metrics are graphed together, and the second uses the "metric" 
+       chart type so that the ssh and ping metrics are graphed separately.</para>
+      <graphic fileref="figures/consumer/config-single-metric.jpg" align="center"></graphic>
+       <para>The graphs created by the configuration above are shown below.  The first graph uses the chart type "single"
+       so we see four lines, one for each series and one for each metric:</para>
+      <graphic fileref="figures/consumer/chart-single.jpg" align="center"></graphic>
+       <para>The second configuration uses the chart type "metric" so there are two graphs, one for each
+       metric.  Each graph has two lines, one for each series:</para>
+      <graphic fileref="figures/consumer/chart-metric.jpg" align="center"></graphic>
+       <para>If configuration used the chart type "series" there would be two graphs, one for each
+       series.  Each graph would have two lines, one for each metric:</para>
+      <graphic fileref="figures/consumer/chart-series.jpg" align="center"></graphic>
     </section>
     <section id="ave-pass-report">
       <title>Average Pass Rate by Resource/Suite</title>
