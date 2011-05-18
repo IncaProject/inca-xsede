@@ -30,27 +30,30 @@ my $xp = XML::XPath->new( xml => $config );
 
 # get current downtimes
 my $outfile = get("http://info.teragrid.org/web-apps/csv/tg-outages-v1/current/");
-my @outages = split(/\n/, $outfile);
-my $pre = "/misc/inca/install-2r5/webapps";
-my $prop = "$pre/../etc/downtime.properties";
-my $iis =  "$pre/inca/html/downtimes-iis.txt";
-open PROP,">$prop";
-open IIS,">$iis";
-for my $i (1 .. $#outages){
-  my @line = split(/,/, $outages[$i]);
-  my $iis_resource = $line[1];
-  my ($news_id) = $line[2] =~ /(\d+)"/;
-  print IIS "$iis_resource=$news_id\n";
-  my $rnode = $xp->find("/inca:inca/resourceConfig/resources/resource[name='$iis_resource']/macros/macro[name='__regexp__']/value/text()");
-  foreach my $node ($rnode->get_nodelist) {
-    my $resource = XML::XPath::XMLParser::as_string($node);
-    my @resources = split(/ /, $resource);
-    foreach my $r (@resources) {
-      print PROP "$r=$news_id\n";
+if ($?){
+  print "could not get outage file\n$!";
+} else {
+  my @outages = split(/\n/, $outfile);
+  my $pre = "/misc/inca/install-2r5/webapps";
+  my $prop = "$pre/../etc/downtime.properties";
+  my $iis =  "$pre/inca/html/downtimes-iis.txt";
+  open PROP,">$prop";
+  open IIS,">$iis";
+  for my $i (1 .. $#outages){
+    my @line = split(/,/, $outages[$i]);
+    my $iis_resource = $line[1];
+    my ($news_id) = $line[2] =~ /(\d+)"/;
+    print IIS "$iis_resource=$news_id\n";
+    my $rnode = $xp->find("/inca:inca/resourceConfig/resources/resource[name='$iis_resource']/macros/macro[name='__regexp__']/value/text()");
+    foreach my $node ($rnode->get_nodelist) {
+      my $resource = XML::XPath::XMLParser::as_string($node);
+      my @resources = split(/ /, $resource);
+      foreach my $r (@resources) {
+        print PROP "$r=$news_id\n";
+      }
     }
   }
+  close PROP;
+  close IIS;
+  `cp $prop $pre/inca/html/downtimes.txt`;
 }
-close PROP;
-close IIS;
-`cp $prop $pre/inca/html/downtimes.txt`;
-
