@@ -18,9 +18,9 @@ import edu.sdsc.inca.util.CachedProperties;
 public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
   private static Logger logger = Logger.getLogger(TeraGridFilter.class);
   private static CachedProperties cacheDown =
-      new CachedProperties("downtime", "15");
+      new CachedProperties("inca.depot.", "downtime", "15");
   private static CachedProperties cacheFilter =
-      new CachedProperties("filter", "1440");
+      new CachedProperties("inca.depot.", "filter", "1440");
 
   /**
    * Checks context to see if matches regex string for a down resource
