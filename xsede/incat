@@ -3995,6 +3995,18 @@
             <name>gateway5.0.1-gram5-port</name>
             <value>2119</value>
           </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-hostcount</name>
+            <value>1</value>
+          </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-mpicc</name>
+            <value>icc</value>
+          </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-mpicc-lib</name>
+            <value>-lmpi</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -7615,6 +7627,18 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-hostcount</name>
+            <value>2</value>
+          </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-mpicc-lib</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>gateway5.0.1-gram5-mpicc</name>
+            <value/>
           </macro>
         </macros>
       </resource>
@@ -12772,62 +12796,6 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>data.access.postgres.unit.connect</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.postgres.unit.connect</uri>
-            <args>
-              <arg>
-                <name>numTries</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>exec</name>
-                <value>psql</value>
-              </arg>
-              <arg>
-                <name>user</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>postgres-connect</nickname>
-          <resourceSetName>capac</resourceSetName>
-          <schedule>
-            <crontime>? * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>inca.diskusage</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.diskusage</uri>
             <args>
@@ -12865,62 +12833,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>usage &lt; @MAX_DISK_USAGE_MB@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>inca.cleanup</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.cleanup</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>units</name>
-                <value>days</value>
-              </arg>
-              <arg>
-                <name>filePatterns</name>
-                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std*</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>time</name>
-                <value>1</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@@</context>
-          </series>
-          <nickname>leftoverFiles</nickname>
-          <resourceSetName>ALL-RM</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -13040,6 +12952,62 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>data.access.postgres.unit.connect</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.access.postgres.unit.connect</uri>
+            <args>
+              <arg>
+                <name>numTries</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>psql</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>postgres-connect</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>inca.memusage</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.memusage</uri>
             <args>
@@ -13141,11 +13109,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>inca.cleanup</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.cleanup</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>units</name>
+                <value>days</value>
+              </arg>
+              <arg>
+                <name>filePatterns</name>
+                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std*</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>time</name>
+                <value>1</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>leftoverFiles</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>check-reporter-managers</name>
       <guid>incas://capac.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
-      <version>244</version>
+      <version>265</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -14149,7 +14173,7 @@
       <name>ctss</name>
       <guid>incas://capac.sdsc.edu:6323/ctss</guid>
       <description>cross-site tests and tests not in latest ctss kits</description>
-      <version>290</version>
+      <version>292</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15539,6 +15563,70 @@
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>data.db.postgres.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
+            <args>
+              <arg>
+                <name>port</name>
+                <value>5432</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>user</name>
+                <value>inca_checkpg</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>90</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>tgcdb.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>db</name>
+                <value>teragrid</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@ @@@post@</context>
+          </series>
+          <nickname>TGCDB_connect</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>?-59/5 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tgcdb-admin@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>grid.wget.performance</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.wget.performance</uri>
             <args>
@@ -15647,62 +15735,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.cvs.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.cvs.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>root</name>
-                <value>inca@gsirepo:/var/lib/cvs</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>file</name>
-                <value>gig-si/software/build/globus/4.0.1/README</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value>TeraGrid 3.9.x striped gridFTP notes</value>
-              </arg>
-            </args>
-            <limits>
-              <cpuTime>600</cpuTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>cvs_repo</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>? ?-23 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>network.ping.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
             <args>
@@ -15752,70 +15784,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>data.db.postgres.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/data.db.postgres.unit</uri>
-            <args>
-              <arg>
-                <name>port</name>
-                <value>5432</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>user</name>
-                <value>inca_checkpg</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>90</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>tgcdb.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>db</name>
-                <value>teragrid</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@ @@@post@</context>
-          </series>
-          <nickname>TGCDB_connect</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/5 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:tgcdb-admin@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -15881,11 +15849,67 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.cvs.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.cvs.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>root</name>
+                <value>inca@gsirepo:/var/lib/cvs</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>file</name>
+                <value>inca/DESIGN</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>grep</name>
+                <value>TeraGrid 3.9.x striped gridFTP notes</value>
+              </arg>
+            </args>
+            <limits>
+              <cpuTime>600</cpuTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>cvs_repo</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>gig</name>
       <guid>incas://capac.sdsc.edu:6323/gig</guid>
       <description>tests to monitor gig servers and repo</description>
-      <version>49</version>
+      <version>52</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -15920,7 +15944,7 @@
               </arg>
             </args>
             <limits>
-              <wallClockTime>650</wallClockTime>
+              <wallClockTime>651</wallClockTime>
             </limits>
             <context>@@</context>
           </series>
@@ -15945,7 +15969,7 @@
       <name>karnak</name>
       <guid>incas://capac.sdsc.edu:6323/karnak</guid>
       <description>Karnak testing</description>
-      <version>6</version>
+      <version>9</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22913,11 +22937,87 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>grid.parallel_tools.mpicc_compile_submit.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.parallel_tools.mpicc_compile_submit.unit</uri>
+            <args>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>mpicc</name>
+                <value>@gateway5.0.1-gram5-mpicc@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>hostcount</name>
+                <value>@gateway5.0.1-gram5-hostcount@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>taskcount</name>
+                <value>4</value>
+              </arg>
+              <arg>
+                <name>lib</name>
+                <value>@gateway5.0.1-gram5-mpicc-lib@</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>exe</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>endpoint</name>
+                <value>@gateway5.0.1-gatekeeper-host@:@gateway5.0.1-gram5-port@/@gateway5.0.1-gram5-batch-job-manager@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>5000</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram5-mpicc-sg-5.0.11</nickname>
+          <resourceSetName>science-gateway.teragrid.org-5.0.1-gram5</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@adminEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>science-gateway.teragrid.org-5.0.1</name>
       <guid>incas://capac.sdsc.edu:6323/science-gateway.teragrid.org-5.0.1</guid>
       <description>Science gateway</description>
-      <version>66</version>
+      <version>71</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -22969,7 +23069,7 @@
       <name>security</name>
       <guid>incas://capac.sdsc.edu:6323/security</guid>
       <description/>
-      <version>245</version>
+      <version>249</version>
     </suite>
     <suite>
       <seriesConfigs>
@@ -24381,7 +24481,7 @@
       <name>tgup</name>
       <guid>incas://capac.sdsc.edu:6323/tgup</guid>
       <description>Tests for the TeraGrid User Portal (TGUP)</description>
-      <version>14</version>
+      <version>17</version>
     </suite>
     <suite>
       <seriesConfigs>
