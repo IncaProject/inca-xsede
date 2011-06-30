@@ -11,11 +11,11 @@
   <xsl:param name="url" />
 
   <xsl:template name="header">
-    <xsl:variable name="map" select="'http://sapa.sdsc.edu:8080/inca'"/>
+    <xsl:variable name="map" select="'http://capac.sdsc.edu:8080/inca'"/>
     <table width="100%" class="subheader">
       <tr>
-        <td><b><a href="http://www.teragrid.org/">
-          <img src="{concat($url, '/img/tgheader.gif')}" alt="TeraGrid Inca Status Pages" border="0"/>
+        <td><b><a href="http://inca.xsede.org/">
+          <img src="{concat($url, '/img/xsede-header.jpg')}" alt="XSEDE Inca Status Pages" border="0"/>
         </a></b></td>
         <td>
           <div id="menu">
@@ -35,11 +35,6 @@
                   <li>
                     <a href="{concat($url, '/jsp/seriesConfig.jsp')}">
                       List Running Tests - Detail
-                    </a>
-                  </li>
-                  <li>
-                    <a href="http://news.teragrid.org/">
-                      User/System News
                     </a>
                   </li>
                 </ul>
@@ -83,7 +78,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,sapa,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,capac,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -190,7 +185,7 @@
                       </li>
                       <li>
                         <a href="{concat($url, '/jsp/status.jsp?xml=tg-iis.xml&amp;resourceIds=quarry&amp;suiteNames=tg-iis')}">
-                          tg wide information services
+                          information services
                         </a>
                       </li>
                       <li>
@@ -199,12 +194,12 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/tgup/sapa')}">
-                          teragrid user portal (tgup)
+                        <a href="{concat($url, '/HTML/kit-status-v1/tgup/capac')}">
+                          user portal
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/security/sapa')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/security/capac')}">
                           security
                         </a>
                       </li>
