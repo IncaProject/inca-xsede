@@ -31,10 +31,7 @@ function MM_swapImage() { //v3.0
 </script>
 <body onLoad="MM_preloadImages('../img/homepage/related-test-histories.jpg','../img/homepage/weekly-status-report.jpg','../img/homepage/error-history-summary.jpg','../img/homepage/resource-status-history.jpg','../img/homepage/test-status-by-package-and-resource.jpg','../img/homepage/cumulative-test-status-by-resource.jpg','../img/homepage/individual-test-result-details.jpg','../img/homepage/individual-test-history.jpg')">
 
-<table xmlns:sdf="java.text.SimpleDateFormat" xmlns:date="java.util.Date" xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes" width="100%" border="0"><tr align="left"><td><h1 class="body">Inca Status Pages for TeraGrid</h1></td></tr></table>
-
-                        <p><strong> New!</strong> System administrators can execute tests from &quot;Individual Test Result Details&quot; pages by clicking on the &quot;Run Now&quot; button. (April 2009)</p>
-                        <p>Status pages show TeraGrid's health as monitored using <a href="http://inca.sdsc.edu/">Inca</a>.  All pages are linked from the drop down menu at the top right of this page. </p>
+                        <p>Status pages show XSEDE's health as monitored using <a href="http://inca.sdsc.edu/">Inca</a>.  All pages are linked from the drop down menu at the top right of this page. </p>
                         <img src="../img/homepage/wheel-of-views.jpg" alt="Inca Status Pages" name="Image1" border="0" usemap="#Map" id="Image1">
                         <map name="Map">
                           <area shape="rect" coords="121,342,260,480" href="http://cuzco.sdsc.edu:8085/cgi-bin/lead.cgi" alt="Related Test Histories" onMouseOver="MM_swapImage('Image1','','../img/homepage/related-test-histories.jpg',1)" onMouseOut="MM_swapImgRestore()">
