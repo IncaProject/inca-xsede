@@ -38,7 +38,7 @@ my $noemail = defined($err) && $err =~ /(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca err
 if (!$noemail){
   my $name = $ENV{incanickname} || $ENV{incareporter};
   my $subject =
-  "Inca TeraGrid Notification: $name on $ENV{incaresource} $ENV{incaresult}";
+  "Inca XSEDE Notification: $name on $ENV{incaresource} $ENV{incaresult}";
   my $date = ParseDate($ENV{incacollected});
   my ($unixdate, $zone) = UnixDate($date, "%Y-%m-%dT%H:%M:%S.000","%z");
   my $fmtdate = $unixdate . substr($zone, 0, 3) . ":" . substr($zone, 3, 2);
@@ -79,13 +79,13 @@ if (!$noemail){
     if(scalar(@pieces) == 1 || ($failed && $pieces[0] =~ /^Fail/) ||
      (!$failed && $pieces[0] !~ /^Fail/)) {
       if ($to eq "help\@teragrid.org"){
-        $subject = "Inca TeraGrid Notification: $name $ENV{incaresult}";
+        $subject = "Inca XSEDE Notification: $name $ENV{incaresult}";
         my $assign = getHelpAssignment($name);
         my $newbody = "Ticket assignment group: $assign\n\n$body";
         $body = $newbody;
-        `date >> email.log`;
-        `echo "Sending email for $name to $to ($subject)\n$body" >> email.log`;
         }
+      `date >> email.log`;
+      `echo "Sending email for $name to $to ($subject)\n$body" >> email.log`;
       open(MAIL, "|$mailPath $to");
       print MAIL "$subjectPrefix$subject\n";
       print MAIL "To:$to\n" if $mailPath =~ /sendmail/;
@@ -102,8 +102,6 @@ if (!$noemail){
 sub getExternalEmail {
   my $name = shift;
   my %map = ( 
-    "\.bigred\." => "FailTo:jomlowe\@iupui.edu, FailTo:jtillots\@indiana.edu",
-    "ember\.ncsa" => "FailTo:ember-admin\@ncsa.illinois.edu",
     "\.nics\." => "FailTo:admin-core\@nics.utk.edu",
     "\.psc\." => "FailTo:rbudden\@psc.edu",
     "\.purdue\." => "FailTo:psmith\@purdue.edu, FailTo:fhu\@purdue.edu",
