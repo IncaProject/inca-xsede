@@ -103,30 +103,9 @@
         <para>The Inca map views can be configured using the page described in <xref linkend="config-consumer">.
         Use the options in <xref linkend="google-config"> to configure maps for your site.</para>
         <para>
-        To access the map view, you need to install a Google Maps API key in
-        your Inca consumer.  To generate one, go the Google Maps API web page at
-        <ulink url="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</ulink>,
-        type "http://<emphasis role="red">yourHost</emphasis>:8080" in the "My
-        web site URL" text box, then click the "Generate API key" button.  A
-        new page will display a key for your server that looks something like
-        "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then use the configuration page 
-        to replace "Insert key here" with your new Google Maps API key as shown below:
-        <graphic fileref="figures/consumer/google-keys.gif" align="center"></graphic>
-        </para>
-        
-        <para>If you have more than one alias for your Inca server, generate an API key for 
-        each alias, click on the "Add Alias Key" in the configuration page and add your host alias in 
-        hostname:port format.  Then expand the "keys" folder and complete the values 
-        for each "key" folder, using your google map keys and their corresponding hostname:port 
-        like the example below:
-        <graphic fileref="figures/consumer/google-alias-keys.gif" align="center"></graphic>
-        </para>
-
-        <para>
         Next give the map generator the locations of your resources.  Use the 
         configuration page to add/edit sites and resource like the one below:
-        <graphic fileref="figures/consumer/google-sites.gif" align="center"></graphic>
+        <graphic fileref="figures/consumer/google-sites.jpg" align="center"></graphic>
         </para>
 
        <para>Provide a site name, latitude/longitude coordinates
@@ -143,29 +122,26 @@
 <title>Google Map Options</title>
 <itemizedList>
 <listItem><para>
-  <emphasis>key:</emphasis> Google key for your Inca server.  If you have more than one alias for your web server, add key aliases for your server.
-</para></listItem>
-<listItem><para>
   <emphasis>width/height:</emphasis> The size of the map graphic (in pixels) that will be generated. By default the map is 800x500.
 </para></listItem>
 <listItem><para>
   <emphasis>center:</emphasis> The center of the map in latitude/longitude coordinates. By default, the center of the map corresponds to the center of the U.S.
 </para></listItem>
 <listItem><para>
-  <emphasis>mapType:</emphasis> Type of map to display. By default the map is G_NORMAL_MAP.
+  <emphasis>mapType:</emphasis> Type of map to display. By default the map is google.maps.MapTypeId.TERRAIN.
 </para>
 <itemizedList>
 <listItem><para>
-  <emphasis>G_NORMAL_MAP:</emphasis> displays the default road map view.
+  <emphasis>google.maps.MapTypeId.ROADMAP:</emphasis> displays the default road map view.
 </para></listItem>
 <listItem><para>
-  <emphasis>G_SATELLITE_MAP:</emphasis> displays Google Earth satellite images.
+  <emphasis>google.maps.MapTypeId.SATELLITE:</emphasis> displays Google Earth satellite images.
 </para></listItem>
 <listItem><para>
-  <emphasis>G_HYBRID_MAP:</emphasis> displays a mixture of normal and satellite views.
+  <emphasis>google.maps.MapTypeId.HYBRID:</emphasis> displays a mixture of normal and satellite views.
 </para></listItem>
 <listItem><para>
-  <emphasis>G_PHYSICAL_MAP:</emphasis> displays a physical map based on terrain information.
+  <emphasis>google.maps.MapTypeId.TERRAIN:</emphasis> displays a physical map based on terrain information.
 </para></listItem>
 </itemizedList>
 </listItem>
@@ -179,7 +155,7 @@
   <emphasis>maxErrors:</emphasis> The maximum number of errors to display in the info window that is displayed when a resource is clicked.
 </para></listItem>
 <listItem><para>
-  <emphasis>line:</emphasis> For cross-site tests, a line will be displayed between the two sites to indicate the test status.  If a suite contains a cross-site test, a button will be displayed below the map named "Toggle &lt;testName&gt; status". When the button is clicked, the status of an individual cross-site test will be expressed as a line in between the source resource and the destination resource. The color of the line used to represent the test status can be customized. By default, green represents the test passed and red represents the test failed. 
+  <emphasis>line:</emphasis> For cross-site tests, a line will be displayed between the two sites to indicate the test status.  If a suite contains a cross-site test, a button will be displayed below the map named "Toggle &lt;testName&gt; status". When the button is clicked, the status of an individual cross-site test will be expressed as a line in between the source resource and the destination resource. The color of the line used to represent the test status can be customized. By default, green represents the test passed and red represents the test failed.  See "crossSite" below to specify the tests you want displayed.
 </para></listItem>
 <listItem><para>
   <emphasis>marker:</emphasis> Customize the look of the icon marker used to represent a resource on the map.
@@ -219,6 +195,12 @@ using the three weather icons located on the Google server at: <ulink url="http:
 </para></listItem>
 </itemizedList>
 </listItem>
+<listItem><para>
+  <emphasis>crossSite:</emphasis>  For each cross site test specified, a
+  button will be displayed under the map to toggle status lines on and off
+  the map.  Each test has a name and a regex (regular expression to match
+  the cross site test nicknames).
+</para></listItem>
 <listItem><para>
   <emphasis>sites:</emphasis>  The information about where to place resources in a site.  Can have multiple logos and resources for a site.  The logo angle/logoAnchorX/logoAnchorY are placement relative to the latitude/longitude.  Angle is the degrees from the site center (latitude/longitude).  For example, an angle of 0 will place the logo to the right of the resources, 180 to the left, 90 to the top, and 270 to the bottom.  logoAnchorX and logoAnchorY are used to indicate the coordinates relative to the image that should be placed on the map. For example, if your image is 12x12, using logoAnchorX=6 and logoAnchorY=6 will place the image in the center.
 </para></listItem>
