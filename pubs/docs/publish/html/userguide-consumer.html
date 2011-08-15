@@ -270,48 +270,11 @@ HREF="userguide-consumer.html#GOOGLE-CONFIG"
 >Section 6.1.2.2.1</A
 > to configure maps for your site.</P
 ><P
->        To access the map view, you need to install a Google Maps API key in
-        your Inca consumer.  To generate one, go the Google Maps API web page at
-        <A
-HREF="http://www.google.com/apis/maps/signup.html"
-TARGET="_top"
->http://www.google.com/apis/maps/signup.html</A
->,
-        type "http://<STRONG
-><FONT
-COLOR="RED"
->yourHost</FONT
-></STRONG
->:8080" in the "My
-        web site URL" text box, then click the "Generate API key" button.  A
-        new page will display a key for your server that looks something like
-        "ABQIAAAA_4IHDoSvxQqISMa1RKFLQBSSlCzupJMr-Xoh__duR37DAX9UVBRVn9-X9_4ILpmvilr4hN-QZU8pNQ".
-        Copy this key, then use the configuration page 
-        to replace "Insert key here" with your new Google Maps API key as shown below:
-        <P
-><IMG
-SRC="figures/consumer/google-keys.gif"
-ALIGN="CENTER"></P
->
-        </P
-><P
->If you have more than one alias for your Inca server, generate an API key for 
-        each alias, click on the "Add Alias Key" in the configuration page and add your host alias in 
-        hostname:port format.  Then expand the "keys" folder and complete the values 
-        for each "key" folder, using your google map keys and their corresponding hostname:port 
-        like the example below:
-        <P
-><IMG
-SRC="figures/consumer/google-alias-keys.gif"
-ALIGN="CENTER"></P
->
-        </P
-><P
 >        Next give the map generator the locations of your resources.  Use the 
         configuration page to add/edit sites and resource like the one below:
         <P
 ><IMG
-SRC="figures/consumer/google-sites.gif"
+SRC="figures/consumer/google-sites.jpg"
 ALIGN="CENTER"></P
 >
         </P
@@ -343,14 +306,6 @@ NAME="GOOGLE-CONFIG"
 ><P
 >  <EM
 ><FONT
->key:</FONT
-></EM
-> Google key for your Inca server.  If you have more than one alias for your web server, add key aliases for your server.</P
-></LI
-><LI
-><P
->  <EM
-><FONT
 >width/height:</FONT
 ></EM
 > The size of the map graphic (in pixels) that will be generated. By default the map is 800x500.</P
@@ -369,7 +324,7 @@ NAME="GOOGLE-CONFIG"
 ><FONT
 >mapType:</FONT
 ></EM
-> Type of map to display. By default the map is G_NORMAL_MAP.</P
+> Type of map to display. By default the map is google.maps.MapTypeId.TERRAIN.</P
 ><P
 ></P
 ><UL
@@ -377,7 +332,7 @@ NAME="GOOGLE-CONFIG"
 ><P
 >  <EM
 ><FONT
->G_NORMAL_MAP:</FONT
+>google.maps.MapTypeId.ROADMAP:</FONT
 ></EM
 > displays the default road map view.</P
 ></LI
@@ -385,7 +340,7 @@ NAME="GOOGLE-CONFIG"
 ><P
 >  <EM
 ><FONT
->G_SATELLITE_MAP:</FONT
+>google.maps.MapTypeId.SATELLITE:</FONT
 ></EM
 > displays Google Earth satellite images.</P
 ></LI
@@ -393,7 +348,7 @@ NAME="GOOGLE-CONFIG"
 ><P
 >  <EM
 ><FONT
->G_HYBRID_MAP:</FONT
+>google.maps.MapTypeId.HYBRID:</FONT
 ></EM
 > displays a mixture of normal and satellite views.</P
 ></LI
@@ -401,7 +356,7 @@ NAME="GOOGLE-CONFIG"
 ><P
 >  <EM
 ><FONT
->G_PHYSICAL_MAP:</FONT
+>google.maps.MapTypeId.TERRAIN:</FONT
 ></EM
 > displays a physical map based on terrain information.</P
 ></LI
@@ -437,7 +392,7 @@ NAME="GOOGLE-CONFIG"
 ><FONT
 >line:</FONT
 ></EM
-> For cross-site tests, a line will be displayed between the two sites to indicate the test status.  If a suite contains a cross-site test, a button will be displayed below the map named "Toggle &#60;testName&#62; status". When the button is clicked, the status of an individual cross-site test will be expressed as a line in between the source resource and the destination resource. The color of the line used to represent the test status can be customized. By default, green represents the test passed and red represents the test failed. </P
+> For cross-site tests, a line will be displayed between the two sites to indicate the test status.  If a suite contains a cross-site test, a button will be displayed below the map named "Toggle &#60;testName&#62; status". When the button is clicked, the status of an individual cross-site test will be expressed as a line in between the source resource and the destination resource. The color of the line used to represent the test status can be customized. By default, green represents the test passed and red represents the test failed.  See "crossSite" below to specify the tests you want displayed.</P
 ></LI
 ><LI
 ><P
@@ -536,6 +491,17 @@ TARGET="_top"
 >  the size of the shadow icon in pixels.</P
 ></LI
 ></UL
+></LI
+><LI
+><P
+>  <EM
+><FONT
+>crossSite:</FONT
+></EM
+>  For each cross site test specified, a
+  button will be displayed under the map to toggle status lines on and off
+  the map.  Each test has a name and a regex (regular expression to match
+  the cross site test nicknames).</P
 ></LI
 ><LI
 ><P
@@ -1479,7 +1445,7 @@ NAME="FILE-DESC"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN868"
+NAME="AEN862"
 ></A
 ><P
 ><B
@@ -2129,7 +2095,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1090"
+NAME="AEN1084"
 ></A
 ><P
 ><B
@@ -2651,7 +2617,7 @@ CLASS="FILENAME"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN1279"
+NAME="AEN1273"
 ></A
 ><P
 ><B
