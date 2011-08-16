@@ -42,6 +42,8 @@ if (!$noemail){
   my $date = ParseDate($ENV{incacollected});
   my ($unixdate, $zone) = UnixDate($date, "%Y-%m-%dT%H:%M:%S.000","%z");
   my $fmtdate = $unixdate . substr($zone, 0, 3) . ":" . substr($zone, 3, 2);
+  my $nickname = $ENV{incanickname};
+  $nickname =~ s/ /%20/g;
   my $body =
   "The following Inca test has $ENV{incaresult}ED:\n\n" .
   "RAN AT:  $ENV{incacollected}\n\n" .
@@ -53,11 +55,10 @@ if (!$noemail){
   (defined($ENV{incastderr}) ? "STANDARD ERROR: $ENV{incastderr}\n\n" : "") .
   "\n\n" .
   "details at http://inca.xsede.org/inca/jsp/instance.jsp?xsl=instance.xsl" .
-  "&nickname=$ENV{incanickname}&resource=$ENV{incaresource}&collected=$fmtdate\n\n";
+  "&nickname=$nickname&resource=$ENV{incaresource}&collected=$fmtdate\n\n";
 
   my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
   my $baseDate = ParseDate( $baseDateString );
-  my $date = ParseDate( $ENV{incacollected} );
   if ( Date_Cmp($date, $baseDate) < 0 ) {
     `date >> email.log`;
     `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
@@ -104,7 +105,7 @@ sub getExternalEmail {
   my %map = ( 
     "\.nics\." => "FailTo:admin-core\@nics.utk.edu",
     "\.psc\." => "FailTo:rbudden\@psc.edu",
-    "\.purdue\." => "FailTo:psmith\@purdue.edu, FailTo:fhu\@purdue.edu",
+    "\.purdue\." => "FailTo:grid-systems\@rcac.purdue.edu",
     "\.sdsc\." => "FailTo:diegella\@sdsc.edu, FailTo:wyoung\@sdsc.edu",
     "lonestar" => "FailTo:dcarver\@tacc.utexas.edu, FailTo:timm\@tacc.utexas.edu",
     "(ranger|spur|longhorn)" => "FailTo:dcarver\@tacc.utexas.edu"
