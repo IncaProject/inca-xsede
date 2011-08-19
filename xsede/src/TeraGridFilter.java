@@ -21,6 +21,9 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
       new CachedProperties("inca.depot.", "downtime", "15");
   private static CachedProperties cacheFilter =
       new CachedProperties("inca.depot.", "filter", "1440");
+  //private static Pattern DNS_ERROR = Pattern.compile("<value>info.*<errorMessage>.*(Bad hostname|unknown host|not found|Name or service not known)");
+  private static Pattern DNS_ERROR = Pattern.compile("(?s)<value>info.*<errorMessage>.*(Bad hostname|[Uu]nknown host|not found|Name or service not known)");
+  private static Pattern DNS = Pattern.compile("<reporter>network.dnslookup.unit");
 
   /**
    * Checks context to see if matches regex string for a down resource
@@ -56,7 +59,14 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
    * @return  string with depot report (reporter Stdout)
    */
   public String getStdout() {
+    if ( DNS_ERROR.matcher(super.getStdout()).find() &&
+         ! DNS.matcher(super.getStdout()).find() ) {
+      logger.info( "Found DNS error" );
+      super.setStdout( super.getStdout().replaceFirst( 
+            "<errorMessage>", "<errorMessage>DNS ERROR: ") );
+    }
     if (cacheDown.getProperties().isEmpty()){
+      logger.debug("downtime cache is empty");
       return super.getStdout();
     } else {
       String downSeriesProp = downSeriesResource();
