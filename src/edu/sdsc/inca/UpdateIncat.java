@@ -133,21 +133,19 @@ public class UpdateIncat {
 					}
 
 					for (Software element : swList) {
-						boolean hasSoftware = false;
+						NodeList swNodes = (NodeList)xpath.evaluate(element.expression, kit, XPathConstants.NODESET);
 
-						if (element.macro != null) {
-							String newest = findNewest(xpath, kit, element.expression);
+						if (swNodes.getLength() > 0) {
+							if (element.macro != null) {
+								String newest = findNewest(xpath, swNodes);
+								Node defaultValue = (Node)xpath.evaluate("macros/macro[name = '" + element.macro + "']/value", incatKit, XPathConstants.NODE);
 
-							if (newest != null) {
-								Node valueNode = (Node)xpath.evaluate("macros/macro[name = '" + element.macro + "']/value", incatKit, XPathConstants.NODE);
-
-								if (valueNode == null || !valueNode.getTextContent().equals(newest)) {
+								if (defaultValue == null || !defaultValue.getTextContent().equals(newest)) {
 									String resXpath = xpath.evaluate("xpath", incatRes);
 									Node macroRes = (Node)xpath.evaluate(resXpath, incatDoc, XPathConstants.NODE);
+									Node macroValue = (Node)xpath.evaluate("macros/macro[name = '" + element.macro + "']/value", macroRes, XPathConstants.NODE);
 
-									valueNode = (Node)xpath.evaluate("macros/macro[name = '" + element.macro + "']/value", macroRes, XPathConstants.NODE);
-
-									if (valueNode == null) {
+									if (macroValue == null) {
 										Node newMacro = incatDoc.createElement("macro");
 										Node newChild = incatDoc.createElement("name");
 
@@ -162,29 +160,30 @@ public class UpdateIncat {
 										Node macrosNode = (Node)xpath.evaluate("macros", macroRes, XPathConstants.NODE);
 
 										macrosNode.appendChild(newMacro);
-									}
-									else if (!valueNode.getTextContent().equals(newest))
-										valueNode.setTextContent(newest);
 
-									hasSoftware = true;
+										System.err.println(resId + ": added macro " + element.macro);
+									}
+									else {
+										String macroText = macroValue.getTextContent();
+
+										if (!macroText.equals(newest)) {
+											macroValue.setTextContent(newest);
+
+											System.err.println(resId + ": changed value of macro " + element.macro + " from " + macroText + " to " + newest);
+										}
+									}
 								}
 							}
-						}
-						else {
-							NodeList swNodes = (NodeList)xpath.evaluate(element.expression, kit, XPathConstants.NODESET);
 
-							if (swNodes.getLength() > 0)
-								hasSoftware = true;
-						}
+							if (element.resource != null) {
+								Node optionalKit = (Node)xpath.evaluate("//resourceConfig/resources/resource[name = '" + element.resource + "']", incatDoc, XPathConstants.NODE);
+								String optionalXpath = xpath.evaluate("xpath[matches(., '.+" + resId.replace(".", "\\\\.") + ".+')]", optionalKit);
 
-						if (hasSoftware && element.resource != null) {
-							Node optionalKit = (Node)xpath.evaluate("//resourceConfig/resources/resource[name = '" + element.resource + "']", incatDoc, XPathConstants.NODE);
-							String optionalXpath = xpath.evaluate("xpath[matches(., '.+" + resId.replace(".", "\\\\.") + ".+')]", optionalKit);
+								if (optionalXpath == null || optionalXpath.length() < 1) {
+									addIdToResource(xpath, optionalKit, resId);
 
-							if (optionalXpath == null || optionalXpath.length() < 1) {
-								addIdToResource(xpath, optionalKit, resId);
-
-								System.err.println(resId + ": added optional component " + element.resource);
+									System.err.println(resId + ": added optional component " + element.resource);
+								}
 							}
 						}
 					}
@@ -215,9 +214,6 @@ public class UpdateIncat {
 
 						Node incatRes = (Node)xpath.evaluate("//resourceConfig/resources/resource[name = '" + resIds[i] + "']", incatDoc, XPathConstants.NODE);
 						String resXpath = xpath.evaluate("xpath", incatRes);
-
-						incatRes.getParentNode().removeChild(incatRes);
-
 						NodeList macroNodes = (NodeList)xpath.evaluate(resXpath, incatDoc, XPathConstants.NODESET);
 
 						for (int j = 0 ; j < macroNodes.getLength() ; j += 1) {
@@ -232,19 +228,10 @@ public class UpdateIncat {
 								host.getParentNode().removeChild(host);
 							}
 
-							String macroNodeName = xpath.evaluate("name", macroNode);
-
 							macroNode.getParentNode().removeChild(macroNode);
-
-							nodes = (NodeList)xpath.evaluate("//resourceConfig/resources/resource[matches(xpath, '.+" + macroNodeName.replace(".", "\\\\.") + ".+')]", incatDoc, XPathConstants.NODESET);
-
-							for (int k = 0 ; k < nodes.getLength() ; k += 1)
-								removeIdFromResource(xpath, nodes.item(k), macroNodeName, incatDoc);
-
-							//macroNode.getParentNode().removeChild(macroNode);
 						}
 
-						//incatRes.getParentNode().removeChild(incatRes);
+						incatRes.getParentNode().removeChild(incatRes);
 
 						System.err.println(resIds[i] + ": removed resource");
 
@@ -277,7 +264,7 @@ public class UpdateIncat {
 						Node kitNode = (Node)xpath.evaluate("kit[Name = '" + kitName + "' and Version = '" + kitVersion + "']", resNode, XPathConstants.NODE);
 						NodeList swNodes = (NodeList)xpath.evaluate(element.expression, kitNode, XPathConstants.NODESET);
 
-						if (swNodes == null || swNodes.getLength() < 1) {
+						if (swNodes.getLength() < 1) {
 							removeIdFromResource(xpath, incatKit, resIds[i], incatDoc);
 
 							System.err.println(resIds[i] + ": removed optional component " + element.resource);
@@ -287,13 +274,14 @@ public class UpdateIncat {
 			}
 
 			DOMImplementationLS domLS = (DOMImplementationLS)incatDoc.getImplementation().getFeature("LS", "3.0");
-			LSSerializer lsSerializer = domLS.createLSSerializer();
-			LSOutput lsOutput = domLS.createLSOutput();
-			Writer outStream = args.length < 4 ? new OutputStreamWriter(System.out) : new FileWriter(args[3]);
+			LSSerializer serializer = domLS.createLSSerializer();
+			LSOutput output = domLS.createLSOutput();
+			Writer stream = args.length < 4 ? new OutputStreamWriter(System.out) : new FileWriter(args[3]);
 
-			lsOutput.setEncoding("UTF-8");
-			lsOutput.setCharacterStream(outStream);
-			lsSerializer.write(incatDoc, lsOutput);
+			output.setEncoding("UTF-8");
+			output.setCharacterStream(stream);
+			serializer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+			serializer.write(incatDoc, output);
 		}
 		catch (Exception err) {
 			err.printStackTrace(System.err);
@@ -428,47 +416,29 @@ public class UpdateIncat {
 		text = node.getTextContent();
 		text = text.replaceAll(id + "(:?\\s|\\|)*", "").replaceAll("(:?\\s|\\|)+$", "");
 
-		if (!text.isEmpty())
-			node.setTextContent(text);
-		else {
-			String name = xpath.evaluate("name", resource);
-			NodeList nodes = (NodeList)xpath.evaluate("//resourceConfig/resources/resource[matches(xpath, '.+" + name.replace(".", "\\\\.") + ".+')]", incat, XPathConstants.NODESET);
-
-			for (int i = 0 ; i < nodes.getLength() ; i += 1)
-				removeIdFromResource(xpath, nodes.item(i), name, incat);
-
-			resource.getParentNode().removeChild(resource);
-
-			System.err.println(name + ": removed resource that references nothing");
-		}
+		node.setTextContent(text);
 	}
 
 	/**
 	 *
 	 * @param xpath
-	 * @param kit
-	 * @param expr
+	 * @param nodes
 	 * @return
 	 * @throws XPathExpressionException
 	 */
-	private static String findNewest(XPath xpath, Node kit, String expr) throws XPathExpressionException
+	private static String findNewest(XPath xpath, NodeList nodes) throws XPathExpressionException
 	{
-		NodeList swNodes = (NodeList)xpath.evaluate(expr, kit, XPathConstants.NODESET);
-
-		if (swNodes.getLength() < 1)
-			return null;
-
-		String result = xpath.evaluate("Version", swNodes.item(0));
-		String defaultText = xpath.evaluate("Default", swNodes.item(0));
+		String result = xpath.evaluate("Version", nodes.item(0));
+		String defaultText = xpath.evaluate("Default", nodes.item(0));
 		boolean hasDefault = false;
 
 		if (defaultText != null && defaultText.equalsIgnoreCase("yes"))
 			hasDefault = true;
 
-		for (int i = 1 ; i < swNodes.getLength() ; i += 1) {
-			String currentNode = xpath.evaluate("Version", swNodes.item(i));
+		for (int i = 1 ; i < nodes.getLength() ; i += 1) {
+			String currentNode = xpath.evaluate("Version", nodes.item(i));
 
-			defaultText = xpath.evaluate("Default", swNodes.item(i));
+			defaultText = xpath.evaluate("Default", nodes.item(i));
 
 			if (hasDefault) {
 				if (defaultText == null || !defaultText.equalsIgnoreCase("yes"))
