@@ -583,7 +583,8 @@ public class UpdateIncat {
 	private static void createBackupFile(String fileName) throws IncaException
 	{
 		int position = fileName.lastIndexOf('.');
-		String timestamp = new SimpleDateFormat("ddMMMyyyy").format(new Date());
+		File oldFile = new File(fileName);
+		String timestamp = new SimpleDateFormat("ddMMMyyyy").format(new Date(oldFile.lastModified()));
 		String newFileName;
 
 		if (position >= 0)
@@ -591,7 +592,6 @@ public class UpdateIncat {
 		else
 			newFileName = fileName + "_" + timestamp;
 
-		File oldFile = new File(fileName);
 		File newFile = new File(newFileName);
 
 		if (!oldFile.renameTo(newFile))
