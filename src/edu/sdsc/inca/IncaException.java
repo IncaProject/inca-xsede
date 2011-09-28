@@ -9,12 +9,10 @@ package edu.sdsc.inca;
  * @author Paul Hoover
  *
  */
-public class IncaException extends Exception {
+class IncaException extends Exception {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 8288433054597641692L;
+
 
 	// constructors
 
