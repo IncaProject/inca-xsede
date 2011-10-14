@@ -62,6 +62,64 @@
           </macro>
         </macros>
       </resource>
+      <resource>
+        <name>GATEWAY-EXTRAS</name>
+        <xpath>//resource[matches(name, '^(uthscsa-alamo|uthscsa-bcf)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>GATEWAY-EXTRAS</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>uthscsa-alamo uthscsa-bcf</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>jobmanager</name>
+            <value>jobmanager-pbs</value>
+          </macro>
+          <macro>
+            <name>gramPort</name>
+            <value>2119</value>
+          </macro>
+          <macro>
+            <name>chargeProject</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>nodeCount</name>
+            <value>4</value>
+          </macro>
+          <macro>
+            <name>real_time_script</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>jobQueue</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>memory</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>nodeTag</name>
+            <value/>
+          </macro>
+          <macro>
+            <name>gridftpPort</name>
+            <value>2811</value>
+          </macro>
+        </macros>
+      </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>NCSA</name>
         <xpath>//resource[matches(name, '^(ncsa-lincoln|ncsa-forge)$')]</xpath>
@@ -6144,10 +6202,6 @@
             <value/>
           </macro>
           <macro>
-            <name>chargeProject</name>
-            <value>TG-STA060008N</value>
-          </macro>
-          <macro>
             <name>jobQueue</name>
             <value/>
           </macro>
@@ -6311,6 +6365,10 @@
             <name>__equivalent__</name>
             <value>false</value>
           </macro>
+          <macro>
+            <name>chargeProject</name>
+            <value>TG-STA110011S</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -6442,6 +6500,50 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>uthscsa-alamo</name>
+        <xpath>//resource[matches(name, '^(alamo\.biochemistry\.uthscsa\.edu)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>uthscsa-alamo</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>alamo.biochemistry.uthscsa.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>uthscsa-bcf</name>
+        <xpath>//resource[matches(name, '^(bcf\.biochemistry\.uthscsa\.edu)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>uthscsa-bcf</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>bcf.biochemistry.uthscsa.edu</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>ssh</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>true</value>
           </macro>
         </macros>
       </resource>
@@ -6710,6 +6812,12 @@
             <value>false</value>
           </macro>
         </macros>
+      </resource>
+      <resource>
+        <name>alamo.biochemistry.uthscsa.edu</name>
+      </resource>
+      <resource>
+        <name>bcf.biochemistry.uthscsa.edu</name>
       </resource>
       <resource>
         <name>build.teragrid.org</name>
@@ -10516,6 +10624,230 @@
     </suite>
     <suite>
       <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>user.basicFunctionality.gridJobSubmission.unit</name>
+            <args>
+              <arg>
+                <name>maxRun</name>
+                <value>00:05:00</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>@GATEWAY-EXTRAS->nodeCount@</value>
+              </arg>
+              <arg>
+                <name>maxWait</name>
+                <value>10:00:00</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value>@GATEWAY-EXTRAS->real_time_script@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>memory</name>
+                <value>@GATEWAY-EXTRAS->memory@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@GATEWAY-EXTRAS->jobQueue@</value>
+              </arg>
+              <arg>
+                <name>contact</name>
+                <value>@GATEWAY-EXTRAS->__incaHosts__@:@GATEWAY-EXTRAS->gramPort@/@GATEWAY-EXTRAS->jobmanager@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>nodeTag</name>
+                <value>@GATEWAY-EXTRAS->nodeTag@</value>
+              </arg>
+              <arg>
+                <name>delWait</name>
+                <value>00:00:60</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value>globusrun</value>
+              </arg>
+              <arg>
+                <name>project</name>
+                <value>@GATEWAY-EXTRAS->chargeProject@</value>
+              </arg>
+              <arg>
+                <name>checkWait</name>
+                <value>00:00:60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>39600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram5-batch-rc-5.0.1_to_@GATEWAY-EXTRAS->__incaHosts__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ '(globusrun call timed out|Reporter exceeded usage limits|Inca error)'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.gatekeeper</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@GATEWAY-EXTRAS->__incaHosts__@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gram5-external-gatekeeper-ping-rc-5.0.1_to_@GATEWAY-EXTRAS->__incaHosts__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>network.telnet.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@GATEWAY-EXTRAS->gridftpPort@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@GATEWAY-EXTRAS->__incaHosts__@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-telnet-dms-4.2.0_to_@GATEWAY-EXTRAS->__incaHosts__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.transfer.gridftp.unit.copy</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>gsiftp://@GATEWAY-EXTRAS->__incaHosts__@:@GATEWAY-EXTRAS->gridftpPort@/~/inca.gridftp.test</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>source</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>21600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-transfer-dms-4.2.01_to_@GATEWAY-EXTRAS->__incaHosts__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>gateway-extras</name>
+      <guid/>
+      <description>Testing for gateway machines</description>
+      <version>1</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>data.db.postgres.unit</name>
@@ -11503,7 +11835,7 @@
               </arg>
               <arg>
                 <name>com</name>
-                <value>tgusage --account TG-STA060008N list --resource staff.teragrid</value>
+                <value>tgusage --account @chargeProject@ list --resource staff.teragrid</value>
               </arg>
               <arg>
                 <name>help</name>
