@@ -194,7 +194,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/tgup/capac')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/xup/capac')}">
                           user portal
                         </a>
                       </li>

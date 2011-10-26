@@ -12,13 +12,11 @@
                 xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes">
 
   <xsl:include href="../xsl/inca-common.xsl"/>
-  <xsl:include href="../xsl/instance-extra.xsl"/>
 
   <xsl:param name="printRunNow"/>
   <xsl:param name="printKb"/>
   <xsl:param name="kbSearch"/>
   <xsl:param name="kbSubmit"/>
-  <xsl:param name="kbEmail"/>
   <xsl:param name="week"/>
   <xsl:param name="month"/>
   <xsl:param name="quarter"/>
@@ -37,7 +35,10 @@
   <xsl:template name="printReport" match="report">
     <xsl:variable name="config" select="../seriesConfig"/>
     <xsl:variable name="configId" select="../seriesConfigId"/>
-    <xsl:variable name="cgi" select="concat('http://inca.sdsc.edu/2.0/ctssv3/bin/cgi-bin/reporters.cgi?reporter=', name, '&amp;action=help')"/>
+    <xsl:variable
+        name="cgi"
+        select="concat(substring-before($config/series/uri, name),
+        '../cgi-bin/reporters.cgi?reporter=', name, '&amp;action=help')"/>
     <xsl:variable name="comp" select="../comparisonResult"/>
     <xsl:variable name="used" select="../sysusage"/>
     <xsl:variable name="gmt" select="gmt" as="xs:dateTime" />
@@ -96,7 +97,7 @@
           <xsl:variable name="label"
                         select="concat($resource, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;availMetrics=', $metrics, '&amp;startDate=')"/>
+                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;availMetrics=', $metrics, '&amp;startDate=')"/> 
           <table>
             <tr>
               <td>view results for past: </td>
@@ -149,29 +150,29 @@
         </xsl:if>
         <xsl:if test="$printKb='true'">
           <tr><td>
-          <xsl:variable name="kb1" select="replace($kbSearch,'\+','&amp;')"/>
-          <xsl:variable name="kb2" select="replace($kb1,'@nickname@', $nickName)"/>
-          <xsl:variable name="kb3" select="replace($kb2,'@error@', $errMsg)"/>
+          <xsl:variable name="kb2" select="replace($kbSearch,'@nickname@', $nickName)"/>
+          <xsl:variable name="kb3" select="replace($kb2,'@error@', encode-for-uri($errMsg))"/>
           <xsl:variable name="kb4" select="replace($kb3,'@reporter@', name)"/>
-          <form method="post" action="{$kb4}&amp;kbEmail={$kbEmail}">
+          <form method="post" action="{$kb4}">
           <input type="submit" value="search knowledge base"/>
           </form></td><td>
           <xsl:variable name="ab1" select="replace($kbSubmit,'\+','&amp;')"/>
           <xsl:variable name="ab2" select="replace($ab1,'@nickname@', $nickName)"/>
-          <xsl:variable name="ab3" select="replace($ab2,'@error@', $errMsg)"/>
+          <xsl:variable name="ab3" select="replace($ab2,'@error@', encode-for-uri($errMsg))"/>
           <xsl:variable name="ab4" select="replace($ab3,'@reporter@', name)"/>
-          <form method="post" action="{$ab4}&amp;kbEmail={$kbEmail}">
+          <form method="post" action="{$ab4}">
             <input type="submit" value="add to knowledge base"/>
           </form></td></tr>
         </xsl:if>
-        <!-- instance-extra.xsl for knowledge base -->
-        <xsl:call-template name="knowledgeBase">
-          <xsl:with-param name="nickName" select="$nickName"/>
-          <xsl:with-param name="reporterName" select="name"/>
-          <xsl:with-param name="errMsg" select="$errMsg"/>
-        </xsl:call-template>
       </td>
       </tr>
+      <xsl:if test="count(log/warn/message|log/error/message)>0">
+        <tr>
+          <td colspan="2"><xsl:text>Errors or warnings:</xsl:text>
+            <xsl:apply-templates select="log/warn|log/error"/>
+          </td>
+        </tr>
+      </xsl:if>
       <xsl:if test="$metrics != ''">
       <tr><td colspan="2" class="header">
         Metrics collected:
@@ -255,7 +256,7 @@
       </p></td></tr>
       <xsl:if test="$printRunNow='true'">
       <tr><td colspan="2" align="left">
-        <form method="POST" action="runNow.jsp?configId={$configId}">
+        <form method="POST" action="/inca/jsp/runNow.jsp?configId={$configId}">
           <input type="submit" value="Run Now" name="Run Now"/> (requires authentication)
         </form>
       </td></tr>
@@ -277,17 +278,11 @@
           </td>
         </tr>
       </xsl:if>
-      <xsl:if test="count(log/error/message)>0">
-        <tr><td colspan="2" class="header"><xsl:text>Additional error output:</xsl:text></td></tr>
-        <xsl:for-each select="log/error">
-          <tr><td colspan="2"><p class="code"><xsl:value-of select="message"/></p></td></tr>
-        </xsl:for-each>
-      </xsl:if>
       <!-- instance-extra.xsl for run-now and comment rows -->
-      <xsl:call-template name="instanceExtra">
+      <!--<xsl:call-template name="instanceExtra">
         <xsl:with-param name="nickName" select="$nickName"/>
         <xsl:with-param name="config" select="$config"/>
-      </xsl:call-template>
+      </xsl:call-template>-->
     </table>
   </xsl:template>
 
@@ -312,7 +307,7 @@
       <xsl:value-of select="message"/>
     </p>
   </xsl:template>
-  <xsl:template name="printDebug" match="debug">
+  <xsl:template name="printDebug" match="debug|warn|error">
     <pre><p class="code"><xsl:value-of select="message"/></p></pre>
   </xsl:template>
 

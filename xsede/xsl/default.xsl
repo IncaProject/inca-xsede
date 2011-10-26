@@ -202,6 +202,9 @@
             <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
               <xsl:value-of select="'down'" />
             </xsl:when>
+            <xsl:when test="$errMsg[matches(., '^DNS ERROR')]">
+              <xsl:value-of select="'dnsError'" />
+            </xsl:when>
             <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
               <xsl:value-of select="'noFault'" />
             </xsl:when>

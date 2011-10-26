@@ -33,8 +33,8 @@
               </xsl:call-template>
               Create a stored query for Inca report series on
               specified resources. 
-	      <a href="http://www.teragridforum.org/mediawiki/index.php?title=Inca_Information_for_System_Administrators#Custom_Queries">Visit 
-		the TeraGrid wiki for more information</a>.
+	      <a href="https://www.xsede.org/web/staff/staff-wiki/-/wiki/Main/Inca%2bInformation%2bfor%2bSystem%2bAdministrators#Custom_Queries">Visit 
+		the XSEDE Staff wiki for more information</a>.
               <br/>Enter a name to store this query under,
               check the boxes for each Inca report series to be queried,
               and click 'STORE QUERY'.</p>

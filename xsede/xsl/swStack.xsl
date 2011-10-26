@@ -260,7 +260,7 @@
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
         <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?nickname=',
-            $result/nickname, '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
+            encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
         <xsl:variable name="href">
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
