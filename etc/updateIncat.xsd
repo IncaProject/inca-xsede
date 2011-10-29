@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:st="http://inca.sdsc.edu/dataModel/suite_2.0"
+        xmlns:ui="http://inca.sdsc.edu/updateIncat"
+        targetNamespace="http://inca.sdsc.edu/updateIncat"
+        elementFormDefault="qualified">
+
+  <import namespace="http://inca.sdsc.edu/dataModel/suite_2.0" schemaLocation="file:///Users/phoover/Documents/Inca/inca/trunk/pubs/docs/src/schemas/suite.xsd"/>
+  <import namespace="http://inca.sdsc.edu/dataModel/util_2.0" schemaLocation="file:///Users/phoover/Documents/Inca/inca/trunk/pubs/docs/src/schemas/incaCommon.xsd"/>
+
+  <complexType name="kitQuery">
+    <sequence>
+      <element name="expression" type="string"/>
+      <element name="products">
+        <complexType>
+          <choice maxOccurs="unbounded">
+            <element name="version" type="string"/>
+            <element name="optional" type="string"/>
+            <element name="url">
+              <complexType>
+                <sequence>
+                  <element name="host" type="string"/>
+                  <element name="port" type="string"/>
+                </sequence>
+              </complexType>
+            </element>
+          </choice>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="kitQuerySet">
+    <sequence>
+      <element name="resource" type="string"/>
+      <element name="query" type="ui:kitQuery" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="macroType">
+    <restriction base="token">
+      <enumeration value="constant"/>
+      <enumeration value="variable"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="macro">
+    <sequence>
+      <element name="type" type="ui:macroType"/>
+      <element name="name" type="string"/>
+      <element name="value" type="string"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="resource">
+    <sequence>
+      <element name="name" type="string"/>
+      <element name="macro" type="ui:macro" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="xsedeResource">
+    <complexContent>
+      <extension base="ui:resource">
+        <sequence>
+          <element name="macroResource" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+              <complexContent>
+                <extension base="ui:resource">
+                  <sequence>
+                    <element name="hosts" type="string"/>
+                  </sequence>
+                </extension>
+						  </complexContent>
+            </complexType>
+          </element>
+          <element name="kit" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+              <sequence>
+                <element name="name" type="string"/>
+                <element name="optional" type="string" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="kitResource">
+    <complexContent>
+      <extension base="ui:resource">
+        <sequence>
+          <element name="optional" type="ui:resource" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+	  </complexContent>
+  </complexType>
+
+  <complexType name="config">
+    <sequence>
+      <element name="properties">
+        <complexType>
+          <sequence>
+            <element name="repository" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="queries">
+        <complexType>
+          <sequence>
+            <element name="kit" type="ui:kitQuerySet" maxOccurs="unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="tgResources">
+        <complexType>
+          <sequence>
+            <element name="resource" type="ui:xsedeResource" maxOccurs="unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="kitResources">
+        <complexType>
+          <sequence>
+            <element name="resource" type="ui:kitResource" maxOccurs="unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="suites">
+        <complexType>
+          <sequence>
+            <element name="suite" type="st:suite" maxOccurs="unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+</schema>
