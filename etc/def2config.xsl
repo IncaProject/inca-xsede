@@ -89,6 +89,37 @@
   </xsl:template>
 
   <!-- ==================================================================== -->
+  <!-- printServiceQuery                                                    -->
+  <!--                                                                      -->
+  <!-- Prints the query xml to describe a software packages.                -->
+  <!--                                                                      -->
+  <!-- Inputs:                                                              -->
+  <!--   kit - the kit node containing its details                          -->
+  <!--   service - the service name                                         -->
+  <!--   optional - true if the software package is optional and false      -->
+  <!--              otherwise                                               -->
+  <!-- ==================================================================== -->
+  <xsl:template name="printServiceQuery">
+    <xsl:param name="kit"/>
+    <xsl:param name="service"/>
+    <xsl:param name="optional"/>
+
+    <query>
+      <expression>service[Name = '<xsl:value-of select="$service"/>']</expression>
+      <products>
+        <version><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-registered-version')"/></version>
+        <xsl:if test="$optional=1">
+          <optional><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service)"/></optional>
+        </xsl:if>
+        <url>
+          <host><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-host')"/></host>
+          <port><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-port')"/></port>
+        </url>
+      </products>
+    </query>
+  </xsl:template>
+
+  <!-- ==================================================================== -->
   <!-- printKit                                                             -->
   <!--                                                                      -->
   <!-- Prints a kit.                                                        -->
@@ -125,19 +156,28 @@
 
         <xsl:for-each select="Service">
           <xsl:variable name="service" select="."/>
-          <query>
-            <expression>service[Name = '<xsl:value-of select="$service/Name"/>']</expression>
-            <products>
-              <version><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service/Name, '-registered-version')"/></version>
-            <xsl:if test="$kit/Fixed='false' or ($kit/Fixed='true' and $service/Required='false')">
-              <optional><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name)"/></optional>
-            </xsl:if>
-              <url>
-                <host><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service/Name, '-host')"/></host>
-                <port><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service/Name, '-port')"/></port>
-              </url>
-            </products>
-          </query>
+          <xsl:variable name="variables">
+            <xsl:call-template name="crossProduct">
+              <xsl:with-param name="values" select="Variable"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <xsl:choose><xsl:when test="not(matches($variables, '^\s*$'))">
+            <xsl:for-each select="tokenize($variables, '\|')">
+              <xsl:if test="not(matches(.,'^\s*$'))">
+              <xsl:call-template name="printServiceQuery">
+                <xsl:with-param name="service" select="concat($service/Name,'-',normalize-space(.))"/>
+                <xsl:with-param name="kit" select="$kit"/>
+                <xsl:with-param name="optional" select="1"/>
+              </xsl:call-template>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:when><xsl:otherwise>
+            <xsl:call-template name="printServiceQuery">
+              <xsl:with-param name="service" select="$service/Name"/>
+              <xsl:with-param name="kit" select="$kit"/>
+              <xsl:with-param name="optional" select="$kit/Fixed='false' or ($kit/Fixed='true' and $service/Required='false')"/>
+            </xsl:call-template>
+          </xsl:otherwise></xsl:choose>
         </xsl:for-each>
       </kit>
   </xsl:template>
