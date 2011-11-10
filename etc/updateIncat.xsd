@@ -47,7 +47,7 @@
     <sequence>
       <element name="type" type="ui:macroType"/>
       <element name="name" type="string"/>
-      <element name="value" type="string"/>
+      <element name="value" type="string" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -55,6 +55,7 @@
     <sequence>
       <element name="name" type="string"/>
       <element name="macro" type="ui:macro" minOccurs="0" maxOccurs="unbounded"/>
+      <element name="group" type="string" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -112,7 +113,7 @@
           </sequence>
         </complexType>
       </element>
-      <element name="tgResources">
+      <element name="xsedeResources">
         <complexType>
           <sequence>
             <element name="resource" type="ui:xsedeResource" maxOccurs="unbounded"/>
@@ -123,6 +124,13 @@
         <complexType>
           <sequence>
             <element name="resource" type="ui:kitResource" maxOccurs="unbounded"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="groupResources">
+        <complexType>
+          <sequence>
+            <element name="resource" type="ui:resource" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
         </complexType>
       </element>

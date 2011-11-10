@@ -138,7 +138,7 @@ class KitQuery {
 			}
 
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
-			boolean changedConfig = setMacroValue(xpath, configDoc, macroRes, resId, m_hostName, matchResult.group(1));;
+			boolean changedConfig = setMacroValue(xpath, configDoc, macroRes, resId, m_hostName, matchResult.group(1));
 
 			if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_portName, matchResult.group(2)))
 				changedConfig = true;
