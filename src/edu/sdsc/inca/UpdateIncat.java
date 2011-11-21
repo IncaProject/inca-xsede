@@ -41,8 +41,8 @@ import org.xml.sax.InputSource;
  */
 public class UpdateIncat {
 
-	private static final Map<String, List<KitQuery>> m_kitQueries = new TreeMap<String, List<KitQuery>>();
-	private static final Map<String, Map<String, String>> m_implQueries = new TreeMap<String, Map<String, String>>();
+	private static final List<ResourceQuery> m_resourceQueries = new ArrayList<ResourceQuery>();
+	private static final Map<String, KitQuerySet> m_kitQueries = new TreeMap<String, KitQuerySet>();
 
 
 	// public methods
@@ -98,7 +98,6 @@ public class UpdateIncat {
 			builder.append("<resources>");
 
 			writeXsedeResources(xpath, configDoc, builder);
-			writeKitResources(xpath, configDoc, builder);
 			writeGroupResources(xpath, configDoc, builder);
 
 			builder.append("</resources>");
@@ -137,36 +136,24 @@ public class UpdateIncat {
 	 */
 	private static void populateQueries(XPath xpath, Document configDoc) throws XPathExpressionException, IncaException
 	{
-		NodeList kitNodes = (NodeList)xpath.evaluate("/config/queries/kit", configDoc, XPathConstants.NODESET);
+		NodeList nodes = (NodeList)xpath.evaluate("/config/queries/kit", configDoc, XPathConstants.NODESET);
 
-		for (int i = 0 ; i < kitNodes.getLength() ; i += 1) {
-			Node kit = kitNodes.item(i);
-			String kitKey = xpath.evaluate("resource", kit);
+		for (int i = 0 ; i < nodes.getLength() ; i += 1) {
+			Node kit = nodes.item(i);
+			String kitName = xpath.evaluate("name", kit);
+			String kitVersion = xpath.evaluate("version", kit);
+			String kitKey = kitName + "-" + kitVersion;
 
 			if (m_kitQueries.containsKey(kitKey))
 				throw new IncaException("Config contains duplicate kits");
 
-			NodeList queryNodes = (NodeList)xpath.evaluate("query", kit, XPathConstants.NODESET);
-			List<KitQuery> queryList = new ArrayList<KitQuery>();
-			Map<String, String> queryMap = new TreeMap<String, String>();
-
-			for (int j = 0 ; j < queryNodes.getLength() ; j += 1) {
-				Node query = queryNodes.item(j);
-
-				queryList.add(new KitQuery(xpath, query));
-
-				Node optional = (Node)xpath.evaluate("products/optional", query, XPathConstants.NODE);
-
-				if (optional != null) {
-					String expression = xpath.evaluate("expression", query);
-
-					queryMap.put(optional.getTextContent(), expression);
-				}
-			}
-
-			m_kitQueries.put(kitKey, queryList);
-			m_implQueries.put(kitKey, queryMap);
+			m_kitQueries.put(kitKey, new KitQuerySet(xpath, kit));
 		}
+
+		nodes = (NodeList)xpath.evaluate("/config/queries/resource", configDoc, XPathConstants.NODESET);
+
+		for (int i = 0 ; i < nodes.getLength() ; i += 1)
+			m_resourceQueries.add(new ResourceQuery(xpath, nodes.item(i)));
 	}
 
 	/**
@@ -185,15 +172,13 @@ public class UpdateIncat {
 			String kitName = xpath.evaluate("Name", kit);
 			String kitVersion = xpath.evaluate("Version", kit);
 			String kitKey = kitName + "-" + kitVersion;
-			List<KitQuery> queryList = m_kitQueries.get(kitKey);
+			KitQuerySet querySet = m_kitQueries.get(kitKey);
 
-			if (queryList == null)
+			if (querySet == null)
 				continue;
 
-			for (KitQuery query : queryList) {
-				if (query.matches(xpath, kit))
-					return true;
-			}
+			if (querySet.matches(xpath, kit))
+				return true;
 		}
 
 		return false;
@@ -206,8 +191,9 @@ public class UpdateIncat {
 	 * @param configDoc
 	 * @return
 	 * @throws XPathExpressionException
+	 * @throws IncaException
 	 */
-	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException
+	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException, IncaException
 	{
 		NodeList inputResNodes = (NodeList)xpath.evaluate("//resource", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
@@ -215,13 +201,18 @@ public class UpdateIncat {
 		for (int i = 0 ; i < inputResNodes.getLength() ; i += 1) {
 			Node inputRes = inputResNodes.item(i);
 			String resId = xpath.evaluate("ResourceID", inputRes);
-			Node configRes = (Node)xpath.evaluate("/config/xsedeResources/resource[name = '" + resId + "']", configDoc, XPathConstants.NODE);
+			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "']", configDoc, XPathConstants.NODE);
 
 			if (configRes == null) {
 				if (hasTestedSoftware(xpath, inputRes))
 					System.err.println(resId + ": has applicable kits, but is not present in config");
 
 				continue;
+			}
+
+			for (ResourceQuery query : m_resourceQueries) {
+				if (query.evaluate(xpath, configDoc, inputRes, configRes))
+					changedConfig = true;
 			}
 
 			NodeList kitNodes = (NodeList)xpath.evaluate("kit[SupportLevel != 'retired']", inputRes, XPathConstants.NODESET);
@@ -231,41 +222,16 @@ public class UpdateIncat {
 				String kitName = xpath.evaluate("Name", kit);
 				String kitVersion = xpath.evaluate("Version", kit);
 				String kitKey = kitName + "-" + kitVersion;
-				List<KitQuery> queryList = m_kitQueries.get(kitKey);
+				KitQuerySet querySet = m_kitQueries.get(kitKey);
 
-				if (queryList == null) {
-					System.err.println(resId + ": couldn't find a corresponding query entry for kit " + kitName + ", version " + kitVersion);
-
-					continue;
-				}
-
-				Node configKit = (Node)xpath.evaluate("/config/kitResources/resource[name = '" + kitKey + "']", configDoc, XPathConstants.NODE);
-
-				if (configKit == null) {
-					System.err.println(resId + ": couldn't find a corresponding resource for kit " + kitName + ", version " + kitVersion);
+				if (querySet == null) {
+					System.err.println(resId + ": couldn't find a corresponding query set for kit " + kitName + ", version " + kitVersion);
 
 					continue;
 				}
 
-				Node resKit = (Node)xpath.evaluate("kit[name = '" + kitKey + "']", configRes, XPathConstants.NODE);
-
-				if (resKit == null) {
-					Node newResKit = configDoc.createElement("kit");
-					Node newName = configDoc.createElement("name");
-
-					newName.setTextContent(kitKey);
-					newResKit.appendChild(newName);
-					configRes.appendChild(newResKit);
-
+				if (querySet.evaluate(xpath, configDoc, kit, configRes))
 					changedConfig = true;
-
-					System.err.println(resId + ": added kit " + kitKey);
-				}
-
-				for (KitQuery query : queryList) {
-					if (query.evaluate(xpath, configDoc, kit, configKit, configRes))
-						changedConfig = true;
-				}
 			}
 		}
 
@@ -282,7 +248,7 @@ public class UpdateIncat {
 	 */
 	private static boolean examineConfig(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException
 	{
-		NodeList configResNodes = (NodeList)xpath.evaluate("/config/xsedeResources/resource", configDoc, XPathConstants.NODESET);
+		NodeList configResNodes = (NodeList)xpath.evaluate("/config/resources/resource", configDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
@@ -300,79 +266,9 @@ public class UpdateIncat {
 				continue;
 			}
 
-			NodeList resKitNodes = (NodeList)xpath.evaluate("kit", configRes, XPathConstants.NODESET);
-
-			for (int j = 0 ; j < resKitNodes.getLength() ; j += 1) {
-				Node resKit = resKitNodes.item(j);
-				String kitKey = xpath.evaluate("name", resKit);
-				int separator = kitKey.lastIndexOf("-");
-				String kitName = kitKey.substring(0, separator);
-				String kitVersion = kitKey.substring(separator + 1, kitKey.length());
-				Map<String, String> queryMap = m_implQueries.get(kitKey);
-
-				if (queryMap == null) {
-					configRes.removeChild(resKit);
-
+			for (KitQuerySet querySet : m_kitQueries.values()) {
+				if (querySet.examineGroups(xpath, configDoc, inputRes, configRes))
 					changedConfig = true;
-
-					System.err.println(resId + ": couldn't find a corresponding query entry for kit " + kitName + ", version " + kitVersion);
-
-					continue;
-				}
-
-				Node inputKit = (Node)xpath.evaluate("kit[Name = '" + kitName + "' and Version = '" + kitVersion + "']", inputRes, XPathConstants.NODE);
-
-				if (inputKit == null) {
-					configRes.removeChild(resKit);
-
-					changedConfig = true;
-
-					System.err.println(resId + ": removed kit " + kitName + ", version " + kitVersion);
-
-					continue;
-				}
-
-				String supportLevel = xpath.evaluate("SupportLevel", inputKit);
-
-				if (supportLevel != null && supportLevel.equals("retired")) {
-					configRes.removeChild(resKit);
-
-					changedConfig = true;
-
-					System.err.println(resId + ": removed retired kit " + kitName + ", version " + kitVersion);
-
-					continue;
-				}
-
-				NodeList optionalNodes = (NodeList)xpath.evaluate("optional", resKit, XPathConstants.NODESET);
-
-				for (int k = 0 ; k < optionalNodes.getLength() ; k += 1) {
-					Node optional = optionalNodes.item(k);
-					String optionalName = optional.getTextContent();
-					String expression = queryMap.get(optionalName);
-
-					if (expression == null) {
-						resKit.removeChild(optional);
-
-						changedConfig = true;
-
-						System.err.println(resId + ": couldn't find a corresponding query entry for optional component " + optionalName);
-
-						continue;
-					}
-
-					NodeList resultNodes = (NodeList)xpath.evaluate(expression, inputKit, XPathConstants.NODESET);
-
-					if (resultNodes.getLength() < 1) {
-						resKit.removeChild(optional);
-
-						changedConfig = true;
-
-						System.err.println(resId + ": removed optional component " + optionalName);
-
-						continue;
-					}
-				}
 			}
 		}
 
@@ -487,7 +383,7 @@ public class UpdateIncat {
 	 */
 	private static void writeXsedeResources(XPath xpath, Document configDoc, StringBuilder builder) throws XPathExpressionException
 	{
-		NodeList configResNodes = (NodeList)xpath.evaluate("/config/xsedeResources/resource", configDoc, XPathConstants.NODESET);
+		NodeList configResNodes = (NodeList)xpath.evaluate("/config/resources/resource", configDoc, XPathConstants.NODESET);
 
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
@@ -517,70 +413,15 @@ public class UpdateIncat {
 	 * @param builder
 	 * @throws XPathExpressionException
 	 */
-	private static void writeKitResources(XPath xpath, Document configDoc, StringBuilder builder) throws XPathExpressionException
-	{
-		NodeList configKitNodes = (NodeList)xpath.evaluate("/config/kitResources/resource", configDoc, XPathConstants.NODESET);
-
-		for (int i = 0 ; i < configKitNodes.getLength() ; i += 1) {
-			Node kit = configKitNodes.item(i);
-			String kitName = xpath.evaluate("name", kit);
-			NodeList implNodes = (NodeList)xpath.evaluate("/config/xsedeResources/resource[kit/name = '" + kitName + "']/name", configDoc, XPathConstants.NODESET);
-
-			if (implNodes.getLength() < 1)
-				System.err.println("kit " + kitName + " has no implementers");
-			else {
-				StringBuilder implementers = new StringBuilder();
-
-				implementers.append(implNodes.item(0).getTextContent());
-
-				for (int j = 1 ; j < implNodes.getLength() ; j += 1) {
-					implementers.append(' ');
-					implementers.append(implNodes.item(j).getTextContent());
-				}
-
-				writeIncatResource(xpath, kit, implementers.toString(), false, builder);
-			}
-
-			NodeList optionalNodes = (NodeList)xpath.evaluate("optional", kit, XPathConstants.NODESET);
-
-			for (int j = 0 ; j < optionalNodes.getLength() ; j += 1) {
-				kit = optionalNodes.item(j);
-				kitName = xpath.evaluate("name", kit);
-				implNodes = (NodeList)xpath.evaluate("/config/xsedeResources/resource[kit/optional = '" + kitName + "']/name", configDoc, XPathConstants.NODESET);
-
-				if (implNodes.getLength() < 1)
-					System.err.println("optional component " + kitName + " has no implementers");
-				else {
-					StringBuilder implementers = new StringBuilder();
-
-					implementers.append(implNodes.item(0).getTextContent());
-
-					for (int k = 1 ; k < implNodes.getLength() ; k += 1) {
-						implementers.append(' ');
-						implementers.append(implNodes.item(k).getTextContent());
-					}
-
-					writeIncatResource(xpath, kit, implementers.toString(), false, builder);
-				}
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @param xpath
-	 * @param configDoc
-	 * @param builder
-	 * @throws XPathExpressionException
-	 */
 	private static void writeGroupResources(XPath xpath, Document configDoc, StringBuilder builder) throws XPathExpressionException
 	{
-		NodeList configGroupNodes = (NodeList)xpath.evaluate("/config/groupResources/resource", configDoc, XPathConstants.NODESET);
+		NodeList groupNodes = (NodeList)xpath.evaluate("/config/groups/group", configDoc, XPathConstants.NODESET);
 
-		for (int i = 0 ; i < configGroupNodes.getLength() ; i += 1) {
-			Node group = configGroupNodes.item(i);
+		for (int i = 0 ; i < groupNodes.getLength() ; i += 1) {
+			Node group = groupNodes.item(i);
+			String groupType = xpath.evaluate("type", group);
 			String groupName = xpath.evaluate("name", group);
-			NodeList implNodes = (NodeList)xpath.evaluate("/config//*[group = '" + groupName + "']/name", configDoc, XPathConstants.NODESET);
+			NodeList implNodes = (NodeList)xpath.evaluate("/config//*/group[type = '" + groupType + "' and name = '" + groupName + "']/../name", configDoc, XPathConstants.NODESET);
 
 			if (implNodes.getLength() < 1)
 				System.err.println("group " + groupName + " has no implementers");

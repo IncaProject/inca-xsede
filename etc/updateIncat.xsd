@@ -15,6 +15,7 @@
           <choice maxOccurs="unbounded">
             <element name="version" type="string"/>
             <element name="optional" type="string"/>
+            <element name="key" type="string"/>
             <element name="url">
               <complexType>
                 <sequence>
@@ -31,8 +32,23 @@
 
   <complexType name="kitQuerySet">
     <sequence>
-      <element name="resource" type="string"/>
+      <element name="name" type="string"/>
+      <element name="version" type="string"/>
+      <element name="group" type="string"/>
       <element name="query" type="ui:kitQuery" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="resourceQuery">
+    <sequence>
+      <element name="expression" type="string"/>
+      <element name="products">
+        <complexType>
+          <choice maxOccurs="unbounded">
+            <element name="group" type="string"/>
+          </choice>
+        </complexType>
+      </element>
     </sequence>
   </complexType>
 
@@ -51,11 +67,26 @@
     </sequence>
   </complexType>
 
+  <simpleType name="groupType">
+    <restriction base="token">
+      <enumeration value="general"/>
+      <enumeration value="kit"/>
+      <enumeration value="optional"/>
+    </restriction>
+  </simpleType>
+
   <complexType name="resource">
     <sequence>
       <element name="name" type="string"/>
       <element name="macro" type="ui:macro" minOccurs="0" maxOccurs="unbounded"/>
-      <element name="group" type="string" minOccurs="0" maxOccurs="unbounded"/>
+      <element name="group" minOccurs="0" maxOccurs="unbounded">
+        <complexType>
+          <sequence>
+            <element name="type" type="ui:groupType"/>
+            <element name="name" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
     </sequence>
   </complexType>
 
@@ -74,24 +105,16 @@
 						  </complexContent>
             </complexType>
           </element>
-          <element name="kit" minOccurs="0" maxOccurs="unbounded">
-            <complexType>
-              <sequence>
-                <element name="name" type="string"/>
-                <element name="optional" type="string" minOccurs="0" maxOccurs="unbounded"/>
-              </sequence>
-            </complexType>
-          </element>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
 
-  <complexType name="kitResource">
+  <complexType name="groupResource">
     <complexContent>
       <extension base="ui:resource">
         <sequence>
-          <element name="optional" type="ui:resource" minOccurs="0" maxOccurs="unbounded"/>
+          <element name="type" type="ui:groupType"/>
         </sequence>
       </extension>
 	  </complexContent>
@@ -108,29 +131,23 @@
       </element>
       <element name="queries">
         <complexType>
-          <sequence>
-            <element name="kit" type="ui:kitQuerySet" maxOccurs="unbounded"/>
-          </sequence>
+          <choice maxOccurs="unbounded">
+            <element name="kit" type="ui:kitQuerySet"/>
+            <element name="resource" type="ui:resourceQuery"/>
+          </choice>
         </complexType>
       </element>
-      <element name="xsedeResources">
+      <element name="resources">
         <complexType>
           <sequence>
             <element name="resource" type="ui:xsedeResource" maxOccurs="unbounded"/>
           </sequence>
         </complexType>
       </element>
-      <element name="kitResources">
+      <element name="groups">
         <complexType>
           <sequence>
-            <element name="resource" type="ui:kitResource" maxOccurs="unbounded"/>
-          </sequence>
-        </complexType>
-      </element>
-      <element name="groupResources">
-        <complexType>
-          <sequence>
-            <element name="resource" type="ui:resource" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="group" type="ui:groupResource" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
         </complexType>
       </element>

@@ -79,11 +79,15 @@ class KitQuery {
 		 */
 		public boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
 		{
-			String newest = findNewest(xpath, result);
+			if (result.getLength() < 1)
+				return false;
+
+			Node newest = findNewest(xpath, result);
+			String version = xpath.evaluate("Version", newest);
 			String resId = xpath.evaluate("name", configRes);
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
-			return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, newest);
+			return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
 		}
 	}
 
@@ -127,6 +131,9 @@ class KitQuery {
 		 */
 		public boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
 		{
+			if (result.getLength() < 1)
+				return false;
+
 			String resId = xpath.evaluate("name", configRes);
 			String url = xpath.evaluate("Endpoint", result.item(0));
 			Matcher matchResult = m_urlPattern.matcher(url);
@@ -152,7 +159,6 @@ class KitQuery {
 	 */
 	private static class OptionalProduct implements QueryProduct {
 
-		private final String m_kitName;
 		private final String m_optionalName;
 
 
@@ -163,9 +169,8 @@ class KitQuery {
 		 *
 		 * @param name
 		 */
-		public OptionalProduct(String kitName, String optionalName)
+		public OptionalProduct(String optionalName)
 		{
-			m_kitName = kitName;
 			m_optionalName = optionalName;
 		}
 
@@ -186,21 +191,92 @@ class KitQuery {
 		 */
 		public boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
 		{
-			Node resKit = (Node)xpath.evaluate("kit[name = '" + m_kitName + "']", configRes, XPathConstants.NODE);
-			Node optional = (Node)xpath.evaluate("optional[. = '" + m_optionalName + "']", resKit, XPathConstants.NODE);
+			Node optional = (Node)xpath.evaluate("group[type = 'optional' and name = '" + m_optionalName + "']", configRes, XPathConstants.NODE);
 
-			if (optional != null)
+			if (result.getLength() > 0) {
+				if (optional != null)
+					return false;
+
+				String resId = xpath.evaluate("name", configRes);
+				Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
+				Node newGroup = configDoc.createElement("group");
+				Node newType = configDoc.createElement("type");
+				Node newName = configDoc.createElement("name");
+
+				newType.setTextContent("optional");
+				newName.setTextContent(m_optionalName);
+				newGroup.appendChild(newType);
+				newGroup.appendChild(newName);
+				configRes.insertBefore(newGroup, macroRes);
+
+				System.err.println(resId + ": added optional component " + m_optionalName);
+
+				return true;
+			}
+			else {
+				if (optional == null)
+					return false;
+
+				configRes.removeChild(optional);
+
+				String resId = xpath.evaluate("name", configRes);
+
+				System.err.println(resId + ": removed optional component " + m_optionalName);
+
+				return true;
+			}
+		}
+	}
+
+	/**
+	 *
+	 */
+	private static class KeyProduct implements QueryProduct {
+
+		private final String m_macroName;
+
+
+		// constructors
+
+
+		/**
+		 *
+		 * @param name
+		 */
+		public KeyProduct(String name)
+		{
+			m_macroName = name;
+		}
+
+
+		// public methods
+
+
+		/**
+		 *
+		 * @param xpath
+		 * @param result
+		 * @param configDoc
+		 * @param configKit
+		 * @param configRes
+		 * @return
+		 * @throws XPathExpressionException
+		 */
+		public boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
+		{
+			if (result.getLength() < 1)
+				return false;
+
+			Node newest = findNewest(xpath, result);
+			String key = xpath.evaluate("HandleKey", newest);
+
+			if (key.length() < 1)
 				return false;
 
 			String resId = xpath.evaluate("name", configRes);
-			Node newOptional = configDoc.createElement("optional");
+			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
-			newOptional.setTextContent(m_optionalName);
-			resKit.appendChild(newOptional);
-
-			System.err.println(resId + ": added optional component " + m_optionalName);
-
-			return true;
+			return setMacroValue(xpath, configDoc, macroRes, resId, m_macroName, "@keyPre@ " + key + " @keyPost@");
 		}
 	}
 
@@ -240,12 +316,10 @@ class KitQuery {
 
 				m_products.add(new URLProduct(host, port));
 			}
-			else if (name.equals("optional")) {
-				String kitName = xpath.evaluate("../resource", query);
-				String optionalName = product.getTextContent();
-
-				m_products.add(new OptionalProduct(kitName, optionalName));
-			}
+			else if (name.equals("optional"))
+				m_products.add(new OptionalProduct(product.getTextContent()));
+			else if (name.equals("key"))
+				m_products.add(new KeyProduct(product.getTextContent()));
 			else
 				throw new IncaException("Unknown query product type " + name);
 		}
@@ -284,11 +358,9 @@ class KitQuery {
 		NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputKit, XPathConstants.NODESET);
 		boolean changedConfig = false;
 
-		if (resultNodes.getLength() > 0) {
-			for (QueryProduct product : m_products) {
-				if (product.evaluate(xpath, resultNodes, configDoc, configKit, configRes))
-					changedConfig = true;
-			}
+		for (QueryProduct product : m_products) {
+			if (product.evaluate(xpath, resultNodes, configDoc, configKit, configRes))
+				changedConfig = true;
 		}
 
 		return changedConfig;
@@ -305,33 +377,36 @@ class KitQuery {
 	 * @return
 	 * @throws XPathExpressionException
 	 */
-	private static String findNewest(XPath xpath, NodeList nodes) throws XPathExpressionException
+	private static Node findNewest(XPath xpath, NodeList nodes) throws XPathExpressionException
 	{
-		String result = xpath.evaluate("Version", nodes.item(0));
-		String defaultText = xpath.evaluate("Default", nodes.item(0));
+		Node resultNode = nodes.item(0);
+		String resultText = xpath.evaluate("Version", resultNode);
+		String defaultText = xpath.evaluate("Default", resultNode);
 		boolean hasDefault = false;
 
-		if (defaultText != null && defaultText.equalsIgnoreCase("yes"))
+		if (defaultText.equalsIgnoreCase("yes"))
 			hasDefault = true;
 
 		for (int i = 1 ; i < nodes.getLength() ; i += 1) {
-			String currentNode = xpath.evaluate("Version", nodes.item(i));
+			Node currentNode = nodes.item(i);
+			String currenText = xpath.evaluate("Version", currentNode);
 
-			defaultText = xpath.evaluate("Default", nodes.item(i));
+			defaultText = xpath.evaluate("Default", currentNode);
 
 			if (hasDefault) {
-				if (defaultText == null || !defaultText.equalsIgnoreCase("yes"))
+				if (!defaultText.equalsIgnoreCase("yes"))
 					continue;
 			}
-			else if (defaultText != null && defaultText.equalsIgnoreCase("yes")) {
-				result = currentNode;
+			else if (defaultText.equalsIgnoreCase("yes")) {
+				resultNode = currentNode;
+				resultText = currenText;
 				hasDefault = true;
 
 				continue;
 			}
 
-			String[] currentPieces = currentNode.split("\\.");
-			String[] newestPieces = result.split("\\.");
+			String[] currentPieces = currenText.split("\\.");
+			String[] newestPieces = resultText.split("\\.");
 			int offset = 0;
 
 			while (true) {
@@ -339,7 +414,8 @@ class KitQuery {
 					break;
 
 				if (offset >= newestPieces.length) {
-					result = currentNode;
+					resultNode = currentNode;
+					resultText = currenText;
 
 					break;
 				}
@@ -352,7 +428,8 @@ class KitQuery {
 						break;
 
 					if (current > newest) {
-						result = currentNode;
+						resultNode = currentNode;
+						resultText = currenText;
 
 						break;
 					}
@@ -364,7 +441,8 @@ class KitQuery {
 						break;
 
 					if (comparison > 0) {
-						result = currentNode;
+						resultNode = currentNode;
+						resultText = currenText;
 
 						break;
 					}
@@ -374,7 +452,7 @@ class KitQuery {
 			}
 		}
 
-		return result;
+		return resultNode;
 	}
 
 	/**
