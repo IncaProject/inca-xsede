@@ -1315,6 +1315,10 @@
           <type>general</type>
           <name>ALL-RM</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>softenv</name>
+        </group>
         <hosts>tg-condor.purdue.teragrid.org</hosts>
       </macroResource>
     </resource>
@@ -3865,6 +3869,16 @@
       </macro>
       <macro>
         <type>constant</type>
+        <name>bash</name>
+        <value>bash -l -c</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>perl5</name>
+        <value><![CDATA[export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &&]]></value>
+      </macro>
+      <macro>
+        <type>constant</type>
         <name>psArgs</name>
         <value>-x -o pid,command</value>
       </macro>
@@ -3915,12 +3929,22 @@
       <macro>
         <type>constant</type>
         <name>keyPre</name>
-        <value></value>
+        <value>eval \"`soft-dec sh add +</value>
       </macro>
       <macro>
         <type>constant</type>
         <name>keyPost</name>
-        <value></value>
+        <value><![CDATA[`\" &&]]></value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>pre</name>
+        <value><![CDATA[@bash@ 'set -a; cd @__incaReporterManagerLocation__@; cp ~/.soft.v3 ~/.soft.v3.$$ && soft-msc ~/.soft.v3.$$ && source ~/.soft.v3.$$.cache.sh && @perl5@]]></value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>post</name>
+        <value>; rm -f ~/.soft.v3.$$*';</value>
       </macro>
       <type>general</type>
     </group>
