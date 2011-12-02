@@ -11,18 +11,15 @@
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
-  <xsl:template name="generateXML" match="/Kits">
+  <xsl:template name="generateXML" match="/config">
     <config>
-      <properties>
-        <repository>http://inca.sdsc.edu/2.0/ctssv3</repository>
-      </properties>
+      <xsl:copy-of select="properties"/>
       <queries>
-      <xsl:apply-templates select="iis:Kit" />
+      <xsl:apply-templates select="Kits/iis:Kit" />
       </queries>
-      <tgResources>
-        <resource>
-        </resource>
-      </tgResources>
+      <xsl:copy-of select="resources"/>
+      <xsl:copy-of select="groups"/>
+      <xsl:copy-of select="suites"/>
     </config>
   </xsl:template>
 
@@ -127,7 +124,9 @@
   <xsl:template name="printKit" match="iis:Kit">
       <kit>
         <xsl:variable name="kit" select="."/>
-        <resource><xsl:value-of select="concat(Name,'.teragrid.org-',Version)"/></resource>
+        <name><xsl:value-of select="Name"/>.teragrid.org</name>
+        <version><xsl:value-of select="Version"/></version>
+        <group><xsl:value-of select="concat(Name,'.teragrid.org-',Version)"/></group>
         <xsl:for-each select="Software">
           <xsl:variable name="sw" select="."/>
           <xsl:variable name="variables">
