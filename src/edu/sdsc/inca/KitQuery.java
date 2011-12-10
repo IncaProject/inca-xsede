@@ -268,9 +268,14 @@ class KitQuery {
 				return false;
 
 			Node newest = findNewest(xpath, result);
+			String defaultText = xpath.evaluate("Default", newest);
+
+			if (defaultText.equalsIgnoreCase("yes"))
+				return false;
+
 			String key = xpath.evaluate("HandleKey", newest);
 
-			if (key.length() < 1)
+			if (key.length() < 1 || key.equalsIgnoreCase("None"))
 				return false;
 
 			String resId = xpath.evaluate("name", configRes);
@@ -389,7 +394,7 @@ class KitQuery {
 
 		for (int i = 1 ; i < nodes.getLength() ; i += 1) {
 			Node currentNode = nodes.item(i);
-			String currenText = xpath.evaluate("Version", currentNode);
+			String currentText = xpath.evaluate("Version", currentNode);
 
 			defaultText = xpath.evaluate("Default", currentNode);
 
@@ -399,14 +404,14 @@ class KitQuery {
 			}
 			else if (defaultText.equalsIgnoreCase("yes")) {
 				resultNode = currentNode;
-				resultText = currenText;
+				resultText = currentText;
 				hasDefault = true;
 
 				continue;
 			}
 
-			String[] currentPieces = currenText.split("\\.");
-			String[] newestPieces = resultText.split("\\.");
+			String[] currentPieces = currentText.split("\\.|r");
+			String[] newestPieces = resultText.split("\\.|r");
 			int offset = 0;
 
 			while (true) {
@@ -415,7 +420,7 @@ class KitQuery {
 
 				if (offset >= newestPieces.length) {
 					resultNode = currentNode;
-					resultText = currenText;
+					resultText = currentText;
 
 					break;
 				}
@@ -429,7 +434,7 @@ class KitQuery {
 
 					if (current > newest) {
 						resultNode = currentNode;
-						resultText = currenText;
+						resultText = currentText;
 
 						break;
 					}
@@ -442,7 +447,7 @@ class KitQuery {
 
 					if (comparison > 0) {
 						resultNode = currentNode;
-						resultText = currenText;
+						resultText = currentText;
 
 						break;
 					}
