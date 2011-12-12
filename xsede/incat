@@ -556,7 +556,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>app-support.teragrid.org-4.2.0-compiler-gnu-f90</name>
         <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|forge\.ncsa\.teragrid\.org|dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
@@ -582,7 +582,7 @@
           </macro>
         </macros>
       </resource>
-      <resource>
+      <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>app-support.teragrid.org-4.2.0-compiler-gnu-f95</name>
         <xpath>//resource[matches(name, '^(ranger\.tacc\.teragrid\.org|kraken\.nics\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|forge\.ncsa\.teragrid\.org|dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
@@ -5586,10 +5586,6 @@
             <value>module swap pgi gcc/4.3.2 @keyPost@</value>
           </macro>
           <macro>
-            <name>apps4.2.0-compiler-intel-key</name>
-            <value>@keyPre@ intel/10.1 @keyPost@</value>
-          </macro>
-          <macro>
             <name>apps4.2.0-compiler-pgi-version</name>
             <value>7.2</value>
           </macro>
@@ -5600,6 +5596,10 @@
           <macro>
             <name>apps4.2.0-compiler-pgi-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>apps4.2.0-compiler-intel-key</name>
+            <value>module swap pgi intel/10.1 @keyPost@</value>
           </macro>
         </macros>
       </resource>
@@ -7763,58 +7763,6 @@
               </arg>
               <arg>
                 <name>compiler</name>
-                <value>@apps4.2.0-fortran-intel-compiler@</value>
-              </arg>
-              <arg>
-                <name>lang</name>
-                <value>fortran</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apps4.2.0-compiler-intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-f95-as-4.2.0</nickname>
-          <resourceSetName>app-support.teragrid.org-4.2.0-compiler-intel</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.compiler.any.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.any.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>compiler</name>
                 <value>@apps4.2.0-c-intel-compiler@</value>
               </arg>
               <arg>
@@ -8174,10 +8122,10 @@
             </limits>
             <context>@pre@@apps4.2.0-compiler-intel-key@@@@post@</context>
           </series>
-          <nickname>compiler-intel-f77-as-4.2.0</nickname>
+          <nickname>compiler-intel-f90-as-4.2.0</nickname>
           <resourceSetName>app-support.teragrid.org-4.2.0-compiler-intel</resourceSetName>
           <schedule>
-            <crontime>? ? * * *</crontime>
+            <crontime>? ? ?-31 * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -8209,7 +8157,7 @@
               </arg>
               <arg>
                 <name>log</name>
-                <value>5</value>
+                <value>4</value>
               </arg>
               <arg>
                 <name>compiler</name>
@@ -8225,10 +8173,61 @@
             </limits>
             <context>@pre@@apps4.2.0-compiler-intel-key@@@@post@</context>
           </series>
-          <nickname>compiler-intel-f90-as-4.2.0</nickname>
+          <nickname>compiler-intel-f95-as-4.2.0</nickname>
           <resourceSetName>app-support.teragrid.org-4.2.0-compiler-intel</resourceSetName>
           <schedule>
-            <crontime>? ? * * *</crontime>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.compiler.any.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>compiler</name>
+                <value>@apps4.2.0-fortran-intel-compiler@</value>
+              </arg>
+              <arg>
+                <name>lang</name>
+                <value>fortran</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@apps4.2.0-compiler-intel-key@@@@post@</context>
+          </series>
+          <nickname>compiler-intel-f77-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0-compiler-intel</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -8246,7 +8245,7 @@
       <name>app-support.teragrid.org-4.2.0</name>
       <guid>incas://capac.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
       <description>Application Development and Runtime Support Capability</description>
-      <version>280</version>
+      <version>350</version>
     </suite>
     <suite>
       <seriesConfigs>
