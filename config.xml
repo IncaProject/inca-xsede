@@ -653,6 +653,81 @@
   </queries>
   <resources>
     <resource>
+      <name>capac.sdsc.teragrid.org</name>
+      <macroResource>
+        <name>capac</name>
+        <macro>
+          <name>__remoteInvocationMethod__</name>
+          <value>local</value>
+          <type>constant</type>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/users/u3/inca/inca2install</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>maxMan</name>
+          <value>2</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>maxSched</name>
+          <value>2</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>pre</name>
+          <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>psMax</name>
+          <value>150</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>tgupContact</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>bash</name>
+        </group>
+        <hosts>capac.sdsc.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>quarry.sdsc.teragrid.org</name>
+      <macroResource>
+        <name>quarry</name>
+        <macro>
+          <type>constant</type>
+          <name>__remoteInvocationMethod__</name>
+          <value>ssh</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca2install</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>bash</name>
+        </group>
+        <hosts>gw60.quarry.iu.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
       <name>forge.ncsa.teragrid.org</name>
       <group>
         <type>kit</type>
@@ -831,7 +906,7 @@
           <type>general</type>
           <name>module</name>
         </group>
-        <hosts>login-abe.ncsa.teragrid.org</hosts>
+        <hosts>login-forge.ncsa.xsede.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -999,11 +1074,6 @@
     </resource>
     <resource>
       <name>pople.psc.teragrid.org</name>
-      <macro>
-        <type>constant</type>
-        <name>__remoteInvocationMethod__</name>
-        <value>globus2</value>
-      </macro>
       <group>
         <type>kit</type>
         <name>core.teragrid.org-4.2.1</name>
@@ -3741,6 +3811,20 @@
         <type>constant</type>
         <name>PROC_REGEX</name>
         <value>reporter-manager ,Schedule::Cron Main,reporter-instance-manager,sshd,defunct</value>
+      </macro>
+      <type>general</type>
+    </group>
+    <group>
+      <name>bash</name>
+      <macro>
+        <type>constant</type>
+        <name>pre</name>
+        <value><![CDATA[bash -l -c 'set -a; cd @__incaReporterManagerLocation__@;  export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl:@__incaReporterManagerLocation__@/lib/perl &&]]></value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>post</name>
+        <value>';</value>
       </macro>
       <type>general</type>
     </group>
