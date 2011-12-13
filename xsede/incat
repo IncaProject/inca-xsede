@@ -2139,6 +2139,10 @@
             <name>apps4.2.0-compiler-intel-version</name>
             <value>12.0.4</value>
           </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>grid-forge.ncsa.xsede.org</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -2346,10 +2350,6 @@
             <value>/nics/a/home/inca/inca2install</value>
           </macro>
           <macro>
-            <name>core5.0.0-mds-info-host</name>
-            <value>grid.nics.teragrid.org</value>
-          </macro>
-          <macro>
             <name>localCompute4.2.2-glue-host</name>
             <value/>
             <value>grid.nics.teragrid.org</value>
@@ -2385,6 +2385,10 @@
           <macro>
             <name>apps4.2.0-compiler-pgi-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>grid.nics.utk.edu</value>
           </macro>
         </macros>
       </resource>
@@ -4459,10 +4463,6 @@
             <value>2</value>
           </macro>
           <macro>
-            <name>core5.0.0-mds-info-host</name>
-            <value>dash-login.sdsc.edu</value>
-          </macro>
-          <macro>
             <name>wl5.0.0-fs</name>
             <value>/dcwan</value>
           </macro>
@@ -4546,6 +4546,10 @@
             <name>apps4.2.0-tginfo-key</name>
             <value/>
           </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>dash-login2.sdsc.edu</value>
+          </macro>
         </macros>
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -4587,10 +4591,6 @@
           <macro>
             <name>core5.0.0-mds-info-port</name>
             <value>8446</value>
-          </macro>
-          <macro>
-            <name>core5.0.0-mds-info-host</name>
-            <value>dash-login.sdsc.edu</value>
           </macro>
           <macro>
             <name>keyPre</name>
@@ -4715,6 +4715,10 @@
           <macro>
             <name>apps4.2.0-tginfo-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>core5.0.0-mds-info-host</name>
+            <value>dash-login2.sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -8783,7 +8787,7 @@
               </arg>
               <arg>
                 <name>remotecert</name>
-                <value>@gridnode@:8446</value>
+                <value>@core.teragrid.org-5.0.0->core5.0.0-mds-info-host@:8446</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8807,8 +8811,8 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>hostcert-gridnode-check-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0-grid</resourceSetName>
+          <nickname>hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -8819,70 +8823,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>security.ca.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
-            <args>
-              <arg>
-                <name>minCertDays</name>
-                <value>14</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>wgetArgs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>certUrl</name>
-                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
-              </arg>
-              <arg>
-                <name>minCrlDays</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@gridnode@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ca-crl-gridnode-check-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0-gridssh</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@securityContact@, FailTo:help@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
