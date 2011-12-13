@@ -668,6 +668,11 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>MAX_DISK_USAGE_MB</name>
+          <value>3072</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>maxMan</name>
           <value>2</value>
         </macro>
@@ -703,7 +708,7 @@
       </macroResource>
     </resource>
     <resource>
-      <name>quarry.sdsc.teragrid.org</name>
+      <name>quarry.iu.teragrid.org</name>
       <macroResource>
         <name>quarry</name>
         <macro>
@@ -716,6 +721,16 @@
           <name>__incaReporterManagerLocation__</name>
           <value>/home/inca/inca2install</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>MAX_DISK_USAGE_MB</name>
+          <value>25600</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>psMax</name>
+          <value>80</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -725,6 +740,31 @@
           <name>bash</name>
         </group>
         <hosts>gw60.quarry.iu.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>build.iu.teragrid.org</name>
+      <macroResource>
+        <name>teragrid-build</name>
+        <macro>
+          <type>constant</type>
+          <name>__remoteInvocationMethod__</name>
+          <value>ssh</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca2install-build</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>bash</name>
+        </group>
+        <hosts>build.teragrid.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -1070,108 +1110,6 @@
           <name>module</name>
         </group>
         <hosts>tg-login.blacklight.psc.teragrid.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
-      <name>pople.psc.teragrid.org</name>
-      <group>
-        <type>kit</type>
-        <name>core.teragrid.org-4.2.1</name>
-      </group>
-      <group>
-        <type>kit</type>
-        <name>data-movement.teragrid.org-4.1.2</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>data-movement.teragrid.org-4.1.2-gridftp-striped</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>data-movement.teragrid.org-4.1.2-rft</name>
-      </group>
-      <group>
-        <type>kit</type>
-        <name>local-compute.teragrid.org-4.2.2</name>
-      </group>
-      <group>
-        <type>kit</type>
-        <name>remote-compute.teragrid.org-4.0.2</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-4.0.2-mds</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-4.0.2-mds-auth</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-4.0.2-prewsgram-batch</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-4.0.2-wsgram-batch</name>
-      </group>
-      <group>
-        <type>kit</type>
-        <name>remote-compute.teragrid.org-5.0.1</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-5.0.1-gram5</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-5.0.1-gram5-batch</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-5.0.1-gram5-netstat</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-5.0.1-mds</name>
-      </group>
-      <group>
-        <type>optional</type>
-        <name>remote-compute.teragrid.org-5.0.1-mds-auth</name>
-      </group>
-      <group>
-        <type>kit</type>
-        <name>wan-lustre.teragrid.org-4.0.0</name>
-      </group>
-      <macroResource>
-        <name>psc-pople</name>
-        <macro>
-          <type>constant</type>
-          <name>gatekeeperlog</name>
-          <value>/usr/local/packages/globus/globus-4.0.1/var/globus-fork.log</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>__remoteInvocationMethod__</name>
-          <value>ssh</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/usr/users/9/inca/inca2install</value>
-        </macro>
-        <macro>
-          <name>defaultModule</name>
-          <value><![CDATA[ module load teragrid &&]]></value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <hosts>tg-login1.pople.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -1748,6 +1686,16 @@
           <type>constant</type>
           <name>adminEmail</name>
           <value>FailTo:inca@sdsc.edu, FailTo:diegella@sdsc.edu, FailTo:wyoung@sdsc.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>maxMan</name>
+          <value>2</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>maxSched</name>
+          <value>2</value>
         </macro>
         <group>
           <type>general</type>
