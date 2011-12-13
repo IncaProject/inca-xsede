@@ -1052,6 +1052,16 @@
           <name>nativeFortranCompiler</name>
           <value>ftn</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>securityContact</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -1098,8 +1108,18 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:rbudden@psc.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>nativeFortranCompiler</name>
           <value>g77</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>securityContact</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:ca-admin@psc.edu</value>
         </macro>
         <group>
           <type>general</type>
@@ -2011,6 +2031,10 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>tacc</name>
+        </group>
         <hosts>login1.ls4.tacc.utexas.edu</hosts>
       </macroResource>
     </resource>
@@ -2084,6 +2108,10 @@
         <group>
           <type>general</type>
           <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>tacc</name>
         </group>
         <hosts>login2.longhorn.tacc.utexas.edu</hosts>
       </macroResource>
@@ -2297,6 +2325,10 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>tacc</name>
+        </group>
         <hosts>login3.ranger.tacc.utexas.edu</hosts>
       </macroResource>
     </resource>
@@ -2363,41 +2395,16 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>tacc</name>
+        </group>
         <hosts>tg-login.spur.tacc.teragrid.org</hosts>
       </macroResource>
     </resource>
   </resources>
   <groups>
     <!--
-    <group>
-      <name>core.teragrid.org-4.2.1</name>
-      <macro>
-        <type>constant</type>
-        <name>core4.2.1-mds-info-host</name>
-        <value/>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>core4.2.1-mds-info-port</name>
-        <value>8446</value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>core4.2.1-pacman-key</name>
-        <value>@keyPre@pacman-3.20-r1 @keyPost@</value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>core4.2.1-tgresid-key</name>
-        <value/>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>__remoteInvocationMethod__</name>
-        <value>globus2</value>
-      </macro>
-      <type>kit</type>
-    </group>
     <group>
       <name>core.teragrid.org-5.0.0</name>
       <macro>
@@ -3668,6 +3675,15 @@
       <type>kit</type>
     </group>
     -->
+    <group>
+      <name>tacc</name>
+      <macro>
+        <type>constant</type>
+        <name>securityContact</name>
+        <value>FailTo:inca@sdsc.edu, FailTo:ca@tacc.utexas.edu</value>
+      </macro>
+      <type>general</type>
+    </group>
     <group>
       <name>ALL-RM</name>
       <macro>
@@ -6157,7 +6173,7 @@
               </arg>
               <arg>
                 <name>remotecert</name>
-                <value>@gridnode@:8446</value>
+                <value>@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-host@:@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -6181,8 +6197,8 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>hostcert-gridnode-check-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0-grid</resourceSetName>
+          <nickname>hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -6193,70 +6209,6 @@
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@tgContact@, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>security.ca.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
-            <args>
-              <arg>
-                <name>minCertDays</name>
-                <value>14</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>wgetArgs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>certUrl</name>
-                <value>http://inca.sdsc.edu/2.0/ctssv3/share/teragrid-certs.tar.gz</value>
-              </arg>
-              <arg>
-                <name>minCrlDays</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@gridnode@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>ca-crl-gridnode-check-5.0.0</nickname>
-          <resourceSetName>core.teragrid.org-5.0.0-gridssh</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@securityContact@, FailTo:help@teragrid.org</target>
               </notification>
             </notifications>
           </acceptedOutput>
