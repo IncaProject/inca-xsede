@@ -96,7 +96,7 @@ class KitQuery {
 	 */
 	private static class URLProduct implements QueryProduct {
 
-		private static final Pattern m_urlPattern = Pattern.compile("(?:[a-zA-Z]+://)?([a-zA-Z0-9\\-]+(?:\\.[a-zA-Z0-9\\-]+)*)(?::(\\d+)).*");
+		private static final Pattern m_urlPattern = Pattern.compile("(?:[a-zA-Z]+://)?([a-zA-Z0-9\\-]+(?:\\.[a-zA-Z0-9\\-]+)*)(?::(\\d+))?(?:/[a-zA-Z0-9\\-\\.]*)*");
 		private final String m_hostName;
 		private final String m_portName;
 
