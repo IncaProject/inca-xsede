@@ -205,7 +205,7 @@ public class UpdateIncat {
 
 			if (configRes == null) {
 				if (hasTestedSoftware(xpath, inputRes))
-					System.err.println(resId + ": has applicable kits, but is not present in config");
+					System.err.println(resId + ": has applicable kits, but is not present in the config");
 
 				continue;
 			}
@@ -257,11 +257,7 @@ public class UpdateIncat {
 			Node inputRes = (Node)xpath.evaluate("//resource[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
 
 			if (inputRes == null) {
-				configRes.getParentNode().removeChild(configRes);
-
-				changedConfig = true;
-
-				System.err.println(resId + ": removed resource");
+				System.err.println(resId + ": present in the config, but not in the input");
 
 				continue;
 			}

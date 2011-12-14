@@ -495,9 +495,9 @@ class KitQuery {
 	 */
 	private static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
 	{
-		Node macroValue = (Node)xpath.evaluate("macro[name = '" + name + "']/value", resource, XPathConstants.NODE);
+		Node macro = (Node)xpath.evaluate("macro[name = '" + name + "']", resource, XPathConstants.NODE);
 
-		if (macroValue == null) {
+		if (macro == null) {
 			Node newMacro = config.createElement("macro");
 			Node newChild = config.createElement("type");
 
@@ -520,14 +520,19 @@ class KitQuery {
 			return true;
 		}
 		else {
-			String macroText = macroValue.getTextContent();
+			String macroType = xpath.evaluate("type", macro);
 
-			if (!macroText.equals(value)) {
-				macroValue.setTextContent(value);
+			if (!macroType.equals("constant")) {
+				Node macroValue = (Node)xpath.evaluate("value", macro, XPathConstants.NODE);
+				String currentValue = macroValue.getTextContent();
 
-				System.err.println(id + ": changed value of macro " + name + " from " + macroText + " to " + value);
+				if (!currentValue.equals(value)) {
+					macroValue.setTextContent(value);
 
-				return true;
+					System.err.println(id + ": changed value of macro " + name + " from " + currentValue + " to " + value);
+
+					return true;
+				}
 			}
 		}
 
