@@ -8,6 +8,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml" >
 
+   <xsl:output method="xml" indent="yes"/>
+  <xsl:preserve-space elements="* iis:*"/>
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
@@ -25,7 +27,9 @@
             <xsl:with-param name="existingGroups" select="/config/groups/group"/>
           </xsl:call-template>
         </xsl:for-each>
-      <xsl:copy-of select="groups/group"/>
+        <xsl:for-each select="groups/group">
+          <xsl:copy-of select="."/>
+        </xsl:for-each>
       </groups>
       <xsl:copy-of select="suites"/>
     </config>
@@ -59,7 +63,7 @@
       <xsl:for-each select="tokenize($intermediateCrossProduct, '\|')">
         <xsl:variable name="intermediateVal" select="."/>
         <xsl:for-each select="tokenize($lastItem, '\|')">
-          <xsl:value-of select="concat('(', $intermediateVal,')?-(',.,')?')"/>|
+          <xsl:value-of select="concat('(', $intermediateVal,')?(-',.,')?')"/>|
         </xsl:for-each>
       </xsl:for-each>
     </xsl:otherwise></xsl:choose>
@@ -84,7 +88,7 @@
 
     <query>
         <xsl:variable name="regexPrefix"><xsl:choose><xsl:when test="$swRegex!=''"><xsl:value-of select="$swRegex"/></xsl:when><xsl:otherwise><xsl:value-of select="$sw"/></xsl:otherwise></xsl:choose></xsl:variable>
-        <expression>sw[matches(Name,'<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?')]</expression>
+        <expression>sw[matches(Name,'^<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?$')]</expression>
         <products>
           <version><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw,'-version')"/></version>
           <xsl:if test="$optional=1">
@@ -155,7 +159,7 @@
         <xsl:for-each select="tokenize($variables, '\|')">
           <xsl:if test="not(matches(.,'^\s*$'))">
           <xsl:variable name="name" select="concat($sw/Name,'-',normalize-space(.))"/>
-          <xsl:variable name="plainName" select="replace($name, '[()?]', '')"/>
+          <xsl:variable name="plainName" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
           <group>
             <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$plainName)"/></name>
             <type>optional</type>
@@ -180,7 +184,6 @@
       </xsl:when></xsl:choose>
     </xsl:for-each>
 
-<!--
     <xsl:for-each select="Service">
       <xsl:variable name="service" select="."/>
       <xsl:variable name="variables">
@@ -191,22 +194,22 @@
       <xsl:choose><xsl:when test="not(matches($variables, '^\s*$'))">
         <xsl:for-each select="tokenize($variables, '\|')">
           <xsl:if test="not(matches(.,'^\s*$'))">
-          <xsl:call-template name="printServiceQuery">
-            <xsl:with-param name="service" select="concat($service/Name,'-',normalize-space(.))"/>
-            <xsl:with-param name="kit" select="$kit"/>
-            <xsl:with-param name="optional" select="1"/>
-          </xsl:call-template>
+          <xsl:variable name="name" select="concat($service/Name,'-',normalize-space(.))"/>
+          <xsl:variable name="plainName" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
+          <group>
+            <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$plainName)"/></name>
+            <type>optional</type>
+          </group>
           </xsl:if>
         </xsl:for-each>
-      </xsl:when><xsl:otherwise>
-        <xsl:call-template name="printServiceQuery">
-          <xsl:with-param name="service" select="$service/Name"/>
-          <xsl:with-param name="kit" select="$kit"/>
-          <xsl:with-param name="optional" select="$kit/Fixed='false' or ($kit/Fixed='true' and $service/Required='false')"/>
-        </xsl:call-template>
-      </xsl:otherwise></xsl:choose>
+      </xsl:when><xsl:when test="$kit/Fixed='false' or ($kit/Fixed='true' and $service/Required='false')">
+        <group>
+          <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name)"/></name>
+          <type>optional</type>
+        </group>
+      </xsl:when></xsl:choose>
     </xsl:for-each>
-    -->
+    
   </xsl:template>
 
   <!-- ==================================================================== -->
@@ -230,10 +233,10 @@
           <xsl:choose><xsl:when test="not(matches($variables, '^\s*$'))">
             <xsl:for-each select="tokenize($variables, '\|')">
               <xsl:if test="not(matches(.,'^\s*$'))">
-              <xsl:variable name="name" select="concat($sw/Name,'-',normalize-space(.))"/>
+              <xsl:variable name="name" select="concat($sw/Name,'-?',normalize-space(.))"/>
               <xsl:call-template name="printSwQuery">
                 <xsl:with-param name="swRegex" select="replace($name, '\+', '\\+')"/>
-                <xsl:with-param name="sw" select="replace($name, '[()?]', '')"/>
+                <xsl:with-param name="sw" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
                 <xsl:with-param name="kit" select="$kit"/>
                 <xsl:with-param name="optional" select="1"/>
               </xsl:call-template>
