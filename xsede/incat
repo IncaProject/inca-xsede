@@ -1038,15 +1038,19 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>condor-matchmakers</name>
-        <xpath>//resource[matches(name, '^(purdue-condor|tacc-ranger|purdue-steele)$')]</xpath>
+        <xpath>//resource[matches(name, '^(purdue-condor|tacc-lonestar|tacc-ranger|purdue-steele)$')]</xpath>
         <macros>
+          <macro>
+            <name>matchmakers</name>
+            <value>tacc.ranger.development</value>
+          </macro>
           <macro>
             <name>__groupname__</name>
             <value>condor-matchmakers</value>
           </macro>
           <macro>
             <name>__regexp__</name>
-            <value>purdue-condor tacc-ranger purdue-steele</value>
+            <value>purdue-condor tacc-lonestar tacc-ranger purdue-steele</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -1055,11 +1059,6 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
-          </macro>
-          <macro>
-            <name>matchmakers</name>
-            <value>tacc.ranger.development</value>
-            <value>ncsa.abe.debug</value>
           </macro>
         </macros>
       </resource>
@@ -1190,6 +1189,28 @@
           <macro>
             <name>__regexp__</name>
             <value>forge.ncsa.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>ctss-gram</name>
+        <xpath>//resource[matches(name, '^(remote-compute\.teragrid\.org-5\.0\.1|nics-kraken|sdsc-dash)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>ctss-gram</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>remote-compute.teragrid.org-5.0.1 nics-kraken sdsc-dash</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -5886,42 +5907,6 @@
             <value>export PYTHONPATH=@__incaReporterManagerLocation__@/var/reporter-packages/lib/python &amp;&amp;</value>
           </macro>
           <macro>
-            <name>gatekeepers</name>
-            <value>grid-abe.ncsa.teragrid.org</value>
-            <value>gatekeeper.ranger.tacc.teragrid.org</value>
-            <value>tg-condor.purdue.teragrid.org</value>
-            <value>tg-steele.purdue.teragrid.org</value>
-            <value>gridftp1.ls4.tacc.utexas.edu</value>
-          </macro>
-          <macro>
-            <name>gridftpHosts</name>
-            <value>gridftp1.ls4.tacc.utexas.edu</value>
-            <value>gridftp-abe.ncsa.teragrid.org</value>
-            <value>gridftp.ranger.tacc.teragrid.org</value>
-            <value>tg-condor.purdue.teragrid.org</value>
-            <value>tg-steele.purdue.teragrid.org</value>
-            <value>tg-data.purdue.teragrid.org</value>
-            <value>gridftp.kraken.nics.teragrid.org</value>
-            <value>gridftp.spur.tacc.teragrid.org</value>
-            <value>login2.longhorn.tacc.utexas.edu</value>
-            <value>dash-login.sdsc.edu</value>
-            <value>gridftp.blacklight.psc.teragrid.org</value>
-            <value>trestles.sdsc.edu</value>
-          </macro>
-          <macro>
-            <name>sshHosts</name>
-            <value>login-abe.ncsa.teragrid.org</value>
-            <value>tg-condor.purdue.teragrid.org</value>
-            <value>tg-steele.purdue.teragrid.org</value>
-            <value>tg-login.ranger.tacc.teragrid.org</value>
-            <value>tg-login.spur.tacc.teragrid.org</value>
-            <value>login2.longhorn.tacc.utexas.edu</value>
-            <value>kraken-gsi.nics.teragrid.org</value>
-            <value>login1.ls4.tacc.utexas.edu</value>
-            <value>dash-login.sdsc.edu</value>
-            <value>trestles.sdsc.edu</value>
-          </macro>
-          <macro>
             <name>chargeProject</name>
             <value>TG-STA110011S</value>
           </macro>
@@ -5968,6 +5953,41 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>sshHosts</name>
+            <value>login-forge.ncsa.xsede.org</value>
+            <value>tg-condor.purdue.teragrid.org</value>
+            <value>tg-steele.purdue.teragrid.org</value>
+            <value>tg-login.ranger.tacc.teragrid.org</value>
+            <value>tg-login.spur.tacc.teragrid.org</value>
+            <value>login2.longhorn.tacc.utexas.edu</value>
+            <value>kraken-gsi.nics.teragrid.org</value>
+            <value>login1.ls4.tacc.utexas.edu</value>
+            <value>dash-login.sdsc.edu</value>
+            <value>trestles.sdsc.xsede.org</value>
+          </macro>
+          <macro>
+            <name>gatekeepers</name>
+            <value>grid-forge.ncsa.xsede.org</value>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
+            <value>tg-condor.rcac.purdue.edu</value>
+            <value>tg-steele.rcac.purdue.edu</value>
+            <value>gridftp1.ls4.tacc.utexas.edu</value>
+            <value>trestles.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>gridftpHosts</name>
+            <value>gridftp1.ls4.tacc.utexas.edu</value>
+            <value>gridftp-forge.ncsa.xsede.org</value>
+            <value>gridftp.ranger.tacc.teragrid.org</value>
+            <value>tg-condor.purdue.teragrid.org</value>
+            <value>tg-steele.purdue.teragrid.org</value>
+            <value>gridftp.kraken.nics.teragrid.org</value>
+            <value>login2.longhorn.tacc.utexas.edu</value>
+            <value>dash-login.sdsc.edu</value>
+            <value>gridftp.blacklight.psc.teragrid.org</value>
+            <value>trestles-dm1.sdsc.xsede.org</value>
           </macro>
         </macros>
       </resource>
@@ -8876,7 +8896,7 @@
             <context>@pre@ nickname=all2all:gsissh_to_@sshHosts@ @@@post@</context>
           </series>
           <nickname>all2all:gsissh_to_@sshHosts@</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -8924,7 +8944,7 @@
             <context>@pre@ nickname=all2all:gram_to_@gatekeepers@ @@@post@</context>
           </series>
           <nickname>all2all:gram_to_@gatekeepers@</nickname>
-          <resourceSetName>teragrid-login</resourceSetName>
+          <resourceSetName>ctss-gram</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
