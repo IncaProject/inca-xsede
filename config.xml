@@ -713,11 +713,6 @@
         <name>quarry</name>
         <macro>
           <type>constant</type>
-          <name>__remoteInvocationMethod__</name>
-          <value>ssh</value>
-        </macro>
-        <macro>
-          <type>constant</type>
           <name>__incaReporterManagerLocation__</name>
           <value>/home/inca/inca2install</value>
         </macro>
@@ -765,6 +760,38 @@
           <name>bash</name>
         </group>
         <hosts>build.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>bcf.biochemistry.uthscsa</name>
+      <macroResource>
+        <name>uthscsa-bcf</name>
+        <macro>
+          <type>constant</type>
+          <name>globusUrlCopyOpts</name>
+          <value>-ds \\\\\"/DC=EDU/DC=UTEXAS/DC=TACC/O=UT-AUSTIN/O=TACC Classic CA/CN=bcf.biochemistry.uthscsa.edu\\\\\"</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>GATEWAY-EXTRAS</name>
+        </group>
+        <hosts>bcf.biochemistry.uthscsa.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>alamo.biochemistry.uthscsa</name>
+      <macroResource>
+        <name>uthscsa-alamo</name>
+        <macro>
+          <type>constant</type>
+          <name>globusUrlCopyOpts</name>
+          <value>-ds \\\\\"/DC=EDU/DC=UTEXAS/DC=TACC/O=UT-AUSTIN/O=TACC Classic CA/CN=alamo.biochemistry.uthscsa.edu\\\\\"</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>GATEWAY-EXTRAS</name>
+        </group>
+        <hosts>alamo.biochemistry.uthscsa.edu</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -3801,6 +3828,10 @@
         <name>PROC_REGEX</name>
         <value>reporter-manager ,Schedule::Cron Main,reporter-instance-manager,sshd,defunct</value>
       </macro>
+      <type>general</type>
+    </group>
+    <group>
+      <name>GATEWAY-EXTRAS</name>
       <type>general</type>
     </group>
     <group>
@@ -7878,7 +7909,7 @@
               </arg>
               <arg>
                 <name>nodes</name>
-                <value>@GATEWAY-EXTRAS->nodeCount@</value>
+                <value>4</value>
               </arg>
               <arg>
                 <name>maxWait</name>
@@ -7886,7 +7917,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@GATEWAY-EXTRAS->real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -7902,15 +7933,15 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@GATEWAY-EXTRAS->memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
-                <value>@GATEWAY-EXTRAS->jobQueue@</value>
+                <value/>
               </arg>
               <arg>
                 <name>contact</name>
-                <value>@GATEWAY-EXTRAS->__incaHosts__@:@GATEWAY-EXTRAS->gramPort@/@GATEWAY-EXTRAS->jobmanager@</value>
+                <value>@GATEWAY-EXTRAS->__incaHosts__@:2119/jobmanager-pbs</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -7918,7 +7949,7 @@
               </arg>
               <arg>
                 <name>nodeTag</name>
-                <value>@GATEWAY-EXTRAS->nodeTag@</value>
+                <value/>
               </arg>
               <arg>
                 <name>delWait</name>
@@ -7930,7 +7961,7 @@
               </arg>
               <arg>
                 <name>project</name>
-                <value>@GATEWAY-EXTRAS->chargeProject@</value>
+                <value/>
               </arg>
               <arg>
                 <name>checkWait</name>
@@ -7968,7 +7999,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@GATEWAY-EXTRAS->gridftpPort@</value>
+                <value>2811</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8018,7 +8049,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>gsiftp://@GATEWAY-EXTRAS->__incaHosts__@:@GATEWAY-EXTRAS->gridftpPort@/~/inca.gridftp.test</value>
+                <value>gsiftp://@GATEWAY-EXTRAS->__incaHosts__@:2811/~/inca.gridftp.test</value>
               </arg>
               <arg>
                 <name>log</name>
