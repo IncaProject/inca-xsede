@@ -930,6 +930,11 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>adminEmail</name>
+          <value>inca@sdsc.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>gatekeeperlog</name>
           <value>/usr/local/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
         </macro>
@@ -945,10 +950,6 @@
         <group>
           <type>general</type>
           <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <hosts>login-forge.ncsa.xsede.org</hosts>
       </macroResource>
@@ -1069,10 +1070,6 @@
         <group>
           <type>general</type>
           <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -1364,16 +1361,17 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:grid-systems@rcac.purdue.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>nativeFortranCompiler</name>
           <value>g77</value>
         </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -1610,16 +1608,17 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:grid-systems@rcac.purdue.edu</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>nativeFortranCompiler</name>
           <value>g77</value>
         </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -1746,10 +1745,6 @@
         <group>
           <type>general</type>
           <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -1892,10 +1887,6 @@
         <group>
           <type>general</type>
           <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <hosts>trestles.sdsc.edu</hosts>
       </macroResource>
@@ -2064,10 +2055,6 @@
         <group>
           <type>general</type>
           <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -2362,10 +2349,6 @@
         <group>
           <type>general</type>
           <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ctss-gram-client</name>
         </group>
         <group>
           <type>general</type>
@@ -3923,6 +3906,19 @@
       </macro>
     </group>
     <group>
+      <name>app-support4.2.0-globus-client</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>app-support4.2.0-globus-client-key</name>
+        <value/>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>ctss-gram-client</name>
+      </group>
+    </group>
+    <group>
       <name>data-movement.teragrid.org-4.1.2</name>
       <type>kit</type>
       <macro>
@@ -3942,6 +3938,11 @@
     <group>
       <name>data-movement-clients.teragrid.org-4.2.0</name>
       <type>kit</type>
+      <macro>
+        <type>constant</type>
+        <name>data-movement-clients4.2.0-uberftp-key</name>
+        <value/>
+      </macro>
       <group>
         <type>general</type>
         <name>ctss-gridftp-client</name>
@@ -3958,6 +3959,14 @@
       <group>
         <type>general</type>
         <name>ctss-gridftp-server</name>
+      </group>
+    </group>
+    <group>
+      <name>remote-compute5.0.1-gram5-fork</name>
+      <type>optional</type>
+      <group>
+        <type>general</type>
+        <name>ctss-gram-client</name>
       </group>
     </group>
   </groups>
@@ -6879,7 +6888,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMoveServer4.2.0-ssh-host@</value>
+                <value>@data-movement-servers4.2.0-gsi-scp-hpn-server-host@</value>
               </arg>
             </args>
             <limits>
@@ -6923,7 +6932,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>gsiftp://@dataMoveServer4.2.0-gridftp-striped-host@:@dataMoveServer4.2.0-gridftp-striped-port@/~/inca.gridftp.test</value>
+                <value>gsiftp://@data-movement-servers4.2.0-gridftp-striped-server-host@:@data-movement-servers4.2.0-gridftp-striped-server-port@/~/inca.gridftp.test</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -6940,7 +6949,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-striped-transfer-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-striped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -6975,7 +6984,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>gsiftp://@dataMoveServer4.2.0-gridftp-nonstriped-host@:@dataMoveServer4.2.0-gridftp-nonstriped-port@/~/inca.gridftp.test</value>
+                <value>gsiftp://@data-movement-servers4.2.0-gridftp-nonstriped-server-host@:@data-movement-servers4.2.0-gridftp-nonstriped-server-port@/~/inca.gridftp.test</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -6992,7 +7001,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-transfer-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-nonstriped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -7023,7 +7032,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@dataMoveServer4.2.0-gridftp-nonstriped-port@</value>
+                <value>@data-movement-servers4.2.0-gridftp-nonstriped-server-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -7035,7 +7044,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMoveServer4.2.0-gridftp-nonstriped-host@</value>
+                <value>@data-movement-servers4.2.0-gridftp-nonstriped-server-host@</value>
               </arg>
             </args>
             <limits>
@@ -7044,13 +7053,13 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-registered-version-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-nonstriped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>gridftp=~@dataMoveServer4.2.0-gridftp-nonstriped-registered-version@ &amp;&amp; gridftp>=4.0.8</comparison>
+            <comparison>gridftp=~@data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version@ &amp;&amp; gridftp>=4.0.8</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -7075,7 +7084,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@dataMoveServer4.2.0-gridftp-striped-port@</value>
+                <value>@data-movement-servers4.2.0-gridftp-striped-server-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -7087,7 +7096,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMoveServer4.2.0-gridftp-striped-host@</value>
+                <value>@data-movement-servers4.2.0-gridftp-striped-server-host@</value>
               </arg>
             </args>
             <limits>
@@ -7096,13 +7105,13 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-striped-registered-version-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-striped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>gridftp=~@dataMoveServer4.2.0-gridftp-striped-registered-version@ &amp;&amp; gridftp>=4.0.8</comparison>
+            <comparison>gridftp=~@data-movement-servers4.2.0-gridftp-striped-server-registered-version@ &amp;&amp; gridftp>=4.0.8</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -7135,15 +7144,15 @@
               </arg>
               <arg>
                 <name>gridftpPort</name>
-                <value>@dataMoveServer4.2.0-gridftp-default-port@</value>
+                <value>@data-movement-servers4.2.0-gridftp-default-server-port@</value>
               </arg>
               <arg>
                 <name>rftHost</name>
-                <value>@dataMoveServer4.2.0-rft-host@ -r @dataMoveServer4.2.0-rft-port@</value>
+                <value>@data-movement-servers4.2.0-rft-host@ -r @data-movement-servers4.2.0-rft-port@</value>
               </arg>
               <arg>
                 <name>gridftpHost</name>
-                <value>@dataMoveServer4.2.0-gridftp-default-host@</value>
+                <value>@data-movement-servers4.2.0-gridftp-default-server-host@</value>
               </arg>
             </args>
             <limits>
@@ -7152,7 +7161,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>rft-unit-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-rft</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-rft</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -7191,7 +7200,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMoveServer4.2.0-rft-host@:@dataMoveServer4.2.0-rft-port@</value>
+                <value>@data-movement-servers4.2.0-rft-host@:@data-movement-servers4.2.0-rft-port@</value>
               </arg>
             </args>
             <limits>
@@ -7200,7 +7209,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>rft-version-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-rft</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-rft</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -7235,7 +7244,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>@dataMoveServer4.2.0-gridftp-nonstriped-host@:@dataMoveServer4.2.0-gridftp-nonstriped-port@</value>
+                <value>@data-movement-servers4.2.0-gridftp-nonstriped-server-host@:@data-movement-servers4.2.0-gridftp-nonstriped-server-port@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -7252,7 +7261,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-auth-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-nonstriped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
           </schedule>
@@ -7287,7 +7296,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>@dataMoveServer4.2.0-gridftp-striped-host@:@dataMoveServer4.2.0-gridftp-striped-port@</value>
+                <value>@data-movement-servers4.2.0-gridftp-striped-server-host@:@data-movement-servers4.2.0-gridftp-striped-server-port@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -7304,7 +7313,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-striped-auth-dms-4.2.0</nickname>
-          <resourceSetName>data-movement-servers.teragrid.org-4.2.0-gridftp-striped</resourceSetName>
+          <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
           </schedule>
@@ -7347,7 +7356,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dms-4.2.0-gridftp-striped-telnet-hosts@</value>
+                <value>@data-movement-servers4.2.0-gridftp-striped-server->data-movement-servers4.2.0-gridftp-striped-server-host@ @data-movement-servers4.2.0-gridftp-striped-server->data-movement-servers4.2.0-gridftp-striped-server-port@</value>
               </arg>
             </args>
             <limits>
@@ -7355,7 +7364,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gridftp-striped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-striped-telnet-hosts@</nickname>
+          <nickname>gridftp-striped-external-telnet-dms-4.2.0_@data-movement-servers4.2.0-gridftp-striped-server->data-movement-servers4.2.0-gridftp-striped-server-host@ @data-movement-servers4.2.0-gridftp-striped-server->data-movement-servers4.2.0-gridftp-striped-server-port@</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
@@ -7399,7 +7408,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</value>
+                <value>@data-movement-servers4.2.0-gridftp-nonstriped-server->data-movement-servers4.2.0-gridftp-nonstriped-server-host@ @data-movement-servers4.2.0-gridftp-nonstriped-server->data-movement-servers4.2.0-gridftp-nonstriped-server-port@</value>
               </arg>
             </args>
             <limits>
@@ -7407,7 +7416,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gridftp-nonstriped-external-telnet-dms-4.2.0_@dms-4.2.0-gridftp-nonstriped-telnet-hosts@</nickname>
+          <nickname>gridftp-nonstriped-external-telnet-dms-4.2.0_@data-movement-servers4.2.0-gridftp-nonstriped-server->data-movement-servers4.2.0-gridftp-nonstriped-server-host@ @data-movement-servers4.2.0-gridftp-nonstriped-server->data-movement-servers4.2.0-gridftp-nonstriped-server-port@</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
@@ -7447,7 +7456,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dms-4.2.0-gridftp-ping-hosts@</value>
+                <value>@data-movement-servers.teragrid.org-4.2.0->data-movement-servers4.2.0-gridftp-default-server-host@</value>
               </arg>
               <arg>
                 <name>count</name>
@@ -7463,7 +7472,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gridftp-external-ping-dms-4.2.0_@dms-4.2.0-gridftp-ping-hosts@</nickname>
+          <nickname>gridftp-external-ping-dms-4.2.0_@data-movement-servers.teragrid.org-4.2.0->data-movement-servers4.2.0-gridftp-default-server-host@</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/3 * * * *</crontime>
@@ -7519,7 +7528,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMove4.1.2-ssh-host@</value>
+                <value>@data-movement4.1.2-gsi-openssh-host@</value>
               </arg>
             </args>
             <limits>
@@ -7563,7 +7572,7 @@
               </arg>
               <arg>
                 <name>dest</name>
-                <value>gsiftp://@dataMove4.1.2-gridftp-striped-host@:@dataMove4.1.2-gridftp-striped-port@/~/inca.gridftp.test</value>
+                <value>gsiftp://@data-movement4.1.2-gridftp-striped-server-host@:@data-movement4.1.2-gridftp-striped-server-port@/~/inca.gridftp.test</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -7580,7 +7589,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-striped-transfer-dm-4.1.2</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.2-gridftp-striped</resourceSetName>
+          <resourceSetName>data-movement.teragrid.org-4.1.2-gridftp-striped-server</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -7611,7 +7620,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@dataMove4.1.2-gridftp-striped-port@</value>
+                <value>@data-movement4.1.2-gridftp-striped-server-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -7623,7 +7632,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@dataMove4.1.2-gridftp-striped-host@</value>
+                <value>@data-movement4.1.2-gridftp-striped-server-host@</value>
               </arg>
             </args>
             <limits>
@@ -7632,7 +7641,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>gridftp-striped-registered-version-dm-4.1.2</nickname>
-          <resourceSetName>data-movement.teragrid.org-4.1.2-gridftp-striped</resourceSetName>
+          <resourceSetName>data-movement.teragrid.org-4.1.2-gridftp-striped-server</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
