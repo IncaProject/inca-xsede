@@ -27,9 +27,7 @@
             <xsl:with-param name="existingGroups" select="/config/groups/group"/>
           </xsl:call-template>
         </xsl:for-each>
-        <xsl:for-each select="groups/group">
-          <xsl:copy-of select="."/>
-        </xsl:for-each>
+        <xsl:copy-of select="groups/group"/>
       </groups>
       <xsl:copy-of select="suites"/>
     </config>
@@ -146,6 +144,13 @@
      <group>
        <name><xsl:value-of select="concat($kit/Name,'.teragrid.org-',$kit/Version)"/></name>
        <type>kit</type>
+       <xsl:for-each select="Software[Required='true']">
+         <macro>
+           <type>constant</type>
+           <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',Name,'-key')"/></name>
+           <value></value>
+         </macro>
+       </xsl:for-each>
      </group>
    </xsl:if>
     <xsl:for-each select="Software">
@@ -160,27 +165,34 @@
           <xsl:if test="not(matches(.,'^\s*$'))">
           <xsl:variable name="name" select="concat($sw/Name,'-',normalize-space(.))"/>
           <xsl:variable name="plainName" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
+          <xsl:variable name="swGroup" select="concat($kit/Name,$kit/Version,'-',$plainName)"/>
+          <xsl:if test="count($existingGroups[name=$swGroup])=0">
           <group>
-            <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$plainName)"/></name>
+            <name><xsl:value-of select="$swGroup"/></name>
             <type>optional</type>
             <macro>
               <type>constant</type>
-              <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$plainName,'-key')"/></name>
+              <name><xsl:value-of select="concat($swGroup,'-key')"/></name>
               <value></value>
             </macro>
           </group>
           </xsl:if>
+          </xsl:if>
         </xsl:for-each>
       </xsl:when><xsl:when test="$kit/Fixed='false' or ($kit/Fixed='true' and $sw/Required='false')">
+          <xsl:variable name="swGroup"
+                        select="concat($kit/Name,$kit/Version,'-',$sw/Name)"/>
+          <xsl:if test="count($existingGroups[name=$swGroup])=0">
           <group>
-            <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw/Name)"/></name>
+            <name><xsl:value-of select="$swGroup"/></name>
             <type>optional</type>
             <macro>
               <type>constant</type>
-              <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw/Name,'-key')"/></name>
+              <name><xsl:value-of select="concat($swGroup,'-key')"/></name>
               <value></value>
             </macro>
           </group>
+          </xsl:if>
       </xsl:when></xsl:choose>
     </xsl:for-each>
 
@@ -196,17 +208,25 @@
           <xsl:if test="not(matches(.,'^\s*$'))">
           <xsl:variable name="name" select="concat($service/Name,'-',normalize-space(.))"/>
           <xsl:variable name="plainName" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
+          <xsl:variable name="serviceGroup" 
+                        select="concat($kit/Name,$kit/Version,'-',$plainName)"/>
+          <xsl:if test="count($existingGroups[name=$serviceGroup])=0">
           <group>
-            <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$plainName)"/></name>
+            <name><xsl:value-of select="$serviceGroup"/></name>
             <type>optional</type>
           </group>
           </xsl:if>
+          </xsl:if>
         </xsl:for-each>
       </xsl:when><xsl:when test="$kit/Fixed='false' or ($kit/Fixed='true' and $service/Required='false')">
+        <xsl:variable name="serviceGroup" 
+                      select="concat($kit/Name,$kit/Version,'-',$service/Name)"/>
+        <xsl:if test="count($existingGroups[name=$serviceGroup])=0">
         <group>
           <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name)"/></name>
           <type>optional</type>
         </group>
+        </xsl:if>
       </xsl:when></xsl:choose>
     </xsl:for-each>
     
