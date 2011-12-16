@@ -215,7 +215,7 @@ public class UpdateIncat {
 					changedConfig = true;
 			}
 
-			NodeList kitNodes = (NodeList)xpath.evaluate("kit[SupportLevel != 'retired']", inputRes, XPathConstants.NODESET);
+			NodeList kitNodes = (NodeList)xpath.evaluate("kit[SupportLevel = 'production' or SupportLevel = 'testing']", inputRes, XPathConstants.NODESET);
 
 			for (int j = 0 ; j < kitNodes.getLength() ; j += 1) {
 				Node kit = kitNodes.item(j);
