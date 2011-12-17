@@ -1401,6 +1401,31 @@
           <name>nativeFortranCompiler</name>
           <value>g77</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>jobQueue</name>
+          <value>standby</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>mds-job-cache</name>
+          <value>PCGridResourceJobs</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>mds-jobs-object</name>
+          <value>PCGridJobs</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>mds-load-cache</name>
+          <value>PCGridResourceDeviceGroups</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>mds-load-object</name>
+          <value>PCGridGroups</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -1647,6 +1672,11 @@
           <type>constant</type>
           <name>nativeFortranCompiler</name>
           <value>g77</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>jobQueue</name>
+          <value>standby</value>
         </macro>
         <group>
           <type>general</type>
@@ -2092,6 +2122,11 @@
           <name>app-support4.2.0-compiler-f90-gnu-key</name>
           <value>module swap intel gcc/4.4.5 @keyPost@</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>maxMem</name>
+          <value>1024</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -2386,6 +2421,11 @@
           <name>app-support4.2.0-compiler-f95-intel-key</name>
           <value>module swap pgi intel/10.1 @keyPost@</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>jobQueue</name>
+          <value>normal</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -2561,8 +2601,43 @@
       </macro>
       <macro>
         <type>constant</type>
+        <name>nodeCount</name>
+        <value>4</value>
+      </macro>
+      <macro>
+        <type>constant</type>
         <name>chargeProject</name>
         <value>TG-STA110011S</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>jobQueue</name>
+        <value/>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>maxMem</name>
+        <value>2048</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>mds-job-cache</name>
+        <value>ComputeResourceJobs</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>mds-jobs-object</name>
+        <value>Jobs</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>mds-load-cache</name>
+        <value>ComputeResourceLoad</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>mds-load-object</name>
+        <value>LoadInfo</value>
       </macro>
       <macro>
         <type>constant</type>
@@ -8432,7 +8507,7 @@
               </arg>
               <arg>
                 <name>scheduler</name>
-                <value>@gridScheduler@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -8440,7 +8515,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-wsgram-port@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler-host@:@remote-compute4.2.0-ws-gram-scheduler-port@</value>
               </arg>
             </args>
             <limits>
@@ -8449,7 +8524,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-wsrf-get-property-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-ws-gram-scheduler-batch</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
           </schedule>
@@ -8488,7 +8563,7 @@
               </arg>
               <arg>
                 <name>scheduler</name>
-                <value>@gridScheduler@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler@</value>
               </arg>
               <arg>
                 <name>queue</name>
@@ -8504,7 +8579,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -8512,7 +8587,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-wsgram-port@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler-host@:@remote-compute4.2.0-ws-gram-scheduler-port@</value>
               </arg>
             </args>
             <limits>
@@ -8521,7 +8596,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-batch-submit-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-wsgram-batch</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-ws-gram-scheduler-batch</resourceSetName>
           <schedule>
             <crontime>? ?-23 * * *</crontime>
           </schedule>
@@ -8556,7 +8631,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -8572,7 +8647,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -8580,7 +8655,7 @@
               </arg>
               <arg>
                 <name>contact</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-prews-gram-port@/@remote4.2.0-prews-fork-job-manager@</value>
+                <value>@remote-compute4.2.0-prews-gram-fork-host@:@remote-compute4.2.0-prews-gram-fork-port@/jobmanager-fork</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -8613,7 +8688,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>prews-gram-fork-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-prewsgram</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-prews-gram-fork</resourceSetName>
           <schedule>
             <crontime>? ?-23/4 * * *</crontime>
           </schedule>
@@ -8672,7 +8747,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@wsgram-fork-exe@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -8680,7 +8755,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-wsgram-port@</value>
+                <value>@remote-compute4.2.0-ws-gram-Fork-host@:@remote-compute4.2.0-ws-gram-Fork-port@</value>
               </arg>
             </args>
             <limits>
@@ -8689,7 +8764,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-fork-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-ws-gram-Fork</resourceSetName>
           <schedule>
             <crontime>? ?-23/4 * * *</crontime>
           </schedule>
@@ -8724,7 +8799,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -8740,7 +8815,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -8748,7 +8823,7 @@
               </arg>
               <arg>
                 <name>contact</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-prews-gram-port@/@remote4.2.0-prews-batch-job-manager@</value>
+                <value>@remote-compute4.2.0-prews-gram-scheduler-host@:@remote-compute4.2.0-prews-gram-scheduler-port@/jobmanager-@remote-compute4.2.0-prews-gram-scheduler@</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -8781,7 +8856,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>prews-gram-batch-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-prewsgram-batch</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-prews-gram-scheduler-batch</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -8820,7 +8895,7 @@
               </arg>
               <arg>
                 <name>scheduler</name>
-                <value>@gridScheduler@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler@</value>
               </arg>
               <arg>
                 <name>queue</name>
@@ -8840,7 +8915,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -8848,7 +8923,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-gatekeeper-host@:@remote4.2.0-wsgram-port@</value>
+                <value>@remote-compute4.2.0-ws-gram-scheduler-host@:@remote-compute4.2.0-ws-gram-scheduler-port@</value>
               </arg>
             </args>
             <limits>
@@ -8857,7 +8932,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-batch-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-wsgram-batch</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-ws-gram-scheduler-batch</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -8888,7 +8963,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-prews-gram-port@</value>
+                <value>@remote-compute4.2.0-prews-gram-fork-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8909,7 +8984,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>prews-gram-netstat-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-prewsgram-netstat</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-prews-gram-fork</resourceSetName>
           <schedule>
             <crontime>?-59/3 * * * *</crontime>
           </schedule>
@@ -8940,7 +9015,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-wsgram-port@</value>
+                <value>@remote-compute5.0.1-ws-gram-Fork-port@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8961,7 +9036,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-netstat-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-wsgram-netstat</resourceSetName>
+          <resourceSetName>remote-compute4.2.0-ws-gram-Fork</resourceSetName>
           <schedule>
             <crontime>?-59/3 * * * *</crontime>
           </schedule>
@@ -9000,7 +9075,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-mds@:@remote4.2.0-mds-port@</value>
+                <value>@remote-compute4.2.0-globus-mds-host@:@remote-compute4.2.0-globus-mds-port@</value>
               </arg>
             </args>
             <limits>
@@ -9009,7 +9084,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-mds</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -9048,7 +9123,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@rc-4.2.0-gram-ping-hosts@</value>
+                <value>@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-host@</value>
               </arg>
               <arg>
                 <name>count</name>
@@ -9064,7 +9139,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gram-external-ping-rc-4.2.0_@rc-4.2.0-gram-ping-hosts@</nickname>
+          <nickname>gram-external-ping-rc-4.2.0_@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-host@</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/3 * * * *</crontime>
@@ -9104,7 +9179,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@rc-4.2.0-prews-telnet-hosts@</value>
+                <value>@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-host@:@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-port@</value>
               </arg>
             </args>
             <limits>
@@ -9112,7 +9187,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>prews-gram-external-gatekeeper-ping-rc-4.2.0_@rc-4.2.0-prews-telnet-hosts@</nickname>
+          <nickname>prews-gram-external-gatekeeper-ping-rc-4.2.0_@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-host@:@remote-compute4.2.0-prews-gram-fork->remote-compute4.2.0-prews-gram-fork-port@</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
@@ -9148,7 +9223,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-mds-auth-port@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9188,11 +9263,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@remote4.2.0-jobs-grep@</value>
+                <value>@mds-jobs-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-mds-auth@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -9201,7 +9276,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-JobsRP-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -9224,7 +9299,7 @@
             <args>
               <arg>
                 <name>localquery</name>
-                <value>//*[local-name()='\\''JobsRP'\\'']/@remote4.2.0-jobs-cache@/@remote4.2.0-jobs-grep-cache@[@timestamp]</value>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
               </arg>
               <arg>
                 <name>cache</name>
@@ -9236,7 +9311,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-mds-auth-port@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9264,7 +9339,7 @@
               </arg>
               <arg>
                 <name>query</name>
-                <value>//*[local-name()='\\''JobsRP'\\'']/@remote4.2.0-jobs-cache@[@remote4.2.0-jobs-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
               </arg>
               <arg>
                 <name>cachesecs</name>
@@ -9276,11 +9351,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@remote4.2.0-jobs-grep-cache@</value>
+                <value>@mds-jobs-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-mds-auth@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -9289,7 +9364,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-JobsRP-cache-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -9324,7 +9399,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-mds-auth-port@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9364,11 +9439,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@remote4.2.0-load-grep@</value>
+                <value>@mds-load-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-mds-auth@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -9377,7 +9452,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-LoadRP-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -9400,7 +9475,7 @@
             <args>
               <arg>
                 <name>localquery</name>
-                <value>//*[local-name()='\\''LoadRP'\\'']/@remote4.2.0-load-cache@/@remote4.2.0-load-grep-cache@[@timestamp]</value>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
               </arg>
               <arg>
                 <name>cache</name>
@@ -9412,7 +9487,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@remote4.2.0-mds-auth-port@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9440,7 +9515,7 @@
               </arg>
               <arg>
                 <name>query</name>
-                <value>//*[local-name()='\\''LoadRP'\\'']/@remote4.2.0-load-cache@[@remote4.2.0-load-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
               </arg>
               <arg>
                 <name>cachesecs</name>
@@ -9452,11 +9527,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@remote4.2.0-load-grep-cache@</value>
+                <value>@mds-load-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote4.2.0-mds-auth@</value>
+                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -9465,7 +9540,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-LoadRP-cache-rc-4.2.0</nickname>
-          <resourceSetName>remote-compute.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -9508,7 +9583,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9524,7 +9599,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -9652,7 +9727,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -9668,7 +9743,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -9816,7 +9891,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -9888,7 +9963,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -9964,7 +10039,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@wsgram-fork-exe@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -10684,7 +10759,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -10760,7 +10835,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@wsgram-fork-exe@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -11564,7 +11639,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11580,7 +11655,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -11656,7 +11731,7 @@
               </arg>
               <arg>
                 <name>exec</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11672,7 +11747,7 @@
               </arg>
               <arg>
                 <name>memory</name>
-                <value>@memory@</value>
+                <value/>
               </arg>
               <arg>
                 <name>queue</name>
@@ -11924,7 +11999,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@real_time_script@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
@@ -12000,7 +12075,7 @@
               </arg>
               <arg>
                 <name>exe</name>
-                <value>@wsgram-fork-exe@</value>
+                <value/>
               </arg>
               <arg>
                 <name>project</name>
