@@ -528,25 +528,25 @@
       <query>
         <expression>service[Name = 'globus-mds']</expression>
         <products>
-          <optional>science-gateway.teragrid.org-4.2.0-mds</optional>
+          <optional>science-gateway.teragrid.org-4.2.0</optional>
         </products>
       </query>
       <query>
         <expression>service[Name = 'globus-mds-secure']</expression>
         <products>
-          <optional>science-gateway.teragrid.org-4.2.0-mds-auth</optional>
+          <optional>science-gateway.teragrid.org-4.2.0</optional>
         </products>
       </query>
       <query>
         <expression>service[matches(Name, 'ogsa-dai.*')]</expression>
         <products>
-          <optional>science-gateway.teragrid.org-4.2.0-ogsadai</optional>
+          <optional>science-gateway.teragrid.org-4.2.0</optional>
         </products>
       </query>
       <query>
         <expression>service[matches(Name, 'ws-gram.*')]</expression>
         <products>
-          <optional>science-gateway.teragrid.org-4.2.0-wsgram</optional>
+          <optional>science-gateway4.2.0-ws-gram-Fork</optional>
         </products>
       </query>
     </kit>
@@ -1342,19 +1342,19 @@
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-mds</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-mds-auth</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-ogsadai</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-wsgram</name>
+        <name>science-gateway4.2.0-ws-gram-Fork</name>
       </group>
       <group>
         <type>kit</type>
@@ -1614,19 +1614,19 @@
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-mds</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-mds-auth</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-ogsadai</name>
+        <name>science-gateway.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>optional</type>
-        <name>science-gateway.teragrid.org-4.2.0-wsgram</name>
+        <name>science-gateway4.2.0-ws-gram-Fork</name>
       </group>
       <group>
         <type>kit</type>
@@ -10697,7 +10697,7 @@
               </arg>
               <arg>
                 <name>scheduler</name>
-                <value>@gridScheduler@</value>
+                <value>@science-gateway4.2.0-ws-gram-scheduler@</value>
               </arg>
               <arg>
                 <name>queue</name>
@@ -10725,7 +10725,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-wsgram-port@</value>
+                <value>@science-gateway4.2.0-ws-gram-scheduler-host@:@science-gateway4.2.0-ws-gram-scheduler-port@</value>
               </arg>
             </args>
             <limits>
@@ -10734,7 +10734,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-batch-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <resourceSetName>science-gateway4.2.0-ws-gram-scheduler-batch</resourceSetName>
           <schedule>
             <crontime>? ?-23/12 * * *</crontime>
           </schedule>
@@ -10801,7 +10801,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-gatekeeper-host@:@gateway4.2.0-wsgram-port@</value>
+                <value>@science-gateway4.2.0-ws-gram-Fork-host@:@science-gateway4.2.0-ws-gram-Fork-port@</value>
               </arg>
             </args>
             <limits>
@@ -10810,7 +10810,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsgram-fork-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-wsgram</resourceSetName>
+          <resourceSetName>science-gateway4.2.0-ws-gram-Fork</resourceSetName>
           <schedule>
             <crontime>? ?-23/4 * * *</crontime>
           </schedule>
@@ -10841,11 +10841,11 @@
               </arg>
               <arg>
                 <name>trustsite</name>
-                <value>@gateway4.2.0-trustsite@</value>
+                <value>https://info.teragrid.org/gateways</value>
               </arg>
               <arg>
                 <name>trustfile</name>
-                <value>@gateway4.2.0-trustfile@</value>
+                <value>tg-gateway-entity-map.txt</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -10853,7 +10853,7 @@
               </arg>
               <arg>
                 <name>metapath</name>
-                <value>@gateway4.2.0-metapath@</value>
+                <value>/etc/grid-security/metadata</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -10863,7 +10863,7 @@
             <limits>
               <wallClockTime>600</wallClockTime>
             </limits>
-            <context>@pre@@gateway4.2.0-gridshib-key@@@@post@</context>
+            <context>@pre@@science-gateway4.2.0-gridshib-gt-key@@@@post@</context>
           </series>
           <nickname>gridshib-unit-4.2.0</nickname>
           <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
@@ -10927,7 +10927,7 @@
             <limits>
               <wallClockTime>1200</wallClockTime>
             </limits>
-            <context>@pre@@gateway4.2.0-gridshib-key@@@@post@</context>
+            <context>@pre@@science-gateway4.2.0-gridshib-gt-key@@@@post@</context>
           </series>
           <nickname>gram-audit-db-unit-4.2.0</nickname>
           <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
@@ -10953,7 +10953,7 @@
             <args>
               <arg>
                 <name>contact</name>
-                <value>@gateway4.2.0-ogsadai@</value>
+                <value>https://@science-gateway4.2.0-ogsa-dai-TeraGridResource-host@:@science-gateway4.2.0-ogsa-dai-TeraGridResource-port@/wsrf/services/ogsadai/Teragrid</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -10982,7 +10982,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>ogsadai-account-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-ogsadai</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11005,7 +11005,7 @@
             <args>
               <arg>
                 <name>contact</name>
-                <value>@gateway4.2.0-ogsadai@</value>
+                <value>https://@science-gateway4.2.0-ogsa-dai-TeraGridResource-host@:@science-gateway4.2.0-ogsa-dai-TeraGridResource-port@/wsrf/services/ogsadai/Teragrid</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -11034,7 +11034,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>ogsadai-audit-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-ogsadai</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11073,7 +11073,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-mds@:@gateway4.2.0-mds-port@</value>
+                <value>@science-gateway4.2.0-globus-mds-host@:@science-gateway4.2.0-globus-mds-port@</value>
               </arg>
             </args>
             <limits>
@@ -11082,7 +11082,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11117,7 +11117,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@gateway4.2.0-mds-auth-port@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11157,11 +11157,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@gateway4.2.0-jobs-grep@</value>
+                <value>@mds-jobs-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-mds-auth@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -11170,7 +11170,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-JobsRP-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11205,7 +11205,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@gateway4.2.0-mds-auth-port@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11245,11 +11245,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@gateway4.2.0-load-grep@</value>
+                <value>@mds-load-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-mds-auth@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -11258,7 +11258,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-LoadRP-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11281,7 +11281,7 @@
             <args>
               <arg>
                 <name>localquery</name>
-                <value>//*[local-name()='\\''JobsRP'\\'']/@gateway4.2.0-jobs-cache@/@gateway4.2.0-jobs-grep-cache@[@timestamp]</value>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
               </arg>
               <arg>
                 <name>cache</name>
@@ -11293,7 +11293,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@gateway4.2.0-mds-auth-port@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11321,7 +11321,7 @@
               </arg>
               <arg>
                 <name>query</name>
-                <value>//*[local-name()='\\''JobsRP'\\'']/@gateway4.2.0-jobs-cache@[@gateway4.2.0-jobs-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
               </arg>
               <arg>
                 <name>cachesecs</name>
@@ -11333,11 +11333,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@gateway4.2.0-jobs-grep-cache@</value>
+                <value>@mds-jobs-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-mds-auth@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -11346,7 +11346,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-JobsRP-cache-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -11369,7 +11369,7 @@
             <args>
               <arg>
                 <name>localquery</name>
-                <value>//*[local-name()='\\''LoadRP'\\'']/@gateway4.2.0-load-cache@/@gateway4.2.0-load-grep-cache@[@timestamp]</value>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
               </arg>
               <arg>
                 <name>cache</name>
@@ -11381,7 +11381,7 @@
               </arg>
               <arg>
                 <name>port</name>
-                <value>@gateway4.2.0-mds-auth-port@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -11409,7 +11409,7 @@
               </arg>
               <arg>
                 <name>query</name>
-                <value>//*[local-name()='\\''LoadRP'\\'']/@gateway4.2.0-load-cache@[@gateway4.2.0-load-grep-cache@[@hostname='\\''%HOSTNAME%'\\'']]</value>
+                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
               </arg>
               <arg>
                 <name>cachesecs</name>
@@ -11421,11 +11421,11 @@
               </arg>
               <arg>
                 <name>grep</name>
-                <value>@gateway4.2.0-load-grep-cache@</value>
+                <value>@mds-load-object@</value>
               </arg>
               <arg>
                 <name>host</name>
-                <value>@gateway4.2.0-mds-auth@</value>
+                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
               </arg>
             </args>
             <limits>
@@ -11434,7 +11434,7 @@
             <context>@pre@@@@post@</context>
           </series>
           <nickname>wsrf-query-mds-auth-LoadRP-cache-sg-4.2.0</nickname>
-          <resourceSetName>science-gateway.teragrid.org-4.2.0-mds-auth</resourceSetName>
+          <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
