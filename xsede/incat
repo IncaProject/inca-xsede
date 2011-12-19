@@ -2892,10 +2892,6 @@
             <value>PCGridGroups</value>
           </macro>
           <macro>
-            <name>remote5.0.1-gatekeeper-host</name>
-            <value>tg-condor.rcac.purdue.edu</value>
-          </macro>
-          <macro>
             <name>remote5.0.1-jobs-cache</name>
             <value>PCGridResourceJobs</value>
           </macro>
@@ -3002,6 +2998,10 @@
           <macro>
             <name>apps4.2.0-tginfo-key</name>
             <value/>
+          </macro>
+          <macro>
+            <name>remote5.0.1-gatekeeper-host</name>
+            <value>tg-condor.rcac.purdue.edu</value>
           </macro>
         </macros>
       </resource>
@@ -3406,34 +3406,6 @@
             <value>tg-steele.purdue.teragrid.org:2120</value>
           </macro>
           <macro>
-            <name>rc-5.0.1-gram-ping-hosts</name>
-            <value>tg-condor.rcac.purdue.edu</value>
-            <value>tg-steele.rcac.purdue.edu</value>
-            <value>grid-abe.ncsa.teragrid.org</value>
-            <value>gridftp1.ls4.tacc.utexas.edu</value>
-            <value>gatekeeper.ranger.tacc.teragrid.org</value>
-            <value>trestles.sdsc.edu</value>
-            <value>grid-forge.ncsa.xsede.org</value>
-          </macro>
-          <macro>
-            <name>rc-5.0.1-wsgram-telnet-hosts</name>
-            <value>tg-condor.rcac.purdue.edu:8443</value>
-            <value>tg-steele.rcac.purdue.edu:8443</value>
-            <value>grid-abe.ncsa.teragrid.org:8443</value>
-            <value>dash-login.sdsc.edu:8443</value>
-            <value>grid-forge.ncsa.xsede.org:8443</value>
-          </macro>
-          <macro>
-            <name>rc-5.0.1-gram5-telnet-hosts</name>
-            <value>tg-condor.rcac.purdue.edu:2119</value>
-            <value>tg-steele.rcac.purdue.edu:2119</value>
-            <value>grid-abe.ncsa.teragrid.org:2120</value>
-            <value>gridftp1.ls4.tacc.utexas.edu:2119</value>
-            <value>gatekeeper.ranger.tacc.teragrid.org:2119</value>
-            <value>trestles.sdsc.edu:2119</value>
-            <value>grid-forge.ncsa.xsede.org:2119</value>
-          </macro>
-          <macro>
             <name>dms-4.2.0-gridftp-striped-telnet-hosts</name>
             <value>tg-data.purdue.teragrid.org 2811</value>
             <value>gridftp.kraken.nics.utk.edu 2811</value>
@@ -3471,6 +3443,31 @@
           <macro>
             <name>dm-4.1.2-gridftp-striped-telnet-hosts</name>
             <value>gridftp.blacklight.psc.teragrid.org 2811</value>
+          </macro>
+          <macro>
+            <name>rc-5.0.1-gram-ping-hosts</name>
+            <value>tg-condor.rcac.purdue.edu</value>
+            <value>tg-steele.rcac.purdue.edu</value>
+            <value>gridftp1.ls4.tacc.utexas.edu</value>
+            <value>gatekeeper.ranger.tacc.teragrid.org</value>
+            <value>trestles.sdsc.edu</value>
+            <value>grid-forge.ncsa.xsede.org</value>
+          </macro>
+          <macro>
+            <name>rc-5.0.1-gram5-telnet-hosts</name>
+            <value>tg-condor.rcac.purdue.edu:2119</value>
+            <value>tg-steele.rcac.purdue.edu:2119</value>
+            <value>gridftp1.ls4.tacc.utexas.edu:2119</value>
+            <value>gatekeeper.ranger.tacc.teragrid.org:2119</value>
+            <value>trestles.sdsc.edu:2119</value>
+            <value>grid-forge.ncsa.xsede.org:2119</value>
+          </macro>
+          <macro>
+            <name>rc-5.0.1-wsgram-telnet-hosts</name>
+            <value>tg-condor.rcac.purdue.edu:8443</value>
+            <value>tg-steele.rcac.purdue.edu:8443</value>
+            <value>dash-login.sdsc.edu:8443</value>
+            <value>grid-forge.ncsa.xsede.org:8443</value>
           </macro>
         </macros>
       </resource>
@@ -3985,6 +3982,10 @@
           <macro>
             <name>__equivalent__</name>
             <value>false</value>
+          </macro>
+          <macro>
+            <name>remote5.0.1-wsgram-gatekeeper-host</name>
+            <value>@remote5.0.1-gatekeeper-host@</value>
           </macro>
         </macros>
       </resource>
@@ -4763,6 +4764,10 @@
           <macro>
             <name>login4.0.0-ssh-host</name>
             <value>trestles.sdsc.xsede.org</value>
+          </macro>
+          <macro>
+            <name>remote5.0.1-wsgram-gatekeeper-host</name>
+            <value>dash-login.sdsc.edu</value>
           </macro>
         </macros>
       </resource>
@@ -8582,7 +8587,7 @@
             <args>
               <arg>
                 <name>procPat</name>
-                <value>edu.sdsc.inca</value>
+                <value>Xmx1024m.*edu.sdsc.inca</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -13369,58 +13374,6 @@
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.netstat.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.netstat.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>@remote5.0.1-gram5-port@</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>30</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>120</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>gram5-netstat-rc-5.0.1</nickname>
-          <resourceSetName>remote-compute.teragrid.org-5.0.1-gram5-netstat</resourceSetName>
-          <schedule>
-            <crontime>?-59/3 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@adminEmail@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>user.basicFunctionality.gridJobSubmission.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.basicFunctionality.gridJobSubmission.unit</uri>
             <args>
@@ -13610,7 +13563,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote5.0.1-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
+                <value>@remote5.0.1-wsgram-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
               </arg>
             </args>
             <limits>
@@ -13682,7 +13635,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote5.0.1-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
+                <value>@remote5.0.1-wsgram-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
               </arg>
             </args>
             <limits>
@@ -13758,7 +13711,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote5.0.1-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
+                <value>@remote5.0.1-wsgram-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
               </arg>
             </args>
             <limits>
@@ -13854,7 +13807,7 @@
               </arg>
               <arg>
                 <name>scheduler</name>
-                <value>@gridScheduler@</value>
+                <value>Fork</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -13862,7 +13815,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@remote5.0.1-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
+                <value>@remote5.0.1-wsgram-gatekeeper-host@:@remote5.0.1-wsgram-port@</value>
               </arg>
             </args>
             <limits>
