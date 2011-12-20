@@ -763,6 +763,49 @@
       </macroResource>
     </resource>
     <resource>
+      <name>info.teragrid</name>
+      <macroResource>
+        <name>info</name>
+        <macro>
+          <type>constant</type>
+          <name>infoEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>infoPingFreq</name>
+          <value>?-59/15 * * * *</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>INFO</name>
+        </group>
+        <hosts>info.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>info1.teragrid</name>
+      <macroResource>
+        <name>info1</name>
+        <group>
+          <type>general</type>
+          <name>INFO</name>
+        </group>
+        <hosts>info1.dyn.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>info2.teragrid</name>
+      <macroResource>
+        <name>info2</name>
+        <group>
+          <type>general</type>
+          <name>INFO</name>
+        </group>
+        <hosts>info2.dyn.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
       <name>bcf.biochemistry.uthscsa</name>
       <macroResource>
         <name>uthscsa-bcf</name>
@@ -2533,6 +2576,20 @@
       <type>general</type>
     </group>
     <group>
+      <name>INFO</name>
+      <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>infoEmail</name>
+        <value>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>infoPingFreq</name>
+        <value>? ?-23 * * *</value>
+      </macro>
+    </group>
+    <group>
       <name>ALL-RM</name>
       <macro>
         <type>constant</type>
@@ -3703,6 +3760,51 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison><![CDATA[tginfo>=1.0.2]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+       <seriesConfig
+xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.devel.gmake.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.devel.gmake.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gmake-version-as-4.2.0</nickname>
+          <resourceSetName>app-support.teragrid.org-4.2.0</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gmake=~".*"</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -12579,7 +12681,7 @@
               </arg>
               <arg>
                 <name>remotecert</name>
-                <value>info.teragrid.org:443</value>
+                <value>@INFO->__incaHosts__@:443</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -12603,7 +12705,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>info.teragrid.org:443 (Apache HTTPS certificate)</nickname>
+          <nickname>@INFO->__incaHosts__@:443 (Apache HTTPS certificate)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -12614,119 +12716,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>security.hostcert.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.hostcert.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>remotecert</name>
-                <value>@info_service_hosts@:443</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>cert</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>2</value>
-              </arg>
-              <arg>
-                <name>minimum</name>
-                <value>7</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>@info_service_hosts@:443 (Apache HTTPS certificate)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>security.hostcert.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.hostcert.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>remotecert</name>
-                <value>info.teragrid.org:8444</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>cert</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>2</value>
-              </arg>
-              <arg>
-                <name>minimum</name>
-                <value>7</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org:8444 (Tomcat/User Profile HTTPS certificate)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -12755,7 +12745,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>info.teragrid.org</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
             </args>
             <limits>
@@ -12763,7 +12753,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>info.teragrid.org (DNS lookup)</nickname>
+          <nickname>@INFO->__incaHosts__@ (DNS lookup)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>?-59/15 * * * *</crontime>
@@ -12774,55 +12764,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.dnslookup.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.dnslookup.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@info_service_hosts@</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>@info_service_hosts@ (DNS lookup)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -12851,7 +12793,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
               <arg>
                 <name>count</name>
@@ -12867,10 +12809,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@ (ping)</nickname>
+          <nickname>@INFO->__incaHosts__@ (ping)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
-            <crontime>? ?-23 * * *</crontime>
+            <crontime>@INFO->infoPingFreq@</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -12878,7 +12820,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -12919,7 +12861,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
               <arg>
                 <name>path</name>
@@ -12935,10 +12877,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@:80 (Apache)</nickname>
+          <nickname>@INFO->__incaHosts__@:80 (Apache)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
-            <crontime>? ?-23 * * *</crontime>
+            <crontime>@INFO->infoPingFreq@</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -12946,7 +12888,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13015,7 +12957,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
             </args>
             <limits>
@@ -13023,10 +12965,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@:8443 (WS MDS; standard; globus-mds-auth)</nickname>
+          <nickname>@INFO->__incaHosts__@:8443 (WS MDS; standard; globus-mds-auth)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
-            <crontime>? ?-23 * * *</crontime>
+            <crontime>@INFO->infoPingFreq@</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -13034,7 +12976,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13055,7 +12997,7 @@
               </arg>
               <arg>
                 <name>remotecert</name>
-                <value>@info_service_hosts@:8444</value>
+                <value>@INFO->__incaHosts__@:8444</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -13079,7 +13021,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@:8444 (Tomcat/User Profile HTTPS certificate)</nickname>
+          <nickname>@INFO->__incaHosts__@:8444 (Tomcat/User Profile HTTPS certificate)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -13090,7 +13032,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13131,7 +13073,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
               <arg>
                 <name>path</name>
@@ -13147,10 +13089,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@:8444 (Tomcat/User Profile)</nickname>
+          <nickname>@INFO->__incaHosts__@:8444 (Tomcat/User Profile)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
-            <crontime>? ?-23 * * *</crontime>
+            <crontime>@INFO->infoPingFreq@</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -13158,7 +13100,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13227,7 +13169,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
             </args>
             <limits>
@@ -13235,10 +13177,10 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@:8446 (WS MDS; globus-mds-info)</nickname>
+          <nickname>@INFO->__incaHosts__@:8446 (WS MDS; globus-mds-info)</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
-            <crontime>? ?-23 * * *</crontime>
+            <crontime>@INFO->infoPingFreq@</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
@@ -13246,7 +13188,7 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
+                <target>@INFO->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -13275,7 +13217,7 @@
               </arg>
               <arg>
                 <name>host</name>
-                <value>@info_service_hosts@</value>
+                <value>@INFO->__incaHosts__@</value>
               </arg>
             </args>
             <limits>
@@ -13283,423 +13225,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>@info_service_hosts@_@info_service_stats@</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>? ?-23/2 * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:si-server-ops@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>60</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org (ping)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.middleware.globus.unit.httpmds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.httpmds</uri>
-            <args>
-              <arg>
-                <name>port</name>
-                <value>80</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>match</name>
-                <value>TeraGrid.*Service</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>protocol</name>
-                <value>http</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>path</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>lines</name>
-                <value>10</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org:80 (Apache)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.middleware.globus.unit.securemds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-            <args>
-              <arg>
-                <name>localquery</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-              </arg>
-              <arg>
-                <name>cache</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8446</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>secs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value>DefaultIndexService</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>query</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
-              </arg>
-              <arg>
-                <name>cachesecs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>delta</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value>ns1:CurrentTime</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org:8446 (WS MDS; globus-mds-info)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.middleware.globus.unit.httpmds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.httpmds</uri>
-            <args>
-              <arg>
-                <name>port</name>
-                <value>8444</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>match</name>
-                <value>The request requires user authentication</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>protocol</name>
-                <value>https</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-              <arg>
-                <name>path</name>
-                <value>web-apps/html/profile-v1</value>
-              </arg>
-              <arg>
-                <name>lines</name>
-                <value>6</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org:8444 (Tomcat/User Profile)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>grid.middleware.globus.unit.securemds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-            <args>
-              <arg>
-                <name>localquery</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-              </arg>
-              <arg>
-                <name>cache</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>prop</name>
-                <value>{http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd}CurrentTime</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8443</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>secs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value>DefaultIndexService</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>query</name>
-                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
-              </arg>
-              <arg>
-                <name>cachesecs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>delta</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value>ns1:CurrentTime</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>650.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org:8443 (WS MDS; standard; globus-mds-auth)</nickname>
-          <resourceSetName>quarry</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>FailTo:inca@sdsc.edu, FailTo:help@teragrid.org</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>teragrid.info.performance</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/teragrid.info.performance</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>info.teragrid.org</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>1300</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>info.teragrid.org_@info_service_stats@</nickname>
+          <nickname>@INFO->__incaHosts__@_stats</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ?-23/2 * * *</crontime>
