@@ -99,6 +99,7 @@ class KitQuery {
 		private static final Pattern m_urlPattern = Pattern.compile("(?:[a-zA-Z]+://)?([a-zA-Z0-9\\-]+(?:\\.[a-zA-Z0-9\\-]+)*)(?::(\\d+))?(?:/[a-zA-Z0-9\\-\\.]*)*");
 		private final String m_hostName;
 		private final String m_portName;
+		private final String m_endpoint;
 
 
 		// constructors
@@ -108,11 +109,13 @@ class KitQuery {
 		 *
 		 * @param host
 		 * @param port
+		 * @param endpoint
 		 */
-		public URLProduct(String host, String port)
+		public URLProduct(String host, String port, String endpoint)
 		{
 			m_hostName = host;
 			m_portName = port;
+			m_endpoint = endpoint;
 		}
 
 
@@ -148,6 +151,9 @@ class KitQuery {
 			boolean changedConfig = setMacroValue(xpath, configDoc, macroRes, resId, m_hostName, matchResult.group(1));
 
 			if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_portName, matchResult.group(2)))
+				changedConfig = true;
+
+			if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_endpoint, url))
 				changedConfig = true;
 
 			return changedConfig;
@@ -318,8 +324,9 @@ class KitQuery {
 			else if (name.equals("url")) {
 				String host = xpath.evaluate("host", product);
 				String port = xpath.evaluate("port", product);
+				String endpoint = xpath.evaluate("endpoint", product);
 
-				m_products.add(new URLProduct(host, port));
+				m_products.add(new URLProduct(host, port, endpoint));
 			}
 			else if (name.equals("optional"))
 				m_products.add(new OptionalProduct(product.getTextContent()));
