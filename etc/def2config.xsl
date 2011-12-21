@@ -13,7 +13,7 @@
   <!-- ==================================================================== -->
   <!-- Main template                                                        -->
   <!-- ==================================================================== -->
-  <xsl:template name="generateXML" match="/config">
+  <xsl:template name="generateXML" match="/def2config">
     <config>
       <xsl:copy-of select="properties"/>
       <queries>
@@ -24,12 +24,12 @@
         <xsl:for-each select="Kits/iis:Kit">
           <xsl:call-template name="printGroups">
             <xsl:with-param name="kit" select="."/>
-            <xsl:with-param name="existingGroups" select="/config/groups/group"/>
+            <xsl:with-param name="existingGroups" select="config/groups/group"/>
           </xsl:call-template>
         </xsl:for-each>
-        <xsl:copy-of select="groups/group"/>
+        <xsl:copy-of select="config/groups/group"/>
       </groups>
-      <xsl:copy-of select="suites"/>
+      <xsl:copy-of select="config/suites"/>
     </config>
   </xsl:template>
 
@@ -114,7 +114,10 @@
     <xsl:param name="optional"/>
 
     <query>
-      <expression>service[Name = '<xsl:value-of select="$service"/>']</expression>
+      <!-- exception for ws gram service registrations -->
+      <xsl:variable name="serviceRegex" select="replace($service, '^ws-gram-', 'ws-gram/')"/>
+      <xsl:variable name="service" select="replace($service, '/', '-')"/>
+      <expression>service[Name = '<xsl:value-of select="$serviceRegex"/>']</expression>
       <products>
         <version><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-registered-version')"/></version>
         <xsl:if test="$optional=1">
@@ -124,6 +127,7 @@
           <host><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-host')"/></host>
           <port><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-port')"/></port>
         </url>
+        <endpoint><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-endpoint')"/></endpoint>
       </products>
     </query>
   </xsl:template>
@@ -203,6 +207,12 @@
           <xsl:with-param name="values" select="Variable"/>
         </xsl:call-template>
       </xsl:variable>
+      <xsl:for-each select="$service/Group">
+        <group>
+          <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name,'-',@Name)"/></name>
+          <type>general</type>
+        </group>
+      </xsl:for-each>
       <xsl:choose><xsl:when test="not(matches($variables, '^\s*$'))">
         <xsl:for-each select="tokenize($variables, '\|')">
           <xsl:if test="not(matches(.,'^\s*$'))">
@@ -214,6 +224,38 @@
           <group>
             <name><xsl:value-of select="$serviceGroup"/></name>
             <type>optional</type>
+            <xsl:for-each select="$service/Variable">
+              <xsl:variable name="var" select="."/>
+              <xsl:variable name="varMacroPrefix" 
+                            select="concat($kit/Name,$kit/Version,'-',$service/Name, '-', @Name)"/>
+              <macro>
+                <type>constant</type>
+                <name><xsl:value-of select="$varMacroPrefix"/></name>
+                <xsl:for-each select="tokenize($plainName, '-')">
+                  <xsl:if test="matches(.,$var)">
+                    <value><xsl:value-of select="."/></value>
+                  </xsl:if>
+                </xsl:for-each>
+              </macro>
+              <macro>
+                <type>constant</type>
+                <name><xsl:value-of select="concat($varMacroPrefix, '-host' )"/></name>
+                <value>@<xsl:value-of select="concat($serviceGroup, '-host')"/>@</value>
+              </macro>
+              <macro>
+                <type>constant</type>
+                <name><xsl:value-of select="concat($varMacroPrefix, '-port' )"/></name>
+                <value>@<xsl:value-of select="concat($serviceGroup, '-port')"/>@</value>
+              </macro>
+            </xsl:for-each>
+            <xsl:for-each select="$service/Group">
+              <xsl:if test="matches($plainName, .)">
+              <group>
+                <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name,'-',@Name)"/></name>
+                <type>general</type>
+              </group>
+              </xsl:if>
+            </xsl:for-each>
           </group>
           </xsl:if>
           </xsl:if>
@@ -222,8 +264,9 @@
         <xsl:variable name="serviceGroup" 
                       select="concat($kit/Name,$kit/Version,'-',$service/Name)"/>
         <xsl:if test="count($existingGroups[name=$serviceGroup])=0">
+        <xsl:variable name="serviceName" select="replace($service/Name, '/', '-')"/>
         <group>
-          <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service/Name)"/></name>
+          <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$serviceName)"/></name>
           <type>optional</type>
         </group>
         </xsl:if>
