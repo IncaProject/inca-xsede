@@ -57,9 +57,5 @@ $cmd = "cat config-auto.xml.tmp | sed 's/^<config.*\$/<config>/' > config-auto.x
 print "$cmd\n";
 `$cmd`;
 exit(1) if $? != 0; 
+unlink "config-auto.xml.tmp";
 
-# feed thru updateIncat to auto-generated a new incat.xml
-$cmd = "$xslthome/bin/updateIncat.sh config-auto.xml cache incat-auto.xml";
-print "$cmd\n";
-`$cmd`;
-exit(1) if $? != 0; 
