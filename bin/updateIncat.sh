@@ -8,4 +8,8 @@ for jar_file in $file_list; do
   classpath="$classpath:$jar_file"
 done
 
-java -Xms256M -Xmx1024M -ea -cp "$classpath" edu.sdsc.inca.UpdateIncat $@
+if [ "$1" = "auto" ]; then
+  java -Xms256M -Xmx1024M -ea -cp "$classpath" edu.sdsc.inca.UpdateIncat config-auto.xml cache incat-auto.xml
+else
+  java -Xms256M -Xmx1024M -ea -cp "$classpath" edu.sdsc.inca.UpdateIncat $@
+fi
