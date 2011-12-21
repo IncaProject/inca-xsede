@@ -27,40 +27,24 @@ sub readAndPrintFile {
   close READ;
 }
 
-# create config-part.xml
-open( WRITE, ">$xslthome/config-part.xml") || die "Unable to open config.part.xml";
-open( READ, "<config.xml") || die "Unable to open config.xml";
-while( <READ> ) {
-  next if /xml version="1\.0"/;
-  next if /config>/;
-  if ( /queries/ ) {
-    $_ = <READ>;
-    while ( $_ !~ /queries/ ) {
-      $_ = <READ>;
-    }
-    $_ = <READ>;
-  }
-  print WRITE $_;
-}
-close READ;
-close WRITE;
-
-# concat kit defs
+# create xml file to be fed to def2config.xsl 
 my $fd;
-open( $fd, ">$xslthome/merged-config.xml") || die "Unable to open merged-config.xml";
-print $fd "<config>\n";
-readAndPrintFile( "config-part.xml", $fd );
+open( $fd, ">$xslthome/def2config.xml") || die "Unable to open def2config.xml";
+print $fd "<def2config>\n";
 print $fd "<Kits>\n";
 my @xmls = glob( "$xslthome/etc/kits/*" );
 for my $xml ( @xmls ) {
   readAndPrintFile( $xml, $fd );
 }
 print $fd "</Kits>\n";
-print $fd "</config>\n";
+readAndPrintFile( "config.xml", $fd );
+print $fd "</def2config>\n";
 close $fd;
 
+# create a new version of config.xml with kit queries and groups
+# auto-generated
 my $cmd = "java -cp " . join( ":", @classpath ) . " " . $XSLT_CLASS . " " .
-          "-xsl $xslthome/etc/def2config.xsl -in $xslthome/merged-config.xml > newconfigtmp.xml";
+          "-xsl $xslthome/etc/def2config.xsl -in $xslthome/def2config.xml > config-auto.xml.tmp";
 if ( scalar(@ARGV) > 0 ) {
   $cmd .= " > $ARGV[0]";
 }
@@ -68,12 +52,14 @@ print "$cmd\n";
 `$cmd`;
 exit(1) if $? != 0; 
 
-$cmd = "cat newconfigtmp.xml | sed 's/^<config.*\$/<config>/' > newconfig.xml ";
+# remove namespaces from config tag
+$cmd = "cat config-auto.xml.tmp | sed 's/^<config.*\$/<config>/' > config-auto.xml";
 print "$cmd\n";
 `$cmd`;
 exit(1) if $? != 0; 
 
-$cmd = "$xslthome/bin/updateIncat.sh newconfig.xml cache newincat.xml";
+# feed thru updateIncat to auto-generated a new incat.xml
+$cmd = "$xslthome/bin/updateIncat.sh config-auto.xml cache incat-auto.xml";
 print "$cmd\n";
 `$cmd`;
 exit(1) if $? != 0; 
