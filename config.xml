@@ -13692,7 +13692,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>search</name>
-                <value>@wg4.0.0-fs@</value>
+                <value>@wan-gpfs4.0.0-gpfs-wan-front-end-endpoint@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -13736,6 +13736,61 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wan-lustre4.0.0-dc-wan-cluster-endpoint@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-dc-cluster-4.0.0</nickname>
+          <resourceSetName>wan-lustre4.0.0-dc-wan-cluster</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>user.search.output.unit</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
               <arg>
@@ -13756,7 +13811,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>search</name>
-                <value>@wl4.0.0-fs@</value>
+                <value>@wan-lustre4.0.0-dc-wan-front-end-endpoint@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -13772,8 +13827,8 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>mount-wl-4.0.0</nickname>
-          <resourceSetName>wan-lustre.teragrid.org-4.0.0</resourceSetName>
+          <nickname>mount-wl-dc-frontend-4.0.0</nickname>
+          <resourceSetName>wan-lustre4.0.0-dc-wan-front-end</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -13820,7 +13875,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>search</name>
-                <value>@wl5.0.0-fs@</value>
+                <value>@wan-lustre5.0.0-dc-wan-cluster-endpoint@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -13836,8 +13891,173 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>mount-wl-5.0.0</nickname>
-          <resourceSetName>wan-lustre.teragrid.org-5.0.0</resourceSetName>
+          <nickname>mount-wl-dc-cluster-5.0.0</nickname>
+          <resourceSetName>wan-lustre5.0.0-dc-wan-cluster</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wan-lustre5.0.0-dc-wan-front-end-endpoint@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-dc-frontend-5.0.0</nickname>
+          <resourceSetName>wan-lustre5.0.0-dc-wan-front-end</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wan-lustre5.0.0-albedo-wan-cluster-endpoint@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-albedo-cluster-5.0.0</nickname>
+          <resourceSetName>wan-lustre5.0.0-albedo-wan-cluster</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wan-lustre5.0.0-albedo-wan-front-end-endpoint@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-albedo-frontend-5.0.0</nickname>
+          <resourceSetName>wan-lustre5.0.0-albedo-wan-front-end</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
