@@ -15,16 +15,16 @@
   <!-- ==================================================================== -->
   <xsl:template name="generateXML" match="/def2config">
     <config>
-      <xsl:copy-of select="properties"/>
+      <xsl:copy-of select="config/properties"/>
       <queries>
       <xsl:apply-templates select="Kits/iis:Kit" />
       </queries>
-      <xsl:copy-of select="resources"/>
+      <xsl:copy-of select="config/resources"/>
       <groups>
         <xsl:for-each select="Kits/iis:Kit">
           <xsl:call-template name="printGroups">
             <xsl:with-param name="kit" select="."/>
-            <xsl:with-param name="existingGroups" select="config/groups/group"/>
+            <xsl:with-param name="existingGroups" select="/def2config/config/groups/group"/>
           </xsl:call-template>
         </xsl:for-each>
         <xsl:copy-of select="config/groups/group"/>
@@ -146,7 +146,7 @@
    because it contains custom macros -->
    <xsl:if test="count($existingGroups[name=$kitGroup])=0">
      <group>
-       <name><xsl:value-of select="concat($kit/Name,'.teragrid.org-',$kit/Version)"/></name>
+       <name><xsl:value-of select="$kitGroup"/></name>
        <type>kit</type>
        <xsl:for-each select="Software[Required='true']">
          <macro>
