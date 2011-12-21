@@ -2586,10 +2586,6 @@
             <value>tg-login.blacklight.psc.teragrid.org</value>
           </macro>
           <macro>
-            <name>wl4.0.0-fs</name>
-            <value>/dcwan</value>
-          </macro>
-          <macro>
             <name>__groupname__</name>
             <value>psc-blacklight</value>
           </macro>
@@ -2620,6 +2616,10 @@
           <macro>
             <name>__incaReporterManagerLocation__</name>
             <value>/usr/users/9/inca/inca2install</value>
+          </macro>
+          <macro>
+            <name>wl4.0.0-dc-fs</name>
+            <value>/dcwan</value>
           </macro>
         </macros>
       </resource>
@@ -4530,10 +4530,6 @@
             <value>2</value>
           </macro>
           <macro>
-            <name>wl5.0.0-fs</name>
-            <value>/dcwan</value>
-          </macro>
-          <macro>
             <name>adminEmail</name>
             <value>FailTo:inca@sdsc.edu, FailTo:diegella@sdsc.edu, FailTo:wyoung@sdsc.edu</value>
           </macro>
@@ -4616,6 +4612,10 @@
           <macro>
             <name>core5.0.0-mds-info-host</name>
             <value>dash-login2.sdsc.edu</value>
+          </macro>
+          <macro>
+            <name>wl5.0.0-dc-fs</name>
+            <value>/dcwan</value>
           </macro>
         </macros>
       </resource>
@@ -6373,15 +6373,37 @@
       </resource>
       <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
         <name>wan-lustre.teragrid.org-4.0.0</name>
-        <xpath>//resource[matches(name, '^(blacklight\.psc\.teragrid\.org)$')]</xpath>
+        <xpath>//resource[matches(name, '^(blacklight\.psc\.teragrid\.org|steele\.purdue\.teragrid\.org|condor\.purdue\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>wl4.0.0-fs</name>
+            <name>wl4.0.0-dc-fs</name>
             <value>/N/dcwan</value>
           </macro>
           <macro>
             <name>__groupname__</name>
             <value>wan-lustre.teragrid.org-4.0.0</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>blacklight.psc.teragrid.org steele.purdue.teragrid.org condor.purdue.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wan-lustre.teragrid.org-4.0.0-dc-cluster</name>
+        <xpath>//resource[matches(name, '^(blacklight\.psc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wan-lustre.teragrid.org-4.0.0-dc-cluster</value>
           </macro>
           <macro>
             <name>__regexp__</name>
@@ -6402,16 +6424,108 @@
         <xpath>//resource[matches(name, '^(lonestar4\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
         <macros>
           <macro>
-            <name>wl5.0.0-fs</name>
-            <value>/N/dcwan</value>
-          </macro>
-          <macro>
             <name>__groupname__</name>
             <value>wan-lustre.teragrid.org-5.0.0</value>
           </macro>
           <macro>
             <name>__regexp__</name>
             <value>lonestar4.tacc.teragrid.org longhorn.tacc.teragrid.org ranger.tacc.teragrid.org dash.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+          <macro>
+            <name>wl5.0.0-albedo-fs</name>
+            <value>/albedo</value>
+          </macro>
+          <macro>
+            <name>wl5.0.0-dc-fs</name>
+            <value>/dcwan</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wan-lustre.teragrid.org-5.0.0-albedo-cluster</name>
+        <xpath>//resource[matches(name, '^(lonestar4\.tacc\.teragrid\.org|dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wan-lustre.teragrid.org-5.0.0-albedo-cluster</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lonestar4.tacc.teragrid.org dash.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wan-lustre.teragrid.org-5.0.0-albedo-frontend</name>
+        <xpath>//resource[matches(name, '^(lonestar4\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org|ranger\.tacc\.teragrid\.org|dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wan-lustre.teragrid.org-5.0.0-albedo-frontend</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>lonestar4.tacc.teragrid.org longhorn.tacc.teragrid.org ranger.tacc.teragrid.org dash.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wan-lustre.teragrid.org-5.0.0-dc-cluster</name>
+        <xpath>//resource[matches(name, '^(dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wan-lustre.teragrid.org-5.0.0-dc-cluster</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>dash.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
+          </macro>
+          <macro>
+            <name>__remoteInvocationMethod__</name>
+            <value>globus2</value>
+          </macro>
+          <macro>
+            <name>__equivalent__</name>
+            <value>false</value>
+          </macro>
+        </macros>
+      </resource>
+      <resource>
+        <name>wan-lustre.teragrid.org-5.0.0-dc-frontend</name>
+        <xpath>//resource[matches(name, '^(dash\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+        <macros>
+          <macro>
+            <name>__groupname__</name>
+            <value>wan-lustre.teragrid.org-5.0.0-dc-frontend</value>
+          </macro>
+          <macro>
+            <name>__regexp__</name>
+            <value>dash.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
           </macro>
           <macro>
             <name>__remoteInvocationMethod__</name>
@@ -17906,10 +18020,9 @@
     </suite>
     <suite>
       <seriesConfigs>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+        <seriesConfig>
           <series>
             <name>user.search.output.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
             <args>
               <arg>
                 <name>version</name>
@@ -17929,7 +18042,7 @@
               </arg>
               <arg>
                 <name>search</name>
-                <value>@wl4.0.0-fs@</value>
+                <value>@wl4.0.0-dc-fs@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -17945,8 +18058,8 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>mount-wl-4.0.0</nickname>
-          <resourceSetName>wan-lustre.teragrid.org-4.0.0</resourceSetName>
+          <nickname>mount-wl-dc-cluster-4.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-4.0.0-dc-cluster</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -17993,7 +18106,7 @@
               </arg>
               <arg>
                 <name>search</name>
-                <value>@wl5.0.0-fs@</value>
+                <value>@wl5.0.0-dc-fs@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -18009,8 +18122,173 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>mount-wl-5.0.0</nickname>
-          <resourceSetName>wan-lustre.teragrid.org-5.0.0</resourceSetName>
+          <nickname>mount-wl-dc-cluster-5.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-5.0.0-dc-cluster</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wl5.0.0-albedo-fs@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-albedo-frontend-5.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-5.0.0-albedo-frontend</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wl5.0.0-albedo-fs@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-albedo-cluster-5.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-5.0.0-albedo-cluster</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>mount -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>@wl5.0.0-dc-fs@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>mount-wl-dc-frontend-5.0.0</nickname>
+          <resourceSetName>wan-lustre.teragrid.org-5.0.0-dc-frontend</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
