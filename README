@@ -40,21 +40,30 @@ Case 1:  changes in the cache are detected
 
 1. Copy cache.new file from gw60 and rename it cache
 
-2. If you do not have a cursuites dir, run
+2. If you do not have an up-to-date cursuites dir already, run
 
 % ./bin/verifyIncat expand -i <current incat file> -s cursuites
 
-2. Run updateIncat to generate new incat file
+3. Run updateIncat to generate new incat file incat-auto-new.xml
 
 % ./bin/updateIncat auto
 
-3. Verify changes 
+4. Verify changes 
 
 % ./bin/verifyIncat auto
 
-4. Verify changes in diff.log look reasonable
+5. Verify changes in diff.log look reasonable
 
-5. Commit changes (IMPORTANT!  do not commit existing suite series that you
-don't want changed -- only commit configs adds and deletes) 
+6. Commit changes by commiting the diffs between incat-auto-new.xml and
+incat-auto.xml 
 
-% ./bin/commitIncat <incat file>
+% ./bin/commitIncat auto
+
+This will create an incat-diff.xml file and be displayed to stdout.  Check
+the incat-diff file and if it looks good, re-run with the -f option.
+
+% ./bin/commitIncat -f auto
+
+Press enter to continue after incat-diff is displayed.  The incat-auto-new.xml
+will then be moved to incat-auto.xml.
+
