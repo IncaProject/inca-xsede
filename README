@@ -1,0 +1,56 @@
+Readme for updateIncat
+=======================
+
+This tool is used to make automatic updates to the XSEDE Inca deployment based
+on data from kit registrations.
+
+Files:
+======
+
+config.xml = original config file that holds manually added resources and 
+             custom macros as well as suites.  Does not contain kit queries
+             which are auto=generated from kit definition files in etc/kits
+
+config=auto.xml = current version of config file to use to generate a 
+                  fresh incat=auto.xml file.
+
+incat=auto.xml = auto=generated incat file to send to agent
+
+Tools:
+======
+
+./bin/generateConfig = generates config=auto.xml from config.xml and kit
+                       definition files in etc/kits.  Should only need to be
+                       run if changes are made to config.xml or etc/kits.
+
+./bin/updateIncat = generates a fresh incat file based on input from a 
+                    fresh cache file.  If used with the 'auto' argument, it
+                    will reference the files indicated above.
+
+./bin/verifyIncat = wrapper for SuiteStagesWrapper main program.  If used with
+                    the 'auto' argument, will expand incat=auto.xml and place
+                    the new suite files in "newsuites" and the compare them
+                    against "cursuites"
+
+General Procedures:
+===================
+
+Case 1:  changes in the cache are detected
+------------------------------------------
+
+1. Copy cache.new file from gw60 and rename it cache
+
+2. If you do not have a cursuites dir, run
+
+% ./bin/verifyIncat expand -i <current incat file> -s cursuites
+
+2. Run updateIncat to generate new incat file
+
+% ./bin/updateIncat auto
+
+3. Verify changes 
+
+% ./bin/verifyIncat auto
+
+4. Verify changes in diff.log look reasonable
+
