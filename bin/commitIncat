@@ -1,0 +1,17 @@
+#!/bin/sh
+
+AGENT="localhost:6323"
+
+if [ "$1" = "" ]; then
+  echo "Please specify incat file" >&2
+  exit 1
+fi
+
+incatFile=$1
+
+echo "Ready to commit changes in $incatFile to $AGENT...press enter to continue"
+read
+
+cmd="java -cp ../teragrid/etc:lib/log4j-1.2.15.jar:../teragrid/lib/bcprov-jdk14-131.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/inca-common.jar  edu.sdsc.inca.AgentClient -f $incatFile -A $AGENT -P stdin:password: -c incatcert.pem -k incatkey.pem -t trusted"
+echo $cmd
+$cmd
