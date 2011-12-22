@@ -1,0 +1,22 @@
+#!/bin/sh
+
+javaexec="java -cp ./lib/inca-common.jar:./lib/incaXmlBeans.jar:./lib/log4j-1.2.15.jar:./lib/saxon9-dom.jar:./lib/saxon9.jar:./lib/xbean-2.4.jar:./lib/xbean_xpath-2.4.jar  edu.sdsc.inca.util.SuiteStagesWrapper"
+
+if [ "$1" = "auto" ]; then
+  if [ ! -d "cursuites" ]; then
+    echo "Please generate a suite directory for the current incat configuration" >&2
+    echo "E.g., ./bin/verifyIncat expand -i <incatfile> -s cursuites" >&2
+    exit 1;
+  fi
+  echo "Expanding inca-auto.xml to newsuites";
+  if [ -d "newsuites" ]; then
+    rm -fr "newsuites";
+  fi
+  $javaexec expand -i incat-auto.xml -s newsuites
+  echo "Diffing suites";
+  $javaexec diff -s1 newsuites -s2 cursuites -it true > diff.log
+  echo "Check diff.log for results (search for ERROR for errors)";
+else
+  $javaexec $*
+fi
+
