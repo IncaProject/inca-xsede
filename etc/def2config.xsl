@@ -92,11 +92,17 @@
         <xsl:variable name="groupName" select="concat($kit/Name,$kit/Version,'-',$sw)"/>
         <expression>sw[matches(Name,'^<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?$')]</expression>
         <products>
-          <version><xsl:value-of select="concat($groupName,'-version')"/></version>
+          <version>
+            <macro><xsl:value-of select="concat($groupName,'-version')"/></macro>
+          </version>
           <xsl:if test="$optional=1">
-          <optional><xsl:value-of select="$groupName"/></optional>
+          <optional>
+            <group><xsl:value-of select="$groupName"/></group>
+          </optional>
           </xsl:if>
-          <key><xsl:value-of select="concat($groupName,'-key')"/></key>
+          <key>
+            <macro><xsl:value-of select="concat($groupName,'-key')"/></macro>
+          </key>
       </products>
     </query>
   </xsl:template>
@@ -124,15 +130,21 @@
       <expression>service[Name = '<xsl:value-of select="$serviceRegex"/>']</expression>
       <xsl:variable name="groupName" select="concat($kit/Name, $kit/Version, '-', $service)"/>
       <products>
-        <version><xsl:value-of select="concat($groupName, '-registered-version')"/></version>
+        <version>
+          <macro><xsl:value-of select="concat($groupName, '-registered-version')"/></macro>
+        </version>
         <xsl:if test="$optional=1">
-          <optional><xsl:value-of select="$groupName"/></optional>
+          <optional>
+            <group><xsl:value-of select="$groupName"/></group>
+          </optional>
         </xsl:if>
         <url>
           <host><xsl:value-of select="concat($groupName, '-host')"/></host>
           <port><xsl:value-of select="concat($groupName, '-port')"/></port>
         </url>
-        <endpoint><xsl:value-of select="concat($groupName, '-endpoint')"/></endpoint>
+        <endpoint>
+          <macro><xsl:value-of select="concat($groupName, '-endpoint')"/></macro>
+        </endpoint>
       </products>
     </query>
   </xsl:template>

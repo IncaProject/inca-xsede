@@ -132,7 +132,7 @@ class ResourceQuery {
 	{
 		m_expression = xpath.evaluate("expression", query);
 
-		if (m_expression == null || m_expression.length() < 1)
+		if (m_expression.length() < 1)
 			throw new IncaException("Resource query has no expression");
 
 		NodeList productNodes = (NodeList)xpath.evaluate("products/*", query, XPathConstants.NODESET);

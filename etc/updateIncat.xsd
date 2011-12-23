@@ -7,24 +7,54 @@
 
   <import namespace="http://inca.sdsc.edu/dataModel/suite_2.0"/>
 
+  <complexType name="product" abstract="true">
+    <sequence>
+      <element name="expression" type="string" minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="macroProduct">
+    <complexContent>
+      <extension base="ui:product">
+        <sequence>
+          <element name="macro" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="groupProduct">
+    <complexContent>
+      <extension base="ui:product">
+        <sequence>
+          <element name="group" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="urlProduct">
+    <complexContent>
+      <extension base="ui:product">
+        <sequence>
+          <element name="host" type="string"/>
+          <element name="port" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
   <complexType name="kitQuery">
     <sequence>
       <element name="expression" type="string"/>
       <element name="products">
         <complexType>
           <choice maxOccurs="unbounded">
-            <element name="version" type="string"/>
-            <element name="optional" type="string"/>
-            <element name="key" type="string"/>
-            <element name="endpoint" type="string"/>
-            <element name="url">
-              <complexType>
-                <sequence>
-                  <element name="host" type="string"/>
-                  <element name="port" type="string"/>
-                </sequence>
-              </complexType>
-            </element>
+            <element name="version" type="ui:macroProduct"/>
+            <element name="optional" type="ui:groupProduct"/>
+            <element name="key" type="ui:macroProduct"/>
+            <element name="endpoint" type="ui:macroProduct"/>
+            <element name="url" type="ui:urlProduct"/>
           </choice>
         </complexType>
       </element>

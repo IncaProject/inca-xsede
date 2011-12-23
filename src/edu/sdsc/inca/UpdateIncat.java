@@ -280,7 +280,7 @@ public class UpdateIncat {
 	{
 		int position = fileName.lastIndexOf('.');
 		File oldFile = new File(fileName);
-		String timestamp = new SimpleDateFormat("ddMMMyyyy").format(new Date(oldFile.lastModified()));
+		String timestamp = (new SimpleDateFormat("ddMMMyyyy")).format(new Date(oldFile.lastModified()));
 		String basename;
 		String extension;
 
