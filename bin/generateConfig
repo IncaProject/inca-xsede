@@ -45,9 +45,6 @@ close $fd;
 # auto-generated
 my $cmd = "java -cp " . join( ":", @classpath ) . " " . $XSLT_CLASS . " " .
           "-xsl $xslthome/etc/def2config.xsl -in $xslthome/def2config.xml > config-auto.xml.tmp";
-if ( scalar(@ARGV) > 0 ) {
-  $cmd .= " > $ARGV[0]";
-}
 print "$cmd\n";
 `$cmd`;
 exit(1) if $? != 0; 
