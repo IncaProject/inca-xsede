@@ -271,14 +271,12 @@ class KitQuery {
 			String defaultText = xpath.evaluate("Default", newest);
 			String key;
 
-			if (defaultText.equalsIgnoreCase("yes"))
+			if (defaultText.equalsIgnoreCase("yes")) 
 				key = "";
-			else {
+			 else {
 				String keyText = xpath.evaluate("HandleKey", newest);
 
-				if (keyText.length() < 1)
-					return false;
-				else if (keyText.equalsIgnoreCase("None"))
+				if (keyText.length() < 1 || keyText.equalsIgnoreCase("None"))
 					key = "";
 				else
 					key = "@keyPre@ " + keyText + " @keyPost@";
