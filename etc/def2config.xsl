@@ -17,16 +17,19 @@
     <config>
       <xsl:copy-of select="config/properties"/>
       <queries>
+      <!-- insert kit queries -->
       <xsl:apply-templates select="Kits/iis:Kit" />
       </queries>
       <xsl:copy-of select="config/resources"/>
       <groups>
+        <!-- insert kit groups -->
         <xsl:for-each select="Kits/iis:Kit">
           <xsl:call-template name="printGroups">
             <xsl:with-param name="kit" select="."/>
             <xsl:with-param name="existingGroups" select="/def2config/config/groups/group"/>
           </xsl:call-template>
         </xsl:for-each>
+        <!-- copy manual groups -->
         <xsl:copy-of select="config/groups/group"/>
       </groups>
       <xsl:copy-of select="config/suites"/>
@@ -86,13 +89,14 @@
 
     <query>
         <xsl:variable name="regexPrefix"><xsl:choose><xsl:when test="$swRegex!=''"><xsl:value-of select="$swRegex"/></xsl:when><xsl:otherwise><xsl:value-of select="$sw"/></xsl:otherwise></xsl:choose></xsl:variable>
+        <xsl:variable name="groupName" select="concat($kit/Name,$kit/Version,'-',$sw)"/>
         <expression>sw[matches(Name,'^<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?$')]</expression>
         <products>
-          <version><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw,'-version')"/></version>
+          <version><xsl:value-of select="concat($groupName,'-version')"/></version>
           <xsl:if test="$optional=1">
-          <optional><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw)"/></optional>
+          <optional><xsl:value-of select="$groupName"/></optional>
           </xsl:if>
-          <key><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$sw,'-key')"/></key>
+          <key><xsl:value-of select="concat($groupName,'-key')"/></key>
       </products>
     </query>
   </xsl:template>
@@ -118,16 +122,17 @@
       <xsl:variable name="serviceRegex" select="replace($service, '^ws-gram-', 'ws-gram/')"/>
       <xsl:variable name="service" select="replace($service, '/', '-')"/>
       <expression>service[Name = '<xsl:value-of select="$serviceRegex"/>']</expression>
+      <xsl:variable name="groupName" select="concat($kit/Name, $kit/Version, '-', $service)"/>
       <products>
-        <version><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-registered-version')"/></version>
+        <version><xsl:value-of select="concat($groupName, '-registered-version')"/></version>
         <xsl:if test="$optional=1">
-          <optional><xsl:value-of select="concat($kit/Name,$kit/Version,'-',$service)"/></optional>
+          <optional><xsl:value-of select="$groupName"/></optional>
         </xsl:if>
         <url>
-          <host><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-host')"/></host>
-          <port><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-port')"/></port>
+          <host><xsl:value-of select="concat($groupName, '-host')"/></host>
+          <port><xsl:value-of select="concat($groupName, '-port')"/></port>
         </url>
-        <endpoint><xsl:value-of select="concat($kit/Name, $kit/Version, '-', $service, '-endpoint')"/></endpoint>
+        <endpoint><xsl:value-of select="concat($groupName, '-endpoint')"/></endpoint>
       </products>
     </query>
   </xsl:template>
@@ -148,13 +153,6 @@
      <group>
        <name><xsl:value-of select="$kitGroup"/></name>
        <type>kit</type>
-       <xsl:for-each select="Software[Required='true']">
-         <macro>
-           <type>constant</type>
-           <name><xsl:value-of select="concat($kit/Name,$kit/Version,'-',Name,'-key')"/></name>
-           <value></value>
-         </macro>
-       </xsl:for-each>
      </group>
    </xsl:if>
     <xsl:for-each select="Software">
@@ -174,11 +172,6 @@
           <group>
             <name><xsl:value-of select="$swGroup"/></name>
             <type>optional</type>
-            <macro>
-              <type>constant</type>
-              <name><xsl:value-of select="concat($swGroup,'-key')"/></name>
-              <value></value>
-            </macro>
           </group>
           </xsl:if>
           </xsl:if>
@@ -190,11 +183,6 @@
           <group>
             <name><xsl:value-of select="$swGroup"/></name>
             <type>optional</type>
-            <macro>
-              <type>constant</type>
-              <name><xsl:value-of select="concat($swGroup,'-key')"/></name>
-              <value></value>
-            </macro>
           </group>
           </xsl:if>
       </xsl:when></xsl:choose>
