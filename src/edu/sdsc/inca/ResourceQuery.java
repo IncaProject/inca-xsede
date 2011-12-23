@@ -26,26 +26,9 @@ class ResourceQuery {
 	/**
 	 *
 	 */
-	private interface QueryProduct {
+	private static abstract class QueryProduct {
 
-		/**
-		 *
-		 * @param xpath
-		 * @param result
-		 * @param configDoc
-		 * @param configRes
-		 * @return
-		 * @throws XPathExpressionException
-		 */
-		boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configRes) throws XPathExpressionException;
-	}
-
-	/**
-	 *
-	 */
-	private static class GroupProduct implements QueryProduct {
-
-		private final String m_groupName;
+		private final String m_expression;
 
 
 		// constructors
@@ -53,11 +36,11 @@ class ResourceQuery {
 
 		/**
 		 *
-		 * @param name
+		 * @param expression
 		 */
-		public GroupProduct(String name)
+		public QueryProduct(String expression)
 		{
-			m_groupName = name;
+			m_expression = expression;
 		}
 
 
@@ -70,15 +53,85 @@ class ResourceQuery {
 		 * @param result
 		 * @param configDoc
 		 * @param configRes
-		 * @param id
 		 * @return
 		 * @throws XPathExpressionException
 		 */
 		public boolean evaluate(XPath xpath, NodeList result, Document configDoc, Node configRes) throws XPathExpressionException
 		{
+			List<Node> resultList = new ArrayList<Node>();
+
+			if (m_expression.length() > 0) {
+				for (int i = 0 ; i < result.getLength() ; i += 1) {
+					Node resultNode = (Node)xpath.evaluate(m_expression, result.item(i), XPathConstants.NODE);
+
+					resultList.add(resultNode);
+				}
+			}
+			else {
+				for (int i = 0 ; i < result.getLength() ; i += 1)
+					resultList.add(result.item(i));
+			}
+
+			return evaluate(xpath, resultList, configDoc, configRes);
+		}
+
+
+		// protected methods
+
+
+		/**
+		 *
+		 * @param xpath
+		 * @param result
+		 * @param configDoc
+		 * @param configRes
+		 * @return
+		 * @throws XPathExpressionException
+		 */
+		protected abstract boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configRes) throws XPathExpressionException;
+	}
+
+	/**
+	 *
+	 */
+	private static class GroupProduct extends QueryProduct {
+
+		private final String m_groupName;
+
+
+		// constructors
+
+
+		/**
+		 *
+		 * @param name
+		 */
+		public GroupProduct(String expression, String name)
+		{
+			super(expression);
+
+			m_groupName = name;
+		}
+
+
+		// protected methods
+
+
+		/**
+		 *
+		 * @param xpath
+		 * @param result
+		 * @param configDoc
+		 * @param configRes
+		 * @param id
+		 * @return
+		 * @throws XPathExpressionException
+		 */
+		protected boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configRes) throws XPathExpressionException
+		{
 			Node group = (Node)xpath.evaluate("group[type = 'general' and name = '" + m_groupName + "']", configRes, XPathConstants.NODE);
 
-			if (result.getLength() > 0) {
+			if (!result.isEmpty()) {
 				if (group != null)
 					return false;
 
@@ -140,9 +193,13 @@ class ResourceQuery {
 		for (int i = 0 ; i < productNodes.getLength() ; i += 1) {
 			Node product = productNodes.item(i);
 			String name = product.getNodeName();
+			String expression = xpath.evaluate("expression", product);
 
-			if (name.equals("group"))
-				m_products.add(new GroupProduct(product.getTextContent()));
+			if (name.equals("group")) {
+				String group = xpath.evaluate("group", product);
+
+				m_products.add(new GroupProduct(expression, group));
+			}
 			else
 				throw new IncaException("Unknown query product type " + name);
 		}

@@ -39,7 +39,7 @@ class KitQuerySet {
 		m_kitVersion = xpath.evaluate("version", querySet);
 		m_groupName = xpath.evaluate("group", querySet);
 
-		NodeList nodes = (NodeList)xpath.evaluate("query/products/optional", querySet, XPathConstants.NODESET);
+		NodeList nodes = (NodeList)xpath.evaluate("query/products/optional/group", querySet, XPathConstants.NODESET);
 
 		for (int i = 0 ; i < nodes.getLength() ; i += 1)
 			m_optionalGroups.add(nodes.item(i).getTextContent());
