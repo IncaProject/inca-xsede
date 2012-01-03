@@ -165,7 +165,7 @@ public class UpdateIncat {
 	 */
 	private static boolean hasTestedSoftware(XPath xpath, Node inputRes) throws XPathExpressionException
 	{
-		NodeList kitNodes = (NodeList)xpath.evaluate("kit[SupportLevel != 'retired']", inputRes, XPathConstants.NODESET);
+		NodeList kitNodes = (NodeList)xpath.evaluate("Kit[SupportLevel != 'retired']", inputRes, XPathConstants.NODESET);
 
 		for (int j = 0 ; j < kitNodes.getLength() ; j += 1) {
 			Node kit = kitNodes.item(j);
@@ -195,7 +195,7 @@ public class UpdateIncat {
 	 */
 	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException, IncaException
 	{
-		NodeList inputResNodes = (NodeList)xpath.evaluate("//resource", inputDoc, XPathConstants.NODESET);
+		NodeList inputResNodes = (NodeList)xpath.evaluate("//KitRegistration", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 
 		for (int i = 0 ; i < inputResNodes.getLength() ; i += 1) {
@@ -215,7 +215,7 @@ public class UpdateIncat {
 					changedConfig = true;
 			}
 
-			NodeList kitNodes = (NodeList)xpath.evaluate("kit[SupportLevel = 'production' or SupportLevel = 'testing']", inputRes, XPathConstants.NODESET);
+			NodeList kitNodes = (NodeList)xpath.evaluate("Kit[SupportLevel = 'production' or SupportLevel = 'testing']", inputRes, XPathConstants.NODESET);
 
 			for (int j = 0 ; j < kitNodes.getLength() ; j += 1) {
 				Node kit = kitNodes.item(j);
@@ -254,7 +254,7 @@ public class UpdateIncat {
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
 			String resId = xpath.evaluate("name", configRes);
-			Node inputRes = (Node)xpath.evaluate("//resource[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			Node inputRes = (Node)xpath.evaluate("//KitRegistration[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
 
 			if (inputRes == null) {
 				System.err.println(resId + ": present in the config, but not in the input");

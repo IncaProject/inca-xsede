@@ -90,7 +90,7 @@
     <query>
         <xsl:variable name="regexPrefix"><xsl:choose><xsl:when test="$swRegex!=''"><xsl:value-of select="$swRegex"/></xsl:when><xsl:otherwise><xsl:value-of select="$sw"/></xsl:otherwise></xsl:choose></xsl:variable>
         <xsl:variable name="groupName" select="concat($kit/Name,$kit/Version,'-',$sw)"/>
-        <expression>sw[matches(Name,'^<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?$')]</expression>
+        <expression>Software[matches(Name,'^<xsl:value-of select="$regexPrefix"/>(-[\d\.]+)?$')]</expression>
         <products>
           <version>
             <macro><xsl:value-of select="concat($groupName,'-version')"/></macro>
@@ -127,7 +127,7 @@
       <!-- exception for ws gram service registrations -->
       <xsl:variable name="serviceRegex" select="replace($service, '^ws-gram-', 'ws-gram/')"/>
       <xsl:variable name="service" select="replace($service, '/', '-')"/>
-      <expression>service[Name = '<xsl:value-of select="$serviceRegex"/>']</expression>
+      <expression>Service[Name = '<xsl:value-of select="$serviceRegex"/>']</expression>
       <xsl:variable name="groupName" select="concat($kit/Name, $kit/Version, '-', $service)"/>
       <products>
         <version>

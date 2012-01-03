@@ -137,7 +137,7 @@ class KitQuerySet {
 		if (kitGroup == null)
 			return false;
 
-		Node inputKit = (Node)xpath.evaluate("kit[Name = '" + m_kitName + "' and Version = '" + m_kitVersion + "']", inputRes, XPathConstants.NODE);
+		Node inputKit = (Node)xpath.evaluate("Kit[Name = '" + m_kitName + "' and Version = '" + m_kitVersion + "']", inputRes, XPathConstants.NODE);
 		boolean removeKit = false;
 
 		if (inputKit == null)
