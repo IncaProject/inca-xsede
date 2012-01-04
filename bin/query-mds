@@ -7,49 +7,34 @@ my $config = "cache";
 my $xml = "cache.xml.$$";
 #`wget -o /dev/null -O $xml 'http://info.teragrid.org/web-apps/xml/reg-cat-v1/name/KitRegistration'`;
 `curl 'http://info.teragrid.org/web-apps/xml/reg-cat-v1/name/KitRegistration' 2>/dev/null > $xml`;
-print "Downloading cache to $xml...\n";
-#`cp cache.orig $xml`;
 open( READ, "<$xml" );
 open( WRITE, ">$config" );
 my $resource;
 while( <READ> ) {
   my $line = $_;
   ($resource) = /<ResourceID>([^<]+)<\/ResourceID>/ if /ResourceID/;
-#  $line =~ s/tg:V4KitsRP[^>]*/config/ if /tg:V4KitsRP/;
-#  $line =~ s/KitRegistration[^>]*/resource/ if /KitRegistration/;
-#  $line =~ s/compiler-gnu-gcc/compiler-gnu/ if /compiler-gnu-gcc/;
-#  $line =~ s/hdf5/0/ if /<Version>hdf5<\/Version>/;
-#  $line =~ s/gsi-scp-hpn</gsi-scp-hpn-server</g if /gsi-scp-hpn</;
-#  $line =~ s/gsiftp:\/\/\//gsiftp:\/\//g if /gsiftp:\/\/\//;
-#  if ( $line =~ /Extensions/ ) {
-#    print WRITE "</sw>\n";
-#    while( <READ> ) {
-#      my $line2 = $_;
-#      $line2 =~ s/Type/Name/g if $line2 =~ /Type/;
-#      $line2 =~ s/AccessMethod/service/g if $line2 =~ /AccessMethod/;
-#      next if $line2 =~ /Extensions/;
-#      next if $line2 =~ /ExtendedInfo/;
-#      last if /<\/sw>/;
-#      print WRITE $line2;
-#    }
-#    next;
-#  }
-#  if ( $line =~ /science-gateway.teragrid.org/ ) {
-#    my $holdLines = $line;
-#    my $version;
-#    my $serviceOrSw = 0;
-#    while( <READ> ) {
-#      $holdLines .= $_;
-#      ($version) = /<Version>([\d\.]+)<\/Version>/ if /Version/ && ! $serviceOrSw;
-#      $serviceOrSw = 1 if /service|sw/;
-#      last if /<\/kit>/;
-#    }
-#    $line = (defined $version && defined $resource && $version eq '5.0.1' && $resource =~ /kraken/) ? "</kit>" : $holdLines;
-#  }
-#
-#  if ( $line =~ /GLOBUS_MDS_INFO_HOSTNAME/ ) {
-#    $line =~ s/GLOBUS_MDS_INFO_HOSTNAME/grid.nics.utk.edu/ if $resource =~ /kraken/;
-#  }
+  $line =~ s/tg:V4KitsRP[^>]*/config/ if /tg:V4KitsRP/;
+  $line =~ s/KitRegistration[^>]*/resource/ if /KitRegistration/;
+  $line =~ s/compiler-gnu-gcc/compiler-gnu/ if /compiler-gnu-gcc/;
+  $line =~ s/hdf5/0/ if /<Version>hdf5<\/Version>/;
+  $line =~ s/gsi-scp-hpn</gsi-scp-hpn-server</g if /gsi-scp-hpn</;
+  $line =~ s/gsiftp:\/\/\//gsiftp:\/\//g if /gsiftp:\/\/\//;
+  if ( $line =~ /science-gateway.teragrid.org/ ) {
+    my $holdLines = $line;
+    my $version;
+    my $serviceOrSw = 0;
+    while( <READ> ) {
+      $holdLines .= $_;
+      ($version) = /<Version>([\d\.]+)<\/Version>/ if /Version/ && ! $serviceOrSw;
+      $serviceOrSw = 1 if /service|sw/;
+      last if /<\/Kit>/;
+    }
+    $line = (defined $version && defined $resource && $version eq '5.0.1' && $resource =~ /kraken/) ? "" : $holdLines;
+  }
+
+  if ( $line =~ /GLOBUS_MDS_INFO_HOSTNAME/ ) {
+    $line =~ s/GLOBUS_MDS_INFO_HOSTNAME/grid.nics.utk.edu/ if $resource =~ /kraken/;
+  }
   print WRITE $line;
 }
 close READ;
