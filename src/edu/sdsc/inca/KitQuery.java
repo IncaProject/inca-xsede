@@ -68,7 +68,8 @@ class KitQuery {
 				for (int i = 0 ; i < result.getLength() ; i += 1) {
 					Node resultNode = (Node)xpath.evaluate(m_expression, result.item(i), XPathConstants.NODE);
 
-					resultList.add(resultNode);
+					if (resultNode != null)
+						resultList.add(resultNode);
 				}
 			}
 			else {
@@ -138,7 +139,7 @@ class KitQuery {
 				return false;
 
 			Node newest = findNewest(xpath, result);
-			String version = xpath.evaluate("Version", newest);
+			String version = xpath.evaluate("tg:Version", newest);
 			String resId = xpath.evaluate("name", configRes);
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
@@ -192,7 +193,7 @@ class KitQuery {
 				return false;
 
 			String resId = xpath.evaluate("name", configRes);
-			String url = xpath.evaluate("Endpoint", result.get(0));
+			String url = xpath.evaluate("tg:Endpoint", result.get(0));
 			Matcher matchResult = m_urlPattern.matcher(url);
 
 			if (!matchResult.matches()) {
@@ -329,13 +330,13 @@ class KitQuery {
 				return false;
 
 			Node newest = findNewest(xpath, result);
-			String defaultText = xpath.evaluate("Default", newest);
+			String defaultText = xpath.evaluate("tg:Default", newest);
 			String key;
 
 			if (defaultText.equalsIgnoreCase("yes"))
 				key = "";
 			else {
-				String keyText = xpath.evaluate("HandleKey", newest);
+				String keyText = xpath.evaluate("tg:HandleKey", newest);
 
 				if (keyText.length() < 1 || keyText.equalsIgnoreCase("None"))
 					key = "";
@@ -391,7 +392,7 @@ class KitQuery {
 			if (result.isEmpty())
 				return false;
 
-			String endpoint = xpath.evaluate("Endpoint", result.get(0));
+			String endpoint = xpath.evaluate("tg:Endpoint", result.get(0));
 			String resId = xpath.evaluate("name", configRes);
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
@@ -517,8 +518,8 @@ class KitQuery {
 
 		Iterator<Node> elements = nodes.iterator();
 		Node resultNode = elements.next();
-		String resultText = xpath.evaluate("Version", resultNode);
-		String defaultText = xpath.evaluate("Default", resultNode);
+		String resultText = xpath.evaluate("tg:Version", resultNode);
+		String defaultText = xpath.evaluate("tg:Default", resultNode);
 		boolean hasDefault = false;
 
 		if (defaultText.equalsIgnoreCase("yes"))
@@ -526,9 +527,9 @@ class KitQuery {
 
 		while (elements.hasNext()) {
 			Node currentNode = elements.next();
-			String currentText = xpath.evaluate("Version", currentNode);
+			String currentText = xpath.evaluate("tg:Version", currentNode);
 
-			defaultText = xpath.evaluate("Default", currentNode);
+			defaultText = xpath.evaluate("tg:Default", currentNode);
 
 			if (hasDefault) {
 				if (!defaultText.equalsIgnoreCase("yes"))

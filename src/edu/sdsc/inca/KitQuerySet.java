@@ -137,13 +137,13 @@ class KitQuerySet {
 		if (kitGroup == null)
 			return false;
 
-		Node inputKit = (Node)xpath.evaluate("Kit[Name = '" + m_kitName + "' and Version = '" + m_kitVersion + "']", inputRes, XPathConstants.NODE);
+		Node inputKit = (Node)xpath.evaluate("tg:Kit[tg:Name = '" + m_kitName + "' and tg:Version = '" + m_kitVersion + "']", inputRes, XPathConstants.NODE);
 		boolean removeKit = false;
 
 		if (inputKit == null)
 			removeKit = true;
 		else {
-			String supportLevel = xpath.evaluate("SupportLevel", inputKit);
+			String supportLevel = xpath.evaluate("tg:SupportLevel", inputKit);
 
 			if (supportLevel.equals("retired"))
 				removeKit = true;
