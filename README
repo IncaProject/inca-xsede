@@ -9,17 +9,20 @@ Files:
 
 config.xml = original config file that holds manually added resources and 
              custom macros as well as suites.  Does not contain kit queries
-             which are auto=generated from kit definition files in etc/kits
+             which are auto-generated from kit definition files in etc/kits
 
-config=auto.xml = current version of config file to use to generate a 
-                  fresh incat=auto.xml file.
+config-auto.xml = current version of config file to use to generate a 
+                  fresh incat-auto.xml file.
 
-incat=auto.xml = auto=generated incat file to send to agent
+incat-auto.xml = auto=generated incat file to send to agent
 
 Tools:
 ======
 
-./bin/generateConfig = generates config=auto.xml from config.xml and kit
+./bin/downloadKitRegs = downloads a current copy of the kit registrations
+                        to kit-regs.xml
+                        
+./bin/generateConfig = generates config-auto.xml from config.xml and kit
                        definition files in etc/kits.  Should only need to be
                        run if changes are made to config.xml or etc/kits.
 
@@ -28,7 +31,7 @@ Tools:
                     will reference the files indicated above.
 
 ./bin/verifyIncat = wrapper for SuiteStagesWrapper main program.  If used with
-                    the 'auto' argument, will expand incat=auto.xml and place
+                    the 'auto' argument, will expand incat-auto.xml and place
                     the new suite files in "newsuites" and the compare them
                     against "cursuites"
 
@@ -38,7 +41,9 @@ General Procedures:
 Case 1:  changes in the cache are detected
 ------------------------------------------
 
-1. Copy cache.new file from gw60 and rename it cache
+1. Download a fresh copy of the kit registrations from info.teragrid.org
+
+% ./bin/downloadKitRegs
 
 2. If you do not have an up-to-date cursuites dir already, run
 
@@ -65,5 +70,16 @@ the incat-diff file and if it looks good, re-run with the -f option.
 % ./bin/commitIncat -f auto
 
 Press enter to continue after incat-diff is displayed.  The incat-auto-new.xml
-will then be moved to incat-auto.xml.
+will then be moved to incat-auto.xml and newsuites will replace the
+cursuites dir.
 
+Case 2:  changes in etc/def2config.xsl and/or config.xml are needed
+-----------------------------------------------------------------
+
+1. Make needed changes in etc/def2config.xsl and/or config.xml
+
+2. Re-generate config-auto.xml
+
+% ./bin/generateConfig
+
+3. Follow steps 2 - 6 above
