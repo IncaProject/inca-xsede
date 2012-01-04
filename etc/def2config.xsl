@@ -86,6 +86,7 @@
     <xsl:param name="sw"/>
     <xsl:param name="swRegex"/>
     <xsl:param name="optional"/>
+    <xsl:param name="accessMethod"/>
 
     <query>
         <xsl:variable name="regexPrefix"><xsl:choose><xsl:when test="$swRegex!=''"><xsl:value-of select="$swRegex"/></xsl:when><xsl:otherwise><xsl:value-of select="$sw"/></xsl:otherwise></xsl:choose></xsl:variable>
@@ -103,6 +104,23 @@
           <key>
             <macro><xsl:value-of select="concat($groupName,'-key')"/></macro>
           </key>
+          <xsl:if test="$accessMethod">
+            <xsl:if test="$optional=1">
+            <optional>
+              <expression>tg:Extensions/tg:ExtendedInfo/tg:AccessMethod[tg:Type='<xsl:value-of select="$accessMethod"/>']</expression>
+              <group><xsl:value-of select="concat($groupName, '-', $accessMethod)"/></group>
+            </optional>
+            </xsl:if>
+            <url>
+              <expression>tg:Extensions/tg:ExtendedInfo/tg:AccessMethod[tg:Type='<xsl:value-of select="$accessMethod"/>']</expression>
+              <host><xsl:value-of select="concat($groupName, '-', $accessMethod, '-host')"/></host>
+              <port><xsl:value-of select="concat($groupName, '-', $accessMethod, '-port')"/></port>
+            </url>
+            <endpoint>
+              <expression>tg:Extensions/tg:ExtendedInfo/tg:AccessMethod[tg:Type='<xsl:value-of select="$accessMethod"/>']</expression>
+              <macro><xsl:value-of select="concat($groupName, '-', $accessMethod, '-endpoint')"/></macro>
+            </endpoint>
+          </xsl:if>
       </products>
     </query>
   </xsl:template>
@@ -194,6 +212,12 @@
           <xsl:if test="count($existingGroups[name=$swGroup])=0">
           <group>
             <name><xsl:value-of select="$swGroup"/></name>
+            <type>optional</type>
+          </group>
+          </xsl:if>
+          <xsl:if test="$sw/AccessMethod">
+          <group>
+            <name><xsl:value-of select="concat($swGroup, '-', $sw/AccessMethod)"/></name>
             <type>optional</type>
           </group>
           </xsl:if>
@@ -302,6 +326,7 @@
                 <xsl:with-param name="sw" select="replace(replace($name, '[()?]', ''), '\+', 'p')"/>
                 <xsl:with-param name="kit" select="$kit"/>
                 <xsl:with-param name="optional" select="1"/>
+                <xsl:with-param name="accessMethod" select="$sw/AccessMethod"/>
               </xsl:call-template>
               </xsl:if>
             </xsl:for-each>
@@ -310,6 +335,7 @@
               <xsl:with-param name="sw" select="$sw/Name"/>
               <xsl:with-param name="kit" select="$kit"/>
               <xsl:with-param name="optional" select="$kit/Fixed='false' or ($kit/Fixed='true' and $sw/Required='false')"/>
+                <xsl:with-param name="accessMethod" select="$sw/AccessMethod"/>
             </xsl:call-template>
           </xsl:otherwise></xsl:choose>
         </xsl:for-each>
