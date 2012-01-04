@@ -3,18 +3,16 @@
 use strict;
 use warnings;
 
-my $config = "cache";
-my $xml = "cache.xml.$$";
+my $kitRegFile = "kit-regs.xml";
+my $xml = "kit-regs.xml.$$";
 #`wget -o /dev/null -O $xml 'http://info.teragrid.org/web-apps/xml/reg-cat-v1/name/KitRegistration'`;
 `curl 'http://info.teragrid.org/web-apps/xml/reg-cat-v1/name/KitRegistration' 2>/dev/null > $xml`;
 open( READ, "<$xml" );
-open( WRITE, ">$config" );
+open( WRITE, ">$kitRegFile" );
 my $resource;
 while( <READ> ) {
   my $line = $_;
   ($resource) = /<ResourceID>([^<]+)<\/ResourceID>/ if /ResourceID/;
-  $line =~ s/tg:V4KitsRP[^>]*/config/ if /tg:V4KitsRP/;
-  $line =~ s/KitRegistration[^>]*/resource/ if /KitRegistration/;
   $line =~ s/compiler-gnu-gcc/compiler-gnu/ if /compiler-gnu-gcc/;
   $line =~ s/hdf5/0/ if /<Version>hdf5<\/Version>/;
   $line =~ s/gsi-scp-hpn</gsi-scp-hpn-server</g if /gsi-scp-hpn</;
@@ -39,4 +37,4 @@ while( <READ> ) {
 }
 close READ;
 close WRITE;
-
+unlink $xml;
