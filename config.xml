@@ -2888,6 +2888,62 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
       <seriesConfigs>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>egrep '^[0-9-]+ [0-9,:]+ DEBUG AgentClient:[0-9]+ - cron scheduler is NOT running' ${HOME}/inca2install/var/reporter-manager*log || test 1 | wc -l</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>^0$</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>client-checkSchedRestart</nickname>
+          <resourceSetName>tacc-ranger</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>inca.diskusage</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.diskusage</uri>
             <args>
