@@ -3,9 +3,8 @@
 javaexec="java -cp ./lib/inca-common.jar:./lib/incaXmlBeans.jar:./lib/log4j-1.2.15.jar:./lib/saxon9-dom.jar:./lib/saxon9.jar:./lib/xbean-2.4.jar:./lib/xbean_xpath-2.4.jar  edu.sdsc.inca.util.SuiteStagesWrapper"
 
 if [ "$1" = "auto" ]; then
-  if [ ! -d "cursuites" ]; then
-    echo "Please generate a suite directory for the current incat configuration" >&2
-    echo "E.g., ./bin/verifyIncat expand -i <incatfile> -s cursuites" >&2
+  if [ ! -d "../teragrid/var/suites" ]; then
+    echo "Cannot find teragrid var/suites directory at ../teragrid/var/suites" >&2
     exit 1;
   fi
   echo "Expanding inca-auto-new.xml to newsuites";
@@ -14,7 +13,7 @@ if [ "$1" = "auto" ]; then
   fi
   $javaexec expand -i incat-auto-new.xml -s newsuites
   echo "Diffing suites";
-  $javaexec diff -s1 newsuites -s2 cursuites -it true -iu true > diff.log
+  $javaexec diff -s1 newsuites -s2 ../teragrid/var/suites -it true -iu true > diff.log
   echo "Check diff.log for results (search for ERROR for errors)";
 else
   $javaexec $*
