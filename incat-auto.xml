@@ -15305,26 +15305,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -15339,42 +15326,30 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@remote-compute4.2.0-globus-mds-secure-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-jobs-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
                             <wallClockTime>3600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
                     <nickname>wsrf-query-mds-auth-JobsRP-rc-4.2.0</nickname>
                     <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
@@ -15393,26 +15368,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -15427,220 +15389,32 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/DefaultIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-JobsRP-cache-rc-4.2.0</nickname>
-                    <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
+                                <name>localEndpoint</name>
+                                <value>@remote-compute4.2.0-globus-mds-endpoint@</value>
                             </arg>
                             <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-load-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-load-object@</value>
                             </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
-                            </arg>
                         </args>
                         <limits>
                             <wallClockTime>3600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
                     <nickname>wsrf-query-mds-auth-LoadRP-rc-4.2.0</nickname>
-                    <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute4.2.0-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-LoadRP-cache-rc-4.2.0</nickname>
                     <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
@@ -16329,26 +16103,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -16363,42 +16124,30 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@remote-compute5.0.1-globus-mds-secure-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-jobs-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
                             <wallClockTime>3600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
                     <nickname>wsrf-query-mds-auth-JobsRP-rc-5.0.1</nickname>
                     <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
@@ -16417,26 +16166,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -16451,220 +16187,32 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/DefaultIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-JobsRP-cache-rc-5.0.1</nickname>
-                    <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
+                                <name>localEndpoint</name>
+                                <value>@remote-compute5.0.1-globus-mds-endpoint@</value>
                             </arg>
                             <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-load-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-load-object@</value>
                             </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-host@</value>
-                            </arg>
                         </args>
                         <limits>
                             <wallClockTime>3600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
                     <nickname>wsrf-query-mds-auth-LoadRP-rc-5.0.1</nickname>
-                    <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@remote-compute5.0.1-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-LoadRP-cache-rc-5.0.1</nickname>
                     <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
@@ -17189,26 +16737,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -17223,36 +16758,24 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@science-gateway4.2.0-globus-mds-secure-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-jobs-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
@@ -17268,35 +16791,16 @@
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
                         <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -17311,36 +16815,24 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/DefaultIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@science-gateway4.2.0-globus-mds-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-load-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
@@ -17356,188 +16848,6 @@
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
                         <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-JobsRP-cache-sg-4.2.0</nickname>
-                    <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway4.2.0-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-LoadRP-cache-sg-4.2.0</nickname>
-                    <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
@@ -18157,26 +17467,13 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -18191,36 +17488,24 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@science-gateway5.0.1-globus-mds-secure-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-jobs-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
@@ -18236,35 +17521,16 @@
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
                         <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
                         <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
                         <args>
                             <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad/LoadInfo[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-port@</value>
+                                <name>expire</name>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -18279,36 +17545,24 @@
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
+                                <name>remoteEndpoint</name>
+                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/DefaultIndexService</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
+                                <name>localEndpoint</name>
+                                <value>@science-gateway5.0.1-globus-mds-endpoint@</value>
+                            </arg>
+                            <arg>
                                 <name>query</name>
-                                <value>//*[local-name()='LoadRP']/ComputeResourceLoad[LoadInfo[@hostname='%HOSTNAME%']]</value>
+                                <value>//@mds-load-object@</value>
                             </arg>
                             <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
+                                <name>objectname</name>
                                 <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-host@</value>
                             </arg>
                         </args>
                         <limits>
@@ -18324,188 +17578,6 @@
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
                         <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@/@mds-jobs-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}JobsRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>SecureIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''JobsRP'\\'']/@mds-job-cache@[@mds-jobs-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-jobs-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-JobsRP-cache-sg-5.0.1</nickname>
-                    <resourceSetName>science-gateway.teragrid.org-5.0.1</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
-                        <args>
-                            <arg>
-                                <name>localquery</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@/@mds-load-object@[@timestamp]</value>
-                            </arg>
-                            <arg>
-                                <name>cache</name>
-                                <value>yes</value>
-                            </arg>
-                            <arg>
-                                <name>prop</name>
-                                <value>{http://mds.teragrid.org/2006/09/tg-user-portal}LoadRP</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-port@</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>secs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>service</name>
-                                <value>DefaultIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//*[local-name()='\\''LoadRP'\\'']/@mds-load-cache@[@mds-load-object@[@hostname='\\''%HOSTNAME%'\\'']]</value>
-                            </arg>
-                            <arg>
-                                <name>cachesecs</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>delta</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>grep</name>
-                                <value>@mds-load-object@</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@science-gateway5.0.1-globus-mds-secure-host@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-LoadRP-cache-sg-5.0.1</nickname>
-                    <resourceSetName>science-gateway.teragrid.org-5.0.1</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@adminEmail@, @tgContact@, FailTo:maytal@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
