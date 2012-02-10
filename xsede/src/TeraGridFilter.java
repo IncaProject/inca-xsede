@@ -1,5 +1,3 @@
-import java.util.Vector;
-import java.util.Enumeration;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import edu.sdsc.inca.util.CachedProperties;
@@ -19,39 +17,8 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
   private static Logger logger = Logger.getLogger(TeraGridFilter.class);
   private static CachedProperties cacheDown =
       new CachedProperties("inca.depot.", "downtime", "15");
-  private static CachedProperties cacheFilter =
-      new CachedProperties("inca.depot.", "filter", "1440");
-  //private static Pattern DNS_ERROR = Pattern.compile("<value>info.*<errorMessage>.*(Bad hostname|unknown host|not found|Name or service not known)");
   private static Pattern DNS_ERROR = Pattern.compile("(?s)<value>info.*<errorMessage>.*(Bad hostname|[Uu]nknown host|not found|Name or service not known)");
   private static Pattern DNS = Pattern.compile("<reporter>network.dnslookup.unit");
-
-  /**
-   * Checks context to see if matches regex string for a down resource
-   *
-   * @return  string with resource down optional string
-   */
-  private String downSeriesResource() {
-    String downResource = null;
-    Enumeration keys = cacheFilter.getProperties().keys();
-    Vector checkResources = new Vector();
-    while (keys.hasMoreElements()) {
-      String key = (String)keys.nextElement();
-      String value = (String)cacheFilter.getProperties().get(key);
-      if (Pattern.matches("(.|\\n)*"+value+"(.|\\n)*", super.getContext())){
-        checkResources.addElement(key);
-      }
-    }
-    String[] check = (String[])checkResources.toArray(
-        new String [checkResources.size()] );
-    for (String lookup : check){
-      String resourceProp  = cacheDown.getProperties().getProperty(lookup);
-      if (resourceProp != null){
-        logger.debug( lookup + " is down " + resourceProp );
-        return resourceProp;
-      }
-    }
-    return downResource;
-  }
 
   /**
    * Writes new report with modified error message to depot if resource is down
@@ -69,15 +36,15 @@ public class TeraGridFilter extends edu.sdsc.inca.depot.util.ReportFilter {
       logger.debug("downtime cache is empty");
       return super.getStdout();
     } else {
-      String downSeriesProp = downSeriesResource();
-      if (downSeriesProp != null){
-        return super.getStdout().replaceFirst(
-            "<errorMessage>", "<errorMessage>DOWNTIME:"+ downSeriesProp +": ");
-      }
+      logger.debug( "Target hostname is " + super.getTargetHostname() );
+      logger.debug( "Resource is " + super.getResource() );
+
+      String downtimeResource = super.getTargetHostname() == null ?
+        super.getResource() : super.getTargetHostname();
       String resourceProp  =
-          cacheDown.getProperties().getProperty(super.getResource());
+          cacheDown.getProperties().getProperty(downtimeResource);
       if (resourceProp != null){
-        logger.debug( super.getResource() + " is down " + resourceProp );
+        logger.debug( downtimeResource + " is down " + resourceProp );
         return super.getStdout().replaceFirst(
             "<errorMessage>", "<errorMessage>DOWNTIME:"+ resourceProp +": ");
       } else{
