@@ -295,6 +295,84 @@
         <hosts>grid.nics.utk.edu</hosts>
       </macroResource>
     </resource>
+<!--
+    <resource>
+      <name>grid1.osg.xsede.org</name>
+      <macroResource>
+        <name>osg</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca2install-gordon</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>defaultModule</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>OSG</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>xsede</name>
+        </group>
+        <hosts>osg-xsede.grid.iu.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>osg.xsede.org</name>
+      <macroResource>
+        <name>osg</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca2install-gordon</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>defaultModule</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>OSG</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>xsede</name>
+        </group>
+        <hosts>osg-xsede.grid.iu.edu</hosts>
+      </macroResource>
+    </resource>
+-->
     <resource>
       <name>blacklight.psc.teragrid.org</name>
       <macroResource>
@@ -3593,6 +3671,59 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>expire</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>remoteEndpoint</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>localEndpoint</name>
+                <value>@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-endpoint@</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='V4KitsRP']</value>
+              </arg>
+              <arg>
+                <name>objectname</name>
+                <value>KitRegistration</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
       </seriesConfigs>
       <name>core.teragrid.org-5.0.0</name>
       <guid>incas://capac.sdsc.edu:6323/core.teragrid.org-5.0.0</guid>
@@ -5832,23 +5963,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>localquery</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>cache</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>prop</name>
-                <value>{http://info.teragrid.org/2009/03/ctss}V4glue2RP</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8443</value>
+                <name>expire</name>
+                <value>1800</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -5863,36 +5981,24 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <value>no</value>
               </arg>
               <arg>
-                <name>secs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value>DefaultIndexService</value>
+                <name>remoteEndpoint</name>
+                <value/>
               </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
               </arg>
               <arg>
+                <name>localEndpoint</name>
+                <value>@local-compute4.2.2-glue2-secure-globus-mds4-endpoint@</value>
+              </arg>
+              <arg>
                 <name>query</name>
-                <value/>
+                <value>//ctss:V4glue2RP</value>
               </arg>
               <arg>
-                <name>cachesecs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>delta</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@local-compute4.2.2-glue2-secure-globus-mds4-host@</value>
+                <name>objectname</name>
+                <value>glue2</value>
               </arg>
             </args>
             <limits>
@@ -6572,23 +6678,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
-                <name>localquery</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>cache</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>prop</name>
-                <value>{http://info.teragrid.org/2009/03/ctss}V4glue2RP</value>
-              </arg>
-              <arg>
-                <name>port</name>
-                <value>8443</value>
+                <name>expire</name>
+                <value>1800</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -6603,36 +6696,24 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <value>no</value>
               </arg>
               <arg>
-                <name>secs</name>
-                <value>1800</value>
-              </arg>
-              <arg>
-                <name>service</name>
-                <value>DefaultIndexService</value>
+                <name>remoteEndpoint</name>
+                <value/>
               </arg>
               <arg>
                 <name>version</name>
                 <value>no</value>
               </arg>
               <arg>
+                <name>localEndpoint</name>
+                <value>@metascheduling4.2.1-glue2-secure-globus-mds4-endpoint@</value>
+              </arg>
+              <arg>
                 <name>query</name>
-                <value/>
+                <value>//ctss:V4glue2RP</value>
               </arg>
               <arg>
-                <name>cachesecs</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>delta</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>grep</name>
-                <value/>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>@metascheduling4.2.1-glue2-secure-globus-mds4-host@</value>
+                <name>objectname</name>
+                <value>glue2</value>
               </arg>
             </args>
             <limits>
