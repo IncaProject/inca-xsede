@@ -248,6 +248,11 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>defaultModule</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>blasLink</name>
           <value/>
         </macro>
@@ -295,53 +300,22 @@
         <hosts>grid.nics.utk.edu</hosts>
       </macroResource>
     </resource>
-<!--
+<!-- exception for faulty registrations
     <resource>
-      <name>grid1.osg.xsede.org</name>
-      <macroResource>
-        <name>osg</name>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/home/inca/inca2install-gordon</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>defaultModule</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>OSG</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>xsede</name>
-        </group>
-        <hosts>osg-xsede.grid.iu.edu</hosts>
-      </macroResource>
+      <name>dash.sdsc.teragrid.org</name>
     </resource>
     <resource>
       <name>osg.xsede.org</name>
+    </resource>
+-->
+    <resource>
+      <name>grid1.osg.xsede.org</name>
       <macroResource>
-        <name>osg</name>
+        <name>osg-grid1</name>
         <macro>
           <type>constant</type>
           <name>__incaReporterManagerLocation__</name>
-          <value>/home/inca/inca2install-gordon</value>
+          <value>/home/inca/incaReporterManager</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -372,7 +346,6 @@
         <hosts>osg-xsede.grid.iu.edu</hosts>
       </macroResource>
     </resource>
--->
     <resource>
       <name>blacklight.psc.teragrid.org</name>
       <macroResource>
@@ -876,6 +849,10 @@
   <groups>
     <group>
       <name>NCSA</name>
+      <type>general</type>
+    </group>
+    <group>
+      <name>OSG</name>
       <type>general</type>
     </group>
     <group>
@@ -3485,6 +3462,52 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </notification>
             </notifications>
           </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>inca.cleanup</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/inca.cleanup</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>units</name>
+                <value>days</value>
+              </arg>
+              <arg>
+                <name>filePatterns</name>
+                <value>/localdisk/inca/updateincatXSEDE/config-auto_*</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>time</name>
+                <value>2</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>server-cleanConfigs</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
@@ -11747,6 +11770,120 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
       <guid>incas://capac.sdsc.edu:6323/xup</guid>
       <description>Tests for the XSEDE User Portal (XUP)</description>
       <version>2</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>expire</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>remoteEndpoint</name>
+                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>localEndpoint</name>
+                <value>https://@sdsc-gordon->core5.0.0-globus-mds-info-host@:8443/wsrf/services/DefaultIndexService</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//@mds-load-object@</value>
+              </arg>
+              <arg>
+                <name>objectname</name>
+                <value>@mds-load-object@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-LoadRP</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>expire</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>remoteEndpoint</name>
+                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>localEndpoint</name>
+                <value>https://@sdsc-gordon->core5.0.0-globus-mds-info-host@:8443/wsrf/services/SecureIndexService</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//@mds-jobs-object@</value>
+              </arg>
+              <arg>
+                <name>objectname</name>
+                <value>@mds-jobs-object@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>wsrf-query-mds-auth-JobsRP</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>sdsc</name>
+      <guid>incas://capac.sdsc.edu:6323/sdsc</guid>
+      <description>Tests for the SDSC Gordon machine</description>
+      <version>1</version>
     </suite>
   </suites>
 </config>
