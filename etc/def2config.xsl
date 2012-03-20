@@ -185,6 +185,14 @@
        <type>kit</type>
      </group>
    </xsl:if>
+   <group>
+     <name><xsl:value-of select="concat($kit/Name,'-',$kit/Version)"/>-production</name>
+     <type>optional</type>
+   </group>
+   <group>
+     <name><xsl:value-of select="concat($kit/Name,'-',$kit/Version)"/>-testing</name>
+     <type>optional</type>
+   </group>
     <xsl:for-each select="Software">
       <xsl:variable name="sw" select="."/>
       <xsl:variable name="variables">
@@ -310,6 +318,22 @@
         <name><xsl:value-of select="Name"/>.teragrid.org</name>
         <version><xsl:value-of select="Version"/></version>
         <group><xsl:value-of select="concat(Name,'.teragrid.org-',Version)"/></group>
+        <query>
+          <expression>tg:SupportLevel[. = 'production']</expression>
+          <products>
+            <optional>
+              <group><xsl:value-of select="concat(Name,'-',Version)"/>-production</group>
+           </optional>
+          </products>
+        </query>
+        <query>
+          <expression>tg:SupportLevel[. = 'testing']</expression>
+          <products>
+            <optional>
+              <group><xsl:value-of select="concat(Name,'-',Version)"/>-testing</group>
+           </optional>
+          </products>
+        </query>
         <xsl:for-each select="Software">
           <xsl:variable name="sw" select="."/>
           <xsl:variable name="variables">
