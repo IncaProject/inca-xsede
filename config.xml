@@ -207,7 +207,7 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>inca@sdsc.edu</value>
+          <value>FailTo:inca@sdsc.edu</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -3214,7 +3214,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
+                <target>FailTo:inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -3270,7 +3270,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
+                <target>FailTo:inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -3429,7 +3429,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu</target>
+                <target>FailTo:inca@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -4099,7 +4099,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <args>
               <arg>
                 <name>filter</name>
-                <value>all2all:gridftp_to_.*</value>
+                <value>all2all:gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@</value>
               </arg>
               <arg>
                 <name>server</name>
@@ -4153,16 +4153,16 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@ nickname=all2all:gridftp_to_.* @@@post@</context>
+            <context>@pre@@@@post@</context>
           </series>
-          <nickname>gridftp_summary</nickname>
+          <nickname>gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@</nickname>
           <resourceSetName>capac</resourceSetName>
           <schedule>
-            <crontime>4-59/10 * * * *</crontime>
+            <crontime>?-59/10 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <comparison>(errorMessage == '' || errorMessage =~ 'Inca error') &amp;&amp; all2all:gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@-pct&gt;50</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -4212,16 +4212,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
@@ -4854,7 +4844,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@data-movement-servers4.2.0-gridftp-striped-server->adminEmail@,FailTo:smartin@mcs.anl.gov</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -4906,7 +4896,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@data-movement-servers4.2.0-gridftp-nonstriped-server->adminEmail@,FailTo:smartin@mcs.anl.gov</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -4962,7 +4952,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@data-movement-servers.teragrid.org-4.2.0->adminEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -5234,7 +5224,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@data-movement4.1.2-gridftp-striped-server->adminEmail@,FailTo:smartin@mcs.anl.gov</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -5290,7 +5280,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@data-movement.teragrid.org-4.1.2->adminEmail@,FailTo:smartin@mcs.anl.gov</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -7716,7 +7706,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@remote-compute4.2.0-prews-gram-fork->adminEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -7764,7 +7754,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@remote-compute4.2.0-prews-gram-fork->adminEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -8522,7 +8512,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@remote-compute5.0.1-gram5-scheduler-batch->adminEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -8570,7 +8560,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>externalEmail</target>
+                <target>@remote-compute5.0.1-gram5-scheduler-batch->adminEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
