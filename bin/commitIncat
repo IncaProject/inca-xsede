@@ -60,8 +60,10 @@ if [ "$FORCE" = "yes" ]; then
   cmd="java -cp $CLIENT_LIBS edu.sdsc.inca.AgentClient -f incat-diff.xml -A $AGENT -P stdin:password: -c agentcert.pem -k agentkey.pem -t trusted"
   echo $cmd
   $cmd
+  echo $?
   
   echo "Moving $newIncatFile to $oldIncatFile";
+  mv $oldIncatFile $oldIncatFile.bak
   mv $newIncatFile $oldIncatFile
   echo "Moving newsuites to cursuites";
   rm -fr cursuites

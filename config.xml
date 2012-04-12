@@ -535,7 +535,7 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu</value>
+          <value>FailTo:inca@sdsc.edu, FailTo:kenneth@sdsc.edu, FailTo:wyoung@sdsc.edu</value>
         </macro>
         <group>
           <type>general</type>
@@ -564,6 +564,36 @@
           <type>constant</type>
           <name>__incaReporterManagerLocation__</name>
           <value>/home/inca/inca2install</value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>core5.0.0-globus-mds-info-host</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>core5.0.0-globus-mds-info-port</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>core5.0.0-globus-mds-info-endpoint</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>login4.0.0-gsi-openssh-host</name>
+          <value>trestles.sdsc.xsede.org</value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>data-movement-servers4.2.0-gridftp-default-server-host</name>
+          <value>trestles-dm1.sdsc.xsede.org</value>
+        </macro>
+        <macro>
+          <type>optional</type>
+          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-host</name>
+          <value>trestles.sdsc.xsede.org</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -3696,6 +3726,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -3796,16 +3830,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
@@ -3915,7 +3939,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <args>
               <arg>
                 <name>filter</name>
-                <value>all2all:gsissh_to_.*</value>
+                <value>all2all:gsissh_to_@login.teragrid.org-4.0.0->login4.0.0-gsi-openssh-host@</value>
               </arg>
               <arg>
                 <name>server</name>
@@ -3963,26 +3987,26 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ignoreErr</name>
-                <value>DOWNTIME:|NOT_AT_FAULT:|Inca error</value>
+                <value>DOWNTIME:|Inca error|skipped due to high load</value>
               </arg>
             </args>
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@ nickname=all2all:gsissh_to_.* @@@post@</context>
+            <context>@pre@@@@post@</context>
           </series>
-          <nickname>gsissh_summary</nickname>
+          <nickname>gsissh_to_@login.teragrid.org-4.0.0->login4.0.0-gsi-openssh-host@</nickname>
           <resourceSetName>capac</resourceSetName>
           <schedule>
-            <crontime>7-59/10 * * * *</crontime>
+            <crontime>?-59/10 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <comparison>(errorMessage == '' || errorMessage =~ 'Inca error') &amp;&amp; all2all:gsissh_to_@login.teragrid.org-4.0.0->login4.0.0-gsi-openssh-host@-pct&gt;50</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
+                <target>ssmallen@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
@@ -4043,7 +4067,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ignoreErr</name>
-                <value>DOWNTIME:|NOT_AT_FAULT:|Inca error</value>
+                <value>DOWNTIME:|Inca error|skipped due to high load</value>
               </arg>
             </args>
             <limits>
@@ -4123,7 +4147,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ignoreErr</name>
-                <value>DOWNTIME:|NOT_AT_FAULT:|Inca error</value>
+                <value>DOWNTIME:|Inca error|skipped due to high load</value>
               </arg>
             </args>
             <limits>
@@ -4401,7 +4425,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>21600.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-striped-transfer-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
@@ -4453,7 +4477,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>21600.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-transfer-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
@@ -4505,7 +4529,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-registered-version-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
@@ -4557,7 +4581,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-striped-registered-version-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
@@ -4613,7 +4637,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>3600.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>rft-unit-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-rft</resourceSetName>
@@ -4661,7 +4685,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>3600.0</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>rft-version-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-rft</resourceSetName>
@@ -4713,7 +4737,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>300</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-nonstriped-auth-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-nonstriped-server</resourceSetName>
@@ -4765,7 +4789,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>300</wallClockTime>
             </limits>
-            <context>@pre@@@@post@</context>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
           </series>
           <nickname>gridftp-striped-auth-dms-4.2.0</nickname>
           <resourceSetName>data-movement-servers4.2.0-gridftp-striped-server</resourceSetName>
@@ -5985,6 +6009,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -6699,6 +6727,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -7743,6 +7775,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -7805,6 +7841,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -8541,6 +8581,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -8603,6 +8647,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -9169,6 +9217,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -9225,6 +9277,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -9893,6 +9949,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -9949,6 +10009,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -10372,6 +10436,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -10559,6 +10627,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/grid.middleware.globus.unit.securemds</uri>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
@@ -11775,6 +11847,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
               <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
                 <name>expire</name>
                 <value>1800</value>
               </arg>
@@ -11827,6 +11903,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>grid.middleware.globus.unit.securemds</name>
             <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
               <arg>
                 <name>expire</name>
                 <value>1800</value>
