@@ -78,7 +78,7 @@
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,capac,teragrid-usage,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
+                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,capac,USAGE,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
                     <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
                       Other test suites
                     </a>
@@ -157,12 +157,12 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/html/ctssv3-expanded.html')}">
+                    <a href="{concat($url, '/HTML/kit-status-v1/ctss/xsede')}">
                       Cross-Site
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/html/ctssv3-expanded.html')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/ctss/xsede')}">
                           expanded detailed table
                         </a>
                       </li>
@@ -174,12 +174,12 @@
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-usage&amp;suiteNames=usage')}">
+                    <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=USAGE&amp;suiteNames=usage')}">
                       Other Test Suites
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=teragrid-usage&amp;suiteNames=usage')}">
+                        <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=USAGE&amp;suiteNames=usage')}">
                           grid job usage
                         </a>
                       </li>
@@ -189,7 +189,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/gig/gig')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/gig/quarry')}">
                           grid infrastructure group (gig)
                         </a>
                       </li>
