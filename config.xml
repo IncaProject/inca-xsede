@@ -566,36 +566,6 @@
           <value>/home/inca/inca2install</value>
         </macro>
         <macro>
-          <type>optional</type>
-          <name>core5.0.0-globus-mds-info-host</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>optional</type>
-          <name>core5.0.0-globus-mds-info-port</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>optional</type>
-          <name>core5.0.0-globus-mds-info-endpoint</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>optional</type>
-          <name>login4.0.0-gsi-openssh-host</name>
-          <value>trestles.sdsc.xsede.org</value>
-        </macro>
-        <macro>
-          <type>optional</type>
-          <name>data-movement-servers4.2.0-gridftp-default-server-host</name>
-          <value>trestles-dm1.sdsc.xsede.org</value>
-        </macro>
-        <macro>
-          <type>optional</type>
-          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-host</name>
-          <value>trestles.sdsc.xsede.org</value>
-        </macro>
-        <macro>
           <type>constant</type>
           <name>defaultModule</name>
           <value></value>
@@ -3868,16 +3838,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
@@ -4019,7 +3979,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <args>
               <arg>
                 <name>filter</name>
-                <value>all2all:gram_to_.*</value>
+                <value>all2all:gram_to_@remote-compute5.0.1-gram5-fork->remote-compute5.0.1-gram5-fork-host@</value>
               </arg>
               <arg>
                 <name>server</name>
@@ -4073,16 +4033,16 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@ nickname=all2all:gram_to_.* @@@post@</context>
+            <context>@pre@@@@post@</context>
           </series>
-          <nickname>gram_summary</nickname>
+          <nickname>gram_to_@remote-compute5.0.1-gram5-fork->remote-compute5.0.1-gram5-fork-host@</nickname>
           <resourceSetName>capac</resourceSetName>
           <schedule>
-            <crontime>1-59/10 * * * *</crontime>
+            <crontime>?-59/10 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <comparison>(errorMessage == '' || errorMessage =~ 'Inca error') &amp;&amp; all2all:gram_to_@remote-compute5.0.1-gram5-fork->remote-compute5.0.1-gram5-fork-host@-pct&gt;50</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -5561,7 +5521,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>host</name>
-                <value>tgcdb.teragrid.org</value>
+                <value>tgcdb.xsede.org</value>
               </arg>
               <arg>
                 <name>db</name>
@@ -7877,7 +7837,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@@</context>
           </series>
-          <nickname>wsrf-query-mds-auth-LoadRP-rc-4.2.0</nickname>
+          <nickname>wsrf-query-mds-LoadRP-rc-4.2.0</nickname>
           <resourceSetName>remote-compute.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -8683,7 +8643,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@@</context>
           </series>
-          <nickname>wsrf-query-mds-auth-LoadRP-rc-5.0.1</nickname>
+          <nickname>wsrf-query-mds-LoadRP-rc-5.0.1</nickname>
           <resourceSetName>remote-compute.teragrid.org-5.0.1</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -9313,7 +9273,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>wsrf-query-mds-auth-LoadRP-sg-4.2.0</nickname>
+          <nickname>wsrf-query-mds-LoadRP-sg-4.2.0</nickname>
           <resourceSetName>science-gateway.teragrid.org-4.2.0</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -10045,7 +10005,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>wsrf-query-mds-auth-LoadRP-sg-5.0.1</nickname>
+          <nickname>wsrf-query-mds-LoadRP-sg-5.0.1</nickname>
           <resourceSetName>science-gateway.teragrid.org-5.0.1</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -11202,117 +11162,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>user.search.output.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>com</name>
-                <value>mount -l</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>search</name>
-                <value>@wan-lustre5.0.0-dc-wan-cluster-endpoint@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>delim</name>
-                <value/>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>mount-wl-dc-cluster-5.0.0</nickname>
-          <resourceSetName>wan-lustre5.0.0-dc-wan-cluster</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>user.search.output.unit</name>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>com</name>
-                <value>mount -l</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>search</name>
-                <value>@wan-lustre5.0.0-dc-wan-front-end-endpoint@</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>delim</name>
-                <value/>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>mount-wl-dc-frontend-5.0.0</nickname>
-          <resourceSetName>wan-lustre5.0.0-dc-wan-front-end</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>user.search.output.unit</name>
             <args>
               <arg>
                 <name>version</name>
@@ -11858,7 +11707,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>remoteEndpoint</name>
-                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
+                <value>https://info.dyn.teragrid.org:8443/wsrf/services/DefaultIndexService</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -11882,7 +11731,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </limits>
             <context>@@</context>
           </series>
-          <nickname>wsrf-query-mds-auth-LoadRP</nickname>
+          <nickname>wsrf-query-mds-LoadRP</nickname>
           <resourceSetName>quarry</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
