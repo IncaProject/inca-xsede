@@ -34,9 +34,11 @@
          If the transfer fails or the source endpoint is having problems, 
          another source endpoint is randomly selected from the list.  If
          3 attempts fail, a failure is assumed on the destination endpoint.
+      </p><p>
          Click on selected
          icons (described in the <a href="javascript:window.open('/inca/jsp/legend.jsp','incalegend','width=400,height=325,resizable=yes')">legend</a>) for more details about the 
          collected Inca report.</p>
+       <p>Click <a href="/inca/jsp/report.jsp?xml=goReport.xml">here for historical report</a>.</p>
     </xsl:if>
 
     <!-- printSuiteInfo -->
@@ -58,6 +60,7 @@
       <xsl:for-each select="$suite/quer:object//rs:reportSummary">
         <xsl:sort select="nickname"/>
 
+        <xsl:variable name="i" select="position()"/>
         <xsl:variable name="errMsg" select="errorMessage" />
         <xsl:variable name="normRef">
           <xsl:choose><xsl:when test="gmt">
@@ -85,18 +88,19 @@
             <xsl:if test="body/transfers/@warnings&gt;0">warnings</xsl:if>
           </xsl:variable>
           <xsl:value-of select="$defaultconfig/incaResult/primaryState[@name=$transferResult]/@bgcolor"/>|<xsl:value-of select="$defaultconfig/incaResult/primaryState[@name=$transferResult]/@img"/>|<xsl:value-of select="$defaultconfig/incaResult/secondaryState[@name=$transferWarns]/@text"/>
-
         </xsl:otherwise></xsl:choose>
         </xsl:variable>
         <xsl:variable name="bgcolor" select="tokenize($state,'\|')[1]"/>
         <xsl:variable name="img" select="tokenize($state,'\|')[2]"/>
         <xsl:variable name="text" select="tokenize($state,'\|')[3]"/>
+        <xsl:variable name="passImg" select="$defaultconfig/incaResult/primaryState[@name='pass']/@img"/>
+        <xsl:variable name="failImg" select="$defaultconfig/incaResult/primaryState[@name='error']/@img"/>
 
         <tr>
           <td class="clear"><xsl:value-of select="replace(nickname,'go-transfers_to_','')"/></td>
           <td bgcolor="{$bgcolor}" align="center">
             <a href="{$href}" title="{$errMsg}" id="statuscell" >
-            <xsl:if test="$img!=''">
+            <xsl:if test="$img!='' and body=''">
               <img src="{concat('/inca/img/', $img)}"/>
                 <xsl:if test="$href != $normRef">
                   <a style="text-decoration:none; text-size: tiny" href="{$normRef}">*</a>
@@ -106,7 +110,8 @@
             <xsl:if test="body/transfers">
               <xsl:variable name="numErrors" select="body/transfers/@errors"/>
               <xsl:variable name="numTransfers" select="count(body/transfers/transfer)"/>
-              <table>
+              <a href="{$href}" title="{$errMsg}" id="statuscell" >
+              <table width="100%">
               <xsl:for-each select="body/transfers/transfer">
                 <xsl:variable name="tresult"><xsl:choose>
                   <xsl:when test="@result=1">green</xsl:when>
@@ -116,21 +121,28 @@
                   <xsl:when test="@result=1">pass</xsl:when>
                   <xsl:otherwise>fail</xsl:otherwise>
                 </xsl:choose></xsl:variable>
+                <xsl:variable name="resultImg"><xsl:choose>
+                  <xsl:when test="@result=1"><xsl:value-of select="$passImg"/></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="$failImg"/></xsl:otherwise>
+                </xsl:choose></xsl:variable>
                 <tr>
-                  <td><b><xsl:value-of select="@dest"/>/<xsl:value-of select="."/></b></td>
-<!--
-                  <td><xsl:if test="$numErrors &gt; 0 and $numTransfers &gt; 1"> <font color="{$tresult}"><xsl:value-of select="$text"/></font></xsl:if></td>
--->
-                  <td><font color="{$tresult}"><xsl:value-of select="$text"/></font></td>
+                  <td align="center"><b><xsl:value-of select="@dest"/>/<xsl:value-of select="."/></b></td>
+                  <xsl:choose><xsl:when test="$i &lt; count($suite/quer:object//rs:reportSummary) div 2">
+                  <td align="right"><img width="20" src="{concat('/inca/img/', $resultImg)}"/></td>
+                  </xsl:when><xsl:otherwise>
+                  <td align="right"><font color="{$tresult}"><xsl:value-of select="$text"/></font></td>
+                  </xsl:otherwise></xsl:choose>
                 </tr>
               </xsl:for-each>
               </table>
-              <p class="footer">from randomly select host(s)</p>
+              </a>
+              <a class="footer" title="from randomly selected host(s)">* from 
               <xsl:choose><xsl:when test="$numErrors=0">
                 <span class="footer"><xsl:value-of select="distinct-values(body/transfers/transfer/@source)"/></span>
               </xsl:when><xsl:otherwise>
                 <span class="footer"><xsl:value-of select="string-join(body/transfers/source, ', ')"/></span>
               </xsl:otherwise></xsl:choose>
+              </a>
             </xsl:if> 
           </td>
         </tr>
