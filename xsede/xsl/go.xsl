@@ -60,7 +60,6 @@
       <xsl:for-each select="$suite/quer:object//rs:reportSummary">
         <xsl:sort select="nickname"/>
 
-        <xsl:variable name="i" select="position()"/>
         <xsl:variable name="errMsg" select="errorMessage" />
         <xsl:variable name="normRef">
           <xsl:choose><xsl:when test="gmt">
@@ -113,25 +112,13 @@
               <a href="{$href}" title="{$errMsg}" id="statuscell" >
               <table width="100%">
               <xsl:for-each select="body/transfers/transfer">
-                <xsl:variable name="tresult"><xsl:choose>
-                  <xsl:when test="@result=1">green</xsl:when>
-                  <xsl:otherwise>red</xsl:otherwise>
-                </xsl:choose></xsl:variable>
-                <xsl:variable name="text"><xsl:choose>
-                  <xsl:when test="@result=1">pass</xsl:when>
-                  <xsl:otherwise>fail</xsl:otherwise>
-                </xsl:choose></xsl:variable>
                 <xsl:variable name="resultImg"><xsl:choose>
                   <xsl:when test="@result=1"><xsl:value-of select="$passImg"/></xsl:when>
                   <xsl:otherwise><xsl:value-of select="$failImg"/></xsl:otherwise>
                 </xsl:choose></xsl:variable>
                 <tr>
                   <td align="center"><b><xsl:value-of select="@dest"/>/<xsl:value-of select="."/></b></td>
-                  <xsl:choose><xsl:when test="$i &lt; count($suite/quer:object//rs:reportSummary) div 2">
                   <td align="right"><img width="20" src="{concat('/inca/img/', $resultImg)}"/></td>
-                  </xsl:when><xsl:otherwise>
-                  <td align="right"><font color="{$tresult}"><xsl:value-of select="$text"/></font></td>
-                  </xsl:otherwise></xsl:choose>
                 </tr>
               </xsl:for-each>
               </table>
