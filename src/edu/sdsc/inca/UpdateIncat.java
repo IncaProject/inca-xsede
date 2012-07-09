@@ -206,7 +206,7 @@ public class UpdateIncat {
 		for (int i = 0 ; i < inputResNodes.getLength() ; i += 1) {
 			Node inputRes = inputResNodes.item(i);
 			String resId = xpath.evaluate("tg:ResourceID", inputRes);
-			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "']", configDoc, XPathConstants.NODE);
+			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
 
 			if (configRes == null) {
 				if (hasTestedSoftware(xpath, inputRes))
