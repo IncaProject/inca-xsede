@@ -56,7 +56,7 @@
     <xsl:variable name="defaultconfig" select="document('../xml/default.xml')/default"/>
 
     <table class="subheader">
-      <tr><td><b>Resource</b></td><td align="center"><p><b>Filesystems</b></p></td></tr>
+      <tr><th><b>Resource</b></th><th align="center"><p><b>Filesystems</b></p></th></tr>
       <xsl:for-each select="$suite/quer:object//rs:reportSummary">
         <xsl:sort select="nickname"/>
 
@@ -96,7 +96,9 @@
         <xsl:variable name="failImg" select="$defaultconfig/incaResult/primaryState[@name='error']/@img"/>
 
         <tr>
-          <td class="clear"><xsl:value-of select="replace(nickname,'go-transfers_to_','')"/></td>
+          <xsl:variable name="resource" select="replace(nickname,'go-transfers_to_','')"/>
+          <xsl:variable name="xsedeid" select="/combo/resources/resource/macros/macro[name='__regexp__' and value=$resource]/../../name[contains(., '.org')]"/>
+          <td class="clear"><xsl:value-of select="string-join($xsedeid,'|')"/></td>
           <td bgcolor="{$bgcolor}" align="center">
             <a href="{$href}" title="{$errMsg}" id="statuscell" >
             <xsl:if test="$img!='' and body=''">
