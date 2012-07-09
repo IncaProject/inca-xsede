@@ -179,6 +179,11 @@
                     </a>
                     <ul>
                       <li>
+                        <a href="{concat($url, '/HTML/kit-status-v1/go-testing')}">
+                          globusonline (testing)
+                        </a>
+                      </li>
+                      <li>
                         <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=USAGE&amp;suiteNames=usage')}">
                           grid job usage
                         </a>
