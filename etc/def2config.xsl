@@ -163,6 +163,9 @@
         <endpoint>
           <macro><xsl:value-of select="concat($groupName, '-endpoint')"/></macro>
         </endpoint>
+        <xsl:if test="$service='gridftp-default-server'">
+        <go-endpoint><macro>go-id</macro></go-endpoint>
+        </xsl:if>
       </products>
     </query>
   </xsl:template>
