@@ -189,7 +189,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xml=tg-iis.xml&amp;resourceIds=quarry&amp;suiteNames=tg-iis')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/tg-iis/INFO')}">
                           information services
                         </a>
                       </li>
@@ -204,7 +204,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/security/capac')}">
+                        <a href="{concat($url, '/HTML/kit-status-v1/security/SECURITY')}">
                           security
                         </a>
                       </li>
