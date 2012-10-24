@@ -262,14 +262,10 @@
         <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?nickname=',
             encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;target=', $result/targetHostname, '&amp;collected=', $result/gmt)"/>
         <xsl:variable name="href">
-<xsl:value-of select="$errMsg"/>
-<xsl:value-of select="$normRef"/>
-<!--
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
             <xsl:with-param name="normRef" select="$normRef"/>
           </xsl:call-template>
--->
         </xsl:variable>
         <xsl:variable name="stale">
           <xsl:if test="$result/gmtExpires">
