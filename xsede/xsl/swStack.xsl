@@ -248,7 +248,7 @@
     <xsl:variable name="endpoint" select="$testname/../../../../endpoint[
          matches(nickname, $thisResource)]/regex"/>
     <xsl:variable name="testClean" select="replace($testname,'\+','.')"/>
-    <xsl:variable name="regexTest" select="concat('^',$testClean,'_',$endpoint,'$')"/>
+    <xsl:variable name="regexTest" select="concat('^',$testClean,'(_|_to_)',$endpoint,'$')"/>
     <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
          (matches(hostname, $regexHost) and nickname=$testname) or 
          (matches(nickname, $regexTest))]" />
@@ -260,12 +260,16 @@
       <xsl:when test="count($result)>0">
         <!-- resource is not exempt -->
         <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?nickname=',
-            encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
+            encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;target=', $result/targetHostname, '&amp;collected=', $result/gmt)"/>
         <xsl:variable name="href">
+<xsl:value-of select="$errMsg"/>
+<xsl:value-of select="$normRef"/>
+<!--
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
             <xsl:with-param name="normRef" select="$normRef"/>
           </xsl:call-template>
+-->
         </xsl:variable>
         <xsl:variable name="stale">
           <xsl:if test="$result/gmtExpires">
@@ -288,6 +292,9 @@
             </xsl:when>
             <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
               <xsl:value-of select="'noFault'" />
+            </xsl:when>
+            <xsl:when test="$errMsg[matches(., '.*skipped due to high load.*')]">
+              <xsl:value-of select="'skipped'" />
             </xsl:when>
             <xsl:when test="$errMsg[matches(., 'soft-msc: command not found')]">
               <xsl:value-of select="'noSoftenv'" />
@@ -328,13 +335,15 @@
                         </xsl:for-each>
                         <xsl:value-of select="$exit"/>
                       </xsl:when>
+<!--
                       <xsl:when test="$result/body/stats//warn">
-                        <xsl:value-of select="$errMsg" /><br/>
+                        <pre><xsl:value-of select="$errMsg" /></pre><br/>
                         <xsl:value-of select="'Near expiration:'" /><br/>
                         <xsl:for-each select="$result/body/stats//warn">
                           &#160;&#160;<xsl:value-of select="." /><br/>
                         </xsl:for-each>
                       </xsl:when>
+-->
                       <xsl:otherwise>
                         <xsl:value-of select="$exit"/>
                       </xsl:otherwise>
