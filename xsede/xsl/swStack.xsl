@@ -241,6 +241,9 @@
     <xsl:param name="testname"/>
     <xsl:param name="package"/>
     <xsl:param name="suite"/>
+
+    <xsl:variable name="defaultconfig" select="document('../xml/default.xml')/default"/>
+
     <xsl:variable name="thisResource" select="concat('^', name, '$')"/>
     <xsl:variable name="thisMacros" 
          select="replace(macros/macro[name='__regexp__']/value, ' ','|')"/>
@@ -265,6 +268,7 @@
           <xsl:call-template name="getLink">
             <xsl:with-param name="errMsg" select="$errMsg"/>
             <xsl:with-param name="normRef" select="$normRef"/>
+            <xsl:with-param name="downtimeUrl" select="$defaultconfig/downtimeUrl"/>
           </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="stale">
