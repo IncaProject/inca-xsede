@@ -30,40 +30,69 @@ use Date::Manip;
 
 exit if scalar(@ARGV) < 1;
 
+#exit if $ENV{incanickname} =~ /XDCDB_connect/;
+#exit if $ENV{incanickname} =~ /ca-crl-check-5.0.0/;
+#@ARGV = qw(ssmallen@sdsc.edu) if $ENV{incareporter} =~ /securemds/;
+#exit if $ENV{incanickname} =~ /WS MDS/;
+#exit if $ENV{incaresource} =~ /capac/ || $ENV{incanickname} =~ /capac/;
+#exit if $ENV{incaresource} =~ /quarry/ || $ENV{incanickname} =~ /quarry/;
+#exit if $ENV{incaresource} =~ /kraken/ || $ENV{incanickname} =~ /kraken/;
+#exit if $ENV{incaresource} =~ /blacklight/ || $ENV{incanickname} =~ /blacklight/;
+#exit if $ENV{incaresource} =~ /ranger/ || $ENV{incanickname} =~ /ranger/;
+#exit if $ENV{incaresource} =~ /spur/ || $ENV{incanickname} =~ /spur/;
+#exit if $ENV{incaresource} =~ /forge/ || $ENV{incanickname} =~ /forge/;
+
 exit if $ENV{incaschedule} =~ /immediate/;
 
 my $err = $ENV{incaerrorMessage};
-my $noemail = defined($err) && $err =~ /(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*|.*Execution of reporter skipped due to high load:.*)/;
+my $noemail = defined($err) && $err =~ /(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*|.*Execution of reporter skipped due to high load:.*|.*Error occurred during initialization of VM.*)/;
+if ( $ENV{incareporter} eq 'summary.successpct.performance' && ! defined $err && 
+     defined $ENV{incacomparisonResult} && $ENV{incacomparisonResult} =~ /Failure.*pct/ ) {
+  my ($cstest) = $ENV{incacomparisonResult} =~ /Failure:(\S+)-pct/;
+  my @lines = split( /\n/, $ENV{incabody} );
+  my %metrics;
+  for ( my $i = 0; $i <= $#lines; $i++ ) {
+    if ( $lines[$i] =~ /<ID>$cstest/ ) {
+      my ($metric) = $lines[$i] =~ /-(\w+)<\/ID>$/;
+      my ($value) = $lines[$i+1] =~ /(\d+)/;
+      $metrics{$metric} = $value;
+    }
+  }
+  my $total = $metrics{fail} + $metrics{success};
+  $err = "$cstest failed on $metrics{fail} of $total XSEDE resources ($metrics{pct} %)\n";
+}
 
 if (!$noemail){
   my $name = $ENV{incanickname} || $ENV{incareporter};
+  my $resource = defined $ENV{incatargetHostname} && $ENV{incatargetHostname} =~ /\w/ ?
+                 "to $ENV{incatargetHostname}" : "on $ENV{incaresource}";
+  my $target = defined $ENV{incatargetHostname} && $ENV{incatargetHostname} =~ /\w/ ?
+               "&target=$ENV{incatargetHostname}" : "";
   my $subject =
-  "Inca XSEDE Notification: $name on $ENV{incaresource} $ENV{incaresult}";
-  my $date = ParseDate($ENV{incacollected});
-  my ($unixdate, $zone) = UnixDate($date, "%Y-%m-%dT%H:%M:%S.000","%z");
-  my $fmtdate = $unixdate . substr($zone, 0, 3) . ":" . substr($zone, 3, 2);
+  "Inca XSEDE Notification: $name $resource $ENV{incaresult}";
   my $nickname = $ENV{incanickname};
   $nickname =~ s/ /%20/g;
   my $body =
   "The following Inca test has $ENV{incaresult}ED:\n\n" .
   "RAN AT:  $ENV{incacollected}\n\n" .
   "RAN ON:  $ENV{incahostname}\n\n" .
+  "RAN TO:  $ENV{incatargetHostname}\n\n" .
   "TEST:  $ENV{incareporter}\n\n" .
   "INPUT PARAMETERS:  $ENV{incaargs}\n\n" .
   (defined($ENV{incalog}) ? "LOGGED COMMANDS: $ENV{incalog}\n\n" : "") .
   (defined($err) ?  "ERROR MESSAGE: $err\n\n" : '') .
   (defined($ENV{incastderr}) ? "STANDARD ERROR: $ENV{incastderr}\n\n" : "") .
   "\n\n" .
-  "details at http://inca.xsede.org/inca/jsp/instance.jsp?xsl=instance.xsl" .
-  "&nickname=$nickname&resource=$ENV{incaresource}&collected=$fmtdate\n\n";
+  "details at http://inca.xsede.org/inca/jsp/instance.jsp?" .
+  "&nickname=$nickname&resource=$ENV{incaresource}$target&collected=$ENV{incacollected}\n\n";
 
-  my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
-  my $baseDate = ParseDate( $baseDateString );
-  if ( Date_Cmp($date, $baseDate) < 0 ) {
-    `date >> email.log`;
-    `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
-    exit 0;
-  }
+  #my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
+  #my $baseDate = ParseDate( $baseDateString );
+  #if ( Date_Cmp($date, $baseDate) < 0 ) {
+  #  `date >> email.log`;
+  #  `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
+  #  exit 0;
+  #}
 
   my $mailPath = "/usr/sbin/sendmail"; # or my $mailPath = `which mailx`;
   my $subjectPrefix = 'Subject:'; # or my $subjectPrefix = '~s';
@@ -71,9 +100,6 @@ if (!$noemail){
   my $failed = defined($ENV{incacomparisonResult}) &&
              $ENV{incacomparisonResult} =~ /^Failure/;
   my @emails = @ARGV;
-  if ($emails[0] eq "externalEmail"){
-    @emails = getExternalEmail($name);
-  }
   foreach my $email(split(/[\s,;]+/, join(' ', @emails))) {
     my @pieces = split(/:/, $email);
     my $to = $pieces[$#pieces];
@@ -98,33 +124,6 @@ if (!$noemail){
   #`date >> email.log`;
   #`echo "No email for $ENV{incanickname} report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
   exit 0;
-}
-
-sub getExternalEmail {
-  my $name = shift;
-  my %map = ( 
-    "\.nics\." => "FailTo:admin-core\@nics.utk.edu",
-    "\.psc\." => "FailTo:rbudden\@psc.edu",
-    "\.purdue\." => "FailTo:grid-systems\@rcac.purdue.edu",
-    "\.sdsc\." => "FailTo:diegella\@sdsc.edu, FailTo:wyoung\@sdsc.edu",
-    "lonestar" => "FailTo:dcarver\@tacc.utexas.edu, FailTo:timm\@tacc.utexas.edu",
-    "(ranger|spur|longhorn)" => "FailTo:dcarver\@tacc.utexas.edu"
-  );    
-  my @notify = ("FailTo:inca\@sdsc.edu");
-  for my $host ( keys %map ) {
-    my $adminEmail = $map{$host};
-    if ($name =~ /-external-.*_.*$host/){
-      push (@notify, $adminEmail);
-    }
-  }
-  my @stu = ("gridftp-external-ping-dm-4.1.2", "gridftp-striped-external-telnet-dm-4.1.2", "gridftp-nonstriped-external-telnet-dm-4.1.2", "wsgram-external-telnet-rc-4.0.2");
-  if (grep(/$name/, @stu)){
-    push (@notify, "FailTo:smartin\@mcs.anl.gov");
-  }
-  my $notify = join(", ", @notify);
-  #`date >> email.log`;
-  #`echo "Sending email for $name to $notify (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
-  return @notify;
 }
 
 sub getHelpAssignment{
