@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app 
+   xmlns="http://java.sun.com/xml/ns/javaee" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+   version="2.5">
+
+  <!-- Configure Inca objects -->
+  <listener>
+      <listener-class>edu.sdsc.inca.consumer.WebappListener</listener-class>
+  </listener>
+
+  <!-- Configure CeWolf -->
+  <servlet>
+    <servlet-name>CewolfServlet</servlet-name>
+    <servlet-class>de.laures.cewolf.CewolfRenderer</servlet-class>
+    <!-- sets storage implementation -->
+    <init-param>
+      <param-name>storage</param-name>
+      <param-value>de.laures.cewolf.storage.TransientSessionStorage</param-value>
+    </init-param>
+    <!-- sets overlib.js location relative to webapp -->
+    <init-param>
+      <param-name>overliburl</param-name>
+      <param-value>/js/overlib.js</param-value>
+    </init-param>
+    <!-- turn on or off debugging logging -->
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!-- Configure rest urls -->
+  <servlet>
+    <servlet-name>RestServlet</servlet-name>
+    <jsp-file>/jsp/rest.jsp</jsp-file>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>RestServlet</servlet-name>
+    <url-pattern>/XML/*</url-pattern>
+    <url-pattern>/HTML/*</url-pattern>
+  </servlet-mapping>
+ 
+  <context-param>
+    <param-name>restId</param-name>
+    <param-value>rest</param-value>
+  </context-param>
+
+
+<!--
+Automatically created by JspC.
+Place this fragment in the web.xml before all icon, display-name,
+description, distributable, and context-param elements.
+-->
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.addDbCommentsForm_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.addDbCommentsForm_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.addKnowledgeBase_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.addKnowledgeBase_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.admin_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.admin_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.config_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.config_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.descriptions_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.descriptions_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.error_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.error_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.footer_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.footer_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.graph_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.graph_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.header_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.header_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.index_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.index_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.instance_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.instance_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.legend_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.legend_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.query_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.query_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.querySeries_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.querySeries_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.report_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.report_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.rest_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.rest_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.runNow_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.runNow_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.searchKnowledgeBase_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.searchKnowledgeBase_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.seriesConfig_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.seriesConfig_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.status_002dauth_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.status_002dauth_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.status_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.status_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.statusCache_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.statusCache_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summary_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.summary_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summaryDetails_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.summaryDetails_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summaryHistory_jsp</servlet-name>
+        <servlet-class>edu.sdsc.inca.consumer.jsp.summaryHistory_jsp</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.addDbCommentsForm_jsp</servlet-name>
+        <url-pattern>/jsp/addDbCommentsForm.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.addKnowledgeBase_jsp</servlet-name>
+        <url-pattern>/jsp/addKnowledgeBase.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.admin_jsp</servlet-name>
+        <url-pattern>/jsp/admin.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.config_jsp</servlet-name>
+        <url-pattern>/jsp/config.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.descriptions_jsp</servlet-name>
+        <url-pattern>/jsp/descriptions.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.error_jsp</servlet-name>
+        <url-pattern>/jsp/error.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.footer_jsp</servlet-name>
+        <url-pattern>/jsp/footer.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.graph_jsp</servlet-name>
+        <url-pattern>/jsp/graph.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.header_jsp</servlet-name>
+        <url-pattern>/jsp/header.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.index_jsp</servlet-name>
+        <url-pattern>/jsp/index.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.instance_jsp</servlet-name>
+        <url-pattern>/jsp/instance.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.legend_jsp</servlet-name>
+        <url-pattern>/jsp/legend.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.query_jsp</servlet-name>
+        <url-pattern>/jsp/query.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.querySeries_jsp</servlet-name>
+        <url-pattern>/jsp/querySeries.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.report_jsp</servlet-name>
+        <url-pattern>/jsp/report.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.rest_jsp</servlet-name>
+        <url-pattern>/jsp/rest.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.runNow_jsp</servlet-name>
+        <url-pattern>/jsp/runNow.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.searchKnowledgeBase_jsp</servlet-name>
+        <url-pattern>/jsp/searchKnowledgeBase.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.seriesConfig_jsp</servlet-name>
+        <url-pattern>/jsp/seriesConfig.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.status_002dauth_jsp</servlet-name>
+        <url-pattern>/jsp/status-auth.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.status_jsp</servlet-name>
+        <url-pattern>/jsp/status.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.statusCache_jsp</servlet-name>
+        <url-pattern>/jsp/statusCache.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summary_jsp</servlet-name>
+        <url-pattern>/jsp/summary.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summaryDetails_jsp</servlet-name>
+        <url-pattern>/jsp/summaryDetails.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>edu.sdsc.inca.consumer.jsp.summaryHistory_jsp</servlet-name>
+        <url-pattern>/jsp/summaryHistory.jsp</url-pattern>
+    </servlet-mapping>
+
+<!--
+All session-config, mime-mapping, welcome-file-list, error-page, taglib,
+resource-ref, security-constraint, login-config, security-role,
+env-entry, and ejb-ref elements should follow this fragment.
+-->
+
+
+  <servlet-mapping>
+    <servlet-name>CewolfServlet</servlet-name>
+    <url-pattern>/cewolf/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- set default timeout for a page to be 1 hour -->
+  <session-config>
+    <session-timeout>3600</session-timeout>
+  </session-config>
+
+  <!-- require authentication on specific status pages -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Inca Status Pages</web-resource-name>
+      <url-pattern>/jsp/admin.jsp</url-pattern>
+      <url-pattern>/jsp/query.jsp</url-pattern>
+      <url-pattern>/jsp/runNow.jsp</url-pattern>
+      <url-pattern>/jsp/addKnowledgeBase.jsp</url-pattern>
+      <url-pattern>/jsp/seriesConfig.jsp</url-pattern>
+      <url-pattern>/jsp/status-auth.jsp</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+</web-app>
+
