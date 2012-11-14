@@ -141,12 +141,13 @@ sub replaceUrls {
 #-----------------------------------------------------------------------------#
 
 my $timeLog = "$ENV{HOME}/logs/genWebPagesTimes.log";
-my $webdir = "/misc/inca/install-2r5/webapps/inca/html/reports";
+my $webdir = "/localdisk/inca/teragrid/webapps/inca/html/reports";
 die "Unable to cd to '$webdir'" if !chdir($webdir);
 
 my %pages = (
-  'summaryHistoryByResource' => "http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?groupBy=resource&lines=total",
-  'summaryHistoryBySuite' => "http://sapa.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?groupBy=suite&lines=total"
+  'summaryHistoryByResource' => "http://capac.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?groupBy=resource&lines=total",
+  'summaryHistoryBySuite' => "http://capac.sdsc.edu:8080/inca/jsp/summaryHistory.jsp?groupBy=suite&lines=total"
+  #'quarterlyReport' => "http://capac.sdsc.edu:8080/inca/jsp/report.jsp?xml=xsedeServices.xml&startDate=070111&endDate=093011"
 );
 
 for my $page ( keys %pages ) {
@@ -192,7 +193,7 @@ for my $page ( keys %pages ) {
     }
   }
   if ($err ne ""){
-    `date | mail -s "report generation failed (expired charts)" inca\@sdsc.edu`;
+    `echo "$page" | mail -s "report generation failed (expired charts)" inca\@sdsc.edu`;
   } else {
   `rm -rf $page; mv $dir .`;
   }
