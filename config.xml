@@ -55,6 +55,10 @@
         </group>
         <group>
           <type>general</type>
+          <name>SECURITY</name>
+        </group>
+        <group>
+          <type>general</type>
           <name>bash</name>
         </group>
         <hosts>capac.sdsc.edu</hosts>
@@ -87,6 +91,10 @@
         <group>
           <type>general</type>
           <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>SECURITY</name>
         </group>
         <group>
           <type>general</type>
@@ -501,6 +509,11 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>data-movement-clients4.2.0-globus-url-copy-key</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>adminEmail</name>
           <value>FailTo:inca@sdsc.edu, FailTo:rbudden@psc.edu</value>
         </macro>
@@ -539,7 +552,7 @@
           <type>general</type>
           <name>module</name>
         </group>
-        <hosts>tg-login.blacklight.psc.teragrid.org</hosts>
+        <hosts>login.blacklight.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -1123,6 +1136,10 @@
         <name>infoPingFreq</name>
         <value>? ?-23 * * *</value>
       </macro>
+    </group>
+    <group>
+      <name>SECURITY</name>
+      <type>general</type>
     </group>
     <group>
       <name>USAGE</name>
@@ -3570,7 +3587,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>filePatterns</name>
-                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std* ~/sge.*</value>
+                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std* ~/sge.* ~/STDIN.* @__incaReporterManagerLocation__@/hs_err_pid* @__incaReporterManagerLocation__@/var/archive/*</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -3848,7 +3865,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
+                <value>warn|error</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -10430,6 +10447,73 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>security.ca.unit</name>
+            <args>
+              <arg>
+                <name>minCertDays</name>
+                <value>14</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value>--no-check-certificate</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>warn|error</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>certUrl</name>
+                <value>https://software.xsede.org/security/xsede-certs.tar.gz</value>
+              </arg>
+              <arg>
+                <name>minCrlDays</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>myproxy</name>
+                <value>myproxy-get-trustroots -s myproxy.teragrid.org</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>myproxy-ca-crl-check</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[numExpiredCrl < 1 && numWarnCrl < 1 && numMissingCrl < 1 && numExpiredCa < 1 && numWarnCa < 1 && numMissingCa < 1]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
               </notification>
             </notifications>
           </acceptedOutput>
