@@ -12,7 +12,7 @@
       function setResourceAndXml(){
         document.form.xml.value = document.form.suiteNames.value + '.xml';
         if (document.form.suiteNames.value.match(/,/)){
-          document.form.xml.value = "core.teragrid.org-4.2.1.xml,core.teragrid.org-5.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement.teragrid.org-4.1.2.xml,data-movement-clients.teragrid.org-4.2.0.xml,data-movement-servers.teragrid.org-4.2.0.xml,local-compute.teragrid.org-4.2.2.xml,remote-compute.teragrid.org-4.0.2.xml,remote-compute.teragrid.org-4.2.0.xml,remote-compute.teragrid.org-5.0.1.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.2.0.xml,parallel-app.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.1.xml,workflow.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.2.0.xml,vtss.teragrid.org-3.0.0.xml,wan-gpfs.teragrid.org-4.0.0.xml,wan-lustre.teragrid.org-4.0.0.xml,wan-lustre.teragrid.org-5.0.0.xml,science-gateway.teragrid.org-4.2.0.xml,science-gateway.teragrid.org-5.0.1.xml,metascheduling.teragrid.org-4.2.1.xml";
+          document.form.xml.value = "core.teragrid.org-4.2.1.xml,core.teragrid.org-5.0.0.xml,data-management.teragrid.org-4.0.0.xml,data-movement-clients.teragrid.org-4.2.0.xml,data-movement-servers.teragrid.org-4.2.0.xml,local-compute.teragrid.org-4.2.2.xml,remote-compute.teragrid.org-4.0.2.xml,remote-compute.teragrid.org-4.2.0.xml,remote-compute.teragrid.org-5.0.1.xml,login.teragrid.org-4.0.0.xml,app-support.teragrid.org-4.2.0.xml,parallel-app.teragrid.org-4.0.0.xml,parallel-app.teragrid.org-4.0.1.xml,workflow.teragrid.org-4.0.0.xml,workflow.teragrid.org-4.2.0.xml,vtss.teragrid.org-3.0.0.xml,wan-gpfs.teragrid.org-4.0.0.xml,wan-lustre.teragrid.org-4.0.0.xml,wan-lustre.teragrid.org-5.0.0.xml,science-gateway.teragrid.org-4.2.0.xml,science-gateway.teragrid.org-5.0.1.xml,metascheduling.teragrid.org-4.2.1.xml";
         }
         if (document.form.resource.value == "select"){
           document.form.resourceIds.value = document.form.suiteNames.value;
@@ -25,13 +25,12 @@
       <table cellpadding="2">
         <tr><td><p>KIT:<br/>
           <select name="suiteNames">
-            <option value="core.teragrid.org-4.2.1,core.teragrid.org-5.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.2,data-movement-clients.teragrid.org-4.2.0,data-movement-servers.teragrid.org-4.2.0,local-compute.teragrid.org-4.2.2,remote-compute.teragrid.org-4.0.2,remote-compute.teragrid.org-4.2.0,remote-compute.teragrid.org-5.0.1,login.teragrid.org-4.0.0,app-support.teragrid.org-4.2.0,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,workflow.teragrid.org-4.2.0,vtss.teragrid.org-3.0.0,wan-gpfs.teragrid.org-4.0.0,wan-lustre.teragrid.org-4.0.0,wan-lustre.teragrid.org-5.0.0,science-gateway.teragrid.org-4.2.0,science-gateway.teragrid.org-5.0.1,metascheduling.teragrid.org-4.2.1">- Select One -</option>
-            <option value="core.teragrid.org-4.2.1,core.teragrid.org-5.0.0,data-management.teragrid.org-4.0.0,data-movement.teragrid.org-4.1.2,data-movement-clients.teragrid.org-4.2.0,data-movement-servers.teragrid.org-4.2.0,local-compute.teragrid.org-4.2.2,remote-compute.teragrid.org-4.0.2,remote-compute.teragrid.org-4.2.0,remote-compute.teragrid.org-5.0.1,login.teragrid.org-4.0.0,app-support.teragrid.org-4.2.0,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,workflow.teragrid.org-4.2.0,vtss.teragrid.org-3.0.0,wan-gpfs.teragrid.org-4.0.0,wan-lustre.teragrid.org-4.0.0,wan-lustre.teragrid.org-5.0.0,science-gateway.teragrid.org-4.2.0,science-gateway.teragrid.org-5.0.1,metascheduling.teragrid.org-4.2.1">ALL KITS</option>
+            <option value="core.teragrid.org-4.2.1,core.teragrid.org-5.0.0,data-management.teragrid.org-4.0.0,data-movement-clients.teragrid.org-4.2.0,data-movement-servers.teragrid.org-4.2.0,local-compute.teragrid.org-4.2.2,remote-compute.teragrid.org-4.0.2,remote-compute.teragrid.org-4.2.0,remote-compute.teragrid.org-5.0.1,login.teragrid.org-4.0.0,app-support.teragrid.org-4.2.0,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,workflow.teragrid.org-4.2.0,vtss.teragrid.org-3.0.0,wan-gpfs.teragrid.org-4.0.0,wan-lustre.teragrid.org-4.0.0,wan-lustre.teragrid.org-5.0.0,science-gateway.teragrid.org-4.2.0,science-gateway.teragrid.org-5.0.1,metascheduling.teragrid.org-4.2.1">- Select One -</option>
+            <option value="core.teragrid.org-4.2.1,core.teragrid.org-5.0.0,data-management.teragrid.org-4.0.0,data-movement-clients.teragrid.org-4.2.0,data-movement-servers.teragrid.org-4.2.0,local-compute.teragrid.org-4.2.2,remote-compute.teragrid.org-4.0.2,remote-compute.teragrid.org-4.2.0,remote-compute.teragrid.org-5.0.1,login.teragrid.org-4.0.0,app-support.teragrid.org-4.2.0,parallel-app.teragrid.org-4.0.0,parallel-app.teragrid.org-4.0.1,workflow.teragrid.org-4.0.0,workflow.teragrid.org-4.2.0,vtss.teragrid.org-3.0.0,wan-gpfs.teragrid.org-4.0.0,wan-lustre.teragrid.org-4.0.0,wan-lustre.teragrid.org-5.0.0,science-gateway.teragrid.org-4.2.0,science-gateway.teragrid.org-5.0.1,metascheduling.teragrid.org-4.2.1">ALL KITS</option>
             <option value="app-support.teragrid.org-4.2.0">Application Development &amp; Runtime Support 4.2.0</option>
             <option value="core.teragrid.org-4.2.1">Core Integration 4.2.1</option>
             <option value="core.teragrid.org-5.0.0">Core Integration 5.0.0</option>
             <option value="data-management.teragrid.org-4.0.0">Data Management 4.0.0</option>
-            <option value="data-movement.teragrid.org-4.1.2">Data Movement 4.1.2</option>
             <option value="data-movement-clients.teragrid.org-4.2.0">Data Movement Clients 4.2.0</option>
             <option value="data-movement-servers.teragrid.org-4.2.0">Data Movement Servers 4.2.0</option>
             <option value="metascheduling.teragrid.org-4.2.1">Metascheduling 4.2.1</option>
@@ -55,21 +54,16 @@
           <td> <p>RESOURCE:<br/>
             <select name="resource">
               <option value="select">- Select One -</option>
-              <option value="teragrid-login">TeraGrid</option>
+              <option value="xsede">XSEDE</option>
               <xsl:for-each select="/combo/resources/resource[name]">
                 <xsl:sort select="." />
                 <xsl:variable name="name" select="name" />
                 <option value="{$name}"><xsl:value-of select="name"/></option>
               </xsl:for-each>
-              <option value="ANL-login">ANL</option>
-              <option value="Indiana">Indiana</option>
-              <option value="LONI">LONI</option>
-              <option value="NCAR">NCAR</option>
               <option value="NCSA">NCSA</option>
               <option value="NICS">NICS</option>
-              <option value="ORNL">ORNL</option>
               <option value="PSC">PSC</option>
-              <option value="Purdue-login">Purdue</option>
+              <option value="Purdue">Purdue</option>
               <option value="SDSC">SDSC</option>
               <option value="TACC">TACC</option>
             </select>
