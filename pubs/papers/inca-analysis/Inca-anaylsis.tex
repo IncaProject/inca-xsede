@@ -18,43 +18,59 @@ Shava Smallen, Sameer Tilak, etc. \\
 
 \maketitle
 
-\begin{abstract}
+\begin{abstract} 
+
+Large-scale Inca is a user-level monitoring tool that has been used successfully in cyberinfrastructure projects such as the TeraGrid and other similar projects.  Its flexible architecture enables multiple types of functionality and performance data to easily be collected about the systems it is monitoring. A unique centralized monitoring configuration approach makes Inca easy to setup and maintain on multiple systems and lends to consistent monitoring results.  We are experimenting with using Inca in Cloud environments where users are interested in monitoring the functionality and performance of their personal Clouds as they are re-instantiated on different machines and locations. We believe Inca’s flexibility, easy-to-use administrative interfaces, and other features make it a natural fit for Cloud environments.   
 
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction} (0.5 page)
 
-\section{Future Grid Overview}
+\section{Future Grid Overview} (1 page)
+Add description of load -- vm count, hrs. etc.
 
 The FutureGrid Project provides a geographically distributed experimental platform for computer scientists to understand the behavior and utility of cloud computing approaches. The platform will allow these computer scientists to tackle complex research challenges in the areas ranging from authentication, authorization, scheduling, virtualization, middleware design, interface design and cybersecurity to the optimization of grid-enabled and cloud-enabled computational schemes for researchers in astronomy, chemistry, biology, engineering, atmospheric science and epidemiology. The FutureGrid is a key component of NSF's high-performance cyberinfrastructure and supports innovative computer science research requiring access to lower levels of the grid software stack, the networking software stack, and to virtualization and workflow orchestration tools.
 
-\section{Inca Architecture}
 
-\section{Use cases}
+\section{Inca Architecture} (0.5 page)
 
-\section{Test suite classes}
+Cyberinfrastructure (CI) aggregates multiple complex and interdependent systems that span several administrative domains. This complexity poses challenges for both administrators who build and maintain CI resources and scientists who use them.  These challenges and the cutting-edge nature of the infrastructure make it susceptible to failures, which frustrate and even dissuade users.  In order to provide scientists with persistent and reliable CI, the user-level functionality and performance of the system must be monitored.  Developed in 2003, Inca [1] is a tool that provides user-level monitoring for CI systems. It has proven to be a valuable tool for the TeraGrid [2] and eleven other production CI projects [3], and is currently monitoring over a hundred machines.   Inca differs from other monitoring tools with its user-level monitoring approach, flexibility to collect multiple types of monitoring data, and full archiving support.  Inca also uses a unique centralized monitoring configuration approach, which is essential for providing consistent monitoring results and a unified and coherent infrastructure for users. 
 
-\section{Experimental results}
+Inca automates the installation, execution, and maintenance of a large variety and number of reporters (monitoring scripts) consistently across Grid resources.   Monitoring results are collected, archived, and displayed through web status pages.   The core of the Inca architecture is formed by four server components: the agent, depot, data consumer, and reporter repository (see Figure 1).  The agent controls the deployment and maintenance of the Inca installation, while the depot provides data storage.  A reporter repository contains a set of tests and benchmarks, and the data consumer displays the collected results as web status pages.  An additional Inca component called the reporter manager runs on each monitored resource to collect status and performance data.  The final component of Inca is a GUI tool (incat) used by Inca administrators to configure and maintain their Inca deployments. 
 
-\subsection{Monitoring tools comparison:} Ganglia vs Inca
 
-\subsection{reliability}
+Recently, we have been exploring how to leverage Inca in virtual Cloud environments as part of the work we are doing in FutureGrid [4].  FutureGrid is an experimental testbed that will be used to develop and test novel approaches to parallel, grid, and cloud computing.  It supports user “experiments” that can be run either on the bare hardware or on virtual machines using Cloud technologies Nimbus or Eucalyptus.   In particular, we are interested in using Inca to validate a user’s virtual environment started up by these tools both in terms of functionality and performance.  For example, a user may want to know how the performance of their virtual cluster compares to a month earlier when they last instantiated it. We are also interested in using Inca to validate individual virtual machine images as well.  
 
-\subsection{resource-level}: How do different resources (storage, compute, network) compare in terms of reliability. Where is the bottleneck?
-\subsection{sw-stack-level}: How do different layers of the s/w stack compare? Where do failures occur the most? Middleware, Apps, OS, etc....
+
+\section{Use cases} (0.5 pages)
+
+\section{Test suite classes} (0.5 pages)
+
+\section{Analysis results} (4 pages)
+Description of the methodology -- how data was filtered and interpreted.
+
+\subsection{SSH data}
+\subsubsection{Failure Classifiation:} What types of failures do we see?
+\subsubsection{Failures distribution:} Are failures independent or related?
+\subsubsection{predictability} Is this system system predictable in terms of resource availability or failures.
 \subsection{site-level}: How do different sites compare in terms of reliability.
-\subsection{software-level:} Should we upgrade? History shows newer releases make the system more stable or less stable.
+
+ssh key -- test improvements.
+
 \subsection{cloud-stats}
 \subsection{hpc-stats:} benchmarks, version numbers.
-\subsection{Failures distribution:} Are failures independent or related?
+
+\subsection{sw-stack-level}: How do different layers of the s/w stack compare? Where do failures occur the most? Middleware, Apps, OS, etc....
+\subsection{software-level:} Should we upgrade? History shows newer releases make the system more stable or less stable.
 \subsection{upgrade stats:} Patches done every month. 
-\subsection{predictability} Is this system system predictable in terms of resource availability or failures.
-\subsection{Test success rate}
 
 
-\section{Future Work}
+\section{Related Work} (0.5 page)
 
-\section{Conclusion}
+\section{Future Work} (0.25 page)
+
+\section{Conclusion} (0.25 page)
+
 
 
 \bibliographystyle{abbrv}
