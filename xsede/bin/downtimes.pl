@@ -1,22 +1,28 @@
 #!/usr/bin/perl
 
+
 use strict;
 use warnings;
-use lib "/localdisk/inca/teragrid/lib/perl";
+
+my $INCA_INSTALL;
+BEGIN { # force variable to be set during compile
+  $INCA_INSTALL="$ENV{HOME}/xsede";
+}
+use lib "$INCA_INSTALL/lib/perl";
 use LWP::Simple;
 use XML::XPath;
 use XML::XPath::XMLParser;
 use Data::Dumper;
 use Date::Manip;
 
-my $config = `cat /localdisk/inca/teragrid/var/resources.xml`;
+my $config = `cat $INCA_INSTALL/var/resources.xml`;
 my $xp = XML::XPath->new( xml => $config );
 
 # get current downtimes
 # future is looked at too since there were some timezone parsing problems
 my @urls = ( "http://info.teragrid.org/web-apps/csv/tg-outages-v1/future/", "http://info.teragrid.org/web-apps/csv/tg-outages-v1/current/");
-my $pre = "/localdisk/inca/teragrid/webapps";
-my $prop = "$pre/../etc/downtime.properties";
+my $pre = "$INCA_INSTALL/webapps";
+my $prop = "$INCA_INSTALL/etc/downtime.properties";
 my $iis =  "$pre/inca/html/downtimes-iis.txt";
 open PROP,">$prop";
 open IIS,">$iis";
