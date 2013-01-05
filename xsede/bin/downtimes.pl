@@ -28,13 +28,9 @@ for my $url ( @urls ) {
     my @outages = split(/\n/, $outfile);
     for my $i (1 .. $#outages){
       my @line = split(/,/, $outages[$i]);
-      # 5/16/12 -- resource ids got reversed to <resource-name>-<site>
+      # 10/9/12:  expecting iis id on second field
       my $iis_resource = $line[1];
-      my @iis_resource_ids = split( /-/, $iis_resource );
-      next if scalar(@iis_resource_ids) < 2; # not a resource-site pair
-      my $site = $iis_resource_ids[$#iis_resource_ids];
-      next if $site eq "news";
-      my $resource = $iis_resource_ids[0];
+      next if $iis_resource =~ /general-user-news/;
       my $start= $line[$#line-1];
       $start =~ s/"//g;
       my $end= $line[$#line];
@@ -45,15 +41,21 @@ for my $url ( @urls ) {
       if ( Date_Cmp($now, $startDate) >= 0 &&
            (! defined $endDate || $endDate eq "" || Date_Cmp($now, $endDate)< 1) ) {
         my ($news_id) = $line[2] =~ /(\d+)"/;
-        my $rnode = $xp->find("/res:resourceConfig/resources/resource[name='$resource-$site']/macros/macro[name='__regexp__']/value/text()");
-        print PROP "$site-$resource=$news_id\n";
+        # 10/9/12 -- lonestar has 2 registrations in IIS lonestar and lonestar4
+        my $search_resource = $iis_resource =~ /lonestar/ ? "lonestar4.tacc.teragrid.org" : $iis_resource;
+        $search_resource = $search_resource =~ /ranch/ ? "ranch.tacc.xsede.org" : $search_resource;
+        $search_resource = $search_resource =~ /condor/ ? "condor.purdue.teragrid.org" : $search_resource;
+        my $rnode = $xp->find("/res:resourceConfig/resources/resource[name='$search_resource']/macros/macro[name='__regexp__']/value/text()");
+        print IIS "$iis_resource=$news_id\n";
         foreach my $node ($rnode->get_nodelist) {
           my $resource = XML::XPath::XMLParser::as_string($node);
           my @resources = split(/ /, $resource);
           foreach my $r (@resources) {
-            print IIS "$r=$news_id\n";
+            print PROP "$r=$news_id\n";
           }
         }
+      } else {
+         ##print "$iis_resource $start $end\n";
       }
     }
   }
