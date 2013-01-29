@@ -9035,7 +9035,7 @@
                     </macro>
                     <macro>
                         <name>PROC_REGEX</name>
-                        <value>reporter-manager ,Schedule::Cron Main,reporter-instance-manager,sshd,defunct</value>
+                        <value>reporter-manager ,reporter-instance-manager,Schedule::Cron Main,sshd,defunct</value>
                     </macro>
                     <macro>
                         <name>trustfile</name>
@@ -11202,7 +11202,7 @@
                             </arg>
                             <arg>
                                 <name>sleep</name>
-                                <value>10</value>
+                                <value>15</value>
                             </arg>
                             <arg>
                                 <name>procRegex</name>
@@ -11262,7 +11262,7 @@
                             </arg>
                             <arg>
                                 <name>sleep</name>
-                                <value>20</value>
+                                <value>5</value>
                             </arg>
                         </args>
                         <limits>
@@ -11602,6 +11602,70 @@
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                    <series>
+                        <name>security.ca.unit</name>
+                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/security.ca.unit</uri>
+                        <args>
+                            <arg>
+                                <name>minCertDays</name>
+                                <value>14</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>wgetArgs</name>
+                                <value>--no-check-certificate</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>warn|error</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>certUrl</name>
+                                <value>https://software.xsede.org/security/xsede-certs.tar.gz</value>
+                            </arg>
+                            <arg>
+                                <name>minCrlDays</name>
+                                <value>3</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value/>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>600.0</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>ca-crl-check</nickname>
+                    <resourceSetName>quarry</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
             </seriesConfigs>
@@ -13346,7 +13410,7 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>FailTo:inca@sdsc.edu, FailTo:help@xsede.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:mshapiro51@gmail.com,  FailTo:lcarson@sdsc.edu, FailTo:light@psc.edu</target>
+                                <target>FailTo:inca@sdsc.edu, FailTo:help@xsede.org, FailTo:squinn@ncsa.uiuc.edu, FailTo:shapiro2@illinois.edu,  FailTo:lcarson@sdsc.edu, FailTo:light@psc.edu</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
