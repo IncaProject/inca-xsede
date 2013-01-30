@@ -39,7 +39,7 @@ for my $suite ( keys %SUITES ) {
           $frequency = 720;
         } 
         print "Fetching history\n";
-        print `./getHistory.pl data/$suite+$nickname+$resource.csv $frequency prepend`;
+        print `./getHistory.pl data/$suite+$nickname+$resource.csv $frequency`;
       }
     }
   } 
