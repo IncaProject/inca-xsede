@@ -49,13 +49,14 @@ Case 1:  changes in the cache are detected
 
 % ./bin/updateIncat auto
 
-3. Verify changes 
+3. Verify changes and make sure agent can expand config
 
 % ./bin/verifyIncat auto
 
-4. Verify changes in diff.log look reasonable
+4. Verify changes in diff.log look reasonable.  If no changes detected,
+delete ~/.checkInfo file and you are done.
 
-5. Commit changes by commiting the diffs between incat-auto-new.xml and
+5. Otherwise, commit changes by commiting the diffs between incat-auto-new.xml and
 incat-auto.xml 
 
 % ./bin/commitIncat auto
@@ -78,4 +79,6 @@ Case 2:  changes in etc/def2config.xsl and/or config.xml are needed
 
 % ./bin/generateConfig
 
-3. Follow steps 2 - 5 above
+3. Follow steps 2 - 5 above in Case 1
+
+4. Do svn commit on config.xml file 
