@@ -19,36 +19,43 @@
           <name>__incaReporterManagerLocation__</name>
           <value>/users/u3/inca/inca2install</value>
         </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>INCASERVERS</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>SECURITY</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>bash</name>
+        </group>
+        <hosts>capac.sdsc.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>inca.nics.xsede.org</name>
+      <macroResource>
+        <name>inca.nics</name>
         <macro>
+          <name>__remoteInvocationMethod__</name>
+          <value>manual</value>
           <type>constant</type>
-          <name>MAX_DISK_USAGE_MB</name>
-          <value>3072</value>
         </macro>
         <macro>
           <type>constant</type>
-          <name>maxMan</name>
-          <value>2</value>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/data/home/inca/inca2install</value>
         </macro>
-        <macro>
-          <type>constant</type>
-          <name>maxSched</name>
-          <value>2</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>pre</name>
-          <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>psMax</name>
-          <value>150</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>tgupContact</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
-        </macro>
+        <group>
+          <type>general</type>
+          <name>INCASERVERS</name>
+        </group>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -61,7 +68,7 @@
           <type>general</type>
           <name>bash</name>
         </group>
-        <hosts>capac.sdsc.edu</hosts>
+        <hosts>inca.nics.utk.edu</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -285,29 +292,6 @@
           <name>go-testing</name>
         </group>
         <hosts>mss.ncsa.teragrid.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
-      <!-- remote testing only no local client -->
-      <name>frost.ncar.teragrid.org</name>
-      <skip/>
-      <macroResource>
-        <name>ncar-frost</name>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>frost</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-dirs</name>
-          <value></value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>go-testing</name>
-        </group>
-        <hosts>fr0103ge.ncar.teragrid.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -1028,6 +1012,40 @@
     <group>
       <name>SDSC</name>
       <type>general</type>
+    </group>
+    <group>
+      <name>INCASERVERS</name>
+      <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>MAX_DISK_USAGE_MB</name>
+        <value>3072</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>maxMan</name>
+        <value>2</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>maxSched</name>
+        <value>2</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>pre</name>
+        <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>psMax</name>
+        <value>150</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>tgupContact</name>
+        <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
+      </macro>
     </group>
     <group>
       <name>TACC</name>
@@ -3377,7 +3395,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@@</context>
           </series>
           <nickname>server-vacuumdb</nickname>
-          <resourceSetName>capac</resourceSetName>
+          <resourceSetName>INCASERVERS</resourceSetName>
           <schedule>
             <crontime>30 21 * * *</crontime>
           </schedule>
@@ -3483,7 +3501,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@@</context>
           </series>
           <nickname>server-memusage</nickname>
-          <resourceSetName>capac</resourceSetName>
+          <resourceSetName>INCASERVERS</resourceSetName>
           <schedule>
             <crontime>? ?-23 * * *</crontime>
           </schedule>
@@ -3539,7 +3557,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@@</context>
           </series>
           <nickname>server-cleanLogs</nickname>
-          <resourceSetName>capac</resourceSetName>
+          <resourceSetName>INCASERVERS</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
@@ -3595,7 +3613,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@@</context>
           </series>
           <nickname>server-cleanConfigs</nickname>
-          <resourceSetName>capac</resourceSetName>
+          <resourceSetName>INCASERVERS</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>

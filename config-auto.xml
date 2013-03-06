@@ -3986,36 +3986,43 @@
                     <name>__incaReporterManagerLocation__</name>
                     <value>/users/u3/inca/inca2install</value>
                 </macro>
+                <group>
+                    <type>general</type>
+                    <name>ALL-RM</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>INCASERVERS</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>SECURITY</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>bash</name>
+                </group>
+                <hosts>capac.sdsc.edu</hosts>
+            </macroResource>
+        </resource>
+        <resource>
+            <name>inca.nics.xsede.org</name>
+            <macroResource>
+                <name>inca.nics</name>
                 <macro>
+                    <name>__remoteInvocationMethod__</name>
+                    <value>manual</value>
                     <type>constant</type>
-                    <name>MAX_DISK_USAGE_MB</name>
-                    <value>3072</value>
                 </macro>
                 <macro>
                     <type>constant</type>
-                    <name>maxMan</name>
-                    <value>2</value>
+                    <name>__incaReporterManagerLocation__</name>
+                    <value>/data/home/inca/inca2install</value>
                 </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>maxSched</name>
-                    <value>2</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>pre</name>
-                    <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>psMax</name>
-                    <value>150</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>tgupContact</name>
-                    <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
-                </macro>
+                <group>
+                    <type>general</type>
+                    <name>INCASERVERS</name>
+                </group>
                 <group>
                     <type>general</type>
                     <name>ALL-RM</name>
@@ -4028,7 +4035,7 @@
                     <type>general</type>
                     <name>bash</name>
                 </group>
-                <hosts>capac.sdsc.edu</hosts>
+                <hosts>inca.nics.utk.edu</hosts>
             </macroResource>
         </resource>
         <resource>
@@ -4922,29 +4929,6 @@
                     <name>go-testing</name>
                 </group>
                 <hosts>mss.ncsa.teragrid.org</hosts>
-            </macroResource>
-        </resource>
-        <resource>
-            <!-- remote testing only no local client -->
-            <name>frost.ncar.teragrid.org</name>
-            <skip/>
-            <macroResource>
-                <name>ncar-frost</name>
-                <macro>
-                    <type>constant</type>
-                    <name>go-id</name>
-                    <value>frost</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>go-dirs</name>
-                    <value/>
-                </macro>
-                <group>
-                    <type>general</type>
-                    <name>go-testing</name>
-                </group>
-                <hosts>fr0103ge.ncar.teragrid.org</hosts>
             </macroResource>
         </resource>
         <resource>
@@ -5866,7 +5850,7 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>data-movement-servers-4.2.0-testing</name>
+                <name>data-movement-servers-4.2.0-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -11014,10 +10998,6 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>data-movement-servers4.2.0-gridftp-striped-server</name>
-            </group>
-            <group>
-                <type>optional</type>
                 <name>data-movement-servers4.2.0-gridftp-nonstriped-server</name>
             </group>
             <group>
@@ -11034,7 +11014,7 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>remote-compute-5.0.1-testing</name>
+                <name>remote-compute-5.0.1-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -11046,7 +11026,7 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>science-gateway-5.0.1-testing</name>
+                <name>science-gateway-5.0.1-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -11066,6 +11046,11 @@
                     <type>constant</type>
                     <name>__incaReporterManagerLocation__</name>
                     <value>/home1/00500/inca/inca2install-stampede</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>__checkPeriod__</name>
+                    <value>3</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -11122,26 +11107,6 @@
                     <type>variable</type>
                     <name>core5.0.0-globus-mds-info-endpoint</name>
                     <value>https://login5.stampede.tacc.utexas.edu:8446/wsrf/services/DefaultIndexService</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-striped-server-registered-version</name>
-                    <value>5.2.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-striped-server-host</name>
-                    <value>data1.stampede.tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-striped-server-port</name>
-                    <value>2811</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-striped-server-endpoint</name>
-                    <value>gsiftp://data1.stampede.tacc.utexas.edu:2811/</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -13596,6 +13561,40 @@
             <type>general</type>
         </group>
         <group xmlns="">
+            <name>INCASERVERS</name>
+            <type>general</type>
+            <macro>
+                <type>constant</type>
+                <name>MAX_DISK_USAGE_MB</name>
+                <value>3072</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>maxMan</name>
+                <value>2</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>maxSched</name>
+                <value>2</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>pre</name>
+                <value>bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &amp;&amp;</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>psMax</name>
+                <value>150</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>tgupContact</name>
+                <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
+            </macro>
+        </group>
+        <group xmlns="">
             <name>TACC</name>
             <macro>
                 <type>constant</type>
@@ -15942,7 +15941,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-vacuumdb</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>30 21 * * *</crontime>
                     </schedule>
@@ -16048,7 +16047,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-memusage</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ?-23 * * *</crontime>
                     </schedule>
@@ -16104,7 +16103,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-cleanLogs</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
@@ -16160,7 +16159,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-cleanConfigs</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
@@ -22541,7 +22540,7 @@
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>numExpiredCrl &lt; 1 &amp;&amp; numWarnCrl &lt; 1 &amp;&amp; numMissingCrl &lt; 1 &amp;&amp; numExpiredCa &lt; 1 &amp;&amp; numWarnCa &lt; 1 &amp;&amp; numMissingCa &lt; 1</comparison>
+                        <comparison>numExpiredCrl &lt; 1 &amp;&amp; numMissingCrl &lt; 1 &amp;&amp; numExpiredCa &lt; 1 &amp;&amp; numWarnCa &lt; 1 &amp;&amp; numMissingCa &lt; 1</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>

@@ -47,34 +47,57 @@
                         <name>__incaReporterManagerLocation__</name>
                         <value>/users/u3/inca/inca2install</value>
                     </macro>
-                    <macro>
-                        <name>MAX_DISK_USAGE_MB</name>
-                        <value>3072</value>
-                    </macro>
-                    <macro>
-                        <name>maxMan</name>
-                        <value>2</value>
-                    </macro>
-                    <macro>
-                        <name>maxSched</name>
-                        <value>2</value>
-                    </macro>
-                    <macro>
-                        <name>pre</name>
-                        <value><![CDATA[bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &&]]></value>
-                    </macro>
-                    <macro>
-                        <name>psMax</name>
-                        <value>150</value>
-                    </macro>
-                    <macro>
-                        <name>tgupContact</name>
-                        <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
-                    </macro>
                 </macros>
             </resource>
             <resource>
                 <name>capac.sdsc.edu</name>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>inca.nics.xsede.org</name>
+                <xpath>//resource[matches(name, '^(inca\.nics)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>inca.nics.xsede.org</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>inca.nics</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>false</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>inca.nics</name>
+                <xpath>//resource[matches(name, '^(inca\.nics\.utk\.edu)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>inca.nics</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>inca.nics.utk.edu</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>true</value>
+                    </macro>
+                    <macro>
+                        <name>__remoteInvocationMethod__</name>
+                        <value>manual</value>
+                    </macro>
+                    <macro>
+                        <name>__incaReporterManagerLocation__</name>
+                        <value>/data/home/inca/inca2install</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource>
+                <name>inca.nics.utk.edu</name>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>quarry.iu.teragrid.org</name>
@@ -906,53 +929,6 @@
             </resource>
             <resource>
                 <name>mss.ncsa.teragrid.org</name>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>frost.ncar.teragrid.org</name>
-                <xpath>//resource[matches(name, '^(ncar-frost)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>frost.ncar.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>ncar-frost</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>ncar-frost</name>
-                <xpath>//resource[matches(name, '^(fr0103ge\.ncar\.teragrid\.org)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>ncar-frost</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>fr0103ge.ncar.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>true</value>
-                    </macro>
-                    <macro>
-                        <name>go-id</name>
-                        <value>frost</value>
-                    </macro>
-                    <macro>
-                        <name>go-dirs</name>
-                        <value/>
-                    </macro>
-                </macros>
-            </resource>
-            <resource>
-                <name>fr0103ge.ncar.teragrid.org</name>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>queenbee.loni-lsu.teragrid.org</name>
@@ -5151,6 +5127,10 @@
                         <value>/home1/00500/inca/inca2install-stampede</value>
                     </macro>
                     <macro>
+                        <name>__checkPeriod__</name>
+                        <value>3</value>
+                    </macro>
+                    <macro>
                         <name>adminEmail</name>
                         <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu</value>
                     </macro>
@@ -5177,22 +5157,6 @@
                     <macro>
                         <name>core5.0.0-globus-mds-info-endpoint</name>
                         <value>https://login5.stampede.tacc.utexas.edu:8446/wsrf/services/DefaultIndexService</value>
-                    </macro>
-                    <macro>
-                        <name>data-movement-servers4.2.0-gridftp-striped-server-registered-version</name>
-                        <value>5.2.3</value>
-                    </macro>
-                    <macro>
-                        <name>data-movement-servers4.2.0-gridftp-striped-server-host</name>
-                        <value>data1.stampede.tacc.utexas.edu</value>
-                    </macro>
-                    <macro>
-                        <name>data-movement-servers4.2.0-gridftp-striped-server-port</name>
-                        <value>2811</value>
-                    </macro>
-                    <macro>
-                        <name>data-movement-servers4.2.0-gridftp-striped-server-endpoint</name>
-                        <value>gsiftp://data1.stampede.tacc.utexas.edu:2811/</value>
                     </macro>
                     <macro>
                         <name>data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version</name>
@@ -5987,7 +5951,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>data-movement-servers-4.2.0-production</name>
-                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|kraken\.nics\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|kraken\.nics\.teragrid\.org|blacklight\.psc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|longhorn\.tacc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -5995,25 +5959,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>forge.ncsa.teragrid.org kraken.nics.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org lonestar4.tacc.teragrid.org longhorn.tacc.teragrid.org stampede.tacc.xsede.org</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>data-movement-servers-4.2.0-testing</name>
-                <xpath>//resource[matches(name, '^(blacklight\.psc\.teragrid\.org)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>data-movement-servers-4.2.0-testing</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>blacklight.psc.teragrid.org</value>
+                        <value>forge.ncsa.teragrid.org kraken.nics.teragrid.org blacklight.psc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org lonestar4.tacc.teragrid.org longhorn.tacc.teragrid.org stampede.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -6023,7 +5969,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>data-movement-servers4.2.0-gridftp-striped-server</name>
-                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|kraken\.nics\.teragrid\.org|blacklight\.psc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|kraken\.nics\.teragrid\.org|blacklight\.psc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -6031,7 +5977,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>forge.ncsa.teragrid.org kraken.nics.teragrid.org blacklight.psc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org stampede.tacc.xsede.org</value>
+                        <value>forge.ncsa.teragrid.org kraken.nics.teragrid.org blacklight.psc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -6617,7 +6563,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>remote-compute-5.0.1-production</name>
-                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(forge\.ncsa\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -6625,25 +6571,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>forge.ncsa.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>remote-compute-5.0.1-testing</name>
-                <xpath>//resource[matches(name, '^(stampede\.tacc\.xsede\.org)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>remote-compute-5.0.1-testing</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>stampede.tacc.xsede.org</value>
+                        <value>forge.ncsa.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org stampede.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -7067,7 +6995,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>science-gateway-5.0.1-production</name>
-                <xpath>//resource[matches(name, '^(condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|lonestar4\.tacc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -7075,25 +7003,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>condor.purdue.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway-5.0.1-testing</name>
-                <xpath>//resource[matches(name, '^(stampede\.tacc\.xsede\.org)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway-5.0.1-testing</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>stampede.tacc.xsede.org</value>
+                        <value>condor.purdue.teragrid.org steele.purdue.teragrid.org lonestar4.tacc.teragrid.org stampede.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -7786,6 +7696,48 @@
                 </macros>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>INCASERVERS</name>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>INCASERVERS</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>capac inca.nics</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>false</value>
+                    </macro>
+                    <macro>
+                        <name>MAX_DISK_USAGE_MB</name>
+                        <value>3072</value>
+                    </macro>
+                    <macro>
+                        <name>maxMan</name>
+                        <value>2</value>
+                    </macro>
+                    <macro>
+                        <name>maxSched</name>
+                        <value>2</value>
+                    </macro>
+                    <macro>
+                        <name>pre</name>
+                        <value><![CDATA[bash --login -c 'set -a; cd @__incaReporterManagerLocation__@; export PERL5LIB=@__incaReporterManagerLocation__@/var/reporter-packages/lib/perl &&]]></value>
+                    </macro>
+                    <macro>
+                        <name>psMax</name>
+                        <value>150</value>
+                    </macro>
+                    <macro>
+                        <name>tgupContact</name>
+                        <value>FailTo:inca@sdsc.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>TACC</name>
                 <xpath>//resource[matches(name, '^(tacc-lonestar|tacc-longhorn|tacc-stampede)$')]</xpath>
                 <macros>
@@ -7835,7 +7787,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>SECURITY</name>
-                <xpath>//resource[matches(name, '^(capac|quarry)$')]</xpath>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics|quarry)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -7843,7 +7795,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac quarry</value>
+                        <value>capac inca.nics quarry</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -7871,7 +7823,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>go-testing</name>
-                <xpath>//resource[matches(name, '^(ncsa-forge|ncsa-mss|ncar-frost|lsu-queenbee|iu-hpss|nics-kraken|nics-nautilus|psc-blacklight|purdue-condor|purdue-steele|sdsc-gordon|sdsc-trestles|tacc-lonestar|tacc-longhorn|tacc-ranch)$')]</xpath>
+                <xpath>//resource[matches(name, '^(ncsa-forge|ncsa-mss|lsu-queenbee|iu-hpss|nics-kraken|nics-nautilus|psc-blacklight|purdue-condor|purdue-steele|sdsc-gordon|sdsc-trestles|tacc-lonestar|tacc-longhorn|tacc-ranch)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -7879,7 +7831,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>ncsa-forge ncsa-mss ncar-frost lsu-queenbee iu-hpss nics-kraken nics-nautilus psc-blacklight purdue-condor purdue-steele sdsc-gordon sdsc-trestles tacc-lonestar tacc-longhorn tacc-ranch</value>
+                        <value>ncsa-forge ncsa-mss lsu-queenbee iu-hpss nics-kraken nics-nautilus psc-blacklight purdue-condor purdue-steele sdsc-gordon sdsc-trestles tacc-lonestar tacc-longhorn tacc-ranch</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -7889,7 +7841,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>ALL-RM</name>
-                <xpath>//resource[matches(name, '^(capac|quarry|teragrid-build|ncsa-forge|nics-kraken|osg-grid1|psc-blacklight|purdue-condor|purdue-steele|sdsc-gordon|sdsc-trestles|tacc-lonestar|tacc-longhorn|tacc-stampede)$')]</xpath>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics|quarry|teragrid-build|ncsa-forge|nics-kraken|osg-grid1|psc-blacklight|purdue-condor|purdue-steele|sdsc-gordon|sdsc-trestles|tacc-lonestar|tacc-longhorn|tacc-stampede)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -7897,7 +7849,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac quarry teragrid-build ncsa-forge nics-kraken osg-grid1 psc-blacklight purdue-condor purdue-steele sdsc-gordon sdsc-trestles tacc-lonestar tacc-longhorn tacc-stampede</value>
+                        <value>capac inca.nics quarry teragrid-build ncsa-forge nics-kraken osg-grid1 psc-blacklight purdue-condor purdue-steele sdsc-gordon sdsc-trestles tacc-lonestar tacc-longhorn tacc-stampede</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -8053,7 +8005,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>bash</name>
-                <xpath>//resource[matches(name, '^(capac|quarry|teragrid-build)$')]</xpath>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics|quarry|teragrid-build)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -8061,7 +8013,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac quarry teragrid-build</value>
+                        <value>capac inca.nics quarry teragrid-build</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -10292,7 +10244,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-vacuumdb</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>30 21 * * *</crontime>
                     </schedule>
@@ -10398,7 +10350,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-memusage</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ?-23 * * *</crontime>
                     </schedule>
@@ -10454,7 +10406,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-cleanLogs</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
@@ -10510,7 +10462,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-cleanConfigs</nickname>
-                    <resourceSetName>capac</resourceSetName>
+                    <resourceSetName>INCASERVERS</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
@@ -16891,7 +16843,7 @@
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>numExpiredCrl &lt; 1 &amp;&amp; numWarnCrl &lt; 1 &amp;&amp; numMissingCrl &lt; 1 &amp;&amp; numExpiredCa &lt; 1 &amp;&amp; numWarnCa &lt; 1 &amp;&amp; numMissingCa &lt; 1</comparison>
+                        <comparison>numExpiredCrl &lt; 1 &amp;&amp; numMissingCrl &lt; 1 &amp;&amp; numExpiredCa &lt; 1 &amp;&amp; numWarnCa &lt; 1 &amp;&amp; numMissingCa &lt; 1</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
