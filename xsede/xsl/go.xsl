@@ -94,6 +94,7 @@
         <xsl:variable name="text" select="tokenize($state,'\|')[3]"/>
         <xsl:variable name="passImg" select="$defaultconfig/incaResult/primaryState[@name='pass']/@img"/>
         <xsl:variable name="failImg" select="$defaultconfig/incaResult/primaryState[@name='error']/@img"/>
+        <xsl:variable name="missingImg" select="$defaultconfig/incaResult/primaryState[@name='missing']/@img"/>
 
         <tr>
           <xsl:variable name="resource" select="replace(nickname,'go-transfers_to_','')"/>
@@ -108,7 +109,7 @@
                 </xsl:if>
               </xsl:if> 
             </a>
-            <xsl:if test="body/transfers">
+            <xsl:choose><xsl:when test="body/transfers">
               <xsl:variable name="numErrors" select="body/transfers/@errors"/>
               <xsl:variable name="numTransfers" select="count(body/transfers/transfer)"/>
               <a href="{$href}" title="{$errMsg}" id="statuscell" >
@@ -132,7 +133,9 @@
                 <span class="footer"><xsl:value-of select="string-join(body/transfers/source, ', ')"/></span>
               </xsl:otherwise></xsl:choose>
               </a>
-            </xsl:if> 
+            </xsl:when><xsl:otherwise> 
+              <img width="20" src="{concat('/inca/img/', $missingImg)}"/>
+            </xsl:otherwise></xsl:choose>
           </td>
         </tr>
       </xsl:for-each>
