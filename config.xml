@@ -211,110 +211,31 @@
       </macroResource>
     </resource>
     <resource>
-      <name>forge.ncsa.teragrid.org</name>
-      <macroResource>
-        <name>ncsa-forge</name>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/uf/ncsa/inca/inca2install</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>__incaSuspend__</name>
-          <value>load1&gt;15</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>gatekeeperlog</name>
-          <value>/usr/local/prews-gram-4.0.1-r3/var/globus-gatekeeper.log</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>defaultModule</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-dirs</name>
-          <value>/scratch/users/inca</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>go-testing</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>xsede</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>NCSA</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>USAGE</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <hosts>login-forge.ncsa.xsede.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
       <!-- remote testing only no local client -->
-      <name>tape.ncsa.teragrid.org</name>
+      <name>glade.ncar.xsede.org</name>
       <skip/>
       <macroResource>
-        <name>ncsa-mss</name>
+        <name>ncar-glade</name>
         <macro>
           <type>constant</type>
           <name>go-id</name>
-          <value>ncsa-mss</value>
+          <value>ncar</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>goContact</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:dhart@ucar.edu</value>
         </macro>
         <macro>
           <type>constant</type>
           <name>go-dirs</name>
-          <value></value>
+          <value>/glade/u/home/inca /glade/nwsc_scratch/inca /glade/p/work/inca</value>
         </macro>
         <group>
           <type>general</type>
           <name>go-testing</name>
         </group>
-        <hosts>mss.ncsa.teragrid.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
-      <!-- remote testing only no local client -->
-      <name>queenbee.loni-lsu.teragrid.org</name>
-      <skip/>
-      <macroResource>
-        <name>lsu-queenbee</name>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>queenbee</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-dirs</name>
-          <value></value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>go-testing</name>
-        </group>
-        <hosts>login1-qb.loni-lsu.teragrid.org</hosts>
+        <hosts>login.glade.ncar.xsede.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -972,6 +893,20 @@
           <name>data-movement-clients4.2.0-uberftp-key</name>
           <value/>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>go-id</name>
+          <value>stampede</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>go-dirs</name>
+          <value>/work/00500/inca /scratch/00500/inca</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>go-testing</name>
+        </group>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -1081,6 +1016,11 @@
     <group>
       <name>go-testing</name>
       <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>goContact</name>
+        <value>FailTo:inca@sdsc.edu</value>
+      </macro>
       <group>
         <type>general</type>
         <name>data-movement-servers.teragrid.org-4.1.2</name>
@@ -11575,6 +11515,16 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@go-testing->goContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
