@@ -82,3 +82,39 @@ Case 2:  changes in etc/def2config.xsl and/or config.xml are needed
 3. Follow steps 2 - 5 above in Case 1
 
 4. Do svn commit on config.xml file 
+
+Case 3:  reporter update
+-----------------------------------------------------------------
+
+1. Check in reporter to SVN
+
+2. Go to an SDSC reference machine such as login.sdsc.edu and go to
+
+   /misc/www/projects/inca/2.0/ctssv3/bin
+
+3. Do a SVN update only on the changed reporter.
+
+   % svn update <reporter name>
+
+4. Update the repository by running
+
+   % ./sbin/incpack -I lib/perl bin/<reporter name>
+
+5. Force the agent to update the reporter by opening up incat and 
+   clicking the "Refresh" button under the "Repositories" tab.
+   Then exit incat and DO NOT commit or save changes.
+
+6. If the reporter's list of arguments has changed, modify appropriate
+   series in config.xml and then following steps in Step 2.
+
+7. If you see email "Cron <inca@inca> ${HOME}/bin/genWebPages.pl", this is due
+   to the fact we have duplicate suites in the database now.  Run the following
+   on capac and nics:
+
+   % perl deactivateExtras.pl > d.sql
+   (capac) % psql tg < d.sql
+   (nics) % psql xsede < d.sql
+
+	 The consumer should update its cache within 15 minutes and the emails should
+   go away.
+
