@@ -47,6 +47,10 @@
                         <name>__incaReporterManagerLocation__</name>
                         <value>/users/u3/inca/inca2install</value>
                     </macro>
+                    <macro>
+                        <name>incaServerLocation</name>
+                        <value>/localdisk/inca/teragrid</value>
+                    </macro>
                 </macros>
             </resource>
             <resource>
@@ -93,6 +97,14 @@
                     <macro>
                         <name>__incaReporterManagerLocation__</name>
                         <value>/data/home/inca/inca2install</value>
+                    </macro>
+                    <macro>
+                        <name>incaServerLocation</name>
+                        <value>/data/home/inca/xsede</value>
+                    </macro>
+                    <macro>
+                        <name>MAX_DISK_USAGE_MB</name>
+                        <value>20480</value>
                     </macro>
                 </macros>
             </resource>
@@ -9865,7 +9877,7 @@
                             </arg>
                             <arg>
                                 <name>filePatterns</name>
-                                <value>/localdisk/inca/teragrid/var/agent.log* /localdisk/inca/teragrid/var/depot.log* /localdisk/inca/teragrid/var/consumer.log* /localdisk/inca/teragrid/var/jetty.request.*</value>
+                                <value>@incaServerLocation@/var/agent.log* @incaServerLocation@/var/depot.log* @incaServerLocation@/var/consumer.log* @incaServerLocation@/var/jetty.request.*</value>
                             </arg>
                             <arg>
                                 <name>help</name>
@@ -9942,7 +9954,7 @@
                         <context>@@</context>
                     </series>
                     <nickname>server-cleanConfigs</nickname>
-                    <resourceSetName>INCASERVERS</resourceSetName>
+                    <resourceSetName>capac</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
