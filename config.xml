@@ -6356,6 +6356,50 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
+            <name>cluster.accounting.xdusage.version</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.xdusage.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@module add xdusage &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>xdusage-version</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>xdusage>=1.0</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
             <name>cluster.admin.softenv.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
             <args>
@@ -6574,6 +6618,62 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
           </series>
           <nickname>tgusage-unit</nickname>
+          <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>user.search.output.unit</name>
+            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>script -c \\"xdusage -p @chargeProject@\\" /dev/null</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>Total=[\\d,]+\\s+Remaining=[\\d,]+\\s+Usage=[\\d,]+\\s+Jobs=[\\d,]+</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>\\|</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@module add xdusage &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>xdusage-unit</nickname>
           <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
