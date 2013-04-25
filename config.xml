@@ -1233,30 +1233,6 @@
       <type>general</type>
     </group>
     <group>
-      <name>softenv</name>
-      <macro>
-        <type>constant</type>
-        <name>keyPre</name>
-        <value>eval \"`soft-dec sh add</value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>keyPost</name>
-        <value><![CDATA[`\" &&]]></value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>pre</name>
-        <value><![CDATA[@bash@ 'set -a; cd @__incaReporterManagerLocation__@; cp ~/.soft.v3 ~/.soft.v3.$$ && soft-msc ~/.soft.v3.$$ && source ~/.soft.v3.$$.cache.sh && @perl5@]]></value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>post</name>
-        <value>; rm -f ~/.soft.v3.$$*';</value>
-      </macro>
-      <type>general</type>
-    </group>
-    <group>
       <name>module</name>
       <macro>
         <type>constant</type>
@@ -1931,94 +1907,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison><![CDATA[java>=1.4.2_11]]></comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.tg.softenv.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-unit-as-4.2.0</nickname>
-          <resourceSetName>app-support4.2.0-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-as-4.2.0</nickname>
-          <resourceSetName>app-support4.2.0-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[softenv>=1.6.2]]></comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -6268,50 +6156,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
-            <name>cluster.tg.softenv.unit</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-unit-rl-4.0.0</nickname>
-          <resourceSetName>login4.0.0-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
             <name>cluster.accounting.tgusage.version</name>
             <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
             <args>
@@ -6389,50 +6233,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>xdusage>=1.0</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>cluster.admin.softenv.version</name>
-            <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>softenv-version-rl-4.0.0</nickname>
-          <resourceSetName>login4.0.0-softenv</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>softenv>=1.6.2</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>

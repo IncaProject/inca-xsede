@@ -4721,6 +4721,22 @@
                         <value>https://login5.stampede.tacc.utexas.edu:8446/wsrf/services/DefaultIndexService</value>
                     </macro>
                     <macro>
+                        <name>data-movement-servers4.2.0-gridftp-striped-server-registered-version</name>
+                        <value>5.2.4</value>
+                    </macro>
+                    <macro>
+                        <name>data-movement-servers4.2.0-gridftp-striped-server-host</name>
+                        <value>gridftp.stampede.tacc.utexas.edu</value>
+                    </macro>
+                    <macro>
+                        <name>data-movement-servers4.2.0-gridftp-striped-server-port</name>
+                        <value>2811</value>
+                    </macro>
+                    <macro>
+                        <name>data-movement-servers4.2.0-gridftp-striped-server-endpoint</name>
+                        <value>gsiftp://gridftp.stampede.tacc.utexas.edu:2811/</value>
+                    </macro>
+                    <macro>
                         <name>data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version</name>
                         <value>5.2.4</value>
                     </macro>
@@ -5671,7 +5687,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>data-movement-servers4.2.0-gridftp-striped-server</name>
-                <xpath>//resource[matches(name, '^(kraken\.nics\.teragrid\.org|blacklight\.psc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(kraken\.nics\.teragrid\.org|blacklight\.psc\.teragrid\.org|condor\.purdue\.teragrid\.org|steele\.purdue\.teragrid\.org|gordon\.sdsc\.teragrid\.org|trestles\.sdsc\.teragrid\.org|stampede\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__groupname__</name>
@@ -5679,7 +5695,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>kraken.nics.teragrid.org blacklight.psc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org</value>
+                        <value>kraken.nics.teragrid.org blacklight.psc.teragrid.org condor.purdue.teragrid.org steele.purdue.teragrid.org gordon.sdsc.teragrid.org trestles.sdsc.teragrid.org stampede.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -8513,94 +8529,6 @@
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
                         <comparison>java&gt;=1.4.2_11</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>cluster.tg.softenv.unit</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>softenv-unit-as-4.2.0</nickname>
-                    <resourceSetName>app-support4.2.0-softenv</resourceSetName>
-                    <schedule>
-                        <crontime>? ? * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage==''</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>cluster.admin.softenv.version</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>softenv-version-as-4.2.0</nickname>
-                    <resourceSetName>app-support4.2.0-softenv</resourceSetName>
-                    <schedule>
-                        <crontime>? ? * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>softenv&gt;=1.6.2</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
@@ -12849,50 +12777,6 @@
                 </seriesConfig>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>cluster.tg.softenv.unit</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.tg.softenv.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>softenv-unit-rl-4.0.0</nickname>
-                    <resourceSetName>login4.0.0-softenv</resourceSetName>
-                    <schedule>
-                        <crontime>? ? * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage==''</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
                         <name>cluster.accounting.tgusage.version</name>
                         <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.tgusage.version</uri>
                         <args>
@@ -12937,8 +12821,8 @@
                 </seriesConfig>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>cluster.admin.softenv.version</name>
-                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.admin.softenv.version</uri>
+                        <name>cluster.accounting.xdusage.version</name>
+                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.accounting.xdusage.version</uri>
                         <args>
                             <arg>
                                 <name>version</name>
@@ -12960,16 +12844,16 @@
                         <limits>
                             <wallClockTime>600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@pre@module add xdusage &amp;&amp; @@@post@</context>
                     </series>
-                    <nickname>softenv-version-rl-4.0.0</nickname>
-                    <resourceSetName>login4.0.0-softenv</resourceSetName>
+                    <nickname>xdusage-version</nickname>
+                    <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>softenv&gt;=1.6.2</comparison>
+                        <comparison>xdusage&gt;=1.0</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
@@ -13155,6 +13039,62 @@
                         <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
                     </series>
                     <nickname>tgusage-unit</nickname>
+                    <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                    <series>
+                        <name>user.search.output.unit</name>
+                        <uri>http://inca.sdsc.edu/2.0/ctssv3/bin/user.search.output.unit</uri>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>script -c \\"xdusage -p @chargeProject@\\" /dev/null</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>Total=[\\d,]+\\s+Remaining=[\\d,]+\\s+Usage=[\\d,]+\\s+Jobs=[\\d,]+</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>\\|</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>600.0</wallClockTime>
+                        </limits>
+                        <context>@pre@module add xdusage &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>xdusage-unit</nickname>
                     <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
