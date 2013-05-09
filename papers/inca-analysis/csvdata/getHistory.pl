@@ -39,6 +39,7 @@ if ( ! -f $filename || defined $prepend ) {
   if ( -f $filename ) {
     my @firstlines = `head -2 $filename`;
     my $collected = (split(/","/, $firstlines[1]))[6];
+    die "No timestamp found in $firstlines[1]" if ! defined $collected;
     $end = getTimestamp($collected);
     my ($year, $month, $day) = $collected =~ /20(\d\d)-(\d\d)-(\d\d)/;
     $enddate = "$month$day$year";
