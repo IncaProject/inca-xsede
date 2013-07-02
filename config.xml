@@ -3691,74 +3691,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-          <series>
-            <name>network.ping.unit</name>
-            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.ping.unit</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-              <arg>
-                <name>host</name>
-                <value>129.114.33.8</value>
-              </arg>
-              <arg>
-                <name>count</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>timeout</name>
-                <value>30</value>
-              </arg>
-              <arg>
-                <name>retries</name>
-                <value>3</value>
-              </arg>
-              <arg>
-                <name>verify</name>
-                <value>@externalVerifyServers@</value>
-              </arg>
-              <arg>
-                <name>sleep</name>
-                <value>30</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>120</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>sdiact-70-ping</nickname>
-          <resourceSetName>capac</resourceSetName>
-          <schedule>
-            <crontime>?-59/5 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
       </seriesConfigs>
       <name>check-reporter-managers</name>
       <guid>incas://capac.sdsc.edu:6323/check-reporter-managers</guid>
@@ -6745,6 +6677,46 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>myproxy>=3.4</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.admin.modules.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <context>@pre@@login5.0.0-modules-key@@@@post@</context>
+          </series>
+          <nickname>modules-version</nickname>
+          <resourceSetName>login.teragrid.org-5.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>modules>=1.6.1</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
