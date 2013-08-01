@@ -24,6 +24,16 @@
           <name>incaServerLocation</name>
           <value>/localdisk/inca/teragrid</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>incadb</name>
+          <value>tg</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>incaServerMemMax</name>
+          <value><![CDATA[Consumer < 1300 && Depot < 1300 && Agent < 700]]></value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -61,6 +71,16 @@
           <type>constant</type>
           <name>incaServerLocation</name>
           <value>/data/home/inca/xsede</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>incadb</name>
+          <value>xsede</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>incaServerMemMax</name>
+          <value><![CDATA[Consumer < 1300 && Depot < 1300]]></value>
         </macro>
         <macro>
           <type>constant</type>
@@ -3261,7 +3281,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>db</name>
-                <value>tg</value>
+                <value>@incadb@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -3395,7 +3415,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[Consumer < 1300 && Depot < 1300 && Agent < 700]]></comparison>
+            <comparison>@incaServerMemMax@</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -3678,6 +3698,54 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <resourceSetName>capac</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.dnslookup.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.dnslookup.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>inca.xsede.org</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>Inca DNS lookup</nickname>
+          <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>?-59/15 * * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
