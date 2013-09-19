@@ -9391,54 +9391,6 @@
             <seriesConfigs>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>network.dnslookup.unit</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.dnslookup.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>0</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>tgcdb.xsede.org</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>650.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>XDCDB DNS lookup</nickname>
-                    <resourceSetName>quarry</resourceSetName>
-                    <schedule>
-                        <crontime>?-59/15 * * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
                         <name>grid.wget.performance</name>
                         <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.wget.performance</uri>
                         <args>
@@ -9734,66 +9686,6 @@
             <guid>incas://capac.sdsc.edu:6323/gig</guid>
             <description>tests to monitor gig servers and repo</description>
             <version>56</version>
-        </suite>
-        <suite>
-            <seriesConfigs>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.wget.unit</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.wget.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
-                                <name>wgetArgs</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>page</name>
-                                <value>http://karnak.teragrid.org/karnak/index.html</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>651</wallClockTime>
-                        </limits>
-                        <context>@@</context>
-                    </series>
-                    <nickname>wget-karnak</nickname>
-                    <resourceSetName>quarry</resourceSetName>
-                    <schedule>
-                        <crontime>?-59/30 * * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:inca@sdsc.edu, FailTo:wsmith@tacc.utexas.edu, FailTo:maytal@tacc.utexas.edu, FailTo:mock@tacc.utexas.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-            </seriesConfigs>
-            <name>karnak</name>
-            <guid>incas://capac.sdsc.edu:6323/karnak</guid>
-            <description>Karnak testing</description>
-            <version>11</version>
         </suite>
         <suite>
             <seriesConfigs>
