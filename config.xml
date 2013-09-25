@@ -1193,6 +1193,11 @@
         <name>gsi-openssh-host</name>
         <value>@login4.0.0-gsi-openssh-host@</value>
       </macro>
+      <macro>
+        <type>constant</type>
+        <name>gsi-openssh-port</name>
+        <value>@login4.0.0-gsi-openssh-port@</value>
+      </macro>
       <group>
         <type>general</type>
         <name>ctss-gsissh-server</name>
@@ -1206,6 +1211,11 @@
         <name>gsi-openssh-host</name>
         <value>@login5.0.0-gsi-openssh-host@</value>
       </macro>
+      <macro>
+        <type>constant</type>
+        <name>gsi-openssh-port</name>
+        <value>@login5.0.0-gsi-openssh-port@</value>
+      </macro>
       <group>
         <type>general</type>
         <name>ctss-gsissh-server</name>
@@ -1218,6 +1228,11 @@
         <type>constant</type>
         <name>gridftp-default-server-host</name>
         <value>@data-movement-servers4.2.0-gridftp-default-server-host@</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>globus-url-copy-key</name>
+        <value>@data-movement-clients4.2.0-globus-url-copy-key@</value>
       </macro>
       <group>
         <type>general</type>
@@ -3868,7 +3883,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ssh</name>
-                <value>gsissh</value>
+                <value>gsissh -p @ctss-gsissh-server->gsi-openssh-port@</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -4198,7 +4213,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>1800.0</wallClockTime>
             </limits>
-            <context>@pre@ nickname=all2all:gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@ @@@post@</context>
+            <context>@pre@ @globus-url-copy-key@ nickname=all2all:gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@ @@@post@</context>
           </series>
           <nickname>all2all:gridftp_to_@ctss-gridftp-server->gridftp-default-server-host@</nickname>
           <resourceSetName>ctss-gridftp-client</resourceSetName>
@@ -4346,7 +4361,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ssh</name>
-                <value>gsissh</value>
+                <value>gsissh -p @data-movement-servers4.2.0-gsi-scp-hpn-server-port@</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -5557,7 +5572,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ssh</name>
-                <value>gsissh</value>
+                <value>gsissh -p @login4.0.0-gsi-openssh-port@</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -6093,7 +6108,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>ssh</name>
-                <value>gsissh</value>
+                <value>gsissh -p @login5.0.0-gsi-openssh-port@</value>
               </arg>
               <arg>
                 <name>host</name>

@@ -5458,6 +5458,10 @@
                         <name>gsi-openssh-host</name>
                         <value>@login4.0.0-gsi-openssh-host@</value>
                     </macro>
+                    <macro>
+                        <name>gsi-openssh-port</name>
+                        <value>@login4.0.0-gsi-openssh-port@</value>
+                    </macro>
                 </macros>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -5480,6 +5484,10 @@
                         <name>gsi-openssh-host</name>
                         <value>@login5.0.0-gsi-openssh-host@</value>
                     </macro>
+                    <macro>
+                        <name>gsi-openssh-port</name>
+                        <value>@login5.0.0-gsi-openssh-port@</value>
+                    </macro>
                 </macros>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
@@ -5501,6 +5509,10 @@
                     <macro>
                         <name>gridftp-default-server-host</name>
                         <value>@data-movement-servers4.2.0-gridftp-default-server-host@</value>
+                    </macro>
+                    <macro>
+                        <name>globus-url-copy-key</name>
+                        <value>@data-movement-clients4.2.0-globus-url-copy-key@</value>
                     </macro>
                 </macros>
             </resource>
@@ -8158,7 +8170,7 @@
                             </arg>
                             <arg>
                                 <name>ssh</name>
-                                <value>gsissh</value>
+                                <value>gsissh -p @ctss-gsissh-server-&gt;gsi-openssh-port@</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -8488,7 +8500,7 @@
                         <limits>
                             <wallClockTime>1800.0</wallClockTime>
                         </limits>
-                        <context>@pre@ nickname=all2all:gridftp_to_@ctss-gridftp-server-&gt;gridftp-default-server-host@ @@@post@</context>
+                        <context>@pre@ @globus-url-copy-key@ nickname=all2all:gridftp_to_@ctss-gridftp-server-&gt;gridftp-default-server-host@ @@@post@</context>
                     </series>
                     <nickname>all2all:gridftp_to_@ctss-gridftp-server-&gt;gridftp-default-server-host@</nickname>
                     <resourceSetName>ctss-gridftp-client</resourceSetName>
@@ -8636,7 +8648,7 @@
                             </arg>
                             <arg>
                                 <name>ssh</name>
-                                <value>gsissh</value>
+                                <value>gsissh -p @data-movement-servers4.2.0-gsi-scp-hpn-server-port@</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -9847,7 +9859,7 @@
                             </arg>
                             <arg>
                                 <name>ssh</name>
-                                <value>gsissh</value>
+                                <value>gsissh -p @login4.0.0-gsi-openssh-port@</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -10383,7 +10395,7 @@
                             </arg>
                             <arg>
                                 <name>ssh</name>
-                                <value>gsissh</value>
+                                <value>gsissh -p @login5.0.0-gsi-openssh-port@</value>
                             </arg>
                             <arg>
                                 <name>host</name>
