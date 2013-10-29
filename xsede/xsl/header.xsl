@@ -11,7 +11,7 @@
   <xsl:param name="url" />
 
   <xsl:template name="header">
-    <xsl:variable name="map" select="'http://capac.sdsc.edu:8080/inca'"/>
+    <xsl:variable name="map" select="'http://capac.sdsc.edu/inca'"/>
     <table width="100%" class="subheader">
       <tr>
         <td><b><a href="http://inca.xsede.org/">
@@ -196,11 +196,6 @@
                       <li>
                         <a href="{concat($url, '/HTML/kit-status-v1/gig/quarry')}">
                           grid infrastructure group (gig)
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/xup/capac')}">
-                          user portal
                         </a>
                       </li>
                       <li>
