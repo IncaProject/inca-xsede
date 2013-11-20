@@ -253,7 +253,7 @@
     <xsl:variable name="testClean" select="replace($testname,'\+','.')"/>
     <xsl:variable name="regexTest" select="concat('^',$testClean,'(_|_to_)',$endpoint,'$')"/>
     <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
-         (matches(hostname, $regexHost) and nickname=$testname) or 
+         (matches(hostname, $regexHost) and nickname=$testname) or (matches(targetHostname, $regexHost) and nickname=$testname) or 
          (matches(nickname, $regexTest))]" />
     <xsl:variable name="instance" select="$result/instanceId" />
     <xsl:variable name="comparitor" select="$result/comparisonResult" />

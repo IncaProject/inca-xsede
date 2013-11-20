@@ -10,8 +10,8 @@
                 xmlns:rs="http://inca.sdsc.edu/queryResult/reportSummary_2.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xsl:include href="../xsl/inca-common.xsl"/>
-  <xsl:include href="../xsl/legend.xsl"/>
+  <xsl:include href="../xsl/inca-common26.xsl"/>
+  <xsl:param name="queryStr"/>
 
   <!-- ==================================================================== -->
   <!-- generateHTML                                                         -->
@@ -20,11 +20,19 @@
   <!-- ==================================================================== -->
   <xsl:template name="generateHTML" match="/combo">
     <!-- inca-common.xsl -->
-    <xsl:call-template name="printBodyTitle">
-      <xsl:with-param name="title" select="''"/>
-    </xsl:call-template>
-    <!-- legend.xsl -->
-    <xsl:call-template name="printLegend"/>
+    <xsl:if test="not(contains($queryStr,'noDescription=true'))">
+      <xsl:call-template name="printBodyTitle">
+        <xsl:with-param name="title" select="'Inca reporter results'"/>
+      </xsl:call-template>
+      <p>Inca test results, version information, or performance results are shown below
+         in one or more tables.  Each table displays related test results where the
+         rows of the table will display the name of an Inca test, software version, or
+         performance measurement.  The columns of the table display the resource where the
+         test was executed.  Click on selected
+         icons (described in the <a href="javascript:window.open('/inca/jsp/legend.jsp','incalegend','width=400,height=325,resizable=yes')">legend</a>) for more details about the
+         collected Inca report.</p>
+    </xsl:if>
+
     <!-- printSuiteInfo -->
     <xsl:apply-templates select="suites/suite|queries/query" />
   </xsl:template>
@@ -36,72 +44,43 @@
   <!-- ==================================================================== -->
   <xsl:template name="printSuiteInfo" match="suite|query">
     <xsl:variable name="name" select="name"/>
-    <xsl:choose>
-    <xsl:when test="name[matches(., '^tg-iis$')]">
-    <xsl:call-template name="printMdsResultsTable"/>
-    </xsl:when>
-    <xsl:otherwise>
-    <h1><xsl:value-of select="$name"/></h1>
+
+    <xsl:variable name="defaultconfig" select="document('../xml/default.xml')/default"/>
+
+    <!-- get all series names; we don't want cross-site names that aren't all2all series
+         and don't want summary reporters -->
     <xsl:variable name="seriesNames"
-         select="distinct-values(quer:object//rs:reportSummary/nickname)"/>
-    <!-- inca-common.xsl -->
-    <xsl:if test="name[not(matches(., '^(security|sdsc-ops)$'))]">
+         select="distinct-values(quer:object//rs:reportSummary[starts-with(nickname, 'all2all:') or ( not(contains(nickname, '_to_')) and not(matches(uri, '/summary\.successpct\.performance$')) )]/nickname)"/> 
+    <xsl:variable name="csSeriesNamesString">
+      <!-- needs to be crunched on one line to take out newlines in string -->
+      <xsl:for-each select="quer:object//rs:reportSummary[not(ends-with(uri,'summary.successpct.performance'))]/nickname[not(starts-with(., 'all2all:')) and contains(., '_to_')]"><xsl:value-of select="substring-before(., '_to_')"/><xsl:if test="position() != last()">,</xsl:if></xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="csSeriesNames" select="distinct-values(tokenize($csSeriesNamesString,','))"/>
+
+    <!-- Uncomment below if want to print a list of tests in the below table with links
     <xsl:call-template name="printSeriesNamesTable">
       <xsl:with-param name="seriesNames" select="$seriesNames"/>
     </xsl:call-template>
-    </xsl:if>
+    -->
     <xsl:variable name="summaries" select="quer:object//rs:reportSummary[matches(uri,
      '/summary\.successpct\.performance$')]/body/performance/benchmark/statistics/statistic"/>
     <xsl:variable name="resources" select="/combo/resources/resource |
                /combo/suites/suite[matches(name, $name)]/resources/resource" />
-    <xsl:call-template name="printSeriesResultsTable">
-      <xsl:with-param name="seriesNames" select="$seriesNames"/>
-      <xsl:with-param name="summaries" select="$summaries"/>
-      <xsl:with-param name="resources" select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
-    </xsl:call-template>
-    </xsl:otherwise>
-    </xsl:choose>
+    <table><tr>
+      <td><h1><xsl:value-of select="$name"/></h1></td>
+      <td align="left">(<a href="javascript:window.open('/inca/jsp/legend.jsp','incalegend','width=400,height=325,resizable=yes')">view legend</a>)</td>
+    </tr><tr><td colspan="2">
+      <xsl:call-template name="printSeriesResultsTable">
+        <xsl:with-param name="seriesNames" 
+                        select="distinct-values(insert-before($seriesNames,0,$csSeriesNames))"/>
+        <xsl:with-param name="summaries" select="$summaries"/>
+        <xsl:with-param name="resources" select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
+        <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+      </xsl:call-template>
+    </td></tr></table>
+    <br/>
   </xsl:template>
 
-  <!-- ==================================================================== -->
-  <!-- printMdsResultsTable                                                 -->
-  <!--                                                                      -->
-  <!-- Prints a table with mds series results.                              -->
-  <!-- ==================================================================== -->
-  <xsl:template name="printMdsResultsTable">
-    <xsl:variable name="seriesNames" select="/combo/tgwide/services/service"/>
-    <xsl:variable name="resources" select="/combo/tgwide/resources/resource"/>
-    <xsl:variable name="suite" select="."/>
-    <h1><xsl:value-of select="/combo/tgwide/id"/></h1>
-    <table class="subheader">
-      <tr>
-        <td class="subheader"/>
-        <!-- inca-common.xsl printResourceNameCell -->
-        <xsl:apply-templates select="$resources" mode="name">
-          <xsl:sort/>
-        </xsl:apply-templates>
-      </tr>
-      <xsl:for-each select="$seriesNames">
-        <tr>
-          <td class="clear"><xsl:value-of select="concat(name,' ',port)"/></td>
-          <xsl:variable name="series" select="name"/>
-          <xsl:variable name="port" select="port"/>
-          <xsl:for-each select="$resources">
-            <xsl:sort/>
-            <xsl:variable name="regex" select="concat('^',name,'(|:',$port,')(| )(\(|_)',$series,'(\)|)$')"/>
-            <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
-                matches(nickname, $regex)]"/>
-            <xsl:call-template name="printResourceResultCell">
-              <xsl:with-param name="result" select="$result"/>
-              <xsl:with-param name="bench" 
-                select="$result/body/performance/benchmark" />
-            </xsl:call-template>
-          </xsl:for-each>
-        </tr>
-      </xsl:for-each>
-    </table>
-  </xsl:template>
-  
   <!-- ==================================================================== -->
   <!-- printSeriesResultsTable                                              -->
   <!--                                                                      -->
@@ -111,10 +90,61 @@
     <xsl:param name="seriesNames"/>
     <xsl:param name="summaries"/>
     <xsl:param name="resources"/>
+    <xsl:param name="defaultconfig"/>
     <xsl:variable name="suite" select="."/>
+
+    <xsl:variable name="groupregex">
+      <xsl:choose><xsl:when test="/combo/default/group"><xsl:value-of select="string-join(/combo/default/group/@regex, '|')"/></xsl:when><xsl:when test="$defaultconfig/group"><xsl:value-of select="string-join($defaultconfig/group/@regex, '|')"/></xsl:when><xsl:otherwise>^$</xsl:otherwise></xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="groupedseries" select="$seriesNames[matches(.,$groupregex)]"/>
+    <xsl:variable name="ungroupedseries" select="$seriesNames[not(matches(.,$groupregex))]"/>
+
     <table class="subheader">
-      <xsl:for-each select="$seriesNames">
-        <xsl:sort/>
+      <xsl:for-each select="/combo/default/group | $defaultconfig/group">
+        <xsl:variable name="regex" select="@regex"/>
+        <xsl:variable name="strip" select="@strip"/>
+        <xsl:variable name="missing" select="@missing"/>
+        <xsl:if test="count($groupedseries[matches(.,$regex)])>0 or $missing">
+        <tr>
+          <td class="subheader"><xsl:value-of select="@name"/></td>
+          <xsl:if test="$summaries"><td class="subheader">SUMMARY</td></xsl:if>
+          <!-- inca-common.xsl printResourceNameCell -->
+          <xsl:apply-templates select="$resources" mode="name">
+            <xsl:sort/>
+          </xsl:apply-templates>
+        </tr>
+        </xsl:if>
+        <xsl:if test="count($groupedseries[matches(.,$regex)])=0 and $missing">
+        <xsl:variable name="numResources" select="count($resources)+1"/>
+        <tr><td class="clear" colspan="{$numResources}"><xsl:value-of select="$missing"/></td></tr>
+        </xsl:if>
+        <xsl:for-each select="$groupedseries[matches(.,$regex)]">
+          <xsl:sort select="replace(., '\d', '')" />
+          <xsl:sort select="replace(.,'[^\d]', '')" data-type="number"/>
+
+          <xsl:variable name="seriesName" select="."/>
+          <xsl:variable name="printSeriesName">
+            <xsl:choose><xsl:when test="$strip">
+              <xsl:value-of select="replace(.,$strip,'')"/>
+            </xsl:when><xsl:otherwise>
+              <xsl:value-of select="."/>
+            </xsl:otherwise></xsl:choose>
+          </xsl:variable>  
+          <xsl:call-template name="printSeriesResultsRow">
+            <xsl:with-param name="resources" select="$resources"/>
+            <xsl:with-param name="seriesName" select="$seriesName"/>
+            <xsl:with-param name="printSeriesName" select="$printSeriesName"/>
+            <xsl:with-param name="suite" select="$suite"/>
+            <xsl:with-param name="summaries" select="$summaries"/>
+            <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:for-each>
+      <xsl:for-each select="$ungroupedseries">
+        <!-- do text number sort -->
+        <xsl:sort select="replace(., '\d', '')" />
+        <xsl:sort select="replace(.,'[^\d]', '')" data-type="number"/>
+
         <xsl:if test="position() mod 20 = 1">
           <tr>
             <td class="subheader"/>
@@ -125,30 +155,63 @@
             </xsl:apply-templates>
           </tr>
         </xsl:if>
-        <tr>
-          <td class="clear"><a name="{.}">
-            <xsl:value-of select="replace(., '^all2all:gridftp_to_', '')" />
-          </a></td>
-          <xsl:if test="$summaries">
-            <xsl:call-template name="printSummaryValue">
-              <xsl:with-param name="test" select="."/>
-              <xsl:with-param name="summaries" select="$summaries"/>
-            </xsl:call-template>
-          </xsl:if>
-          <xsl:variable name="series" select="."/>
-          <xsl:for-each select="$resources">
-            <xsl:sort/>
-            <xsl:variable name="regexHost" select="concat('^', name, '$|',
-               replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
-            <xsl:variable name="result" select="$suite/quer:object//rs:reportSummary[
-                 matches(hostname, $regexHost) and nickname=$series]" />
-            <xsl:call-template name="printResourceResultCell">
-              <xsl:with-param name="result" select="$result"/>
-            </xsl:call-template>
-          </xsl:for-each>
-        </tr>
+        <xsl:variable name="seriesName" select="."/>
+        <xsl:call-template name="printSeriesResultsRow">
+          <xsl:with-param name="resources" select="$resources"/>
+          <xsl:with-param name="seriesName" select="$seriesName"/>
+          <xsl:with-param name="printSeriesName" select="$seriesName"/>
+          <xsl:with-param name="suite" select="$suite"/>
+          <xsl:with-param name="summaries" select="$summaries"/>
+          <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+        </xsl:call-template>
       </xsl:for-each>
     </table>
+  </xsl:template>
+
+  <!-- ==================================================================== -->
+  <!-- printSeriesResultsRow -->
+  <!--                                                                      -->
+  <!-- Prints a row of series results    .                                  -->
+  <!-- ==================================================================== -->
+  <xsl:template name="printSeriesResultsRow">
+    <xsl:param name="resources"/>
+    <xsl:param name="seriesName"/>
+    <xsl:param name="printSeriesName"/>
+    <xsl:param name="suite"/>
+    <xsl:param name="summaries"/>
+    <xsl:param name="defaultconfig"/>
+    <tr>
+      <td class="clear"><a name="{$seriesName}">
+        <xsl:value-of select="$printSeriesName" />
+      </a></td>
+      <xsl:if test="$summaries">
+        <xsl:call-template name="printSummaryValue">
+          <xsl:with-param name="test" select="$seriesName"/>
+          <xsl:with-param name="summaries" select="$summaries"/>
+          <xsl:with-param name="states" select="$defaultconfig/incaResult"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:for-each select="$resources">
+        <xsl:sort/>
+
+        <xsl:variable name="regexHost" select="concat(name, '$|',
+          replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
+        <xsl:variable name="csSeriesName" select="concat('^', $seriesName,'_to_(', $regexHost, ')' )"/>
+        <xsl:variable name="reports" select="$suite/quer:object//rs:reportSummary[nickname=$seriesName or matches(nickname, $csSeriesName)]"/>
+        <xsl:choose><xsl:when test="count($reports[matches(hostname,$regexHost)])&gt;0">
+          <xsl:call-template name="printResourceResultCell">
+            <xsl:with-param name="result" select="$reports[matches(hostname,$regexHost)]"/>
+            <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+          </xsl:call-template>
+        </xsl:when><xsl:otherwise>
+          <xsl:call-template name="printResourceResultCell">
+            <xsl:with-param name="result" select="$reports[matches(targetHostname,$regexHost)]"/>
+            <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+          </xsl:call-template>
+        </xsl:otherwise></xsl:choose>
+
+      </xsl:for-each>
+    </tr>
   </xsl:template>
 
   <!-- ==================================================================== -->
@@ -158,134 +221,71 @@
   <!-- ==================================================================== -->
   <xsl:template name="printResourceResultCell">
     <xsl:param name="result"/>
-    <xsl:param name="bench"/>
+    <xsl:param name="defaultconfig"/>
     <xsl:variable name="instance" select="$result/instanceId" />
-    <xsl:variable name="comparitor" select="$result/comparisonResult" />
-    <xsl:variable name="foundVersion" select="$result/body/package/version" />
+    <xsl:variable name="foundVersion" select="$result/body/package/version|$result/body/package/subpackage"/>
     <xsl:variable name="errMsg" select="$result/errorMessage" />
-    <xsl:choose>
-      <xsl:when test="count($result)>0">
+
+    <xsl:choose><xsl:when test="count($result)=1">
         <!-- resource is not exempt -->
-        <xsl:variable name="resourceName">
-          <xsl:choose>
-            <!-- in tg-iis suite -->
-            <xsl:when test="name[matches(., '^(info|info1\.dyn|info2\.dyn|mds)\.teragrid\.org$')]">
-              <xsl:value-of select="'repo'" />
-            </xsl:when>
-            <xsl:otherwise><xsl:value-of select="name"/></xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="normRef" select="concat('/inca/jsp/instance.jsp?nickname=',
-            encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;collected=', $result/gmt)"/>
-        <xsl:variable name="href">
-          <xsl:call-template name="getLink">
-            <xsl:with-param name="errMsg" select="$errMsg"/>
-            <xsl:with-param name="normRef" select="$normRef"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="stale">
-          <xsl:if test="$result/gmtExpires">
-            <!-- inca-common.xsl -->
-            <xsl:call-template name="markOld">
-              <xsl:with-param name="gmtExpires" select="$result/gmtExpires" as="xs:dateTime"/>
-            </xsl:call-template>
-          </xsl:if>
-        </xsl:variable>
-        <xsl:variable name="exit">
-          <xsl:choose>
-            <xsl:when test="string($stale)!=''">
-              <xsl:value-of select="'stale'" />
-            </xsl:when>
-            <xsl:when test="count($result/body)=0">
-              <xsl:value-of select="''" />
-            </xsl:when>
-            <xsl:when test="$errMsg[matches(., '^DOWNTIME:.*: ')]">
-              <xsl:value-of select="'down'" />
-            </xsl:when>
-            <xsl:when test="$errMsg[matches(., '^DNS ERROR')]">
-              <xsl:value-of select="'dnsError'" />
-            </xsl:when>
-            <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">
-              <xsl:value-of select="'noFault'" />
-            </xsl:when>
-            <xsl:when test="$comparitor='Success' or 
-              (string($result/body)!=''
-               and string($errMsg)=''
-               and string($comparitor)='' )">
-              <xsl:value-of select="'pass'" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="'error'" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="mapstats" select="$result/body/performance/benchmark/statistics"/>
-        <xsl:choose>
-          <xsl:when test="$exit!=''">
-            <td class="{$exit}">
-              <a href="{$href}" title="{$errMsg}">
-                <xsl:choose>
-                  <xsl:when test="string($foundVersion)='' or string($stale)!=''">
-                    <xsl:choose>
-                      <xsl:when test="$mapstats/@ip!=''">
-                        <xsl:value-of select="$mapstats/@ip"/>
-                      </xsl:when>
-                      <xsl:when test="string($bench)!='' and $bench/statistics/@*">
-                          <xsl:value-of select="$bench"/>
-                          <xsl:for-each select="$bench/statistics/@*">
-                            <xsl:sort select="."/>
-                            <table><tr>
-                              <td><xsl:value-of select="name()"/></td>
-                              <td><xsl:value-of select="."/></td>
-                            </tr></table>
-                          </xsl:for-each>
-                      </xsl:when>
-                      <xsl:when test="string($mapstats/statistic[ID='error-CommunityUser'])">
-                        <xsl:variable name="ecu" select="$mapstats/statistic[ID='error-CommunityUser']/value"/>
-                        <xsl:if test="$ecu>0"><xsl:value-of select="concat('community_user:_',$ecu)"/><br/></xsl:if>
-                        <xsl:variable name="ef" select="$mapstats/statistic[ID='error-DNtoMultiplePersonID']/value"/>
-                        <xsl:if test="$ef>0"><xsl:value-of select="concat('dn_to_mutiple_person_id:_',$ef)"/><br/></xsl:if>
-                        <xsl:variable name="egt" select="$mapstats/statistic[ID='error-NoGT4DN']/value"/>
-                        <xsl:if test="$egt>0"><xsl:value-of select="concat('no_gt4_dn:_',$egt)"/><br/></xsl:if>
-                        <xsl:variable name="emu" select="$mapstats/statistic[ID='error-NonCommunityUser']/value"/>
-                        <xsl:if test="$emu>0"><xsl:value-of select="concat('non_community_user:_',$emu)"/><br/></xsl:if>
-                        <xsl:variable name="enm" select="$mapstats/statistic[ID='error-OldDN']/value"/>
-                        <xsl:if test="$enm>0"><xsl:value-of select="concat('old_dn:_',$enm)"/><br/></xsl:if>
-                        <xsl:variable name="eog" select="$mapstats/statistic[ID='warn-DNtoMultiplePersonIDCommunityUser']/value"/>
-                        <xsl:if test="$eog>0"><xsl:value-of select="concat('dn_to_multiple_person_id_community_user:_',$eog)"/><br/></xsl:if>
-                        <xsl:variable name="epm" select="$mapstats/statistic[ID='warn-Proxy']/value"/>
-                        <xsl:if test="$epm>0"><xsl:value-of select="concat('proxy:_',$epm)"/><br/></xsl:if>
-                        <xsl:value-of select="$exit"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="$exit"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="$foundVersion" />
-                  </xsl:otherwise>
-                </xsl:choose>
-              </a>
-              <xsl:if test="$exit='down'">
-                <xsl:value-of select="' '" />
-                <a href="{$normRef}" title="{$errMsg}">err</a>
-              </xsl:if>
-            </td>
-          </xsl:when>
-          <!-- missing data -->
-          <xsl:otherwise>
-            <td class="clear"><xsl:value-of select="' '" /></td>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <!-- resource is exempt -->
-        <td class="na">
-          <xsl:text>n/a</xsl:text>
-        </td>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:variable name="normRef">
+        <xsl:choose><xsl:when test="$result/gmt">
+          <xsl:value-of select="concat('/inca/jsp/instance.jsp?nickname=', encode-for-uri($result/nickname), '&amp;resource=', $result/hostname, '&amp;target=', $result/targetHostname, '&amp;collected=', $result/gmt)"/>
+        </xsl:when><xsl:otherwise>
+          <xsl:value-of select="concat('/inca/jsp/runNow.jsp?configId=', $result/seriesConfigId)"/>
+        </xsl:otherwise></xsl:choose>
+     </xsl:variable>
+       <xsl:variable name="href"><xsl:call-template name="getLink">
+           <xsl:with-param name="errMsg" select="$errMsg"/>
+           <xsl:with-param name="normRef" select="$normRef"/>
+           <xsl:with-param name="downtimeUrl" select="$defaultconfig/downtimeUrl"/>
+       </xsl:call-template></xsl:variable>
+
+       <!-- inca-common.xsl:  returns string of bgcolor|img.png -->
+       <xsl:variable name="state"><xsl:call-template name="getStatus">
+           <xsl:with-param name="result" select="$result"/>
+           <xsl:with-param name="states" select="$defaultconfig/incaResult"/>
+       </xsl:call-template></xsl:variable>
+
+       <xsl:if test="$state!=''">
+         <xsl:variable name="bgcolor" select="tokenize($state,'\|')[1]"/>
+         <xsl:variable name="img" select="tokenize($state,'\|')[2]"/>
+         <xsl:variable name="text" select="tokenize($state,'\|')[3]"/>
+         <td bgcolor="{$bgcolor}" align="center">
+           <a href="{$href}" title="{$errMsg}" id="statuscell" >
+             <xsl:if test="$img!='' and (not(contains($state, 'pass')) or not($foundVersion))">
+               <img src="{concat('/inca/img/', $img)}"/>
+               <xsl:if test="$href != $normRef">
+                 <a style="text-decoration:none; text-size: tiny" href="{$normRef}">*</a>
+               </xsl:if>
+               <br/>
+             </xsl:if>
+             <xsl:value-of select="$text"/>
+             <xsl:choose>
+               <xsl:when test="$result/body//statistics and $result/errorMessage=''">
+                 <table bgcolor="{$bgcolor}">
+                 <xsl:call-template name="printBodyStats">
+                   <xsl:with-param name="report" select="$result"/>
+                 </xsl:call-template>
+                 </table>
+               </xsl:when>
+               <xsl:when test="count($foundVersion)>1">
+                 <xsl:for-each select="$result/body/package/subpackage">
+                 <xsl:value-of select="ID"/>: <xsl:value-of select="version"/><br/>
+                 </xsl:for-each>
+               </xsl:when>
+               <xsl:when test="string($foundVersion)!=''">
+                 <xsl:value-of select="$foundVersion" />
+               </xsl:when>
+             </xsl:choose>
+           </a>
+         </td>
+       </xsl:if>
+     </xsl:when><xsl:otherwise>
+	<!-- resource is exempt -->
+       <xsl:variable name="naConfig" select="$defaultconfig/incaResult/secondaryState[@name='na']"/>
+       <td bgcolor="{$naConfig/@bgcolor}" align="center"><xsl:value-of select="$naConfig/@text"/></td>
+     </xsl:otherwise></xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
