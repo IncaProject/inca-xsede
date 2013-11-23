@@ -10,7 +10,7 @@
                 xmlns:rs="http://inca.sdsc.edu/queryResult/reportSummary_2.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xsl:include href="../xsl/inca-common26.xsl"/>
+  <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:param name="queryStr"/>
 
   <!-- ==================================================================== -->
@@ -76,6 +76,7 @@
         <xsl:with-param name="summaries" select="$summaries"/>
         <xsl:with-param name="resources" select="$resources[macros/macro[name='__equivalent__' and value='true']]"/>
         <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
+        <xsl:with-param name="localdefaultconfig" select="default"/>
       </xsl:call-template>
     </td></tr></table>
     <br/>
@@ -91,16 +92,18 @@
     <xsl:param name="summaries"/>
     <xsl:param name="resources"/>
     <xsl:param name="defaultconfig"/>
+    <xsl:param name="localdefaultconfig"/>
     <xsl:variable name="suite" select="."/>
 
     <xsl:variable name="groupregex">
-      <xsl:choose><xsl:when test="/combo/default/group"><xsl:value-of select="string-join(/combo/default/group/@regex, '|')"/></xsl:when><xsl:when test="$defaultconfig/group"><xsl:value-of select="string-join($defaultconfig/group/@regex, '|')"/></xsl:when><xsl:otherwise>^$</xsl:otherwise></xsl:choose>
+      <xsl:choose><xsl:when test="$localdefaultconfig/group"><xsl:value-of select="string-join($localdefaultconfig/group/@regex, '|')"/></xsl:when><xsl:when test="$defaultconfig/group"><xsl:value-of select="string-join($defaultconfig/group/@regex, '|')"/></xsl:when><xsl:otherwise>^$</xsl:otherwise></xsl:choose>
     </xsl:variable>
+
     <xsl:variable name="groupedseries" select="$seriesNames[matches(.,$groupregex)]"/>
     <xsl:variable name="ungroupedseries" select="$seriesNames[not(matches(.,$groupregex))]"/>
 
     <table class="subheader">
-      <xsl:for-each select="/combo/default/group | $defaultconfig/group">
+      <xsl:for-each select="$localdefaultconfig/group | $defaultconfig/group">
         <xsl:variable name="regex" select="@regex"/>
         <xsl:variable name="strip" select="@strip"/>
         <xsl:variable name="missing" select="@missing"/>
@@ -196,7 +199,7 @@
 
         <xsl:variable name="regexHost" select="concat(name, '$|',
           replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
-        <xsl:variable name="csSeriesName" select="concat('^', $seriesName,'_to_(', $regexHost, ')' )"/>
+        <xsl:variable name="csSeriesName" select="concat('^', encode-for-uri($seriesName),'_to_(', $regexHost, ')' )"/>
         <xsl:variable name="reports" select="$suite/quer:object//rs:reportSummary[nickname=$seriesName or matches(nickname, $csSeriesName)]"/>
         <xsl:choose><xsl:when test="count($reports[matches(hostname,$regexHost)])&gt;0">
           <xsl:call-template name="printResourceResultCell">
@@ -262,7 +265,7 @@
              </xsl:if>
              <xsl:value-of select="$text"/>
              <xsl:choose>
-               <xsl:when test="$result/body//statistics and $result/errorMessage=''">
+               <xsl:when test="$result/body//statistics">
                  <table bgcolor="{$bgcolor}">
                  <xsl:call-template name="printBodyStats">
                    <xsl:with-param name="report" select="$result"/>

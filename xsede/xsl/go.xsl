@@ -10,7 +10,7 @@
                 xmlns:rs="http://inca.sdsc.edu/queryResult/reportSummary_2.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xsl:include href="../xsl/inca-common26.xsl"/>
+  <xsl:include href="../xsl/inca-common.xsl"/>
   <xsl:param name="queryStr"/>
 
   <!-- ==================================================================== -->
