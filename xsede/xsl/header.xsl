@@ -44,52 +44,51 @@
               <li><h2>Query</h2>
                 <ul>
                   <li>
-                    <a href="{concat($url, '/html/ctssv4-graph.html')}">
+                    <a href="{concat($url, '/view/graph/prodkits')}">
                       CTSSv4
                     </a>
 		    <ul>
                       <li>
-                        <a href="{concat($url, '/html/ctssv4-graph.html')}">
+                        <a href="{concat($url, '/view/graph/prodkits')}">
                           Create historical graph
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/html/ctssv4-query.html')}">
+                        <a href="{concat($url, '/view/query/prodkits')}">
                           Create stored query
                         </a>
                       </li>
 		    </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/html/ctssv3-graph.html')}">
+                    <a href="{concat($url, '/view/graph/ctss')}">
                       Cross-Site
                     </a>
 		    <ul>
                       <li>
-                        <a href="{concat($url, '/html/ctssv3-graph.html')}">
+                        <a href="{concat($url, '/view/graph/ctss')}">
                           Create historical graph
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/html/ctssv3-query.html')}">
+                        <a href="{concat($url, '/view/query/ctss')}">
                           Create stored query
                         </a>
                       </li>
 		    </ul>
                   </li>
                   <li>
-                    <xsl:variable name="other" select="'&amp;resourceIds=quarry,gig,capac,USAGE,ALL-RM&amp;suiteNames=tg-iis,gig,security,usage,check-reporter-managers'"/>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
+                    <a href="{concat($url, '/view/graph/other')}">
                       Other test suites
                     </a>
 		    <ul>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=graph.xsl', $other)}">
+                        <a href="{concat($url, '/view/graph/other')}">
                           Create historical graph
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=create-query.xsl', $other)}">
+                        <a href="{concat($url, '/view/query/other')}">
                           Create stored query
                         </a>
                       </li>
@@ -140,71 +139,71 @@
               <li><h2>Current Data</h2>
                 <ul>
                   <li>
-                    <a href="{concat($url, '/html/ctssv4.html')}">
+                    <a href="{concat($url, '/view/status/prodkits')}">
                       CTSSv4
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/html/ctssv4.html')}">
+                        <a href="{concat($url, '/view/status/prodkits')}">
                           expanded detailed table
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($map, '/html/ctssv4-map.html')}">
+                        <a href="{concat($map, '/view/map/prodkits')}">
                           google map
                         </a>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/HTML/kit-status-v1/ctss/xsede')}">
+                    <a href="{concat($url, '/view/status/ctss')}">
                       Cross-Site
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/ctss/xsede')}">
+                        <a href="{concat($url, '/view/status/ctss')}">
                           expanded detailed table
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($map, '/html/ctssv3-map.html')}">
+                        <a href="{concat($url, '/view/map/ctss')}">
                           google map
                         </a>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=USAGE&amp;suiteNames=usage')}">
+                    <a href="{concat($url, '/view/status/other')}">
                       Other Test Suites
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/go-testing')}">
+                        <a href="{concat($url, '/view/status/go')}">
                           globusonline (testing)
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/jsp/status.jsp?xsl=job.xsl&amp;resourceIds=USAGE&amp;suiteNames=usage')}">
+                        <a href="{concat($url, '/view/status/usage')}">
                           grid job usage
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/tg-iis/INFO')}">
+                        <a href="{concat($url, '/view/status/info')}">
                           information services
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/gig/quarry')}">
+                        <a href="{concat($url, '/view/status/gig')}">
                           grid infrastructure group (gig)
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/security/SECURITY')}">
+                        <a href="{concat($url, '/view/status/security')}">
                           security
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/HTML/kit-status-v1/check-reporter-managers/ALL-RM')}">
+                        <a href="{concat($url, '/view/status/inca')}">
                           inca self check
                         </a>
                       </li>
