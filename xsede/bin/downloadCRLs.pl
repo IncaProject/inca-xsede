@@ -26,7 +26,7 @@ for my $crlFile ( @crlFiles ) {
       `rm -f $localCrlFilename`;
     } elsif ( $localCrlFilename ne $localr0Filename ) {
       #print "cp $localCrlFilename $localr0Filename\n";
-      `mv $localCrlFilename $localr0Filename`;
+      `cp $localCrlFilename $localr0Filename`;
     }
     last if -f $localCrlFilename;
   }
