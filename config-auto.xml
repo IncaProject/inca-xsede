@@ -5047,7 +5047,7 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>core-5.0.0-testing</name>
+                <name>core-5.0.0-production</name>
             </group>
             <group>
                 <type>kit</type>
@@ -5091,6 +5091,16 @@
                 </macro>
                 <macro>
                     <type>constant</type>
+                    <name>go-dirs</name>
+                    <value/>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>go-id</name>
+                    <value>osg</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
                     <name>adminEmail</name>
                     <value>FailTo:inca@sdsc.edu, FailTo:osg-xsede-ops@opensciencegrid.org</value>
                 </macro>
@@ -5109,6 +5119,10 @@
                 <group>
                     <type>general</type>
                     <name>xsede</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>go-testing</name>
                 </group>
                 <hosts>osg-xsede.grid.iu.edu</hosts>
                 <macro>
@@ -5767,14 +5781,6 @@
             </group>
             <group>
                 <type>kit</type>
-                <name>data-management.teragrid.org-4.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-management-4.0.0-production</name>
-            </group>
-            <group>
-                <type>kit</type>
                 <name>data-movement-clients.teragrid.org-4.2.0</name>
             </group>
             <group>
@@ -5812,50 +5818,6 @@
             <group>
                 <type>optional</type>
                 <name>local-compute4.2.2-glue2-secure</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>login.teragrid.org-4.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login-4.0.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login4.0.0-softenv</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>remote-compute.teragrid.org-5.0.1</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>remote-compute-5.0.1-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>remote-compute5.0.1-gram5-pbs</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>remote-compute5.0.1-gram5-fork</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>wan-lustre.teragrid.org-4.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>wan-lustre-4.0.0-testing</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>wan-lustre4.0.0-dc-wan-cluster</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>wan-lustre4.0.0-dc-wan-front-end</name>
             </group>
             <macroResource>
                 <name>sdsc-trestles</name>
@@ -5927,48 +5889,28 @@
                 </macro>
                 <macro>
                     <type>variable</type>
-                    <name>data-management4.0.0-srb-server-registered-version</name>
-                    <value>3.4.1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-management4.0.0-srb-server-host</name>
-                    <value>srb.sdsc.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-management4.0.0-srb-server-port</name>
-                    <value>7321</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-management4.0.0-srb-server-endpoint</name>
-                    <value>srb://srb.sdsc.edu:7321/</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
                     <name>data-movement-clients4.2.0-globus-url-copy-version</name>
-                    <value>5.0.2-r1</value>
+                    <value>5.2.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>data-movement-clients4.2.0-globus-url-copy-key</name>
-                    <value/>
+                    <value>@keyPre@ globus @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>data-movement-clients4.2.0-uberftp-version</name>
-                    <value>2.6-r1</value>
+                    <value>2.6</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>data-movement-clients4.2.0-uberftp-key</name>
-                    <value/>
+                    <value>@keyPre@ globus @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gridftp-striped-server-registered-version</name>
-                    <value>5.2.2</value>
+                    <value>5.2.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -5988,7 +5930,7 @@
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version</name>
-                    <value>5.2.2</value>
+                    <value>5.2.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6008,7 +5950,7 @@
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gridftp-default-server-registered-version</name>
-                    <value>5.2.2</value>
+                    <value>5.2.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6033,7 +5975,7 @@
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gsi-scp-hpn-server-registered-version</name>
-                    <value>5.6p1</value>
+                    <value>5.9</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6070,176 +6012,6 @@
                     <name>local-compute4.2.2-glue2-secure-key</name>
                     <value/>
                 </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-version</name>
-                    <value>5.6p1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-myproxy-version</name>
-                    <value>5.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-myproxy-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-softenv-version</name>
-                    <value>1.6.4-r1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-softenv-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-tgusage-version</name>
-                    <value>3.0-r3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-tgusage-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-uberftp-version</name>
-                    <value>2.6-r1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-uberftp-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-registered-version</name>
-                    <value>5.6p1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-host</name>
-                    <value>trestles.sdsc.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-port</name>
-                    <value>22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login4.0.0-gsi-openssh-endpoint</name>
-                    <value>trestles.sdsc.edu:22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-registered-version</name>
-                    <value>4.0.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-host</name>
-                    <value>trestles-login.sdsc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-port</name>
-                    <value>8443</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-endpoint</name>
-                    <value>https://trestles-login.sdsc.xsede.org:8443/wsrf/services/DefaultIndexService</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-secure-registered-version</name>
-                    <value>4.0.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-secure-host</name>
-                    <value>trestles-login.sdsc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-secure-port</name>
-                    <value>8443</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-globus-mds-secure-endpoint</name>
-                    <value>https://trestles-login.sdsc.xsede.org:8443/wsrf/services/SecureIndexService</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-pbs-registered-version</name>
-                    <value>5.0.1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-pbs-host</name>
-                    <value>trestles-login.sdsc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-pbs-port</name>
-                    <value>2119</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-pbs-endpoint</name>
-                    <value>trestles-login.sdsc.xsede.org:2119/jobmanager-pbs</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-fork-registered-version</name>
-                    <value>5.0.1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-fork-host</name>
-                    <value>trestles-login.sdsc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-fork-port</name>
-                    <value>2119</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>remote-compute5.0.1-gram5-fork-endpoint</name>
-                    <value>trestles-login.sdsc.xsede.org:2119/jobmanager-fork</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>wan-lustre4.0.0-dc-wan-cluster-registered-version</name>
-                    <value>1.6.4.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>wan-lustre4.0.0-dc-wan-cluster-endpoint</name>
-                    <value>/dcwan</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>wan-lustre4.0.0-dc-wan-front-end-registered-version</name>
-                    <value>1.6.4.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>wan-lustre4.0.0-dc-wan-front-end-endpoint</name>
-                    <value>/dcwan</value>
-                </macro>
             </macroResource>
         </resource>
         <resource>
@@ -6271,14 +6043,6 @@
             <group>
                 <type>optional</type>
                 <name>login5.0.0-tgproxy</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>workflow.teragrid.org-4.2.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>workflow-4.2.0-production</name>
             </group>
             <group>
                 <type>kit</type>
@@ -6391,26 +6155,6 @@
             <group>
                 <type>optional</type>
                 <name>app-support4.2.0-tginfo</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>metascheduling.teragrid.org-4.2.1</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>metascheduling-4.2.1-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>metascheduling4.2.1-glue2</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>metascheduling4.2.1-glue2-secure</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>metascheduling4.2.1-glue2-secure-globus-mds4</name>
             </group>
             <group>
                 <type>kit</type>
@@ -6639,46 +6383,6 @@
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-endpoint</name>
                     <value>lonestar.tacc.xsede.org:22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-version</name>
-                    <value>7.4.4</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-key</name>
-                    <value>@keyPre@ condor/7.4.4 @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-version</name>
-                    <value>7.4.4</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-key</name>
-                    <value>@keyPre@ condor-g/7.4.4 @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-registered-version</name>
-                    <value>7.4.4</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-endpoint</name>
-                    <value>embedded_in_software</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-matchmaking-registered-version</name>
-                    <value>7.4.4.</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>workflow4.2.0-condor-g-matchmaking-endpoint</name>
-                    <value>embedded_in_software</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -7017,41 +6721,6 @@
                 </macro>
                 <macro>
                     <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-version</name>
-                    <value>1.1.0</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-secure-version</name>
-                    <value>1.1.0</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-secure-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-secure-globus-mds4-host</name>
-                    <value>gridftp.lonestar.tacc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-secure-globus-mds4-port</name>
-                    <value>8443</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>metascheduling4.2.1-glue2-secure-globus-mds4-endpoint</name>
-                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/SecureIndexService</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
                     <name>data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version</name>
                     <value>5.2.5</value>
                 </macro>
@@ -7189,368 +6858,6 @@
                     <type>variable</type>
                     <name>wan-lustre5.0.0-albedo-wan-front-end-endpoint</name>
                     <value>/albedo</value>
-                </macro>
-            </macroResource>
-        </resource>
-        <resource>
-            <name>longhorn.tacc.teragrid.org</name>
-            <group>
-                <type>kit</type>
-                <name>core.teragrid.org-5.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>core-5.0.0-production</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>vtss.teragrid.org-3.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss-3.0.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss3.0.0-cmake</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss3.0.0-vtk</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss3.0.0-netpbm</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss3.0.0-paraview</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>vtss3.0.0-imagemagick</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>data-movement-servers.teragrid.org-4.2.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-movement-servers-4.2.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-movement-servers4.2.0-gridftp-nonstriped-server</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>data-movement-clients.teragrid.org-4.2.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-movement-clients-4.2.0-production</name>
-            </group>
-            <group>
-                <type>kit</type>
-                <name>login.teragrid.org-5.0.0</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login-5.0.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login5.0.0-gx-map</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login5.0.0-modules</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>login5.0.0-tgproxy</name>
-            </group>
-            <macroResource>
-                <name>tacc-longhorn</name>
-                <macro>
-                    <type>constant</type>
-                    <name>__incaReporterManagerLocation__</name>
-                    <value>/home/00500/inca/inca2install</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>adminEmail</name>
-                    <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu, FailTo:timm@tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>gatekeeperlog</name>
-                    <value>/share/apps/teragrid/prews-gram-4.0.8-r5/var/globus-gatekeeper.log</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>go-dirs</name>
-                    <value>/scratch/00500/inca</value>
-                </macro>
-                <group>
-                    <type>general</type>
-                    <name>go-testing</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>ALL-RM</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>xsede</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>USAGE</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>module</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>TACC</name>
-                </group>
-                <hosts>login2.longhorn.tacc.utexas.edu</hosts>
-                <macro>
-                    <type>variable</type>
-                    <name>core5.0.0-globus-mds-info-registered-version</name>
-                    <value>4.0.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>core5.0.0-globus-mds-info-host</name>
-                    <value>login2.longhorn.tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>core5.0.0-globus-mds-info-port</name>
-                    <value>8446</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>core5.0.0-globus-mds-info-endpoint</name>
-                    <value>https://login2.longhorn.tacc.utexas.edu:8446/wsrf/services/DefaultIndexService</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-cmake-version</name>
-                    <value>2.4.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-cmake-key</name>
-                    <value>@keyPre@ cmake @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-vtk-version</name>
-                    <value>5.0.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-vtk-key</name>
-                    <value>@keyPre@ vtk @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-netpbm-version</name>
-                    <value>10.26.56</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-netpbm-key</name>
-                    <value>@keyPre@ netpbm @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-paraview-version</name>
-                    <value>3.2.1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-paraview-key</name>
-                    <value>@keyPre@ paraview @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-imagemagick-version</name>
-                    <value>6.4.3</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>vtss3.0.0-imagemagick-key</name>
-                    <value>@keyPre@ imagamagick @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-nonstriped-server-registered-version</name>
-                    <value>5.2.5</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-nonstriped-server-host</name>
-                    <value>login2.longhorn.tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-nonstriped-server-port</name>
-                    <value>2811</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-nonstriped-server-endpoint</name>
-                    <value>gsiftp://login2.longhorn.tacc.utexas.edu:2811/</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-default-server-registered-version</name>
-                    <value>5.2.5</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-default-server-host</name>
-                    <value>login2.longhorn.tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-default-server-port</name>
-                    <value>2811</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gridftp-default-server-endpoint</name>
-                    <value>gsiftp://login2.longhorn.tacc.utexas.edu:2811/</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>go-id</name>
-                    <value>longhorn</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gsi-scp-hpn-server-registered-version</name>
-                    <value>4.5</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gsi-scp-hpn-server-host</name>
-                    <value>longhorn.tacc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gsi-scp-hpn-server-port</name>
-                    <value>22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-servers4.2.0-gsi-scp-hpn-server-endpoint</name>
-                    <value>longhorn.tacc.xsede.org:22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-clients4.2.0-globus-url-copy-version</name>
-                    <value>5.0.4</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-clients4.2.0-globus-url-copy-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-clients4.2.0-uberftp-version</name>
-                    <value>2.6</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>data-movement-clients4.2.0-uberftp-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-version</name>
-                    <value>5.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gx-map-version</name>
-                    <value>0.5.3.2</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gx-map-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-myproxy-version</name>
-                    <value>3.4</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-myproxy-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-modules-version</name>
-                    <value>3.1.6</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-modules-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-tgproxy-version</name>
-                    <value>0.9.1</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-tgproxy-key</name>
-                    <value>@keyPre@ tgproxy/0.9.1 @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-xdusage-version</name>
-                    <value>1.0</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-xdusage-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-registered-version</name>
-                    <value>5.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-host</name>
-                    <value>longhorn.tacc.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-port</name>
-                    <value>22</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>login5.0.0-gsi-openssh-endpoint</name>
-                    <value>longhorn.tacc.xsede.org:22</value>
                 </macro>
             </macroResource>
         </resource>
@@ -7893,7 +7200,7 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-registered-version</name>
-                    <value>5.8p2</value>
+                    <value>6.2p1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -7953,7 +7260,7 @@
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gsi-scp-hpn-server-registered-version</name>
-                    <value>5.8p2</value>
+                    <value>6.2p1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -13293,6 +12600,54 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>inca.web</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>consumer</name>
+                                <value>http://@__incaHosts__@</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>wgetArgs</name>
+                                <value/>
+                            </arg>
+                        </args>
+                        <context>@@</context>
+                    </series>
+                    <nickname>server-check-incaweb</nickname>
+                    <resourceSetName>INCASERVERS</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/15 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name>check-reporter-managers</name>
             <guid>incas://capac.sdsc.edu:6323/check-reporter-managers</guid>
@@ -13500,7 +12855,7 @@
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error' || errorMessage =~ 'Reporter exceeded usage limits' || errorMessage =~ 'openssl connect'</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
@@ -15091,7 +14446,7 @@
                 </seriesConfig>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>grid.interactive_access.myproxy.stored.unit</name>
+                        <name>grid.middleware.globus.unit.proxy</name>
                         <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.interactive_access.myproxy.stored.unit</uri>
                         <args>
                             <arg>
@@ -15103,28 +14458,12 @@
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>user</name>
-                                <value>inca</value>
-                            </arg>
-                            <arg>
-                                <name>port</name>
-                                <value>7512</value>
-                            </arg>
-                            <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>mindays</name>
-                                <value>14</value>
-                            </arg>
-                            <arg>
-                                <name>server</name>
-                                <value>myproxy.teragrid.org</value>
+                                <value>0</value>
                             </arg>
                         </args>
                         <limits>
