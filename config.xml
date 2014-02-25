@@ -142,7 +142,54 @@
           <type>general</type>
           <name>bash</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>gw60</name>
+        </group>
         <hosts>gw60.quarry.iu.teragrid.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
+      <name>quarry.iu.xsede.org</name>
+      <macroResource>
+        <name>inca.gw60</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca2install</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>MAX_DISK_USAGE_MB</name>
+          <value>25600</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>infoEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:info-serv-alert@xsede.org</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>psMax</name>
+          <value>110</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>SECURITY</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>bash</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>gw60</name>
+        </group>
+        <hosts>gw60.iu.xsede.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -1121,6 +1168,10 @@
     </group>
     <group>
       <name>ctss-gridftp-client</name>
+      <type>general</type>
+    </group>
+    <group>
+      <name>gw60</name>
       <type>general</type>
     </group>
     <group>
@@ -3362,7 +3413,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@@@@post@</context>
           </series>
           <nickname>ca-crl-check</nickname>
-          <resourceSetName>quarry</resourceSetName>
+          <resourceSetName>gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -3530,7 +3581,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@@@@post@</context>
           </series>
           <nickname>Inca DNS lookup</nickname>
-          <resourceSetName>quarry</resourceSetName>
+          <resourceSetName>gw60</resourceSetName>
           <schedule>
             <crontime>?-59/15 * * * *</crontime>
           </schedule>
@@ -3796,6 +3847,62 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </series>
           <nickname>hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
           <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error' || errorMessage =~ 'Reporter exceeded usage limits' || errorMessage =~ 'openssl connect'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@, FailTo:help@xsede.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>security.hostcert.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/security.hostcert.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value>@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-host@:@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>14</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>650.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>newgw60-hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
