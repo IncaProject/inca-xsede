@@ -321,29 +321,6 @@
       </macroResource>
     </resource>
     <resource>
-      <!-- remote testing only no local client -->
-      <name>hpss.iu.teragrid.org</name>
-      <skip/>
-      <macroResource>
-        <name>iu-hpss</name>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>hpss-iu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-dirs</name>
-          <value></value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>go-testing</name>
-        </group>
-        <hosts>gridftp.archive.iu.teragrid.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
       <name>kraken.nics.teragrid.org</name>
       <macroResource>
         <name>nics-kraken</name>
@@ -709,6 +686,11 @@
           <name>go-dirs</name>
           <value>/scratch/00500/inca /work/00500/inca</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>MAX_DISK_USAGE_MB</name>
+          <value>800</value>
+        </macro>
         <group>
           <type>general</type>
           <name>go-testing</name>
@@ -978,7 +960,7 @@
       </macro>
       <macro>
         <name>__myproxyPassword__</name>
-        <value>E74jHfyvuucd/ZV/pB9eqg==</value>
+        <value>/vR809fKog2e/WhxULioMg==</value>
       </macro>
       <macro>
         <type>constant</type>
@@ -3914,6 +3896,63 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </series>
           <nickname>globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
           <resourceSetName>quarry</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.globus.unit.securemds</name>
+            <args>
+              <arg>
+                <name>retry</name>
+                <value>3:60</value>
+              </arg>
+              <arg>
+                <name>expire</name>
+                <value>1800</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>remoteEndpoint</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>localEndpoint</name>
+                <value>@core.teragrid.org-5.0.0->core5.0.0-globus-mds-info-endpoint@</value>
+              </arg>
+              <arg>
+                <name>query</name>
+                <value>//*[local-name()='V4KitsRP']</value>
+              </arg>
+              <arg>
+                <name>objectname</name>
+                <value>KitRegistration</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@ @@@post@</context>
+          </series>
+          <nickname>newgw60-globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0->__groupname__@</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
           </schedule>
