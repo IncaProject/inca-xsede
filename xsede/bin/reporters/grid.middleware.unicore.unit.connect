@@ -1,0 +1,54 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Inca::XSEDE::Unicore;
+
+my @CMDS = qw(ucc myproxy-logon-unicore);
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'grid.middleware.unicore.unit.connect',
+  version => 1,
+  description => 'This test verifies that unicore is registered in IIS, can connect to the registry, and the site is present',
+  url => 'http://www.unicore.eu',
+  unit_name => 'connect'
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>1 );
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('resource', 'IIS resource name');
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('id', 'UNICORE site name to verify');
+$reporter->processArgv(@ARGV);
+my $resource = $reporter->argValue('resource');
+my $registry = $reporter->argValue('registry');
+my $site = $reporter->argValue("id");
+
+my @errors;
+
+my $iisXml = $reporter->loggedCommand("wget -O - http://info.xsede.org/restdemo/xml/tg/software/unicore-ucc-client 2>/dev/null | grep $resource" );
+push( @errors, "missing unicore-ucc-client IIS registration") if $iisXml eq '';
+
+for my $service ( qw(unicore-bes-server  unicore-server) ) {
+  $iisXml = $reporter->loggedCommand("wget -O - http://info.xsede.org/restdemo/xml/tg/service/$service 2>/dev/null | grep $resource" );
+  push( @errors, "missing $service IIS registration") if $iisXml eq '';
+}
+
+for my $cmd ( @CMDS ) {
+  my $path = `which $cmd`;
+  push( @errors, "missing cmd $cmd") if $path !~ /$cmd/; 
+}
+
+my $out = $unicore->loggedCommand( "ucc list-sites -v -r $registry" );
+my @sitedata = $out =~ /^([^\n]+)\n/g;
+$reporter->failPrintAndExit( "$site is not in the registry $registry" ) 
+  if scalar(@sitedata) < 1;
+$reporter->failPrintAndExit( "inca does not have access to $site" ) 
+  if grep( /No accessible/, @sitedata);
+
+if(scalar(@errors) > 0 ) {
+  $reporter->unitFailure("Error(s): " . join(", ", @errors) );
+} else {
+  $reporter->unitSuccess();
+}
+$reporter->print();
