@@ -395,6 +395,15 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>unicore-id</name>
+          <value>NICS-Darter</value>
+        </macro>
         <hosts>gsissh.darter.nics.xsede.org</hosts>
       </macroResource>
     </resource>
@@ -536,6 +545,15 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>unicore-id</name>
+          <value>PSC-Blacklight</value>
+        </macro>
         <hosts>login.blacklight.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
@@ -583,6 +601,15 @@
           <type>general</type>
           <name>xsede</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>unicore-id</name>
+          <value>SDSC-Gordon</value>
+        </macro>
         <hosts>gordon.sdsc.edu</hosts>
       </macroResource>
     </resource>
@@ -635,6 +662,15 @@
           <type>general</type>
           <name>xsede</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>unicore-id</name>
+          <value>SDSC-Trestles</value>
+        </macro>
         <hosts>trestles.sdsc.edu</hosts>
       </macroResource>
     </resource>
@@ -814,11 +850,24 @@
           <type>general</type>
           <name>TACC</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>unicore-id</name>
+          <value>TACC-Stampede</value>
+        </macro>
         <hosts>stampede.tacc.utexas.edu</hosts>
       </macroResource>
     </resource>
   </resources>
   <groups>
+    <group>
+      <name>unicore</name>
+      <type>general</type>
+    </group>
     <group>
       <name>NCSA</name>
       <type>general</type>
@@ -5565,6 +5614,132 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
       <name>data-movement-servers.teragrid.org-4.2.1</name>
       <guid>incas://capac.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.1</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
+      <version>1</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.unicore.ucc.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>unicore-ucc-version</nickname>
+          <resourceSetName>unicore</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>execution-management-client.xsede.org-1.0</name>
+      <guid>incas://capac.sdsc.edu:6323/execution-management-client.xsede.org-1.0</guid>
+      <description>XSEDE Execution Management Client Capability Registration</description>
+      <version>1</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.unicore.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>registry</name>
+                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>id</name>
+                <value>@unicore->unicore-id@</value>
+              </arg>
+            </args>
+            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>unicore-server-version</nickname>
+          <resourceSetName>psc-blacklight</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.unicore.unit.connect</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>registry</name>
+                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>resource</name>
+                <value>@unicore->__incaHosts__@</value>
+              </arg>
+              <arg>
+                <name>id</name>
+                <value>@unicore->unicore-id@</value>
+              </arg>
+            </args>
+            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>unicore-server-checks</nickname>
+          <resourceSetName>psc-blacklight</resourceSetName>
+          <schedule>
+            <crontime>? * * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>execution-management-server.xsede.org-1.0</name>
+      <guid>incas://capac.sdsc.edu:6323/execution-management-server.xsede.org-1.0</guid>
+      <description>XSEDE Execution Management Server Capability Registration</description>
       <version>1</version>
     </suite>
     <suite>
