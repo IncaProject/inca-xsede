@@ -106,7 +106,7 @@
       <xsl:when test="$result/body//statistics/statistic[ID='warnings']/value>0">warnings</xsl:when>
       <xsl:when test="$result/body//statistics/@warnings>0">warnings</xsl:when>
       <xsl:when test="$errMsg[matches(., 'Unable to fetch proxy')]">proxyError</xsl:when>
-      <xsl:when test="$errMsg[matches(., 'Inca error')]">incaError</xsl:when>
+      <xsl:when test="$errMsg[matches(., 'Inca error') and not(matches(., 'module\(s\) are unknown'))]">incaError</xsl:when>
     </xsl:choose></xsl:variable>
 
     <xsl:choose><xsl:when test="$secondaryState!=''">
