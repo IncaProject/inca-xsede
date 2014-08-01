@@ -201,14 +201,14 @@
           replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
         <xsl:variable name="csSeriesName" select="concat('^', encode-for-uri($seriesName),'_to_(', $regexHost, ')' )"/>
         <xsl:variable name="reports" select="$suite/quer:object//rs:reportSummary[nickname=$seriesName or matches(nickname, $csSeriesName)]"/>
-        <xsl:choose><xsl:when test="count($reports[matches(hostname,$regexHost)])&gt;0">
+        <xsl:choose><xsl:when test="count($reports[matches(targetHostname,$regexHost)])=1">
           <xsl:call-template name="printResourceResultCell">
-            <xsl:with-param name="result" select="$reports[matches(hostname,$regexHost)]"/>
+            <xsl:with-param name="result" select="$reports[matches(targetHostname,$regexHost)]"/>
             <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
           </xsl:call-template>
         </xsl:when><xsl:otherwise>
           <xsl:call-template name="printResourceResultCell">
-            <xsl:with-param name="result" select="$reports[matches(targetHostname,$regexHost)]"/>
+            <xsl:with-param name="result" select="$reports[matches(hostname,$regexHost)]"/>
             <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
           </xsl:call-template>
         </xsl:otherwise></xsl:choose>
