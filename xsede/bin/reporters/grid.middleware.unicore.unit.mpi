@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Inca::XSEDE::Unicore;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'grid.middleware.unicore.unit.mpi',
+  version => 1,
+  description => 'This test verifies that an MPI job run thru selected UNICORE service',
+  url => 'http://www.unicore.eu',
+  unit_name => 'mpi'
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>1 );
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('debug', 'Submit the unicore job with -v', 'false', 'true|false');
+$reporter->addArg('charge', 'XSEDE allocation to use', 'TG-STA110011S');
+$reporter->addArg('id', 'UNICORE site name to submit job to');
+$reporter->addArg('jsdl', 'path or url to JSDL job submit file example');
+$reporter->addArg('numprocs', 'Number of processes to add to the job request (i.e., mpi -n', "4");
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('target', 'Local or remote file to put the job output');
+$reporter->processArgv(@ARGV);
+my $debug = $reporter->argValue("debug") eq 'true' ? "-v" : "";
+my $charge = $reporter->argValue("charge");
+my $site = $reporter->argValue("id");
+my $jsdl = $reporter->argValue("jsdl");
+my $numprocs = $reporter->argValue("numprocs");
+my $registry = $reporter->argValue('registry');
+my $target = $reporter->argValue("target");
+
+`which ucc`;
+$reporter->failPrintAndExit("Unable to find ucc") if $? != 0;
+
+my $dotucc = $unicore->getDotUccDir();
+my $out = `wget -O - $dotucc/mpihw.jsdl $jsdl 2>/dev/null`;
+$reporter->failPrintAndExit("Unable to download mpihw.jsdl file: " . $out) if $? != 0;
+
+my ($jobname) = $jsdl =~ /([^\.\/]+)\.jsdl/;
+$jobname .= "-$$";
+my %substitutions = (
+  "/jsdl-posix:Argument,jsdl-posix:Argument" => $numprocs,
+  "jsdl:JobProject" => $charge,
+  "jsdl:Target,jsdl:URI" => $target,
+  "jsdl:JobName" => $jobname
+);
+for my $field ( keys %substitutions ) {
+  my $value = $substitutions{$field};
+  my @tags = split( /,/, $field );
+  if ( scalar(@tags) == 1 ) {
+    $out =~ s/(<$field>)([^<]+)(<\/$field>)/$1$value$3/; 
+  } else {
+    $out =~ s/(<$tags[0]>\n\s*<$tags[1]>)([^<]+)(<\/$tags[1]>)/$1$value$3/; 
+  }
+}
+open( FD, ">$dotucc/mpihw-inca.jsdl" );
+print FD $out;
+close FD;
+
+$out = $unicore->loggedCommand( "ucc run -j $dotucc/mpihw-inca.jsdl -s $site $debug -r $registry" );
+if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {
+  my ($stageback) = $out =~ /(\/\S+)\/[^\/]+.properties/;
+  my $mpiout = `cat $stageback/mpihwout`;
+  my @hellos = $mpiout =~ /(Hello from rank \d+)/g;
+  $reporter->failPrintAndExit( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
+    if scalar(@hellos) < $numprocs;
+  my ($nodes) = $mpiout =~ /Nodes:\s*(\S+)/;
+  $reporter->log( 'debug', "Job ran on node(s) $nodes" );
+  $reporter->unitSuccess();
+} else {
+  $out =~ s/Please enter your keystore password:\n\*+//;
+  $reporter->unitFailure("Error: " . substr($out, 0, 4000));
+}
+$reporter->print();

@@ -73,14 +73,31 @@ sub new {
   bless ($self, $class);
 
   $self->{reporter}->addDependency(__PACKAGE__);
-  $self->{reporter}->failPrintAndExit("X509_USER_PROXY must be defined") 
-    if ! exists $ENV{X509_USER_PROXY};
   $self->{dotucc} = "$ENV{HOME}/.ucc.$$";
   $self->{reporter}->tempFile( $self->{dotucc} ) if ! $debug;
 
   return $self;
 }
 
+#-----------------------------------------------------------------------------#
+
+=head2 getDotUccDir()
+
+Return the path to the temporary ~/.ucc.$$ directory in use for this instance.
+
+=cut
+
+#-----------------------------------------------------------------------------#
+sub getDotUccDir {
+  my ($self ) = @_;
+
+  if ( ! -d $self->{dotucc} ) {
+    $self->{reporter}->failPrintAndExit("Cannot create temp dir " . $self->{dotucc} ) 
+      if !  mkdir( $self->{dotucc} );
+    $self->{reporter}->log( 'INFO', "Created temp dir " . $self->{dotucc} );
+  }
+  return $self->{dotucc};
+}
 #-----------------------------------------------------------------------------#
 
 =head2 loggedCommand($cmd)
@@ -104,16 +121,13 @@ Unicore command to run
 sub loggedCommand {
   my ($self, $cmd, $timeout) = @_;
 
-  if ( ! -d $self->{dotucc} ) {
-    $self->{reporter}->failPrintAndExit("Cannot create temp dir " . $self->{dotucc} ) 
-    if !  mkdir( $self->{dotucc} );
-    $self->{reporter}->log( 'INFO', "Created temp dir " . $self->{dotucc} );
-  }
-  if ( ! -f $self->{dotucc} . "/default-myproxy.p12" ) {
+  $self->{reporter}->failPrintAndExit("X509_USER_PROXY must be defined") 
+    if ! exists $ENV{X509_USER_PROXY};
+  if ( ! -f $self->getDotUccDir() . "/default-myproxy.p12" ) {
     $self->{randpass} = `openssl rand -base64 32`;
     chomp($self->{randpass});
     my $cmd = "openssl pkcs12 -export -in $ENV{X509_USER_PROXY} -out " .
-              $self->{dotucc} . "/default-myproxy.p12  -name myproxy -password stdin";
+              $self->getDotUccDir() . "/default-myproxy.p12  -name myproxy -password stdin";
     $self->{reporter}->failPrintAndExit("Problem running command $cmd") 
       if ! open( SSL, "|$cmd" ); 
     $self->{reporter}->log('system', $cmd);
@@ -121,9 +135,9 @@ sub loggedCommand {
     print SSL $self->{randpass} . "\n";
     close SSL;
   }
-  $cmd .= " -k " . $self->{dotucc} . "/default-myproxy.p12 -T /etc/grid-security/xsede-certs.jks -Y xsede-certs.jks";
+  $cmd .= " -k " . $self->getDotUccDir() . "/default-myproxy.p12 -T /etc/grid-security/xsede-certs.jks -Y xsede-certs.jks";
   $self->{reporter}->log('system', $cmd);
-  my $tempfile = $self->{dotucc} . "/ucc-" . time() . ".out";
+  my $tempfile = $self->getDotUccDir() . "/ucc-" . time() . ".out";
   open( CMD, "|$cmd &> $tempfile" );
   print CMD $self->{randpass} . "\n";
   close CMD;
