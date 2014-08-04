@@ -7,7 +7,7 @@ use Inca::XSEDE::Unicore;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.mpi',
-  version => 1,
+  version => 4,
   description => 'This test verifies that an MPI job run thru selected UNICORE service',
   url => 'http://www.unicore.eu',
   unit_name => 'mpi'
@@ -42,6 +42,7 @@ $jobname .= "-$$";
 my %substitutions = (
   "/jsdl-posix:Argument,jsdl-posix:Argument" => $numprocs,
   "jsdl:JobProject" => $charge,
+  "jsdl:TotalCPUCount,jsdl:Exact", $numprocs,
   "jsdl:Target,jsdl:URI" => $target,
   "jsdl:JobName" => $jobname
 );
@@ -57,6 +58,11 @@ for my $field ( keys %substitutions ) {
 open( FD, ">$dotucc/mpihw-inca.jsdl" );
 print FD $out;
 close FD;
+
+$unicore->loggedCommand( "ucc connect -r $registry" );
+$out = $unicore->loggedCommand( "ucc list-sites -r $registry" );
+$reporter->failPrintAndExit("$site either not available in registry or to inca user")
+  if $out !~ $site;
 
 $out = $unicore->loggedCommand( "ucc run -j $dotucc/mpihw-inca.jsdl -s $site $debug -r $registry" );
 if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {

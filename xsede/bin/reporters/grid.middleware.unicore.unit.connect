@@ -9,12 +9,12 @@ my @CMDS = qw(ucc myproxy-logon-unicore);
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.connect',
-  version => 1,
+  version => 5,
   description => 'This test verifies that unicore is registered in IIS, can connect to the registry, and the site is present',
   url => 'http://www.unicore.eu',
   unit_name => 'connect'
 );
-my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>1 );
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>0 );
 $reporter->addDependency('Inca::Reporter::GridProxy');
 $reporter->addArg('resource', 'IIS resource name');
 $reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
@@ -39,12 +39,15 @@ for my $cmd ( @CMDS ) {
   push( @errors, "missing cmd $cmd") if $path !~ /$cmd/; 
 }
 
+$unicore->loggedCommand( "ucc connect -r $registry" );
 my $out = $unicore->loggedCommand( "ucc list-sites -v -r $registry" );
-my @sitedata = $out =~ /^([^\n]+)\n/g;
-$reporter->failPrintAndExit( "$site is not in the registry $registry" ) 
-  if scalar(@sitedata) < 1;
-$reporter->failPrintAndExit( "inca does not have access to $site" ) 
-  if grep( /No accessible/, @sitedata);
+my @sitedata = $out =~ /([^\n]*http\S+$site\S+)/g;
+if ( grep(/$site/, @sitedata) ) {
+  push( @errors,  "inca does not have access to $site")
+     if grep( /No accessible/, @sitedata);
+} else {
+  push( @errors, "$site is not in the registry $registry" );
+}
 
 if(scalar(@errors) > 0 ) {
   $reporter->unitFailure("Error(s): " . join(", ", @errors) );
@@ -52,3 +55,4 @@ if(scalar(@errors) > 0 ) {
   $reporter->unitSuccess();
 }
 $reporter->print();
+
