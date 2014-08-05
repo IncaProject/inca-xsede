@@ -332,10 +332,17 @@ public class UpdateIncat {
 		builder.append("<name>" + resName + "</name>");
 		builder.append("<xpath>//resource[matches(name, '^(" + pattern.replace(' ', '|').replace(".", "\\.") + ")$')]</xpath>");
 		builder.append("<macros>");
-		builder.append("<macro>");
-		builder.append("<name>__groupname__</name>");
-		builder.append("<value>" + resName + "</value>");
-		builder.append("</macro>");
+    if ( equivalent ) {
+		  builder.append("<macro>");
+		  builder.append("<name>__shortname__</name>");
+		  builder.append("<value>" + resName + "</value>");
+	  	builder.append("</macro>");
+    } else {
+		  builder.append("<macro>");
+		  builder.append("<name>__longname__</name>");
+		  builder.append("<value>" + resName + "</value>");
+	  	builder.append("</macro>");
+    }
 		builder.append("<macro>");
 		builder.append("<name>__regexp__</name>");
 		builder.append("<value>" + pattern + "</value>");
@@ -388,6 +395,7 @@ public class UpdateIncat {
 
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
+			String longName = xpath.evaluate("name", configRes);
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 			String shortName = xpath.evaluate("name", macroRes);
 
