@@ -7,7 +7,7 @@ use Inca::XSEDE::Unicore;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.mpi',
-  version => 4,
+  version => 5,
   description => 'This test verifies that an MPI job run thru selected UNICORE service',
   url => 'http://www.unicore.eu',
   unit_name => 'mpi'
@@ -20,7 +20,7 @@ $reporter->addArg('id', 'UNICORE site name to submit job to');
 $reporter->addArg('jsdl', 'path or url to JSDL job submit file example');
 $reporter->addArg('numprocs', 'Number of processes to add to the job request (i.e., mpi -n', "4");
 $reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
-$reporter->addArg('target', 'Local or remote file to put the job output');
+$reporter->addArg('target', 'Local or remote dir to put the job output');
 $reporter->processArgv(@ARGV);
 my $debug = $reporter->argValue("debug") eq 'true' ? "-v" : "";
 my $charge = $reporter->argValue("charge");
@@ -39,6 +39,8 @@ $reporter->failPrintAndExit("Unable to download mpihw.jsdl file: " . $out) if $?
 
 my ($jobname) = $jsdl =~ /([^\.\/]+)\.jsdl/;
 $jobname .= "-$$";
+my ($localoutputfile) = $out =~ /<jsdl-posix:Output>([^<]+)/;
+$target .= "/$jobname-out";
 my %substitutions = (
   "/jsdl-posix:Argument,jsdl-posix:Argument" => $numprocs,
   "jsdl:JobProject" => $charge,
@@ -66,16 +68,26 @@ $reporter->failPrintAndExit("$site either not available in registry or to inca u
 
 $out = $unicore->loggedCommand( "ucc run -j $dotucc/mpihw-inca.jsdl -s $site $debug -r $registry" );
 if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {
+  my @resultfiles; 
   my ($stageback) = $out =~ /(\/\S+)\/[^\/]+.properties/;
-  my $mpiout = `cat $stageback/mpihwout`;
-  my @hellos = $mpiout =~ /(Hello from rank \d+)/g;
-  $reporter->failPrintAndExit( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
-    if scalar(@hellos) < $numprocs;
-  my ($nodes) = $mpiout =~ /Nodes:\s*(\S+)/;
-  $reporter->log( 'debug', "Job ran on node(s) $nodes" );
+	  push( @resultfiles, "$stageback/$localoutputfile" );
+  # if gridftp staged back
+  if ( $target =~ /^gsiftp/ ) {
+    $target =~ s/^gsiftp:\/\/[^\/]+//;
+    push( @resultfiles, $target );
+  }
+  for my $resultfile ( @resultfiles ) {
+    my $mpiout = `cat $resultfile`;
+    my @hellos = $mpiout =~ /(Hello from rank \d+)/g;
+      $reporter->failPrintAndExit( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
+        if scalar(@hellos) < $numprocs;
+    my ($nodes) = $mpiout =~ /Nodes:\s*(\S+)/;
+    $reporter->log( 'debug', "Job ran on node(s) $nodes" );
+  }
   $reporter->unitSuccess();
 } else {
   $out =~ s/Please enter your keystore password:\n\*+//;
   $reporter->unitFailure("Error: " . substr($out, 0, 4000));
 }
 $reporter->print();
+

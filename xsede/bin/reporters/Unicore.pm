@@ -134,8 +134,13 @@ sub loggedCommand {
     print SSL $self->{randpass} . "\n";
     print SSL $self->{randpass} . "\n";
     close SSL;
+    my $prefs = $self->getDotUccDir() . "/preferences";
+    open( FD, ">$prefs" );
+    print FD "client.outHandlers=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
+    print FD "uas.security.out.handler.classname=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
+    close FD;
   }
-  $cmd .= " -k " . $self->getDotUccDir() . "/default-myproxy.p12 -T /etc/grid-security/xsede-certs.jks -Y xsede-certs.jks";
+  $cmd .= " -k " . $self->getDotUccDir() . "/default-myproxy.p12 -T /etc/grid-security/xsede-certs.jks -Y xsede-certs.jks -c " . $self->getDotUccDir() . "/preferences";
   $self->{reporter}->log('system', $cmd);
   my $tempfile = $self->getDotUccDir() . "/ucc-" . time() . ".out";
   open( CMD, "|$cmd &> $tempfile" );
