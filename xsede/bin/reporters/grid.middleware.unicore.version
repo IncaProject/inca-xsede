@@ -1,0 +1,48 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Version;
+use Inca::XSEDE::Unicore;
+
+my $reporter = new Inca::Reporter::Version(
+  name => 'grid.middleware.unicore.version',
+  version => 3,
+  description => 'Reports the version of the remote UNICORE service',
+  url => 'http://www.unicore.eu',
+  package_name => 'unicore'
+);
+my $unicore = new Inca::XSEDE::Unicore($reporter, debug => 0);
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('id', 'UNICORE site name to submit job to');
+
+$reporter->processArgv(@ARGV);
+my $registry = $reporter->argValue('registry');
+my $site = $reporter->argValue("id");
+
+my @errors;
+
+`which ucc`;
+$reporter->failPrintAndExit("Unable to find ucc") if $? != 0;
+
+my $out = $unicore->loggedCommand( "ucc system-info -l -r $registry" );
+if ( $? != 0 ) {
+  $reporter->failPrintAndExit("Error runnning system-info: $out");
+}
+
+my @factories = $out =~ /(https\S+default_target_system_factory)/g;
+$reporter->failPrintAndExit( "no default_target_system_factory found in system-info" ) 
+  if scalar(@factories) < 1; 
+my ($url) = grep( /$site/, @factories );
+$reporter->failPrintAndExit( "$site not registered with $registry" ) if ! defined $url;
+
+$out = $unicore->loggedCommand( "ucc wsrf g $url -r $registry");
+if ( $? != 0 ) {
+  $reporter->failPrintAndExit("Error querying $url: $out");
+}
+my ($version) = $out =~ /typ:Version[^>]+>([^<]+)</;
+$reporter->setPackageVersion($version);
+
+$reporter->setCompleted(1);
+$reporter->print();
