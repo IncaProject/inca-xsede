@@ -344,6 +344,10 @@ public class UpdateIncat {
 	  	builder.append("</macro>");
     }
 		builder.append("<macro>");
+		builder.append("<name>__groupname__</name>");
+		builder.append("<value>" + resName + "</value>");
+	  builder.append("</macro>");
+		builder.append("<macro>");
 		builder.append("<name>__regexp__</name>");
 		builder.append("<value>" + pattern + "</value>");
 		builder.append("</macro>");
