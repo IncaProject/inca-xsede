@@ -1493,6 +1493,89 @@
             </query>
         </kit>
         <kit>
+            <name>execution-management-client.xsede.org</name>
+            <version>1.0</version>
+            <group>execution-management-client.xsede.org-1.0</group>
+            <query>
+                <expression>tg:SupportLevel[. = 'production']</expression>
+                <products>
+                    <optional>
+                        <group>execution-management-client-1.0-production</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:SupportLevel[. = 'testing']</expression>
+                <products>
+                    <optional>
+                        <group>execution-management-client-1.0-testing</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Software[matches(tg:Name,'^unicore-ucc-client(-[\d\.]+)?$')]</expression>
+                <products>
+                    <version>
+                        <macro>execution-management-client1.0-unicore-ucc-client-version</macro>
+                    </version>
+                    <key>
+                        <macro>execution-management-client1.0-unicore-ucc-client-key</macro>
+                    </key>
+                </products>
+            </query>
+        </kit>
+        <kit>
+            <name>execution-management-service.xsede.org</name>
+            <version>1.0</version>
+            <group>execution-management-service.xsede.org-1.0</group>
+            <query>
+                <expression>tg:SupportLevel[. = 'production']</expression>
+                <products>
+                    <optional>
+                        <group>execution-management-service-1.0-production</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:SupportLevel[. = 'testing']</expression>
+                <products>
+                    <optional>
+                        <group>execution-management-service-1.0-testing</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Service[tg:Name = 'unicore-bes-server']</expression>
+                <products>
+                    <version>
+                        <macro>execution-management-service1.0-unicore-bes-server-registered-version</macro>
+                    </version>
+                    <url>
+                        <host>execution-management-service1.0-unicore-bes-server-host</host>
+                        <port>execution-management-service1.0-unicore-bes-server-port</port>
+                    </url>
+                    <endpoint>
+                        <macro>execution-management-service1.0-unicore-bes-server-endpoint</macro>
+                    </endpoint>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Service[tg:Name = 'unicore-server']</expression>
+                <products>
+                    <version>
+                        <macro>execution-management-service1.0-unicore-server-registered-version</macro>
+                    </version>
+                    <url>
+                        <host>execution-management-service1.0-unicore-server-host</host>
+                        <port>execution-management-service1.0-unicore-server-port</port>
+                    </url>
+                    <endpoint>
+                        <macro>execution-management-service1.0-unicore-server-endpoint</macro>
+                    </endpoint>
+                </products>
+            </query>
+        </kit>
+        <kit>
             <name>local-compute.teragrid.org</name>
             <version>4.2.2</version>
             <group>local-compute.teragrid.org-4.2.2</group>
@@ -4495,12 +4578,24 @@
                 <name>core.teragrid.org-5.0.0</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>core-5.0.0-production</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>login.teragrid.org-4.0.0</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>login-4.0.0-production</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>local-compute.teragrid.org-4.2.2</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>local-compute-4.2.2-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -4511,8 +4606,16 @@
                 <name>data-movement-clients.teragrid.org-4.2.0</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>data-movement-clients-4.2.0-production</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>data-movement-servers.teragrid.org-4.2.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>data-movement-servers-4.2.0-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -4525,6 +4628,10 @@
             <group>
                 <type>kit</type>
                 <name>app-support.teragrid.org-4.2.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>app-support-4.2.0-production</name>
             </group>
             <group>
                 <type>optional</type>
@@ -4575,28 +4682,20 @@
                 <name>app-support4.2.0-python</name>
             </group>
             <group>
-                <type>optional</type>
-                <name>core-5.0.0-production</name>
+                <type>kit</type>
+                <name>execution-management-service.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
-                <name>login-4.0.0-production</name>
+                <name>execution-management-service-1.0-production</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
-                <name>local-compute-4.2.2-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-movement-clients-4.2.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>data-movement-servers-4.2.0-production</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>app-support-4.2.0-production</name>
+                <name>execution-management-client-1.0-production</name>
             </group>
             <macroResource>
                 <name>nics-darter</name>
@@ -4623,10 +4722,7 @@
                 <macro>
                     <type>constant</type>
                     <name>securityContact</name>
-                    <!--
-          <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
--->
-                    <value>FailTo:inca@sdsc.edu</value>
+                    <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -4671,6 +4767,25 @@
                     <type>general</type>
                     <name>module</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>NICS-Darter</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>mpiNumProcs</name>
+                    <value>32</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>chargeProject</name>
+                    <value>TG-STA110005S</value>
+                </macro>
                 <hosts>gsissh.darter.nics.xsede.org</hosts>
                 <macro>
                     <type>variable</type>
@@ -5012,6 +5127,36 @@
                     <name>app-support4.2.0-python-key</name>
                     <value>@keyPre@ python/3.4.0 @keyPost@</value>
                 </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-registered-version</name>
+                    <value>6.6.0-p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-endpoint</name>
+                    <value>https://unicore-gateway.nics.utk.edu:8080/NICS-Darter/services/BESFactory?res=default_bes_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-registered-version</name>
+                    <value>6.6.0-p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://unicore-gateway.nics.utk.edu:8080/NICS-Darter/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-version</name>
+                    <value>6.6.0</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-key</name>
+                    <value>@keyPre@ unicore/6.6.0 @keyPost@</value>
+                </macro>
             </macroResource>
         </resource>
         <resource>
@@ -5034,7 +5179,281 @@
                     <type>general</type>
                     <name>go-testing</name>
                 </group>
-                <hosts>login.nautilus.nics.xsede.org</hosts>
+                <hosts>gsissh.nautilus.nics.xsede.org</hosts>
+            </macroResource>
+        </resource>
+        <resource>
+            <name>mason.iu.xsede.org</name>
+            <group>
+                <type>kit</type>
+                <name>core.teragrid.org-5.0.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>core-5.0.0-production</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>data-movement-servers.teragrid.org-4.2.1</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>data-movement-servers-4.2.1-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>data-movement-servers4.2.1-gridftp-nonstriped-server</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>data-movement-clients.teragrid.org-4.2.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>data-movement-clients-4.2.0-production</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>local-compute.teragrid.org-4.2.2</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>local-compute-4.2.2-production</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>login.teragrid.org-4.0.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>login-4.0.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>login4.0.0-gx-map</name>
+            </group>
+            <macroResource>
+                <name>iu-mason</name>
+                <macro>
+                    <type>constant</type>
+                    <name>__incaReporterManagerLocation__</name>
+                    <value>/N/u/inca/Mason/incaReporterManager</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>defaultModule</name>
+                    <value/>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>go-dirs</name>
+                    <value/>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>go-id</name>
+                    <value>mason</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>adminEmail</name>
+                    <value>FailTo:inca@sdsc.edu</value>
+                </macro>
+                <group>
+                    <type>general</type>
+                    <name>module</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>ALL-RM</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>IU</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>xsede</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>go-testing</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>IU-MASON</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://gw49.iu.xsede.org:8080/IU-MASON/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
+                <hosts>mason.indiana.edu</hosts>
+                <macro>
+                    <type>variable</type>
+                    <name>core5.0.0-globus-mds-info-registered-version</name>
+                    <value>4.0.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>core5.0.0-globus-mds-info-host</name>
+                    <value>gw46.iu.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>core5.0.0-globus-mds-info-port</name>
+                    <value>8446</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>core5.0.0-globus-mds-info-endpoint</name>
+                    <value>https://gw46.iu.xsede.org:8446/wsrf/services/DefaultIndexService</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-nonstriped-server-registered-version</name>
+                    <value>5.2.5</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-nonstriped-server-host</name>
+                    <value>gridftp.mason.iu.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-nonstriped-server-port</name>
+                    <value>2811</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-nonstriped-server-endpoint</name>
+                    <value>gsiftp://gridftp.mason.iu.xsede.org:2811/</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-default-server-registered-version</name>
+                    <value>5.2.5</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-default-server-host</name>
+                    <value>gridftp.mason.iu.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-default-server-port</name>
+                    <value>2811</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gridftp-default-server-endpoint</name>
+                    <value>gsiftp://gridftp.mason.iu.xsede.org:2811/</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gsi-scp-hpn-server-registered-version</name>
+                    <value>5.6</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gsi-scp-hpn-server-host</name>
+                    <value>mason.iu.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gsi-scp-hpn-server-port</name>
+                    <value>22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-servers4.2.1-gsi-scp-hpn-server-endpoint</name>
+                    <value>mason.iu.xsede.org:22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-clients4.2.0-globus-url-copy-version</name>
+                    <value>5.0.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-clients4.2.0-globus-url-copy-key</name>
+                    <value>@keyPre@ globus/5.0.4 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-clients4.2.0-uberftp-version</name>
+                    <value>2.6</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>data-movement-clients4.2.0-uberftp-key</name>
+                    <value>@keyPre@ globus/5.0.4 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-version</name>
+                    <value>5.3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-key</name>
+                    <value/>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gx-map-version</name>
+                    <value>0.5.3.3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gx-map-key</name>
+                    <value>@keyPre@ gx-map/0.5.3.3 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-myproxy-version</name>
+                    <value>5.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-myproxy-key</name>
+                    <value>@keyPre@ globus/5.0.4 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-uberftp-version</name>
+                    <value>2.6</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-uberftp-key</name>
+                    <value>@keyPre@ globus/5.0.4 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-registered-version</name>
+                    <value>4.5</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-host</name>
+                    <value>mason.iu.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-port</name>
+                    <value>22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>login4.0.0-gsi-openssh-endpoint</name>
+                    <value>mason.iu.xsede.org:22</value>
+                </macro>
             </macroResource>
         </resource>
         <resource>
@@ -5136,7 +5555,7 @@
                 </group>
                 <macro>
                     <type>constant</type>
-                    <name>data-movement-clients4.2.1-globus-url-copy-key</name>
+                    <name>data-movement-clients4.2.0-globus-url-copy-key</name>
                     <value/>
                 </macro>
                 <hosts>osg-xsede.grid.iu.edu</hosts>
@@ -5426,6 +5845,20 @@
                     <type>general</type>
                     <name>module</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>PSC-Blacklight</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://giu1.psc.xsede.org:8080/PSC-Blacklight/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
                 <hosts>login.blacklight.psc.teragrid.org</hosts>
                 <macro>
                     <type>variable</type>
@@ -5545,7 +5978,7 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-version</name>
-                    <value>6.0</value>
+                    <value>6.6</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -5575,7 +6008,7 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-xdusage-version</name>
-                    <value>1.0</value>
+                    <value>1.1-2</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -5585,7 +6018,7 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-registered-version</name>
-                    <value>6.0</value>
+                    <value>6.6</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -5696,6 +6129,20 @@
                     <type>general</type>
                     <name>xsede</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>SDSC-Gordon</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Gordon/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
                 <hosts>gordon.sdsc.edu</hosts>
                 <macro>
                     <type>variable</type>
@@ -5941,6 +6388,20 @@
                     <type>general</type>
                     <name>xsede</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>SDSC-Trestles</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Trestles/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
                 <hosts>trestles.sdsc.edu</hosts>
                 <macro>
                     <type>variable</type>
@@ -6113,6 +6574,38 @@
             </group>
             <group>
                 <type>kit</type>
+                <name>remote-compute.teragrid.org-5.0.1</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>remote-compute-5.0.1-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>remote-compute5.0.1-gram5-sge</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>remote-compute5.0.1-gram5-fork</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>science-gateway.teragrid.org-5.0.1</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>science-gateway-5.0.1-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>science-gateway5.0.1-gram5-sge</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>science-gateway5.0.1-gram5-fork</name>
+            </group>
+            <group>
+                <type>kit</type>
                 <name>app-support.teragrid.org-4.2.0</name>
             </group>
             <group>
@@ -6134,6 +6627,10 @@
             <group>
                 <type>optional</type>
                 <name>app-support4.2.0-compiler-cpp-gnu</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>app-support4.2.0-compiler-cpp-intel</name>
             </group>
             <group>
                 <type>optional</type>
@@ -6162,6 +6659,10 @@
             <group>
                 <type>optional</type>
                 <name>app-support4.2.0-globus-client</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>app-support4.2.0-gnu-make</name>
             </group>
             <group>
                 <type>optional</type>
@@ -6221,11 +6722,7 @@
             </group>
             <group>
                 <type>optional</type>
-                <name>app-support4.2.0-compiler-cpp-intel</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>app-support4.2.0-gnu-make</name>
+                <name>local-compute4.2.2-glue2-secure-globus-mds4</name>
             </group>
             <macroResource>
                 <name>tacc-lonestar</name>
@@ -6383,6 +6880,166 @@
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-endpoint</name>
                     <value>lonestar.tacc.xsede.org:22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-registered-version</name>
+                    <value>4.0.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-port</name>
+                    <value>8443</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-endpoint</name>
+                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/DefaultIndexService</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-secure-registered-version</name>
+                    <value>4.0.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-secure-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-secure-port</name>
+                    <value>8443</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-globus-mds-secure-endpoint</name>
+                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/SecureIndexService</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-sge-registered-version</name>
+                    <value>5.0.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-sge-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-sge-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-sge-endpoint</name>
+                    <value>gridftp.lonestar.tacc.xsede.org:2119/jobmanager-sge</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-fork-registered-version</name>
+                    <value>5.0.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-fork-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-fork-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-fork-endpoint</name>
+                    <value>gridftp.lonestar.tacc.xsede.org:2119/jobmanager-fork</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-sge-registered-version</name>
+                    <value>5.0.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-sge-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-sge-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-sge-endpoint</name>
+                    <value>gridftp.lonestar.tacc.xsede.org:2119/jobmanager-sge</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-fork-registered-version</name>
+                    <value>5.0.4</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-fork-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-fork-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-fork-endpoint</name>
+                    <value>gridftp.lonestar.tacc.xsede.org:2119/jobmanager-fork</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-registered-version</name>
+                    <value>4.0.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-port</name>
+                    <value>8443</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-endpoint</name>
+                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/DefaultIndexService</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-secure-registered-version</name>
+                    <value>4.0.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-secure-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-secure-port</name>
+                    <value>8443</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-globus-mds-secure-endpoint</name>
+                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/SecureIndexService</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6666,23 +7323,18 @@
                 </macro>
                 <macro>
                     <type>variable</type>
-                    <name>wan-lustre5.0.0-albedo-wan-cluster-registered-version</name>
-                    <value>1.8.3</value>
+                    <name>local-compute4.2.2-glue2-secure-globus-mds4-host</name>
+                    <value>gridftp.lonestar.tacc.xsede.org</value>
                 </macro>
                 <macro>
                     <type>variable</type>
-                    <name>wan-lustre5.0.0-albedo-wan-cluster-endpoint</name>
-                    <value>/albedo</value>
+                    <name>local-compute4.2.2-glue2-secure-globus-mds4-port</name>
+                    <value>8443</value>
                 </macro>
                 <macro>
                     <type>variable</type>
-                    <name>wan-lustre5.0.0-albedo-wan-front-end-registered-version</name>
-                    <value>1.8.5</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>wan-lustre5.0.0-albedo-wan-front-end-endpoint</name>
-                    <value>/albedo</value>
+                    <name>local-compute4.2.2-glue2-secure-globus-mds4-endpoint</name>
+                    <value>https://gridftp.lonestar.tacc.xsede.org:8443/wsrf/services/SecureIndexService</value>
                 </macro>
             </macroResource>
         </resource>
@@ -6862,6 +7514,22 @@
                 <type>optional</type>
                 <name>app-support4.2.0-tginfo</name>
             </group>
+            <group>
+                <type>kit</type>
+                <name>execution-management-client.xsede.org-1.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client-1.0-testing</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>execution-management-service.xsede.org-1.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service-1.0-testing</name>
+            </group>
             <macroResource>
                 <name>tacc-stampede</name>
                 <macro>
@@ -6892,11 +7560,6 @@
                 <macro>
                     <type>constant</type>
                     <name>login4.0.0-uberftp-key</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>login4.0.0-tgusage-key</name>
                     <value/>
                 </macro>
                 <macro>
@@ -6933,6 +7596,20 @@
                     <type>general</type>
                     <name>TACC</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore</name>
+                </group>
+                <macro>
+                    <type>constant</type>
+                    <name>unicore-id</name>
+                    <value>TACC-Stampede</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://login5.stampede.tacc.utexas.edu:8080/TACC-STAMPEDE/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                </macro>
                 <hosts>stampede.tacc.utexas.edu</hosts>
                 <macro>
                     <type>variable</type>
@@ -6957,12 +7634,12 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-version</name>
-                    <value>4.7p1</value>
+                    <value>5.7</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-key</name>
-                    <value>@keyPre@ globus/5.0.4 @keyPost@</value>
+                    <value>@keyPre@ globus/5.2.5 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6997,7 +7674,7 @@
                 <macro>
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-registered-version</name>
-                    <value>6.2p1</value>
+                    <value>5.7</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -7057,7 +7734,7 @@
                 <macro>
                     <type>variable</type>
                     <name>data-movement-servers4.2.0-gsi-scp-hpn-server-registered-version</name>
-                    <value>6.2p1</value>
+                    <value>5.7</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -7384,6 +8061,31 @@
                     <name>app-support4.2.0-tginfo-key</name>
                     <value/>
                 </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-version</name>
+                    <value>6.5.1</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-key</name>
+                    <value>@keyPre@ unicore/6.5.1 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-registered-version</name>
+                    <value>6.5.1</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-endpoint</name>
+                    <value>https://SET_TO_HOSTNAME:8080/SIERRA/services/BESFactory?res=default_bes_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-registered-version</name>
+                    <value>6.5.1</value>
+                </macro>
             </macroResource>
         </resource>
     </resources>
@@ -7705,10 +8407,6 @@
             <type>optional</type>
         </group>
         <group>
-            <name>data-movement-servers.teragrid.org-4.2.1</name>
-            <type>kit</type>
-        </group>
-        <group>
             <name>data-movement-servers-4.2.1-production</name>
             <type>optional</type>
         </group>
@@ -7742,6 +8440,30 @@
         </group>
         <group>
             <name>data-movement4.1.2-gridftp-nonstriped-server</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-client.xsede.org-1.0</name>
+            <type>kit</type>
+        </group>
+        <group>
+            <name>execution-management-client-1.0-production</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-client-1.0-testing</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service.xsede.org-1.0</name>
+            <type>kit</type>
+        </group>
+        <group>
+            <name>execution-management-service-1.0-production</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service-1.0-testing</name>
             <type>optional</type>
         </group>
         <group>
@@ -9662,6 +10384,10 @@
             <type>optional</type>
         </group>
         <group xmlns="">
+            <name>unicore</name>
+            <type>general</type>
+        </group>
+        <group xmlns="">
             <name>NCSA</name>
             <type>general</type>
         </group>
@@ -9872,6 +10598,11 @@
             </macro>
             <macro>
                 <type>constant</type>
+                <name>mpiNumProcs</name>
+                <value>4</value>
+            </macro>
+            <macro>
+                <type>constant</type>
                 <name>nodeCount</name>
                 <value>4</value>
             </macro>
@@ -9929,6 +10660,11 @@
                 <type>constant</type>
                 <name>trustfile</name>
                 <value>tg-gateway-entity-map.txt</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>unicore-registry</name>
+                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry,https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
             </macro>
             <type>general</type>
         </group>
@@ -10076,6 +10812,24 @@
                 <type>constant</type>
                 <name>gridftp-default-server-host</name>
                 <value>@data-movement-servers4.2.0-gridftp-default-server-host@</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>globus-url-copy-key</name>
+                <value>@data-movement-clients4.2.0-globus-url-copy-key@</value>
+            </macro>
+            <group>
+                <type>general</type>
+                <name>ctss-gridftp-server</name>
+            </group>
+        </group>
+        <group xmlns="">
+            <name>data-movement-servers.teragrid.org-4.2.1</name>
+            <type>kit</type>
+            <macro>
+                <type>constant</type>
+                <name>gridftp-default-server-host</name>
+                <value>@data-movement-servers4.2.1-gridftp-default-server-host@</value>
             </macro>
             <macro>
                 <type>constant</type>
@@ -12669,7 +13423,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname>hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__groupname__@</nickname>
+                    <nickname>hostcert-check-mds-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__shortname__@</nickname>
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
@@ -12736,7 +13490,7 @@
                         </limits>
                         <context>@@</context>
                     </series>
-                    <nickname>globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__groupname__@</nickname>
+                    <nickname>globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__shortname__@</nickname>
                     <resourceSetName>quarry</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
@@ -12793,7 +13547,7 @@
                         </limits>
                         <context>@pre@ @@@post@</context>
                     </series>
-                    <nickname>newgw60-globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__groupname__@</nickname>
+                    <nickname>newgw60-globus-mds-info-5.0.0_to_@core.teragrid.org-5.0.0-&gt;__shortname__@</nickname>
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
@@ -13971,7 +14725,7 @@
                         <limits>
                             <wallClockTime>21600.0</wallClockTime>
                         </limits>
-                        <context>@pre@@data-movement-clients4.2.1-globus-url-copy-key@@@@post@</context>
+                        <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
                     </series>
                     <nickname>gridftp-nonstriped-transfer-dms-4.2.1</nickname>
                     <resourceSetName>data-movement-servers4.2.1-gridftp-nonstriped-server</resourceSetName>
@@ -14023,7 +14777,7 @@
                         <limits>
                             <wallClockTime>1800.0</wallClockTime>
                         </limits>
-                        <context>@pre@@data-movement-clients4.2.1-globus-url-copy-key@@@@post@</context>
+                        <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
                     </series>
                     <nickname>gridftp-nonstriped-registered-version-dms-4.2.1</nickname>
                     <resourceSetName>data-movement-servers4.2.1-gridftp-nonstriped-server</resourceSetName>
@@ -14075,7 +14829,7 @@
                         <limits>
                             <wallClockTime>1801.0</wallClockTime>
                         </limits>
-                        <context>@pre@@data-movement-clients4.2.1-globus-url-copy-key@@@@post@</context>
+                        <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
                     </series>
                     <nickname>gridftp-striped-registered-version-dms-4.2.1</nickname>
                     <resourceSetName>data-movement-servers4.2.1-gridftp-striped-server</resourceSetName>
@@ -14127,7 +14881,7 @@
                         <limits>
                             <wallClockTime>300</wallClockTime>
                         </limits>
-                        <context>@pre@@data-movement-clients4.2.1-globus-url-copy-key@@@@post@</context>
+                        <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
                     </series>
                     <nickname>gridftp-nonstriped-auth-dms-4.2.1</nickname>
                     <resourceSetName>data-movement-servers4.2.1-gridftp-nonstriped-server</resourceSetName>
@@ -14179,7 +14933,7 @@
                         <limits>
                             <wallClockTime>301</wallClockTime>
                         </limits>
-                        <context>@pre@@data-movement-clients4.2.1-globus-url-copy-key@@@@post@</context>
+                        <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
                     </series>
                     <nickname>gridftp-striped-auth-dms-4.2.1</nickname>
                     <resourceSetName>data-movement-servers4.2.1-gridftp-striped-server</resourceSetName>
@@ -14406,6 +15160,466 @@
             <name>data-movement-servers.teragrid.org-4.2.1</name>
             <guid>incas://capac.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.1</guid>
             <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
+            <version>1</version>
+        </suite>
+        <suite>
+            <seriesConfigs>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.ucc.version</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-ucc-version</nickname>
+                    <resourceSetName>unicore</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <action>add</action>
+                </seriesConfig>
+            </seriesConfigs>
+            <name>execution-management-client.xsede.org-1.0</name>
+            <guid>incas://capac.sdsc.edu:6323/execution-management-client.xsede.org-1.0</guid>
+            <description>XSEDE Execution Management Client Capability Registration</description>
+            <version>1</version>
+        </suite>
+        <suite>
+            <seriesConfigs>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.registry</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-check-registry-nics</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/10 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.registry</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-check-registry-psc</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/10 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.registry</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-check-registry-any</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/10 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.version</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>id</name>
+                                <value>@unicore-&gt;unicore-id@</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-version</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.connect</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@unicore-&gt;__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>id</name>
+                                <value>@unicore-&gt;unicore-id@</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-checks</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>? * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.trust</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>tsf</name>
+                                <value>@unicore-&gt;execution-management-service1.0-unicore-server-endpoint@</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>wgetArgs</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>certUrl</name>
+                                <value>http://software.xsede.org/security/xsede-certs.tar.gz</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-check-trust</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.mpi</name>
+                        <args>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>debug</name>
+                                <value>false</value>
+                            </arg>
+                            <arg>
+                                <name>id</name>
+                                <value>@unicore-&gt;unicore-id@</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>numprocs</name>
+                                <value>@unicore-&gt;mpiNumProcs@</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>target</name>
+                                <value>file://@unicore-&gt;__incaReporterManagerLocation__@/</value>
+                            </arg>
+                            <arg>
+                                <name>charge</name>
+                                <value>@unicore-&gt;chargeProject@</value>
+                            </arg>
+                            <arg>
+                                <name>jsdl</name>
+                                <value>http://www.nics.tennessee.edu/files/scripts/mpihw.jsdl</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-run-remote-mpijob</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.unicore.unit.mpi</name>
+                        <args>
+                            <arg>
+                                <name>registry</name>
+                                <value>@unicore-registry@</value>
+                            </arg>
+                            <arg>
+                                <name>debug</name>
+                                <value>false</value>
+                            </arg>
+                            <arg>
+                                <name>id</name>
+                                <value>@unicore-&gt;unicore-id@</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>numprocs</name>
+                                <value>@unicore-&gt;mpiNumProcs@</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>target</name>
+                                <value>gsiftp://@gridftp-default-server-host@/@__incaReporterManagerLocation__@/</value>
+                            </arg>
+                            <arg>
+                                <name>charge</name>
+                                <value>@unicore-&gt;chargeProject@</value>
+                            </arg>
+                            <arg>
+                                <name>jsdl</name>
+                                <value>http://www.nics.tennessee.edu/files/scripts/mpihw-gridftp.jsdl</value>
+                            </arg>
+                        </args>
+                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                    </series>
+                    <nickname>unicore-run-remote-mpijob-gridftpstage</nickname>
+                    <resourceSetName>psc-blacklight</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+            </seriesConfigs>
+            <name>execution-management-server.xsede.org-1.0</name>
+            <guid>incas://capac.sdsc.edu:6323/execution-management-server.xsede.org-1.0</guid>
+            <description>XSEDE Execution Management Server Capability Registration</description>
             <version>1</version>
         </suite>
         <suite>
@@ -15283,50 +16497,6 @@
                 </seriesConfig>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>cluster.accounting.tgusage.version</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/cluster.accounting.tgusage.version</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
-                    </series>
-                    <nickname>tgusage-version</nickname>
-                    <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>tgusage&gt;=2.9</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
                         <name>cluster.accounting.xdusage.version</name>
                         <uri>http://inca.sdsc.edu/inca/files/xsede/bin/cluster.accounting.xdusage.version</uri>
                         <args>
@@ -15492,62 +16662,6 @@
                     <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage==''</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>user.search.output.unit</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/user.search.output.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>com</name>
-                                <value>tgusage --account @chargeProject@ list --resource staff.teragrid</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>search</name>
-                                <value>.*\\d+\\s+SU\\s+\\d+\\s+SU\\s+\\d+\\s+SU</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
-                                <name>delim</name>
-                                <value>\\|</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@login4.0.0-tgusage-key@@@@post@</context>
-                    </series>
-                    <nickname>tgusage-unit</nickname>
-                    <resourceSetName>login.teragrid.org-4.0.0</resourceSetName>
-                    <schedule>
-                        <crontime>? ? * * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
@@ -18756,7 +19870,7 @@
                         </args>
                         <context>@@</context>
                     </series>
-                    <nickname>go-transfers_to_@go-testing-&gt;__groupname__@</nickname>
+                    <nickname>go-transfers_to_@go-testing-&gt;__shortname__@</nickname>
                     <resourceSetName>quarry</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
