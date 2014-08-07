@@ -5490,10 +5490,6 @@
                     <type>general</type>
                     <name>module</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
@@ -6017,19 +6013,10 @@
                     <type>general</type>
                     <name>module</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
                     <value>GATech-Keeneland</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>mpiNumProcs</name>
-                    <value>32</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -6245,7 +6232,7 @@
                 <macro>
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-bes-server-endpoint</name>
-                    <value>https://unicore-gateway.nics.utk.edu:8080/NICS-Keeneland/services/BESFactory?res=default_bes_factory</value>
+                    <value>https://unicore-gateway.nics.utk.edu:8080/GATech-Keeneland/services/BESFactory?res=default_bes_factory</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6255,7 +6242,7 @@
                 <macro>
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://unicore-gateway.nics.utk.edu:8080/NICS-Keeneland/services/TargetSystemFactoryService?res=default_target_system_factory</value>
+                    <value>https://unicore-gateway.nics.utk.edu:8080/GATech-Keeneland/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -6511,10 +6498,6 @@
                 <group>
                     <type>general</type>
                     <name>module</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
                 </group>
                 <macro>
                     <type>constant</type>
@@ -7152,19 +7135,10 @@
                     <type>general</type>
                     <name>go-testing</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
                     <value>IU-MASON</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://gw49.iu.xsede.org:8080/IU-MASON/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
                 <hosts>mason.indiana.edu</hosts>
                 <macro>
@@ -7351,6 +7325,11 @@
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-server-registered-version</name>
                     <value>6.6.0</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://gw49.iu.xsede.org:8080/IU-MASON/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
             </macroResource>
         </resource>
@@ -7747,6 +7726,10 @@
                     <type>general</type>
                     <name>unicore</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore-client</name>
+                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
@@ -8031,6 +8014,10 @@
                     <type>general</type>
                     <name>unicore</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore-client</name>
+                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
@@ -8285,6 +8272,10 @@
                 <group>
                     <type>general</type>
                     <name>xsede</name>
+                </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore-client</name>
                 </group>
                 <group>
                     <type>general</type>
@@ -9498,6 +9489,10 @@
                     <type>general</type>
                     <name>unicore</name>
                 </group>
+                <group>
+                    <type>general</type>
+                    <name>unicore-client</name>
+                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
@@ -10341,20 +10336,12 @@
             <type>optional</type>
         </group>
         <group>
-            <name>execution-management-client.xsede.org-1.0</name>
-            <type>kit</type>
-        </group>
-        <group>
             <name>execution-management-client-1.0-production</name>
             <type>optional</type>
         </group>
         <group>
             <name>execution-management-client-1.0-testing</name>
             <type>optional</type>
-        </group>
-        <group>
-            <name>execution-management-service.xsede.org-1.0</name>
-            <type>kit</type>
         </group>
         <group>
             <name>execution-management-service-1.0-production</name>
@@ -12282,8 +12269,33 @@
             <type>optional</type>
         </group>
         <group xmlns="">
-            <name>unicore</name>
             <type>general</type>
+            <name>unicore</name>
+        </group>
+        <group xmlns="">
+            <name>execution-management-client.xsede.org-1.0</name>
+            <type>kit</type>
+            <group>
+                <type>general</type>
+                <name>unicore-client</name>
+            </group>
+        </group>
+        <group xmlns="">
+            <type>general</type>
+            <name>unicore-client</name>
+            <macro>
+                <type>constant</type>
+                <name>execution-management-client1.0-unicore-ucc-client-key</name>
+                <value>@keyPre@ unicore @keyPost@</value>
+            </macro>
+        </group>
+        <group xmlns="">
+            <name>execution-management-service.xsede.org-1.0</name>
+            <type>kit</type>
+            <group>
+                <type>general</type>
+                <name>unicore</name>
+            </group>
         </group>
         <group xmlns="">
             <name>NCSA</name>
@@ -17083,10 +17095,10 @@
                                 <value>3</value>
                             </arg>
                         </args>
-                        <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+                        <context>@pre@@execution-management-client1.0-unicore-ucc-client-key@ @@@post@</context>
                     </series>
                     <nickname>unicore-ucc-version</nickname>
-                    <resourceSetName>unicore</resourceSetName>
+                    <resourceSetName>unicore-client</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
                     </schedule>
