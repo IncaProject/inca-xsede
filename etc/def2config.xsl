@@ -179,7 +179,8 @@
     <xsl:param name="kit"/>
     <xsl:param name="existingGroups"/>
 
-   <xsl:variable name="kitGroup" select="concat($kit/Name,'.teragrid.org-',$kit/Version)"/>
+   <xsl:variable name="domain"><xsl:choose><xsl:when test="count($kit/Domain)&gt;0"><xsl:value-of select="$kit/Domain"/></xsl:when><xsl:otherwise>teragrid.org</xsl:otherwise></xsl:choose></xsl:variable>
+   <xsl:variable name="kitGroup" select="concat($kit/Name,'.',$domain,'-',$kit/Version)"/>
    <!-- if there is already a group in the config file we don't override it
    because it contains custom macros -->
    <xsl:if test="count($existingGroups[name=$kitGroup])=0">
@@ -318,9 +319,10 @@
   <xsl:template name="printKit" match="iis:Kit">
       <kit>
         <xsl:variable name="kit" select="."/>
-        <name><xsl:value-of select="Name"/>.teragrid.org</name>
+        <xsl:variable name="domain"><xsl:choose><xsl:when test="count($kit/Domain)&gt;0"><xsl:value-of select="$kit/Domain"/></xsl:when><xsl:otherwise>teragrid.org</xsl:otherwise></xsl:choose></xsl:variable>
+        <name><xsl:value-of select="Name"/>.<xsl:value-of select="$domain"/></name>
         <version><xsl:value-of select="Version"/></version>
-        <group><xsl:value-of select="concat(Name,'.teragrid.org-',Version)"/></group>
+        <group><xsl:value-of select="concat(Name,'.',$domain,'-',Version)"/></group>
         <query>
           <expression>tg:SupportLevel[. = 'production']</expression>
           <products>
