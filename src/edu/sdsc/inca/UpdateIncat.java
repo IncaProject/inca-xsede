@@ -436,9 +436,10 @@ public class UpdateIncat {
 			String groupName = xpath.evaluate("name", group);
 			NodeList implNodes = (NodeList)xpath.evaluate("/config//*/group[type = '" + groupType + "' and name = '" + groupName + "']/../name", configDoc, XPathConstants.NODESET);
 
-			if (implNodes.getLength() < 1)
+			if (implNodes.getLength() < 1) {
 				System.err.println("group " + groupName + " has no implementers");
-			else {
+				writeIncatResource(xpath, group, "", false, builder);
+			} else {
 				StringBuilder implementers = new StringBuilder();
 
 				implementers.append(implNodes.item(0).getTextContent());
