@@ -336,11 +336,6 @@
         </macro>
         <macro>
           <type>constant</type>
-          <name>MAX_DISK_USAGE_MB</name>
-          <value>400</value>
-        </macro>
-        <macro>
-          <type>constant</type>
           <name>defaultModule</name>
           <value></value>
         </macro>
@@ -399,11 +394,6 @@
           <name>__remoteInvocationMethod__</name>
           <value>manual</value>
           <type>constant</type>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>MAX_DISK_USAGE_MB</name>
-          <value>400</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -506,11 +496,6 @@
         </macro>
         <macro>
           <type>constant</type>
-          <name>MAX_DISK_USAGE_MB</name>
-          <value>400</value>
-        </macro>
-        <macro>
-          <type>constant</type>
           <name>defaultModule</name>
           <value></value>
         </macro>
@@ -593,11 +578,6 @@
           <name>__remoteInvocationMethod__</name>
           <value>manual</value>
           <type>constant</type>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>MAX_DISK_USAGE_MB</name>
-          <value>400</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -1118,6 +1098,42 @@
       </macroResource>
     </resource>
     <resource>
+      <name>maverick.tacc.xsede.org</name>
+      <macroResource>
+        <name>tacc-maverick</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/00500/inca/inca2install-maverick</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+<!--
+          <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu</value>
+-->
+          <value>FailTo:inca@sdsc.edu</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>xsede</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>TACC</name>
+        </group>
+        <hosts>maverick.tacc.utexas.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
       <name>stampede.tacc.xsede.org</name>
       <macroResource>
         <name>tacc-stampede</name>
@@ -1240,6 +1256,15 @@
     <group>
       <name>NCSA</name>
       <type>general</type>
+    </group>
+    <group>
+      <name>NICS</name>
+      <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>MAX_DISK_USAGE_MB</name>
+        <value>500</value>
+      </macro>
     </group>
     <group>
       <name>OSG</name>
@@ -3599,7 +3624,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>filePatterns</name>
-                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std* ~/sge.* ~/STDIN.* @__incaReporterManagerLocation__@/hs_err_pid* @__incaReporterManagerLocation__@/var/archive/* ~/inca-go-file-*copy*</value>
+                <value>@__incaReporterManagerLocation__@/var/inca.process* ~/\.soft\.v3\.[0-9]* ~/\.soft\.[0-9]* ~/gram_job_mgr_* ~/gram_*.log ~/.globus/.gass_cache/local/md5/*/* ~/.globus/.gass_cache/global/md5/*/* /tmp/inca.rm* ~/*.std* ~/sge.* ~/STDIN.* @__incaReporterManagerLocation__@/hs_err_pid* @__incaReporterManagerLocation__@/var/archive/* ~/inca-go-file-*copy* ~/.ucc.[0-9]*</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -10148,10 +10173,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@vtss3.0.0-cmake-key@@@@post@</context>
+            <context>@pre@@vtss4.2.0-cmake-key@@@@post@</context>
           </series>
           <nickname>cmake-version</nickname>
-          <resourceSetName>vtss3.0.0-cmake</resourceSetName>
+          <resourceSetName>vtss4.2.0-cmake</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -10196,10 +10221,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@vtss3.0.0-vtk-key@@@@post@</context>
+            <context>@pre@@vtss4.2.0-vtk-key@@@@post@</context>
           </series>
           <nickname>vtk-version</nickname>
-          <resourceSetName>vtss3.0.0-vtk</resourceSetName>
+          <resourceSetName>vtss4.2.0-vtk</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -10240,10 +10265,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@vtss3.0.0-netpbm-key@@@@post@</context>
+            <context>@pre@@vtss4.2.0-netpbm-key@@@@post@</context>
           </series>
           <nickname>netpbm-version</nickname>
-          <resourceSetName>vtss3.0.0-netpbm</resourceSetName>
+          <resourceSetName>vtss4.2.0-netpbm</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -10288,10 +10313,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@vtss3.0.0-paraview-key@@@@post@</context>
+            <context>@pre@@vtss4.2.0-paraview-key@@@@post@</context>
           </series>
           <nickname>paraview-version</nickname>
-          <resourceSetName>vtss3.0.0-paraview</resourceSetName>
+          <resourceSetName>vtss4.2.0-paraview</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -10332,10 +10357,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <limits>
               <wallClockTime>600.0</wallClockTime>
             </limits>
-            <context>@pre@@vtss3.0.0-imagemagick-key@@@@post@</context>
+            <context>@pre@@vtss4.2.0-imagemagick-key@@@@post@</context>
           </series>
           <nickname>imagemagick-version</nickname>
-          <resourceSetName>vtss3.0.0-imagemagick</resourceSetName>
+          <resourceSetName>vtss4.2.0-imagemagick</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -10352,8 +10377,8 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
-      <name>vtss.teragrid.org-3.0.0</name>
-      <guid>incas://capac.sdsc.edu:6323/vtss.teragrid.org-3.0.0</guid>
+      <name>vtss.teragrid.org-4.2.0</name>
+      <guid>incas://capac.sdsc.edu:6323/vtss.teragrid.org-4.2.0</guid>
       <description>Vizualization software</description>
       <version>47</version>
     </suite>
