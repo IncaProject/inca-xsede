@@ -640,6 +640,11 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>local-compute4.2.2-batch-submitparam</name>
+          <value>-ncpus=16</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>science-gateway5.0.1-globus-mds-host</name>
           <value>grid1.nics.utk.edu</value>
         </macro>
@@ -856,6 +861,11 @@
           <name>execution-management-service1.0-unicore-server-endpoint</name>
           <value>https://giu1.psc.xsede.org:8080/PSC-Blacklight/services/TargetSystemFactoryService?res=default_target_system_factory</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>mpiNumProcs</name>
+          <value>32</value>
+        </macro>
         <hosts>login.blacklight.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
@@ -1047,6 +1057,16 @@
           <type>constant</type>
           <name>MAX_DISK_USAGE_MB</name>
           <value>800</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>jobQueue</name>
+          <value>normal</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-submitparam</name>
+          <value>-V  -pe 12way 24</value>
         </macro>
         <group>
           <type>general</type>
@@ -1722,6 +1742,100 @@
       <group>
         <type>general</type>
         <name>ctss-gram-client</name>
+      </group>
+    </group>
+    <group>
+      <name>local-compute4.2.2-batch</name>
+      <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-scheduler</name>
+        <value>pbs</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-submitparam</name>
+        <value/>
+      </macro>
+    </group>
+    <group>
+      <name>local-compute4.2.2-condor</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-nickname</name>
+        <value>condor</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-scheduler</name>
+        <value>condor</value>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>local-compute4.2.2-batch</name>
+      </group>
+    </group>
+    <group>
+      <name>local-compute4.2.2-moab</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-nickname</name>
+        <value>moab</value>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>local-compute4.2.2-batch</name>
+      </group>
+    </group>
+    <group>
+      <name>local-compute4.2.2-pbs-torque</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-nickname</name>
+        <value>pbs-torque</value>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>local-compute4.2.2-batch</name>
+      </group>
+    </group>
+    <group>
+      <name>local-compute4.2.2-sge</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-nickname</name>
+        <value>sge</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-scheduler</name>
+        <value>sge</value>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>local-compute4.2.2-batch</name>
+      </group>
+    </group>
+    <group>
+      <name>local-compute4.2.2-slurm</name>
+      <type>optional</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-nickname</name>
+        <value>slurm</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-test-scheduler</name>
+        <value>slurm</value>
+      </macro>
+      <group>
+        <type>general</type>
+        <name>local-compute4.2.2-batch</name>
       </group>
     </group>
   </groups>
@@ -7048,6 +7162,92 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
     </suite>
     <suite>
       <seriesConfigs>
+        <seriesConfig>
+          <series>
+            <name>cluster.batch.wrapper</name>
+            <args>
+              <arg>
+                <name>account</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@local-compute4.2.2-batch-test-scheduler@</value>
+              </arg>
+              <arg>
+                <name>randomwait</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>walllimit</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>poll</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>1:@mpiNumProcs@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>submitparam</name>
+                <value>@local-compute4.2.2-batch-submitparam@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>showscript</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>shell</name>
+                <value>/bin/sh</value>
+              </arg>
+              <arg>
+                <name>var</name>
+                <value/>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>@local-compute4.2.2-batch-test-nickname@</nickname>
+          <resourceSetName>local-compute4.2.2-batch</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>metascheduling.glue.unit</name>
