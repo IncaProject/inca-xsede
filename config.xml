@@ -463,6 +463,11 @@
         <name>chargeProject</name>
         <value>TG-STA110005S</value>
       </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-test-scheduler</name>
+          <value>pbscray</value>
+        </macro>
         <hosts>gsissh.darter.nics.xsede.org</hosts>
       </macroResource>
     </resource>
@@ -597,6 +602,11 @@
 -->
           <value>FailTo:inca@sdsc.edu</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-test-scheduler</name>
+          <value>pbssgi</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -641,7 +651,7 @@
         <macro>
           <type>constant</type>
           <name>local-compute4.2.2-batch-submitparam</name>
-          <value>-ncpus=16</value>
+          <value>ncpus=16</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -1196,6 +1206,11 @@
           <type>constant</type>
           <name>go-dirs</name>
           <value>/work/00500/inca /scratch/00500/inca</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>jobQueue</name>
+          <value>normal</value>
         </macro>
         <group>
           <type>general</type>
@@ -5757,7 +5772,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>4</value>
+                <value>5</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -5809,7 +5824,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>5</value>
+                <value>4</value>
               </arg>
               <arg>
                 <name>host</name>
@@ -5861,7 +5876,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>1</value>
+                <value>3</value>
               </arg>
               <arg>
                 <name>timeout</name>
@@ -5913,7 +5928,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>0</value>
+                <value>3</value>
               </arg>
               <arg>
                 <name>timeout</name>
@@ -7208,7 +7223,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>nodes</name>
-                <value>1:@mpiNumProcs@</value>
+                <value>1::@mpiNumProcs@</value>
               </arg>
               <arg>
                 <name>queue</name>
@@ -7246,6 +7261,16 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
           <action>add</action>
         </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
@@ -10673,7 +10698,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
+                <value>5</value>
               </arg>
               <arg>
                 <name>delim</name>
@@ -10728,7 +10753,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
+                <value>5</value>
               </arg>
               <arg>
                 <name>delim</name>

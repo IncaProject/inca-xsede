@@ -1200,6 +1200,10 @@
                         <value>TG-STA110005S</value>
                     </macro>
                     <macro>
+                        <name>local-compute4.2.2-batch-test-scheduler</name>
+                        <value>pbscray</value>
+                    </macro>
+                    <macro>
                         <name>core5.0.0-amie-version</name>
                         <value>4.0.0</value>
                     </macro>
@@ -1854,6 +1858,10 @@
                         <value>FailTo:inca@sdsc.edu</value>
                     </macro>
                     <macro>
+                        <name>local-compute4.2.2-batch-test-scheduler</name>
+                        <value>pbssgi</value>
+                    </macro>
+                    <macro>
                         <name>unicore-id</name>
                         <value>NICS-Nautilus</value>
                     </macro>
@@ -1875,7 +1883,7 @@
                     </macro>
                     <macro>
                         <name>local-compute4.2.2-batch-submitparam</name>
-                        <value>-ncpus=16</value>
+                        <value>ncpus=16</value>
                     </macro>
                     <macro>
                         <name>science-gateway5.0.1-globus-mds-host</name>
@@ -4403,6 +4411,10 @@
                     <macro>
                         <name>go-dirs</name>
                         <value>/work/00500/inca /scratch/00500/inca</value>
+                    </macro>
+                    <macro>
+                        <name>jobQueue</name>
+                        <value>normal</value>
                     </macro>
                     <macro>
                         <name>unicore-id</name>
@@ -16388,7 +16400,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>4</value>
+                                <value>5</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -16440,7 +16452,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>5</value>
+                                <value>4</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -16492,7 +16504,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>1</value>
+                                <value>3</value>
                             </arg>
                             <arg>
                                 <name>timeout</name>
@@ -16544,7 +16556,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>0</value>
+                                <value>3</value>
                             </arg>
                             <arg>
                                 <name>timeout</name>
@@ -17839,7 +17851,7 @@
                             </arg>
                             <arg>
                                 <name>nodes</name>
-                                <value>1:@mpiNumProcs@</value>
+                                <value>1::@mpiNumProcs@</value>
                             </arg>
                             <arg>
                                 <name>queue</name>
@@ -17877,6 +17889,16 @@
                     <schedule>
                         <crontime>? ? * * *</crontime>
                     </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
@@ -21304,7 +21326,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>3</value>
+                                <value>5</value>
                             </arg>
                             <arg>
                                 <name>delim</name>
@@ -21359,7 +21381,7 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>3</value>
+                                <value>5</value>
                             </arg>
                             <arg>
                                 <name>delim</name>
