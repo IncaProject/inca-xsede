@@ -208,7 +208,7 @@
           </xsl:call-template>
         </xsl:when><xsl:otherwise>
           <xsl:call-template name="printResourceResultCell">
-            <xsl:with-param name="result" select="$reports[matches(hostname,$regexHost) and targethostname='']"/>
+            <xsl:with-param name="result" select="$reports[matches(hostname,$regexHost) and targetHostname='']"/>
             <xsl:with-param name="defaultconfig" select="$defaultconfig"/>
           </xsl:call-template>
         </xsl:otherwise></xsl:choose>
