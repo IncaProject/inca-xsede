@@ -7,7 +7,7 @@ use Inca::XSEDE::Unicore;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.mpi',
-  version => 5,
+  version => 7,
   description => 'This test verifies that an MPI job run thru selected UNICORE service',
   url => 'http://www.unicore.eu',
   unit_name => 'mpi'
@@ -18,7 +18,8 @@ $reporter->addArg('debug', 'Submit the unicore job with -v', 'false', 'true|fals
 $reporter->addArg('charge', 'XSEDE allocation to use', 'TG-STA110011S');
 $reporter->addArg('id', 'UNICORE site name to submit job to');
 $reporter->addArg('jsdl', 'path or url to JSDL job submit file example');
-$reporter->addArg('numprocs', 'Number of processes to add to the job request (i.e., mpi -n', "4");
+$reporter->addArg('numprocs', 'Number of processes to add to the job request (i.e., mpi -n)', "4");
+$reporter->addArg('regex', 'Regular expression to verify output', 'Hello from rank \d+' );
 $reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
 $reporter->addArg('target', 'Local or remote dir to put the job output');
 $reporter->processArgv(@ARGV);
@@ -27,6 +28,7 @@ my $charge = $reporter->argValue("charge");
 my $site = $reporter->argValue("id");
 my $jsdl = $reporter->argValue("jsdl");
 my $numprocs = $reporter->argValue("numprocs");
+my $regex = $reporter->argValue('regex');
 my $registry = $reporter->argValue('registry');
 my $target = $reporter->argValue("target");
 
@@ -44,7 +46,8 @@ $target .= "/$jobname-out";
 my %substitutions = (
   "/jsdl-posix:Argument,jsdl-posix:Argument" => $numprocs,
   "jsdl:JobProject" => $charge,
-  "jsdl:TotalCPUCount,jsdl:Exact", $numprocs,
+  "jsdl:TotalCPUCount,jsdl:Exact" => $numprocs,
+  "jsdl-u:Value" => $numprocs,
   "jsdl:Target,jsdl:URI" => $target,
   "jsdl:JobName" => $jobname
 );
@@ -78,11 +81,11 @@ if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {
   }
   for my $resultfile ( @resultfiles ) {
     my $mpiout = `cat $resultfile`;
-    my @hellos = $mpiout =~ /(Hello from rank \d+)/g;
+    my @hellos = $mpiout =~ /($regex)/g;
       $reporter->failPrintAndExit( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
         if scalar(@hellos) < $numprocs;
     my ($nodes) = $mpiout =~ /Nodes:\s*(\S+)/;
-    $reporter->log( 'debug', "Job ran on node(s) $nodes" );
+    $reporter->log( 'debug', "Job ran on node(s) $nodes" ) if defined $nodes;
   }
   $reporter->unitSuccess();
 } else {
