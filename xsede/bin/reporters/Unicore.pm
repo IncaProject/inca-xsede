@@ -137,6 +137,7 @@ sub loggedCommand {
     my $prefs = $self->getDotUccDir() . "/preferences";
     open( FD, ">$prefs" );
     print FD "credential.path=" . $self->getDotUccDir() . "/default-myproxy.p12\n";
+    print FD "credential.format=pkcs12\n";
     print FD "truststore.type=directory\n";
     print FD "truststore.directoryLocations.1=/etc/grid-security/certificates/*.0\n";
     print FD "truststore.crlLocations.1=/etc/grid-security/certificates/*.r0\n";
