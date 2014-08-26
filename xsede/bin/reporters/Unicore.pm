@@ -136,11 +136,17 @@ sub loggedCommand {
     close SSL;
     my $prefs = $self->getDotUccDir() . "/preferences";
     open( FD, ">$prefs" );
+    print FD "credential.path=" . $self->getDotUccDir() . "/default-myproxy.p12\n";
+    print FD "truststore.type=directory\n";
+    print FD "truststore.directoryLocations.1=/etc/grid-security/certificates/*.0\n";
+    print FD "truststore.crlLocations.1=/etc/grid-security/certificates/*.r0\n";
+    print FD "client.http.connection.timeout=2000\n";
+    print FD "client.http.socket.timeout=2000\n";
     print FD "client.outHandlers=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
     print FD "uas.security.out.handler.classname=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
     close FD;
   }
-  $cmd .= " -k " . $self->getDotUccDir() . "/default-myproxy.p12 -T /etc/grid-security/xsede-certs.jks -Y xsede-certs.jks -c " . $self->getDotUccDir() . "/preferences";
+  $cmd .= " -c " . $self->getDotUccDir() . "/preferences";
   $self->{reporter}->log('system', $cmd);
   my $tempfile = $self->getDotUccDir() . "/ucc-" . time() . ".out";
   open( CMD, "|$cmd &> $tempfile" );
