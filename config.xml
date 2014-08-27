@@ -173,6 +173,11 @@
           <name>psMax</name>
           <value>110</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>gridftp-default-server-host</name>
+          <value>gw60.iu.xsede.org</value>
+        </macro>
         <group>
           <type>general</type>
           <name>ALL-RM</name>
@@ -187,7 +192,15 @@
         </group>
         <group>
           <type>general</type>
+          <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
           <name>gw60</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>unicore-client</name>
         </group>
         <hosts>gw60.iu.xsede.org</hosts>
       </macroResource>
@@ -448,6 +461,10 @@
           <type>general</type>
           <name>module</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore-registry</name>
+        </group>
         <macro>
           <type>constant</type>
           <name>unicore-id</name>
@@ -468,6 +485,11 @@
           <name>local-compute4.2.2-batch-test-scheduler</name>
           <value>pbscray</value>
         </macro>
+      <macro>
+        <type>constant</type>
+        <name>unicore-site-registry</name>
+        <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+      </macro>
         <hosts>gsissh.darter.nics.xsede.org</hosts>
       </macroResource>
     </resource>
@@ -792,7 +814,7 @@
           <name>data-movement-clients4.2.0-globus-url-copy-key</name>
           <value/>
         </macro>
-        <hosts>osg-xsede.grid.iu.edu</hosts>
+        <hosts>submit-1.osg.xsede.org</hosts>
       </macroResource>
     </resource>
     <resource>
@@ -861,6 +883,10 @@
           <type>general</type>
           <name>unicore-client</name>
         </group>
+        <group>
+          <type>general</type>
+          <name>unicore-registry</name>
+        </group>
         <macro>
           <type>constant</type>
           <name>unicore-id</name>
@@ -876,6 +902,11 @@
           <name>mpiNumProcs</name>
           <value>32</value>
         </macro>
+      <macro>
+        <type>constant</type>
+        <name>unicore-site-registry</name>
+        <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
+      </macro>
         <hosts>login.blacklight.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
@@ -1259,6 +1290,10 @@
     </resource>
   </resources>
   <groups>
+    <group>
+      <type>general</type>
+      <name>unicore-registry</name>
+    </group>
     <group>
       <type>general</type>
       <name>unicore</name>
@@ -6221,7 +6256,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>registry</name>
-                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+                <value>@unicore-registry->unicore-site-registry@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -6234,8 +6269,8 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             </args>
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
-          <nickname>unicore-server-check-registry-nics</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <nickname>unicore-server-check-registry</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
           </schedule>
@@ -6265,51 +6300,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>registry</name>
-                <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
-          </series>
-          <nickname>unicore-server-check-registry-psc</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
-          <schedule>
-            <crontime>?-59/10 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.unicore.unit.registry</name>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>registry</name>
-                <value>@unicore-registry@</value>
+                <value>@nics-darter->unicore-registry@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -6323,7 +6314,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-server-check-registry-any</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>?-59/10 * * * *</crontime>
           </schedule>
@@ -6371,7 +6362,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-server-version</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -6413,7 +6404,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-server-checks</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? * * * *</crontime>
           </schedule>
@@ -6469,7 +6460,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-server-check-trust</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -6530,14 +6521,18 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <value>@unicore->chargeProject@</value>
               </arg>
               <arg>
+                <name>regex</name>
+                <value>Hello from rank \\d+</value>
+              </arg>
+              <arg>
                 <name>jsdl</name>
-                <value>http://www.nics.tennessee.edu/files/scripts/mpihw.jsdl</value>
+                <value>http://software.xsede.org/production/UNICORE/examples/mpihw.jsdl</value>
               </arg>
             </args>
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-run-remote-mpijob</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -6598,14 +6593,90 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <value>@unicore->chargeProject@</value>
               </arg>
               <arg>
+                <name>regex</name>
+                <value>Hello from rank \\d+</value>
+              </arg>
+              <arg>
                 <name>jsdl</name>
-                <value>http://www.nics.tennessee.edu/files/scripts/mpihw-gridftp.jsdl</value>
+                <value>http://software.xsede.org/production/UNICORE/examples/mpihw-gridftp.jsdl</value>
               </arg>
             </args>
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
           </series>
           <nickname>unicore-run-remote-mpijob-gridftpstage</nickname>
-          <resourceSetName>psc-blacklight</resourceSetName>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.middleware.unicore.unit.mpi</name>
+            <args>
+              <arg>
+                <name>registry</name>
+                <value>@unicore-registry@</value>
+              </arg>
+              <arg>
+                <name>debug</name>
+                <value>false</value>
+              </arg>
+              <arg>
+                <name>id</name>
+                <value>@nics-nautilus->unicore-id@</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>numprocs</name>
+                <value>@nics-nautilus->mpiNumProcs@</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>target</name>
+                <value>gsiftp://@gridftp-default-server-host@/@__incaReporterManagerLocation__@/</value>
+              </arg>
+              <arg>
+                <name>charge</name>
+                <value>@nics-nautilus->chargeProject@</value>
+              </arg>
+              <arg>
+                <name>regex</name>
+                <value>Hello world from process \\d</value>
+              </arg>
+              <arg>
+                <name>jsdl</name>
+                <value>http://software.xsede.org/production/UNICORE/examples/mpihw-gridftp-nautilus.jsdl</value>
+              </arg>
+            </args>
+            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
+          </series>
+          <nickname>unicore-run-remote-mpienvjob-gridftpstage</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
