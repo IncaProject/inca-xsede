@@ -1,0 +1,76 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use File::Path qw(make_path);
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'cluster.filesystem.xwfs.writeable',
+	version => 1,
+	description => 'Tests XSEDE-Wide File System (XWFS) mount and 100MB file creation',
+	url => 'https://portal.xsede.org/web/xup/xwfs',
+	unit_name => 'xwfs'
+);
+
+
+#
+# Get reporter arguments
+#
+$reporter->addArg( 'dir', 'XWFS directory', '/xwfs' );
+$reporter->addArg( 'testdir', 'Test directory under XWFS', 'tmp/inca' );
+$reporter->processArgv(@ARGV);
+my $xwfs = $reporter->argValue( 'dir' );
+my $test_dir = $xwfs . "/" . $reporter->argValue( 'testdir' ) . "/xwfs-test.$$";
+
+
+#
+# Run the command “df” and verify that the /xwfs file system is listed in the output
+#
+my $df = $reporter->loggedCommand( 'df | grep ' . $xwfs );
+if ( $df !~ /$xwfs/ )
+{
+	$reporter->failPrintAndExit( $xwfs . ' directory not found with df' );
+}
+
+
+#
+# Setup test directory
+#
+if ( ! -e $test_dir )
+{
+	if ( ! make_path( $test_dir ) )
+	{
+		$reporter->failPrintAndExit( 'Could not make test directory ' . $test_dir );
+	}
+	
+}
+if ( ! chdir( $test_dir ) )
+{
+	$reporter->failPrintAndExit( 'Could not cd to test directory ' . $test_dir );
+}
+$reporter->tempFile( $test_dir );
+
+
+#
+# Create 100MB test file in XWFS test directory
+#
+my $fw = $reporter->loggedCommand( 'dd if=/dev/zero of=./testfile bs=1024k count=100' );
+$reporter->log( 'debug', $test_dir . '/testfile write output: ' . $fw );
+if ( $fw !~ /.*^104857600 bytes.*/m )
+{
+	$reporter->failPrintAndExit( 'Unexpected output writing test file ' . $test_dir . '/testfile' );
+}
+
+#
+# Read 100MB test file in XWFS test directory
+#
+my $fr = $reporter->loggedCommand( 'dd if=./testfile of=/dev/null bs=1024k' );
+$reporter->log( 'debug', $test_dir . '/testfile read output: ' . $fr );
+if ( $fr !~ /.*^104857600 bytes.*/m )
+{
+	$reporter->failPrintAndExit( 'Unexpected output reading test file ' . $test_dir . '/testfile' );
+}
+
+$reporter->unitSuccess();
+$reporter->print();
