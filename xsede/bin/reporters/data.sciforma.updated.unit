@@ -1,0 +1,58 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use JSON qw( decode_json );
+use Date::Parse;
+use POSIX;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'data.sciforma.updated.unit',
+	version => 1,
+	description => 'Verifies that a Sciforma data JSON file is up to date',
+	unit_name => 'sciforma'
+);
+
+
+#
+# Get reporter arguments
+#
+$reporter->addArg( 'file', 'Path to Sciforma JSON file', '/local/software.xsede.org/jira/sciforma.json' );
+$reporter->addArg( 'age', 'Age in minutes that the file should be newer than', '240' );
+$reporter->processArgv(@ARGV);
+my $file = $reporter->argValue( 'file' );
+my $age = $reporter->argValue( 'age' );
+
+
+#
+# Read JSON file
+#
+if ( ! -e $file )
+{
+	$reporter->failPrintAndExit( 'Sciforma file does not exist: ' . $file );
+}
+open my $fh, '<', $file or $reporter->failPrintAndExit( 'Cannot open Sciforma file: ' . $file );
+my $json = do { local $/; <$fh> };
+my $data = decode_json($json);
+if ( ! exists $data->{'Updated'} || ! defined $data->{'Updated'} )
+{
+	$reporter->failPrintAndExit( 'No "Updated" value in JSON file: ' . $file );
+}
+
+
+#
+# Compare updated date
+#
+my $updated = $data->{'Updated'};
+$reporter->log( 'debug', 'File updated at: ' . $updated );
+my $minutes_elapsed = ( time() - str2time( $updated ) ) / 60;
+$reporter->log( 'debug', 'Minutes elapsed: ' . floor( $minutes_elapsed ) );
+if ( $minutes_elapsed > $age )
+{
+	$reporter->failPrintAndExit( 'File is older than allowed number of minutes: ' . $age );
+}
+
+
+$reporter->unitSuccess();
+$reporter->print();
