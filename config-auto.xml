@@ -1513,6 +1513,17 @@
                 </products>
             </query>
             <query>
+                <expression>tg:Software[matches(tg:Name,'^genesis-ii-bes-client(-[\d\.]+)?$')]</expression>
+                <products>
+                    <version>
+                        <macro>execution-management-client1.0-genesis-ii-bes-client-version</macro>
+                    </version>
+                    <key>
+                        <macro>execution-management-client1.0-genesis-ii-bes-client-key</macro>
+                    </key>
+                </products>
+            </query>
+            <query>
                 <expression>tg:Software[matches(tg:Name,'^unicore-ucc-client(-[\d\.]+)?$')]</expression>
                 <products>
                     <version>
@@ -1572,6 +1583,38 @@
                     <endpoint>
                         <macro>execution-management-service1.0-unicore-server-endpoint</macro>
                     </endpoint>
+                </products>
+            </query>
+        </kit>
+        <kit>
+            <name>global-federated-file-system-client.xsede.org</name>
+            <version>1.0</version>
+            <group>global-federated-file-system-client.xsede.org-1.0</group>
+            <query>
+                <expression>tg:SupportLevel[. = 'production']</expression>
+                <products>
+                    <optional>
+                        <group>global-federated-file-system-client-1.0-production</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:SupportLevel[. = 'testing']</expression>
+                <products>
+                    <optional>
+                        <group>global-federated-file-system-client-1.0-testing</group>
+                    </optional>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Software[matches(tg:Name,'^genesis-ii-gffs-client(-[\d\.]+)?$')]</expression>
+                <products>
+                    <version>
+                        <macro>global-federated-file-system-client1.0-genesis-ii-gffs-client-version</macro>
+                    </version>
+                    <key>
+                        <macro>global-federated-file-system-client1.0-genesis-ii-gffs-client-key</macro>
+                    </key>
                 </products>
             </query>
         </kit>
@@ -5418,6 +5461,16 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-client1.0-genesis-ii-bes-client-version</name>
+                    <value>2.7.46</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-genesis-ii-bes-client-key</name>
+                    <value>@keyPre@ genesis-ii/2.7.46 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.5.1</value>
                 </macro>
@@ -7622,6 +7675,16 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-client1.0-genesis-ii-bes-client-version</name>
+                    <value>2.7.97</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-genesis-ii-bes-client-key</name>
+                    <value>@keyPre@ genesis-ii/2.7.97 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.6.0</value>
                 </macro>
@@ -7757,6 +7820,11 @@
                     <type>constant</type>
                     <name>data-movement-clients4.2.0-globus-url-copy-key</name>
                     <value/>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>hostcertPath</name>
+                    <value>/etc/grid-security/host/cert.pem</value>
                 </macro>
                 <hosts>submit-1.osg.xsede.org</hosts>
                 <macro>
@@ -8003,6 +8071,22 @@
                 <type>optional</type>
                 <name>login5.0.0-modules</name>
             </group>
+            <group>
+                <type>kit</type>
+                <name>execution-management-client.xsede.org-1.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>kit</type>
+                <name>execution-management-service.xsede.org-1.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service-1.0-production</name>
+            </group>
             <macroResource>
                 <name>psc-blacklight</name>
                 <macro>
@@ -8074,7 +8158,7 @@
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
-                    <value>PSC-Blacklight</value>
+                    <value>Blacklight</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -8276,6 +8360,31 @@
                     <type>variable</type>
                     <name>login5.0.0-gsi-openssh-endpoint</name>
                     <value>tg-login.blacklight.psc.xsede.org:22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-version</name>
+                    <value>6.6.0</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-client1.0-unicore-ucc-client-key</name>
+                    <value>@keyPre@ unicore/6.6.0 @keyPost@</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-registered-version</name>
+                    <value>6.5.1</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-bes-server-endpoint</name>
+                    <value>https://SET_TO_HOSTNAME:8080/SIERRA/services/BESFactory?res=default_bes_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-registered-version</name>
+                    <value>6.5.1</value>
                 </macro>
             </macroResource>
         </resource>
@@ -10340,6 +10449,14 @@
             </group>
             <group>
                 <type>kit</type>
+                <name>global-federated-file-system-client.xsede.org-1.0</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>global-federated-file-system-client-1.0-testing</name>
+            </group>
+            <group>
+                <type>kit</type>
                 <name>execution-management-service.xsede.org-1.0</name>
             </group>
             <group>
@@ -10899,17 +11016,17 @@
                 <macro>
                     <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
-                    <value>6.5.1</value>
+                    <value>6.6.0</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-key</name>
-                    <value>@keyPre@ unicore/6.5.1 @keyPost@</value>
+                    <value>@keyPre@ unicore/6.6.0 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-bes-server-registered-version</name>
-                    <value>6.5.1</value>
+                    <value>6.6.0</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -10919,7 +11036,7 @@
                 <macro>
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-server-registered-version</name>
-                    <value>6.5.1</value>
+                    <value>6.6.0</value>
                 </macro>
             </macroResource>
         </resource>
@@ -11291,6 +11408,18 @@
         </group>
         <group>
             <name>execution-management-service-1.0-testing</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>global-federated-file-system-client.xsede.org-1.0</name>
+            <type>kit</type>
+        </group>
+        <group>
+            <name>global-federated-file-system-client-1.0-production</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>global-federated-file-system-client-1.0-testing</name>
             <type>optional</type>
         </group>
         <group>
@@ -13360,6 +13489,11 @@
         </group>
         <group xmlns="">
             <name>ALL-RM</name>
+            <macro>
+                <type>constant</type>
+                <name>hostcertPath</name>
+                <value>/etc/grid-security/hostcert.pem</value>
+            </macro>
             <macro>
                 <type>constant</type>
                 <name>externalVerifyServers</name>
@@ -16221,7 +16355,7 @@
                             </arg>
                             <arg>
                                 <name>cert</name>
-                                <value>/etc/grid-security/hostcert.pem</value>
+                                <value>@hostcertPath@</value>
                             </arg>
                             <arg>
                                 <name>log</name>
