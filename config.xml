@@ -704,6 +704,27 @@
       </macroResource>
     </resource>
     <resource>
+      <name>software.iu.xsede.org</name>
+      <macroResource>
+        <name>software</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/incaReporterManager</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <hosts>software.xsede.org</hosts>
+      </macroResource>
+    </resource>
+    <resource>
       <name>mason.iu.xsede.org</name>
       <macroResource>
         <name>iu-mason</name>
@@ -4260,6 +4281,57 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <resourceSetName>INCASERVERS</resourceSetName>
           <schedule>
             <crontime>?-59/15 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.sciforma.updated.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>age</name>
+                <value>240</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>file</name>
+                <value>/local/software.xsede.org/jira/sciforma.json</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>120</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>sciforma-updated</nickname>
+          <resourceSetName>software</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/6 * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
