@@ -1518,6 +1518,9 @@
                     <version>
                         <macro>execution-management-client1.0-genesis-ii-bes-client-version</macro>
                     </version>
+                    <optional>
+                        <group>execution-management-client1.0-genesis-ii-bes-client</group>
+                    </optional>
                     <key>
                         <macro>execution-management-client1.0-genesis-ii-bes-client-key</macro>
                     </key>
@@ -4907,6 +4910,10 @@
                 <type>optional</type>
                 <name>execution-management-client-1.0-testing</name>
             </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-genesis-ii-bes-client</name>
+            </group>
             <macroResource>
                 <name>lsu-supermic</name>
                 <macro>
@@ -7431,6 +7438,10 @@
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-genesis-ii-bes-client</name>
             </group>
             <group>
                 <type>kit</type>
@@ -11400,6 +11411,10 @@
         </group>
         <group>
             <name>execution-management-client-1.0-testing</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-client1.0-genesis-ii-bes-client</name>
             <type>optional</type>
         </group>
         <group>
@@ -18290,6 +18305,36 @@
                     </series>
                     <nickname>unicore-ucc-version</nickname>
                     <resourceSetName>unicore-client</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.genesisii.version</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                        </args>
+                        <context>@pre@@execution-management-client1.0-genesis-ii-bes-client-key@ @@@post@</context>
+                    </series>
+                    <nickname>genesis-ii-version</nickname>
+                    <resourceSetName>execution-management-client1.0-genesis-ii-bes-client</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
                     </schedule>
