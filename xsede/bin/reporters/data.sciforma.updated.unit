@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use Inca::Reporter::SimpleUnit;
-use JSON qw( decode_json );
 use Date::Parse;
 use POSIX;
 
@@ -34,8 +33,9 @@ if ( ! -e $file )
 }
 open my $fh, '<', $file or $reporter->failPrintAndExit( 'Cannot open Sciforma file: ' . $file );
 my $json = do { local $/; <$fh> };
-my $data = decode_json($json);
-if ( ! exists $data->{'Updated'} || ! defined $data->{'Updated'} )
+my ($pre, $updated, $post) = $json =~ m/(,"Updated":")(.[^"]*)(.*)/;
+
+if ( ! length $updated )
 {
 	$reporter->failPrintAndExit( 'No "Updated" value in JSON file: ' . $file );
 }
@@ -44,7 +44,6 @@ if ( ! exists $data->{'Updated'} || ! defined $data->{'Updated'} )
 #
 # Compare updated date
 #
-my $updated = $data->{'Updated'};
 $reporter->log( 'debug', 'File updated at: ' . $updated );
 my $minutes_elapsed = ( time() - str2time( $updated ) ) / 60;
 $reporter->log( 'debug', 'Minutes elapsed: ' . floor( $minutes_elapsed ) );
