@@ -3,11 +3,10 @@
 use strict;
 use warnings;
 use Inca::Reporter::SimpleUnit;
-use File::Path qw(make_path);
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'cluster.filesystem.xwfs.writeable',
-	version => 1,
+	version => 2,
 	description => 'Tests XSEDE-Wide File System (XWFS) mount and 100MB file creation',
 	url => 'https://portal.xsede.org/web/xup/xwfs',
 	unit_name => 'xwfs'
@@ -25,7 +24,7 @@ my $test_dir = $xwfs . "/" . $reporter->argValue( 'testdir' ) . "/xwfs-test.$$";
 
 
 #
-# Run the command “df” and verify that the /xwfs file system is listed in the output
+# Run the 'df' command and verify that the /xwfs file system is listed in the output
 #
 my $df = $reporter->loggedCommand( 'df | grep ' . $xwfs );
 if ( $df !~ /$xwfs/ )
@@ -39,9 +38,10 @@ if ( $df !~ /$xwfs/ )
 #
 if ( ! -e $test_dir )
 {
-	if ( ! make_path( $test_dir ) )
+	system( 'mkdir -p ' . $test_dir );
+	if ( $? )
 	{
-		$reporter->failPrintAndExit( 'Could not make test directory ' . $test_dir );
+		$reporter->failPrintAndExit( 'Could not make test directory ' . $test_dir . ': ' . $! );
 	}
 	
 }
