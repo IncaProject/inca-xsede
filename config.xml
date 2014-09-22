@@ -199,9 +199,13 @@
           <name>gw60</name>
         </group>
         <group>
-          <type>general</type>
-          <name>unicore-client</name>
+          <type>optional</type>
+          <name>execution-management-client1.0-unicore-ucc-client</name>
         </group>
+        <macro>
+          <name>execution-management-client1.0-unicore-ucc-client-key</name>
+          <value>@keyPre@ unicore @keyPost@</value>
+        </macro>
         <hosts>gw60.iu.xsede.org</hosts>
       </macroResource>
     </resource>
@@ -907,16 +911,8 @@
           <name>module</name>
         </group>
         <group>
-          <type>general</type>
-          <name>unicore</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>unicore-client</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>unicore-registry</name>
+          <type>optional</type>
+          <name>execution-management-service1.0-unicore-registry</name>
         </group>
         <macro>
           <type>constant</type>
@@ -935,7 +931,7 @@
         </macro>
       <macro>
         <type>constant</type>
-        <name>unicore-site-registry</name>
+        <name>execution-management-service1.0-unicore-registry-endpoint</name>
         <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
       </macro>
         <hosts>login.blacklight.psc.teragrid.org</hosts>
@@ -985,23 +981,10 @@
           <type>general</type>
           <name>xsede</name>
         </group>
-        <group>
-          <type>general</type>
-          <name>unicore</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>unicore-client</name>
-        </group>
         <macro>
           <type>constant</type>
           <name>unicore-id</name>
           <value>SDSC-Gordon</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>execution-management-service1.0-unicore-server-endpoint</name>
-          <value>https://oldglobe.sdsc.edu:8080/SDSC-Gordon/services/TargetSystemFactoryService?res=default_target_system_factory</value>
         </macro>
         <hosts>gordon.sdsc.edu</hosts>
       </macroResource>
@@ -1055,23 +1038,10 @@
           <type>general</type>
           <name>xsede</name>
         </group>
-        <group>
-          <type>general</type>
-          <name>unicore-client</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>unicore</name>
-        </group>
         <macro>
           <type>constant</type>
           <name>unicore-id</name>
           <value>SDSC-Trestles</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>execution-management-service1.0-unicore-server-endpoint</name>
-          <value>https://oldglobe.sdsc.edu:8080/SDSC-Trestles/services/TargetSystemFactoryService?res=default_target_system_factory</value>
         </macro>
         <hosts>trestles.sdsc.edu</hosts>
       </macroResource>
@@ -1303,23 +1273,10 @@
           <type>general</type>
           <name>TACC</name>
         </group>
-        <group>
-          <type>general</type>
-          <name>unicore</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>unicore-client</name>
-        </group>
         <macro>
           <type>constant</type>
           <name>unicore-id</name>
           <value>TACC-STAMPEDE</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>execution-management-service1.0-unicore-server-endpoint</name>
-          <value>https://login5.stampede.tacc.utexas.edu:8080/TACC-STAMPEDE/services/TargetSystemFactoryService?res=default_target_system_factory</value>
         </macro>
         <hosts>stampede.tacc.utexas.edu</hosts>
       </macroResource>
@@ -1329,35 +1286,6 @@
     <group>
       <type>general</type>
       <name>unicore-registry</name>
-    </group>
-    <group>
-      <type>general</type>
-      <name>unicore</name>
-    </group>
-    <group>
-      <name>execution-management-client.xsede.org-1.0</name>
-      <type>kit</type>
-      <group>
-        <type>general</type>
-        <name>unicore-client</name>
-      </group>
-    </group>
-    <group>
-      <type>general</type>
-      <name>unicore-client</name>
-      <macro>
-        <type>constant</type>
-        <name>execution-management-client1.0-unicore-ucc-client-key</name>
-        <value>@keyPre@ unicore @keyPost@</value>
-      </macro>
-    </group>
-    <group>
-      <name>execution-management-service.xsede.org-1.0</name>
-      <type>kit</type>
-      <group>
-        <type>general</type>
-        <name>unicore</name>
-      </group>
     </group>
     <group>
       <name>NCSA</name>
@@ -6386,7 +6314,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
             <context>@pre@@execution-management-client1.0-unicore-ucc-client-key@ @@@post@</context>
           </series>
           <nickname>unicore-ucc-version</nickname>
-          <resourceSetName>unicore-client</resourceSetName>
+          <resourceSetName>execution-management-client1.0-unicore-ucc-client</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
           </schedule>
@@ -6444,7 +6372,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>registry</name>
-                <value>@unicore-registry->unicore-site-registry@</value>
+                <value>@execution-management-service1.0-unicore-registry->execution-management-service1.0-unicore-registry-endpoint@</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -6544,7 +6472,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>id</name>
-                <value>@unicore->unicore-id@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->unicore-id@</value>
               </arg>
             </args>
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
@@ -6582,11 +6510,11 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>resource</name>
-                <value>@unicore->__longname__@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->__longname__@</value>
               </arg>
               <arg>
                 <name>id</name>
-                <value>@unicore->unicore-id@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->unicore-id@</value>
               </arg>
             </args>
             <context>@pre@module add unicore &amp;&amp; @@@post@</context>
@@ -6630,7 +6558,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>tsf</name>
-                <value>@unicore->execution-management-service1.0-unicore-server-endpoint@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->execution-management-service1.0-unicore-server-endpoint@</value>
               </arg>
               <arg>
                 <name>log</name>
@@ -6678,7 +6606,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>id</name>
-                <value>@unicore->unicore-id@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->unicore-id@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -6694,7 +6622,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>numprocs</name>
-                <value>@unicore->mpiNumProcs@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->mpiNumProcs@</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -6702,11 +6630,11 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>target</name>
-                <value>file://@unicore->__incaReporterManagerLocation__@/</value>
+                <value>file://@execution-management-service1.0-unicore-bes-server->__incaReporterManagerLocation__@/</value>
               </arg>
               <arg>
                 <name>charge</name>
-                <value>@unicore->chargeProject@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->chargeProject@</value>
               </arg>
               <arg>
                 <name>regex</name>
@@ -6750,7 +6678,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>id</name>
-                <value>@unicore->unicore-id@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->unicore-id@</value>
               </arg>
               <arg>
                 <name>verbose</name>
@@ -6766,7 +6694,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>numprocs</name>
-                <value>@unicore->mpiNumProcs@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->mpiNumProcs@</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -6778,7 +6706,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>charge</name>
-                <value>@unicore->chargeProject@</value>
+                <value>@execution-management-service1.0-unicore-bes-server->chargeProject@</value>
               </arg>
               <arg>
                 <name>regex</name>

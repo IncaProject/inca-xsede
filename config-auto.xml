@@ -1532,6 +1532,9 @@
                     <version>
                         <macro>execution-management-client1.0-unicore-ucc-client-version</macro>
                     </version>
+                    <optional>
+                        <group>execution-management-client1.0-unicore-ucc-client</group>
+                    </optional>
                     <key>
                         <macro>execution-management-client1.0-unicore-ucc-client-key</macro>
                     </key>
@@ -1564,6 +1567,9 @@
                     <version>
                         <macro>execution-management-service1.0-unicore-bes-server-registered-version</macro>
                     </version>
+                    <optional>
+                        <group>execution-management-service1.0-unicore-bes-server</group>
+                    </optional>
                     <url>
                         <host>execution-management-service1.0-unicore-bes-server-host</host>
                         <port>execution-management-service1.0-unicore-bes-server-port</port>
@@ -1579,12 +1585,33 @@
                     <version>
                         <macro>execution-management-service1.0-unicore-server-registered-version</macro>
                     </version>
+                    <optional>
+                        <group>execution-management-service1.0-unicore-server</group>
+                    </optional>
                     <url>
                         <host>execution-management-service1.0-unicore-server-host</host>
                         <port>execution-management-service1.0-unicore-server-port</port>
                     </url>
                     <endpoint>
                         <macro>execution-management-service1.0-unicore-server-endpoint</macro>
+                    </endpoint>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Service[tg:Name = 'unicore-registry']</expression>
+                <products>
+                    <version>
+                        <macro>execution-management-service1.0-unicore-registry-registered-version</macro>
+                    </version>
+                    <optional>
+                        <group>execution-management-service1.0-unicore-registry</group>
+                    </optional>
+                    <url>
+                        <host>execution-management-service1.0-unicore-registry-host</host>
+                        <port>execution-management-service1.0-unicore-registry-port</port>
+                    </url>
+                    <endpoint>
+                        <macro>execution-management-service1.0-unicore-registry-endpoint</macro>
                     </endpoint>
                 </products>
             </query>
@@ -4630,9 +4657,13 @@
                     <name>gw60</name>
                 </group>
                 <group>
-                    <type>general</type>
-                    <name>unicore-client</name>
+                    <type>optional</type>
+                    <name>execution-management-client1.0-unicore-ucc-client</name>
                 </group>
+                <macro>
+                    <name>execution-management-client1.0-unicore-ucc-client-key</name>
+                    <value>@keyPre@ unicore @keyPost@</value>
+                </macro>
                 <hosts>gw60.iu.xsede.org</hosts>
             </macroResource>
         </resource>
@@ -4949,6 +4980,10 @@
             <group>
                 <type>optional</type>
                 <name>execution-management-client1.0-genesis-ii-bes-client</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>lsu-supermic</name>
@@ -5647,12 +5682,28 @@
                 <name>execution-management-service-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-registry</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>nics-darter</name>
@@ -6121,6 +6172,16 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-registered-version</name>
+                    <value>6.6.0-p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
+                    <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.6.0</value>
                 </macro>
@@ -6198,12 +6259,28 @@
                 <name>execution-management-service-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-registry</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>gatech-keeneland</name>
@@ -6508,6 +6585,16 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-registered-version</name>
+                    <value>6.6.0-p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
+                    <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.6.0</value>
                 </macro>
@@ -6729,12 +6816,28 @@
                 <name>execution-management-service-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-registry</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>nics-nautilus</name>
@@ -7399,6 +7502,16 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-registered-version</name>
+                    <value>6.6.0-p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
+                    <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.6.0</value>
                 </macro>
@@ -7501,12 +7614,24 @@
                 <name>execution-management-client1.0-genesis-ii-bes-client</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-service.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-service-1.0-testing</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
             </group>
             <macroResource>
                 <name>iu-mason</name>
@@ -8156,12 +8281,24 @@
                 <name>execution-management-client-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-service.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-service-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
             </group>
             <macroResource>
                 <name>psc-blacklight</name>
@@ -8225,16 +8362,8 @@
                     <name>module</name>
                 </group>
                 <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore-client</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore-registry</name>
+                    <type>optional</type>
+                    <name>execution-management-service1.0-unicore-registry</name>
                 </group>
                 <macro>
                     <type>constant</type>
@@ -8253,7 +8382,7 @@
                 </macro>
                 <macro>
                     <type>constant</type>
-                    <name>unicore-site-registry</name>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
                     <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
                 </macro>
                 <hosts>login.blacklight.psc.teragrid.org</hosts>
@@ -8550,12 +8679,24 @@
                 <name>execution-management-service-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>sdsc-gordon</name>
@@ -8599,23 +8740,10 @@
                     <type>general</type>
                     <name>xsede</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore-client</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
                     <value>SDSC-Gordon</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Gordon/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
                 <hosts>gordon.sdsc.edu</hosts>
                 <macro>
@@ -8800,6 +8928,11 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Gordon/services/TargetSystemFactory?res=default_target_system_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-client1.0-unicore-ucc-client-version</name>
                     <value>6.5.1</value>
                 </macro>
@@ -8881,12 +9014,24 @@
                 <name>execution-management-service-1.0-production</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>execution-management-client.xsede.org-1.0</name>
             </group>
             <group>
                 <type>optional</type>
                 <name>execution-management-client-1.0-production</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-client1.0-unicore-ucc-client</name>
             </group>
             <macroResource>
                 <name>sdsc-trestles</name>
@@ -8935,23 +9080,10 @@
                     <type>general</type>
                     <name>xsede</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore-client</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
                     <value>SDSC-Trestles</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Trestles/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
                 <hosts>trestles.sdsc.edu</hosts>
                 <macro>
@@ -9133,6 +9265,11 @@
                     <type>variable</type>
                     <name>execution-management-service1.0-unicore-server-registered-version</name>
                     <value>6.5.1</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://oldglobe.sdsc.edu:8080/SDSC-Trestles/services/TargetSystemFactory?res=default_target_system_factory</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -10682,6 +10819,18 @@
                 <type>optional</type>
                 <name>execution-management-service-1.0-testing</name>
             </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-bes-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-server</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>execution-management-service1.0-unicore-registry</name>
+            </group>
             <macroResource>
                 <name>tacc-stampede</name>
                 <macro>
@@ -10758,23 +10907,10 @@
                     <type>general</type>
                     <name>TACC</name>
                 </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>unicore-client</name>
-                </group>
                 <macro>
                     <type>constant</type>
                     <name>unicore-id</name>
                     <value>TACC-STAMPEDE</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://login5.stampede.tacc.utexas.edu:8080/TACC-STAMPEDE/services/TargetSystemFactoryService?res=default_target_system_factory</value>
                 </macro>
                 <hosts>stampede.tacc.utexas.edu</hosts>
                 <macro>
@@ -11262,6 +11398,21 @@
                     <name>execution-management-service1.0-unicore-server-registered-version</name>
                     <value>6.6.0</value>
                 </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://SET_TO_HOSTNAME:8080/SET_TO_SITE_RESOURCE/services/TargetSystemFactory?res=default_target_system_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-registered-version</name>
+                    <value>6.6.0</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
+                    <value>https://SET_TO_HOSTNAME:8080/REGISTRY/services/Registry?res=default_registry</value>
+                </macro>
             </macroResource>
         </resource>
     </resources>
@@ -11619,6 +11770,10 @@
             <type>optional</type>
         </group>
         <group>
+            <name>execution-management-client.xsede.org-1.0</name>
+            <type>kit</type>
+        </group>
+        <group>
             <name>execution-management-client-1.0-production</name>
             <type>optional</type>
         </group>
@@ -11631,11 +11786,31 @@
             <type>optional</type>
         </group>
         <group>
+            <name>execution-management-client1.0-unicore-ucc-client</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service.xsede.org-1.0</name>
+            <type>kit</type>
+        </group>
+        <group>
             <name>execution-management-service-1.0-production</name>
             <type>optional</type>
         </group>
         <group>
             <name>execution-management-service-1.0-testing</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service1.0-unicore-bes-server</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service1.0-unicore-server</name>
+            <type>optional</type>
+        </group>
+        <group>
+            <name>execution-management-service1.0-unicore-registry</name>
             <type>optional</type>
         </group>
         <group>
@@ -13586,35 +13761,6 @@
         <group xmlns="">
             <type>general</type>
             <name>unicore-registry</name>
-        </group>
-        <group xmlns="">
-            <type>general</type>
-            <name>unicore</name>
-        </group>
-        <group xmlns="">
-            <name>execution-management-client.xsede.org-1.0</name>
-            <type>kit</type>
-            <group>
-                <type>general</type>
-                <name>unicore-client</name>
-            </group>
-        </group>
-        <group xmlns="">
-            <type>general</type>
-            <name>unicore-client</name>
-            <macro>
-                <type>constant</type>
-                <name>execution-management-client1.0-unicore-ucc-client-key</name>
-                <value>@keyPre@ unicore @keyPost@</value>
-            </macro>
-        </group>
-        <group xmlns="">
-            <name>execution-management-service.xsede.org-1.0</name>
-            <type>kit</type>
-            <group>
-                <type>general</type>
-                <name>unicore</name>
-            </group>
         </group>
         <group xmlns="">
             <name>NCSA</name>
@@ -18642,7 +18788,7 @@
                         <context>@pre@@execution-management-client1.0-unicore-ucc-client-key@ @@@post@</context>
                     </series>
                     <nickname>unicore-ucc-version</nickname>
-                    <resourceSetName>unicore-client</resourceSetName>
+                    <resourceSetName>execution-management-client1.0-unicore-ucc-client</resourceSetName>
                     <schedule>
                         <crontime>? ? * * *</crontime>
                     </schedule>
@@ -18700,7 +18846,7 @@
                             </arg>
                             <arg>
                                 <name>registry</name>
-                                <value>@unicore-registry-&gt;unicore-site-registry@</value>
+                                <value>@execution-management-service1.0-unicore-registry-&gt;execution-management-service1.0-unicore-registry-endpoint@</value>
                             </arg>
                             <arg>
                                 <name>help</name>
@@ -18800,7 +18946,7 @@
                             </arg>
                             <arg>
                                 <name>id</name>
-                                <value>@unicore-&gt;unicore-id@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;unicore-id@</value>
                             </arg>
                         </args>
                         <context>@pre@module add unicore &amp;&amp; @@@post@</context>
@@ -18838,11 +18984,11 @@
                             </arg>
                             <arg>
                                 <name>resource</name>
-                                <value>@unicore-&gt;__longname__@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;__longname__@</value>
                             </arg>
                             <arg>
                                 <name>id</name>
-                                <value>@unicore-&gt;unicore-id@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;unicore-id@</value>
                             </arg>
                         </args>
                         <context>@pre@module add unicore &amp;&amp; @@@post@</context>
@@ -18886,7 +19032,7 @@
                             </arg>
                             <arg>
                                 <name>tsf</name>
-                                <value>@unicore-&gt;execution-management-service1.0-unicore-server-endpoint@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;execution-management-service1.0-unicore-server-endpoint@</value>
                             </arg>
                             <arg>
                                 <name>log</name>
@@ -18934,7 +19080,7 @@
                             </arg>
                             <arg>
                                 <name>id</name>
-                                <value>@unicore-&gt;unicore-id@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;unicore-id@</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -18950,7 +19096,7 @@
                             </arg>
                             <arg>
                                 <name>numprocs</name>
-                                <value>@unicore-&gt;mpiNumProcs@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;mpiNumProcs@</value>
                             </arg>
                             <arg>
                                 <name>version</name>
@@ -18958,11 +19104,11 @@
                             </arg>
                             <arg>
                                 <name>target</name>
-                                <value>file://@unicore-&gt;__incaReporterManagerLocation__@/</value>
+                                <value>file://@execution-management-service1.0-unicore-bes-server-&gt;__incaReporterManagerLocation__@/</value>
                             </arg>
                             <arg>
                                 <name>charge</name>
-                                <value>@unicore-&gt;chargeProject@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;chargeProject@</value>
                             </arg>
                             <arg>
                                 <name>regex</name>
@@ -19006,7 +19152,7 @@
                             </arg>
                             <arg>
                                 <name>id</name>
-                                <value>@unicore-&gt;unicore-id@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;unicore-id@</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -19022,7 +19168,7 @@
                             </arg>
                             <arg>
                                 <name>numprocs</name>
-                                <value>@unicore-&gt;mpiNumProcs@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;mpiNumProcs@</value>
                             </arg>
                             <arg>
                                 <name>version</name>
@@ -19034,7 +19180,7 @@
                             </arg>
                             <arg>
                                 <name>charge</name>
-                                <value>@unicore-&gt;chargeProject@</value>
+                                <value>@execution-management-service1.0-unicore-bes-server-&gt;chargeProject@</value>
                             </arg>
                             <arg>
                                 <name>regex</name>
