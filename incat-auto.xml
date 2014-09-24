@@ -4808,6 +4808,22 @@
                         <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-fork</value>
                     </macro>
                     <macro>
+                        <name>remote-compute5.0.1-gram5-slurm-registered-version</name>
+                        <value>5.2.3</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-slurm-host</name>
+                        <value>login5.stampede.tacc.utexas.edu</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-slurm-port</name>
+                        <value>2119</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-slurm-endpoint</name>
+                        <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-slurm</value>
+                    </macro>
+                    <macro>
                         <name>science-gateway5.0.1-gram5-fork-registered-version</name>
                         <value>5.2.3</value>
                     </macro>
@@ -4822,6 +4838,22 @@
                     <macro>
                         <name>science-gateway5.0.1-gram5-fork-endpoint</name>
                         <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-fork</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-slurm-registered-version</name>
+                        <value>5.2.3</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-slurm-host</name>
+                        <value>login5.stampede.tacc.utexas.edu</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-slurm-port</name>
+                        <value>2119</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-slurm-endpoint</name>
+                        <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-slurm</value>
                     </macro>
                     <macro>
                         <name>science-gateway5.0.1-globus-mds-registered-version</name>
@@ -9460,7 +9492,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>remote-compute5.0.1-gram5-scheduler-batch</name>
-                <xpath>//resource[matches(name, '^(remote-compute5\.0\.1-gram5-condor|remote-compute5\.0\.1-gram5-loadleveler|remote-compute5\.0\.1-gram5-lsf|remote-compute5\.0\.1-gram5-pbs|remote-compute5\.0\.1-gram5-sge)$')]</xpath>
+                <xpath>//resource[matches(name, '^(remote-compute5\.0\.1-gram5-condor|remote-compute5\.0\.1-gram5-loadleveler|remote-compute5\.0\.1-gram5-lsf|remote-compute5\.0\.1-gram5-pbs|remote-compute5\.0\.1-gram5-sge|remote-compute5\.0\.1-gram5-slurm)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -9472,7 +9504,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>remote-compute5.0.1-gram5-condor remote-compute5.0.1-gram5-loadleveler remote-compute5.0.1-gram5-lsf remote-compute5.0.1-gram5-pbs remote-compute5.0.1-gram5-sge</value>
+                        <value>remote-compute5.0.1-gram5-condor remote-compute5.0.1-gram5-loadleveler remote-compute5.0.1-gram5-lsf remote-compute5.0.1-gram5-pbs remote-compute5.0.1-gram5-sge remote-compute5.0.1-gram5-slurm</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -9647,6 +9679,40 @@
                     <macro>
                         <name>remote-compute5.0.1-gram5-scheduler-port</name>
                         <value>@remote-compute5.0.1-gram5-sge-port@</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>remote-compute5.0.1-gram5-slurm</name>
+                <xpath>//resource[matches(name, '^(stampede\.tacc\.xsede\.org)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__longname__</name>
+                        <value>remote-compute5.0.1-gram5-slurm</value>
+                    </macro>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>remote-compute5.0.1-gram5-slurm</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>stampede.tacc.xsede.org</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>false</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-scheduler</name>
+                        <value>slurm</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-scheduler-host</name>
+                        <value>@remote-compute5.0.1-gram5-slurm-host@</value>
+                    </macro>
+                    <macro>
+                        <name>remote-compute5.0.1-gram5-scheduler-port</name>
+                        <value>@remote-compute5.0.1-gram5-slurm-port@</value>
                     </macro>
                 </macros>
             </resource>
@@ -10754,7 +10820,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>science-gateway5.0.1-gram5-scheduler-batch</name>
-                <xpath>//resource[matches(name, '^(science-gateway5\.0\.1-gram5-condor|science-gateway5\.0\.1-gram5-loadleveler|science-gateway5\.0\.1-gram5-lsf|science-gateway5\.0\.1-gram5-pbs|science-gateway5\.0\.1-gram5-sge)$')]</xpath>
+                <xpath>//resource[matches(name, '^(science-gateway5\.0\.1-gram5-condor|science-gateway5\.0\.1-gram5-loadleveler|science-gateway5\.0\.1-gram5-lsf|science-gateway5\.0\.1-gram5-pbs|science-gateway5\.0\.1-gram5-sge|science-gateway5\.0\.1-gram5-slurm)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -10766,7 +10832,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>science-gateway5.0.1-gram5-condor science-gateway5.0.1-gram5-loadleveler science-gateway5.0.1-gram5-lsf science-gateway5.0.1-gram5-pbs science-gateway5.0.1-gram5-sge</value>
+                        <value>science-gateway5.0.1-gram5-condor science-gateway5.0.1-gram5-loadleveler science-gateway5.0.1-gram5-lsf science-gateway5.0.1-gram5-pbs science-gateway5.0.1-gram5-sge science-gateway5.0.1-gram5-slurm</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -10975,6 +11041,40 @@
                     <macro>
                         <name>science-gateway5.0.1-gram5-scheduler-port</name>
                         <value>@science-gateway5.0.1-gram5-fork-port@</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>science-gateway5.0.1-gram5-slurm</name>
+                <xpath>//resource[matches(name, '^(stampede\.tacc\.xsede\.org)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__longname__</name>
+                        <value>science-gateway5.0.1-gram5-slurm</value>
+                    </macro>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>science-gateway5.0.1-gram5-slurm</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>stampede.tacc.xsede.org</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>false</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-scheduler</name>
+                        <value>slurm</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-scheduler-host</name>
+                        <value>@science-gateway5.0.1-gram5-slurm-host@</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.1-gram5-scheduler-port</name>
+                        <value>@science-gateway5.0.1-gram5-slurm-port@</value>
                     </macro>
                 </macros>
             </resource>

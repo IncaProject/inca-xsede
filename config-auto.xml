@@ -3174,6 +3174,24 @@
                     </endpoint>
                 </products>
             </query>
+            <query>
+                <expression>tg:Service[tg:Name = 'gram5-slurm']</expression>
+                <products>
+                    <version>
+                        <macro>remote-compute5.0.1-gram5-slurm-registered-version</macro>
+                    </version>
+                    <optional>
+                        <group>remote-compute5.0.1-gram5-slurm</group>
+                    </optional>
+                    <url>
+                        <host>remote-compute5.0.1-gram5-slurm-host</host>
+                        <port>remote-compute5.0.1-gram5-slurm-port</port>
+                    </url>
+                    <endpoint>
+                        <macro>remote-compute5.0.1-gram5-slurm-endpoint</macro>
+                    </endpoint>
+                </products>
+            </query>
         </kit>
         <kit>
             <name>science-gateway.teragrid.org</name>
@@ -3866,6 +3884,24 @@
                     </url>
                     <endpoint>
                         <macro>science-gateway5.0.1-gram5-fork-endpoint</macro>
+                    </endpoint>
+                </products>
+            </query>
+            <query>
+                <expression>tg:Service[tg:Name = 'gram5-slurm']</expression>
+                <products>
+                    <version>
+                        <macro>science-gateway5.0.1-gram5-slurm-registered-version</macro>
+                    </version>
+                    <optional>
+                        <group>science-gateway5.0.1-gram5-slurm</group>
+                    </optional>
+                    <url>
+                        <host>science-gateway5.0.1-gram5-slurm-host</host>
+                        <port>science-gateway5.0.1-gram5-slurm-port</port>
+                    </url>
+                    <endpoint>
+                        <macro>science-gateway5.0.1-gram5-slurm-endpoint</macro>
                     </endpoint>
                 </products>
             </query>
@@ -10705,6 +10741,10 @@
                 <name>remote-compute5.0.1-gram5-fork</name>
             </group>
             <group>
+                <type>optional</type>
+                <name>remote-compute5.0.1-gram5-slurm</name>
+            </group>
+            <group>
                 <type>kit</type>
                 <name>science-gateway.teragrid.org-5.0.1</name>
             </group>
@@ -10715,6 +10755,10 @@
             <group>
                 <type>optional</type>
                 <name>science-gateway5.0.1-gram5-fork</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>science-gateway5.0.1-gram5-slurm</name>
             </group>
             <group>
                 <type>kit</type>
@@ -11130,6 +11174,26 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-slurm-registered-version</name>
+                    <value>5.2.3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-slurm-host</name>
+                    <value>login5.stampede.tacc.utexas.edu</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-slurm-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>remote-compute5.0.1-gram5-slurm-endpoint</name>
+                    <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-slurm</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>science-gateway5.0.1-gram5-fork-registered-version</name>
                     <value>5.2.3</value>
                 </macro>
@@ -11147,6 +11211,26 @@
                     <type>variable</type>
                     <name>science-gateway5.0.1-gram5-fork-endpoint</name>
                     <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-fork</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-slurm-registered-version</name>
+                    <value>5.2.3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-slurm-host</name>
+                    <value>login5.stampede.tacc.utexas.edu</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-slurm-port</name>
+                    <value>2119</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>science-gateway5.0.1-gram5-slurm-endpoint</name>
+                    <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-slurm</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -12886,6 +12970,29 @@
             </group>
         </group>
         <group>
+            <name>remote-compute5.0.1-gram5-slurm</name>
+            <type>optional</type>
+            <macro>
+                <type>constant</type>
+                <name>remote-compute5.0.1-gram5-scheduler</name>
+                <value>slurm</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>remote-compute5.0.1-gram5-scheduler-host</name>
+                <value>@remote-compute5.0.1-gram5-slurm-host@</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>remote-compute5.0.1-gram5-scheduler-port</name>
+                <value>@remote-compute5.0.1-gram5-slurm-port@</value>
+            </macro>
+            <group>
+                <name>remote-compute5.0.1-gram5-scheduler-batch</name>
+                <type>general</type>
+            </group>
+        </group>
+        <group>
             <name>science-gateway.teragrid.org-4.2.0</name>
             <type>kit</type>
         </group>
@@ -13610,6 +13717,29 @@
                 <name>science-gateway5.0.1-gram5-scheduler-port</name>
                 <value>@science-gateway5.0.1-gram5-fork-port@</value>
             </macro>
+        </group>
+        <group>
+            <name>science-gateway5.0.1-gram5-slurm</name>
+            <type>optional</type>
+            <macro>
+                <type>constant</type>
+                <name>science-gateway5.0.1-gram5-scheduler</name>
+                <value>slurm</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>science-gateway5.0.1-gram5-scheduler-host</name>
+                <value>@science-gateway5.0.1-gram5-slurm-host@</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>science-gateway5.0.1-gram5-scheduler-port</name>
+                <value>@science-gateway5.0.1-gram5-slurm-port@</value>
+            </macro>
+            <group>
+                <name>science-gateway5.0.1-gram5-scheduler-batch</name>
+                <type>general</type>
+            </group>
         </group>
         <group>
             <name>science-gateway5.0.1-ogsa-dai-TeraGridResource</name>
