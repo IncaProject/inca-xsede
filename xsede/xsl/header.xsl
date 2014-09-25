@@ -23,7 +23,7 @@
               <li><h2>Info</h2>
                 <ul>
                   <li>
-                    <a href="{$url}">
+                    <a href="{concat($url, '/jsp/index.jsp')}">
                       Description of Status Pages
                     </a>
                   </li>
@@ -36,63 +36,6 @@
                     <a href="{concat($url, '/jsp/seriesConfig.jsp')}">
                       List Running Tests - Detail
                     </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <ul>
-              <li><h2>Query</h2>
-                <ul>
-                  <li>
-                    <a href="{concat($url, '/view/graph/prodkits')}">
-                      CTSSv4
-                    </a>
-		    <ul>
-                      <li>
-                        <a href="{concat($url, '/view/graph/prodkits')}">
-                          Create historical graph
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/query/prodkits')}">
-                          Create stored query
-                        </a>
-                      </li>
-		    </ul>
-                  </li>
-                  <li>
-                    <a href="{concat($url, '/view/graph/ctss')}">
-                      Cross-Site
-                    </a>
-		    <ul>
-                      <li>
-                        <a href="{concat($url, '/view/graph/ctss')}">
-                          Create historical graph
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/query/ctss')}">
-                          Create stored query
-                        </a>
-                      </li>
-		    </ul>
-                  </li>
-                  <li>
-                    <a href="{concat($url, '/view/graph/other')}">
-                      Other test suites
-                    </a>
-		    <ul>
-                      <li>
-                        <a href="{concat($url, '/view/graph/other')}">
-                          Create historical graph
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/query/other')}">
-                          Create stored query
-                        </a>
-                      </li>
-		    </ul>
                   </li>
                 </ul>
               </li>
