@@ -67,6 +67,11 @@
     <xsl:variable name="resources" select="/combo/resources/resource |
                /combo/suites/suite[matches(name, $name)]/resources/resource" />
     <xsl:variable name="resourceid" select="/combo/suites/suite[matches(name, $name)]/resourceId" />
+    <xsl:variable name="guid" select="/combo/suites/suite[matches(name, $name)]/guid" />
+    <xsl:variable name="suiteuri" select="substring-after( $guid, '//' )" />
+    <xsl:variable name="agenturi" select="substring-before( $suiteuri, '/' )" />
+    <xsl:variable name="agenthost" select="substring-before( $agenturi, ':' )" />
+    <xsl:variable name="agentport" select="substring-after( $agenturi, ':' )" />
     <table><tr>
       <td>
         <h1><xsl:value-of select="$name"/></h1>
@@ -74,7 +79,7 @@
       <td align="right">
         <a href="/inca/HTML/kit-status-v1/{$name}/{$resourceid}"><span class="buttonGrey"><xsl:text disable-output-escaping="yes"><![CDATA[html &sect;]]></xsl:text></span></a>
         <a href="/inca/XML/kit-status-v1/{$name}/{$resourceid}"><span class="buttonGrey"><xsl:text disable-output-escaping="yes"><![CDATA[&lt; xml /&gt;]]></xsl:text></span></a>
-        <a href="/inca/jsp/query.jsp?action=Refresh&amp;qname=incaQueryLatest%2Bincas%3A__capac.sdsc.edu%3A6323_{$name}"><span class="buttonGrey"><xsl:text disable-output-escaping="yes"><![CDATA[refresh &#x21bb;]]></xsl:text></span></a>
+        <a href="/inca/jsp/query.jsp?action=Refresh&amp;qname=incaQueryLatest%2Bincas%3A__{$agenthost}%3A{$agentport}_{$name}"><span class="buttonGrey"><xsl:text disable-output-escaping="yes"><![CDATA[refresh &#x21bb;]]></xsl:text></span></a>
         <a href="javascript:window.open('/inca/jsp/legend.jsp','incalegend','width=400,height=325,resizable=yes')"><span class="buttonGrey"><xsl:text disable-output-escaping="yes"><![CDATA[legend &#10027;]]></xsl:text></span></a>
       </td>
     </tr><tr><td colspan="2">
