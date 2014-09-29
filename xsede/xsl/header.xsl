@@ -11,7 +11,7 @@
   <xsl:param name="url" />
 
   <xsl:template name="header">
-    <xsl:variable name="map" select="'http://capac.sdsc.edu/inca'"/>
+    <xsl:variable name="map" select="'http://inca.xsede.org/inca'"/>
     <table width="100%" class="subheader">
       <tr>
         <td><b><a href="http://inca.xsede.org/">
