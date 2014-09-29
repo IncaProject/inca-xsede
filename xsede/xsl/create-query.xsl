@@ -24,7 +24,7 @@
           <xsl:apply-templates select="error" />
         </xsl:when>
         <xsl:otherwise>
-          <form method="post" action="/inca/jsp/emailForm.jsp" name="form"
+          <form method="post" action="/inca/jsp/query.jsp" name="form"
                 onsubmit="return validate(form);">
             <p>
               <!-- inca-common.xsl -->
@@ -32,10 +32,7 @@
                 <xsl:with-param name="title" select="'Create Stored Query'"/>
               </xsl:call-template>
               Create a stored query for Inca report series on
-              specified resources. 
-	      <a href="https://www.xsede.org/web/staff/staff-wiki/-/wiki/Main/Inca%2bInformation%2bfor%2bSystem%2bAdministrators#Custom_Queries">Visit 
-		the XSEDE Staff wiki for more information</a>.
-              <br/>Enter a name to store this query under,
+              specified resources. <br/>Enter a name to store this query under,
               check the boxes for each Inca report series to be queried,
               and click 'STORE QUERY'.</p>
             <table class="subheader" cellpadding="6">
@@ -44,8 +41,6 @@
                 <td><input name="qname" type="text"/></td>
                 <td>Fetch every (secs): </td>
                 <td><input name="period" type="text"/></td>
-		<td>Your email address: </td>
-                <td><input name="email" type="text"/></td>
               </tr>
               <tr>
                 <td>
