@@ -39,13 +39,8 @@
                 <xsl:variable name="name" select="name" />
                 <option value="{$name}"><xsl:value-of select="name"/></option>
               </xsl:for-each>
-              <option value="teragrid">TeraGrid</option>
-              <option value="ANL">ANL</option>
-              <option value="Indiana">Indiana</option>
-              <option value="LONI">LONI</option>
-              <option value="NCAR">NCAR</option>
+              <option value="xsede">XSEDE</option>
               <option value="NCSA">NCSA</option>
-              <option value="ORNL">ORNL</option>
               <option value="PSC">PSC</option>
               <option value="Purdue">Purdue</option>
               <option value="SDSC">SDSC</option>
