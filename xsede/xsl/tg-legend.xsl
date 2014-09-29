@@ -32,6 +32,14 @@
                     <font color="black">does not apply to resource</font>
                   </td>
                 </tr>
+            <tr valign="top">
+              <td class="skipped">
+                <font color="black">skipped</font>
+              </td>
+              <td class="clear">
+                <font color="black">test skipped due to high load on machine</font>
+              </td>
+            </tr>
                 <tr valign="top">
                   <td class="error"><font color="black">error</font></td>
                   <td class="clear"><font color="black">error</font></td>
