@@ -46,7 +46,7 @@
     <xsl:variable name="errMsg" select="exitStatus/errorMessage" />
     <xsl:variable name="package" select="body/package"/>
     <xsl:variable name="resource" select="$config/resourceHostname"/>
-
+    <xsl:variable name="target" select="$config/targetHostname"/>
 
     <xsl:variable name="resultText">
       <xsl:choose>
@@ -88,16 +88,18 @@
       <xsl:for-each select="body//statistics/@*">
         <xsl:value-of select="concat(name(), ',')"/>
       </xsl:for-each>
+      <xsl:if test="body/*/@errors">errors,</xsl:if>
+      <xsl:if test="body/*/@warnings">warnings,</xsl:if>
     </xsl:variable>
     <table width="600" cellpadding="4">
       <tr><td colspan="2" class="header"><xsl:text>Result:</xsl:text></td></tr>
       <tr>
         <td><p><xsl:value-of select="$resultText"/></p></td>
         <td>
-          <xsl:variable name="label"
-                        select="concat($resource, ' (',$nickName,')')"/>
+          <xsl:variable name="targetText"><xsl:if test="not(empty($target)) and $target != ''"> to <xsl:value-of select="$target"/> </xsl:if></xsl:variable>
+          <xsl:variable name="label" select="concat($resource, $targetText, ' (',$nickName,')')"/>
           <xsl:variable name="graphUrl"
-                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $label, '&amp;availMetrics=', $metrics, '&amp;startDate=')"/> 
+                        select="concat('/inca/jsp/graph.jsp?series=', $nickName, ',', $resource, ',', $target, ',', $label, '&amp;availMetrics=', $metrics, '&amp;startDate=')"/>
           <table>
             <tr>
               <td>view results for past: </td>
@@ -150,17 +152,16 @@
         </xsl:if>
         <xsl:if test="$printKb='true'">
           <tr><td>
-          <xsl:variable name="kb2" select="replace($kbSearch,'@nickname@', $nickName)"/>
-          <xsl:variable name="kb3" select="replace($kb2,'@error@', encode-for-uri($errMsg))"/>
-          <xsl:variable name="kb4" select="replace($kb3,'@reporter@', name)"/>
-          <form method="post" action="{$kb4}">
+          <xsl:variable name="kb1" select="replace($kbSearch,'@nickname@', $nickName)"/>
+          <xsl:variable name="kb2" select="replace($kb1,'@error@', encode-for-uri(substring($errMsg,0,60)))"/>
+          <xsl:variable name="kb3" select="replace($kb2,'@reporter@', name)"/>
+          <form method="post" action="{$kb3}">
           <input type="submit" value="search knowledge base"/>
           </form></td><td>
-          <xsl:variable name="ab1" select="replace($kbSubmit,'\+','&amp;')"/>
-          <xsl:variable name="ab2" select="replace($ab1,'@nickname@', $nickName)"/>
-          <xsl:variable name="ab3" select="replace($ab2,'@error@', encode-for-uri($errMsg))"/>
-          <xsl:variable name="ab4" select="replace($ab3,'@reporter@', name)"/>
-          <form method="post" action="{$ab4}">
+          <xsl:variable name="ab1" select="replace($kbSubmit,'@nickname@', $nickName)"/>
+          <xsl:variable name="ab2" select="replace($ab1,'@error@', encode-for-uri(substring($errMsg,0,60)))"/>
+          <xsl:variable name="ab3" select="replace($ab2,'@reporter@', name)"/>
+          <form method="post" action="{$ab3}">
             <input type="submit" value="add to knowledge base"/>
           </form></td></tr>
         </xsl:if>
