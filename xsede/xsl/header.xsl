@@ -126,11 +126,6 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($url, '/view/status/usage')}">
-                          grid job usage
-                        </a>
-                      </li>
-                      <li>
                         <a href="{concat($url, '/view/status/info')}">
                           information services
                         </a>
