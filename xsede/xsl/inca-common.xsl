@@ -88,12 +88,12 @@
 
 
     <xsl:variable name="primaryState"><xsl:choose>
-      <xsl:when test="count($result/body)=0">missing</xsl:when>
+      <xsl:when test="count($result/body)=0">missing</xsl:when> 
       <xsl:when test="$errMsg[matches(., '.*skipped due to high load.*')]">busy</xsl:when>
       <xsl:when test="$errMsg[matches(., '^NOT_AT_FAULT:')]">noFault</xsl:when>
       <xsl:when test="$result/body//statistics/statistic[ID='errors']/value>0">error</xsl:when>
       <xsl:when test="$result/body//statistics/@errors>0">error</xsl:when>
-      <xsl:when test="($comparitor='Success' and not($errMsg[matches(., 'Unable to fetch proxy|Inca error')])) or 
+      <xsl:when test="($comparitor='Success' and not($errMsg[matches(., 'Unable to fetch proxy|Inca error')])) or
         (string($result/body)!=''
          and string($errMsg)=''
          and string($comparitor)='' )">pass</xsl:when>
@@ -106,7 +106,7 @@
       <xsl:when test="$result/body//statistics/statistic[ID='warnings']/value>0">warnings</xsl:when>
       <xsl:when test="$result/body//statistics/@warnings>0">warnings</xsl:when>
       <xsl:when test="$errMsg[matches(., 'Unable to fetch proxy')]">proxyError</xsl:when>
-      <xsl:when test="$errMsg[matches(., 'Inca error') and not(matches(., 'module\(s\) are unknown'))]">incaError</xsl:when>
+      <xsl:when test="$errMsg[matches(., 'Inca error')]">incaError</xsl:when>
     </xsl:choose></xsl:variable>
 
     <xsl:choose><xsl:when test="$secondaryState!=''">
@@ -248,17 +248,18 @@
   <!-- ==================================================================== -->
   <xsl:template name="getDownErr">
     <xsl:param name="errMsg" />
+    <xsl:param name="downtimeUrl" />
     <xsl:choose>
       <xsl:when test="$errMsg[matches(., '^DOWNTIME:\d+:')]">
         <xsl:variable name="item">
-          <xsl:analyze-string select="$errMsg" regex="^DOWNTIME:(\d+):.*">
-            <xsl:matching-substring>
-              <xsl:value-of select="regex-group(1)"/>
-            </xsl:matching-substring>
-          </xsl:analyze-string>
+        <xsl:analyze-string select="$errMsg" regex="^DOWNTIME:(\d+):.*">
+          <xsl:matching-substring>
+            <xsl:value-of select="regex-group(1)"/>
+          </xsl:matching-substring>
+        </xsl:analyze-string>
         </xsl:variable>
         <xsl:variable name="href"
-                      select="concat('http://news.teragrid.org/view-item.php?item=', $item)" />
+                      select="concat($downtimeUrl/@prefix, $item, $downtimeUrl/@suffix)" />
         <a href="{$href}">DOWNTIME:</a>
         <xsl:value-of select="replace( $errMsg, '^DOWNTIME:\d+:','')"/>
       </xsl:when>
@@ -386,7 +387,7 @@
     <xsl:variable name="regexHost" select="concat('^', name, '$|',
         replace(macros/macro[name='__regexp__']/value, ' ','|'))"/>
     <xsl:variable name="result" select="$tableNode/quer:object//rs:reportSummary[
-                  (matches(targetHostname,$regexHost) or 
+                  (matches(targetHostname,$regexHost) or
                   (matches(hostname,$regexHost) and string(targetHostname)=''))
                    and nickname=$rowLabel]" />
     <xsl:choose>
@@ -406,7 +407,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- ==================================================================== -->
   <!-- printSummaryValue                                                    -->
   <!--                                                                      -->
@@ -422,9 +423,10 @@
     <xsl:variable name="numFail" select="$summaries[ID[matches(., $numFailRegex)]]/value"/>
     <xsl:variable name="numTotal" select="$numPass+$numFail"/>
     <xsl:variable name="sumReport" select="$numPass/../../../../../.."/>
-    <xsl:variable name="sumLink" 
-      select="concat('/inca/jsp/instance.jsp?nickname=', $sumReport/nickname, 
-           '&amp;resource=', $sumReport/hostname, '&amp;collected=', $sumReport/gmt)"/>
+    <xsl:variable name="sumLink"
+      select="concat('/inca/jsp/instance.jsp?nickname=', encode-for-uri($sumReport/nickname),
+           '&amp;resource=', $sumReport/hostname, '&amp;target=', $sumReport/targetHostname,
+           '&amp;collected=', encode-for-uri($sumReport/gmt) )"/>
     <xsl:choose>
       <xsl:when test="$numTotal>1">
         <xsl:variable name="status">
@@ -502,8 +504,8 @@
     <xsl:variable name="endIndex" select="xs:integer(endIndex)"/>
     <xsl:variable name="begin" select="$beginTimes[$beginIndex]"/>
     <xsl:variable name="end" select="$endTimes[$endIndex]"/>
-    <xsl:variable name="errLink" 
-        select="concat(replace($href, 'seriesSummary.xsl','errMsgSummary.xsl'), 
+    <xsl:variable name="errLink"
+        select="concat(replace($href, 'seriesSummary.xsl','errMsgSummary.xsl'),
         '&amp;startErrs=',$begin,'&amp;endErrs=',$end)"/>
     <tr><td> <a href="{$errLink}"><xsl:value-of select="title"/></a>: </td><td>
     <xsl:if test="$begin and $end">

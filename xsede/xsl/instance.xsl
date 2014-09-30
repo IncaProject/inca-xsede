@@ -48,6 +48,8 @@
     <xsl:variable name="resource" select="$config/resourceHostname"/>
     <xsl:variable name="target" select="$config/targetHostname"/>
 
+    <xsl:variable name="defaultconfig" select="document('../xml/default.xml')/default"/>
+
     <xsl:variable name="resultText">
       <xsl:choose>
         <xsl:when test="count($comp)>0">
@@ -133,6 +135,7 @@
             <!-- inca-common.xsl -->
             <xsl:call-template name="getDownErr">
               <xsl:with-param name="errMsg" select="$errMsg"/>
+              <xsl:with-param name="downtimeUrl" select="$defaultconfig/downtimeUrl"/>
             </xsl:call-template>
           </xsl:variable>
           <p class="code">
