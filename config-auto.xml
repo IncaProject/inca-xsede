@@ -22370,48 +22370,36 @@
             <seriesConfigs>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>grid.middleware.globus.unit.httpmds</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.middleware.globus.unit.httpmds</uri>
+                        <name>user.search.output.unit</name>
+                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/user.search.output.unit</uri>
                         <args>
                             <arg>
-                                <name>port</name>
-                                <value>8444</value>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>match</name>
-                                <value>The request requires user authentication</value>
+                                <name>log</name>
+                                <value>5</value>
                             </arg>
                             <arg>
-                                <name>version</name>
-                                <value>no</value>
+                                <name>com</name>
+                                <value>wget --no-check-certificate https://@INFO-&gt;__incaHosts__@:8444/web-apps/html/profile-v1 -O /dev/null</value>
                             </arg>
                             <arg>
-                                <name>protocol</name>
-                                <value>https</value>
+                                <name>search</name>
+                                <value>401 Unauthorized</value>
                             </arg>
                             <arg>
-                                <name>host</name>
-                                <value>@INFO-&gt;__incaHosts__@</value>
-                            </arg>
-                            <arg>
-                                <name>path</name>
-                                <value>web-apps/html/profile-v1</value>
-                            </arg>
-                            <arg>
-                                <name>lines</name>
-                                <value>6</value>
+                                <name>delim</name>
+                                <value>\\|</value>
                             </arg>
                         </args>
                         <limits>
@@ -22419,7 +22407,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname>inca.gw60 Tomcat/User Profile</nickname>
+                    <nickname>Tomcat/User Profile</nickname>
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>@INFO-&gt;infoPingFreq@</crontime>
@@ -22787,74 +22775,6 @@
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@INFO-&gt;infoEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.middleware.globus.unit.httpmds</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.middleware.globus.unit.httpmds</uri>
-                        <args>
-                            <arg>
-                                <name>port</name>
-                                <value>8444</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>match</name>
-                                <value>The request requires user authentication</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>protocol</name>
-                                <value>https</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@INFO-&gt;__incaHosts__@</value>
-                            </arg>
-                            <arg>
-                                <name>path</name>
-                                <value>web-apps/html/profile-v1</value>
-                            </arg>
-                            <arg>
-                                <name>lines</name>
-                                <value>6</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>650.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>Tomcat/User Profile</nickname>
-                    <resourceSetName>quarry</resourceSetName>
-                    <schedule>
-                        <crontime>@INFO-&gt;infoPingFreq@</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
