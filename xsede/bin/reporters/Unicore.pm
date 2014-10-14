@@ -141,8 +141,8 @@ sub loggedCommand {
     print FD "truststore.type=directory\n";
     print FD "truststore.directoryLocations.1=/etc/grid-security/certificates/*.0\n";
     print FD "truststore.crlLocations.1=/etc/grid-security/certificates/*.r0\n";
-    print FD "client.http.connection.timeout=2000\n";
-    print FD "client.http.socket.timeout=2000\n";
+    print FD "client.http.connection.timeout=10000\n";
+    print FD "client.http.socket.timeout=60000\n";
     print FD "client.outHandlers=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
     print FD "uas.security.out.handler.classname=de.fzj.unicore.uas.security.ProxyCertOutHandler\n";
     close FD;
