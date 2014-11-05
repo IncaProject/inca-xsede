@@ -386,6 +386,46 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>core5.0.0-globus-mds-info-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>core5.0.0-globus-mds-info-port</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>core5.0.0-globus-mds-info-endpoint</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>login4.0.0-gsi-openssh-port</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>login4.0.0-gsi-openssh-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>data-movement-servers4.2.0-gridftp-default-server-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-port</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>go-dirs</name>
           <value></value>
         </macro>
@@ -1201,6 +1241,46 @@
         <macro>
           <type>constant</type>
           <name>data-movement-clients4.2.0-uberftp-key</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>remote-compute5.0.1-globus-mds-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>remote-compute5.0.1-globus-mds-port</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>remote-compute5.0.1-globus-mds-secure-endpoint</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>remote-compute5.0.1-globus-mds-endpoint</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>science-gateway5.0.1-globus-mds-host</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>science-gateway5.0.1-globus-mds-port</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>science-gateway5.0.1-globus-mds-secure-endpoint</name>
+          <value/>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>science-gateway5.0.1-globus-mds-endpoint</name>
           <value/>
         </macro>
         <macro>
@@ -4211,6 +4291,179 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
       <guid>incas://capac.sdsc.edu:6323/check-reporter-managers</guid>
       <description>check max ps on RMs</description>
       <version>274</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>security.hostcert.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/security.hostcert.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>remotecert</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>retries</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>cert</name>
+                <value>@hostcertPath@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>minimum</name>
+                <value>14</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1200.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>hostcert-check-5.0.1</nickname>
+          <resourceSetName>core.teragrid.org-5.0.1</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@, FailTo:help@xsede.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>security.ca.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/security.ca.unit</uri>
+            <args>
+              <arg>
+                <name>minCertDays</name>
+                <value>14</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>wgetArgs</name>
+                <value>--no-check-certificate</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>warn|error</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>certUrl</name>
+                <value>https://software.xsede.org/security/xsede-certs.tar.gz</value>
+              </arg>
+              <arg>
+                <name>minCrlDays</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ca-crl-check-5.0.1</nickname>
+          <resourceSetName>core.teragrid.org-5.0.1</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@securityContact@, FailTo:help@xsede.org</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>xsede.security.ca.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>4</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>ca-tarball-version-5.0.1</nickname>
+          <resourceSetName>core.teragrid.org-5.0.1</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>core.teragrid.org-5.0.1</name>
+      <guid>incas://capac.sdsc.edu:6323/core.teragrid.org-5.0.1</guid>
+      <description>The TeraGrid Core Integration kit defines a minimal set of capabilities that allow coordinated operation of the TeraGrid system by TeraGrid staff.</description>
+      <version>1</version>
     </suite>
     <suite>
       <seriesConfigs>
