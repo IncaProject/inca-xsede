@@ -17905,6 +17905,58 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
+                        <name>user.search.output.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>echo QUIT | openssl s_client -connect @execution-management-service1.0-unicore-bes-server-&gt;__longname__@:443 -ssl3</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>(alert handshake failure|gethostbyname failure|No route to host|Connection refused)</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>:</value>
+                            </arg>
+                        </args>
+                        <context>@pre@ @@@post@</context>
+                    </series>
+                    <nickname>unicore-server-sslv3</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@execution-management-service1.0-unicore-bes-server-&gt;unicoreContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
                         <name>grid.middleware.unicore.unit.registry</name>
                         <args>
                             <arg>
