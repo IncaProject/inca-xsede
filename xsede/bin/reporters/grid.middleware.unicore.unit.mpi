@@ -7,7 +7,7 @@ use Inca::XSEDE::Unicore;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.mpi',
-  version => 7,
+  version => 8,
   description => 'This test verifies that an MPI job run thru selected UNICORE service',
   url => 'http://www.unicore.eu',
   unit_name => 'mpi'
@@ -33,11 +33,11 @@ my $registry = $reporter->argValue('registry');
 my $target = $reporter->argValue("target");
 
 `which ucc`;
-$reporter->failPrintAndExit("Unable to find ucc") if $? != 0;
+failClean("Unable to find ucc") if $? != 0;
 
 my $dotucc = $unicore->getDotUccDir();
 my $out = `wget -O - $dotucc/mpihw.jsdl $jsdl 2>/dev/null`;
-$reporter->failPrintAndExit("Unable to download mpihw.jsdl file: " . $out) if $? != 0;
+failClean("Unable to download mpihw.jsdl file: " . $out) if $? != 0;
 
 my ($jobname) = $jsdl =~ /([^\.\/]+)\.jsdl/;
 $jobname .= "-$$";
@@ -64,10 +64,11 @@ open( FD, ">$dotucc/mpihw-inca.jsdl" );
 print FD $out;
 close FD;
 
-$unicore->loggedCommand( "ucc connect -r $registry" );
+$out = $unicore->loggedCommand( "ucc connect -r $registry" );
+failClean("NOT_AT_FAULT - error connecting to $registry: $out") if $? != 0;
+
 $out = $unicore->loggedCommand( "ucc list-sites -r $registry" );
-$reporter->failPrintAndExit("$site either not available in registry or to inca user")
-  if $out !~ $site;
+failClean("$site either not available in registry or to inca user") if $out !~ $site;
 
 $out = $unicore->loggedCommand( "ucc run -j $dotucc/mpihw-inca.jsdl -s $site $debug -r $registry" );
 if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {
@@ -82,15 +83,20 @@ if ( $? == 0 && $out =~ /SUCCESSFUL exit code: 0/ ) {
   for my $resultfile ( @resultfiles ) {
     my $mpiout = `cat $resultfile`;
     my @hellos = $mpiout =~ /($regex)/g;
-      $reporter->failPrintAndExit( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
+      failClean( "Only " . scalar(@hellos) . " out of $numprocs procs replied with hello")
         if scalar(@hellos) < $numprocs;
     my ($nodes) = $mpiout =~ /Nodes:\s*(\S+)/;
     $reporter->log( 'debug', "Job ran on node(s) $nodes" ) if defined $nodes;
   }
   $reporter->unitSuccess();
+  $reporter->print();
 } else {
   $out =~ s/Please enter your keystore password:\n\*+//;
-  $reporter->unitFailure("Error: " . substr($out, 0, 4000));
+  failClean("Error: " . substr($out, 0, 4000));
 }
-$reporter->print();
 
+sub failClean {
+  my $err = shift;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}

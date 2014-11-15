@@ -9,7 +9,7 @@ my @CMDS = qw(ucc myproxy-logon-unicore);
 
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'grid.middleware.unicore.unit.connect',
-  version => 8,
+  version => 9,
   description => 'This test verifies that unicore is registered in IIS, can connect to the registry, and the site is present',
   url => 'http://www.unicore.eu',
   unit_name => 'connect'
@@ -51,13 +51,20 @@ for my $reg ( @registries ) {
     } else {
       push( @errors, "$site is not in the registry $reg" );
     }
+  } else {
+    failClean("NOT_AT_FAULT - error querying $reg: $out");
   }
 }
 
 if(scalar(@errors) > 0 ) {
-  $reporter->unitFailure("Error(s): " . join(", ", @errors) );
+  failClean("Error(s): " . join(", ", @errors) );
 } else {
   $reporter->unitSuccess();
+  $reporter->print();
 }
-$reporter->print();
 
+sub failClean {
+  my $err = shift;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}
