@@ -738,11 +738,39 @@
                         <value/>
                     </macro>
                     <macro>
+                        <name>local-compute4.2.2-glue2-secure-version</name>
+                        <value>1.1.0</value>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-glue2-secure-key</name>
+                        <value/>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-glue2-secure-globus-mds4-host</name>
+                        <value>smic1.hpc.lsu.edu</value>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-glue2-secure-globus-mds4-port</name>
+                        <value>8443</value>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-glue2-secure-globus-mds4-endpoint</name>
+                        <value>https://smic1.hpc.lsu.edu:8443/wsrf/services/SecureIndexService</value>
+                    </macro>
+                    <macro>
                         <name>local-compute4.2.2-moab-version</name>
                         <value>7.2.8</value>
                     </macro>
                     <macro>
                         <name>local-compute4.2.2-moab-key</name>
+                        <value/>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-pbs-torque-version</name>
+                        <value>3.0.6</value>
+                    </macro>
+                    <macro>
+                        <name>local-compute4.2.2-pbs-torque-key</name>
                         <value/>
                     </macro>
                     <macro>
@@ -1048,34 +1076,6 @@
                     <macro>
                         <name>login5.0.0-gsi-openssh-endpoint</name>
                         <value>smic1.hpc.lsu.edu:2222</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-glue2-secure-version</name>
-                        <value>1.1.0</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-glue2-secure-key</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-glue2-secure-globus-mds4-host</name>
-                        <value>smic1.hpc.lsu.edu</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-glue2-secure-globus-mds4-port</name>
-                        <value>8443</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-glue2-secure-globus-mds4-endpoint</name>
-                        <value>https://smic1.hpc.lsu.edu:8443/wsrf/services/SecureIndexService</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-pbs-torque-version</name>
-                        <value>3.0.6</value>
-                    </macro>
-                    <macro>
-                        <name>local-compute4.2.2-pbs-torque-key</name>
-                        <value/>
                     </macro>
                 </macros>
             </resource>
@@ -20725,47 +20725,35 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
+                        <name>data.xml.age.unit</name>
                         <args>
                             <arg>
-                                <name>retry</name>
-                                <value>3:60</value>
-                            </arg>
-                            <arg>
-                                <name>expire</name>
-                                <value>1800</value>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>3</value>
+                                <name>xpath</name>
+                                <value>/LoadRP/ComputeResourceLoad[ResourceID='"'"'@remote-compute.teragrid.org-5.0.2-&gt;__longname__@'"'"']/@Timestamp</value>
+                            </arg>
+                            <arg>
+                                <name>expire</name>
+                                <value>1800</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>http://info.xsede.org/web-apps/xml/reg-cat-v2/name/LoadInfo/</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>localEndpoint</name>
-                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>remoteEndpoint</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//@mds-load-object@[@hostname=\\\\\\\"@remote-compute.teragrid.org-5.0.2-&gt;__longname__@\\\\\\\"]</value>
-                            </arg>
-                            <arg>
-                                <name>objectname</name>
-                                <value>@mds-load-object@</value>
+                                <name>log</name>
+                                <value>3</value>
                             </arg>
                         </args>
                         <limits>
@@ -20773,7 +20761,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname>wsrf-query-mds-auth-LoadRP-rc-5.0.2</nickname>
+                    <nickname>LoadRP-rc-5.0.2</nickname>
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
