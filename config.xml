@@ -4327,6 +4327,61 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.xml.age.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>xpath</name>
+                <value>/V4KitsRP/KitRegistration[ResourceID='"'"'@core.teragrid.org-5.0.1->__longname__@'"'"']/@Timestamp</value>
+              </arg>
+              <arg>
+                <name>expire</name>
+                <value>5400</value>
+              </arg>
+              <arg>
+                <name>url</name>
+                <value>http://info.xsede.org/web-apps/xml/reg-cat-v2/name/KitRegistration/</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>3600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>V4KitsRP-5.0.1</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/4 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@mdsContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
         <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <series>
             <name>security.ca.unit</name>
@@ -9270,7 +9325,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>log</name>
-                <value>3</value>
+                <value>5</value>
               </arg>
             </args>
             <limits>
@@ -9281,7 +9336,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <nickname>LoadRP-rc-5.0.2</nickname>
           <resourceSetName>inca.gw60</resourceSetName>
           <schedule>
-            <crontime>? ? ?-31 * *</crontime>
+            <crontime>? ?-23/4 * * *</crontime>
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
