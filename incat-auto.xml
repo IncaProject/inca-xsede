@@ -19163,6 +19163,73 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.globus.unit.securemds</name>
+                        <args>
+                            <arg>
+                                <name>retry</name>
+                                <value>3:60</value>
+                            </arg>
+                            <arg>
+                                <name>expire</name>
+                                <value>1800</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>localEndpoint</name>
+                                <value>https://info.xsede.org:8443/wsrf/services/SecureIndexService</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>remoteEndpoint</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>query</name>
+                                <value>//@mds-jobs-object@[@hostname=\\\\\\\"@local-compute.teragrid.org-4.2.2-&gt;__longname__@\\\\\\\"]</value>
+                            </arg>
+                            <arg>
+                                <name>objectname</name>
+                                <value>@mds-jobs-object@</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>3600.0</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>JobsRP-lc-4.2.2</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@mdsContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name>local-compute.teragrid.org-4.2.2</name>
             <guid>incas://capac.sdsc.edu:6323/local-compute.teragrid.org-4.2.2</guid>
@@ -20828,73 +20895,6 @@
                             <notification>
                                 <notifier>EmailNotifier</notifier>
                                 <target>@adminEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig>
-                    <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
-                        <args>
-                            <arg>
-                                <name>retry</name>
-                                <value>3:60</value>
-                            </arg>
-                            <arg>
-                                <name>expire</name>
-                                <value>1800</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>localEndpoint</name>
-                                <value>https://info.dyn.teragrid.org:8443/wsrf/services/SecureIndexService</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>remoteEndpoint</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>query</name>
-                                <value>//@mds-jobs-object@[@hostname=\\\\\\\"@remote-compute.teragrid.org-5.0.2-&gt;__longname__@\\\\\\\"]</value>
-                            </arg>
-                            <arg>
-                                <name>objectname</name>
-                                <value>@mds-jobs-object@</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>3600.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>wsrf-query-mds-auth-JobsRP-rc-5.0.2</nickname>
-                    <resourceSetName>inca.gw60</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@mdsContact@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
