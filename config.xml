@@ -346,7 +346,7 @@
         </macro>
         <macro>
           <type>constant</type>
-          <name>data-movement-clients4.2.1-globus-url-copy-key</name>
+          <name>data-movement-clients4.2.2-globus-url-copy-key</name>
           <value/>
         </macro>
         <hosts>smic1.hpc.lsu.edu</hosts>
@@ -908,6 +908,16 @@
         <name>execution-management-service1.0-unicore-registry-endpoint</name>
         <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
       </macro>
+      <macro>
+        <type>constant</type>
+        <name>gridftp-telnet-timeout</name>
+        <value>20</value>
+      </macro>
+        <macro>
+          <type>constant</type>
+          <name>go-id</name>
+          <value>blacklight</value>
+        </macro>
         <hosts>login.blacklight.psc.teragrid.org</hosts>
       </macroResource>
     </resource>
@@ -1314,7 +1324,7 @@
       <macro>
         <type>constant</type>
         <name>unicoreContact</name>
-        <value>FailTo:inca@sdsc.edu,FailTo:help@nics.tennessee.edu</value>
+        <value>FailTo:inca@sdsc.edu</value>
       </macro>
     </group>
     <group>
@@ -1400,15 +1410,24 @@
       </macro>
       <group>
         <type>general</type>
-        <name>data-movement-servers.teragrid.org-4.1.2</name>
+        <name>data-movement-servers.teragrid.org-4.2.0</name>
       </group>
       <group>
         <type>general</type>
-        <name>data-movement-servers.teragrid.org-4.2.0</name>
+        <name>data-movement-servers.teragrid.org-4.2.1</name>
+      </group>
+      <group>
+        <type>general</type>
+        <name>data-movement-servers.teragrid.org-4.2.2</name>
       </group>
     </group>
     <group>
       <name>ALL-RM</name>
+      <macro>
+        <type>constant</type>
+        <name>gridftp-telnet-timeout</name>
+        <value>10</value>
+      </macro>
       <macro>
         <type>constant</type>
         <name>execution-management-service1.0-unicore-registry-targets</name>
@@ -1759,12 +1778,12 @@
       </group>
     </group>
     <group>
-      <name>data-movement-servers.teragrid.org-4.2.1</name>
+      <name>data-movement-servers.teragrid.org-4.2.2</name>
       <type>kit</type>
       <macro>
         <type>constant</type>
         <name>gridftp-default-server-host</name>
-        <value>@data-movement-servers4.2.1-gridftp-default-server-host@</value>
+        <value>@data-movement-servers4.2.2-gridftp-default-server-host@</value>
       </macro>
       <macro>
         <type>constant</type>
@@ -2523,7 +2542,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[java>=1.4.2_11]]></comparison>
+            <comparison><![CDATA[java>=1.4.2.21]]></comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -5630,7 +5649,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>timeout</name>
-                <value>10</value>
+                <value>@data-movement-servers4.2.0-gridftp-striped-server->gridftp-telnet-timeout@</value>
               </arg>
               <arg>
                 <name>sleep</name>
@@ -5698,7 +5717,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>timeout</name>
-                <value>10</value>
+                <value>@data-movement-servers4.2.0-gridftp-nonstriped-server->gridftp-telnet-timeout@</value>
               </arg>
               <arg>
                 <name>sleep</name>
@@ -5774,11 +5793,11 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </arg>
               <arg>
                 <name>sleep</name>
-                <value>30</value>
+                <value>20</value>
               </arg>
             </args>
             <limits>
-              <wallClockTime>120</wallClockTime>
+              <wallClockTime>180</wallClockTime>
             </limits>
             <context>@pre@@@@post@</context>
           </series>
@@ -6382,6 +6401,586 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
       </seriesConfigs>
       <name>data-movement-servers.teragrid.org-4.2.1</name>
       <guid>incas://capac.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.1</guid>
+      <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
+      <version>1</version>
+    </suite>
+    <suite>
+      <seriesConfigs>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>cluster.interactive_access.openssh.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/cluster.interactive_access.openssh.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>login</name>
+                <value>inca</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>ssh</name>
+                <value>gsissh -p @data-movement-servers4.2.2-gsi-scp-hpn-server-port@</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers4.2.2-gsi-scp-hpn-server-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>900.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gsi-scp-hpn-server-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers.teragrid.org-4.2.2</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.unit.copy-dns</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.unit.copy-dns</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>gsiftp://@data-movement-servers4.2.2-gridftp-striped-server-host@:@data-movement-servers4.2.2-gridftp-striped-server-port@/~/inca.gridftp.test</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>4</value>
+              </arg>
+              <arg>
+                <name>source</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>21601.0</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.2-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-transfer-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-striped-server</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.unit.copy-dns</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.unit.copy-dns</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>gsiftp://@data-movement-servers4.2.2-gridftp-nonstriped-server-host@:@data-movement-servers4.2.2-gridftp-nonstriped-server-port@/~/inca.gridftp.test</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>4</value>
+              </arg>
+              <arg>
+                <name>source</name>
+                <value/>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>21600.0</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-transfer-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-nonstriped-server</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.version</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@data-movement-servers4.2.2-gridftp-nonstriped-server-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers4.2.2-gridftp-nonstriped-server-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1800.0</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-registered-version-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-nonstriped-server</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gridftp=~@data-movement-servers4.2.2-gridftp-nonstriped-server-registered-version@ &amp;&amp; gridftp>=5.2.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@, FailTo:smartin@mcs.anl.gov</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.version</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.version</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@data-movement-servers4.2.2-gridftp-striped-server-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>4</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers4.2.2-gridftp-striped-server-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>1801.0</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-registered-version-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-striped-server</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>gridftp=~@data-movement-servers4.2.2-gridftp-striped-server-registered-version@ &amp;&amp; gridftp>=5.2.2</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@, FailTo:smartin@mcs.anl.gov</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.unit.auth-dns</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.unit.auth-dns</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>@data-movement-servers4.2.2-gridftp-nonstriped-server-host@:@data-movement-servers4.2.2-gridftp-nonstriped-server-port@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>300</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-auth-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-nonstriped-server</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>data.transfer.gridftp.unit.auth-dns</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/data.transfer.gridftp.unit.auth-dns</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>dest</name>
+                <value>@data-movement-servers4.2.2-gridftp-striped-server-host@:@data-movement-servers4.2.2-gridftp-striped-server-port@</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>60</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>301</wallClockTime>
+            </limits>
+            <context>@pre@@data-movement-clients4.2.0-globus-url-copy-key@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-auth-dms-4.2.2</nickname>
+          <resourceSetName>data-movement-servers4.2.2-gridftp-striped-server</resourceSetName>
+          <schedule>
+            <crontime>? ?-23/12 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@data-movement-servers4.2.2-gridftp-striped-server->data-movement-servers4.2.2-gridftp-striped-server-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>retries</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>verify</name>
+                <value>@externalVerifyServers@</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>30</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers4.2.2-gridftp-striped-server->data-movement-servers4.2.2-gridftp-striped-server-host@</value> 
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>601</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-striped-external-telnet-dms-4.2.2</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@data-movement-servers4.2.2-gridftp-striped-server->gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.telnet.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.telnet.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@data-movement-servers4.2.2-gridftp-nonstriped-server->data-movement-servers4.2.2-gridftp-nonstriped-server-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>retries</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>verify</name>
+                <value>@externalVerifyServers@</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>30</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers4.2.2-gridftp-nonstriped-server->data-movement-servers4.2.2-gridftp-nonstriped-server-host@</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>600</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-nonstriped-external-telnet-dms-4.2.2</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>?-59/10 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@data-movement-servers4.2.2-gridftp-nonstriped-server->gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+          <series>
+            <name>network.ping.unit</name>
+            <uri>http://inca.sdsc.edu/inca/files/xsede/bin/network.ping.unit</uri>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@data-movement-servers.teragrid.org-4.2.2->data-movement-servers4.2.2-gridftp-default-server-host@</value>
+              </arg>
+              <arg>
+                <name>count</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>30</value>
+              </arg>
+              <arg>
+                <name>retries</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>verify</name>
+                <value>@externalVerifyServers@</value>
+              </arg>
+              <arg>
+                <name>sleep</name>
+                <value>30</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>120</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>gridftp-external-ping-dms-4.2.2</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>?-59/5 * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@data-movement-servers.teragrid.org-4.2.2->gridftpContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+      </seriesConfigs>
+      <name>data-movement-servers.teragrid.org-4.2.2</name>
+      <guid>incas://capac.sdsc.edu:6323/data-movement-servers.teragrid.org-4.2.2</guid>
       <description>The TeraGrid Data Movement kit defines the core capabilities that allow the transfer of data on and between TeraGrid resources.</description>
       <version>1</version>
     </suite>
