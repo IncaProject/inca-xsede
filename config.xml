@@ -438,11 +438,6 @@
           <name>local-compute4.2.2-batch-test-scheduler</name>
           <value>pbscray</value>
         </macro>
-      <macro>
-        <type>constant</type>
-        <name>unicore-site-registry</name>
-        <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
-      </macro>
         <hosts>gsissh.darter.nics.xsede.org</hosts>
       </macroResource>
     </resource>
@@ -790,19 +785,9 @@
         </macro>
         <macro>
           <type>constant</type>
-          <name>execution-management-service1.0-unicore-server-endpoint</name>
-          <value>https://giu1.psc.xsede.org:8080/PSC-Blacklight/services/TargetSystemFactoryService?res=default_target_system_factory</value>
-        </macro>
-        <macro>
-          <type>constant</type>
           <name>mpiNumProcs</name>
           <value>32</value>
         </macro>
-      <macro>
-        <type>constant</type>
-        <name>execution-management-service1.0-unicore-registry-endpoint</name>
-        <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
-      </macro>
       <macro>
         <type>constant</type>
         <name>gridftp-telnet-timeout</name>
@@ -1414,7 +1399,7 @@
       <macro>
         <type>constant</type>
         <name>unicore-registry</name>
-        <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry,https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
+        <value>@nics-darter->execution-management-service1.0-unicore-registry-endpoint@,@psc-blacklight->execution-management-service1.0-unicore-registry-endpoint@</value>
       </macro>
       <type>general</type>
     </group>

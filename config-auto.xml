@@ -6284,11 +6284,6 @@
                     <name>local-compute4.2.2-batch-test-scheduler</name>
                     <value>pbscray</value>
                 </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>unicore-site-registry</name>
-                    <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
-                </macro>
                 <hosts>gsissh.darter.nics.xsede.org</hosts>
                 <macro>
                     <type>variable</type>
@@ -8378,18 +8373,8 @@
                 </macro>
                 <macro>
                     <type>constant</type>
-                    <name>execution-management-service1.0-unicore-server-endpoint</name>
-                    <value>https://giu1.psc.xsede.org:8080/PSC-Blacklight/services/TargetSystemFactoryService?res=default_target_system_factory</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
                     <name>mpiNumProcs</name>
                     <value>32</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
-                    <value>https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -8564,8 +8549,18 @@
                 </macro>
                 <macro>
                     <type>variable</type>
+                    <name>execution-management-service1.0-unicore-server-endpoint</name>
+                    <value>https://unicore.psc.xsede.org:8080/PSC-Blacklight/services/TargetSystemFactory?res=default_target_system_factory</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
                     <name>execution-management-service1.0-unicore-registry-registered-version</name>
                     <value>6.6.0p3</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>execution-management-service1.0-unicore-registry-endpoint</name>
+                    <value>https://unicore.psc.xsede.org:8080/PSC-Blacklight/services/Registry?res=default_registry</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -13758,7 +13753,7 @@
             <macro>
                 <type>constant</type>
                 <name>unicore-registry</name>
-                <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry,https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry</value>
+                <value>@nics-darter-&gt;execution-management-service1.0-unicore-registry-endpoint@,@psc-blacklight-&gt;execution-management-service1.0-unicore-registry-endpoint@</value>
             </macro>
             <type>general</type>
         </group>
