@@ -215,61 +215,6 @@
                 <name>gw60.iu.xsede.org</name>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>build.iu.teragrid.org</name>
-                <xpath>//resource[matches(name, '^(teragrid-build)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>build.iu.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>build.iu.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>teragrid-build</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>teragrid-build</name>
-                <xpath>//resource[matches(name, '^(build\.teragrid\.org)$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__shortname__</name>
-                        <value>teragrid-build</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>teragrid-build</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value>build.teragrid.org</value>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>true</value>
-                    </macro>
-                    <macro>
-                        <name>__remoteInvocationMethod__</name>
-                        <value>ssh</value>
-                    </macro>
-                    <macro>
-                        <name>__incaReporterManagerLocation__</name>
-                        <value>/home/inca/inca2install-build</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource>
-                <name>build.teragrid.org</name>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>info.teragrid</name>
                 <xpath>//resource[matches(name, '^(info)$')]</xpath>
                 <macros>
@@ -12215,7 +12160,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>ALL-RM</name>
-                <xpath>//resource[matches(name, '^(capac|inca\.nics|inca\.gw60|teragrid-build|lsu-supermic|nics-darter|nics-nautilus|software|iu-mason|osg-grid1|psc-blacklight|sdsc-gordon|sdsc-trestles|tacc-maverick|tacc-stampede)$')]</xpath>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics|inca\.gw60|lsu-supermic|nics-darter|nics-nautilus|software|iu-mason|osg-grid1|psc-blacklight|sdsc-gordon|sdsc-trestles|tacc-maverick|tacc-stampede)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -12227,7 +12172,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac inca.nics inca.gw60 teragrid-build lsu-supermic nics-darter nics-nautilus software iu-mason osg-grid1 psc-blacklight sdsc-gordon sdsc-trestles tacc-maverick tacc-stampede</value>
+                        <value>capac inca.nics inca.gw60 lsu-supermic nics-darter nics-nautilus software iu-mason osg-grid1 psc-blacklight sdsc-gordon sdsc-trestles tacc-maverick tacc-stampede</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -12419,7 +12364,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>bash</name>
-                <xpath>//resource[matches(name, '^(capac|inca\.nics|inca\.gw60|teragrid-build)$')]</xpath>
+                <xpath>//resource[matches(name, '^(capac|inca\.nics|inca\.gw60)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -12431,7 +12376,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac inca.nics inca.gw60 teragrid-build</value>
+                        <value>capac inca.nics inca.gw60</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -18871,6 +18816,73 @@
                             <notification>
                                 <notifier>EmailNotifier</notifier>
                                 <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.unit</name>
+                        <args>
+                            <arg>
+                                <name>auth</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>exchange</name>
+                                <value>inca</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>vhost</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>listentime</name>
+                                <value>300</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value>amqp://info1.dyn.xsede.org:5671/xsede</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>.*</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>210</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_unit</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>? ?-23 * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>kate@sdsc.edu</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>

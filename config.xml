@@ -159,31 +159,6 @@
       </macroResource>
     </resource>
     <resource>
-      <name>build.iu.teragrid.org</name>
-      <macroResource>
-        <name>teragrid-build</name>
-        <macro>
-          <type>constant</type>
-          <name>__remoteInvocationMethod__</name>
-          <value>ssh</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/home/inca/inca2install-build</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>bash</name>
-        </group>
-        <hosts>build.teragrid.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
       <name>info.teragrid</name>
       <macroResource>
         <name>info</name>
@@ -7570,6 +7545,73 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@infoEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>data.amqp.unit</name>
+            <args>
+              <arg>
+                <name>auth</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>exchange</name>
+                <value>inca</value>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>vhost</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>listentime</name>
+                <value>300</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>amqp://info1.dyn.xsede.org:5671/xsede</value>
+              </arg>
+              <arg>
+                <name>keys</name>
+                <value>.*</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>210</wallClockTime>
+            </limits>
+            <context>@@</context>
+          </series>
+          <nickname>amqp_unit</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? ?-23 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>kate@sdsc.edu</target>
               </notification>
             </notifications>
           </acceptedOutput>
