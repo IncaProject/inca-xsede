@@ -3,7 +3,52 @@
 use strict;
 use warnings;
 
-my $kitRegFile = "kit-regs.xml";
+my $SDSC_Login_kit = <<XML;
+  <Kit KitID="login.teragrid.org-5.0.0" UniqueID="capdep4.\@RESOURCE\@.sdsc.xsede.org/login.teragrid.org-5.0.0">
+    <Name>login.teragrid.org</Name>
+    <Version>5.0.0</Version>
+    <Description>Remote Login Capability Kit</Description>
+    <Class>ctss</Class> 
+    <Installed>true</Installed>
+    <DefinitionURL>http://info.teragrid.org/registry/rest/capabilitydefinition-v4.teragrid.org/login.teragrid.org-5.0/</DefinitionURL>
+    <DefinitionVersion>5.0.0</DefinitionVersion>
+    <SupportLevel>production</SupportLevel>
+    <SupportGoal>production</SupportGoal>
+    <UserSupportOrganization>TeraGrid</UserSupportOrganization>
+    <UserSupportContact>mailto:help\@teragrid.org</UserSupportContact>
+    <StatusURL>http://inca.xsede.org/inca/HTML/kit-status-v1/login.teragrid.org-5.0.0/\@RESOURCE\@.tacc.xsede.org</StatusURL>
+    <Software>
+      <Name>gsi-openssh</Name>
+      <Version>5.9p1-hpn13v11</Version>
+      <Description>GSI OpenSSH (ssh) client</Description>
+      <Default>yes</Default>
+    </Software>
+    <Software>
+      <Name>modules</Name>
+      <Version>3.2.9</Version>
+      <Description>Modules environment management system</Description>
+      <Default>yes</Default>
+      <HandleType>module</HandleType>
+      <HandleKey>modules</HandleKey>
+    </Software>
+    <Software>
+      <Name>myproxy</Name>
+      <Version>5.9</Version>
+      <Default>yes</Default>
+      <HandleType/>
+      <HandleKey/>
+    </Software>
+    <Service>
+      <Name>gsi-openssh</Name>
+      <Version>5.9p1-hpn13v11</Version>
+      <Description>GSI OpenSSH login service</Description>
+      <Type>gsi-openssh</Type>
+      <Endpoint>\@RESOURCE\@.sdsc.xsede.org:22</Endpoint>
+    </Service>
+  </Kit>
+XML
+
+my $kitRegFile = "kit-regs-fix.xml";
 my $xml = "kit-regs.xml.$$";
 #`wget -o /dev/null -O $xml 'http://info.teragrid.org/web-apps/xml/reg-cat-v1/name/KitRegistration'`;
 `curl 'http://info.xsede.org/web-apps/xml/reg-cat-v1/name/KitRegistration' 2>/dev/null > $xml`;
@@ -12,7 +57,12 @@ open( WRITE, ">$kitRegFile" );
 my $resource;
 while( <READ> ) {
   my $line = $_;
-  ($resource) = /<ResourceID>([^<]+)<\/ResourceID>/ if /ResourceID/;
+  ($resource) = /<ResourceID>(\w+).sdsc.teragrid.org<\/ResourceID>/ if /ResourceID/;
+  if ( $line =~ /capdep4.(gordon|trestles).sdsc.teragrid.org\/local-compute.teragrid.org-4.2.2/ ) {
+    my $kitxml = $SDSC_Login_kit;
+    $kitxml =~ s/\@RESOURCE\@/$resource/g;
+    print WRITE "$kitxml";
+  }
   print WRITE $line;
 }
 close READ;
