@@ -13,10 +13,6 @@ my $resource;
 while( <READ> ) {
   my $line = $_;
   ($resource) = /<ResourceID>([^<]+)<\/ResourceID>/ if /ResourceID/;
-  $line =~ s/compiler-gnu-gcc/compiler-gnu/ if /compiler-gnu-gcc/;
-  $line =~ s/hdf5/0/ if /<Version>hdf5<\/Version>/;
-  $line =~ s/gsi-scp-hpn</gsi-scp-hpn-server</g if /gsi-scp-hpn</;
-  $line =~ s/gsiftp:\/\/\//gsiftp:\/\//g if /gsiftp:\/\/\//;
   print WRITE $line;
 }
 close READ;
