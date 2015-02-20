@@ -17,18 +17,6 @@ while( <READ> ) {
   $line =~ s/hdf5/0/ if /<Version>hdf5<\/Version>/;
   $line =~ s/gsi-scp-hpn</gsi-scp-hpn-server</g if /gsi-scp-hpn</;
   $line =~ s/gsiftp:\/\/\//gsiftp:\/\//g if /gsiftp:\/\/\//;
-  if ( $line =~ /science-gateway.teragrid.org/ ) {
-    my $holdLines = $line;
-    my $version;
-    my $serviceOrSw = 0;
-    while( <READ> ) {
-      $holdLines .= $_;
-      ($version) = /<Version>([\d\.]+)<\/Version>/ if /Version/ && ! $serviceOrSw;
-      $serviceOrSw = 1 if /service|sw/;
-      last if /<\/Kit>/;
-    }
-    $line = (defined $version && defined $resource && $version eq '5.0.1' && $resource =~ /kraken/) ? "" : $holdLines;
-  }
   print WRITE $line;
 }
 close READ;
