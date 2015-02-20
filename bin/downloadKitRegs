@@ -29,10 +29,6 @@ while( <READ> ) {
     }
     $line = (defined $version && defined $resource && $version eq '5.0.1' && $resource =~ /kraken/) ? "" : $holdLines;
   }
-
-  if ( $line =~ /GLOBUS_MDS_INFO_HOSTNAME/ ) {
-    $line =~ s/GLOBUS_MDS_INFO_HOSTNAME/grid.nics.utk.edu/ if $resource =~ /kraken/;
-  }
   print WRITE $line;
 }
 close READ;
