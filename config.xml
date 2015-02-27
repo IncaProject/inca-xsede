@@ -4269,7 +4269,7 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <nickname>all2all:gsissh_to_@ctss-gsissh-server->gsi-openssh-host@</nickname>
           <resourceSetName>ctss-gsissh-server</resourceSetName>
           <schedule>
-            <crontime>? ?-23/12 * * *</crontime>
+            <crontime>? ?-23/2 * * *</crontime>
           </schedule>
           <action>add</action>
         </seriesConfig>
@@ -7705,6 +7705,102 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.batch.wrapper</name>
+            <args>
+              <arg>
+                <name>account</name>
+                <value>@chargeProject@</value>
+              </arg>
+              <arg>
+                <name>type</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>scheduler</name>
+                <value>@local-compute4.2.2-batch-test-scheduler@</value>
+              </arg>
+              <arg>
+                <name>randomwait</name>
+                <value>0</value>
+              </arg>
+              <arg>
+                <name>walllimit</name>
+                <value>10</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>timeout</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>poll</name>
+                <value>60</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>nodes</name>
+                <value>1::@mpiNumProcs@</value>
+              </arg>
+              <arg>
+                <name>queue</name>
+                <value>@jobQueue@</value>
+              </arg>
+              <arg>
+                <name>exec</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>submitparam</name>
+                <value>@local-compute4.2.2-batch-submitparam@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>showscript</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>shell</name>
+                <value>/bin/sh</value>
+              </arg>
+              <arg>
+                <name>var</name>
+                <value/>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>@local-compute4.2.2-batch-test-nickname@-submit</nickname>
+          <resourceSetName>local-compute4.2.2-batch</resourceSetName>
+          <schedule>
+            <crontime>? 0-23/1 * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage=='' || errorMessage=~'BATCH: Reporter submission timed out'</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
