@@ -1,0 +1,55 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use DBI;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'data.db.tgcdb.gateways',
+	version => 1,
+	description => 'Checks the TGCDB for entries in the job_attribute_stage table without a job_id.',
+);
+$reporter->addDependency('DBI');
+$reporter->addDependency('DBD::Pg');
+$reporter->processArgv(@ARGV);
+
+my $dbh = DBI->connect( "DBI:Pg:dbname=teragrid;host=tgcdb.xsede.org;port=5432", "gw_att_pub", undef, { RaiseError=>1, PrintError=>1 } );
+if ( !$dbh ) 
+{
+	$reporter->failPrintAndExit( "Unable to connect to TGCDB" );
+}
+
+# Get a list of unmatched job_attribute_stage entries
+my $query = qq {
+	SELECT * FROM acct.job_attribute_stage 
+	WHERE job_attribute_stage_id > 27 
+	AND job_id IS NULL 
+	AND submit_time < CAST( NOW() - INTERVAL '2 days' AS timestamp ) 
+	ORDER BY job_attribute_stage_id
+};
+
+my @errs;
+my $sth = $dbh->prepare( $query );
+$sth->execute();
+if ( $sth->rows != 0 ) 
+{
+	while ( my @datarow = $sth->fetchrow() ) 
+	{
+		no warnings 'uninitialized';
+		push( @errs, join( "\t", @datarow ) );
+	}
+}
+$sth->finish();
+$dbh->disconnect();
+
+if ( scalar( @errs ) != 0 )
+{
+	$reporter->log( "debug", "Unmatched entries:\n" . join( "\n", @errs ) );
+	$reporter->failPrintAndExit( "Found entries in the job_attribute_stage table without a job_id." );
+}
+else
+{
+	$reporter->unitSuccess();
+	$reporter->print();
+}
