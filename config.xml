@@ -830,6 +830,16 @@
           <name>unicore-id</name>
           <value>SDSC-Gordon</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-module</name>
+          <value><![CDATA[ module load gateway-usage-reporting &&]]></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-run</name>
+          <value>yes</value>
+        </macro>
         <hosts>gordon.sdsc.edu</hosts>
       </macroResource>
     </resource>
@@ -886,6 +896,16 @@
           <type>constant</type>
           <name>unicore-id</name>
           <value>SDSC-Trestles</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-module</name>
+          <value><![CDATA[ module load gateway-usage-reporting &&]]></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-run</name>
+          <value>yes</value>
         </macro>
         <hosts>trestles.sdsc.edu</hosts>
       </macroResource>
@@ -994,6 +1014,16 @@
         </macro>
         <macro>
           <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-module</name>
+          <value><![CDATA[ module load gateway-usage-reporting &&]]></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>local-compute4.2.2-batch-gateway-run</name>
+          <value>yes</value>
+        </macro>
+        <macro>
+          <type>constant</type>
           <name>data-movement-clients4.2.0-uberftp-key</name>
           <value/>
         </macro>
@@ -1078,6 +1108,20 @@
       </macro>
     </group>
     <group>
+      <name>local-compute.teragrid.org-4.2.2</name>
+      <type>kit</type>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-gateway-module</name>
+        <value/>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>local-compute4.2.2-batch-gateway-run</name>
+        <value>no</value>
+      </macro>
+    </group>
+    <group>
       <name>NICS</name>
       <type>general</type>
       <macro>
@@ -1097,11 +1141,6 @@
     <group>
       <name>SDSC</name>
       <type>general</type>
-      <macro>
-        <type>constant</type>
-        <name>local-compute4.2.2-batch-gateway-module</name>
-        <value><![CDATA[ module load gateway-usage-reporting &&]]></value>
-      </macro>
     </group>
     <group>
       <name>INCASERVERS</name>
@@ -1143,11 +1182,6 @@
         <type>constant</type>
         <name>securityContact</name>
         <value>FailTo:inca@sdsc.edu, FailTo:ca@tacc.utexas.edu</value>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>local-compute4.2.2-batch-gateway-module</name>
-        <value><![CDATA[ module load gateway-usage-reporting &&]]></value>
       </macro>
       <type>general</type>
     </group>
@@ -1601,11 +1635,6 @@
       <macro>
         <type>constant</type>
         <name>local-compute4.2.2-batch-submitparam</name>
-        <value/>
-      </macro>
-      <macro>
-        <type>constant</type>
-        <name>local-compute4.2.2-batch-gateway-module</name>
         <value/>
       </macro>
     </group>
@@ -7714,6 +7743,10 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <name>var</name>
                 <value/>
               </arg>
+              <arg>
+                <name>gateway</name>
+                <value>@local-compute4.2.2-batch-gateway-run@</value>
+              </arg>
             </args>
             <context>@local-compute4.2.2-batch-gateway-module@@@</context>
           </series>
@@ -7810,11 +7843,15 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                 <name>var</name>
                 <value/>
               </arg>
+              <arg>
+                <name>gateway</name>
+                <value>no</value>
+              </arg>
             </args>
             <context>@local-compute4.2.2-batch-gateway-module@@@</context>
           </series>
           <nickname>@local-compute4.2.2-batch-test-nickname@-submit</nickname>
-          <resourceSetName>local-compute4.2.2-batch</resourceSetName>
+          <resourceSetName>SDSC</resourceSetName>
           <schedule>
             <crontime>? 0-23/1 * * *</crontime>
           </schedule>
