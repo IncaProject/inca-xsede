@@ -2700,7 +2700,7 @@
                         <value>SDSC-Gordon</value>
                     </macro>
                     <macro>
-                        <name>local-compute4.2.2-batch-gateway-module</name>
+                        <name>science-gateway5.0.2-gateway_submit_attributes-key</name>
                         <value><![CDATA[module load gateway-usage-reporting &&]]></value>
                     </macro>
                     <macro>
@@ -2959,7 +2959,7 @@
                         <value>SDSC-Trestles</value>
                     </macro>
                     <macro>
-                        <name>local-compute4.2.2-batch-gateway-module</name>
+                        <name>science-gateway5.0.2-gateway_submit_attributes-key</name>
                         <value><![CDATA[module load gateway-usage-reporting &&]]></value>
                     </macro>
                     <macro>
@@ -3600,10 +3600,6 @@
                         <value>/share/apps/teragrid/prews-gram-4.0.7-r1/var/globus-gatekeeper.log</value>
                     </macro>
                     <macro>
-                        <name>local-compute4.2.2-batch-gateway-module</name>
-                        <value><![CDATA[module load gateway-usage-reporting &&]]></value>
-                    </macro>
-                    <macro>
                         <name>local-compute4.2.2-batch-gateway-run</name>
                         <value>yes</value>
                     </macro>
@@ -3770,6 +3766,14 @@
                     <macro>
                         <name>remote-compute5.0.2-gram5-slurm-endpoint</name>
                         <value>login5.stampede.tacc.utexas.edu:2119/jobmanager-slurm</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.2-gateway_submit_attributes-version</name>
+                        <value>1.0</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.2-gateway_submit_attributes-key</name>
+                        <value>@keyPre@ gateway-usage-reporting @keyPost@</value>
                     </macro>
                     <macro>
                         <name>science-gateway5.0.2-gram5-fork-registered-version</name>
@@ -10585,228 +10589,24 @@
                 </macros>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-scheduler-batch</name>
-                <xpath>//resource[matches(name, '^(science-gateway5\.0\.2-prews-gram-condor|science-gateway5\.0\.2-prews-gram-loadleveler|science-gateway5\.0\.2-prews-gram-lsf|science-gateway5\.0\.2-prews-gram-pbs|science-gateway5\.0\.2-prews-gram-sge)$')]</xpath>
+                <name>science-gateway5.0.2-gateway_submit_attributes</name>
+                <xpath>//resource[matches(name, '^(stampede\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-scheduler-batch</value>
+                        <value>science-gateway5.0.2-gateway_submit_attributes</value>
                     </macro>
                     <macro>
                         <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-scheduler-batch</value>
+                        <value>science-gateway5.0.2-gateway_submit_attributes</value>
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>science-gateway5.0.2-prews-gram-condor science-gateway5.0.2-prews-gram-loadleveler science-gateway5.0.2-prews-gram-lsf science-gateway5.0.2-prews-gram-pbs science-gateway5.0.2-prews-gram-sge</value>
+                        <value>stampede.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
                         <value>false</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-condor</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-condor</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-condor</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>condor</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-condor-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-condor-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-loadleveler</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-loadleveler</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-loadleveler</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>loadleveler</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-loadleveler-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-loadleveler-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-lsf</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-lsf</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-lsf</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>lsf</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-lsf-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-lsf-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-pbs</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-pbs</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-pbs</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>pbs</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-pbs-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-pbs-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-sge</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-sge</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-sge</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>sge</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-sge-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-sge-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-prews-gram-fork</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-prews-gram-fork</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-prews-gram-fork</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler</name>
-                        <value>fork</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-host</name>
-                        <value>@science-gateway5.0.2-prews-gram-fork-host@</value>
-                    </macro>
-                    <macro>
-                        <name>science-gateway5.0.2-prews-gram-scheduler-port</name>
-                        <value>@science-gateway5.0.2-prews-gram-fork-port@</value>
                     </macro>
                 </macros>
             </resource>
@@ -11067,28 +10867,6 @@
                     <macro>
                         <name>science-gateway5.0.2-gram5-scheduler-port</name>
                         <value>@science-gateway5.0.2-gram5-slurm-port@</value>
-                    </macro>
-                </macros>
-            </resource>
-            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
-                <name>science-gateway5.0.2-ogsa-dai-TeraGridResource</name>
-                <xpath>//resource[matches(name, '^()$')]</xpath>
-                <macros>
-                    <macro>
-                        <name>__longname__</name>
-                        <value>science-gateway5.0.2-ogsa-dai-TeraGridResource</value>
-                    </macro>
-                    <macro>
-                        <name>__groupname__</name>
-                        <value>science-gateway5.0.2-ogsa-dai-TeraGridResource</value>
-                    </macro>
-                    <macro>
-                        <name>__regexp__</name>
-                        <value/>
-                    </macro>
-                    <macro>
-                        <name>__equivalent__</name>
-                        <value>false</value>
                     </macro>
                 </macros>
             </resource>
@@ -12019,10 +11797,6 @@
                         <value>false</value>
                     </macro>
                     <macro>
-                        <name>local-compute4.2.2-batch-gateway-module</name>
-                        <value/>
-                    </macro>
-                    <macro>
                         <name>local-compute4.2.2-batch-gateway-run</name>
                         <value>no</value>
                     </macro>
@@ -12899,6 +12673,10 @@
                     <macro>
                         <name>__equivalent__</name>
                         <value>false</value>
+                    </macro>
+                    <macro>
+                        <name>science-gateway5.0.2-gateway_submit_attributes-key</name>
+                        <value/>
                     </macro>
                     <macro>
                         <name>local-compute4.2.2-batch-test-scheduler</name>
@@ -19082,7 +18860,7 @@
                                 <value>@local-compute4.2.2-batch-gateway-run@</value>
                             </arg>
                         </args>
-                        <context>@local-compute4.2.2-batch-gateway-module@@@</context>
+                        <context>@science-gateway5.0.2-gateway_submit_attributes-key@@@</context>
                     </series>
                     <nickname>@local-compute4.2.2-batch-test-nickname@</nickname>
                     <resourceSetName>local-compute4.2.2-batch</resourceSetName>
@@ -19135,7 +18913,7 @@
                             </arg>
                             <arg>
                                 <name>timeout</name>
-                                <value>1</value>
+                                <value>.000001</value>
                             </arg>
                             <arg>
                                 <name>poll</name>
