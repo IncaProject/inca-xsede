@@ -1547,6 +1547,11 @@
         <name>gsi-openssh-port</name>
         <value>@login5.0.0-gsi-openssh-port@</value>
       </macro>
+      <macro>
+        <type>variable</type>
+        <name>login5.0.0-xdresourceid-key</name>
+        <value/>
+      </macro>
       <group>
         <type>general</type>
         <name>ctss-gsissh-server</name>
@@ -8801,6 +8806,48 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               </notification>
             </notifications>
           </acceptedOutput>
+          <action>add</action>
+        </seriesConfig>
+       <seriesConfig>
+          <series>
+            <name>any.software.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>package</name>
+                <value/>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>3</value>
+              </arg>
+              <arg>
+                <name>regex</name>
+                <value>([\\d\\.\\-]+)</value>
+              </arg>
+              <arg>
+                <name>command</name>
+                <value>xdresourceid -v</value>
+              </arg>
+            </args>
+            <context>@pre@@login5.0.0-xdresourceid-key@@@@post@</context>
+          </series>
+          <nickname>xdresourceid-version</nickname>
+          <resourceSetName>login.teragrid.org-5.0.0</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
           <action>add</action>
         </seriesConfig>
       </seriesConfigs>
