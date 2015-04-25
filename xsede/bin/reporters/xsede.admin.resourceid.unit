@@ -32,10 +32,13 @@ else
 	{
 		push( @err, "$xdusage_resource_cmd: $! $xdusage_resource" );
 	}
-	chomp( $xdusage_resource );
-	if ( $xdusage_resource ne $registered )
+	else
 	{
-		push( @err, "xdusage ($xdusage_resource) and registered ($registered) names differ" );
+		chomp( $xdusage_resource );
+		if ( $xdusage_resource ne $registered )
+		{
+			push( @err, "xdusage ($xdusage_resource) and registered ($registered) names differ" );
+		}
 	}
 }
 
