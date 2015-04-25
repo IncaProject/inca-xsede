@@ -1,0 +1,66 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use File::Basename;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'xsede.admin.resourceid.unit',
+	version => 1,
+	description => 'Check ResourceID supplied by xdresourceid and xdusage commands',
+	unit_name => 'resourceid'
+);
+$reporter->addArg( 'registered', 'The resource name in info services' );
+$reporter->processArgv( @ARGV );
+my $registered = $reporter->argValue( 'registered' );
+
+my @err;
+my $xdusage_resource;
+my $xdusage_cmd = 'which xdusage';
+my $xdusage = $reporter->loggedCommand( $xdusage_cmd );
+if ( $? != 0 )
+{
+	push( @err, "$xdusage_cmd: $! $xdusage" ); 
+}
+else
+{
+	chomp( $xdusage );
+	my $xdusage_resource_cmd = 'cat ' . dirname( $xdusage ) . '/resource_name';
+	$xdusage_resource = $reporter->loggedCommand( $xdusage_resource_cmd );
+	if ( $? != 0 )
+	{
+		push( @err, "$xdusage_resource_cmd: $! $xdusage_resource" );
+	}
+	chomp( $xdusage_resource );
+	if ( $xdusage_resource ne $registered )
+	{
+		push( @err, "xdusage ($xdusage_resource) and registered ($registered) names differ" );
+	}
+}
+
+my $xdresourceid_cmd = 'xdresourceid -g';
+my $xdresourceid = $reporter->loggedCommand( $xdresourceid_cmd );
+if ( $? != 0 )
+{
+	push( @err, "$xdresourceid_cmd: $! $xdresourceid" ); 
+}
+else
+{
+	chomp( $xdresourceid );
+	if ( $xdresourceid ne $registered )
+	{
+		push( @err, "xdresourceid ($xdresourceid) and registered ($registered) names differ" );
+	}
+	if ( $xdresourceid ne $xdusage_resource )
+	{
+		push( @err, "xdresourceid ($xdresourceid) and xdusage ($xdusage_resource) names differ" );
+	}
+}
+
+if ( @err )
+{
+	$reporter->failPrintAndExit( "Errors found: \n" . join( "\n\n", @err ) ); 
+}
+$reporter->unitSuccess();
+$reporter->print();
