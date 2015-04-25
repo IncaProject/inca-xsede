@@ -12,7 +12,11 @@ my $reporter = new Inca::Reporter::SimpleUnit(
 );
 $reporter->addDependency('DBI');
 $reporter->addDependency('DBD::Pg');
+$reporter->addArg('days', 'Number of days to exclude from search', '2');
+$reporter->addArg('startdate', 'Date after which to search', '2015-04-01 0:0:0');
 $reporter->processArgv(@ARGV);
+my $days = $reporter->argValue('days');
+my $start_date = $reporter->argValue('startdate');
 
 my $dbh = DBI->connect( "DBI:Pg:dbname=teragrid;host=tgcdb.xsede.org;port=5432", "gw_att_pub", undef, { RaiseError=>1, PrintError=>1 } );
 if ( !$dbh ) 
@@ -21,16 +25,16 @@ if ( !$dbh )
 }
 
 # Get a list of unmatched job_attribute_stage entries
-my $query = qq {
-	SELECT * FROM acct.job_attribute_stage 
-	WHERE job_attribute_stage_id > 27 
-	AND job_id IS NULL 
-	AND submit_time < CAST( NOW() - INTERVAL '2 days' AS timestamp ) 
-	ORDER BY job_attribute_stage_id
-};
+my $query = "SELECT * FROM acct.job_attribute_stage 
+	WHERE job_id IS NULL 
+	AND submit_time < CAST( NOW() - INTERVAL '$days days' AS timestamp ) 
+	AND submit_time > CAST( '$start_date' AS timestamp )
+	ORDER BY job_attribute_stage_id";
+
+$reporter->log( 'debug', $query );
 
 my @errs;
-my $sth = $dbh->prepare( $query );
+my $sth = $dbh->prepare( qq { $query } );
 $sth->execute();
 if ( $sth->rows != 0 ) 
 {
@@ -45,7 +49,7 @@ $dbh->disconnect();
 
 if ( scalar( @errs ) != 0 )
 {
-	$reporter->log( "debug", "Unmatched entries:\n" . join( "\n", @errs ) );
+	#$reporter->log( "debug", "Unmatched entries:\n" . join( "\n", @errs ) );
 	$reporter->failPrintAndExit( "Found entries in the job_attribute_stage table without a job_id." );
 }
 else
