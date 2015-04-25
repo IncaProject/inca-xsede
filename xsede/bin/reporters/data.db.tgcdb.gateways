@@ -25,11 +25,12 @@ if ( !$dbh )
 }
 
 # Get a list of unmatched job_attribute_stage entries
-my $query = "SELECT * FROM acct.job_attribute_stage 
-	WHERE job_id IS NULL 
-	AND submit_time < CAST( NOW() - INTERVAL '$days days' AS timestamp ) 
-	AND submit_time > CAST( '$start_date' AS timestamp )
-	ORDER BY job_attribute_stage_id";
+my $query = "SELECT * FROM acct.job_attribute_stage AS s
+	JOIN acct.jobs AS j ON j.resource_id=s.resource_id AND j.local_jobid=s.local_jobid
+	WHERE s.job_id IS NULL 
+	AND s.submit_time < CAST( NOW() - INTERVAL '$days days' AS timestamp ) 
+	AND s.submit_time > CAST( '$start_date' AS timestamp )
+	ORDER BY s.job_attribute_stage_id";
 
 $reporter->log( 'debug', $query );
 
