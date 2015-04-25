@@ -18799,6 +18799,57 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.db.tgcdb.gateways</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>startdate</name>
+                                <value>2015-04-01 0:0:0</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>days</name>
+                                <value>2</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>210</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>tgcdb_gateways</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>kate@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name>gig</name>
             <guid>incas://capac.sdsc.edu:6323/gig</guid>
