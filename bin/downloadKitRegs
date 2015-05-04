@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 my $SDSC_Login_kit = <<XML;
-  <Kit KitID="login.teragrid.org-5.0.0" UniqueID="capdep4.\@RESOURCE\@.sdsc.xsede.org/login.teragrid.org-5.0.0">
+  <Kit KitID="login.teragrid.org-5.0.0" UniqueID="capdep4.\@RESOURCE\@/login.teragrid.org-5.0.0">
     <Name>login.teragrid.org</Name>
     <Version>5.0.0</Version>
     <Description>Remote Login Capability Kit</Description>
@@ -16,7 +16,7 @@ my $SDSC_Login_kit = <<XML;
     <SupportGoal>production</SupportGoal>
     <UserSupportOrganization>TeraGrid</UserSupportOrganization>
     <UserSupportContact>mailto:help\@teragrid.org</UserSupportContact>
-    <StatusURL>http://inca.xsede.org/inca/HTML/kit-status-v1/login.teragrid.org-5.0.0/\@RESOURCE\@.tacc.xsede.org</StatusURL>
+    <StatusURL>http://inca.xsede.org/inca/HTML/kit-status-v1/login.teragrid.org-5.0.0/\@RESOURCE\@</StatusURL>
     <Software>
       <Name>gsi-openssh</Name>
       <Version>5.9p1-hpn13v11</Version>
@@ -43,9 +43,20 @@ my $SDSC_Login_kit = <<XML;
       <Version>5.9p1-hpn13v11</Version>
       <Description>GSI OpenSSH login service</Description>
       <Type>gsi-openssh</Type>
-      <Endpoint>\@RESOURCE\@.sdsc.xsede.org:22</Endpoint>
+      <Endpoint>\@RESOURCE\@:22</Endpoint>
     </Service>
   </Kit>
+XML
+
+my $slurm = <<XML;
+    <Software>
+      <Name>slurm</Name>
+      <Version>14.11.5</Version>
+      <Description>The  Simple  Linux  Utility  for Resource Management (slurm)</Description>
+      <Default>yes</Default>
+      <HandleType/>
+      <HandleKey/>
+    </Software>
 XML
 
 my $kitRegFile = "kit-regs.xml";
@@ -54,16 +65,25 @@ my $xml = "kit-regs.xml.$$";
 `curl 'http://info.xsede.org/web-apps/xml/reg-cat-v1/name/KitRegistration' 2>/dev/null > $xml`;
 open( READ, "<$xml" );
 open( WRITE, ">$kitRegFile" );
-my $resource;
+my ($resource, $kit);
 while( <READ> ) {
   my $line = $_;
-  ($resource) = /<ResourceID>(\w+).sdsc.teragrid.org<\/ResourceID>/ if /ResourceID/;
-  if ( $line =~ /capdep4.(gordon|trestles).sdsc.teragrid.org\/local-compute.teragrid.org-4.2.2/ ) {
+  ($resource) = /<ResourceID>([^<]+)<\/ResourceID>/ if /ResourceID/;
+  ($kit) =  /KitID="([^"]+)"/ if /<Kit KitID/;
+  if ( $line =~ /capdep4.(gordon|comet).\w+.\w+.org\/local-compute.teragrid.org-4.2.2/ ) {
     my $kitxml = $SDSC_Login_kit;
+    $resource =~ s/teragrid/xsede/g;
     $kitxml =~ s/\@RESOURCE\@/$resource/g;
     print WRITE "$kitxml";
   }
+  if ( $line =~ /Support(Level|Goal)/ && $resource && $resource =~ /comet/ ) {
+    $line =~ s/retired/production/g;
+  }
+  $line =~ s/SLURM/slurm/g;
   print WRITE $line;
+  if ( $line =~ /<\/Extensions>/ && $resource && $resource =~ /comet/ && $kit && $kit =~ /local-compute/ ) {
+    print WRITE $slurm;
+  }
 }
 close READ;
 close WRITE;
