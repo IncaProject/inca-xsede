@@ -79,6 +79,12 @@ while( <READ> ) {
   if ( $line =~ /Support(Level|Goal)/ && $resource && $resource =~ /comet/ ) {
     $line =~ s/retired/production/g;
   }
+  if ( $line =~ /<Version>5.0.0<\/Version>/ && $resource && $resource =~ /comet/ && $kit && $kit =~ /core/ ) {
+    $line =~ s/5.0.0/5.0.1/g;
+  }
+  if ( $line =~ /comet.sdsc.xsede.org\/core.teragrid.org-5.0.0/ ) {
+    $line =~ s/5.0.0/5.0.1/g;
+  }
   $line =~ s/SLURM/slurm/g;
   print WRITE $line;
   if ( $line =~ /<\/Extensions>/ && $resource && $resource =~ /comet/ && $kit && $kit =~ /local-compute/ ) {
