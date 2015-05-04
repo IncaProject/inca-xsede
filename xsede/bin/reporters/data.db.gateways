@@ -6,17 +6,19 @@ use Inca::Reporter::SimpleUnit;
 use DBI;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
-	name => 'data.db.tgcdb.gateways',
+	name => 'data.db.gateways',
 	version => 1,
-	description => 'Checks the TGCDB for entries in the job_attribute_stage table without a job_id.',
+	description => 'Checks the central database for entries in the job_attribute_stage table without a job_id.',
 );
 $reporter->addDependency('DBI');
 $reporter->addDependency('DBD::Pg');
 $reporter->addArg('days', 'Number of days to exclude from search', '2');
 $reporter->addArg('startdate', 'Date after which to search', '2015-04-01 0:0:0');
+$reporter->addArg('resources', 'Comma separated resources with entries in the job_attribute_stage table', 'gordon.sdsc.teragrid,stampede.tacc.xsede');
 $reporter->processArgv(@ARGV);
 my $days = $reporter->argValue('days');
 my $start_date = $reporter->argValue('startdate');
+my $resources = $reporter->argValue('resources');
 
 my $dbh = DBI->connect( "DBI:Pg:dbname=teragrid;host=tgcdb.xsede.org;port=5432", "gw_att_pub", undef, { RaiseError=>1, PrintError=>1 } );
 if ( !$dbh ) 
@@ -39,22 +41,51 @@ my $sth = $dbh->prepare( qq { $query } );
 $sth->execute();
 if ( $sth->rows != 0 ) 
 {
+	push( @errs, "Found entries in the job_attribute_stage table without a job_id:" );
 	while ( my @datarow = $sth->fetchrow() ) 
 	{
 		no warnings 'uninitialized';
 		push( @errs, join( "\t", @datarow ) );
 	}
 }
+
+# Get resources that have recent job_attribute_stage entries
+$query = "SELECT DISTINCT resource_name FROM acct.job_attribute_stage 
+	WHERE submit_time > CAST( NOW() - INTERVAL '$days days' AS timestamp )
+	ORDER BY resource_name"; 
+
+$reporter->log( 'debug', $query );
+$sth = $dbh->prepare( qq { $query } );
+$sth->execute();
+if ( $sth->rows == 0 ) 
+{
+	push( @errs, 'No resources with recent job_attribute_stage entries' );
+}
+else
+{
+  my @db_resources;
+	while ( my @datarow = $sth->fetchrow() ) 
+	{
+		push( @db_resources, @datarow );
+	}
+	my @resources = split( ',', $resources );
+	foreach my $resource ( @resources )
+	{
+		if ( ! grep { $_ eq $resource } @db_resources )
+		{
+			push( @errs, 'No recent job_attribute_stage entries for ' . $resource );
+		}
+	} 
+}
+
 $sth->finish();
 $dbh->disconnect();
 
 if ( scalar( @errs ) != 0 )
 {
-	#$reporter->log( "debug", "Unmatched entries:\n" . join( "\n", @errs ) );
-	$reporter->failPrintAndExit( "Found entries in the job_attribute_stage table without a job_id." );
+	$reporter->failPrintAndExit( join( "\n", @errs ) );
 }
-else
-{
-	$reporter->unitSuccess();
-	$reporter->print();
-}
+
+
+$reporter->unitSuccess();
+$reporter->print();
