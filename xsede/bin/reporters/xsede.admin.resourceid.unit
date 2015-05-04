@@ -7,7 +7,7 @@ use Inca::Reporter::SimpleUnit;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'xsede.admin.resourceid.unit',
-	version => 1,
+	version => 2,
 	description => 'Check ResourceID supplied by xdresourceid and xdusage commands',
 	unit_name => 'resourceid'
 );
@@ -16,6 +16,44 @@ $reporter->processArgv( @ARGV );
 my $registered = $reporter->argValue( 'registered' );
 
 my @err;
+
+my $xdresourceid_cmd = 'xdresourceid -c';
+my %xdresource_out;
+my @xdresource = $reporter->loggedCommand( $xdresourceid_cmd );
+if ( $? != 0 )
+{
+	push( @err, "$xdresourceid_cmd: $!" ); 
+}
+else
+{
+	foreach my $line ( @xdresource ) 
+	{
+		my @val = split( '=', $line );
+		$val[1] =~ s/\"\s+$//;
+		$val[1] =~ s/^\"//;
+		if ( $val[0] !~ /^\s*$/ and $val[1] !~ /^\s*$/ )
+		{
+			$xdresource_out{ $val[0] } = $val[1];
+		}
+	}
+}
+
+if ( %xdresource_out )
+{
+	if ( $registered ne $xdresource_out{'ResourceID'} )
+	{
+		push( @err, "xdresourceid ResourceID (" . $xdresource_out{'ResourceID'} . ") and registered ($registered) names differ" );
+	}
+	if ( $xdresource_out{'Title'} =~ /^\s*$/ )
+	{
+		push( @err, "xdresourceid Title is empty" );
+	}
+	if ( $xdresource_out{'SiteID'} =~ /^\s*$/ )
+	{
+		push( @err, "xdresourceid SiteID is empty" );
+	}
+}
+
 my $xdusage_resource;
 my $xdusage_cmd = 'which xdusage';
 my $xdusage = $reporter->loggedCommand( $xdusage_cmd );
@@ -35,29 +73,10 @@ else
 	else
 	{
 		chomp( $xdusage_resource );
-		if ( $xdusage_resource ne $registered )
+		if ( %xdresource_out and ( $xdusage_resource ne $xdresource_out{'XDCDB_resource_name'} ) )
 		{
-			push( @err, "xdusage ($xdusage_resource) and registered ($registered) names differ" );
+			push( @err, "xdusage ($xdusage_resource) and xdresourceid XDCDB_resource_name (" . $xdresource_out{'XDCDB_resource_name'} . ") names differ" );
 		}
-	}
-}
-
-my $xdresourceid_cmd = 'xdresourceid -g';
-my $xdresourceid = $reporter->loggedCommand( $xdresourceid_cmd );
-if ( $? != 0 )
-{
-	push( @err, "$xdresourceid_cmd: $! $xdresourceid" ); 
-}
-else
-{
-	chomp( $xdresourceid );
-	if ( $xdresourceid ne $registered )
-	{
-		push( @err, "xdresourceid ($xdresourceid) and registered ($registered) names differ" );
-	}
-	if ( $xdresourceid ne $xdusage_resource )
-	{
-		push( @err, "xdresourceid ($xdresourceid) and xdusage ($xdusage_resource) names differ" );
 	}
 }
 
