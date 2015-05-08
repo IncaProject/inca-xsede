@@ -1,0 +1,81 @@
+<project name="IncaAmqpReceiver" default="compile" basedir=".">
+
+
+  <property name="version" value="1.0" />
+  <property name="jar.name" value="xsede-messaging.jar" />
+  <property name="incapkg" value="inca-amqp" />
+  <property name="lib.home" location="${basedir}/lib" />
+  <property name="src.home" location="${basedir}/src" />
+  <property name="build.home"   value="${basedir}/build"/>
+  <property name="build.classes" location="${build.home}/classes" />
+  <property name="build.pkg" location="${build.home}/${incapkg}-${version}" />
+  <property name="build.doc" location="${build.home}/doc" />
+
+  <path id="compile.classpath">
+
+    <fileset dir="${lib.home}">
+      <include name="**/*.jar" />
+    </fileset>
+
+  </path>
+
+
+  <target name="clean">
+
+    <delete dir="${build.home}" />
+
+  </target>
+
+
+  <target name="prepare">
+
+    <mkdir dir="${build.classes}" />
+    <unzip dest="${build.classes}">
+    <fileset dir="${lib.home}">
+        <include name="**/*.jar"/>
+    </fileset>
+</unzip>
+
+
+  </target>
+
+
+  <target name="compile" depends="prepare">
+
+    <javac srcdir="${src.home}" destdir="${build.classes}" debug="true" includeAntRuntime="false">
+      <classpath refid="compile.classpath" />
+    </javac>
+
+  </target>
+
+
+  <target name="jar" depends="compile">
+
+    <jar destfile="${build.home}/${jar.name}" basedir="${build.classes}" includes="org/** com/**">
+      <manifest>
+        <attribute name="Main-Class" value="org.xsede.ReceiverExample"/>
+      </manifest>
+    </jar>
+  </target>
+
+
+  <target name="doc">
+
+    <javadoc sourcepath="${src.home}" destdir="${build.doc}" noqualifier="java.*">
+      <classpath refid="compile.classpath" />
+      <package name="org.xsede.messaging.*" />
+    </javadoc>
+
+  </target>
+
+  <target name="inca-package">
+
+<echo message="${build.home}/${jar.name}"/>
+    <tar longfile="gnu" compression="gzip" destfile="${build.pkg}.tar.gz">
+      <tarfileset prefix="${incapkg}-${version}" file="${build.home}/${jar.name}"/>
+      <tarfileset prefix="${incapkg}-${version}" file="${basedir}/Makefile"/>
+    </tar>
+
+  </target>
+
+</project>
