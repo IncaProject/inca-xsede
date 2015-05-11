@@ -19628,77 +19628,6 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
-                        <name>data.amqp.unit</name>
-                        <args>
-                            <arg>
-                                <name>auth</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>exchange</name>
-                                <value>inca</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>vhost</name>
-                                <value>xsede</value>
-                            </arg>
-                            <arg>
-                                <name>listentime</name>
-                                <value>300</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>info.dyn.xsede.org</value>
-                            </arg>
-                            <arg>
-                                <name>keys</name>
-                                <value>.*</value>
-                            </arg>
-                            <arg>
-                                <name>minkeys</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>600</wallClockTime>
-                        </limits>
-                        <context>@@</context>
-                    </series>
-                    <nickname>amqp_unit</nickname>
-                    <resourceSetName>capac</resourceSetName>
-                    <schedule>
-                        <crontime>? ?-23 * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:inca@sdsc.edu</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig>
-                    <series>
                         <name>data.db.gateways</name>
                         <args>
                             <arg>
@@ -23108,6 +23037,77 @@
                             <notification>
                                 <notifier>EmailNotifier</notifier>
                                 <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.unit</name>
+                        <args>
+                            <arg>
+                                <name>auth</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>exchange</name>
+                                <value>inca</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>vhost</name>
+                                <value>xsede</value>
+                            </arg>
+                            <arg>
+                                <name>listentime</name>
+                                <value>300</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value>@INFO-&gt;__incaHosts__@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>.*</value>
+                            </arg>
+                            <arg>
+                                <name>minkeys</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>600</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_unit</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>? ?-23 * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@INFO-&gt;infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
