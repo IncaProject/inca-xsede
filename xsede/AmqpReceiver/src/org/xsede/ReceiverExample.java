@@ -79,9 +79,11 @@ public class ReceiverExample {
     options.addOption("h", false, "print help information");
     options.addOption("s", true, "hostname of AMQP server (default: info.dyn.xsede.org)");
     options.addOption("v", true, "virtual hostname of AMQP server (default: xsede)");
+    options.addOption("T", true, "Stop listening (or timeout) afer provided seconds");
 
     CommandLineParser parser = new GnuParser();
     AmqpConnectionFactory connFactory = new AmqpConnectionFactory();
+    long timeout = 0;
     try {
       CommandLine cmd = parser.parse( options, args);
       if ( cmd.hasOption("h") ) {
@@ -99,6 +101,10 @@ public class ReceiverExample {
       }
       if ( cmd.hasOption("v") ) {
         connFactory.setVirtualHost( cmd.getOptionValue("v") );
+      }
+      if ( cmd.hasOption("T") ) {
+        timeout = Long.parseLong( cmd.getOptionValue("T") );
+        timeout *= 1000;
       }
 
       connFactory.setConnectionTimeout(30000);
@@ -121,7 +127,9 @@ public class ReceiverExample {
           }
         }
 
-        while (true) {
+        long startTime = System.currentTimeMillis();
+        long timeRunning = 0;
+        while ( timeout <= 0 || timeRunning < timeout ) {
           AmqpSubscription.Message message = subscription.nextMessage();
 
           if (message == null)
@@ -131,6 +139,7 @@ public class ReceiverExample {
           String routingKey = message.getEnvelope().getRoutingKey();
 
           System.out.println(routingKey + " ==> " + body);
+          timeRunning = System.currentTimeMillis() - startTime;
         }
       }
       finally {
