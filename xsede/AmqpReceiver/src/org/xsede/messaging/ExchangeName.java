@@ -19,9 +19,10 @@ import java.util.TreeMap;
  */
 public enum ExchangeName {
 
-  GLUE2_ACTIVITIES("glue2.activities"),
-  GLUE2_ACTIVITY_UPDATES("glue2.activity_updates"),
-  GLUE2_SYSTEMS("glue2.systems"),
+  GLUE2_ACTIVITIES("glue2.computing_activities"),
+  GLUE2_ACTIVITY_UPDATES("glue2.computing_activity"),
+  GLUE2_SYSTEMS("glue2.compute"),
+  GLUE2_APPS("glue2.applications"),
   INCA("inca");
 
 
