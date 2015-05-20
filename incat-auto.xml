@@ -11869,7 +11869,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>USAGE</name>
-                <xpath>//resource[matches(name, '^(tacc-stampede|tacc-wrangler)$')]</xpath>
+                <xpath>//resource[matches(name, '^()$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -11881,7 +11881,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>tacc-stampede tacc-wrangler</value>
+                        <value/>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -22100,7 +22100,7 @@
                             </arg>
                             <arg>
                                 <name>listentime</name>
-                                <value>900</value>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -22116,7 +22116,7 @@
                             </arg>
                         </args>
                         <limits>
-                            <wallClockTime>1800</wallClockTime>
+                            <wallClockTime>3600</wallClockTime>
                         </limits>
                         <context>@@</context>
                     </series>
@@ -22242,7 +22242,7 @@
                             </arg>
                             <arg>
                                 <name>listentime</name>
-                                <value>900</value>
+                                <value>1800</value>
                             </arg>
                             <arg>
                                 <name>host</name>
@@ -22258,7 +22258,7 @@
                             </arg>
                         </args>
                         <limits>
-                            <wallClockTime>1800</wallClockTime>
+                            <wallClockTime>3600</wallClockTime>
                         </limits>
                         <context>@@</context>
                     </series>
@@ -22355,74 +22355,6 @@
             <guid>incas://capac.sdsc.edu:6323/tg-iis</guid>
             <description>TeraGrid IIS service availability</description>
             <version>59</version>
-        </suite>
-        <suite>
-            <seriesConfigs>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>grid.jobs.usage</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/grid.jobs.usage</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>end</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>gatekeeperlog</name>
-                                <value>@gatekeeperlog@</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>3</value>
-                            </arg>
-                            <arg>
-                                <name>begin</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>plaintext</name>
-                                <value>0</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>1800.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@python@@@@post@</context>
-                    </series>
-                    <nickname>grid.jobs.usage</nickname>
-                    <resourceSetName>USAGE</resourceSetName>
-                    <schedule>
-                        <crontime>0 0 * * *</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@tgContact@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-            </seriesConfigs>
-            <name>usage</name>
-            <guid>incas://capac.sdsc.edu:6323/usage</guid>
-            <description/>
-            <version>126</version>
         </suite>
         <suite>
             <seriesConfigs>
