@@ -18810,46 +18810,62 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
-                        <name>data.xml.age.unit</name>
+                        <name>data.amqp.unit</name>
                         <args>
                             <arg>
-                                <name>version</name>
-                                <value>no</value>
+                                <name>auth</name>
+                                <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:~/trusted/</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>xpath</name>
-                                <value>/LoadRP/ComputeResourceLoad[ResourceID='"'"'@local-compute.teragrid.org-4.2.2-&gt;__longname__@'"'"']/@Timestamp</value>
-                            </arg>
-                            <arg>
-                                <name>expire</name>
-                                <value>3600</value>
-                            </arg>
-                            <arg>
-                                <name>url</name>
-                                <value>http://info.xsede.org/web-apps/xml/reg-cat-v2/name/LoadInfo/</value>
+                                <name>log</name>
+                                <value>5</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>log</name>
+                                <name>exchange</name>
+                                <value>glue2.computing_activities</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>vhost</name>
+                                <value>xsede</value>
+                            </arg>
+                            <arg>
+                                <name>listentime</name>
+                                <value>900</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value>@info.teragrid-&gt;dynHost@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>@local-compute.teragrid.org-4.2.2-&gt;__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>minkeys</name>
                                 <value>5</value>
                             </arg>
                         </args>
                         <limits>
-                            <wallClockTime>3600.0</wallClockTime>
+                            <wallClockTime>1200</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
-                    <nickname>LoadRP-lc-4.2.2</nickname>
-                    <resourceSetName>inca.gw60</resourceSetName>
+                    <nickname>amqp_glue2.computing_activities_to_@local-compute.teragrid.org-4.2.2-&gt;__shortname__@</nickname>
+                    <resourceSetName>capac</resourceSetName>
                     <schedule>
-                        <crontime>? ?-23/4 * * *</crontime>
+                        <crontime>? ?-23/3 * * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
@@ -18857,7 +18873,7 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>@mdsContact@</target>
+                                <target>FailTo:inca@sdsc.edu</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
@@ -18865,15 +18881,11 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
-                        <name>grid.middleware.globus.unit.securemds</name>
+                        <name>data.amqp.unit</name>
                         <args>
                             <arg>
-                                <name>retry</name>
-                                <value>3:60</value>
-                            </arg>
-                            <arg>
-                                <name>expire</name>
-                                <value>3600</value>
+                                <name>auth</name>
+                                <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:~/trusted/</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
@@ -18881,42 +18893,50 @@
                             </arg>
                             <arg>
                                 <name>log</name>
-                                <value>3</value>
+                                <value>5</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>localEndpoint</name>
-                                <value>https://info.xsede.org:8443/wsrf/services/SecureIndexService</value>
+                                <name>exchange</name>
+                                <value>glue2.computing_activity</value>
                             </arg>
                             <arg>
                                 <name>version</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>remoteEndpoint</name>
-                                <value/>
+                                <name>vhost</name>
+                                <value>xsede</value>
                             </arg>
                             <arg>
-                                <name>query</name>
-                                <value>//self::node()[name()=\\\\\\\"@mds-jobs-object@\\\\\\\"][@hostname=\\\\\\\"@local-compute.teragrid.org-4.2.2-&gt;__longname__@\\\\\\\"]</value>
+                                <name>listentime</name>
+                                <value>43200</value>
                             </arg>
                             <arg>
-                                <name>objectname</name>
-                                <value>ns\\d+:@mds-jobs-object@</value>
+                                <name>host</name>
+                                <value>@info.teragrid-&gt;dynHost@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>@local-compute.teragrid.org-4.2.2-&gt;__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>minkeys</name>
+                                <value>5</value>
                             </arg>
                         </args>
                         <limits>
-                            <wallClockTime>3600.0</wallClockTime>
+                            <wallClockTime>46800</wallClockTime>
                         </limits>
-                        <context>@pre@@@@post@</context>
+                        <context>@@</context>
                     </series>
-                    <nickname>JobsRP-lc-4.2.2</nickname>
-                    <resourceSetName>inca.gw60</resourceSetName>
+                    <nickname>amqp_glue2.computing_activity_to_@local-compute.teragrid.org-4.2.2-&gt;__shortname__@</nickname>
+                    <resourceSetName>capac</resourceSetName>
                     <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
+                        <crontime>? ? * * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
@@ -18924,7 +18944,149 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>@mdsContact@</target>
+                                <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.unit</name>
+                        <args>
+                            <arg>
+                                <name>auth</name>
+                                <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:~/trusted/</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>exchange</name>
+                                <value>glue2.compute</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>vhost</name>
+                                <value>xsede</value>
+                            </arg>
+                            <arg>
+                                <name>listentime</name>
+                                <value>900</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value>@info.teragrid-&gt;dynHost@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>@local-compute.teragrid.org-4.2.2-&gt;__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>minkeys</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>1200</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_glue2.compute_to_@local-compute.teragrid.org-4.2.2-&gt;__shortname__@</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>? ?-23/3 * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.unit</name>
+                        <args>
+                            <arg>
+                                <name>auth</name>
+                                <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:~/trusted/</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>exchange</name>
+                                <value>glue2.applications</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>vhost</name>
+                                <value>xsede</value>
+                            </arg>
+                            <arg>
+                                <name>listentime</name>
+                                <value>43200</value>
+                            </arg>
+                            <arg>
+                                <name>host</name>
+                                <value>@info.teragrid-&gt;dynHost@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>@local-compute.teragrid.org-4.2.2-&gt;__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>minkeys</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>46800</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_glue2.applications_to_@local-compute.teragrid.org-4.2.2-&gt;__shortname__@</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:inca@sdsc.edu</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
