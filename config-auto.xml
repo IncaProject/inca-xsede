@@ -15216,6 +15216,49 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.middleware.globus.version</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>600.0</wallClockTime>
+                        </limits>
+                        <context>@pre@@app-support4.2.0-globus-client-key@@@@post@</context>
+                    </series>
+                    <nickname>globus-version-as-4.2.0</nickname>
+                    <resourceSetName>app-support4.2.0-globus-client</resourceSetName>
+                    <schedule>
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>globus=~".*"</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@tgContact@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name>app-support.teragrid.org-4.2.0</name>
             <guid>incas://capac.sdsc.edu:6323/app-support.teragrid.org-4.2.0</guid>
