@@ -16053,6 +16053,57 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
+                        <name>grid.wget.performance</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                            <arg>
+                                <name>wgetArgs</name>
+                                <value/>
+                            </arg>
+                            <arg>
+                                <name>page</name>
+                                <value>http://inca.xsede.org/</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>650.0</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>Inca URL wget</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/10 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
                         <name>inca.web</name>
                         <args>
                             <arg>
