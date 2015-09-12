@@ -480,126 +480,6 @@
       </macroResource>
     </resource>
     <resource>
-      <name>nautilus.nics.teragrid.org</name>
-      <macroResource>
-        <name>nics-nautilus</name>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>nautilus</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-dirs</name>
-          <value>/lustre/medusa/inca</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>go-testing</name>
-        </group>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/nics/a/home/inca/inca2install-nautilus</value>
-        </macro>
-        <macro>
-          <name>__remoteInvocationMethod__</name>
-          <value>manual</value>
-          <type>constant</type>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>defaultModule</name>
-          <value></value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>securityContact</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-<!--
-          <value>FailTo:inca@sdsc.edu, FailTo:admin-core@nics.utk.edu</value>
--->
-          <value>FailTo:inca@sdsc.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>local-compute4.2.2-batch-test-scheduler</name>
-          <value>pbssgi</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>NICS</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>xsede</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <macro>
-          <type>constant</type>
-          <name>unicore-id</name>
-          <value>NICS-Nautilus</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>blasLink</name>
-          <value>-lmkl -lguide -lpthread</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-port</name>
-          <value/>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>data-movement-servers4.2.0-gsi-scp-hpn-server-host</name>
-          <value/>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>local-compute4.2.2-batch-submitparam</name>
-          <value>ncpus=16</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>science-gateway5.0.1-globus-mds-host</name>
-          <value>grid1.nics.utk.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>science-gateway5.0.1-globus-mds-port</name>
-          <value>8446</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>science-gateway5.0.1-globus-mds-secure-endpoint</name>
-          <value>https://grid1.nics.utk.edu:8446/wsrf/services/SecureIndexService</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>science-gateway5.0.1-globus-mds-endpoint</name>
-          <value>https://grid1.nics.utk.edu:8446/wsrf/services/DefaultIndexService</value>
-        </macro>
-      <macro>
-        <type>constant</type>
-        <name>chargeProject</name>
-        <value>TG-STA110005S</value>
-      </macro>
-        <hosts>gsissh.nautilus.nics.xsede.org</hosts>
-      </macroResource>
-    </resource>
-    <resource>
       <name>software.iu.xsede.org</name>
       <macroResource>
         <name>software</name>
@@ -1457,7 +1337,7 @@
       <macro>
         <type>constant</type>
         <name>unicore-registry</name>
-        <value>@nics-darter->execution-management-service1.0-unicore-registry-endpoint@</value>
+        <value>https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry</value>
       </macro>
       <type>general</type>
     </group>
@@ -7100,78 +6980,6 @@ xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
               <notification>
                 <notifier>EmailNotifier</notifier>
                 <target>@execution-management-service1.0-unicore-bes-server->unicoreContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>grid.middleware.unicore.unit.mpi</name>
-            <args>
-              <arg>
-                <name>registry</name>
-                <value>@unicore-registry@</value>
-              </arg>
-              <arg>
-                <name>debug</name>
-                <value>false</value>
-              </arg>
-              <arg>
-                <name>id</name>
-                <value>@nics-nautilus->unicore-id@</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>numprocs</name>
-                <value>@nics-nautilus->mpiNumProcs@</value>
-              </arg>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>target</name>
-                <value>gsiftp://@gridftp-default-server-host@/@__incaReporterManagerLocation__@/</value>
-              </arg>
-              <arg>
-                <name>charge</name>
-                <value>@nics-nautilus->chargeProject@</value>
-              </arg>
-              <arg>
-                <name>regex</name>
-                <value>Hello world from process \\d</value>
-              </arg>
-              <arg>
-                <name>jsdl</name>
-                <value>http://software.xsede.org/production/UNICORE/examples/mpihw-gridftp-nautilus.jsdl</value>
-              </arg>
-            </args>
-            <context>@pre@module add unicore &amp;&amp; @@@post@</context>
-          </series>
-          <nickname>unicore-run-remote-mpienvjob-gridftpstage</nickname>
-          <resourceSetName>inca.gw60</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@nics-nautilus->unicoreContact@</target>
               </notification>
             </notifications>
           </acceptedOutput>
