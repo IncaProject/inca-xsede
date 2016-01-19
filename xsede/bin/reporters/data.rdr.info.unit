@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use JSON qw( decode_json );
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'data.rdr.info.unit',
+	version => 1,
+	description => 'Verifies RDR URLs',
+	unit_name => 'rdr'
+);
+
+$reporter->addArg( 'url', 'RDR URL to fetch', 'https://dirsdev.psc.edu/rdr_ui/xsede-api/provider/rdr/v1/compute_resources' );
+$reporter->addArg( 'cparam', 'Params to pass to cURL', '-s -X GET -H "XA_CLIENT:XSEDE"' );
+$reporter->addArg( 'keys', 'Space separated list of keys to check', 'computeResources' );
+# $reporter->addArg( 'keys', 'Space separated list of keys to check', 'computeResourceId infoResourceid resourceDescriptiveName' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue( 'url' );
+my $cparam = $reporter->argValue( 'cparam' );
+my $keys = $reporter->argValue( 'keys' );
+
+my $out = $reporter->loggedCommand( "curl $cparam '$url'" );
+if ( $? != 0 || $out !~ /{/ )
+{
+	$reporter->failPrintAndExit( 'cURL command failed: ' . $! . $out );
+}
+
+# $reporter->log( 'debug', "cURL output: $out" );
+
+my $data = decode_json( $out );
+if ( $? != 0 )
+{
+	$reporter->failPrintAndExit( 'Could not decode as JSON data: ' . $! . $out );
+}
+
+my @keys = split( / /, $keys );
+foreach my $key ( @keys )
+{
+	if ( ! exists $data->{$key} || ! defined $data->{$key} )
+	{
+		$reporter->failPrintAndExit( 'Expected key $key is undefined' );
+	}
+	$reporter->log( 'debug', "Key $key value: " . $data->{$key} );
+}
+
+$reporter->unitSuccess();
+$reporter->print();
