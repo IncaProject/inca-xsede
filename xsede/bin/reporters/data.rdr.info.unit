@@ -12,6 +12,7 @@ my $reporter = new Inca::Reporter::SimpleUnit(
 	unit_name => 'rdr'
 );
 
+$reporter->addDependency( 'JSON' );
 $reporter->addArg( 'url', 'RDR URL to fetch', 'https://dirsdev.psc.edu/rdr_ui/xsede-api/provider/rdr/v1/compute_resources' );
 $reporter->addArg( 'cparam', 'Params to pass to cURL', '-s -X GET -H "XA_CLIENT:XSEDE"' );
 $reporter->addArg( 'keys', 'Space separated list of keys to check', 'computeResources' );
