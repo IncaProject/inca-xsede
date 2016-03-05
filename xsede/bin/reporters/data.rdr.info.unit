@@ -2,15 +2,15 @@
 
 use strict;
 use warnings;
-use Inca::Reporter::SimpleUnit;
+use Inca::Reporter::Performance;
 use JSON qw( decode_json );
 use Data::Dumper;
 
-my $reporter = new Inca::Reporter::SimpleUnit(
+my $reporter = new Inca::Reporter::Performance(
 	name => 'data.rdr.info.unit',
 	version => 1,
 	description => 'Lists Information Services Resource Ids for a given RDR Resource',
-	unit_name => 'rdr_info'
+	measurement_name => 'rdr_info'
 );
 
 $reporter->addDependency( 'JSON' );
@@ -60,14 +60,17 @@ foreach my $rdr_resource ( @{$data} )
 		}
 }
 
-@ids = sort( @ids );
+@ids = sort { "\L$a" cmp "\L$b" } @ids;
 my $num_ids = scalar( @ids );
 $reporter->log( 'info', "Found $num_ids $resource info_resourceids: " . join( ', ', @ids ) );
+
+my $benchmark = $reporter->addNewBenchmark( $resource );
+$benchmark->setStatistic( 'Resources', $num_ids );
 
 if( $num_ids < $min_resources )
 {
 		$reporter->failPrintAndExit( "Expected at least $min_resources but found $num_ids" );
 }
 
-$reporter->unitSuccess();
+$reporter->setResult(1);
 $reporter->print();
