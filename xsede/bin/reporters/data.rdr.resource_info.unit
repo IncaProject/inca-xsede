@@ -1,0 +1,72 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use JSON qw( decode_json );
+use Data::Dumper;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'data.rdr.resource_info.unit',
+	version => 1,
+	description => 'Verifies JSON keys for a given RDR Resource and Information Services Resource Id',
+	unit_name => 'rdr_resource_info'
+);
+
+$reporter->addDependency( 'JSON' );
+$reporter->addArg( 'url', 'Base RDR URL to fetch', 'https://dirsdev.psc.edu/rdr_ui/xsede-api/provider/rdr/v1' );
+$reporter->addArg( 'resource', 'RDR resource', 'compute_resources' );
+$reporter->addArg( 'resource_prefix', 'Whether or not the RDR resource name prefixes the JSON object', 'yes', 'yes|no' );
+$reporter->addArg( 'info_resourceid', 'Information Services Resource Id', 'trestles.sdsc.teragrid.org' );
+$reporter->addArg( 'cparam', 'Params to pass to cURL', '-s -k -H "XA_CLIENT:XSEDE" -H "XA-KEY-FORMAT:underscore"' );
+$reporter->addArg( 'keys', 'Space separated list of keys to check', 'compute_resource_id resource_status ip_address' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue( 'url' );
+my $resource = $reporter->argValue( 'resource' );
+my $resource_prefix = $reporter->argValue( 'resource_prefix' );
+my $info_resourceid = $reporter->argValue( 'info_resourceid' );
+my $cparam = $reporter->argValue( 'cparam' );
+my $keys = $reporter->argValue( 'keys' );
+
+my $out = $reporter->loggedCommand( "curl $cparam '$url/$resource/info_resourceid/$info_resourceid'" );
+if ( $? != 0 || $out !~ /{/ )
+{
+	$reporter->failPrintAndExit( 'cURL command failed: ' . $! . $out );
+}
+
+# $reporter->log( 'debug', "cURL output: $out" );
+
+my $data;
+eval
+{
+	$data = decode_json( $out );
+};
+if ($@)
+{
+	$reporter->failPrintAndExit( 'Could not decode as JSON data: ' . $@ );
+}
+
+my $dump = Dumper( $data );
+$reporter->log( 'debug', "JSON output: $dump" );
+
+if ( $resource_prefix eq 'yes' )
+{
+	if ( ! exists $data->{$resource} || ref( $data->{$resource} ) ne 'ARRAY' )
+	{
+		$reporter->failPrintAndExit( "No data for $resource" );
+	}
+	$data = $data->{$resource}[0];
+}
+
+my @keys = split( / /, $keys );
+foreach my $key ( @keys )
+{
+	if ( ! exists $data->{$key} || ! defined $data->{$key} )
+	{
+		$reporter->failPrintAndExit( "Expected key $key is undefined" );
+	}
+	$reporter->log( 'debug', "$key: " . $data->{$key} );
+}
+
+$reporter->unitSuccess();
+$reporter->print();
