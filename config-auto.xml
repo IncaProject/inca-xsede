@@ -5247,6 +5247,10 @@
                 </group>
                 <group>
                     <type>general</type>
+                    <name>INFOC</name>
+                </group>
+                <group>
+                    <type>general</type>
                     <name>INCASERVERS</name>
                 </group>
                 <group>
@@ -5386,6 +5390,10 @@
                 </macro>
                 <group>
                     <type>general</type>
+                    <name>INFOC</name>
+                </group>
+                <group>
+                    <type>general</type>
                     <name>INFO</name>
                 </group>
                 <hosts>info.teragrid.org</hosts>
@@ -5402,6 +5410,10 @@
                 </macro>
                 <group>
                     <type>general</type>
+                    <name>INFOC</name>
+                </group>
+                <group>
+                    <type>general</type>
                     <name>INFO</name>
                 </group>
                 <hosts>info1.dyn.teragrid.org</hosts>
@@ -5416,6 +5428,10 @@
                     <name>dynHost</name>
                     <value>info2.dyn.xsede.org</value>
                 </macro>
+                <group>
+                    <type>general</type>
+                    <name>INFOC</name>
+                </group>
                 <group>
                     <type>general</type>
                     <name>INFO</name>
@@ -23116,6 +23132,175 @@
                             <notification>
                                 <notifier>EmailNotifier</notifier>
                                 <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.adminnodes.unit</name>
+                        <args>
+                            <arg>
+                                <name>cparam</name>
+                                <value>-sn</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>nodes</name>
+                                <value>rabbit@info1 rabbit@info2</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info1.dyn.xsede.org:15671/api/nodes</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>120</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_admin-nodes</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/30 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.adminvhosts.unit</name>
+                        <args>
+                            <arg>
+                                <name>cparam</name>
+                                <value>-sn</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info1.dyn.xsede.org:15671/api/vhosts</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                            <arg>
+                                <name>vhosts</name>
+                                <value>/ xsede</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>120</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_admin-vhosts</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/30 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>data.amqp.adminstats.unit</name>
+                        <args>
+                            <arg>
+                                <name>cparam</name>
+                                <value>-sn</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info1.dyn.xsede.org:15671/api/overview</value>
+                            </arg>
+                            <arg>
+                                <name>minexchanges</name>
+                                <value>6</value>
+                            </arg>
+                            <arg>
+                                <name>minqueues</name>
+                                <value>4</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>120</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>amqp_admin-stats</nickname>
+                    <resourceSetName>capac</resourceSetName>
+                    <schedule>
+                        <crontime>?-59/30 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
