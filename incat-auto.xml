@@ -15066,6 +15066,73 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series>
+                        <name>data.rdr.resource_info.unit</name>
+                        <args>
+                            <arg>
+                                <name>url</name>
+                                <value>https://dirsdev.psc.edu/rdr_ui/xsede-api/provider/rdr/v1</value>
+                            </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>resources</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>3</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>cparam</name>
+                                <value>-s -k -H "XA_CLIENT:XSEDE" -H "XA-KEY-FORMAT:underscore"</value>
+                            </arg>
+                            <arg>
+                                <name>resource_prefix</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>info_resourceid</name>
+                                <value>@__longname__@</value>
+                            </arg>
+                            <arg>
+                                <name>keys</name>
+                                <value>resource_id resource_status resource_descriptive_name</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>180</wallClockTime>
+                        </limits>
+                        <context>@@</context>
+                    </series>
+                    <nickname>rdr_resource_info</nickname>
+                    <resourceSetName>core.teragrid.org-5.0.1</resourceSetName>
+                    <schedule>
+                        <crontime>? ?-23/2 * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
                         <name>data.xml.age.unit</name>
                         <args>
                             <arg>
