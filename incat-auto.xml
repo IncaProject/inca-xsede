@@ -20587,6 +20587,57 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.cert.diagnostics.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>flag</name>
+                                <value>s</value>
+                            </arg>
+                            <arg>
+                                <name>check</name>
+                                <value>@remote-compute5.0.2-gram5-scheduler-batch-&gt;remote-compute5.0.2-gram5-scheduler-host@:@remote-compute5.0.2-gram5-scheduler-batch-&gt;remote-compute5.0.2-gram5-scheduler-port@</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>601</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>gram5-rfc-2818-compliance-rc-5.0.2</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@remote-compute5.0.2-gram5-scheduler-batch-&gt;adminEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name>remote-compute.teragrid.org-5.0.2</name>
             <guid>incas://capac.sdsc.edu:6323/remote-compute.teragrid.org-5.0.2</guid>
