@@ -5348,6 +5348,10 @@
                 </group>
                 <group>
                     <type>general</type>
+                    <name>INFOC</name>
+                </group>
+                <group>
+                    <type>general</type>
                     <name>SECURITY</name>
                 </group>
                 <group>
@@ -12655,6 +12659,10 @@
         <group>
             <name>xwfs-1.0-testing</name>
             <type>optional</type>
+        </group>
+        <group xmlns="">
+            <name>INFOC</name>
+            <type>general</type>
         </group>
         <group xmlns="">
             <name>SECURITY</name>
@@ -24169,6 +24177,108 @@
                     <resourceSetName>capac</resourceSetName>
                     <schedule>
                         <crontime>? ?-23/2 * * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.cert.diagnostics.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>flag</name>
+                                <value>s</value>
+                            </arg>
+                            <arg>
+                                <name>check</name>
+                                <value>myproxy.xsede.org:7512</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>601</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>rfc-2818-compliance-myproxy.xsede.org</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.cert.diagnostics.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>flag</name>
+                                <value>s</value>
+                            </arg>
+                            <arg>
+                                <name>check</name>
+                                <value>myproxy.psc.xsede.org:7512</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>601</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>rfc-2818-compliance-myproxy.psc.xsede.org</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>

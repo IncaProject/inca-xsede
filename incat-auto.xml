@@ -11388,6 +11388,28 @@
                 </macros>
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
+                <name>INFOC</name>
+                <xpath>//resource[matches(name, '^(capac|inca\.gw60|info|info1|info2)$')]</xpath>
+                <macros>
+                    <macro>
+                        <name>__longname__</name>
+                        <value>INFOC</value>
+                    </macro>
+                    <macro>
+                        <name>__groupname__</name>
+                        <value>INFOC</value>
+                    </macro>
+                    <macro>
+                        <name>__regexp__</name>
+                        <value>capac inca.gw60 info info1 info2</value>
+                    </macro>
+                    <macro>
+                        <name>__equivalent__</name>
+                        <value>false</value>
+                    </macro>
+                </macros>
+            </resource>
+            <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>SECURITY</name>
                 <xpath>//resource[matches(name, '^(capac|inca\.gw60)$')]</xpath>
                 <macros>
@@ -23413,10 +23435,9 @@
                     </acceptedOutput>
                     <action>add</action>
                 </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
+                <seriesConfig>
                     <series>
-                        <name>inca.diskusage</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/inca.diskusage</uri>
+                        <name>grid.cert.diagnostics.unit</name>
                         <args>
                             <arg>
                                 <name>version</name>
@@ -23427,35 +23448,90 @@
                                 <value>1</value>
                             </arg>
                             <arg>
+                                <name>flag</name>
+                                <value>s</value>
+                            </arg>
+                            <arg>
+                                <name>check</name>
+                                <value>myproxy.xsede.org:7512</value>
+                            </arg>
+                            <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>dir</name>
-                                <value/>
-                            </arg>
-                            <arg>
                                 <name>log</name>
-                                <value>0</value>
+                                <value>5</value>
                             </arg>
                         </args>
                         <limits>
-                            <wallClockTime>300</wallClockTime>
+                            <wallClockTime>601</wallClockTime>
                         </limits>
-                        <context>@@</context>
+                        <context>@pre@@@@post@</context>
                     </series>
-                    <nickname>Disk Usage</nickname>
-                    <resourceSetName>INFOC</resourceSetName>
+                    <nickname>rfc-2818-compliance-myproxy.xsede.org</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>? ? ?-31 * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>usage &lt; @MAX_DISK_USAGE_MB@</comparison>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>FailTo:inca@sdsc.edu</target>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action>add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series>
+                        <name>grid.cert.diagnostics.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>flag</name>
+                                <value>s</value>
+                            </arg>
+                            <arg>
+                                <name>check</name>
+                                <value>myproxy.psc.xsede.org:7512</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>601</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname>rfc-2818-compliance-myproxy.psc.xsede.org</nickname>
+                    <resourceSetName>inca.gw60</resourceSetName>
+                    <schedule>
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <acceptedOutput>
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
