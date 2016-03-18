@@ -8,7 +8,7 @@ use Data::Dumper;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'data.rdr.resource_info.unit',
-	version => 1,
+	version => 2,
 	description => 'Verifies JSON keys for a given RDR Resource and Information Services Resource Id',
 	unit_name => 'rdr_resource_info'
 );
@@ -48,6 +48,11 @@ if ($@)
 
 my $dump = Dumper( $data );
 $reporter->log( 'debug', "JSON output: $dump" );
+
+if ( exists $data->{'message'} && ( exists $data->{'result'} && !defined( $data->{'result'} ) ) )
+{
+		$reporter->failPrintAndExit( "RDR error: " . $data->{'message'} );
+}
 
 if ( $resource_prefix eq 'yes' )
 {
