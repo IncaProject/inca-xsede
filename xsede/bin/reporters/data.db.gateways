@@ -7,17 +7,18 @@ use DBI;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'data.db.gateways',
-	version => 1,
+	version => 2,
 	description => 'Checks the central database for entries in the job_attribute_stage table without a job_id.',
 );
 $reporter->addDependency('DBI');
 $reporter->addDependency('DBD::Pg');
-$reporter->addArg('days', 'Number of days to exclude from search', '2');
-$reporter->addArg('startdate', 'Date after which to search', '2015-04-01 0:0:0');
-$reporter->addArg('resources', 'Comma separated resources with entries in the job_attribute_stage table', 'gordon.sdsc.teragrid,stampede.tacc.xsede');
+$reporter->addArg('waitdays', 'Number of days to wait for jobs to complete', '2', '\d+');
+$reporter->addArg('checkdays', 'Number of days to check for missing job_id entries (after job complete wait days)', '7', '\d+');
+$reporter->addArg('resources', 'Comma separated resources that should have entries in the job_attribute_stage table', 'comet.sdsc.xsede,gordon.sdsc.teragrid,maverick.tacc.xsede,stampede.tacc.xsede');
 $reporter->processArgv(@ARGV);
-my $days = $reporter->argValue('days');
-my $start_date = $reporter->argValue('startdate');
+my $wait_days = $reporter->argValue('waitdays');
+my $check_days = $reporter->argValue('checkdays');
+my $search_days = $wait_days + $check_days;
 my $resources = $reporter->argValue('resources');
 
 my $dbh = DBI->connect( "DBI:Pg:dbname=teragrid;host=tgcdb.xsede.org;port=5432", "gw_att_pub", undef, { RaiseError=>1, PrintError=>1 } );
@@ -27,11 +28,16 @@ if ( !$dbh )
 }
 
 # Get a list of unmatched job_attribute_stage entries
-my $query = "SELECT * FROM acct.job_attribute_stage AS s
+my $query = "SELECT s.value, 
+		s.submit_time AS submit_time_stage, 
+		j.submit_time AS submit_time_jobs, 
+		s.resource_name, 
+		j.local_jobid 
+	FROM acct.job_attribute_stage AS s
 	JOIN acct.jobs AS j ON j.resource_id=s.resource_id AND j.local_jobid=s.local_jobid
 	WHERE s.job_id IS NULL 
-	AND s.submit_time < CAST( NOW() - INTERVAL '$days days' AS timestamp ) 
-	AND s.submit_time > CAST( '$start_date' AS timestamp )
+	AND s.submit_time < CAST( NOW() - INTERVAL '$wait_days days' AS timestamp ) 
+	AND s.submit_time > CAST( NOW() - INTERVAL '$search_days days' AS timestamp ) 
 	ORDER BY s.job_attribute_stage_id";
 
 $reporter->log( 'debug', $query );
@@ -41,17 +47,20 @@ my $sth = $dbh->prepare( qq { $query } );
 $sth->execute();
 if ( $sth->rows != 0 ) 
 {
-	push( @errs, "Found entries in the job_attribute_stage table without a job_id:" );
+	push( @errs, "Found entries in the job_attribute_stage table without a job_id between $wait_days and $search_days days ago" );
+  my @missing;
+	push( @missing, join( "\t", @{$sth->{NAME}} ) );
 	while ( my @datarow = $sth->fetchrow() ) 
 	{
 		no warnings 'uninitialized';
-		push( @errs, join( "\t", @datarow ) );
+		push( @missing, join( "\t", @datarow ) );
 	}
+  $reporter->log( 'debug', "The following " . $sth->rows . " entries in the job_attribute_stage table are missing a job_id:\n " . join( "\n", @missing ) );
 }
 
 # Get resources that have recent job_attribute_stage entries
 $query = "SELECT DISTINCT resource_name FROM acct.job_attribute_stage 
-	WHERE submit_time > CAST( NOW() - INTERVAL '$days days' AS timestamp )
+	WHERE submit_time > CAST( NOW() - INTERVAL '$wait_days days' AS timestamp )
 	ORDER BY resource_name"; 
 
 $reporter->log( 'debug', $query );
