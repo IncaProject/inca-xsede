@@ -139,7 +139,7 @@ class KitQuery {
         return false;
 
       Node newest = findNewest(xpath, result);
-      String version = xpath.evaluate("tg:Version", newest);
+      String version = getVersion(xpath, newest);
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
@@ -193,7 +193,7 @@ class KitQuery {
         return false;
 
       String resId = xpath.evaluate("name", configRes);
-      String url = xpath.evaluate("tg:Endpoint", result.get(0));
+      String url = xpath.evaluate("URL", result.get(0));
       Matcher matchResult = m_urlPattern.matcher(url);
 
       if (!matchResult.matches()) {
@@ -330,19 +330,13 @@ class KitQuery {
         return false;
 
       Node newest = findNewest(xpath, result);
-      String defaultText = xpath.evaluate("tg:Default", newest);
+      String keyText = xpath.evaluate("Value", newest);
       String key;
 
-      if (defaultText.equalsIgnoreCase("yes"))
-        key = "";
-      else {
-        String keyText = xpath.evaluate("tg:HandleKey", newest);
-
-        if (keyText.length() < 1 || keyText.equalsIgnoreCase("None"))
-          key = "";
-        else
-          key = "@keyPre@ " + keyText + " @keyPost@";
-      }
+      if (keyText.length() < 1 || keyText.equalsIgnoreCase("None"))
+      	key = "";
+      else
+      	key = "@keyPre@ " + keyText + " @keyPost@";
 
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
@@ -392,7 +386,7 @@ class KitQuery {
       if (result.isEmpty())
         return false;
 
-      String endpoint = xpath.evaluate("tg:Endpoint", result.get(0));
+      String endpoint = xpath.evaluate("URL", result.get(0));
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
@@ -529,13 +523,13 @@ class KitQuery {
   /**
    *
    * @param xpath
-   * @param inputKit
+   * @param inputRes
    * @return
    * @throws XPathExpressionException
    */
-  public boolean matches(XPath xpath, Node inputKit) throws XPathExpressionException
+  public boolean matches(XPath xpath, Node inputRes) throws XPathExpressionException
   {
-    NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputKit, XPathConstants.NODESET);
+    NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputRes, XPathConstants.NODESET);
 
     return resultNodes.getLength() > 0;
   }
@@ -544,15 +538,15 @@ class KitQuery {
    *
    * @param xpath
    * @param configDoc
-   * @param inputKit
+   * @param inputRes
    * @param configKit
    * @param configRes
    * @return
    * @throws XPathExpressionException
    */
-  public boolean evaluate(XPath xpath, Document configDoc, Node inputKit, Node configKit, Node configRes) throws XPathExpressionException
+  public boolean evaluate(XPath xpath, Document configDoc, Node inputRes, Node configKit, Node configRes) throws XPathExpressionException
   {
-    NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputKit, XPathConstants.NODESET);
+    NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputRes, XPathConstants.NODESET);
     boolean changedConfig = false;
 
     for (QueryProduct product : m_products) {
@@ -570,6 +564,23 @@ class KitQuery {
   /**
    *
    * @param xpath
+   * @param resultNode
+   * @return
+   * @throws XPathExpressionException
+   */
+  private static String getVersion(XPath xpath, Node resultNode) throws XPathExpressionException
+  {
+    String version = xpath.evaluate("InterfaceVersion", resultNode);
+
+    if (version.length() < 1)
+    	version = xpath.evaluate("AppVersion", resultNode);
+
+    return version;
+  }
+
+  /**
+   *
+   * @param xpath
    * @param nodes
    * @return
    * @throws XPathExpressionException
@@ -580,31 +591,11 @@ class KitQuery {
 
     Iterator<Node> elements = nodes.iterator();
     Node resultNode = elements.next();
-    String resultText = xpath.evaluate("tg:Version", resultNode);
-    String defaultText = xpath.evaluate("tg:Default", resultNode);
-    boolean hasDefault = false;
-
-    if (defaultText.equalsIgnoreCase("yes"))
-      hasDefault = true;
+    String resultText = getVersion(xpath, resultNode);
 
     while (elements.hasNext()) {
       Node currentNode = elements.next();
-      String currentText = xpath.evaluate("tg:Version", currentNode);
-
-      defaultText = xpath.evaluate("tg:Default", currentNode);
-
-      if (hasDefault) {
-        if (!defaultText.equalsIgnoreCase("yes"))
-          continue;
-      }
-      else if (defaultText.equalsIgnoreCase("yes")) {
-        resultNode = currentNode;
-        resultText = currentText;
-        hasDefault = true;
-
-        continue;
-      }
-
+      String currentText = getVersion(xpath, currentNode);
       String[] currentPieces = currentText.split("\\.|r");
       String[] newestPieces = resultText.split("\\.|r");
       int offset = 0;

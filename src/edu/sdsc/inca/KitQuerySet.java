@@ -26,6 +26,7 @@ class KitQuerySet {
 	private final String m_kitName;
 	private final String m_kitVersion;
 	private final String m_groupName;
+	private final String m_expression;
 	private final List<String> m_optionalGroups = new ArrayList<String>();
 	private final List<KitQuery> m_queries = new ArrayList<KitQuery>();
 
@@ -33,11 +34,19 @@ class KitQuerySet {
 	// constructors
 
 
+	/**
+	 *
+	 * @param xpath
+	 * @param querySet
+	 * @throws XPathExpressionException
+	 * @throws IncaException
+	 */
 	public KitQuerySet(XPath xpath, Node querySet) throws XPathExpressionException, IncaException
 	{
 		m_kitName = xpath.evaluate("name", querySet);
 		m_kitVersion = xpath.evaluate("version", querySet);
 		m_groupName = xpath.evaluate("group", querySet);
+		m_expression = xpath.evaluate("expression", querySet);
 
 		NodeList nodes = (NodeList)xpath.evaluate("query/products/optional/group", querySet, XPathConstants.NODESET);
 
@@ -60,14 +69,21 @@ class KitQuerySet {
 	/**
 	 *
 	 * @param xpath
-	 * @param inputKit
+	 * @param inputRes
 	 * @return
 	 * @throws XPathExpressionException
 	 */
-	public boolean matches(XPath xpath, Node inputKit) throws XPathExpressionException
+	public boolean matches(XPath xpath, Node inputRes) throws XPathExpressionException
 	{
+		if (m_expression.length() > 0) {
+			NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputRes, XPathConstants.NODESET);
+
+			if (resultNodes.getLength() < 1)
+				return false;
+		}
+
 		for (KitQuery query : m_queries) {
-			if (query.matches(xpath, inputKit))
+			if (query.matches(xpath, inputRes))
 				return true;
 		}
 
@@ -78,13 +94,13 @@ class KitQuerySet {
 	 *
 	 * @param xpath
 	 * @param configDoc
-	 * @param inputKit
+	 * @param inputRes
 	 * @param configRes
 	 * @return
 	 * @throws XPathExpressionException
 	 * @throws IncaException
 	 */
-	public boolean evaluate(XPath xpath, Document configDoc, Node inputKit, Node configRes) throws XPathExpressionException, IncaException
+	public boolean evaluate(XPath xpath, Document configDoc, Node inputRes, Node configRes) throws XPathExpressionException, IncaException
 	{
 		Node configKit = (Node)xpath.evaluate("/config/groups/group[type = 'kit' and name = '" + m_groupName + "']", configDoc, XPathConstants.NODE);
 
@@ -114,7 +130,7 @@ class KitQuerySet {
 		}
 
 		for (KitQuery query : m_queries) {
-			if (query.evaluate(xpath, configDoc, inputKit, configKit, configRes))
+			if (query.evaluate(xpath, configDoc, inputRes, configKit, configRes))
 				changedConfig = true;
 		}
 
@@ -130,6 +146,7 @@ class KitQuerySet {
 	 * @return
 	 * @throws XPathExpressionException
 	 */
+	/*
 	public boolean examineGroups(XPath xpath, Document configDoc, Node inputRes, Node configRes) throws XPathExpressionException
 	{
 		Node kitGroup = (Node)xpath.evaluate("group[type = 'kit' and name = '" + m_groupName + "']", configRes, XPathConstants.NODE);
@@ -167,4 +184,5 @@ class KitQuerySet {
 
 		return true;
 	}
+	*/
 }

@@ -19,12 +19,13 @@ import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -42,7 +43,7 @@ import org.xml.sax.InputSource;
 public class UpdateIncat {
 
 	private static final List<ResourceQuery> m_resourceQueries = new ArrayList<ResourceQuery>();
-	private static final Map<String, KitQuerySet> m_kitQueries = new TreeMap<String, KitQuerySet>();
+	private static final List<KitQuerySet> m_kitQueries = new ArrayList<KitQuerySet>();
 
 
 	// public methods
@@ -59,11 +60,6 @@ public class UpdateIncat {
 				throw new IncaException("usage: UpdateIncat config input [ output ]");
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			NamespaceMap namespaces = new NamespaceMap();
-
-			namespaces.addMapping("tg", "http://mds.teragrid.org/2007/02/ctss");
-			xpath.setNamespaceContext(namespaces);
-
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document configDoc = docBuilder.parse(new FileInputStream(args[0]));
 
@@ -141,6 +137,7 @@ public class UpdateIncat {
 	 */
 	private static void populateQueries(XPath xpath, Document configDoc) throws XPathExpressionException, IncaException
 	{
+		Map<String, KitQuerySet> kitQueries = new TreeMap<String, KitQuerySet>();
 		NodeList nodes = (NodeList)xpath.evaluate("/config/queries/kit", configDoc, XPathConstants.NODESET);
 
 		for (int i = 0 ; i < nodes.getLength() ; i += 1) {
@@ -149,11 +146,13 @@ public class UpdateIncat {
 			String kitVersion = xpath.evaluate("version", kit);
 			String kitKey = kitName + "-" + kitVersion;
 
-			if (m_kitQueries.containsKey(kitKey))
+			if (kitQueries.containsKey(kitKey))
 				throw new IncaException("Config contains duplicate kits");
 
-			m_kitQueries.put(kitKey, new KitQuerySet(xpath, kit));
+			kitQueries.put(kitKey, new KitQuerySet(xpath, kit));
 		}
+
+		m_kitQueries.addAll(kitQueries.values());
 
 		nodes = (NodeList)xpath.evaluate("/config/queries/resource", configDoc, XPathConstants.NODESET);
 
@@ -170,19 +169,8 @@ public class UpdateIncat {
 	 */
 	private static boolean hasTestedSoftware(XPath xpath, Node inputRes) throws XPathExpressionException
 	{
-		NodeList kitNodes = (NodeList)xpath.evaluate("tg:Kit[tg:SupportLevel != 'retired']", inputRes, XPathConstants.NODESET);
-
-		for (int j = 0 ; j < kitNodes.getLength() ; j += 1) {
-			Node kit = kitNodes.item(j);
-			String kitName = xpath.evaluate("tg:Name", kit);
-			String kitVersion = xpath.evaluate("tg:Version", kit);
-			String kitKey = kitName + "-" + kitVersion;
-			KitQuerySet querySet = m_kitQueries.get(kitKey);
-
-			if (querySet == null)
-				continue;
-
-			if (querySet.matches(xpath, kit))
+		for (KitQuerySet querySet : m_kitQueries) {
+			if (querySet.matches(xpath, inputRes))
 				return true;
 		}
 
@@ -196,21 +184,23 @@ public class UpdateIncat {
 	 * @param configDoc
 	 * @return
 	 * @throws XPathExpressionException
+	 * @throws ParserConfigurationException
+	 * @throws DOMException
 	 * @throws IncaException
 	 */
-	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException, IncaException
+	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException, ParserConfigurationException, DOMException, IncaException
 	{
-		NodeList inputResNodes = (NodeList)xpath.evaluate("/tg:V4KitsRP/tg:KitRegistration", inputDoc, XPathConstants.NODESET);
+		NodeList inputResNodes = (NodeList)xpath.evaluate("/Resources/Resource", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 
 		for (int i = 0 ; i < inputResNodes.getLength() ; i += 1) {
 			Node inputRes = inputResNodes.item(i);
-			String resId = xpath.evaluate("tg:ResourceID", inputRes);
+			String resId = xpath.evaluate("ResourceID", inputRes);
 			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
 
 			if (configRes == null) {
 				if (hasTestedSoftware(xpath, inputRes))
-					System.err.println(resId + ": has applicable kits, but is not present in the config");
+					System.err.println(resId + ": has applicable services or software, but is not present in the config");
 
 				continue;
 			}
@@ -220,22 +210,14 @@ public class UpdateIncat {
 					changedConfig = true;
 			}
 
-			NodeList kitNodes = (NodeList)xpath.evaluate("tg:Kit[tg:SupportLevel = 'production' or tg:SupportLevel = 'testing']", inputRes, XPathConstants.NODESET);
+			Node queryTarget = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().importNode(inputRes, true);
+			NodeList retiredNodes = (NodeList)xpath.evaluate("Service[ServingState = 'retired']", queryTarget, XPathConstants.NODESET);
 
-			for (int j = 0 ; j < kitNodes.getLength() ; j += 1) {
-				Node kit = kitNodes.item(j);
-				String kitName = xpath.evaluate("tg:Name", kit);
-				String kitVersion = xpath.evaluate("tg:Version", kit);
-				String kitKey = kitName + "-" + kitVersion;
-				KitQuerySet querySet = m_kitQueries.get(kitKey);
+			for (int j = 0 ; j < retiredNodes.getLength() ; j += 1)
+				queryTarget.removeChild(retiredNodes.item(j));
 
-				if (querySet == null) {
-					System.err.println(resId + ": couldn't find a corresponding query set for kit " + kitName + ", version " + kitVersion);
-
-					continue;
-				}
-
-				if (querySet.evaluate(xpath, configDoc, kit, configRes))
+			for (KitQuerySet querySet : m_kitQueries) {
+				if (querySet.matches(xpath, queryTarget) && querySet.evaluate(xpath, configDoc, queryTarget, configRes))
 					changedConfig = true;
 			}
 		}
@@ -259,7 +241,7 @@ public class UpdateIncat {
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
 			String resId = xpath.evaluate("name", configRes);
-			Node inputRes = (Node)xpath.evaluate("/tg:V4KitsRP/tg:KitRegistration[tg:ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			Node inputRes = (Node)xpath.evaluate("/Resources/Resource[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
 
 			if (inputRes == null) {
 				System.err.println(resId + ": present in the config, but not in the input");
@@ -267,10 +249,12 @@ public class UpdateIncat {
 				continue;
 			}
 
-			for (KitQuerySet querySet : m_kitQueries.values()) {
+			/*
+			for (KitQuerySet querySet : m_kitQueries) {
 				if (querySet.examineGroups(xpath, configDoc, inputRes, configRes))
 					changedConfig = true;
 			}
+			*/
 		}
 
 		return changedConfig;
@@ -399,7 +383,6 @@ public class UpdateIncat {
 
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
-			String longName = xpath.evaluate("name", configRes);
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 			String shortName = xpath.evaluate("name", macroRes);
 
