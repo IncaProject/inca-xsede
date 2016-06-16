@@ -25,8 +25,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.DOMException;
+import net.sf.saxon.om.NamespaceConstant;
 import org.w3c.dom.Document;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;
@@ -59,7 +61,9 @@ public class UpdateIncat {
 			if (args.length < 2 || args.length > 3)
 				throw new IncaException("usage: UpdateIncat config input [ output ]");
 
-			XPath xpath = XPathFactory.newInstance().newXPath();
+			System.setProperty("javax.xml.xpath.XPathFactory:" + NamespaceConstant.OBJECT_MODEL_SAXON, "net.sf.saxon.xpath.XPathFactoryImpl");
+			XPathFactory xPathFactory = XPathFactory.newInstance(NamespaceConstant.OBJECT_MODEL_SAXON);
+			XPath xpath = xPathFactory.newXPath();
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document configDoc = docBuilder.parse(new FileInputStream(args[0]));
 
@@ -163,23 +167,6 @@ public class UpdateIncat {
 	/**
 	 *
 	 * @param xpath
-	 * @param inputRes
-	 * @return
-	 * @throws XPathExpressionException
-	 */
-	private static boolean hasTestedSoftware(XPath xpath, Node inputRes) throws XPathExpressionException
-	{
-		for (KitQuerySet querySet : m_kitQueries) {
-			if (querySet.matches(xpath, inputRes))
-				return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 *
-	 * @param xpath
 	 * @param inputDoc
 	 * @param configDoc
 	 * @return
@@ -190,36 +177,55 @@ public class UpdateIncat {
 	 */
 	private static boolean examineInput(XPath xpath, Document inputDoc, Document configDoc) throws XPathExpressionException, ParserConfigurationException, DOMException, IncaException
 	{
-		NodeList inputResNodes = (NodeList)xpath.evaluate("/Resources/Resource", inputDoc, XPathConstants.NODESET);
+		// There appears to be two types of resources (most of the time) for every resource; one that is rdr_type
+		// compute and the other is rdr_type resource.  Each has different attributes of interest so we combine when
+		// both exist
+		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and current_statuses != 'decommissioned']", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 
-		for (int i = 0 ; i < inputResNodes.getLength() ; i += 1) {
-			Node inputRes = inputResNodes.item(i);
-			String resId = xpath.evaluate("ResourceID", inputRes);
+		for (int i = 0 ; i < inputComputeResourceNodes.getLength() ; i += 1) {
+			Node computeResNode = inputComputeResourceNodes.item(i);
+			String resId = xpath.evaluate("info_resourceid", computeResNode);
+			Node resourceNode = (Node)xpath.evaluate("//resources/list-item[rdr_type = 'resource' and info_resourceid = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			if ( resourceNode != null ) {
+				NodeList resourceAttributes = resourceNode.getChildNodes();
+				for ( int j = 0; j < resourceAttributes.getLength(); j++) {
+					computeResNode.appendChild(resourceAttributes.item(j).cloneNode(true));
+				}
+			}
 			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
-
+			NodeList inputSoftwareServiceNodes = (NodeList)xpath.evaluate("//list-item[ResourceID = '" + resId.replace("teragrid", "xsede") + "' and ServingState != 'retired' ]", inputDoc, XPathConstants.NODESET);
 			if (configRes == null) {
-				if (hasTestedSoftware(xpath, inputRes))
+				if (inputSoftwareServiceNodes.getLength()>0)
 					System.err.println(resId + ": has applicable services or software, but is not present in the config");
-
 				continue;
 			}
 
 			for (ResourceQuery query : m_resourceQueries) {
-				if (query.evaluate(xpath, configDoc, inputRes, configRes))
+				if (query.evaluate(xpath, configDoc, computeResNode, configRes))
 					changedConfig = true;
 			}
 
-			Node queryTarget = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().importNode(inputRes, true);
-			NodeList retiredNodes = (NodeList)xpath.evaluate("Service[ServingState = 'retired']", queryTarget, XPathConstants.NODESET);
-
-			for (int j = 0 ; j < retiredNodes.getLength() ; j += 1)
-				queryTarget.removeChild(retiredNodes.item(j));
-
+			// some resources are old enough to have .teragrid.org in RDR but are registering with .xsede.org (e.g., Gordon)
+			if ( inputSoftwareServiceNodes == null ) {
+				System.err.println(resId + ": has no services or software, but is present in the config");
+				continue;
+			}
+			Document queryTarget = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+			Element root = queryTarget.createElement("root");
+			queryTarget.appendChild(root);
+			for( int j = 0; j < inputSoftwareServiceNodes.getLength(); j++) {
+				Node node = inputSoftwareServiceNodes.item(j);
+				Node copyNode = queryTarget.importNode(node, true);
+				root.appendChild(copyNode);
+			}
 			for (KitQuerySet querySet : m_kitQueries) {
-				if (querySet.matches(xpath, queryTarget) && querySet.evaluate(xpath, configDoc, queryTarget, configRes))
+				if (querySet.matches(xpath, root) && querySet.evaluate(xpath, configDoc, root, configRes))
 					changedConfig = true;
 			}
+
+
+
 		}
 
 		return changedConfig;
@@ -241,7 +247,7 @@ public class UpdateIncat {
 		for (int i = 0 ; i < configResNodes.getLength() ; i += 1) {
 			Node configRes = configResNodes.item(i);
 			String resId = xpath.evaluate("name", configRes);
-			Node inputRes = (Node)xpath.evaluate("/Resources/Resource[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			Node inputRes = (Node)xpath.evaluate("//resources/list-item[info_resourceid = '" + resId + "']", inputDoc, XPathConstants.NODE);
 
 			if (inputRes == null) {
 				System.err.println(resId + ": present in the config, but not in the input");
