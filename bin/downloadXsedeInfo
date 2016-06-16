@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $PRETTY_PRINT = "java -cp lib/saxon-*.jar net.sf.saxon.Query -s:- -qs:/ '!indent=yes'";
+my @OUTER_TAGS = ( "services", "software", "resources" );
+my @URLS = ( "https://info1.dyn.xsede.org:443/wh1/glue2-views-api/v1/services/", "https://info1.dyn.xsede.org:443/wh1/glue2-views-api/v1/software/", "https://info1.dyn.xsede.org:443/wh1/rdr-db/v1/rdr-xup/" );
+my $regFile = "xsede-info.xml";
+open( WRITE, ">$regFile" );
+print WRITE "<information-warehouse>\n";
+for( my $i = 0; $i < scalar(@URLS); $i++ ) {
+  print "$URLS[$i]\n";
+  my $xml = "xsede-info.xml.$$";
+  `curl -H "Accept: application/xml" $URLS[$i] 2> /dev/null | $PRETTY_PRINT > $xml`;
+  open( READ, "<$xml" );
+  my ($resource, $kit);
+  print WRITE "  <$OUTER_TAGS[$i]>\n";
+  while( <READ> ) {
+    next if /<\/?root>/;
+    next if /<?xml/;
+    my $line = $_;
+    print WRITE $line;
+  }
+  print WRITE "  </$OUTER_TAGS[$i]>\n";
+  close READ;
+  unlink $xml;
+}
+print WRITE "</information-warehouse>\n";
+close WRITE;

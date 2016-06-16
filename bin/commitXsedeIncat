@@ -1,0 +1,75 @@
+#!/bin/sh
+
+AGENT="localhost:6323"
+WRAP_CONFIG_LIBS="lib/log4j-1.2.15.jar:lib/xbean-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar:lib/incat.jar"
+CLIENT_LIBS="../teragrid/etc:lib/log4j-1.2.15.jar:lib/bcprov-jdk14-131.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar"
+
+FORCE=no
+USAGE="Usage: $0 [-f] <new incat file> <old incat file>"
+
+while getopts fh o; do  
+case "$o" in
+  f)  FORCE=yes;;
+  \?)  print >&2 $USAGE
+    exit 1;;
+  esac
+done
+shift `expr $OPTIND - 1`
+
+if [ "$1" = "auto" ]; then
+  newIncatFile=xsede-incat-auto-new.xml
+  oldIncatFile=xsede-incat-auto.xml
+else
+  if [ "$1" = "" ]; then
+    echo "Please specify new incat file" >&2
+    echo $USAGE
+    exit 1
+  fi
+  
+  if [ "$2" = "" ]; then
+    echo "Please specify old incat file" >&2
+    echo $USAGE
+    exit 1
+  fi
+  newIncatFile=$1
+  oldIncatFile=$2
+fi
+
+if [ ! -f $newIncatFile ]; then
+  echo "Missing $newIncatFile" >&2
+  echo $USAGE
+  exit 1
+fi
+
+if [ ! -f $oldIncatFile ]; then
+  echo "Missing $oldIncatFile" >&2
+  echo $USAGE
+  exit 1
+fi
+
+echo "Creating incat file for commit"
+java -cp $WRAP_CONFIG_LIBS edu.sdsc.inca.WrapConfig $newIncatFile $oldIncatFile incat-diff.xml
+echo "------------"
+cat incat-diff.xml
+echo "------------"
+
+if [ "$FORCE" = "yes" ]; then
+  echo "Ready to commit changes in inca-diff.xml to $AGENT...press enter to confirm"
+  read
+  
+  cmd="java -cp $CLIENT_LIBS edu.sdsc.inca.AgentClient -f incat-diff.xml -A $AGENT -P stdin:password: -c agentcert.pem -k agentkey.pem -t trusted"
+  echo $cmd
+  $cmd
+  echo $?
+  
+  echo "Moving $newIncatFile to $oldIncatFile";
+  mv $oldIncatFile $oldIncatFile.bak
+  mv $newIncatFile $oldIncatFile
+  if [ -d newsuites ]; then
+    echo "Moving newsuites to cursuites";
+    rm -fr cursuites
+    mv newsuites cursuites
+  fi
+  rm -f $HOME/.checkInfo
+  echo "done"
+fi
