@@ -112,15 +112,16 @@ class KitQuerySet {
 
 		if (kitGroup == null) {
 			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
-			Node newGroup = configDoc.createElement("group");
+			kitGroup = configDoc.createElement("group");
 			Node newType = configDoc.createElement("type");
 			Node newName = configDoc.createElement("name");
 
 			newType.setTextContent("kit");
 			newName.setTextContent(m_groupName);
-			newGroup.appendChild(newType);
-			newGroup.appendChild(newName);
-			configRes.insertBefore(newGroup, macroRes);
+			kitGroup.appendChild(newType);
+			kitGroup.appendChild(newName);
+
+			configRes.insertBefore(kitGroup, macroRes);
 
 			changedConfig = true;
 
@@ -130,8 +131,9 @@ class KitQuerySet {
 		}
 
 		for (KitQuery query : m_queries) {
-			if (query.evaluate(xpath, configDoc, inputRes, configKit, configRes))
-				changedConfig = true;
+				if (query.evaluate(xpath, configDoc, inputRes, kitGroup, configRes))
+					changedConfig = true;
+
 		}
 
 		return changedConfig;
