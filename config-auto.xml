@@ -5447,7 +5447,7 @@
             </macroResource>
         </resource>
         <resource>
-            <name>info1.teragrid</name>
+            <name>info1.xsede</name>
             <macroResource>
                 <name>info1</name>
                 <macro>
@@ -5463,7 +5463,7 @@
                     <type>general</type>
                     <name>INFO</name>
                 </group>
-                <hosts>info1.dyn.teragrid.org</hosts>
+                <hosts>info1.dyn.xsede.org</hosts>
             </macroResource>
         </resource>
         <resource>
@@ -20725,62 +20725,6 @@
             <seriesConfigs>
                 <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
                     <series>
-                        <name>user.search.output.unit</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/user.search.output.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                            <arg>
-                                <name>com</name>
-                                <value>wget --no-check-certificate https://@INFO-&gt;__incaHosts__@:8444/web-apps/html/profile-v1 -O /dev/null</value>
-                            </arg>
-                            <arg>
-                                <name>search</name>
-                                <value>401 Unauthorized</value>
-                            </arg>
-                            <arg>
-                                <name>delim</name>
-                                <value>\\|</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>650.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>Tomcat/User Profile</nickname>
-                    <resourceSetName>inca.gw60</resourceSetName>
-                    <schedule>
-                        <crontime>@INFO-&gt;infoPingFreq@</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@INFO-&gt;infoEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
                         <name>security.hostcert.unit</name>
                         <uri>http://inca.sdsc.edu/inca/files/xsede/bin/security.hostcert.unit</uri>
                         <args>
@@ -21018,74 +20962,6 @@
                     <resourceSetName>inca.gw60</resourceSetName>
                     <schedule>
                         <crontime>@INFO-&gt;infoPingFreq@</crontime>
-                    </schedule>
-                    <acceptedOutput>
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>@INFO-&gt;infoEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action>add</action>
-                </seriesConfig>
-                <seriesConfig xmlns:suit="http://inca.sdsc.edu/dataModel/suiteStages_2.0">
-                    <series>
-                        <name>security.hostcert.unit</name>
-                        <uri>http://inca.sdsc.edu/inca/files/xsede/bin/security.hostcert.unit</uri>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>remotecert</name>
-                                <value>@INFO-&gt;__incaHosts__@:8444</value>
-                            </arg>
-                            <arg>
-                                <name>timeout</name>
-                                <value>60</value>
-                            </arg>
-                            <arg>
-                                <name>retries</name>
-                                <value>10</value>
-                            </arg>
-                            <arg>
-                                <name>sleep</name>
-                                <value>60</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>cert</name>
-                                <value/>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>2</value>
-                            </arg>
-                            <arg>
-                                <name>minimum</name>
-                                <value>7</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>1200.0</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname>Tomcat/User Profile HTTPS certificate</nickname>
-                    <resourceSetName>inca.gw60</resourceSetName>
-                    <schedule>
-                        <crontime>? ? ?-31 * *</crontime>
                     </schedule>
                     <acceptedOutput>
                         <comparitor>ExprComparitor</comparitor>
