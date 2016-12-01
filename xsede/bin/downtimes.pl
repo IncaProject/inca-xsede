@@ -21,8 +21,7 @@ my $xp = XML::XPath->new( xml => $config );
 
 # get current downtimes
 # future is looked at too since there were some timezone parsing problems
-#my @urls = ( "https://info1.dyn.xsede.org:443/wh1/outages/v1/outages/Current", "https://info1.dyn.xsede.org:443/wh1/outages/v1/outages/Future/");
-my @urls = ( "https://info1.dyn.xsede.org:443/wh1/outages/v1/outages");
+my @urls = ( "https://info1.dyn.xsede.org:443/wh1/outages/v1/outages/Current", "https://info1.dyn.xsede.org:443/wh1/outages/v1/outages/Future/");
 my $pre = "$INCA_INSTALL/webapps";
 my $prop = "$INCA_INSTALL/etc/downtime.properties";
 my $iis =  "$pre/inca/html/downtimes-iis.txt";
