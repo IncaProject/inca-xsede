@@ -293,12 +293,25 @@
              <version>
                  <macro><xsl:value-of select="."/>-version</macro>
              </version>
+             <latestversion>
+                 <macro><xsl:value-of select="."/>-latestversion</macro>
+             </latestversion>
              <optional>
                  <group><xsl:value-of select="."/>-optional</group>
              </optional>
+         </products>
+        </query>
+        <query>
+          <expression>list-item[AppName = '<xsl:value-of select="."/>' <xsl:if test="count($synonyms[ComponentName=$component])>0"> or matches(AppName,'<xsl:value-of select="$synonyms[ComponentName=$component]/module-pattern"/>')</xsl:if>]</expression>
+          <products>
              <key>
                  <macro><xsl:value-of select="."/>-key</macro>
              </key>
+         </products>
+        </query>
+        <query>
+          <expression>list-item[InterfaceName = '<xsl:value-of select="."/>']</expression>
+          <products>
              <url>
                <host><xsl:value-of select="."/>-host</host>
                <port><xsl:value-of select="."/>-port</port>
