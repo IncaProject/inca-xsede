@@ -11,6 +11,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -29,6 +30,7 @@ class KitQuerySet {
 	private final String m_expression;
 	private final List<String> m_optionalGroups = new ArrayList<String>();
 	private final List<KitQuery> m_queries = new ArrayList<KitQuery>();
+	private static final Logger m_logger = Logger.getLogger(KitQuerySet.class);
 
 
 	// constructors
@@ -127,16 +129,24 @@ class KitQuerySet {
 
 			String resId = xpath.evaluate("name", configRes);
 
-			System.err.println(resId + ": added kit " + m_kitName + ", version " + m_kitVersion);
+			m_logger.info(resId + ": added kit " + m_kitName + ", version " + m_kitVersion);
 		}
 
 		for (KitQuery query : m_queries) {
+				m_logger.debug("KitQuery: " + query.toString());
 				if (query.evaluate(xpath, configDoc, inputRes, kitGroup, configRes))
 					changedConfig = true;
 
 		}
 
 		return changedConfig;
+	}
+
+	public String toString() {
+		return "Kit: " + this.m_kitName + " v " + this.m_kitVersion + ", group = " + m_groupName + "\n" +
+				"  expression = '" + m_expression + "', " +
+				"  optional groups count = " + m_optionalGroups.size() + ", " +
+				"  queries groups count = " + m_queries.size();
 	}
 
 	/**

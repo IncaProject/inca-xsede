@@ -11,6 +11,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -29,6 +30,7 @@ class ResourceQuery {
 	private static abstract class QueryProduct {
 
 		private final String m_expression;
+		protected static final Logger m_logger = Logger.getLogger(QueryProduct.class);
 
 
 		// constructors
@@ -147,7 +149,7 @@ class ResourceQuery {
 				newGroup.appendChild(newName);
 				configRes.insertBefore(newGroup, macroRes);
 
-				System.err.println(resId + ": added group " + m_groupName);
+				m_logger.info(resId + ": added group " + m_groupName);
 
 				return true;
 			}
@@ -159,7 +161,7 @@ class ResourceQuery {
 
 				String resId = xpath.evaluate("name", configRes);
 
-				System.err.println(resId + ": removed group " + m_groupName);
+				m_logger.info(resId + ": removed group " + m_groupName);
 
 				return true;
 			}
@@ -230,4 +232,9 @@ class ResourceQuery {
 
 		return changedConfig;
 	}
+
+	public String toString() {
+		return this.m_expression + ": " + this.m_products.size() + " products";
+	}
 }
+

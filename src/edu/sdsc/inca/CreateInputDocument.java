@@ -23,6 +23,7 @@ import javax.json.JsonValue;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
@@ -38,6 +39,8 @@ import org.xml.sax.InputSource;
 public class CreateInputDocument {
 
 	// public methods
+	private static final Logger m_logger = Logger.getLogger(CreateInputDocument.class);
+
 
 
 	/**
@@ -127,7 +130,7 @@ public class CreateInputDocument {
 			lsSerializer.write(outputDoc, lsOutput);
 		}
 		catch (Exception err) {
-			err.printStackTrace(System.err);
+			m_logger.error("Problem reading input", err);
 
 			System.exit(-1);
 		}

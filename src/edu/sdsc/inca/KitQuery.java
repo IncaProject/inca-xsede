@@ -14,6 +14,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -25,6 +26,9 @@ import org.w3c.dom.NodeList;
  *
  */
 class KitQuery {
+
+  private static final Logger m_logger = Logger.getLogger(KitQuery.class);
+
 
   /**
    *
@@ -95,6 +99,10 @@ class KitQuery {
      * @throws XPathExpressionException
      */
     protected abstract boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException;
+
+    public String toString() {
+      return "Expression: " + this.m_expression;
+    }
   }
 
   /**
@@ -138,12 +146,72 @@ class KitQuery {
       if (result.isEmpty())
         return false;
 
+      Node versionMacro = null;
+      for ( int i = 0; i < result.toArray().length; i++ ) {
+        String version = getVersion(xpath, result.get(i));
+        String resId = xpath.evaluate("name", configRes);
+        Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
+        if ( i == 0) {
+          versionMacro = setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
+        } else {
+          Node valueTag = configDoc.createElement("value");
+          valueTag.setTextContent(version);
+          versionMacro.appendChild(valueTag);
+        }
+
+      }
+
+      return true;
+    }
+  }
+
+  /**
+   *
+   */
+  private static class LatestVersionProduct extends QueryProduct {
+
+    private final String m_macroName;
+
+
+    // constructors
+
+
+    /**
+     *
+     * @param name
+     */
+    public LatestVersionProduct(String expression, String name)
+    {
+      super(expression);
+
+      m_macroName = name;
+    }
+
+
+    // protected methods
+
+
+    /**
+     *
+     * @param xpath
+     * @param result
+     * @param configDoc
+     * @param configKit
+     * @param configRes
+     * @return
+     * @throws XPathExpressionException
+     */
+    protected boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
+    {
+      if (result.isEmpty())
+        return false;
+
       Node newest = findNewest(xpath, result);
       String version = getVersion(xpath, newest);
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
-      return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
+      return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version) != null;
     }
   }
 
@@ -193,19 +261,23 @@ class KitQuery {
         return false;
 
       String resId = xpath.evaluate("name", configRes);
+      String interfaceName = xpath.evaluate("InterfaceName", result.get(0));
       String url = xpath.evaluate("URL", result.get(0));
       Matcher matchResult = m_urlPattern.matcher(url);
 
       if (!matchResult.matches()) {
-        System.err.println(resId + ": invalid URL: " + url);
-
+        if ( url.equals("") ) {
+          m_logger.warn(resId + ": " + interfaceName + ": Empty URL found");
+        } else {
+          m_logger.warn(resId + ": " + interfaceName + ": invalid URL: " + url + "");
+        }
         return false;
       }
 
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
       boolean changedConfig = setMacroValue(xpath, configDoc, macroRes, resId, m_hostName, matchResult.group(1));
 
-      if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_portName, matchResult.group(2)))
+      if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_portName, matchResult.group(2)) != null)
         changedConfig = true;
 
       return changedConfig;
@@ -230,7 +302,6 @@ class KitQuery {
     public OptionalProduct(String expression, String optionalName)
     {
       super(expression);
-
       m_optionalName = optionalName;
     }
 
@@ -251,11 +322,13 @@ class KitQuery {
      */
     protected boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configKit, Node configRes) throws XPathExpressionException
     {
-      Node optional = (Node)xpath.evaluate("group[type = 'optional' and name = '" + m_optionalName + "']", configRes, XPathConstants.NODE);
-
+      String query = "group[type = 'optional' and name = '" + m_optionalName + "']";
+      Node optional = (Node)xpath.evaluate(query, configRes, XPathConstants.NODE);
+      m_logger.debug("Running query: " + query);
       if (!result.isEmpty()) {
-        if (optional != null)
+        if (optional != null) {
           return false;
+        }
 
         String resId = xpath.evaluate("name", configRes);
         Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
@@ -269,19 +342,20 @@ class KitQuery {
         newGroup.appendChild(newName);
         configRes.insertBefore(newGroup, macroRes);
 
-        System.err.println(resId + ": added optional component " + m_optionalName);
+        m_logger.info(resId + ": added optional component " + m_optionalName);
 
         return true;
       }
       else {
-        if (optional == null)
+        if (optional == null) {
           return false;
+        }
 
         configRes.removeChild(optional);
 
         String resId = xpath.evaluate("name", configRes);
 
-        System.err.println(resId + ": removed optional component " + m_optionalName);
+        m_logger.info(resId + ": removed optional component " + m_optionalName);
 
         return true;
       }
@@ -485,6 +559,11 @@ class KitQuery {
 
         m_products.add(new VersionProduct(expression, macro));
       }
+      else if (name.equals("latestversion")) {
+        String macro = xpath.evaluate("macro", product);
+
+        m_products.add(new LatestVersionProduct(expression, macro));
+      }
       else if (name.equals("url")) {
         String host = xpath.evaluate("host", product);
         String port = xpath.evaluate("port", product);
@@ -547,9 +626,11 @@ class KitQuery {
   public boolean evaluate(XPath xpath, Document configDoc, Node inputRes, Node configKit, Node configRes) throws XPathExpressionException
   {
     NodeList resultNodes = (NodeList)xpath.evaluate(m_expression, inputRes, XPathConstants.NODESET);
+    m_logger.debug("Kit query " + m_expression + ": " + resultNodes.getLength() + " results");
     boolean changedConfig = false;
 
     for (QueryProduct product : m_products) {
+      m_logger.debug("Evaluating product type: " + product.getClass().toString());
       if (product.evaluate(xpath, resultNodes, configDoc, configKit, configRes))
         changedConfig = true;
     }
@@ -658,14 +739,14 @@ class KitQuery {
    * @return
    * @throws XPathExpressionException
    */
-  private static boolean setMacroValue(XPath xpath, Document config, Node kit, Node resource, String id, String name, String value) throws XPathExpressionException
+  private static Node setMacroValue(XPath xpath, Document config, Node kit, Node resource, String id, String name, String value) throws XPathExpressionException
   {
     Node defaultValue = (Node)xpath.evaluate("macro[name = '" + name + "']/value", kit, XPathConstants.NODE);
 
     if (defaultValue != null && defaultValue.getTextContent().equals(value))
-      return false;
+      return null;
 
-    return setMacroValue(xpath, config, resource, id, name, value);
+    return setMacroValueAndGet(xpath, config, resource, id, name, value);
   }
 
   /**
@@ -679,7 +760,7 @@ class KitQuery {
    * @return
    * @throws XPathExpressionException
    */
-  private static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
+  private static Node setMacroValueAndGet(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
   {
     Node macro = (Node)xpath.evaluate("macro[name = '" + name + "']", resource, XPathConstants.NODE);
 
@@ -701,9 +782,9 @@ class KitQuery {
       newMacro.appendChild(newChild);
       resource.appendChild(newMacro);
 
-      System.err.println(id + ": added macro " + name);
+      m_logger.info(id + ": added macro " + name);
 
-      return true;
+      return newMacro;
     }
     else {
       String macroType = xpath.evaluate("type", macro);
@@ -715,13 +796,39 @@ class KitQuery {
         if (!currentValue.equals(value)) {
           macroValue.setTextContent(value);
 
-          System.err.println(id + ": changed value of macro " + name + " from " + currentValue + " to " + value);
+          m_logger.info(id + ": changed value of macro " + name + " from " + currentValue + " to " + value);
 
-          return true;
+          return macroValue;
         }
       }
     }
 
-    return false;
+    return null;
+  }
+
+  /**
+   *
+   * @param xpath
+   * @param config
+   * @param resource
+   * @param id
+   * @param name
+   * @param value
+   * @return
+   * @throws XPathExpressionException
+   */
+  private static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
+  {
+    Node macro = setMacroValueAndGet(xpath, config, resource, id, name, value);
+    if ( macro == null ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  public String toString() {
+    return  "  expression = " + this.m_expression + "\n" +
+            "  product count = " + this.m_products.size() + "\n";
   }
 }

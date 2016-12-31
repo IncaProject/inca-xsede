@@ -26,6 +26,10 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.sf.saxon.om.NamespaceConstant;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 import org.w3c.dom.Document;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -43,9 +47,9 @@ import org.xml.sax.InputSource;
  *
  */
 public class UpdateIncat {
-
 	private static final List<ResourceQuery> m_resourceQueries = new ArrayList<ResourceQuery>();
 	private static final List<KitQuerySet> m_kitQueries = new ArrayList<KitQuerySet>();
+	private static final Logger m_logger = Logger.getLogger(UpdateIncat.class);
 
 
 	// public methods
@@ -57,6 +61,14 @@ public class UpdateIncat {
 	 */
 	public static void main(String[] args)
 	{
+		Logger logger = Logger.getRootLogger();
+		logger.setLevel(Level.ERROR);
+		Logger incaLogger = Logger.getLogger("edu.sdsc.inca");
+		incaLogger.setLevel(Level.WARN);
+		if (System.getProperty("LOGLEVEL") != null) {
+			incaLogger.setLevel(Level.toLevel(System.getProperty("LOGLEVEL")));
+		}
+		logger.addAppender(new ConsoleAppender(new PatternLayout("%d{ABSOLUTE} %5p [%t] %c{1}:%L - %m%n"), "System.out"));
 		try {
 			if (args.length < 2 || args.length > 3)
 				throw new IncaException("usage: UpdateIncat config input [ output ]");
@@ -65,10 +77,12 @@ public class UpdateIncat {
 			XPathFactory xPathFactory = XPathFactory.newInstance(NamespaceConstant.OBJECT_MODEL_SAXON);
 			XPath xpath = xPathFactory.newXPath();
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			m_logger.info("Reading config doc " + args[0]);
 			Document configDoc = docBuilder.parse(new FileInputStream(args[0]));
 
 			populateQueries(xpath, configDoc);
 
+			m_logger.info("Reading input doc " + args[1]);
 			Document inputDoc = docBuilder.parse(new FileInputStream(args[1]));
 			boolean changedConfig = examineInput(xpath, inputDoc, configDoc);
 
@@ -88,7 +102,7 @@ public class UpdateIncat {
 				lsOutput.setCharacterStream(new FileWriter(args[0]));
 				lsSerializer.write(configDoc, lsOutput);
 
-				System.err.println("Wrote new config file");
+				m_logger.info("Wrote new config file");
 			}
 
 			StringBuilder builder = new StringBuilder();
@@ -122,8 +136,7 @@ public class UpdateIncat {
 			lsSerializer.write(incatDoc, lsOutput);
 		}
 		catch (Exception err) {
-			err.printStackTrace(System.err);
-
+			m_logger.error("Problem running UpdateIncat", err);
 			System.exit(-1);
 		}
 	}
@@ -182,6 +195,9 @@ public class UpdateIncat {
 		// both exist
 		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and current_statuses != 'decommissioned']", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
+		NodeList allinputs =  (NodeList)xpath.evaluate("//list-item", inputDoc, XPathConstants.NODESET);
+		m_logger.debug(allinputs.getLength() + " all input items");
+
 
 		for (int i = 0 ; i < inputComputeResourceNodes.getLength() ; i += 1) {
 			Node computeResNode = inputComputeResourceNodes.item(i);
@@ -194,21 +210,24 @@ public class UpdateIncat {
 				}
 			}
 			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
-			NodeList inputSoftwareServiceNodes = (NodeList)xpath.evaluate("//list-item[ResourceID = '" + resId.replace("teragrid", "xsede") + "' and ServingState != 'retired' ]", inputDoc, XPathConstants.NODESET);
+			String inputQuery = "//list-item[ResourceID = '" + resId.replace("teragrid", "xsede") + "' and (not(ServingState) or ServingState != 'retired') ]";
+			NodeList inputSoftwareServiceNodes = (NodeList)xpath.evaluate(inputQuery, inputDoc, XPathConstants.NODESET);
+			m_logger.debug("Resource query " + inputQuery + ": " + inputSoftwareServiceNodes.getLength() + " results");
 			if (configRes == null) {
 				if (inputSoftwareServiceNodes.getLength()>0)
-					System.err.println(resId + ": has applicable services or software, but is not present in the config");
+					m_logger.warn(resId + ": has applicable services or software, but is not present in the config");
 				continue;
 			}
 
 			for (ResourceQuery query : m_resourceQueries) {
+				m_logger.debug("Running resource query: " + query.toString());
 				if (query.evaluate(xpath, configDoc, computeResNode, configRes))
 					changedConfig = true;
 			}
 
 			// some resources are old enough to have .teragrid.org in RDR but are registering with .xsede.org (e.g., Gordon)
 			if ( inputSoftwareServiceNodes == null ) {
-				System.err.println(resId + ": has no services or software, but is present in the config");
+				m_logger.warn(resId + ": has no services or software, but is present in the config");
 				continue;
 			}
 			Document queryTarget = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -220,6 +239,7 @@ public class UpdateIncat {
 				root.appendChild(copyNode);
 			}
 			for (KitQuerySet querySet : m_kitQueries) {
+				m_logger.debug("Running kit query: " + querySet.toString());
 				if (querySet.matches(xpath, root) && querySet.evaluate(xpath, configDoc, root, configRes))
 					changedConfig = true;
 			}
@@ -250,7 +270,7 @@ public class UpdateIncat {
 			Node inputRes = (Node)xpath.evaluate("//resources/list-item[info_resourceid = '" + resId + "']", inputDoc, XPathConstants.NODE);
 
 			if (inputRes == null) {
-				System.err.println(resId + ": present in the config, but not in the input");
+				m_logger.warn(resId + ": present in the config, but not in the input");
 
 				continue;
 			}
@@ -426,7 +446,7 @@ public class UpdateIncat {
 			NodeList implNodes = (NodeList)xpath.evaluate("/config//*/group[type = '" + groupType + "' and name = '" + groupName + "']/../name", configDoc, XPathConstants.NODESET);
 
 			if (implNodes.getLength() < 1) {
-				System.err.println("group " + groupName + " has no implementers");
+				m_logger.warn("group " + groupName + " has no implementers");
 				writeIncatResource(xpath, group, "", false, builder);
 			} else {
 				StringBuilder implementers = new StringBuilder();
