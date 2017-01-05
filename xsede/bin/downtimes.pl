@@ -32,7 +32,6 @@ for my $url ( @urls ) {
   if ($? || ! defined $outfile ){
     print "could not get outage file\n";
   } else {
-    use Data::Dumper;
     my $json = decode_json($outfile);
     my @outages = @{$json};
     for my $i (1 .. $#outages){
@@ -45,7 +44,6 @@ for my $url ( @urls ) {
       my $now = ParseDate("now");
       if ( Date_Cmp($now, $startDate) >= 0 &&
            (! defined $endDate || $endDate eq "" || Date_Cmp($now, $endDate)< 1) ) {
-        print "Found news item";
         my $news_id = $outages[$i]->{"OutageID"};
         # 10/9/12 -- lonestar has 2 registrations in IIS lonestar and lonestar4
         my $search_resource = $iis_resource =~ /lonestar/ ? "lonestar4.tacc.teragrid.org" : $iis_resource;
