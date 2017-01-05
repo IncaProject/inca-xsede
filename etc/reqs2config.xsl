@@ -85,7 +85,12 @@
         <!-- copy manual groups -->
         <xsl:copy-of select="config/groups/group"/>
       </groups>
-      <xsl:copy-of select="config/suites"/>
+      <suites>
+        <xsl:call-template name="printSuites">
+          <xsl:with-param name="reqs" select="//requirements"/>
+          <xsl:with-param name="suites" select="/reqs2config/config/suites"/>
+        </xsl:call-template>
+      </suites>
     </config>
   </xsl:template>
 
@@ -272,6 +277,43 @@
     
   </xsl:template>
 
+  <!-- ==================================================================== -->
+  <!-- printSuites                                                          -->
+  <!--                                                                      -->
+  <!-- Prints out suites with sp tags                                       -->
+  <!-- ==================================================================== -->
+  <xsl:template name="printSuites">
+    <xsl:param name="reqs"/>
+    <xsl:param name="suites"/>
+
+    <xsl:for-each select="$suites/suite">
+      <xsl:for-each select="*">
+        <xsl:variable name="sctag" select="./name()"/>
+        <xsl:choose><xsl:when test="$sctag='seriesConfigs'">
+          <seriesConfig>
+          <xsl:for-each select="seriesConfig/*">
+            <xsl:variable name="stag" select="./name()"/>
+            <xsl:choose><xsl:when test="$stag='tags'">
+            <xsl:variable name="componentstring" select="tag[starts-with(.,'software') or starts-with(.,'service')]"/>
+            <xsl:variable name="component" select="substring-after($componentstring,'=')"/>
+            <tags>
+              <xsl:for-each select="$reqs/list-item[ComponentName=$component]">
+                <tag><xsl:value-of select="replace(SPClass,' ','_')"/>=<xsl:value-of select="Requirement"/></tag>
+              </xsl:for-each>
+              <xsl:copy-of select="./tag"/>
+            </tags>
+            </xsl:when><xsl:otherwise>
+              <xsl:copy-of select="."/>
+            </xsl:otherwise></xsl:choose>
+          </xsl:for-each>
+          </seriesConfig>
+        </xsl:when><xsl:otherwise>
+          <xsl:copy-of select="."/>
+        </xsl:otherwise></xsl:choose>
+      </xsl:for-each>
+    </xsl:for-each>
+    
+  </xsl:template>
   <!-- ==================================================================== -->
   <!-- printKit                                                             -->
   <!--                                                                      -->
