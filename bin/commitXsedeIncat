@@ -2,7 +2,7 @@
 
 AGENT="localhost:6323"
 WRAP_CONFIG_LIBS="lib/log4j-1.2.15.jar:lib/xbean-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar:lib/incat.jar"
-CLIENT_LIBS="../teragrid/etc:lib/log4j-1.2.15.jar:lib/bcprov-jdk14-131.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar"
+CLIENT_LIBS="../inca/etc:lib/log4j-1.2.15.jar:lib/bcprov-jdk15on-150.jar:lib/bcpkix-jdk15on-150.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar"
 
 FORCE=no
 USAGE="Usage: $0 [-f] <new incat file> <old incat file>"
@@ -60,16 +60,16 @@ if [ "$FORCE" = "yes" ]; then
   cmd="java -cp $CLIENT_LIBS edu.sdsc.inca.AgentClient -f incat-diff.xml -A $AGENT -P stdin:password: -c agentcert.pem -k agentkey.pem -t trusted"
   echo $cmd
   $cmd
-  echo $?
-  
-  echo "Moving $newIncatFile to $oldIncatFile";
-  mv $oldIncatFile $oldIncatFile.bak
-  mv $newIncatFile $oldIncatFile
-  if [ -d newsuites ]; then
-    echo "Moving newsuites to cursuites";
-    rm -fr cursuites
-    mv newsuites cursuites
+  if [ $? -eq 0 ]; then
+    echo "Moving $newIncatFile to $oldIncatFile";
+    mv $oldIncatFile $oldIncatFile.bak
+    mv $newIncatFile $oldIncatFile
+    if [ -d newsuites ]; then
+      echo "Moving newsuites to cursuites";
+      rm -fr cursuites
+      mv newsuites cursuites
+    fi
+    rm -f $HOME/.checkInfo
+    echo "done"
   fi
-  rm -f $HOME/.checkInfo
-  echo "done"
 fi
