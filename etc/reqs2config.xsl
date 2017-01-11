@@ -19,6 +19,14 @@
     <config>
       <xsl:copy-of select="config/properties"/>
       <queries>
+        <resource>
+            <expression>TgcdbResourceName</expression>
+            <products>
+                <macro>
+                    <name>xdcdb_name</name>
+                </macro>
+            </products>
+        </resource>
       <xsl:for-each select="$testable_statuses">
         <resource>
              <expression>current_statuses[matches(.,'<xsl:value-of select="."/>')]</expression>
