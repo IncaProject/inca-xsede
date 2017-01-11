@@ -11,7 +11,7 @@
   <xsl:param name="url" />
 
   <xsl:template name="header">
-    <xsl:variable name="map" select="'http://inca.xsede.org/inca'"/>
+    <xsl:variable name="httpurl" select="replace(replace($url, 'https', 'http'), '8443', '8080')"/>
     <table width="100%" class="subheader">
       <tr>
         <td><b><a href="http://inca.xsede.org/">
@@ -40,6 +40,7 @@
                 </ul>
               </li>
             </ul>
+<!--
             <ul>
               <li><h2>Reports</h2>
                 <ul>
@@ -78,74 +79,46 @@
                 </ul>
               </li>
             </ul>
+-->
             <ul>
               <li><h2>Current Data</h2>
                 <ul>
                   <li>
-                    <a href="{concat($url, '/view/status/prodkits')}">
-                      CTSSv4
+                    <a href="{concat($url, '/view/status/sp')}">
+                      SP Service and Software tests
                     </a>
                     <ul>
                       <li>
-                        <a href="{concat($url, '/view/status/prodkits')}">
+                        <a href="{concat($url, '/view/status/sp')}">
                           expanded detailed table
                         </a>
                       </li>
                       <li>
-                        <a href="{concat($map, '/view/map/prodkits')}">
+                        <a href="{concat($httpurl, '/view/map/sp')}">
                           google map
                         </a>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/view/status/ctss')}">
-                      Cross-Site
+                    <a href="{concat($url, '/view/status/sp-cross-site')}">
+                      SP Cross-Site Service Tests
                     </a>
-                    <ul>
-                      <li>
-                        <a href="{concat($url, '/view/status/ctss')}">
-                          expanded detailed table
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/map/ctss')}">
-                          google map
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                   <li>
-                    <a href="{concat($url, '/view/status/other')}">
-                      Other Test Suites
+                    <a href="{concat($url, '/view/status/central')}">
+                      XSEDE Central Services Tests
                     </a>
-                    <ul>
-                      <li>
-                        <a href="{concat($url, '/view/status/go')}">
-                          globusonline (testing)
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/status/info')}">
-                          information services
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/status/gig')}">
-                          grid infrastructure group (gig)
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/status/security')}">
-                          security
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{concat($url, '/view/status/inca')}">
-                          inca self check
-                        </a>
-                      </li>
-                    </ul>
+                  </li>
+                  <li>
+                    <a href="{concat($url, '/view/status/inca')}">
+                      Inca Status
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{concat($url, '/view/status/gateway-extras')}">
+                      Gateway Tests
+                    </a>
                   </li>
                 </ul>
               </li>
