@@ -204,11 +204,15 @@ public class UpdateIncat {
 			String resId = xpath.evaluate("info_resourceid", computeResNode);
 			Node resourceNode = (Node)xpath.evaluate("//resources/list-item[rdr_type = 'resource' and info_resourceid = '" + resId + "']", inputDoc, XPathConstants.NODE);
 			if ( resourceNode != null ) {
-				NodeList resourceAttributes = resourceNode.getChildNodes();
-				for ( int j = 0; j < resourceAttributes.getLength(); j++) {
-					computeResNode.appendChild(resourceAttributes.item(j).cloneNode(true));
-				}
+				extractAttributes(computeResNode, resourceNode);
 			}
+			resourceNode = (Node)xpath.evaluate("//xdcdb/list-item[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			if ( resourceNode != null ) {
+				extractAttributes(computeResNode, resourceNode);
+			} else {
+				m_logger.warn("No XDCDB info for " + resId);
+			}
+
 			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
 			String inputQuery = "//list-item[ResourceID = '" + resId.replace("teragrid", "xsede") + "' and (not(ServingState) or ServingState != 'retired') ]";
 			NodeList inputSoftwareServiceNodes = (NodeList)xpath.evaluate(inputQuery, inputDoc, XPathConstants.NODESET);
@@ -249,6 +253,13 @@ public class UpdateIncat {
 		}
 
 		return changedConfig;
+	}
+
+	private static void extractAttributes(Node computeResNode, Node resourceNode) {
+		NodeList resourceAttributes = resourceNode.getChildNodes();
+		for ( int j = 0; j < resourceAttributes.getLength(); j++) {
+            computeResNode.appendChild(resourceAttributes.item(j).cloneNode(true));
+        }
 	}
 
 	/**

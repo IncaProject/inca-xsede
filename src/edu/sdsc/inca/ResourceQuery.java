@@ -168,6 +168,49 @@ class ResourceQuery {
 		}
 	}
 
+	private static class MacroProduct extends QueryProduct {
+
+		private final String m_macroName;
+
+
+		// constructors
+
+
+		/**
+		 *
+		 * @param name
+		 */
+		public MacroProduct(String expression, String name)
+		{
+			super(expression);
+
+			m_macroName = name;
+		}
+
+
+		// protected methods
+
+
+		/**
+		 *
+		 * @param xpath
+		 * @param result
+		 * @param configDoc
+		 * @param configRes
+		 * @return
+		 * @throws XPathExpressionException
+		 */
+		protected boolean evaluate(XPath xpath, List<Node> result, Document configDoc, Node configRes) throws XPathExpressionException
+		{
+			Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
+			String resId = xpath.evaluate("name", configRes);
+
+			// let's assume only single value
+			Node macroValue = result.get(0);
+			return KitQuery.setMacroValue(xpath, configDoc, macroRes, resId, m_macroName, macroValue.getTextContent());
+		}
+	}
+
 
 	private final String m_expression;
 	private final List<QueryProduct> m_products = new ArrayList<QueryProduct>();
@@ -201,9 +244,13 @@ class ResourceQuery {
 				String group = xpath.evaluate("group", product);
 
 				m_products.add(new GroupProduct(expression, group));
-			}
-			else
+			} else 	if (name.equals("macro")) {
+				String macroName = xpath.evaluate("name", product);
+
+				m_products.add(new MacroProduct(expression, macroName));
+			} else {
 				throw new IncaException("Unknown query product type " + name);
+			}
 		}
 	}
 

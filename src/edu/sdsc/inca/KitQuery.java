@@ -151,7 +151,7 @@ class KitQuery {
         String version = getVersion(xpath, result.get(i));
         String resId = xpath.evaluate("name", configRes);
         Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
-        if ( i == 0) {
+        if (versionMacro == null) {
           versionMacro = setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
         } else {
           Node valueTag = configDoc.createElement("value");
@@ -461,6 +461,7 @@ class KitQuery {
         return false;
 
       String endpoint = xpath.evaluate("URL", result.get(0));
+      endpoint = endpoint.replaceFirst("\\/$", ""); // strip ending slash if exist
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
@@ -817,7 +818,7 @@ class KitQuery {
    * @return
    * @throws XPathExpressionException
    */
-  private static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
+  protected static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
   {
     Node macro = setMacroValueAndGet(xpath, config, resource, id, name, value);
     if ( macro == null ) {
