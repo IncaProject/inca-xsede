@@ -277,10 +277,13 @@
         </xsl:if>
     </xsl:for-each>
     <xsl:for-each select="distinct-values($reqs/list-item/ComponentName)">
+        <xsl:variable name="groupName" select="."/>
+        <xsl:if test="count($existingGroups[name=$groupName])=0">
         <group>
-            <name><xsl:value-of select="."/></name>
+            <name><xsl:value-of select="$groupName"/></name>
             <type>general</type>
         </group>
+        </xsl:if>
     </xsl:for-each>
     
   </xsl:template>
@@ -295,30 +298,38 @@
     <xsl:param name="suites"/>
 
     <xsl:for-each select="$suites/suite">
+      <suite>
       <xsl:for-each select="*">
         <xsl:variable name="sctag" select="./name()"/>
         <xsl:choose><xsl:when test="$sctag='seriesConfigs'">
-          <seriesConfig>
-          <xsl:for-each select="seriesConfig/*">
-            <xsl:variable name="stag" select="./name()"/>
-            <xsl:choose><xsl:when test="$stag='tags'">
-            <xsl:variable name="componentstring" select="tag[starts-with(.,'software') or starts-with(.,'service')]"/>
-            <xsl:variable name="component" select="substring-after($componentstring,'=')"/>
-            <tags>
-              <xsl:for-each select="$reqs/list-item[ComponentName=$component]">
-                <tag><xsl:value-of select="replace(SPClass,' ','_')"/>=<xsl:value-of select="Requirement"/></tag>
-              </xsl:for-each>
-              <xsl:copy-of select="./tag"/>
-            </tags>
-            </xsl:when><xsl:otherwise>
-              <xsl:copy-of select="."/>
-            </xsl:otherwise></xsl:choose>
+          <seriesConfigs>
+          <xsl:for-each select="seriesConfig">
+            <seriesConfig>
+            <xsl:for-each select="*">
+              <xsl:variable name="stag" select="./name()"/>
+              <xsl:choose><xsl:when test="$stag='tags'">
+              <xsl:variable name="componentstring" select="tag[starts-with(.,'software') or starts-with(.,'service')]"/>
+              <xsl:variable name="component" select="substring-after($componentstring,'=')"/>
+              <tags>
+<!--
+                <xsl:for-each select="$reqs/list-item[ComponentName=$component]">
+                  <tag><xsl:value-of select="replace(SPClass,' ','_')"/>=<xsl:value-of select="Requirement"/></tag>
+                </xsl:for-each>
+-->
+                <xsl:copy-of select="./tag"/>
+              </tags>
+              </xsl:when><xsl:otherwise>
+                <xsl:copy-of select="."/>
+              </xsl:otherwise></xsl:choose>
+            </xsl:for-each>
+            </seriesConfig>
           </xsl:for-each>
-          </seriesConfig>
+          </seriesConfigs>
         </xsl:when><xsl:otherwise>
           <xsl:copy-of select="."/>
         </xsl:otherwise></xsl:choose>
       </xsl:for-each>
+      </suite>
     </xsl:for-each>
     
   </xsl:template>
