@@ -13,9 +13,9 @@ if [ "$1" = "auto" ]; then
   fi
   $javaexec expand -i xsede-incat-auto-new.xml -s xsede-newsuites
   echo "Suite expanded into xsede-newsuites dir"
-  #echo "Diffing suites";
-  #$javaexec diff -s1 newsuites -s2 ../xsede/var/suites -it true -iu true -a true > xsede-diff.log
-  #echo "Check xsede-diff.log for results (search for ERROR for errors)";
+  echo "Diffing suites";
+  $javaexec diff -s1 xsede-newsuites -s2 ../inca/var/suites -it true -iu true -a true > xsede-diff.log
+  echo "Check xsede-diff.log for results (search for ERROR for errors)";
 else
   $javaexec $*
 fi
