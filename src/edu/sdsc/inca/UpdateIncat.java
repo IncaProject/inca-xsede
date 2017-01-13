@@ -193,7 +193,7 @@ public class UpdateIncat {
 		// There appears to be two types of resources (most of the time) for every resource; one that is rdr_type
 		// compute and the other is rdr_type resource.  Each has different attributes of interest so we combine when
 		// both exist
-		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and current_statuses != 'decommissioned']", inputDoc, XPathConstants.NODESET);
+		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and matches(current_statuses,'test|[^-]production')]", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 		NodeList allinputs =  (NodeList)xpath.evaluate("//list-item", inputDoc, XPathConstants.NODESET);
 		m_logger.debug(allinputs.getLength() + " all input items");
@@ -206,12 +206,6 @@ public class UpdateIncat {
 			if ( resourceNode != null ) {
 				extractAttributes(computeResNode, resourceNode);
 			}
-			resourceNode = (Node)xpath.evaluate("//xdcdb/list-item[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
-			if ( resourceNode != null ) {
-				extractAttributes(computeResNode, resourceNode);
-			} else {
-				m_logger.warn("No XDCDB info for " + resId);
-			}
 
 			Node configRes = (Node)xpath.evaluate("/config/resources/resource[name = '" + resId + "' and not(exists(skip))]", configDoc, XPathConstants.NODE);
 			String inputQuery = "//list-item[ResourceID = '" + resId.replace("teragrid", "xsede") + "' and (not(ServingState) or ServingState != 'retired') ]";
@@ -221,6 +215,13 @@ public class UpdateIncat {
 				if (inputSoftwareServiceNodes.getLength()>0)
 					m_logger.warn(resId + ": has applicable services or software, but is not present in the config");
 				continue;
+			}
+
+			resourceNode = (Node)xpath.evaluate("//xdcdb/list-item[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			if ( resourceNode != null ) {
+				extractAttributes(computeResNode, resourceNode);
+			} else {
+				m_logger.warn("No XDCDB info for " + resId);
 			}
 
 			for (ResourceQuery query : m_resourceQueries) {
