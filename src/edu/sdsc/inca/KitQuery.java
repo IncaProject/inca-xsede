@@ -404,13 +404,19 @@ class KitQuery {
         return false;
 
       Node newest = findNewest(xpath, result);
-      String keyText = xpath.evaluate("Value", newest);
+      String appName = xpath.evaluate("AppName", newest);
+      String appVersion = xpath.evaluate("AppVersion", newest);
+
       String key;
 
-      if (keyText.length() < 1 || keyText.equalsIgnoreCase("None"))
+      if (appName.length() < 1 || appName.equalsIgnoreCase("None"))
       	key = "";
-      else
-      	key = "@keyPre@ " + keyText + " @keyPost@";
+      else {
+        key = "@keyPre@ " + appName;
+        if (appVersion != null)
+          key += "/" + appVersion;
+        key += " @keyPost@";
+      }
 
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
