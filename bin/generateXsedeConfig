@@ -52,3 +52,7 @@ exit(1) if $? != 0;
 unlink "xsede-config-input.xml";
 unlink "xsede-config-output.xml";
 
+$cmd = "java -cp " . join( ":", @classpath ) . " " . $XSLT_CLASS . " " .
+          "-xsl $xslthome/etc/refresh.xsl -in $xslthome/xsede-config.xml > xsede-refresh.xml";
+print "$cmd\n";
+`$cmd`;
