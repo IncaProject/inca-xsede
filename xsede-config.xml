@@ -585,6 +585,11 @@
           <value>/home/inca/inca-client</value>
         </macro>
         <macro>
+          <name>__remoteInvocationMethod__</name>
+          <value>manual</value>
+          <type>constant</type>
+        </macro>
+        <macro>
           <type>constant</type>
           <name>go-dirs</name>
           <value></value>
@@ -636,7 +641,7 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:rpwagner@sdsc.edu, FailTo:kenneth@sdsc.edu</value>
+          <value>FailTo:inca@sdsc.edu, FailTo:kenneth@sdsc.edu</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -700,13 +705,13 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:rpwagner@sdsc.edu</value>
+          <value>FailTo:inca@sdsc.edu</value>
         </macro>
         <macro>
           <type>constant</type>
           <name>gridftpContact</name>
           <value>FailTo:inca@sdsc.edu</value>
-          <value>FailTo:inca@sdsc.edu, FailTo:rpwagner@sdsc.edu, FailTo:kenneth@sdsc.edu</value>
+          <value>FailTo:inca@sdsc.edu, FailTo:kenneth@sdsc.edu</value>
         </macro>
         <group>
           <type>general</type>
@@ -1302,7 +1307,7 @@
       <macro>
         <type>constant</type>
         <name>chargeProject</name>
-        <value>TG-STA110011S</value>
+        <value>TG-IRI160006</value>
       </macro>
       <macro>
         <type>constant</type>
@@ -5905,7 +5910,7 @@
             <args>
               <arg>
                 <name>procPat</name>
-                <value>Xmx1024m.*edu.sdsc.inca</value>
+                <value>Xmx\\d+m.*edu.sdsc.inca</value>
               </arg>
               <arg>
                 <name>version</name>
@@ -6454,6 +6459,57 @@
             <tag>name=org.globus.myproxy</tag>
             <tag>version=0</tag>
             <tag>service=org.globus.myproxy</tag>
+          </tags>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>cluster.lang.perl.version</name>
+            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.lang.perl.version</uri>
+  <args>
+    <arg>
+      <name>help</name>
+      <value>no</value>
+    </arg>
+    <arg>
+      <name>log</name>
+      <value>0</value>
+    </arg>
+    <arg>
+      <name>verbose</name>
+      <value>1</value>
+    </arg>
+    <arg>
+      <name>version</name>
+      <value>no</value>
+    </arg>
+  </args>
+
+            <limits>
+              <wallClockTime>600.0</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>perl-version</nickname>
+          <resourceSetName>ALL-RM</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[perl>=5]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@tgContact@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+          <tags>
+            <tag>resource=@__longname__@</tag>
+            <tag>name=perl</tag>
+            <tag>version=5</tag>
+            <tag>software=perl</tag>
           </tags>
         </seriesConfig>
       </seriesConfigs>
@@ -7069,7 +7125,7 @@
           </acceptedOutput>
           <action>add</action>
           <tags>
-            <tag>resource=@SDSC->__longname__@</tag>
+            <tag>resource=@__longname__@</tag>
             <tag>name=cipres</tag>
             <tag>version=0</tag>
             <tag>service=cipres</tag>
