@@ -808,6 +808,8 @@ class KitQuery {
            Node macroValue = macroValues.item(i);
            currentValues[i] = macroValue.getTextContent();
         }
+        Arrays.sort(newValues);
+        Arrays.sort(currentValues);
         if (!Arrays.equals(newValues, currentValues)) {
           Node newMacro = createMacroNode(config, name, newValues);
           resource.replaceChild(newMacro, currentMacro);
