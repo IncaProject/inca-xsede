@@ -5,8 +5,10 @@ package edu.sdsc.inca;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +16,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import edu.sdsc.inca.util.StringMethods;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -146,22 +149,16 @@ class KitQuery {
       if (result.isEmpty())
         return false;
 
-      Node versionMacro = null;
+      // May be duplicate versions (e.g., two login nodes for a host; so just do it once)
+      HashMap<String,String> uniqueVersions = new HashMap<>();
       for ( int i = 0; i < result.toArray().length; i++ ) {
         String version = getVersion(xpath, result.get(i));
-        String resId = xpath.evaluate("name", configRes);
-        Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
-        if (versionMacro == null) {
-          versionMacro = setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
-        } else {
-          Node valueTag = configDoc.createElement("value");
-          valueTag.setTextContent(version);
-          versionMacro.appendChild(valueTag);
-        }
-
+        uniqueVersions.put(version, "");
       }
-
-      return true;
+      String[] newVersions = uniqueVersions.keySet().toArray(new String[uniqueVersions.keySet().size()]);
+      Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
+      String resId = xpath.evaluate("name", configRes);
+      return setMacroValues(xpath, configDoc, configKit, macroRes, resId, m_macroName, newVersions);
     }
   }
 
@@ -211,7 +208,7 @@ class KitQuery {
       String resId = xpath.evaluate("name", configRes);
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
-      return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version) != null;
+      return setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_macroName, version);
     }
   }
 
@@ -261,23 +258,33 @@ class KitQuery {
         return false;
 
       String resId = xpath.evaluate("name", configRes);
-      String interfaceName = xpath.evaluate("InterfaceName", result.get(0));
-      String url = xpath.evaluate("URL", result.get(0));
-      Matcher matchResult = m_urlPattern.matcher(url);
 
-      if (!matchResult.matches()) {
-        if ( url.equals("") ) {
-          m_logger.warn(resId + ": " + interfaceName + ": Empty URL found");
-        } else {
-          m_logger.warn(resId + ": " + interfaceName + ": invalid URL: " + url + "");
+      HashMap<String, String> uniqueHosts = new HashMap<>();
+      HashMap<String, String> uniquePorts = new HashMap<>();
+      for ( int i = 0; i < result.toArray().length; i++ ) {
+        String interfaceName = xpath.evaluate("InterfaceName", result.get(i));
+        String url = xpath.evaluate("URL", result.get(i));
+        Matcher matchResult = m_urlPattern.matcher(url);
+
+        if (!matchResult.matches()) {
+          if ( url.equals("") ) {
+            m_logger.warn(resId + ": " + interfaceName + ": Empty URL found");
+          } else {
+            m_logger.warn(resId + ": " + interfaceName + ": invalid URL: " + url + "");
+          }
+          continue;
         }
-        return false;
+        uniqueHosts.put(matchResult.group(1), "");
+        uniquePorts.put(matchResult.group(2), "");
       }
+      String[] newHosts = uniqueHosts.keySet().toArray(new String[uniqueHosts.size()]);
+      String[] newPorts = uniquePorts.keySet().toArray(new String[uniquePorts.size()]);
+
 
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
-      boolean changedConfig = setMacroValue(xpath, configDoc, macroRes, resId, m_hostName, matchResult.group(1));
+      boolean changedConfig = setMacroValues(xpath, configDoc, macroRes, resId, m_hostName, newHosts);
 
-      if (setMacroValue(xpath, configDoc, configKit, macroRes, resId, m_portName, matchResult.group(2)) != null)
+      if (setMacroValues(xpath, configDoc, configKit, macroRes, resId, m_portName, newPorts))
         changedConfig = true;
 
       return changedConfig;
@@ -466,12 +473,17 @@ class KitQuery {
       if (result.isEmpty())
         return false;
 
-      String endpoint = xpath.evaluate("URL", result.get(0));
-      endpoint = endpoint.replaceFirst("\\/$", ""); // strip ending slash if exist
       String resId = xpath.evaluate("name", configRes);
-      Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
+      Node macroRes = (Node) xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
 
-      return setMacroValue(xpath, configDoc, macroRes, resId, m_macroName, endpoint);
+      HashMap<String, String> uniqueURLs = new HashMap<>();
+      for ( int i = 0; i < result.toArray().length; i++ ) {
+        String endpoint = xpath.evaluate("URL", result.get(i));
+        endpoint = endpoint.replaceFirst("\\/$", ""); // strip ending slash if exist
+        uniqueURLs.put(endpoint, "");
+      }
+      String[] newURLs = uniqueURLs.keySet().toArray(new String[uniqueURLs.size()]);
+      return setMacroValues(xpath, configDoc, configKit, macroRes, resId, m_macroName, newURLs);
     }
   }
 
@@ -734,6 +746,10 @@ class KitQuery {
     return resultNode;
   }
 
+  protected static boolean setMacroValue(XPath xpath, Document config, Node kit, Node resource, String id, String name, String value) throws XPathExpressionException
+  {
+    return setMacroValues(xpath, config, kit, resource, id, name, new String[]{value} );
+  }
   /**
    *
    * @param xpath
@@ -742,18 +758,23 @@ class KitQuery {
    * @param resource
    * @param id
    * @param name
-   * @param value
+   * @param values
    * @return
    * @throws XPathExpressionException
    */
-  private static Node setMacroValue(XPath xpath, Document config, Node kit, Node resource, String id, String name, String value) throws XPathExpressionException
+  protected static boolean setMacroValues(XPath xpath, Document config, Node kit, Node resource, String id, String name, String[] values) throws XPathExpressionException
   {
     Node defaultValue = (Node)xpath.evaluate("macro[name = '" + name + "']/value", kit, XPathConstants.NODE);
 
-    if (defaultValue != null && defaultValue.getTextContent().equals(value))
-      return null;
+    if (defaultValue != null && defaultValue.getTextContent().equals(values[0]))
+      return false;
 
-    return setMacroValueAndGet(xpath, config, resource, id, name, value);
+    return setMacroValues(xpath, config, resource, id, name, values);
+  }
+
+  protected static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
+  {
+    return setMacroValues(xpath, config, resource, id, name, new String[]{value});
   }
 
   /**
@@ -763,75 +784,63 @@ class KitQuery {
    * @param resource
    * @param id
    * @param name
-   * @param value
+   * @param newValues
    * @return
    * @throws XPathExpressionException
    */
-  private static Node setMacroValueAndGet(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
+  protected static boolean setMacroValues(XPath xpath, Document config, Node resource, String id, String name, String[] newValues) throws XPathExpressionException
   {
-    Node macro = (Node)xpath.evaluate("macro[name = '" + name + "']", resource, XPathConstants.NODE);
+    Node currentMacro = (Node)xpath.evaluate("macro[name = '" + name + "']", resource, XPathConstants.NODE);
 
-    if (macro == null) {
-      Node newMacro = config.createElement("macro");
-      Node newChild = config.createElement("type");
+    if (currentMacro == null) {
+      Node newMacro = createMacroNode(config, name, newValues);
+      resource.appendChild(newMacro);
+      m_logger.info(id + ": added macro " + name);
 
-      newChild.setTextContent("variable");
-      newMacro.appendChild(newChild);
+      return true;
+    } else {
+      String macroType = xpath.evaluate("type", currentMacro);
 
-      newChild = config.createElement("name");
+      if (!macroType.equals("constant")) {
+        NodeList macroValues = (NodeList)xpath.evaluate("value", currentMacro, XPathConstants.NODESET);
+        String[] currentValues = new String[macroValues.getLength()];
+        for (int i = 0; i < macroValues.getLength(); i++ ) {
+           Node macroValue = macroValues.item(i);
+           currentValues[i] = macroValue.getTextContent();
+        }
+        if (!Arrays.equals(newValues, currentValues)) {
+          Node newMacro = createMacroNode(config, name, newValues);
+          resource.replaceChild(newMacro, currentMacro);
 
-      newChild.setTextContent(name);
-      newMacro.appendChild(newChild);
+          m_logger.info(id + ": changed value of macro " + name + " from " + StringMethods.join(", ", currentValues) +
+                  " to " + StringMethods.join(", ", newValues));
 
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  private static Node createMacroNode(Document config, String name, String[] newValues) {
+    Node newMacro = config.createElement("macro");
+    Node newChild = config.createElement("type");
+
+    newChild.setTextContent("variable");
+    newMacro.appendChild(newChild);
+
+    newChild = config.createElement("name");
+
+    newChild.setTextContent(name);
+    newMacro.appendChild(newChild);
+
+    for (String value : newValues) {
       newChild = config.createElement("value");
 
       newChild.setTextContent(value);
       newMacro.appendChild(newChild);
-      resource.appendChild(newMacro);
-
-      m_logger.info(id + ": added macro " + name);
-
-      return newMacro;
     }
-    else {
-      String macroType = xpath.evaluate("type", macro);
-
-      if (!macroType.equals("constant")) {
-        Node macroValue = (Node)xpath.evaluate("value", macro, XPathConstants.NODE);
-        String currentValue = macroValue.getTextContent();
-
-        if (!currentValue.equals(value)) {
-          macroValue.setTextContent(value);
-
-          m_logger.info(id + ": changed value of macro " + name + " from " + currentValue + " to " + value);
-
-          return macroValue;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   *
-   * @param xpath
-   * @param config
-   * @param resource
-   * @param id
-   * @param name
-   * @param value
-   * @return
-   * @throws XPathExpressionException
-   */
-  protected static boolean setMacroValue(XPath xpath, Document config, Node resource, String id, String name, String value) throws XPathExpressionException
-  {
-    Node macro = setMacroValueAndGet(xpath, config, resource, id, name, value);
-    if ( macro == null ) {
-      return false;
-    } else {
-      return true;
-    }
+    return newMacro;
   }
 
   public String toString() {
