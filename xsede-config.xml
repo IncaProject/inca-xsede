@@ -424,7 +424,7 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:mbryant@lsu.edu</value>
+          <value>FailTo:inca@sdsc.edu</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -2962,7 +2962,7 @@
             </limits>
             <context>@pre@@globus-key@@@@post@</context>
           </series>
-          <nickname>gsissh-unit</nickname>
+          <nickname>gsissh-unit-@org.globus.openssh-host@</nickname>
           <resourceSetName>org.globus.openssh</resourceSetName>
           <schedule>
             <crontime>? 0-23/3 * * *</crontime>
@@ -3078,7 +3078,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gsi-scp-hpn-server</nickname>
+          <nickname>gsi-scp-hpn-server-@org.globus.openssh-host@</nickname>
           <resourceSetName>org.globus.openssh</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
@@ -3135,7 +3135,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>gsissh-rfc-2818-compliance</nickname>
+          <nickname>gsissh-rfc-2818-compliance-@org.globus.openssh-host@</nickname>
           <resourceSetName>org.globus.openssh</resourceSetName>
           <schedule>
             <crontime>? ? ?-31 * *</crontime>
@@ -4349,56 +4349,6 @@
       <seriesConfigs>
         <seriesConfig>
           <series>
-            <name>cluster.admin.ant.version</name>
-            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.admin.ant.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@apache-ant-key@@@@post@</context>
-          </series>
-          <nickname>ant-version-@apache-ant-version@</nickname>
-          <resourceSetName>apache-ant</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>ant==@apache-ant-version@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-          <tags>
-            <tag>resource=@__longname__@</tag>
-            <tag>name=apache-ant</tag>
-            <tag>version=@apache-ant-version@</tag>
-            <tag>software=apache-ant</tag>
-          </tags>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.compiler.any.unit</uri>
             <args>
@@ -4556,56 +4506,6 @@
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage==''</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-          <tags>
-            <tag>resource=@__longname__@</tag>
-            <tag>name=gnu</tag>
-            <tag>version=@gnu-version@</tag>
-            <tag>software=gnu</tag>
-          </tags>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.compiler.gcc.version</name>
-            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.compiler.gcc.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@gnu-key@@@@post@</context>
-          </series>
-          <nickname>compiler-gnu-version-@gnu-version@</nickname>
-          <resourceSetName>gnu</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>gcc=~".*"</comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
@@ -5059,56 +4959,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.compiler.pgi.version</name>
-            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.compiler.pgi.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>0</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@pgi-key@@@@post@</context>
-          </series>
-          <nickname>compiler-pgi-version-@pgi-version@</nickname>
-          <resourceSetName>pgi</resourceSetName>
-          <schedule>
-            <crontime>? ? ?-31 * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>pgi-compiler=~@pgi-version@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-          <tags>
-            <tag>resource=@__longname__@</tag>
-            <tag>name=pgi</tag>
-            <tag>version=@pgi-version@</tag>
-            <tag>software=pgi</tag>
-          </tags>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <args>
               <arg>
@@ -5280,56 +5130,6 @@
         </seriesConfig>
         <seriesConfig>
           <series>
-            <name>cluster.compiler.intel.version</name>
-            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.compiler.intel.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@intel-key@@@@post@</context>
-          </series>
-          <nickname>compiler-intel-version-@intel-version@</nickname>
-          <resourceSetName>intel</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison>intel-compiler==@intel-version@</comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-          <tags>
-            <tag>resource=@__longname__@</tag>
-            <tag>name=intel</tag>
-            <tag>version=@intel-version@</tag>
-            <tag>software=intel</tag>
-          </tags>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
             <name>cluster.compiler.any.unit</name>
             <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.compiler.any.unit</uri>
             <args>
@@ -5442,56 +5242,6 @@
             <tag>name=intel</tag>
             <tag>version=@intel-version@</tag>
             <tag>software=intel</tag>
-          </tags>
-        </seriesConfig>
-        <seriesConfig>
-          <series>
-            <name>cluster.scripting.python.version</name>
-            <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.scripting.python.version</uri>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>600.0</wallClockTime>
-            </limits>
-            <context>@pre@@python-key@@@@post@</context>
-          </series>
-          <nickname>python-version-@python-version@</nickname>
-          <resourceSetName>python</resourceSetName>
-          <schedule>
-            <crontime>? ? * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[python>=2.2]]></comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>@tgContact@</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-          <tags>
-            <tag>resource=@__longname__@</tag>
-            <tag>name=python</tag>
-            <tag>version=@python-version@</tag>
-            <tag>software=python</tag>
           </tags>
         </seriesConfig>
         <seriesConfig>
