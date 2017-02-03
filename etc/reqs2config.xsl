@@ -41,7 +41,7 @@
       <xsl:for-each select="distinct-values(//requirements/list-item/SPClass)">
         <xsl:variable name="spid" select="translate(lower-case(.),' ', '-')"/>
         <resource>
-             <expression>other_attributes[provider_level='<xsl:value-of select="."/>']</expression>
+             <expression>provider_level[.='<xsl:value-of select="."/>']</expression>
              <products>
                    <group>
                        <group><xsl:value-of select="$spid"/></group>
