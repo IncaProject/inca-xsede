@@ -7,7 +7,7 @@ use DBI;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'data.db.gateways',
-	version => 2,
+	version => 3,
 	description => 'Checks the central database for entries in the job_attribute_stage table without a job_id.',
 );
 $reporter->addDependency('DBI');
@@ -19,7 +19,10 @@ $reporter->processArgv(@ARGV);
 my $wait_days = $reporter->argValue('waitdays');
 my $check_days = $reporter->argValue('checkdays');
 my $search_days = $wait_days + $check_days;
-my $resources = $reporter->argValue('resources');
+my $resources_list = $reporter->argValue('resources');
+my @resources = split( ',', $resources_list );
+my @quoted_resources = map{"'$_'"} @resources;
+my $sql_match_resources = join(",", @quoted_resources);
 
 my $dbh = DBI->connect( "DBI:Pg:dbname=teragrid;host=tgcdb.xsede.org;port=5432", "gw_att_pub", undef, { RaiseError=>1, PrintError=>1 } );
 if ( !$dbh ) 
@@ -36,6 +39,7 @@ my $query = "SELECT s.value,
 	FROM acct.job_attribute_stage AS s
 	JOIN acct.jobs AS j ON j.resource_id=s.resource_id AND j.local_jobid=s.local_jobid
 	WHERE s.job_id IS NULL 
+	AND s.resource_name in ($sql_match_resources) 
 	AND s.submit_time < CAST( NOW() - INTERVAL '$wait_days days' AS timestamp ) 
 	AND s.submit_time > CAST( NOW() - INTERVAL '$search_days days' AS timestamp ) 
 	ORDER BY s.job_attribute_stage_id";
@@ -77,7 +81,6 @@ else
 	{
 		push( @db_resources, @datarow );
 	}
-	my @resources = split( ',', $resources );
 	foreach my $resource ( @resources )
 	{
 		if ( ! grep { $_ eq $resource } @db_resources )
