@@ -7,7 +7,7 @@ use Inca::Reporter::SimpleUnit;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'xsede.admin.resourceid.unit',
-	version => 2,
+	version => 3,
 	description => 'Check ResourceID supplied by xdresourceid and xdusage commands',
 	unit_name => 'resourceid'
 );
@@ -51,32 +51,6 @@ if ( %xdresource_out )
 	if ( $xdresource_out{'SiteID'} =~ /^\s*$/ )
 	{
 		push( @err, "xdresourceid SiteID is empty" );
-	}
-}
-
-my $xdusage_resource;
-my $xdusage_cmd = 'which xdusage';
-my $xdusage = $reporter->loggedCommand( $xdusage_cmd );
-if ( $? != 0 )
-{
-	push( @err, "$xdusage_cmd: $! $xdusage" ); 
-}
-else
-{
-	chomp( $xdusage );
-	my $xdusage_resource_cmd = 'cat ' . dirname( $xdusage ) . '/resource_name';
-	$xdusage_resource = $reporter->loggedCommand( $xdusage_resource_cmd );
-	if ( $? != 0 )
-	{
-		push( @err, "$xdusage_resource_cmd: $! $xdusage_resource" );
-	}
-	else
-	{
-		chomp( $xdusage_resource );
-		if ( %xdresource_out and ( $xdusage_resource ne $xdresource_out{'XDCDB_resource_name'} ) )
-		{
-			push( @err, "xdusage ($xdusage_resource) and xdresourceid XDCDB_resource_name (" . $xdresource_out{'XDCDB_resource_name'} . ") names differ" );
-		}
 	}
 }
 
