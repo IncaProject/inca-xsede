@@ -4928,73 +4928,48 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
-                        <name>data.amqp.unit</name>
+                        <name>info.pub.unit</name>
                         <args>
                             <arg>
-                                <name>auth</name>
-                                <value>@amqp_creds@</value>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>5</value>
+                                <name>age</name>
+                                <value>900</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/processing-status/record/?format=json</value>
+                            </arg>
+                            <arg>
+                                <name>topic</name>
+                                <value>glue2.computing_activities</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>exchange</name>
-                                <value>glue2.computing_activities</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>vhost</name>
-                                <value>xsede</value>
-                            </arg>
-                            <arg>
-                                <name>listentime</name>
-                                <value>900</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@amqpHost@</value>
-                            </arg>
-                            <arg>
-                                <name>keys</name>
-                                <value>@xsede-&gt;amqp-host@</value>
-                            </arg>
-                            <arg>
-                                <name>minkeys</name>
+                                <name>log</name>
                                 <value>5</value>
                             </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@xsede-&gt;amqp-host@</value>
+                            </arg>
                         </args>
-                        <limits>
-                            <wallClockTime>1200</wallClockTime>
-                        </limits>
                         <context>@@</context>
                     </series>
-                    <nickname xmlns="">ipf-glue2-services</nickname>
+                    <nickname xmlns="">ipf-glue2-compute-activities</nickname>
                     <resourceSetName xmlns="">capac</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? ?-23/3 * * *</crontime>
                     </schedule>
-                    <acceptedOutput xmlns="">
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -5005,56 +4980,41 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
-                        <name>data.amqp.unit</name>
+                        <name>info.pub.unit</name>
                         <args>
                             <arg>
-                                <name>auth</name>
-                                <value>@amqp_creds@</value>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>5</value>
+                                <name>age</name>
+                                <value>43200</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/processing-status/record/?format=json</value>
+                            </arg>
+                            <arg>
+                                <name>topic</name>
+                                <value>glue2.computing_activity</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>exchange</name>
-                                <value>glue2.computing_activity</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>vhost</name>
-                                <value>xsede</value>
-                            </arg>
-                            <arg>
-                                <name>listentime</name>
-                                <value>43200</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@amqpHost@</value>
-                            </arg>
-                            <arg>
-                                <name>keys</name>
-                                <value>@xsede-&gt;amqp-host@</value>
-                            </arg>
-                            <arg>
-                                <name>minkeys</name>
+                                <name>log</name>
                                 <value>5</value>
                             </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@xsede-&gt;amqp-host@</value>
+                            </arg>
                         </args>
-                        <limits>
-                            <wallClockTime>46800</wallClockTime>
-                        </limits>
                         <context>@@</context>
                     </series>
                     <nickname xmlns="">ipf-glue2-activity</nickname>
@@ -5062,16 +5022,6 @@
                     <schedule xmlns="">
                         <crontime>? ? * * *</crontime>
                     </schedule>
-                    <acceptedOutput xmlns="">
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -5082,56 +5032,41 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
-                        <name>data.amqp.unit</name>
+                        <name>info.pub.unit</name>
                         <args>
                             <arg>
-                                <name>auth</name>
-                                <value/>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>5</value>
+                                <name>age</name>
+                                <value>900</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/processing-status/record/?format=json</value>
+                            </arg>
+                            <arg>
+                                <name>topic</name>
+                                <value>glue2.compute</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>exchange</name>
-                                <value>glue2.compute</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>vhost</name>
-                                <value>xsede</value>
-                            </arg>
-                            <arg>
-                                <name>listentime</name>
-                                <value>900</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@amqpHost@</value>
-                            </arg>
-                            <arg>
-                                <name>keys</name>
-                                <value>@xsede-&gt;amqp-host@</value>
-                            </arg>
-                            <arg>
-                                <name>minkeys</name>
+                                <name>log</name>
                                 <value>5</value>
                             </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@xsede-&gt;amqp-host@</value>
+                            </arg>
                         </args>
-                        <limits>
-                            <wallClockTime>1200</wallClockTime>
-                        </limits>
                         <context>@@</context>
                     </series>
                     <nickname xmlns="">ipf-glue2-compute</nickname>
@@ -5139,16 +5074,6 @@
                     <schedule xmlns="">
                         <crontime>? ?-23/3 * * *</crontime>
                     </schedule>
-                    <acceptedOutput xmlns="">
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -5159,56 +5084,41 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
-                        <name>data.amqp.unit</name>
+                        <name>info.pub.unit</name>
                         <args>
                             <arg>
-                                <name>auth</name>
-                                <value>@amqp_creds@</value>
+                                <name>version</name>
+                                <value>no</value>
                             </arg>
                             <arg>
                                 <name>verbose</name>
                                 <value>1</value>
                             </arg>
                             <arg>
-                                <name>log</name>
-                                <value>5</value>
+                                <name>age</name>
+                                <value>43200</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/processing-status/record/?format=json</value>
+                            </arg>
+                            <arg>
+                                <name>topic</name>
+                                <value>glue2.applications</value>
                             </arg>
                             <arg>
                                 <name>help</name>
                                 <value>no</value>
                             </arg>
                             <arg>
-                                <name>exchange</name>
-                                <value>glue2.applications</value>
-                            </arg>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>vhost</name>
-                                <value>xsede</value>
-                            </arg>
-                            <arg>
-                                <name>listentime</name>
-                                <value>43200</value>
-                            </arg>
-                            <arg>
-                                <name>host</name>
-                                <value>@amqpHost@</value>
-                            </arg>
-                            <arg>
-                                <name>keys</name>
-                                <value>@xsede-&gt;amqp-host@</value>
-                            </arg>
-                            <arg>
-                                <name>minkeys</name>
+                                <name>log</name>
                                 <value>5</value>
                             </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@xsede-&gt;amqp-host@</value>
+                            </arg>
                         </args>
-                        <limits>
-                            <wallClockTime>46800</wallClockTime>
-                        </limits>
                         <context>@@</context>
                     </series>
                     <nickname xmlns="">ipf-glue2-extmodules</nickname>
@@ -5216,16 +5126,6 @@
                     <schedule xmlns="">
                         <crontime>? ? * * *</crontime>
                     </schedule>
-                    <acceptedOutput xmlns="">
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -6262,7 +6162,7 @@
                         </limits>
                         <context>@pre@@globus-key@@@@post@</context>
                     </series>
-                    <nickname xmlns="">gsissh-unit-@org.globus.openssh-host@</nickname>
+                    <nickname xmlns="">gsissh-unit</nickname>
                     <resourceSetName xmlns="">org.globus.openssh</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? 0-23/3 * * *</crontime>
@@ -6378,7 +6278,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname xmlns="">gsi-scp-hpn-server-@org.globus.openssh-host@</nickname>
+                    <nickname xmlns="">gsi-scp-hpn-server</nickname>
                     <resourceSetName xmlns="">org.globus.openssh</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? ? * * *</crontime>
@@ -6435,7 +6335,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname xmlns="">gsissh-rfc-2818-compliance-@org.globus.openssh-host@</nickname>
+                    <nickname xmlns="">gsissh-rfc-2818-compliance</nickname>
                     <resourceSetName xmlns="">org.globus.openssh</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? ? ?-31 * *</crontime>
