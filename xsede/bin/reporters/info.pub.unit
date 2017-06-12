@@ -9,7 +9,7 @@ use warnings;
 my $buffer = 60;
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'info.pub.unit',
-  version => 2,
+  version => 3,
   description => 'Checks that XSEDE Information Services Warehouse has fresh data for a specific topic and resource',
   unit_name => 'info'
 );
@@ -28,7 +28,7 @@ my $topic = $reporter->argValue( "topic" );
 my $resource = $reporter->argValue( "resource" );
 my $age = $reporter->argValue( "age" );
 my $initscript = $reporter->argValue( "initscript" );
-my $scripthelp = $initscript eq "" ? "" : "Please verify that the $initscript is running on your server.";
+my $scripthelp = $initscript eq "" ? "" : "Please verify that the $initscript init script is running on your server.";
 
 my $wgetCmd = "wget --no-check-certificate -q -O - $url";
 my $wgetOut = $reporter->loggedCommand($wgetCmd);
