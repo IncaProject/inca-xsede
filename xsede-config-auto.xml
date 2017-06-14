@@ -3563,6 +3563,10 @@
             </group>
             <group>
                 <type>optional</type>
+                <name>uberftp-optional</name>
+            </group>
+            <group>
+                <type>optional</type>
                 <name>org.globus.openssh-optional</name>
             </group>
             <group>
@@ -3596,10 +3600,6 @@
             <group>
                 <type>optional</type>
                 <name>intel-optional</name>
-            </group>
-            <group>
-                <type>optional</type>
-                <name>uberftp-optional</name>
             </group>
             <macroResource>
                 <name>tacc-stampede2</name>
@@ -3675,6 +3675,21 @@
                     <type>variable</type>
                     <name>org.globus.gridftp-endpoint</name>
                     <value>gsiftp://gridftp.stampede2.tacc.xsede.org:2811</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>uberftp-version</name>
+                    <value>2.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>uberftp-latestversion</name>
+                    <value>2.8</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>uberftp-key</name>
+                    <value>@keyPre@ uberftp/2.8 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -3764,18 +3779,17 @@
                 <macro>
                     <type>variable</type>
                     <name>gnu-version</name>
-                    <value>6.3.0</value>
                     <value>5.4.0</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gnu-latestversion</name>
-                    <value>6.3.0</value>
+                    <value>5.4.0</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gnu-key</name>
-                    <value>@keyPre@ gcc/6.3.0 @keyPost@</value>
+                    <value>@keyPre@ gcc/5.4.0 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -3821,21 +3835,6 @@
                     <type>variable</type>
                     <name>intel-key</name>
                     <value>@keyPre@ intel/17.0.4 @keyPost@</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>uberftp-version</name>
-                    <value>2.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>uberftp-latestversion</name>
-                    <value>2.8</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>uberftp-key</name>
-                    <value>@keyPre@ uberftp/2.8 @keyPost@</value>
                 </macro>
             </macroResource>
         </resource>
@@ -5337,7 +5336,7 @@
                     <nickname xmlns="">ipf-glue2-activity</nickname>
                     <resourceSetName xmlns="">capac</resourceSetName>
                     <schedule xmlns="">
-                        <crontime>? ? * * *</crontime>
+                        <crontime>? ?-23 * * *</crontime>
                     </schedule>
                     <action xmlns="">add</action>
                     <tags>
