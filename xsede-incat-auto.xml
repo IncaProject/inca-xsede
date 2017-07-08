@@ -1303,7 +1303,7 @@
                     </macro>
                     <macro>
                         <name>org.globus.openssh-version</name>
-                        <value>7.1p2</value>
+                        <value>7.1p2f</value>
                     </macro>
                     <macro>
                         <name>hostcertPath</name>
@@ -1312,6 +1312,18 @@
                     <macro>
                         <name>xdcdb_name</name>
                         <value>grid1.osg.xsede</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-latestversion</name>
+                        <value>7.1p2f</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-port</name>
+                        <value/>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-endpoint</name>
+                        <value>submit-1.osg.xsede.org</value>
                     </macro>
                 </macros>
             </resource>
@@ -2792,7 +2804,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>xsede-kit</name>
-                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|comet\.sdsc\.xsede\.org|xstream\.stanford\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|grid1\.osg\.xsede\.org|comet\.sdsc\.xsede\.org|xstream\.stanford\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -2804,7 +2816,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org comet.sdsc.xsede.org xstream.stanford.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
+                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org grid1.osg.xsede.org comet.sdsc.xsede.org xstream.stanford.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -2990,7 +3002,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>org.globus.openssh-optional</name>
-                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|comet\.sdsc\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|grid1\.osg\.xsede\.org|comet\.sdsc\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -3002,7 +3014,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org comet.sdsc.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
+                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org grid1.osg.xsede.org comet.sdsc.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -4935,6 +4947,16 @@
                     <schedule xmlns="">
                         <crontime>? ?-23 * * *</crontime>
                     </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -5047,6 +5069,16 @@
                     <schedule xmlns="">
                         <crontime>? ?-23 * * *</crontime>
                     </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
@@ -5099,6 +5131,72 @@
                         <context>@@</context>
                     </series>
                     <nickname xmlns="">ipf-glue2-extmodules</nickname>
+                    <resourceSetName xmlns="">capac</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>FailTo:info-serv-admin@xsede.org, @xsede-&gt;adminEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                    <tags>
+                        <tag xmlns="">resource=@xsede-&gt;__longname__@</tag>
+                        <tag xmlns="">name=ipf</tag>
+                        <tag xmlns="">version=0</tag>
+                        <tag xmlns="">software=ipf</tag>
+                    </tags>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>info.pub.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>age</name>
+                                <value>43200</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/processing-status/record/?format=json</value>
+                            </arg>
+                            <arg>
+                                <name>topic</name>
+                                <value>glue2.services</value>
+                            </arg>
+                            <arg>
+                                <name>initscript</name>
+                                <value>ipf-RESOURCE_NAME-glue2-services</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>resource</name>
+                                <value>@xsede-&gt;amqp-host@</value>
+                            </arg>
+                        </args>
+                        <context>@@</context>
+                    </series>
+                    <nickname xmlns="">ipf-glue2-services</nickname>
                     <resourceSetName xmlns="">capac</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? ? * * *</crontime>

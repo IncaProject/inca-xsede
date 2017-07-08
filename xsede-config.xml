@@ -1735,7 +1735,6 @@
           <schedule>
             <crontime>? ?-23 * * *</crontime>
           </schedule>
-<!--
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
@@ -1746,7 +1745,6 @@
               </notification>
             </notifications>
           </acceptedOutput>
--->
           <action>add</action>
           <tags>
             <tag>resource=@xsede->__longname__@</tag>
@@ -1871,7 +1869,6 @@
           <schedule>
             <crontime>? ?-23 * * *</crontime>
           </schedule>
-<!--
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
             <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
@@ -1882,7 +1879,6 @@
               </notification>
             </notifications>
           </acceptedOutput>
--->
           <action>add</action>
           <tags>
             <tag>resource=@xsede->__longname__@</tag>
@@ -1935,6 +1931,72 @@
             <context>@@</context>
           </series>
           <nickname>ipf-glue2-extmodules</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>FailTo:info-serv-admin@xsede.org, @xsede->adminEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+          <tags>
+            <tag>resource=@xsede->__longname__@</tag>
+            <tag>name=ipf</tag>
+            <tag>version=0</tag>
+            <tag>software=ipf</tag>
+          </tags>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>info.pub.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>age</name>
+                <value>43200</value>
+              </arg>
+              <arg>
+                <name>url</name>
+                <value><![CDATA[https://info.xsede.org/wh1/processing-status/record/?format=json]]></value>
+              </arg>
+              <arg>
+                <name>topic</name>
+                <value>glue2.services</value>
+              </arg>
+              <arg>
+                <name>initscript</name>
+                <value>ipf-RESOURCE_NAME-glue2-services</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>resource</name>
+                <value>@xsede->amqp-host@</value>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>ipf-glue2-services</nickname>
           <resourceSetName>capac</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
