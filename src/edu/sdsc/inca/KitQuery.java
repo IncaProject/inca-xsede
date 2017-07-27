@@ -275,7 +275,9 @@ class KitQuery {
           continue;
         }
         uniqueHosts.put(matchResult.group(1), "");
-        uniquePorts.put(matchResult.group(2), "");
+        if (matchResult.group(2) != null) {
+          uniquePorts.put(matchResult.group(2), "");
+        }
       }
       String[] newHosts = uniqueHosts.keySet().toArray(new String[uniqueHosts.size()]);
       String[] newPorts = uniquePorts.keySet().toArray(new String[uniquePorts.size()]);
@@ -284,7 +286,7 @@ class KitQuery {
       Node macroRes = (Node)xpath.evaluate("macroResource", configRes, XPathConstants.NODE);
       boolean changedConfig = setMacroValues(xpath, configDoc, macroRes, resId, m_hostName, newHosts);
 
-      if (setMacroValues(xpath, configDoc, configKit, macroRes, resId, m_portName, newPorts))
+      if (newPorts.length > 0 && setMacroValues(xpath, configDoc, configKit, macroRes, resId, m_portName, newPorts))
         changedConfig = true;
 
       return changedConfig;
