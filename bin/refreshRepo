@@ -2,12 +2,15 @@
 
 AGENT="localhost:6323"
 WRAP_CONFIG_LIBS="lib/log4j-1.2.15.jar:lib/xbean-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar:lib/incat.jar"
-CLIENT_LIBS="../inca/etc:lib/log4j-1.2.15.jar:lib/bcprov-jdk15on-150.jar:lib/bcpkix-jdk15on-150.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar"
+CLIENT_LIBS="../inca/etc:lib/log4j-1.2.15.jar:lib/bcprov-jdk15on-150.jar:lib/bcpkix-jdk15on-150.jar:lib/saxon9.jar:lib/saxon9-dom.jar:lib/xbean-2.4.jar:lib/xbean_xpath-2.4.jar:lib/incaXmlBeans.jar:lib/inca-common.jar:lib/xalan.jar"
+XSLT_CLASS="org.apache.xalan.xslt.Process"
 
-FORCE=no
-USAGE="Usage: $0 [-f] <new incat file> <old incat file>"
 
-cmd="java -cp $CLIENT_LIBS edu.sdsc.inca.AgentClient -f incat-diff.xml -A $AGENT -P stdin:password: -c agentcert.pem -k agentkey.pem -t trusted"
+cmd="java -cp $CLIENT_LIBS $XSLT_CLASS -xsl etc/refresh.xsl -in xsede-config.xml > xsede-refresh.xml"
+echo $cmd
+
+
+cmd="java -cp $CLIENT_LIBS edu.sdsc.inca.AgentClient -f xsede-refresh.xml -A $AGENT -P stdin:password: -c agentcert.pem -k agentkey.pem -t trusted"
 echo $cmd
 $cmd
 if [ $? -eq 0 ]; then
