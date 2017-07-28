@@ -85,11 +85,11 @@
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-version</name>
-                        <value>12.1</value>
+                        <value>12.2</value>
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-latestversion</name>
-                        <value>12.1</value>
+                        <value>12.2</value>
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-host</name>
@@ -169,8 +169,8 @@
                     </macro>
                     <macro>
                         <name>gnu-version</name>
-                        <value>6.3.0</value>
                         <value>4.7.2</value>
+                        <value>6.3.0</value>
                         <value>4.8.4</value>
                         <value>5.3.0</value>
                     </macro>
@@ -239,6 +239,7 @@
                     </macro>
                     <macro>
                         <name>intel-version</name>
+                        <value>17.4</value>
                         <value>compilers</value>
                         <value>compilers-2017</value>
                     </macro>
@@ -1025,8 +1026,8 @@
                     <macro>
                         <name>globus-version</name>
                         <value>6.0</value>
-                        <value>5.7-8</value>
                         <value>5.0.4-r1</value>
+                        <value>5.7-8</value>
                     </macro>
                     <macro>
                         <name>globus-latestversion</name>
@@ -1316,10 +1317,6 @@
                     <macro>
                         <name>org.globus.openssh-latestversion</name>
                         <value>7.1p2f</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.openssh-port</name>
-                        <value/>
                     </macro>
                     <macro>
                         <name>org.globus.openssh-endpoint</name>
@@ -1670,7 +1667,7 @@
                     </macro>
                     <macro>
                         <name>org.globus.openssh-version</name>
-                        <value>1.0.1e-fips</value>
+                        <value>7.3p1c</value>
                     </macro>
                     <macro>
                         <name>org.globus.openssh-host</name>
@@ -1682,11 +1679,11 @@
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-version</name>
-                        <value>6.0.1</value>
+                        <value>12.1</value>
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-latestversion</name>
-                        <value>6.0.1</value>
+                        <value>12.1</value>
                     </macro>
                     <macro>
                         <name>org.globus.gridftp-host</name>
@@ -1699,6 +1696,18 @@
                     <macro>
                         <name>org.globus.gridftp-endpoint</name>
                         <value>gsiftp://xstream.stanford.xsede.org:2811</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-latestversion</name>
+                        <value>7.3p1c</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-port</name>
+                        <value>2222</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-endpoint</name>
+                        <value>xstream.stanford.xsede.org:2222</value>
                     </macro>
                     <macro>
                         <name>apache-ant-version</name>
@@ -3002,7 +3011,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>org.globus.openssh-optional</name>
-                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|grid1\.osg\.xsede\.org|comet\.sdsc\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|supermic\.cct-lsu\.xsede\.org|grid1\.osg\.xsede\.org|comet\.sdsc\.xsede\.org|xstream\.stanford\.xsede\.org|maverick\.tacc\.xsede\.org|stampede\.tacc\.xsede\.org|stampede2\.tacc\.xsede\.org|wrangler\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -3014,7 +3023,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org grid1.osg.xsede.org comet.sdsc.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
+                        <value>bridges.psc.xsede.org supermic.cct-lsu.xsede.org grid1.osg.xsede.org comet.sdsc.xsede.org xstream.stanford.xsede.org maverick.tacc.xsede.org stampede.tacc.xsede.org stampede2.tacc.xsede.org wrangler.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -11806,6 +11815,42 @@
                         <tag xmlns="">name=org.globus.myproxy</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.globus.myproxy</tag>
+                    </tags>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>cluster.os.kernel.version</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>0</value>
+                            </arg>
+                        </args>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">kernel-version</nickname>
+                    <resourceSetName xmlns="">xsede</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>? ? ?-31 * *</crontime>
+                    </schedule>
+                    <action xmlns="">add</action>
+                    <tags>
+                        <tag xmlns="">resource=@__incaHosts__@</tag>
+                        <tag xmlns="">name=org.linux</tag>
+                        <tag xmlns="">version=0</tag>
+                        <tag xmlns="">software=org.linux</tag>
                     </tags>
                 </seriesConfig>
             </seriesConfigs>

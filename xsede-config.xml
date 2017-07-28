@@ -8632,6 +8632,42 @@
             <tag>service=org.globus.myproxy</tag>
           </tags>
         </seriesConfig>
+       <seriesConfig>
+          <series>
+            <name>cluster.os.kernel.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>0</value>
+              </arg>
+            </args>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>kernel-version</nickname>
+          <resourceSetName>xsede</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+          <tags>
+            <tag>resource=@__incaHosts__@</tag>
+            <tag>name=org.linux</tag>
+            <tag>version=0</tag>
+            <tag>software=org.linux</tag>
+          </tags>
+        </seriesConfig>
       </seriesConfigs>
       <name>security</name>
       <guid>incas://capac.sdsc.edu:6323/security</guid>
