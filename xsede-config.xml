@@ -3107,7 +3107,7 @@
             </limits>
             <context>@pre@@globus-key@@@@post@</context>
           </series>
-          <nickname>gsissh-version</nickname>
+          <nickname>gsissh-client-version</nickname>
           <resourceSetName>org.globus.openssh</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>
@@ -3127,6 +3127,50 @@
             <tag>resource=@__longname__@</tag>
             <tag>name=org.globus.openssh</tag>
             <tag>version=@org.globus.openssh-version@</tag>
+            <tag>service=org.globus.openssh</tag>
+          </tags>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>grid.interactive_access.gsissh.server.version</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>port</name>
+                <value>@org.globus.openssh->org.globus.openssh-port@</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>host</name>
+                <value>@org.globus.openssh->org.globus.openssh-host@</value>
+              </arg>
+            </args>
+            <context>@@</context>
+          </series>
+          <nickname>gsissh-server-version</nickname>
+          <resourceSetName>inca.gw60</resourceSetName>
+          <schedule>
+            <crontime>? ? ?-31 * *</crontime>
+          </schedule>
+          <action>add</action>
+          <tags>
+            <tag>resource=@__longname__@</tag>
+            <tag>name=org.globus.openssh</tag>
+            <tag>version=@org.globus.openssh->org.globus.openssh-version@</tag>
             <tag>service=org.globus.openssh</tag>
           </tags>
         </seriesConfig>
