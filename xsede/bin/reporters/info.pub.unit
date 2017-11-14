@@ -9,7 +9,7 @@ use warnings;
 my $buffer = 60;
 my $reporter = new Inca::Reporter::SimpleUnit(
   name => 'info.pub.unit',
-  version => 4,
+  version => 5,
   description => 'Checks that XSEDE Information Services Warehouse has fresh data for a specific topic and resource',
   unit_name => 'info'
 );
@@ -47,8 +47,11 @@ for my $status ( @{$statuses} ) {
 if ( ! defined $this_status ) {
   $reporter->failPrintAndExit("Unable to find the topic $topic for resource $resource in warehouse. $scripthelp");
 }
-$reporter->log("info", "ProcessingEnd is " . $this_status->{'ProcessingEnd'});
-my $lastread = str2time($this_status->{'ProcessingEnd'});
+$reporter->log("debug", "ProcessingStart is " . $this_status->{'ProcessingStart'});
+$reporter->log("debug", "ProcessingEnd is " . $this_status->{'ProcessingEnd'});
+my $last_timestamp = $this_status->{'ProcessingEnd'} ? $this_status->{'ProcessingEnd'} : $this_status->{'ProcessingStart'};
+$reporter->log("debug", "Selected timestamp " . $last_timestamp);
+my $lastread = str2time($last_timestamp);
 my $elapsed_secs = int(time() - $lastread);
 $reporter->log("info", "Age of data $id is $elapsed_secs seconds");
 if ( $elapsed_secs > $age ) {
