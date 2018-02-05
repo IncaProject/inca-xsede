@@ -4212,7 +4212,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>INFOC</name>
-                <xpath>//resource[matches(name, '^(capac|inca\.js|rdr-rest|info|INFO|INFO_RABBITMQ)$')]</xpath>
+                <xpath>//resource[matches(name, '^(rdr-rest|INFO|INFO_RABBITMQ)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -4224,7 +4224,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>capac inca.js rdr-rest info INFO INFO_RABBITMQ</value>
+                        <value>rdr-rest INFO INFO_RABBITMQ</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -11045,6 +11045,64 @@
                     <action xmlns="">add</action>
                     <tags>
                         <tag xmlns="">resource=org.xsede.inca</tag>
+                        <tag xmlns="">name=org.xsede.ipf</tag>
+                        <tag xmlns="">version=0</tag>
+                        <tag xmlns="">service=org.xsede.ipf</tag>
+                    </tags>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>user.search.output.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>cat $HOME/.info-inca.pass | /localdisk/packages/curl-auth-csrf/curl-auth-csrf.py -i https://info.xsede.org/wh1/admin/login/ -d username=inca https://info.xsede.org/wh1/admin/</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>Site administration</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>:</value>
+                            </arg>
+                        </args>
+                        <context>@pre@ @@@post@</context>
+                    </series>
+                    <nickname xmlns="">django-admin-page</nickname>
+                    <resourceSetName xmlns="">capac</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>? ? * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@info.xsede-&gt;infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                    <tags>
+                        <tag xmlns="">resource=@info.xsede-&gt;__longname__@</tag>
                         <tag xmlns="">name=org.xsede.ipf</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.ipf</tag>

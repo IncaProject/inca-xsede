@@ -7968,7 +7968,65 @@
             <tag>service=org.xsede.ipf</tag>
           </tags>
         </seriesConfig>
-<seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>cat $HOME/.info-inca.pass | /localdisk/packages/curl-auth-csrf/curl-auth-csrf.py -i https://info.xsede.org/wh1/admin/login/ -d username=inca https://info.xsede.org/wh1/admin/</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>Site administration</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>:</value>
+              </arg>
+            </args>
+            <context>@pre@ @@@post@</context>
+          </series>
+          <nickname>django-admin-page</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? ? * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@info.xsede->infoEmail@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+          <tags>
+            <tag>resource=@info.xsede->__longname__@</tag>
+            <tag>name=org.xsede.ipf</tag>
+            <tag>version=0</tag>
+            <tag>service=org.xsede.ipf</tag>
+          </tags>
+        </seriesConfig>
+        <seriesConfig>
           <series>
             <name>data.amqp.adminnodes.unit</name>
             <args>
