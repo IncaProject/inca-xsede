@@ -4204,6 +4204,10 @@
                         <value/>
                     </macro>
                     <macro>
+                        <name>sslPort</name>
+                        <value>443</value>
+                    </macro>
+                    <macro>
                         <name>infoPingFreq</name>
                         <value>? ?-23 * * *</value>
                     </macro>
@@ -4254,6 +4258,10 @@
                     <macro>
                         <name>infoEmail</name>
                         <value>FailTo:inca@sdsc.edu, FailTo:info-serv-admin@xsede.org</value>
+                    </macro>
+                    <macro>
+                        <name>sslPort</name>
+                        <value>15671</value>
                     </macro>
                 </macros>
             </resource>
@@ -10551,7 +10559,7 @@
                             </arg>
                             <arg>
                                 <name>remotecert</name>
-                                <value>@INFO-&gt;__incaHosts__@:443</value>
+                                <value>@INFO_N_RABBIT-&gt;__incaHosts__@:@INFO_N_RABBIT-&gt;sslPort@</value>
                             </arg>
                             <arg>
                                 <name>timeout</name>
@@ -10598,13 +10606,13 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>@INFO-&gt;infoEmail@</target>
+                                <target>@INFO_N_RABBIT-&gt;infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
-                        <tag xmlns="">resource=@INFO-&gt;__incaHosts__@</tag>
+                        <tag xmlns="">resource=@INFO_N_RABBIT-&gt;__incaHosts__@</tag>
                         <tag xmlns="">name=org.xsede.ipf</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.ipf</tag>
@@ -11129,7 +11137,7 @@
                             </arg>
                             <arg>
                                 <name>url</name>
-                                <value>https://@info1.xsede-&gt;dynHost@:15671/api/nodes</value>
+                                <value>https://@INFO_RABBITMQ-&gt;__incaHosts__@:15671/api/nodes</value>
                             </arg>
                             <arg>
                                 <name>help</name>
@@ -11156,7 +11164,7 @@
                     </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
-                        <tag xmlns="">resource=@info1.xsede-&gt;dynHost@</tag>
+                        <tag xmlns="">resource=@INFO_RABBITMQ-&gt;__incaHosts__@</tag>
                         <tag xmlns="">name=org.xsede.ipf</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.ipf</tag>
@@ -11180,7 +11188,7 @@
                             </arg>
                             <arg>
                                 <name>url</name>
-                                <value>https://@info1.xsede-&gt;dynHost@:15671/api/vhosts</value>
+                                <value>https://@INFO_RABBITMQ-&gt;__incaHosts__@:15671/api/vhosts</value>
                             </arg>
                             <arg>
                                 <name>help</name>
@@ -11211,13 +11219,13 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>@info1.xsede-&gt;infoEmail@</target>
+                                <target>@INFO_RABBITMQ-&gt;infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
-                        <tag xmlns="">resource=info.xsede.org</tag>
+                        <tag xmlns="">resource=@infopub.xsede-&gt;__incaHosts__@</tag>
                         <tag xmlns="">name=org.xsede.ipf</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.ipf</tag>
@@ -11241,7 +11249,7 @@
                             </arg>
                             <arg>
                                 <name>url</name>
-                                <value>https://@info1.xsede-&gt;dynHost@:15671/api/overview</value>
+                                <value>https://@INFO_RABBITMQ-&gt;__incaHosts__@:15671/api/overview</value>
                             </arg>
                             <arg>
                                 <name>minexchanges</name>
@@ -11276,13 +11284,13 @@
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
-                                <target>@info1.xsede-&gt;infoEmail@</target>
+                                <target>@INFO_RABBITMQ-&gt;infoEmail@</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
                     <action xmlns="">add</action>
                     <tags>
-                        <tag xmlns="">resource=info.xsede.org</tag>
+                        <tag xmlns="">resource=@infopub.xsede-&gt;__incaHosts__@</tag>
                         <tag xmlns="">name=org.xsede.ipf</tag>
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.ipf</tag>

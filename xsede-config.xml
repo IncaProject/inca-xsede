@@ -1230,6 +1230,11 @@
       </macro>
       <macro>
         <type>constant</type>
+        <name>sslPort</name>
+        <value>443</value>
+      </macro>
+      <macro>
+        <type>constant</type>
         <name>infoPingFreq</name>
         <value>? ?-23 * * *</value>
       </macro>
@@ -1253,6 +1258,11 @@
         <type>constant</type>
         <name>infoEmail</name>
         <value>FailTo:inca@sdsc.edu, FailTo:info-serv-admin@xsede.org</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>sslPort</name>
+        <value>15671</value>
       </macro>
       <group>
         <name>INFO_N_RABBIT</name>
@@ -7470,7 +7480,7 @@
               </arg>
               <arg>
                 <name>remotecert</name>
-                <value>@INFO->__incaHosts__@:443</value>
+                <value>@INFO_N_RABBIT->__incaHosts__@:@INFO_N_RABBIT->sslPort@</value>
               </arg>
               <arg>
                 <name>timeout</name>
@@ -7517,13 +7527,13 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>@INFO->infoEmail@</target>
+                <target>@INFO_N_RABBIT->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
           <action>add</action>
           <tags>
-            <tag>resource=@INFO->__incaHosts__@</tag>
+            <tag>resource=@INFO_N_RABBIT->__incaHosts__@</tag>
             <tag>name=org.xsede.ipf</tag>
             <tag>version=0</tag>
             <tag>service=org.xsede.ipf</tag>
@@ -8048,7 +8058,7 @@
               </arg>
               <arg>
                 <name>url</name>
-                <value>https://@info1.xsede->dynHost@:15671/api/nodes</value>
+                <value>https://@INFO_RABBITMQ->__incaHosts__@:15671/api/nodes</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8075,7 +8085,7 @@
           </acceptedOutput>
           <action>add</action>
           <tags>
-            <tag>resource=@info1.xsede->dynHost@</tag>
+            <tag>resource=@INFO_RABBITMQ->__incaHosts__@</tag>
             <tag>name=org.xsede.ipf</tag>
             <tag>version=0</tag>
             <tag>service=org.xsede.ipf</tag>
@@ -8099,7 +8109,7 @@
               </arg>
               <arg>
                 <name>url</name>
-                <value>https://@info1.xsede->dynHost@:15671/api/vhosts</value>
+                <value>https://@INFO_RABBITMQ->__incaHosts__@:15671/api/vhosts</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -8130,13 +8140,13 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>@info1.xsede->infoEmail@</target>
+                <target>@INFO_RABBITMQ->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
           <action>add</action>
           <tags>
-            <tag>resource=info.xsede.org</tag>
+            <tag>resource=@infopub.xsede->__incaHosts__@</tag>
             <tag>name=org.xsede.ipf</tag>
             <tag>version=0</tag>
             <tag>service=org.xsede.ipf</tag>
@@ -8160,7 +8170,7 @@
               </arg>
               <arg>
                 <name>url</name>
-                <value>https://@info1.xsede->dynHost@:15671/api/overview</value>
+                <value>https://@INFO_RABBITMQ->__incaHosts__@:15671/api/overview</value>
               </arg>
               <arg>
                 <name>minexchanges</name>
@@ -8195,13 +8205,13 @@
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>
-                <target>@info1.xsede->infoEmail@</target>
+                <target>@INFO_RABBITMQ->infoEmail@</target>
               </notification>
             </notifications>
           </acceptedOutput>
           <action>add</action>
           <tags>
-            <tag>resource=info.xsede.org</tag>
+            <tag>resource=@infopub.xsede->__incaHosts__@</tag>
             <tag>name=org.xsede.ipf</tag>
             <tag>version=0</tag>
             <tag>service=org.xsede.ipf</tag>
