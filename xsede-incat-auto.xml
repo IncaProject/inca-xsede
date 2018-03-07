@@ -10253,6 +10253,61 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
+                        <name>user.search.output.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>wget -o /dev/null -O - "http://software.xsede.org"</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>Extreme Science and Engineering Discovery Environment</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>:</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>60</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">software_home_wget</nickname>
+                    <resourceSetName xmlns="">inca.js</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>?-59/10 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>inca@sdsc.edu,navarro@mcs.anl.gov</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
                         <name>cluster.interactive_access.openssh.unit</name>
                         <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.interactive_access.openssh.unit</uri>
                         <args>
