@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <properties xmlns="">
-        <repository>http://capac.sdsc.edu/inca/xsede-repo</repository>
+        <repository>http://inca.xsede.org/inca/xsede-repo</repository>
     </properties>
     <queries>
         <resource>
@@ -10411,6 +10411,53 @@
                             <notification>
                                 <notifier>EmailNotifier</notifier>
                                 <target>inca@sdsc.edu,navarro@mcs.anl.gov</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>xsede.uiuc.info.performance</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://info.xsede.org/wh1/resource-api/v1/</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>60</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">uiuc_info_services</nickname>
+                    <resourceSetName xmlns="">inca.js</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>?-59/15 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>providers_time &lt; 1 &amp;&amp; events_time &lt; 1 &amp;&amp; events_week_time &lt; 1 &amp;&amp; resource_search_time &lt; 4</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>inca@sdsc.edu,navarro@mcs.anl.gov,blau@mcs.anl.gov</target>
                             </notification>
                         </notifications>
                     </acceptedOutput>
