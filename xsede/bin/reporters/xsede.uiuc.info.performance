@@ -1,0 +1,69 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use Time::HiRes qw( gettimeofday tv_interval );
+use POSIX qw( strftime );
+
+my $reporter = new Inca::Reporter::Performance(
+	name => 'xsede.uiuc.info.performance',
+	version => 1,
+	description => 'Monitors responsiveness of UIUC Research IT Portal Search enabled by XSEDE Information Services',
+	measurement_name => 'uiuc_info',
+);
+
+$reporter->addArg( 'url', 'URL prefix for API calls', 'https://info.xsede.org/wh1/resource-api/v1/' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue('url');
+
+my $fmt = "%Y-%m-%d";
+my @time = localtime time;
+my $today = strftime( $fmt, @time );
+$time[3] += 7;
+my $next_week = strftime( $fmt, @time );
+my @bench = (
+	[ 'providers', 'providers/?affiliation=uiuc.edu' ],
+	[ 'events', 'events/?affiliation=uiuc.edu&results_per_page=4&page=1' ],
+	[ 'events_week', 'events/?affiliation=uiuc.edu&start_date=' . $today . 'T00:00:00-05:00&end_date=' . $next_week . 'T00:00:00-05:00' ],
+	[ 'resource_search', 'resource_search/?affiliation=uiuc.edu&page=1&results_per_page=25&fields=resource_description,category,resource_name,street_address,building_name,room_number,city,zip,start_date_time,end_date_time' ],
+);
+
+my $err = '';
+for( my $i=0; $i<=$#bench; $i++ )
+{
+	my $page = $url . $bench[$i][1];
+	my $cmd = 'wget -O /dev/null "' . $page . '"';
+	my $t0 = [gettimeofday];
+	my $output = $reporter->loggedCommand( $cmd );
+	if( $? )
+	{
+		$err .= "$cmd failed: $output $!\n\n";
+	}
+	else
+	{
+		my $mark = $bench[$i][0];
+		my $benchmark = $reporter->addNewBenchmark( $mark );
+		$benchmark->setParameter( 'page', $page );
+
+		my $t1 = [gettimeofday];
+		my $elapsed = tv_interval $t0,$t1;
+		$elapsed = sprintf( "%.2f", $elapsed );
+
+		my ($bw, $unit) = $output =~ /([\d.]+) (.B\/s)/;
+	
+		$benchmark->setStatistic( $mark . '_bandwidth', $bw, $unit );
+		$benchmark->setStatistic( $mark . '_time', $elapsed, 'secs' );
+	}
+}
+
+if( $err ne '' )
+{
+	$err =~ s/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/<timestamp>/g;
+	$reporter->setResult( 0, $err );
+}
+else
+{
+	$reporter->setResult( 1 );
+}
+$reporter->print();
