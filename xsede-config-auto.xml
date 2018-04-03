@@ -1553,6 +1553,16 @@
                     <name>infoPingFreq</name>
                     <value>?-59/15 * * * *</value>
                 </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>uiucTestFreq</name>
+                    <value>?-59/15 * * * *</value>
+                </macro>
+                <macro>
+                    <type>constant</type>
+                    <name>uiucNotifier</name>
+                    <value>FailTo:info-serv-admin@xsede.org</value>
+                </macro>
                 <group>
                     <type>general</type>
                     <name>INFO</name>
@@ -2103,8 +2113,8 @@
                 <macro>
                     <type>variable</type>
                     <name>intel-version</name>
-                    <value>2018.1</value>
                     <value>2016.3</value>
+                    <value>2018.1</value>
                     <value>15.0.0</value>
                     <value>14.0.2</value>
                     <value>2017.4</value>
@@ -4523,6 +4533,16 @@
         <group xmlns="">
             <name>INFO</name>
             <type>general</type>
+            <macro>
+                <type>constant</type>
+                <name>uiucTestFreq</name>
+                <value>? * * * *</value>
+            </macro>
+            <macro>
+                <type>constant</type>
+                <name>uiucNotifier</name>
+                <value>FailTo:inca@sdsc.edu</value>
+            </macro>
             <macro>
                 <type>constant</type>
                 <name>infoEmail</name>
@@ -10418,53 +10438,6 @@
                 </seriesConfig>
                 <seriesConfig>
                     <series xmlns="">
-                        <name>xsede.uiuc.info.performance</name>
-                        <args>
-                            <arg>
-                                <name>version</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>verbose</name>
-                                <value>1</value>
-                            </arg>
-                            <arg>
-                                <name>url</name>
-                                <value>https://info.xsede.org/wh1/resource-api/v1/</value>
-                            </arg>
-                            <arg>
-                                <name>help</name>
-                                <value>no</value>
-                            </arg>
-                            <arg>
-                                <name>log</name>
-                                <value>5</value>
-                            </arg>
-                        </args>
-                        <limits>
-                            <wallClockTime>60</wallClockTime>
-                        </limits>
-                        <context>@pre@@@@post@</context>
-                    </series>
-                    <nickname xmlns="">uiuc_info_services</nickname>
-                    <resourceSetName xmlns="">inca.js</resourceSetName>
-                    <schedule xmlns="">
-                        <crontime>?-59/15 * * * *</crontime>
-                    </schedule>
-                    <acceptedOutput xmlns="">
-                        <comparitor>ExprComparitor</comparitor>
-                        <comparison>providers_time &lt; 1 &amp;&amp; events_time &lt; 1 &amp;&amp; events_week_time &lt; 1 &amp;&amp; resource_search_time &lt; 4</comparison>
-                        <notifications>
-                            <notification>
-                                <notifier>EmailNotifier</notifier>
-                                <target>inca@sdsc.edu,navarro@mcs.anl.gov,blau@mcs.anl.gov</target>
-                            </notification>
-                        </notifications>
-                    </acceptedOutput>
-                    <action xmlns="">add</action>
-                </seriesConfig>
-                <seriesConfig>
-                    <series xmlns="">
                         <name>cluster.interactive_access.openssh.unit</name>
                         <uri>http://inca.xsede.org/inca/xsede-repo/bin/cluster.interactive_access.openssh.unit</uri>
                         <args>
@@ -11914,6 +11887,53 @@
                         <tag xmlns="">version=0</tag>
                         <tag xmlns="">service=org.xsede.rdr</tag>
                     </tags>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>xsede.uiuc.info.performance</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>url</name>
+                                <value>https://@INFO-&gt;dynHost@/wh1/resource-api/v1/</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>60</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">uiuc_info_services</nickname>
+                    <resourceSetName xmlns="">inca.js</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>@INFO-&gt;uiucTestFreq@</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>providers_time &lt; 1 &amp;&amp; events_time &lt; 1 &amp;&amp; events_week_time &lt; 1 &amp;&amp; resource_search_time &lt; 4</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@INFO-&gt;uiucNotifier@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
                 </seriesConfig>
             </seriesConfigs>
             <name xmlns="">information-services</name>

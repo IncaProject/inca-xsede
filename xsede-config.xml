@@ -260,6 +260,16 @@
           <name>infoPingFreq</name>
           <value>?-59/15 * * * *</value>
         </macro>
+        <macro>
+          <type>constant</type>
+          <name>uiucTestFreq</name>
+          <value>?-59/15 * * * *</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>uiucNotifier</name>
+          <value>FailTo:info-serv-admin@xsede.org</value>
+        </macro>
         <group>
           <type>general</type>
           <name>INFO</name>
@@ -1238,6 +1248,16 @@
     <group>
       <name>INFO</name>
       <type>general</type>
+      <macro>
+        <type>constant</type>
+        <name>uiucTestFreq</name>
+        <value>? * * * *</value>
+      </macro>
+      <macro>
+        <type>constant</type>
+        <name>uiucNotifier</name>
+        <value>FailTo:inca@sdsc.edu</value>
+      </macro>
       <macro>
         <type>constant</type>
         <name>infoEmail</name>
@@ -7221,53 +7241,6 @@
           </acceptedOutput>
           <action>add</action>
         </seriesConfig>
-	<seriesConfig>
-          <series>
-            <name>xsede.uiuc.info.performance</name>
-            <args>
-              <arg>
-                <name>version</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>verbose</name>
-                <value>1</value>
-              </arg>
-              <arg>
-                <name>url</name>
-                <value>https://info.xsede.org/wh1/resource-api/v1/</value>
-              </arg>
-              <arg>
-                <name>help</name>
-                <value>no</value>
-              </arg>
-              <arg>
-                <name>log</name>
-                <value>5</value>
-              </arg>
-            </args>
-            <limits>
-              <wallClockTime>60</wallClockTime>
-            </limits>
-            <context>@pre@@@@post@</context>
-          </series>
-          <nickname>uiuc_info_services</nickname>
-          <resourceSetName>inca.js</resourceSetName>
-          <schedule>
-            <crontime>?-59/15 * * * *</crontime>
-          </schedule>
-          <acceptedOutput>
-            <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[providers_time < 1 && events_time < 1 && events_week_time < 1 && resource_search_time < 4]]></comparison>
-            <notifications>
-              <notification>
-                <notifier>EmailNotifier</notifier>
-                <target>inca@sdsc.edu,navarro@mcs.anl.gov,blau@mcs.anl.gov</target>
-              </notification>
-            </notifications>
-          </acceptedOutput>
-          <action>add</action>
-        </seriesConfig>
         <seriesConfig>
           <series>
             <name>cluster.interactive_access.openssh.unit</name>
@@ -8719,6 +8692,53 @@
             <tag>version=0</tag>
             <tag>service=org.xsede.rdr</tag>
           </tags>
+        </seriesConfig>
+	<seriesConfig>
+          <series>
+            <name>xsede.uiuc.info.performance</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>url</name>
+                <value>https://@INFO->dynHost@/wh1/resource-api/v1/</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>uiuc_info_services</nickname>
+          <resourceSetName>inca.js</resourceSetName>
+          <schedule>
+            <crontime>@INFO->uiucTestFreq@</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison><![CDATA[providers_time < 1 && events_time < 1 && events_week_time < 1 && resource_search_time < 4]]></comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>@INFO->uiucNotifier@</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
         </seriesConfig>
       </seriesConfigs>
       <name>information-services</name>
