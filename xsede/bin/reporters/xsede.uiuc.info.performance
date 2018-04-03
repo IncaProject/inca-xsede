@@ -8,7 +8,7 @@ use POSIX qw( strftime );
 
 my $reporter = new Inca::Reporter::Performance(
 	name => 'xsede.uiuc.info.performance',
-	version => 1,
+	version => 2,
 	description => 'Monitors responsiveness of UIUC Research IT Portal Search enabled by XSEDE Information Services',
 	measurement_name => 'uiuc_info',
 );
@@ -42,6 +42,11 @@ for( my $i=0; $i<=$#bench; $i++ )
 	}
 	else
 	{
+		my ($ip) = $output =~ /Connecting to info.xsede.org \(info.xsede.org\)\|([\d.]+)/;
+		my $nslookup = `nslookup $ip 2>&1`; 
+		my ($host) = $nslookup =~ /name = (.+)\./;
+		$reporter->log( 'debug', "wget connected to $ip ($host)" );
+
 		my $mark = $bench[$i][0];
 		my $benchmark = $reporter->addNewBenchmark( $mark );
 		$benchmark->setParameter( 'page', $page );
