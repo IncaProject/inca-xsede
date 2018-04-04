@@ -193,7 +193,7 @@ public class UpdateIncat {
 		// There appears to be two types of resources (most of the time) for every resource; one that is rdr_type
 		// compute and the other is rdr_type resource.  Each has different attributes of interest so we combine when
 		// both exist
-		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and matches(current_statuses,'test|[^-]?production') and matches(provider_level, 'XSEDE Level (1|2)$')]", inputDoc, XPathConstants.NODESET);
+		NodeList inputComputeResourceNodes = (NodeList)xpath.evaluate("//resources/list-item[rdr_type = 'compute' and matches(current_statuses,'test|^production') and matches(provider_level, 'XSEDE Level (1|2)$')]", inputDoc, XPathConstants.NODESET);
 		boolean changedConfig = false;
 		NodeList allinputs =  (NodeList)xpath.evaluate("//list-item", inputDoc, XPathConstants.NODESET);
 		m_logger.debug(allinputs.getLength() + " all input items");
@@ -202,6 +202,7 @@ public class UpdateIncat {
 		for (int i = 0 ; i < inputComputeResourceNodes.getLength() ; i += 1) {
 			Node computeResNode = inputComputeResourceNodes.item(i);
 			String resId = xpath.evaluate("info_resourceid", computeResNode);
+			System.out.println(resId);
 			Node resourceNode = (Node)xpath.evaluate("//resources/list-item[rdr_type = 'resource' and info_resourceid = '" + resId + "']", inputDoc, XPathConstants.NODE);
 			if ( resourceNode != null ) {
 				extractAttributes(computeResNode, resourceNode);
