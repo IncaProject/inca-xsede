@@ -99,6 +99,12 @@
           <value>FailTo:inca@sdsc.edu, FailTo:info-serv-admin@xsede.org</value>
         </macro>
         <macro>
+          <name>ampq_creds2check</name>
+          <value>ncsa</value>
+          <value>psc</value>
+          <type>constant</type>
+        </macro>
+        <macro>
           <type>constant</type>
           <name>amqp_creds</name>
           <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:/etc/grid-security/certificates/</value>
@@ -6266,7 +6272,7 @@
             <args>
               <arg>
                 <name>cert</name>
-                <value>~/.globus/inca-ncsacert.pem</value>
+                <value>~/.globus/inca-@ampq_creds2check@cert.pem</value>
               </arg>
               <arg>
                 <name>help</name>
@@ -6310,7 +6316,7 @@
             </limits>
             <context>@pre@@@@post@</context>
           </series>
-          <nickname>Inca AMQP certificate</nickname>
+          <nickname>inca amqp @ampq_creds2check@ certificate</nickname>
           <resourceSetName>capac</resourceSetName>
           <schedule>
             <crontime>? ? * * *</crontime>

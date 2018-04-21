@@ -1393,6 +1393,12 @@
                     <value>FailTo:inca@sdsc.edu, FailTo:info-serv-admin@xsede.org</value>
                 </macro>
                 <macro>
+                    <name>ampq_creds2check</name>
+                    <value>ncsa</value>
+                    <value>psc</value>
+                    <type>constant</type>
+                </macro>
+                <macro>
                     <type>constant</type>
                     <name>amqp_creds</name>
                     <value>~/.globus/inca-ncsacert.pem:~/.globus/inca-ncsakey.pem:/etc/grid-security/certificates/</value>
@@ -2611,17 +2617,17 @@
                 <macro>
                     <type>variable</type>
                     <name>gateway-usage-reporting-version</name>
-                    <value>2.0</value>
+                    <value>2.1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gateway-usage-reporting-latestversion</name>
-                    <value>2.0</value>
+                    <value>2.1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gateway-usage-reporting-key</name>
-                    <value>@keyPre@ gateway-usage-reporting/2.0 @keyPost@</value>
+                    <value>@keyPre@ gateway-usage-reporting/2.1 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -3595,18 +3601,19 @@
                     <type>variable</type>
                     <name>gnu-version</name>
                     <value>4.9.1</value>
+                    <value>7.3.0</value>
                     <value>6.3.0</value>
                     <value>4.9.3</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gnu-latestversion</name>
-                    <value>6.3.0</value>
+                    <value>7.3.0</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>gnu-key</name>
-                    <value>@keyPre@ gcc/6.3.0 @keyPost@</value>
+                    <value>@keyPre@ gcc/7.3.0 @keyPost@</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -9222,7 +9229,7 @@
                         <args>
                             <arg>
                                 <name>cert</name>
-                                <value>~/.globus/inca-ncsacert.pem</value>
+                                <value>~/.globus/inca-@ampq_creds2check@cert.pem</value>
                             </arg>
                             <arg>
                                 <name>help</name>
@@ -9266,7 +9273,7 @@
                         </limits>
                         <context>@pre@@@@post@</context>
                     </series>
-                    <nickname xmlns="">Inca AMQP certificate</nickname>
+                    <nickname xmlns="">inca amqp @ampq_creds2check@ certificate</nickname>
                     <resourceSetName xmlns="">capac</resourceSetName>
                     <schedule xmlns="">
                         <crontime>? ? * * *</crontime>
