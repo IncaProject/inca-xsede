@@ -7,7 +7,7 @@ use DBI;
 
 my $reporter = new Inca::Reporter::SimpleUnit(
 	name => 'data.db.gateways',
-	version => 3,
+	version => 4,
 	description => 'Checks the central database for entries in the job_attribute_stage table without a job_id.',
 );
 $reporter->addDependency('DBI');
@@ -38,7 +38,7 @@ my $query = "SELECT s.value,
 		j.local_jobid 
 	FROM acct.job_attribute_stage AS s
 	JOIN acct.jobs AS j ON j.resource_id=s.resource_id AND j.local_jobid=s.local_jobid
-	WHERE s.job_id IS NULL 
+	WHERE j.job_id IS NULL 
 	AND s.resource_name in ($sql_match_resources) 
 	AND s.submit_time < CAST( NOW() - INTERVAL '$wait_days days' AS timestamp ) 
 	AND s.submit_time > CAST( NOW() - INTERVAL '$search_days days' AS timestamp ) 
