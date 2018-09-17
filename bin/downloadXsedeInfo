@@ -6,7 +6,7 @@ use warnings;
 
 my $PRETTY_PRINT = "java -cp lib/saxon-*.jar net.sf.saxon.Query -s:- -qs:/ '!indent=yes'";
 my @OUTER_TAGS = ( "services", "software", "resources", "xdcdb" );
-my @URLS = ( "https://info1.dyn.xsede.org:443/wh1/glue2-views-api/v1/services/", "https://info1.dyn.xsede.org:443/wh1/glue2-views-api/v1/software/", "https://info1.dyn.xsede.org:443/wh1/rdr-db/v1/rdr-xup/", "https://info1.dyn.xsede.org:443/wh1/xdcdb/v1/xdcdb/" );
+my @URLS = ( "https://info.xsede.org/wh1/glue2-views-api/v1/services/", "https://info.xsede.org/wh1/glue2-views-api/v1/software/", "https://info.xsede.org/wh1/rdr-db/v1/rdr-xup/", "https://info.xsede.org/wh1/xdcdb/v1/xdcdb/" );
 
 sub readInfoFile {
   my $write = shift;
@@ -39,7 +39,7 @@ for( my $i = 0; $i < scalar(@URLS); $i++ ) {
 print $write "</information-warehouse>\n";
 close $write;
 
-my $url = "https://info.dyn.xsede.org/wh1/xcsr-db/v1/componentsprequirement/";
+my $url = "https://info.xsede.org/wh1/xcsr-db/v1/componentsprequirement/";
 open( $write, ">componentsprequirement.xml" );
 readInfoFile($write, $url, "requirements");
 close $write;
