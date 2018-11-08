@@ -9764,6 +9764,61 @@
                         <tag xmlns="">service=org.gnu.cvs</tag>
                     </tags>
                 </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>user.search.output.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>wget -o /dev/null -O - "https://info3.dyn.xsede.org/globus-id-explorer/"</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>You are not logged in</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>\|</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>60</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">globus_id_explorer_wget</nickname>
+                    <resourceSetName xmlns="">inca.js</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>?-59/15 * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage == '' || errorMessage =~ 'Inca error'</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>@infoEmail@</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                </seriesConfig>
             </seriesConfigs>
             <name xmlns="">xci-services</name>
             <guid xmlns="">incas://capac.sdsc.edu:6323/xci-services</guid>
