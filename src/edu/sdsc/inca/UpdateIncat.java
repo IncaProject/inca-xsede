@@ -218,7 +218,7 @@ public class UpdateIncat {
 				continue;
 			}
 
-			resourceNode = (Node)xpath.evaluate("//xdcdb/list-item[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
+			resourceNode = (Node)xpath.evaluate("//xdcdb//list-item[ResourceID = '" + resId + "']", inputDoc, XPathConstants.NODE);
 			if ( resourceNode != null ) {
 				extractAttributes(computeResNode, resourceNode);
 			} else {
