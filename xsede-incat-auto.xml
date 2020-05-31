@@ -168,23 +168,24 @@
                         <name>gnu-version</name>
                         <value>7.2.0</value>
                         <value>7.3.0</value>
+                        <value>10.1.0</value>
                         <value>6.3.0</value>
                         <value>4.7.2</value>
                         <value>8.2.0</value>
                         <value>8.3.0</value>
-                        <value>9.1.0</value>
                         <value>4.8.4</value>
+                        <value>9.1.0</value>
                         <value>8.1.0</value>
                         <value>9.2.0</value>
                         <value>5.3.0</value>
                     </macro>
                     <macro>
                         <name>gnu-latestversion</name>
-                        <value>9.2.0</value>
+                        <value>10.1.0</value>
                     </macro>
                     <macro>
                         <name>gnu-key</name>
-                        <value>@keyPre@ gcc/9.2.0 @keyPost@</value>
+                        <value>@keyPre@ gcc/10.1.0 @keyPost@</value>
                     </macro>
                     <macro>
                         <name>python-version</name>
@@ -256,8 +257,8 @@
                     <macro>
                         <name>intel-version</name>
                         <value>19.5</value>
-                        <value>19.3</value>
                         <value>18.4</value>
+                        <value>19.3</value>
                     </macro>
                     <macro>
                         <name>intel-latestversion</name>
@@ -1249,7 +1250,15 @@
                     </macro>
                     <macro>
                         <name>org.globus.openssh-version</name>
-                        <value>7.5p1b-hpn13v11</value>
+                        <value>1.0.1e-fips</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.openssh-host</name>
+                        <value>comet.sdsc.xsede.org</value>
+                    </macro>
+                    <macro>
+                        <name>org.globus.gridftp-host</name>
+                        <value>oasis-dm.sdsc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>xsedeChargeProject</name>
@@ -1258,42 +1267,6 @@
                     <macro>
                         <name>xdcdb_name</name>
                         <value>comet.sdsc.xsede</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.gridftp-version</name>
-                        <value>12.13</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.gridftp-latestversion</name>
-                        <value>12.13</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.gridftp-host</name>
-                        <value>oasis-dm.sdsc.xsede.org</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.gridftp-port</name>
-                        <value>2811</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.gridftp-endpoint</name>
-                        <value>gsiftp://oasis-dm.sdsc.xsede.org:2811</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.openssh-latestversion</name>
-                        <value>7.5p1b-hpn13v11</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.openssh-host</name>
-                        <value>comet.sdsc.xsede.org</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.openssh-port</name>
-                        <value>22</value>
-                    </macro>
-                    <macro>
-                        <name>org.globus.openssh-endpoint</name>
-                        <value>comet.sdsc.xsede.org:22</value>
                     </macro>
                     <macro>
                         <name>globus-version</name>
@@ -1919,7 +1892,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>org.globus.gridftp-optional</name>
-                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|comet\.sdsc\.xsede\.org|stampede2\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|stampede2\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -1931,7 +1904,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>bridges.psc.xsede.org comet.sdsc.xsede.org stampede2.tacc.xsede.org</value>
+                        <value>bridges.psc.xsede.org stampede2.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -2095,7 +2068,7 @@
             </resource>
             <resource xmlns:res="http://inca.sdsc.edu/dataModel/resourceConfig_2.0">
                 <name>org.globus.openssh-optional</name>
-                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|comet\.sdsc\.xsede\.org|stampede2\.tacc\.xsede\.org)$')]</xpath>
+                <xpath>//resource[matches(name, '^(bridges\.psc\.xsede\.org|stampede2\.tacc\.xsede\.org)$')]</xpath>
                 <macros>
                     <macro>
                         <name>__longname__</name>
@@ -2107,7 +2080,7 @@
                     </macro>
                     <macro>
                         <name>__regexp__</name>
-                        <value>bridges.psc.xsede.org comet.sdsc.xsede.org stampede2.tacc.xsede.org</value>
+                        <value>bridges.psc.xsede.org stampede2.tacc.xsede.org</value>
                     </macro>
                     <macro>
                         <name>__equivalent__</name>
@@ -8236,6 +8209,67 @@
                         <tag xmlns="">name=perl</tag>
                         <tag xmlns="">version=5</tag>
                         <tag xmlns="">software=perl</tag>
+                    </tags>
+                </seriesConfig>
+                <seriesConfig>
+                    <series xmlns="">
+                        <name>user.search.output.unit</name>
+                        <args>
+                            <arg>
+                                <name>version</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>verbose</name>
+                                <value>1</value>
+                            </arg>
+                            <arg>
+                                <name>com</name>
+                                <value>cat /tmp/inca-test</value>
+                            </arg>
+                            <arg>
+                                <name>help</name>
+                                <value>no</value>
+                            </arg>
+                            <arg>
+                                <name>search</name>
+                                <value>OK</value>
+                            </arg>
+                            <arg>
+                                <name>log</name>
+                                <value>5</value>
+                            </arg>
+                            <arg>
+                                <name>delim</name>
+                                <value>:</value>
+                            </arg>
+                        </args>
+                        <limits>
+                            <wallClockTime>60</wallClockTime>
+                        </limits>
+                        <context>@pre@@@@post@</context>
+                    </series>
+                    <nickname xmlns="">inca_email_test</nickname>
+                    <resourceSetName xmlns="">capac</resourceSetName>
+                    <schedule xmlns="">
+                        <crontime>? * * * *</crontime>
+                    </schedule>
+                    <acceptedOutput xmlns="">
+                        <comparitor>ExprComparitor</comparitor>
+                        <comparison>errorMessage==''</comparison>
+                        <notifications>
+                            <notification>
+                                <notifier>EmailNotifier</notifier>
+                                <target>inca@sdsc.edu</target>
+                            </notification>
+                        </notifications>
+                    </acceptedOutput>
+                    <action xmlns="">add</action>
+                    <tags>
+                        <tag xmlns="">resource=inca.xsede.org</tag>
+                        <tag xmlns="">name=edu.sdsc.inca</tag>
+                        <tag xmlns="">version=2.7</tag>
+                        <tag xmlns="">service=edu.sdsc.inca</tag>
                     </tags>
                 </seriesConfig>
             </seriesConfigs>

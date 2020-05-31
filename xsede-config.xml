@@ -765,6 +765,16 @@
           <value>1.0.1e-fips</value>
         </macro>
         <macro>
+          <type>variable</type>
+          <name>org.globus.openssh-host</name>
+          <value>comet.sdsc.xsede.org</value>
+        </macro>
+        <macro>
+          <type>variable</type>
+          <name>org.globus.gridftp-host</name>
+          <value>oasis-dm.sdsc.xsede.org</value>
+        </macro>
+        <macro>
           <type>constant</type>
           <name>xsedeChargeProject</name>
           <value>utk112</value>
@@ -5909,6 +5919,67 @@
             <tag>name=perl</tag>
             <tag>version=5</tag>
             <tag>software=perl</tag>
+          </tags>
+        </seriesConfig>
+        <seriesConfig>
+          <series>
+            <name>user.search.output.unit</name>
+            <args>
+              <arg>
+                <name>version</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>verbose</name>
+                <value>1</value>
+              </arg>
+              <arg>
+                <name>com</name>
+                <value>cat /tmp/inca-test</value>
+              </arg>
+              <arg>
+                <name>help</name>
+                <value>no</value>
+              </arg>
+              <arg>
+                <name>search</name>
+                <value>OK</value>
+              </arg>
+              <arg>
+                <name>log</name>
+                <value>5</value>
+              </arg>
+              <arg>
+                <name>delim</name>
+                <value>:</value>
+              </arg>
+            </args>
+            <limits>
+              <wallClockTime>60</wallClockTime>
+            </limits>
+            <context>@pre@@@@post@</context>
+          </series>
+          <nickname>inca_email_test</nickname>
+          <resourceSetName>capac</resourceSetName>
+          <schedule>
+            <crontime>? * * * *</crontime>
+          </schedule>
+          <acceptedOutput>
+            <comparitor>ExprComparitor</comparitor>
+            <comparison>errorMessage==''</comparison>
+            <notifications>
+              <notification>
+                <notifier>EmailNotifier</notifier>
+                <target>inca@sdsc.edu</target>
+              </notification>
+            </notifications>
+          </acceptedOutput>
+          <action>add</action>
+          <tags>
+            <tag>resource=inca.xsede.org</tag>
+            <tag>name=edu.sdsc.inca</tag>
+            <tag>version=2.7</tag>
+            <tag>service=edu.sdsc.inca</tag>
           </tags>
         </seriesConfig>
       </seriesConfigs>
