@@ -22,7 +22,7 @@
         <macro>
           <type>constant</type>
           <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:rbudden@psc.edu</value>
+          <value>FailTo:inca@sdsc.edu</value>
         </macro>
         <macro>
           <type>constant</type>
@@ -569,6 +569,7 @@
       </macroResource>
     </resource>
 -->
+<!--
     <resource>
       <name>grid1.osg.xsede.org</name>
       <macroResource>
@@ -637,7 +638,6 @@
         <hosts>xd-login.opensciencegrid.org</hosts>
       </macroResource>
     </resource>
-<!--
     <resource>
       <name>gordon.sdsc.xsede.org</name>
       <macroResource>
@@ -783,6 +783,14 @@
       </macroResource>
     </resource>
     <resource>
+      <name>expanse.sdsc.xsede.org</name>
+      <skip/>
+      <macroResource>
+        <name>sdsc-expanse</name>
+        <hosts>login.expanse.sdsc.edu</hosts>
+      </macroResource>
+    </resource>
+    <resource>
       <name>ranch.tacc.xsede.org</name>
       <skip/>
       <macroResource>
@@ -859,84 +867,6 @@
           <name>TACC</name>
         </group>
         <hosts>stampede2.tacc.utexas.edu</hosts>
-      </macroResource>
-    </resource>
-<!--
-    <resource>
-      <name>wrangler.iu.xsede.org</name>
-      <macroResource>
-        <name>iu-wrangler</name>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/home/u20/inca/inca-client</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:hannac@iu.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>xsede#wrangler-iu</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>IU</name>
-        </group>
-        <hosts>iuwrang-login.uits.indiana.edu</hosts>
-      </macroResource>
-    </resource>
--->
-    <resource>
-      <name>wrangler.tacc.xsede.org</name>
-      <macroResource>
-        <name>tacc-wrangler</name>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/home/00500/inca/inca-client</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>xsede#wrangler</value>
-        </macro>
-        <macro>
-          <name>__incaComputePort__</name>
-          <value>2222</value>
-        </macro>
-        <macro>
-          <name>__remoteInvocationMethod__</name>
-          <value>gsissh</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>TACC</name>
-        </group>
-        <hosts>wrangler.tacc.utexas.edu</hosts>
       </macroResource>
     </resource>
   </resources>
@@ -8278,7 +8208,7 @@
           </schedule>
           <acceptedOutput>
             <comparitor>ExprComparitor</comparitor>
-            <comparison><![CDATA[providers_time < 1 && events_time < 1 && events_week_time < 1 && resource_search_time < 5]]></comparison>
+            <comparison><![CDATA[providers_time < 2 && events_time < 2 && events_week_time < 2 && resource_search_time < 5]]></comparison>
             <notifications>
               <notification>
                 <notifier>EmailNotifier</notifier>

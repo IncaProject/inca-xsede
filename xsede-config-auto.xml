@@ -1110,7 +1110,7 @@
                 <macro>
                     <type>constant</type>
                     <name>adminEmail</name>
-                    <value>FailTo:inca@sdsc.edu, FailTo:rbudden@psc.edu</value>
+                    <value>FailTo:inca@sdsc.edu</value>
                 </macro>
                 <macro>
                     <type>constant</type>
@@ -1259,13 +1259,13 @@
                     <name>gnu-version</name>
                     <value>7.2.0</value>
                     <value>7.3.0</value>
-                    <value>10.1.0</value>
-                    <value>6.3.0</value>
                     <value>4.7.2</value>
+                    <value>6.3.0</value>
+                    <value>10.1.0</value>
                     <value>8.2.0</value>
                     <value>8.3.0</value>
-                    <value>4.8.4</value>
                     <value>9.1.0</value>
+                    <value>4.8.4</value>
                     <value>8.1.0</value>
                     <value>9.2.0</value>
                     <value>5.3.0</value>
@@ -1324,10 +1324,11 @@
                 <macro>
                     <type>variable</type>
                     <name>hdf5-version</name>
-                    <value>1.8.21_intel</value>
                     <value>1.10.1_gnu</value>
-                    <value>1.8.16_intel</value>
                     <value>1.8.16_gnu</value>
+                    <value>1.8.16_intel</value>
+                    <value>1.8.21_intel</value>
+                    <value>1.8.21_pgi</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -1362,19 +1363,20 @@
                 <macro>
                     <type>variable</type>
                     <name>intel-version</name>
-                    <value>19.5</value>
                     <value>18.4</value>
                     <value>19.3</value>
+                    <value>19.5</value>
+                    <value>20.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>intel-latestversion</name>
-                    <value>19.5</value>
+                    <value>20.4</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>intel-key</name>
-                    <value>@keyPre@ intel/19.5 @keyPost@</value>
+                    <value>@keyPre@ intel/20.4 @keyPost@</value>
                 </macro>
             </macroResource>
         </resource>
@@ -1875,96 +1877,75 @@
       </macroResource>
     </resource>
 -->
-        <resource>
-            <name>grid1.osg.xsede.org</name>
-            <group>
-                <type>general</type>
-                <name>rdr-production</name>
-            </group>
-            <group>
-                <type>general</type>
-                <name>xsede-level-1</name>
-            </group>
-            <group>
-                <type>general</type>
-                <name>xsede-batch</name>
-            </group>
-            <group>
-                <type>general</type>
-                <name>condor</name>
-            </group>
-            <macroResource>
-                <name>osg</name>
-                <macro>
-                    <type>constant</type>
-                    <name>__incaReporterManagerLocation__</name>
-                    <value>/home/inca/inca-client</value>
-                </macro>
-                <macro>
-                    <name>__remoteInvocationMethod__</name>
-                    <value>gsissh</value>
-                    <type>constant</type>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>go-dirs</name>
-                    <value/>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>go-id</name>
-                    <value>xsede#osg</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>adminEmail</name>
-                    <value>FailTo:inca@sdsc.edu, FailTo:osg-xsede-ops@opensciencegrid.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>org.globus.gridftp-host</name>
-                    <value>submit-1.osg.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>org.globus.openssh-host</name>
-                    <value>submit-1.osg.xsede.org</value>
-                </macro>
-                <macro>
-                    <type>variable</type>
-                    <name>org.globus.openssh-version</name>
-                    <value>7.1p2</value>
-                </macro>
-                <macro>
-                    <name>__incaComputeServer__</name>
-                    <value>xd-login.opensciencegrid.org</value>
-                </macro>
-                <group>
-                    <type>general</type>
-                    <name>module</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>ALL-RM</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>OSG</name>
-                </group>
-                <macro>
-                    <type>constant</type>
-                    <name>hostcertPath</name>
-                    <value>/etc/grid-security/host/cert.pem</value>
-                </macro>
-                <hosts>xd-login.opensciencegrid.org</hosts>
-                <macro>
-                    <type>variable</type>
-                    <name>xdcdb_name</name>
-                    <value>grid1.osg.xsede</value>
-                </macro>
-            </macroResource>
-        </resource>
         <!--
+    <resource>
+      <name>grid1.osg.xsede.org</name>
+      <macroResource>
+        <name>osg</name>
+        <macro>
+          <type>constant</type>
+          <name>__incaReporterManagerLocation__</name>
+          <value>/home/inca/inca-client</value>
+        </macro>
+        <macro>
+          <name>__remoteInvocationMethod__</name>
+          <value>gsissh</value>
+          <type>constant</type>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>go-dirs</name>
+          <value></value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>go-id</name>
+          <value>xsede#osg</value>
+        </macro>
+        <macro>
+          <type>constant</type>
+          <name>adminEmail</name>
+          <value>FailTo:inca@sdsc.edu, FailTo:osg-xsede-ops@opensciencegrid.org</value>
+        </macro>
+      <macro>
+        <type>variable</type>
+        <name>org.globus.gridftp-host</name>
+        <value>submit-1.osg.xsede.org</value>
+      </macro>
+      <macro>
+        <type>variable</type>
+        <name>org.globus.openssh-host</name>
+        <value>submit-1.osg.xsede.org</value>
+      </macro>
+      <macro>
+        <type>variable</type>
+        <name>org.globus.openssh-version</name>
+        <value>7.1p2</value>
+      </macro>
+        <macro>
+          <name>__incaComputeServer__</name>
+          <value>xd-login.opensciencegrid.org</value>
+        </macro>
+        <group>
+          <type>general</type>
+          <name>module</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>ALL-RM</name>
+        </group>
+        <group>
+          <type>general</type>
+          <name>OSG</name>
+        </group>
+        <macro>
+          <type>constant</type>
+          <name>hostcertPath</name>
+          <value>/etc/grid-security/host/cert.pem</value>
+        </macro>
+        <hosts>xd-login.opensciencegrid.org</hosts>
+      </macroResource>
+    </resource>
     <resource>
       <name>gordon.sdsc.xsede.org</name>
       <macroResource>
@@ -2037,6 +2018,14 @@
             <group>
                 <type>kit</type>
                 <name>xsede-kit</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>org.globus.gridftp-optional</name>
+            </group>
+            <group>
+                <type>optional</type>
+                <name>org.globus.openssh-optional</name>
             </group>
             <group>
                 <type>optional</type>
@@ -2141,7 +2130,7 @@
                 <macro>
                     <type>variable</type>
                     <name>org.globus.openssh-version</name>
-                    <value>1.0.1e-fips</value>
+                    <value>7.5p1b-hpn13v11</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -2163,6 +2152,41 @@
                     <type>variable</type>
                     <name>xdcdb_name</name>
                     <value>comet.sdsc.xsede</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.gridftp-version</name>
+                    <value>12.13</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.gridftp-latestversion</name>
+                    <value>12.13</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.gridftp-port</name>
+                    <value>2811</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.gridftp-endpoint</name>
+                    <value>gsiftp://oasis-dm.sdsc.xsede.org:2811</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.openssh-latestversion</name>
+                    <value>7.5p1b-hpn13v11</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.openssh-port</name>
+                    <value>22</value>
+                </macro>
+                <macro>
+                    <type>variable</type>
+                    <name>org.globus.openssh-endpoint</name>
+                    <value>comet.sdsc.xsede.org:22</value>
                 </macro>
                 <macro>
                     <type>variable</type>
@@ -2300,6 +2324,14 @@
                     <name>intel-key</name>
                     <value>@keyPre@ intel/2018.1.163 @keyPost@</value>
                 </macro>
+            </macroResource>
+        </resource>
+        <resource>
+            <name>expanse.sdsc.xsede.org</name>
+            <skip/>
+            <macroResource>
+                <name>sdsc-expanse</name>
+                <hosts>login.expanse.sdsc.edu</hosts>
             </macroResource>
         </resource>
         <resource>
@@ -2612,95 +2644,18 @@
                     <value>18.0.0</value>
                     <value>17.0.4</value>
                     <value>18.0.2</value>
+                    <value>19.1.1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>intel-latestversion</name>
-                    <value>18.0.2</value>
+                    <value>19.1.1</value>
                 </macro>
                 <macro>
                     <type>variable</type>
                     <name>intel-key</name>
-                    <value>@keyPre@ intel/18.0.2 @keyPost@</value>
+                    <value>@keyPre@ intel/19.1.1 @keyPost@</value>
                 </macro>
-            </macroResource>
-        </resource>
-        <!--
-    <resource>
-      <name>wrangler.iu.xsede.org</name>
-      <macroResource>
-        <name>iu-wrangler</name>
-        <macro>
-          <type>constant</type>
-          <name>__incaReporterManagerLocation__</name>
-          <value>/home/u20/inca/inca-client</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>adminEmail</name>
-          <value>FailTo:inca@sdsc.edu, FailTo:hannac@iu.edu</value>
-        </macro>
-        <macro>
-          <type>constant</type>
-          <name>go-id</name>
-          <value>xsede#wrangler-iu</value>
-        </macro>
-        <group>
-          <type>general</type>
-          <name>ALL-RM</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>module</name>
-        </group>
-        <group>
-          <type>general</type>
-          <name>IU</name>
-        </group>
-        <hosts>iuwrang-login.uits.indiana.edu</hosts>
-      </macroResource>
-    </resource>
--->
-        <resource>
-            <name>wrangler.tacc.xsede.org</name>
-            <macroResource>
-                <name>tacc-wrangler</name>
-                <macro>
-                    <type>constant</type>
-                    <name>__incaReporterManagerLocation__</name>
-                    <value>/home/00500/inca/inca-client</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>adminEmail</name>
-                    <value>FailTo:inca@sdsc.edu, FailTo:dcarver@tacc.utexas.edu</value>
-                </macro>
-                <macro>
-                    <type>constant</type>
-                    <name>go-id</name>
-                    <value>xsede#wrangler</value>
-                </macro>
-                <macro>
-                    <name>__incaComputePort__</name>
-                    <value>2222</value>
-                </macro>
-                <macro>
-                    <name>__remoteInvocationMethod__</name>
-                    <value>gsissh</value>
-                </macro>
-                <group>
-                    <type>general</type>
-                    <name>ALL-RM</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>module</name>
-                </group>
-                <group>
-                    <type>general</type>
-                    <name>TACC</name>
-                </group>
-                <hosts>wrangler.tacc.utexas.edu</hosts>
             </macroResource>
         </resource>
     </resources>
@@ -10329,7 +10284,7 @@
                     </schedule>
                     <acceptedOutput xmlns="">
                         <comparitor>ExprComparitor</comparitor>
-                        <comparison>providers_time &lt; 1 &amp;&amp; events_time &lt; 1 &amp;&amp; events_week_time &lt; 1 &amp;&amp; resource_search_time &lt; 5</comparison>
+                        <comparison>providers_time &lt; 2 &amp;&amp; events_time &lt; 2 &amp;&amp; events_week_time &lt; 2 &amp;&amp; resource_search_time &lt; 5</comparison>
                         <notifications>
                             <notification>
                                 <notifier>EmailNotifier</notifier>
