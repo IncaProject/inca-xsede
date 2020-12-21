@@ -8,12 +8,12 @@ use POSIX qw( strftime );
 
 my $reporter = new Inca::Reporter::Performance(
 	name => 'xsede.uiuc.info.performance',
-	version => 4,
+	version => 5,
 	description => 'Monitors responsiveness of UIUC Research IT Portal Search enabled by XSEDE Information Services',
 	measurement_name => 'uiuc_info',
 );
 
-$reporter->addArg( 'url', 'URL prefix for API calls', 'https://info.xsede.org/wh1/resource-api/v1/' );
+$reporter->addArg( 'url', 'URL prefix for API calls', 'https://info.xsede.org/wh1/resource-api/v3/' );
 $reporter->processArgv(@ARGV);
 my $url = $reporter->argValue('url');
 
@@ -23,10 +23,10 @@ my $today = strftime( $fmt, @time );
 $time[3] += 7;
 my $next_week = strftime( $fmt, @time );
 my @bench = (
-	[ 'providers', 'providers/?affiliation=uiuc.edu' ],
-	[ 'events', 'events/?affiliation=uiuc.edu&results_per_page=4&page=1' ],
-	[ 'events_week', 'events/?affiliation=uiuc.edu&start_date=' . $today . 'T00:00:00-05:00&end_date=' . $next_week . 'T00:00:00-05:00' ],
-	[ 'resource_search', 'resource_search/?affiliation=uiuc.edu&page=1&results_per_page=25&fields=resource_description,category,resource_name,street_address,building_name,room_number,city,zip,start_date_time,end_date_time' ],
+	[ 'providers', 'resource_esearch?affiliation=uiuc.edu&resource_groups=organizations&page=1&results_per_page=20' ],
+	[ 'events', 'event_search/?affiliation=uiuc.edu&results_per_page=4&page=1' ],
+	[ 'events_week', 'event_search/?affiliation=uiuc.edu&start_date=' . $today . 'T00:00:00-05:00&end_date=' . $next_week . 'T00:00:00-05:00' ],
+	[ 'resource_search', 'resource_esearch?search_terms=aws' ],
 );
 
 my $err = '';
