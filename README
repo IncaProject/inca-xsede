@@ -2,27 +2,27 @@ Readme for updateIncat
 =======================
 
 This tool is used to make automatic updates to the XSEDE Inca deployment based
-on data from kit registrations.
+on data from XSEDE's information services.
 
 Files:
 ======
 
-config.xml = original config file that holds manually added resources and 
-             custom macros as well as suites.  Does not contain kit queries
-             which are auto-generated from kit definition files in etc/kits
+xsede-config.xml = original config file that holds manually added resources and 
+             custom macros as well as suites.  
 
-config-auto.xml = current version of config file to use to generate a 
+xsede-config-auto.xml = current version of config file to use to generate a 
                   fresh incat-auto.xml file.
 
-incat-auto.xml = auto=generated incat file to send to agent
+xsede-incat-auto.xml = auto=generated incat file to send to agent
 
 Tools:
 ======
 
-./bin/downloadKitRegs = downloads a current copy of the kit registrations
-                        to kit-regs.xml
+./bin/downloadXsedeInfo = downloads the latest software and service
+                          registrations from XSEDE's information service to xsede-info.xml,
+                          information about required versus optional software to componentsprequirement.xml
                         
-./bin/generateConfig = generates config-auto.xml from config.xml and kit
+./bin/generateXsedeConfig = generates xsede-config-auto.xml from xsede-config.xml and kit
                        definition files in etc/kits.  Should only need to be
                        run if changes are made to config.xml or etc/kits.
 

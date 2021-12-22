@@ -76,7 +76,11 @@ public class UpdateIncat {
 			System.setProperty("javax.xml.xpath.XPathFactory:" + NamespaceConstant.OBJECT_MODEL_SAXON, "net.sf.saxon.xpath.XPathFactoryImpl");
 			XPathFactory xPathFactory = XPathFactory.newInstance(NamespaceConstant.OBJECT_MODEL_SAXON);
 			XPath xpath = xPathFactory.newXPath();
-			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+
+			docFactory.setIgnoringElementContentWhitespace(true);
+
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			m_logger.info("Reading config doc " + args[0]);
 			Document configDoc = docBuilder.parse(new FileInputStream(args[0]));
 
@@ -94,7 +98,7 @@ public class UpdateIncat {
 			LSOutput lsOutput = lsImpl.createLSOutput();
 
 			lsOutput.setEncoding("UTF-8");
-			lsSerializer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+			//lsSerializer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
 
 			if (changedConfig) {
 				createBackupFile(args[0]);
