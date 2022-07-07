@@ -1,0 +1,1662 @@
+<section id="userguide-consumer">
+  <title>Data Display (Data Consumers)</title>
+
+  <para>
+  The data that the Inca depot stores can be displayed in many ways, such as
+  current status reports, historical graphs, and customized status information.
+  An Inca data consumer is anything that
+  retrieves data from the depot and displays it (e.g. a JSP, SQL query, CGI,
+  etc.).  The Inca depot provides access to stored data via Perl and Java
+  client APIs (see <xref linkend="userguide-apis">).
+  </para>
+  <graphic fileref="figures/arch/arch-consumer.jpg" align="center"></graphic>
+
+  <para>
+  The data consumer packaged with Inca is a collection of
+  <ulink url="http://java.sun.com/products/jsp/">JavaServer Pages (JSP)</ulink>
+  and associated files.  The consumer is installed in
+  <filename>$INCA_DIST/webapps/inca</filename> and is deployed with
+  <ulink url="http://www.mortbay.org/">Jetty</ulink> when the consumer is
+  started (e.g., ./bin/inca start consumer).  The consumer
+  listens on ports 8080 (HTTP) and 8443 (HTTPS) unless
+  <filename>$INCA_DIST/etc/jetty.xml</filename> is edited as described in
+  <xref linkend="consumer-port">.  
+  </para>
+
+  <para>
+  The default consumer's JSPs query the depot for XML results and
+  either apply XSL to them in order to display HTML status pages or 
+  parse out data and display it in graphs.  The figure below shows
+  the default menu header.  Each menu item invokes a JSP as
+  described in the sections below.
+  </para>
+  
+  <graphic fileref="figures/consumer/menuOverview.jpg" align="center">
+  </graphic>
+
+  <section id="current-data">
+    <title>Current Data</title>
+
+    <para>
+    The default page header navigation contains links to tabular and map view
+    result summaries for the sample suite.  To add other current data pages
+    under this heading (e.g., result summary tables for additional suites),
+    customize the <filename>header.xsl</filename> file as described in
+    <xref linkend="custom-html-header">.
+    </para>
+
+    <section id="table-summary">
+      <title>Tabular Suite Summary View</title>
+      <para>
+      The first item in the CURRENT DATA menu executes
+      <filename>status.jsp</filename> with <filename>default.xsl</filename> to
+      create a summary table of suite results. 
+      This JSP takes comma-delimited lists in its suiteNames and optional
+      resourceIds parameters that specify the suites and resources to be shown.
+      The default installation invokes
+      <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">
+      http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>,
+      producing an image similar to this one:
+      <graphic fileref="figures/consumer/sum_page2.gif" align="center"></graphic>
+      If you omit resourceIds, then all resources will be displayed for each
+      suite.
+      </para>
+    </section>
+
+    <section id="google">
+      <title>Map View using Google Map API</title>
+
+      <section id="google-overview">
+        <title>Overview</title>
+        <para>
+        The second item in the CURRENT DATA menu executes
+        <filename>status.jsp</filename> using <filename>google.xsl</filename> 
+        to display a map that provides a
+        summary of the current status of resources.  For each resource, the map
+        view gives the percentage of reports passed, number of passed reports,
+        number of failed reports, and a list of the failed tests with a link to
+        each report details page.  A resource is represented on the map as a
+        marker and colored red, green, or orange based on the number of tests
+        that have passed and/or failed.  The figure below shows the Inca Google
+        map view for the NEON testbed (four resources at SDSC and one resource
+        at James Reserve).  All resources are passing their tests, so every
+        resource marker is green.
+        </para>
+        <graphic fileref="figures/consumer/googleNeon.png" align="center">
+        </graphic>
+        <para>
+        Clicking on a marker displays a pop-up with the name of the
+        resource and its status information as show below.
+        </para>
+        <graphic fileref="figures/consumer/googleNeonInfo.png" align="center">
+        </graphic>
+        <para>
+        Clicking on the "Toggle ping status" button displays the status of the
+        cross-site ping test as show below.
+        </para>
+        <graphic fileref="figures/consumer/googleNeonPing.png" align="center">
+        </graphic>
+      </section>
+
+      <section id="google-setup">
+        <title>Setting up Google Map View</title>
+        <para>The Inca map views can be configured using the page described in <xref linkend="config-consumer">.
+        Use the options in <xref linkend="google-config"> to configure maps for your site.</para>
+        <para>
+        Next give the map generator the locations of your resources.  Use the 
+        configuration page to add/edit sites and resource like the one below:
+        <graphic fileref="figures/consumer/google-sites.jpg" align="center"></graphic>
+        </para>
+
+       <para>Provide a site name, latitude/longitude coordinates
+        and a list of resources for each site.  
+        Optionally, you can also specify a logo for the site. Specify the height and 
+        width of the logo in pixels, angle from 0 degrees, and logo
+        anchor coordinates (logoAnchorX/logoAnchorY) as
+        shown in the figure below:
+        <graphic fileref="figures/consumer/googleSite.png" align="center">
+        </graphic>
+        </para>
+
+<section id="google-config">
+<title>Google Map Options</title>
+<itemizedList>
+<listItem><para>
+  <emphasis>width/height:</emphasis> The size of the map graphic (in pixels) that will be generated. By default the map is 800x500.
+</para></listItem>
+<listItem><para>
+  <emphasis>center:</emphasis> The center of the map in latitude/longitude coordinates. By default, the center of the map corresponds to the center of the U.S.
+</para></listItem>
+<listItem><para>
+  <emphasis>mapType:</emphasis> Type of map to display. By default the map is google.maps.MapTypeId.TERRAIN.
+</para>
+<itemizedList>
+<listItem><para>
+  <emphasis>google.maps.MapTypeId.ROADMAP:</emphasis> displays the default road map view.
+</para></listItem>
+<listItem><para>
+  <emphasis>google.maps.MapTypeId.SATELLITE:</emphasis> displays Google Earth satellite images.
+</para></listItem>
+<listItem><para>
+  <emphasis>google.maps.MapTypeId.HYBRID:</emphasis> displays a mixture of normal and satellite views.
+</para></listItem>
+<listItem><para>
+  <emphasis>google.maps.MapTypeId.TERRAIN:</emphasis> displays a physical map based on terrain information.
+</para></listItem>
+</itemizedList>
+</listItem>
+<listItem><para>
+  <emphasis>magnificationLevel:</emphasis> The initial magnification, or zoom level, of the map expressed as a number between 1 and 12. Zoom level 1 displays the entire world, while zoom level 12 allows you to read street names.
+</para></listItem>
+<listItem><para>
+  <emphasis>markerDist:</emphasis> The distance between resource markers at a site.  If there is more than one resource at a particular site, the resource markers will be arranged in a circle around the site center. By default, the distance between the markers will be determined so that the markers do not overlap each other.
+</para></listItem>
+<listItem><para>
+  <emphasis>maxErrors:</emphasis> The maximum number of errors to display in the info window that is displayed when a resource is clicked.
+</para></listItem>
+<listItem><para>
+  <emphasis>line:</emphasis> For cross-site tests, a line will be displayed between the two sites to indicate the test status.  If a suite contains a cross-site test, a button will be displayed below the map named "Toggle &lt;testName&gt; status". When the button is clicked, the status of an individual cross-site test will be expressed as a line in between the source resource and the destination resource. The color of the line used to represent the test status can be customized. By default, green represents the test passed and red represents the test failed.  See "crossSite" below to specify the tests you want displayed.
+</para></listItem>
+<listItem><para>
+  <emphasis>marker:</emphasis> Customize the look of the icon marker used to represent a resource on the map.
+  A resource is represented by a Google marker and the color varies based on the number of tests that it failed:
+  all tests passed = <inlinegraphic fileref="figures/consumer/mm_20_green.png" align="center"></inlinegraphic>, 
+  at least one test failed = <inlinegraphic fileref="figures/consumer/mm_20_orange.png" align="center"> </inlinegraphic>,
+  all tests failed = <inlinegraphic fileref="figures/consumer/mm_20_red.png" align="center">
+  </inlinegraphic>.  </para>
+  <para>
+Suppose you wanted to change the icons displayed to weather icons 
+  so that all tests passed = <inlinegraphic fileref="figures/consumer/icon33.png" align="center"></inlinegraphic>, 
+  at least one test failed = <inlinegraphic fileref="figures/consumer/icon34.png" align="center"> </inlinegraphic>,
+  all tests failed = <inlinegraphic fileref="figures/consumer/icon36.png" align="center"></inlinegraphic>. You would 
+  first find the size of the icons and modify the iconWidth and iconHeight (in this case the weather icons are 32x32 pixels).
+  Then pick the anchor point for the icon to be placed in relation to the resource's place on the map.  Since we want the middle of the icon to be placed on the map, we choose the coordinates (16, 16) and modify iconAnchorCoord.
+   Next determine the anchor point for the info window to pop up relative to the icon.  Since we want the info window to appear in the top middle, we choose the coordinates (16, 10) and modify iconInfoWindowAnchorCoord. Then construct the icon URLs 
+using the three weather icons located on the Google server at: <ulink url="http://maps.google.com/mapfiles/kml/pal4/icon33.png">http://maps.google.com/mapfiles/kml/pal4/icon33.png</ulink>, <ulink url="http://maps.google.com/mapfiles/kml/pal4/icon34.png">http://maps.google.com/mapfiles/kml/pal4/icon34.png</ulink>, <ulink url="http://maps.google.com/mapfiles/kml/pal4/icon36.png">http://maps.google.com/mapfiles/kml/pal4/icon36.png</ulink>.  Set the following values: iconUrlPrefix="http://maps.google.com/mapfiles/kml/pal4/icon", iconStatus->fail="36", iconStatus->pass="33", iconStatus->warn="34", iconUrlSuffix=".png".
+  Finally, specify the url for the shadow icon by setting shadowIconUrl="http://maps.google.com/mapfiles/kml/pal4/icon36s.png".</para>
+<itemizedList>
+<listItem><para>
+  <emphasis>iconWidth/iconHeight:</emphasis> size of icon in pixels.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconAnchorCoord:</emphasis> the coordinates of point inside the icon to be used for the anchor.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconInfoWindowAnchorCoord:</emphasis> where the anchor point for the info window should appear inside the icon.
+</para></listItem>
+<listItem><para>
+  <emphasis>iconUrlPrefix/iconStatus/iconUrlSuffix:</emphasis> set of 3 icons to indicate the different resource status: pass/fail/warn based on the number of tests the resource passes.  The url for the 3 different images should have the same url pattern constructed by concatenating &lt;iconUrlPrefix&gt;, &lt;iconStatus&gt;/&lt;fail|pass|warn&gt;, and &lt;iconUrlSuffix&gt;.
+</para></listItem>
+<listItem><para>
+  <emphasis>shadowIconUrl:</emphasis> url of a icon to use for the shadow of the resource icon.
+</para></listItem>
+<listItem><para>
+  <emphasis>shadowIconWidth/shadowIconHeight:</emphasis>  the size of the shadow icon in pixels.
+</para></listItem>
+</itemizedList>
+</listItem>
+<listItem><para>
+  <emphasis>crossSite:</emphasis>  For each cross site test specified, a
+  button will be displayed under the map to toggle status lines on and off
+  the map.  Each test has a name and a regex (regular expression to match
+  the cross site test nicknames).
+</para></listItem>
+<listItem><para>
+  <emphasis>sites:</emphasis>  The information about where to place resources in a site.  Can have multiple logos and resources for a site.  The logo angle/logoAnchorX/logoAnchorY are placement relative to the latitude/longitude.  Angle is the degrees from the site center (latitude/longitude).  For example, an angle of 0 will place the logo to the right of the resources, 180 to the left, 90 to the top, and 270 to the bottom.  logoAnchorX and logoAnchorY are used to indicate the coordinates relative to the image that should be placed on the map. For example, if your image is 12x12, using logoAnchorX=6 and logoAnchorY=6 will place the image in the center.
+</para></listItem>
+<listItem><para>
+  <emphasis>debug:</emphasis>  For development purposes.  Will print out some log messages in a javascript window if greater than 0.
+</para></listItem>
+</itemizedList>
+
+      </section>
+    </section>
+
+      <section id="google-access">
+        <title>Accessing the Google Map View</title>
+        <para>
+        Once setup is complete, load the map view by selecting the "Map of
+        sampleSuite results" item of the CURRENT DATA menu in
+        the navigation bar.
+        </para>
+        <graphic fileref="figures/consumer/googleMapMenu.png" align="center">
+        </graphic>
+        <para>
+        In the default installation, this links to
+        <ulink url="http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?xsl=google.xsl&amp;xml=google.xml&amp;suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink>.
+        This shows one resource and the Inca logo, similar to the map
+        below.  The resource status for multiple suites can be shown by
+        editing <filename>header.xsl</filename> to provide comma-delimited
+        lists for <filename>status.jsp</filename>'s suiteNames and resourceIds
+        parameters.
+        </para>
+        <graphic fileref="figures/consumer/googleDefaultMap.jpg" align="center">
+        </graphic>
+        <para>
+        Clicking on the resource marker will display an info box as below.
+        Clicking on the name of any failed test will take you to the reporter
+        details page.
+        </para>
+        <graphic fileref="figures/consumer/googleDefaultMapInfo.jpg" align="center">
+        </graphic>
+      </section>
+
+    </section>
+
+  </section>
+
+  <section id="reports">
+    <title>Reports</title>
+
+    <para>
+    The items in the REPORTS menu display graphic reports of current Inca
+    data and series histories.  These graphs are generated using
+    <ulink url="http://cewolf.sourceforge.net/">Cewolf</ulink>,
+    a JSP tag library for graphing based on
+    <ulink url="http://www.jfree.org/jfreechart/">JFreeChart</ulink>.
+    Some reports require the "incaQueryStatus" query to have run previously;
+    information about queries can be found in <xref linkend="view-query">.
+    </para>
+
+    <section id="pass-fail-report">
+      <title>Pass/Fail Graphs and Error Messages</title>
+      <para>
+      The first item in the REPORTS menu executes 
+      <filename>report.jsp</filename>, which uses CeWolf/JfreeChart, to
+      generate historical summary reports with pass/fail status and error
+      information.</para>
+      <para>The graphed series can be customized
+       using the page described in <xref linkend="config-consumer">.  Each "graph" folder
+       represents a separate graph on the page and the series under it will appear in the graph.
+       Series should be entered in the format "nickname,resource,label" and correspond to 
+       the names and resources of committed series. Each graph has its own title.  The height and width 
+       of all the graphs can also be customized as well as the page
+       description and title. 
+      <graphic fileref="figures/consumer/status-report.jpg" align="center"></graphic>
+      </para><para>
+      The default consumer groups different combinations of sampleSuite series
+      and displays the past week of results.
+      Each set of series has a title (e.g., Software
+      Deployment Tests) for its grouping and the series nickname, resource
+      name, and report label for each series in the group.
+      </para>
+      <graphic fileref="figures/consumer/summary_report.jpg" align="center">
+      </graphic>
+    </section>
+
+    <section id="metric-report">
+      <title>Metric Reports</title>
+      <para>
+      Like above, the first item in the REPORTS menu executes 
+      <filename>report.jsp</filename>, which uses CeWolf/JfreeChart, to
+      also generate historical summary reports graphing one or
+      more metrics.  </para>
+      <para>The graphed series can be customized
+       using the page described in <xref linkend="config-consumer">.  Each "graph" folder
+       represents a separate graph on the page and the series under it will appear in the graph.
+       Series should be entered in the format "nickname,resource,label" and correspond to 
+       the names and resources of committed series.  The default consumer graphs
+       a single metric called 'bandwidth' for the series
+       "wget_performance,localResource,wget test".  Additional metrics can be specified
+       as a comma separated list, e.g.,
+       "EP-STREAM_Triad_GB_s,G-STREAM_Triad_GB_s,Wall_Mins".  </para>
+       <graphic fileref="figures/consumer/status-report-metric.jpg" align="center"></graphic>
+       <para>There are three different chart types that can be specified as defined
+       below.  By default, the chart type will be 'metric'.</para> 
+
+        <itemizedList>
+        <listItem>
+          <para>metric: one graph containing all series will be printed per metric</para>
+        </listItem>
+        <listItem>
+          <para>series: one graph containing all metrics will be printed per series</para>
+        </listItem>
+        <listItem>
+          <para>single: all series and metrics will display on a single graph</para>
+        </listItem>
+        </itemizedList>
+
+       <para>Below is the graph configuration for two series, one connecting to the alamo 
+       resource and the other to the foxtrot resource.  Each series collects two metrics - ping and ssh.  There 
+       are two graphs that are identically configured except that the first one uses the "single" 
+       chart type so that all series and metrics are graphed together, and the second uses the "metric" 
+       chart type so that the ssh and ping metrics are graphed separately.</para>
+      <graphic fileref="figures/consumer/config-single-metric.jpg" align="center"></graphic>
+       <para>The graphs created by the configuration above are shown below.  The first graph uses the chart type "single"
+       so we see four lines, one for each series and one for each metric:</para>
+      <graphic fileref="figures/consumer/chart-single.jpg" align="center"></graphic>
+       <para>The second configuration uses the chart type "metric" so there are two graphs, one for each
+       metric.  Each graph has two lines, one for each series:</para>
+      <graphic fileref="figures/consumer/chart-metric.jpg" align="center"></graphic>
+       <para>If configuration used the chart type "series" there would be two graphs, one for each
+       series.  Each graph would have two lines, one for each metric:</para>
+      <graphic fileref="figures/consumer/chart-series.jpg" align="center"></graphic>
+    </section>
+    <section id="ave-pass-report">
+      <title>Average Pass Rate by Resource/Suite</title>
+
+      <para>
+      The second item in the REPORTS menu executes
+      <filename>summary.jsp</filename>, which uses CeWolf/JfreeChart and
+      stylesheets <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename> to show the average series pass
+      rate by resource and suite for the past week.  Each bar label shows the
+      value of
+      the average series pass rate for the last week and the difference in
+      percentage from the previous week. The color is green if the average pass
+      rate is better than the previous week, red if the average pass rate is
+      worse, and gray if there was no change. Individual bars can be clicked on
+      to show the percentages broken down further for each individual resource
+      or suite.
+      </para>
+      <graphic fileref="figures/consumer/summaryJsp.gif" align="center">
+      </graphic>
+      <para>
+      Click on any bar to view a more detailed report for that resource or
+      suite.  For example, clicking on the bar for the
+      'app-support.teragrid.org-4.0.0' suite above shows the average pass
+      rates for the 'app-support.teragrid.org-4.0.0' suite for each resource
+      (figure below).
+      </para>
+      <graphic fileref="figures/consumer/summaryDetailsJsp.gif" align="center">
+      </graphic>
+
+    </section>
+
+    <section id="series-report">
+      <title>Series Error Summary</title>
+
+      <para>
+      The third item in the REPORTS menu executes
+      <filename>status.jsp</filename> with
+      <filename>seriesSummary.xsl</filename> to summarize test series errors
+      by time
+      period.  Each time period includes the number of errors for the series
+      during the time period, the number of unique or distinct errors during
+      the period, and the percentage of the total results that passed during
+      the period.
+      </para>
+      <para>The time periods and titles (i.e., PAST 4 WEEKS) can be customized 
+       using the page described in <xref linkend="config-consumer">.
+      <graphic fileref="figures/consumer/error-summary-config.gif" align="center"></graphic>
+      </para>
+      <para>
+      The change between the total number of errors in the most recent period
+      and the total number of errors in the period before it is also given. If
+      the number of errors in the most recent period is greater than the number
+      of errors in the previous period (+), the number appears in red. If the
+      number of errors in the most recent period is less than the number in the
+      previous period (-), the number is green.
+      <graphic fileref="figures/consumer/error-summary.gif" align="center"></graphic>
+      </para>
+
+    </section>
+
+    <section id="ave-pass-history-report">
+      <title>Average Pass History</title>
+      <para>
+      The fourth and fifth items in the REPORTS menu execute
+      <filename>summaryHistory.jsp</filename>, which uses CeWolf/JfreeChart
+      and stylesheets <filename>seriesAverages.xsl</filename> and
+      <filename>periodAverages.xsl</filename> to show the average series pass
+      rate over time grouped by resource and suite.  I.e., When grouped by
+      suite, a history graph summarizing the average series pass rate is
+      displayed for each suite.  By default, multiple lines are used to show
+      the summary history on each resource.  To view the total summary history
+      percentages for all resources, click the <filename>total</filename>
+      checkbox in the top right corner and click the 'Filter' button.
+      Histories for either specific resources or suites can also be displayed
+      thru the form in the top right corner.  The amount of history shown is 4
+      weeks by default but can be modified by editing the 'incaQueryStatus'
+      query parameters described in
+      <xref linkend="view-query">.  
+      </para>
+      <graphic fileref="figures/consumer/summaryHistoryJsp.jpg" align="center">
+      </graphic>
+    </section>
+
+  </section>
+
+  <section id="query-pages">
+    <title>Query</title>
+    <para>
+    The query pages allow users to generate graphs and cache queries to improve
+    data display.
+    </para>
+
+   <section id="graph-series">
+      <title>Create Graph</title>
+      <para>
+      The first item of the QUERY menu executes
+      <filename>status.jsp</filename> with <filename>graph.xsl</filename> 
+      to create a form that allows you to
+      graph the history of more than one series.  The form allows you select
+      the set of series of interest via a set of checkboxes.
+      </para>
+      <graphic fileref="figures/consumer/graphForm.jpg" align="center">
+      </graphic>
+      <para>
+        After selecting the "vtk-nvgl_version" series and
+        clicking on the "graph" button in the form above,
+        a graph page similar to the one below is shown with
+        an XY plot of the pass/fail status of the selected
+        series, a series pass/fail summary table, a bar graph of
+        error message frequency (if the selected series have errors),
+        a summary table of error messages, and a form to customize the graph
+        further.
+        <graphic fileref="figures/consumer/graph1.jpg" align="center"></graphic>
+      </para>
+      <para>To query for all results, clear the "start date"
+        field in the "customize graph" section and click "re-graph".
+        To retrieve graphs more quickly, data point
+        mouseover text and links to
+        report details are turned off for the pass/fail graph.
+        The data points can be made interactive by choosing "show mouseovers/hyperlinks"
+        in the "customize graph" section and clicking on "re-graph".
+        Clicking on interactive data points will lead to
+        report details pages, mousing over them will show
+        collection times and any error messages.
+        <graphic fileref="figures/consumer/graph2.jpg" align="center"></graphic>
+            </para>
+
+      <para>Multiple series can also be graphed together as in the image below.
+      A table under each graph summarizes results for each series.
+        <graphic fileref="figures/consumer/graph3.jpg" align="center"></graphic>
+            </para>
+
+      <para>Graph pages for individual series are also linked from the report details pages.
+        <graphic fileref="figures/consumer/details_graph.gif" align="center"></graphic>
+       </para>
+
+      </section>
+
+      <section id="create-query">
+        <title>Create Stored Query</title>
+        <para>
+        The second item in the QUERY menu executes
+        <filename>status.jsp</filename> with
+        <filename>create-query.xsl</filename> to provide a form for creating a
+        cached query.  Unless password protection has been disabled as
+        described in <xref linkend="password-consumer">, selecting this item
+        causes the consumer to prompt for an id and password.
+        The consumer can cache frequently executed depot queries in
+        order to improve data display speed.   For example, the latest results
+        for a suite can be cached in order to quickly display a suite status
+        page.  By default the latest results for the sampleSuite are cached
+        every 2 minutes.  Results are also cached each day for historical
+        reports.
+        </para>
+        <graphic fileref="figures/consumer/create-query.gif" align="center">
+        </graphic>
+        <para>
+        Cached queries can be used to display custom tables of latest results,
+        using the queryNames parameter to <filename>status.jsp</filename>
+        For example, the image below shows the creation of a cached query,
+        named gccTests, for two series in the default installation.
+        </para>
+        <graphic fileref="figures/consumer/ug-query-create.png" align="center">
+        </graphic>
+        <para>
+        Once this query has been stored and executed, the table shown below can
+        be viewed via
+        <ulink url="http://localhost:8080/inca/jsp/status.jsp?queryNames=gccTests&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?queryNames=gccTests&amp;resourceIds=defaultGrid</ulink>
+        </para>
+        <graphic fileref="figures/consumer/ug-query-table.png" align="center">
+        </graphic>
+      </section>
+
+      <section id="view-query">
+        <title>Manage Stored Queries</title>
+        <para>
+        The third item in the QUERY menu executes <filename>query.jsp</filename>
+        to allow management of cached queries.  Unless password protection has
+        been disabled as described in <xref linkend="password-consumer">,
+        selecting this item causes the consumer to prompt for an id and
+        password.  Click on one of the pre-defined
+        queries to see its parameters.  Each query has a name, execution
+        schedule, depot command it executes and the parameters for the depot
+        command executed.
+        </para>
+        <para>
+        <graphic fileref="figures/consumer/query.gif" align="center"></graphic>
+        </para>
+
+        <para>
+        By default, the latest instances of all suites are cached every
+        2 minutes by predefined queries named
+        incaQueryLatest+<emphasis role="red">agentUri</emphasis>_<emphasis role="red">suiteName</emphasis>.
+        These
+        cached queries are used for the CURRENT DATA menu views described in
+        <xref linkend="current-data">.  Another default query is
+        "incaQueryStatus" which retrieves a summary of the number of successes
+        and failures for each series for the past 4 weeks.  This cached query
+        is used for the several of the reports described in <xref
+        linkend="reports">.  To display 10 weeks of history instead, modify "28"
+        days to "70" and click "Change".  Note that the consumer will
+        automatically re-create any of these default queries that are deleted.
+        </para>
+      </section>
+
+  </section>
+
+
+  <section id="admin">
+      <title>Admin</title>
+      <para>The ADMIN menu item offers two views of the
+      running reporters in an Inca deployment and a configuration page.  To
+      link other informational pages under this heading, customize the
+      <filename>header.xsl</filename> file as described in
+      <xref linkend="custom-html-header">. </para>
+      
+    <section id="running-reporters">
+      <title>List Running Reporters</title>
+      <para>The "Running Reporters" page displays running reporters series by suite.  
+    Each series lists its name, frequency of execution, whether email notification is
+    enabled, the reporter script used for the series, and a description of the reporter script.
+    Note that in this view, and in the more detailed running reporters view, the reporter names link to a CGI script 
+    that will not work for repositories that are not web accessible (like the local default repository).
+    Make your repository web accessible and add/commit the repository URL beginning with "http" in order to activate the reporter links.
+    </para>
+      <graphic fileref="figures/consumer/running-reporters.jpg" align="center"></graphic>
+
+      <para>The detailed "Running Reporter Series" page below lists the running reporter series and the suite each belongs to, the machine 
+      each is scheduled to execute on, whether email notification is configured, and the recipient ("Target") 
+      of any notification.</para>
+      <graphic fileref="figures/consumer/running-reporters-detail.jpg" align="center"></graphic>
+
+    </section>
+    
+    <section id="config-consumer">
+      <title>View/Change Configuration</title>
+      <para>Here Inca administrators can view and change the global configuration of status pages. Determine whether to allow run nows or the execution of tests via the detailed status pages (see <xref linkend="consumer-run-now">) and configure the <link linkend="consumer-kb">knowledge base</link>, <link linkend="google-setup">google map</link>, <link linkend="series-report">series summary</link> and <link linkend="pass-fail-report">status report</link> status pages.
+      </para>
+      <graphic fileref="figures/consumer/config-view-change.gif" align="center"></graphic>
+    </section>
+
+  </section>
+
+  <section id="consumer-report-details">
+    <title>Report Details</title>
+
+    <para>The Current Data, Reports, and Query views described in previous
+    sections provide links to a view that displays the individual report
+    details as shown in the figure below. </para>
+
+    <graphic fileref="figures/consumer/details_annotated.jpg"></graphic>
+
+   <section id="consumer-run-now">
+    <title>Run Nows</title>
+    <para>If the "Allow run nows from web pages" option is checked 
+    (see <xref linkend="config-consumer">), a "Run
+    Now" button will appear under the "Command used to execute the reporter"
+    heading. This option is useful for system administrators who have fixed an
+    issue and want to see the updated result or for those who want to verify that a problem  
+    has been resolved.  
+    <graphic fileref="figures/consumer/run-now.gif" align="center"></graphic>
+    </para>
+
+    <para>Clicking on the "Run Now" button triggers reporter execution
+    on the local machine.  Depending on the reporter execution time and page cache frequency (see <xref
+    linkend="view-query">), results may take a few minutes to propagate 
+    to the Inca web pages.</para>
+    
+    <graphic fileref="figures/consumer/run-now-button.png" align="center"></graphic>
+
+    <para>Since authentication is required based on the authentication setup (see
+    <xref linkend="password-consumer">), a box will popup such as follows:</para>
+
+    <graphic fileref="figures/consumer/security-popup.jpg" align="center"></graphic>
+
+    <para>Press 'Continue' and the security login window will display such as
+    follows:</para>
+
+    <graphic fileref="figures/consumer/security-login.jpg" align="center"></graphic>
+
+    <para>Use the username and password specified in
+    <filename>$INCA_DIST/etc/realm.properties</filename>.  By default, the
+    username and password are 'inca'. After the consumer submits the request, 
+    you will see a confirmation such as below: </para>
+
+    <graphic fileref="figures/consumer/run-now-confirm.jpg" align="center"></graphic>
+
+    </section>
+   
+    <section id="consumer-kb">
+    <title>Knowledge Base</title>
+    <para>The Inca default knowledge base is designed to collect problem resolution information 
+    for tests.  System administrators may use solutions stored in the knowledge base when debugging
+    issues on their resources. The knowledge base can be configured using the admin page 
+    described in <xref linkend="config-consumer"> with the options described after the configuration image below:
+    <graphic fileref="figures/consumer/kb-config.gif" align="center"></graphic>
+    <itemizedList>
+      <listItem>
+        <para>enable:</para>
+        <para>
+   If the "enable" value is set to "true" then a "search knowledge base" button
+and an "add to knowledge base" button will appear under the "Result" heading of
+the reporter details status pages.  If "enable" is set to "false" then the
+knowledge base buttons will be hidden and inaccessible.
+        </para>
+      </listItem>
+      <listItem>
+        <para>searchString:</para>
+        <para>
+   The URL that will be visited after clicking on the "search knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&".
+        </para>
+      </listItem>
+      <listItem>
+        <para>submitString:</para>
+        <para>
+   The URL that will be visited after clicking on the "add to knowledge base"  
+button.  The macros "@nickname@", "@reporter@" and "@error@" will be replaced  
+by the actual series nickname (e.g. gcc_version), reporter name (e.g. cluster.compiler.gcc.version), 
+and error message for each test.  The "+" character will be replaced by "&".
+        </para>
+      </listItem>
+      <listItem>
+        <para>submitEmailNotification:</para>
+        <para>
+   The email address to send new, changed, and removed knowledge base articles to.
+By default no email notifications are sent and the "submitEmailNotifications" value
+is set to "none".  To add email notifications, change this value to an email address or
+a list of email addresses separated by commas (e.g. "email1@loc.edu, email2@loc.edu").
+        </para>
+      </listItem>
+    </itemizedList>
+    </para>
+
+    <para>Once the knowledge base is enabled, two buttons to search and add to the 
+    knowledge base will appear on the report details pages:</para>
+    
+    <graphic fileref="figures/consumer/kb-annotated-details.jpg" align="center"></graphic>
+    
+    <para>Clicking on the "search knowledge base" button will lead to the URL set as the 
+    "searchString" value.  By default, this returns all of the knowledge base articles related to 
+    the series:</para>
+    
+    <graphic fileref="figures/consumer/kb-search.gif" align="center"></graphic>
+
+    <para>Clicking on the "add to knowledge base" button will lead to the URL set as the 
+    "submitString" value.  By default, this is a form for entering article information.
+    Since authentication is required for this form based on the authentication setup (see
+    <xref linkend="password-consumer">), a box will popup such as follows:</para>
+
+    <graphic fileref="figures/consumer/security-popup.jpg" align="center"></graphic>
+
+    <para>Press 'Continue' and the security login window will display such as
+    follows:</para>
+
+    <graphic fileref="figures/consumer/security-login.jpg" align="center"></graphic>
+
+    <para>Use the username and password specified in
+    <filename>$INCA_DIST/etc/realm.properties</filename>.  By default, the
+    username and password are 'inca'. After the consumer submits the request, 
+    a form will appear to complete like the one below: </para>
+
+    <graphic fileref="figures/consumer/kb-add.gif" align="center"></graphic>
+
+    <section id="external-kb">
+    <title>Using an External or Custom Knowledge Base</title>
+    <para>To use an external or custom knowledge base instead of Inca's default internal knowledge base, 
+      configure the "searchString" and "submitString" parameters described in <xref linkend="consumer-kb">.  
+      For example, to add articles to an external knowledge base with a cgi submission form like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=text</filename></para>
+   <para>change the "submitString" parameter to something like</para>
+   <para<filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleText=@nickname@%20@error@</filename></para>
+   <para>Inca will replace the @nickname@ macro with the actual series nickname (e.g. gcc_version) and the @error@ macro with the series error message.  The "%20" represents a space since Inca replaces the "+" character with "&amp;".  Therefore, if the external knowledge base had a cgi submission form like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=title&amp;articleText=text</filename></para>
+   <para>then the "submitString" parameter would be changed to something like</para>
+   <para><filename>https://www.teragrid.org/cgi-bin/add-kb.cgi?articleTitle=@nickname@+articleText=@error@</filename></para>
+   <para>The same syntax applies to the "searchString" parameter, which Inca uses to search for knowledge article and can be an external or custom URL.</para> 
+    </section>
+    </section>
+  </section>
+  
+  <section id="consumer-report-summary-xml">
+    <title>Report Summaries</title>
+
+    <para>The Current Data and Query views described in previous
+    sections display "latest" report summaries like the one shown in the figure below. </para>
+     <graphic fileref="figures/consumer/sum_page1.gif"></graphic>
+    <para>Report summaries are generated by a depot query that returns the XML 
+      described in <xref linkend="consumer-report-summaries-xml">.</para>
+    
+   </section>
+
+<section id="file-desc">
+    <title>Description of Data Consumer Files</title>
+
+    <para>
+      The following table describes the main JSPs contained in the
+      default consumer.
+      The JSPs generally retrieve XML from depot and agent functions and
+      apply XSL stylesheets to display HTML.  If the "debug=1" parameter
+      for a JSP is used, the JSP displays the XML. Parameters marked with
+      an asterisk (*) are optional.
+    </para>
+
+    <table>
+      <title>Default Consumer JSP</title>
+      <tgroup cols="4">
+        <thead>
+          <row valign="top">
+            <entry><para>Name</para></entry>
+            <entry><para>Purpose</para></entry>
+            <entry><para>Parameters</para></entry>
+          </row>
+        </thead>
+        <tbody>
+
+          <row valign="top">
+            <entry><para><filename>config.jsp</filename>
+                <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Prints description of deployed suites and series.
+                Linked at the bottom of <filename>index.jsp</filename>
+              </para></entry>
+            <entry><itemizedList>
+                <listItem><para>xsl *: stylesheet to format returned XML [default: config.xsl]</para>
+                </listItem></itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/config.jsp">http://localhost:8080/inca/jsp/config.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>error.jsp</filename>
+                <graphic fileref="figures/consumer/errorJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Prints Inca error message page.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem><para>msg: error message from another JSP</para></listItem>
+                <listItem><para>usage: correct usage of the JSP</para></listItem>
+	    </itemizedList></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>graph.jsp</filename>
+                <graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Historical graphs of pass/fail status and error frequency.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>series: a series nickname and resource separated by a comma and an optional label</para>
+                </listItem>
+                <listItem>
+                  <para>legend *: boolean for showing legend</para>
+                </listItem>
+                <listItem>
+                  <para>legendAnchor *: position of legend</para>
+                </listItem>
+                <listItem>
+                  <para>height *: graph height in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>width *: graph width in pixels</para>
+                </listItem>
+                <listItem>
+                  <para>startDate *: date to start querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>endDate *: date to stop querying data for</para>
+                </listItem>
+                <listItem>
+                  <para>bgcolor *: background color of graph images</para>
+                </listItem>
+                <listItem>
+                  <para>map *: boolean for showing graph links and mouseovers</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource">http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource</ulink></para></entry>
+          </row>
+
+	<row valign="top">
+            <entry><para><filename>index.jsp</filename>
+                <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Lists an installation's configured suites and resource
+                names in an HTML form whose action is to display results
+                for the selected suite and resource.  The consumer
+                initially redirects to this page.
+              </para></entry>
+            <entry><itemizedList><listItem><para>xsl *: stylesheet to format returned XML [default: index.xsl]</para></listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/index.jsp">http://localhost:8080/inca/jsp/index.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>instance.jsp</filename>
+                <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Queries depot for report instance and invokes the specified xsl stylesheet on it.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>nickname: the series nickname</para>
+                </listItem>
+                <listItem>
+                  <para>resource: the resource name the instance executed on</para>
+                </listItem>
+                <listItem>
+                  <para>collected: the time the instance executed</para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: instance.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_helloworld_compile_test&amp;resource=localResource&amp;collected=2010-08-11T20:51:08.000-07:00">http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_helloworld_compile_test&amp;resource=localResource&amp;collected=2010-08-11T20:51:08.000-07:00</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>query.jsp</filename>
+                <graphic fileref="figures/consumer/query_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Page for managing stored queries in the Consumer.  Queries
+  can be added, deleted, changed, viewed or executed (and return XML).
+  This jsp page manages the query manipulation via jsp tags and leaves the
+  display of the current queries to a stylesheet.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>action: an action to take on the query (see JSP usage for more information)</para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: query.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/query.jsp">http://localhost:8080/inca/jsp/query.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>report.jsp</filename>
+                <graphic fileref="figures/consumer/summary_report_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Summary report with graphs of pass/fail status and error frequency.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>startDate *: start date for summary report (gets complete history by default)</para>
+                </listItem>
+                <listItem>
+                  <para>endDate *: end date for summary report (current date by default)</para>
+                </listItem>
+                <listItem>
+                  <para>xml *: name of xml file to configure report (<filename>webapps/xml/statusReport.xml</filename> by default)</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/report.jsp">http://localhost:8080/inca/jsp/report.jsp</ulink></para></entry>
+          </row>
+
+          <row valign="top">
+            <entry><para><filename>seriesConfig.jsp</filename>
+                <graphic fileref="figures/consumer/configDetail_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Prints detailed (expanded) information about running reporter
+                series.  Linked in <filename>ADMIN menu</filename>.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem><para>xsl *: stylesheet to format returned XML [default: configDetail.xsl]</para>
+                </listItem></itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/config.jsp">http://localhost:8080/inca/jsp/config.jsp</ulink></para></entry>
+          </row>
+
+	<row valign="top">
+            <entry><para><filename>status.jsp</filename>
+                <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays current results for a set of suites or cached queries.
+                This page is the action of the <filename>index.jsp</filename> form to display suite results.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>suiteNames *: a comma separated list of suite names.  At least one suite name
+    is required if queryNames is empty and the number of suite names
+    should match the number of resourceIds.  A suite name is optional if
+    queryNames is provided.</para>
+                </listItem>
+                <listItem>
+                  <para>queryNames *: a comma separated list of cached query names.  At least one name
+    is required if suiteNames is empty.</para>
+                </listItem>
+                <listItem>
+                  <para>resourceIds *: a comma separated list of resource group ids.  At least one
+    resource id is required if suiteNames is not empty and the number of
+    resourceIds should match the number of suiteNames.  A resource id is
+    optional if queryNames is provided.  </para>
+                </listItem>
+                <listItem>
+                  <para>xml *: a comma separated list of xml files to include.  Can be empty, contain
+    one xml file or must match number of suiteNames and resourceIds if
+    queryNames is empty. </para>
+                </listItem>
+                <listItem>
+                  <para>xsl *: name of stylesheet to format returned XML [default: default.xsl]</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink></para></entry>
+          </row>
+
+         <row valign="top">
+            <entry><para><filename>summary.jsp</filename>
+                <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Shows the average series pass rate by resource and by suite for a given time period.  Uses
+		<filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
+		to calculate statistics.
+              </para></entry>
+            <entry><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summary.jsp">http://localhost:8080/inca/jsp/summary.jsp</ulink></para></entry>
+          </row>
+
+         <row valign="top">
+            <entry><para><filename>summaryDetails.jsp</filename>
+                <graphic fileref="figures/consumer/summaryDetailsJsp_sm.gif" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays summary statistic details for resource or suite.  Linked from <filename>summary.jsp</filename>.
+		Uses <filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
+                to calculate statistics.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>resource *: resource to get summary stats for (e.g. localResource)</para>
+                </listItem>
+                <listItem>
+                  <para>guid *: suite guid to get summary stats for (e.g. incas://localhost:6323/sampleSuite)</para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource">http://localhost:8080/inca/jsp/summaryDetails.jsp?resource=localResource</ulink></para></entry>
+          </row>
+
+         <row valign="top">
+            <entry><para><filename>summaryHistory.jsp</filename>
+                <graphic fileref="figures/consumer/summaryHistoryJsp_sm.jpg" align="center"></graphic>
+              </para></entry>
+            <entry><para>
+                Displays average series pass rate by resource or suite. Uses
+                <filename>seriesAverages.xsl</filename> and <filename>periodAverages.xsl</filename>
+                to calculate statistics.
+              </para></entry>
+            <entry><itemizedList>
+                <listItem>
+                  <para>groupBy *: if 'resource', displays history grouped by resource or if 'suite' is specified, displays history grouped by suite.  [Default: resource]</para>
+                </listItem>
+                <listItem>
+                  <para>lines *: if 'multiple', displays individual histories (i.e., if groupBy = 'suite', displays a line for each resource).  If 'total', a single
+                  line is displayed representing all resources or suites.
+                  [Default: multiple]</para>
+                </listItem>
+                <listItem>
+                  <para>filterResource*: if specified, only displays histories
+                  for specified resources (comma delimited).  </para>
+                </listItem>
+                <listItem>
+                  <para>filterSuite *: if specified, only displays histories for specified suites (comma delimited).  </para>
+                </listItem>
+              </itemizedList><para>e.g. <ulink url="http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource">http://localhost:8080/inca/jsp/summaryHistory.jsp?groupBy=resource</ulink></para></entry>
+          </row>
+
+
+        </tbody>
+      </tgroup>
+    </table>
+
+         <para>
+        The default JSPs use the XSL stylesheets in
+        <filename>$INCA_DIST/webapps/xsl</filename>
+           to transform the XML into HTML.
+           The following stylesheets are installed
+        with the default consumer:</para>
+
+      <table>
+        <title>Default Consumer XSL</title>
+        <tgroup cols="3">
+          <thead>
+            <row valign="top">
+              <entry><para>Name</para></entry>
+              <entry><para>Applied To</para></entry>
+              <entry><para>Purpose</para></entry>
+            </row>
+          </thead>
+          <tbody>
+
+            <row valign="top">
+              <entry><para><filename>config.xsl</filename>
+                  <graphic fileref="figures/consumer/config_sm.jpg" align="center"></graphic>
+                </para></entry>
+               <entry><para><filename>config.jsp</filename></para></entry>
+              <entry><para>Prints description of deployed suites and series.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>create-query.xsl</filename>
+                  <graphic fileref="figures/consumer/create-query_sm.jpg" align="center"></graphic>
+                </para></entry>
+               <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints form to select series and resources to query.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>default.xsl</filename>
+                  <graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints table of suite(s) results.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>error.xsl</filename>
+                  <graphic fileref="figures/consumer/errorJsp_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>error.jsp</filename></para></entry>
+              <entry><para>Displays JSP error message and usage information.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>footer.xsl</filename>
+                  <graphic fileref="figures/consumer/footer_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para>(included in most other xsl files)</para></entry>
+              <entry><para>Prints HTML page footer with the Inca logo.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>google.xsl</filename>
+                  <graphic fileref="figures/consumer/google_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints google map summary of current data.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>graph.xsl</filename>
+                  <graphic fileref="figures/consumer/graph_form_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints form to select series to graph.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>header.xsl</filename>
+                  <graphic fileref="figures/consumer/header_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>(included in most other xsl files)</filename></para></entry>
+              <entry><para>Prints HTML page header.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>inca-common.xsl</filename></para></entry>
+              <entry><para>(included in most other stylesheets)</para></entry>
+              <entry><para>Common templates for use in Inca stylesheets.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>index.xsl</filename>
+                  <graphic fileref="figures/consumer/index_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>index.jsp</filename></para></entry>
+              <entry><para>
+                  Lists all configured suite and resource names in an
+                  HTML form whose action is to display results for the
+                  selected suite and resource.
+                </para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>instance.xsl</filename>
+                  <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>instance.jsp</filename></para></entry>
+              <entry><para>Prints HTML table with report details.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>legend.xsl</filename>
+                  <graphic fileref="figures/consumer/legend_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para>(included in <filename>default.xsl</filename>
+                  and <filename>swStack.xsl</filename>)</para></entry>
+              <entry><para>Prints a key to cell colors and text.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>periodAverages.xsl</filename>
+                  <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>summary.jsp</filename>, <filename>summaryDetails.jsp</filename>,
+		<filename>summaryHistory.jsp</filename></para></entry>
+              <entry><para>Computes pass percentage for suites and resources for a given period.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>query.xsl</filename>
+                  <graphic fileref="figures/consumer/query_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>query.jsp</filename></para></entry>
+              <entry><para>Creates form to manipulate hql queries.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>seriesAverages.xsl</filename>
+                  <graphic fileref="figures/consumer/summaryJsp_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>summary.jsp</filename>, <filename>summaryDetails.jsp</filename>,
+		<filename>summaryHistory.jsp</filename></para></entry>
+              <entry><para>Computes series pass percentages.</para></entry>
+            </row>
+
+            <row valign="top">
+              <entry><para><filename>seriesSummary.xsl</filename>
+                  <graphic fileref="figures/consumer/error-summary_sm.gif" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Print out a table of stats for individual series.
+                </para></entry>
+            </row>
+	
+	<row valign="top">
+              <entry><para><filename>swStack.xsl</filename>
+                  <graphic fileref="figures/consumer/swstack_sm.jpg" align="center"></graphic>
+                </para></entry>
+              <entry><para><filename>status.jsp</filename></para></entry>
+              <entry><para>Prints table of suite(s) results.  Uses XML file
+                  to format table rows by software categories and packages.</para></entry>
+            </row>
+
+
+          </tbody>
+        </tgroup>
+      </table>
+     </section>
+
+    <section id="rest">
+      <title>REST URLs</title>
+      <para>Inca provides the ability to fetch suite or stored query data in XML or HTML
+      format using REST URLs.  By default, the consumer recognizes a 
+      REST URL using the following format:
+      </para>
+
+      <para><filename>http://localhost:8080/inca/XML|HTML/rest/&lt;suiteName&gt;|&lt;queryName&gt;[/&lt;resourceId&gt;[/&lt;seriesNickname&gt;[/&lt;timestamp&gt;|week|month|quarter|year]]]</filename></para>
+
+  <table><title>Examples of Inca REST URLs</title>
+  <tgroup cols="2">
+  <thead>
+    <row>
+      <entry><para>REST URL (Equivalent URL shown under REST URL)</para></entry>
+      <entry><para>Returns</para></entry>
+    </row>
+  </thead>
+  <tbody>
+    <row>
+      <entry><para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite">http://localhost:8080/inca/HTML/rest/sampleSuite</ulink></para><para>equivalent to:</para><para><ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite</ulink></para></entry>
+      <entry><para>An HTML table of latest results for the specified suite (or query).  Generated by applying an XSL stylesheet to an array of <link linkend="consumer-report-summaries-xml">report summaries</link>.</para><para><graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic> </para></entry>
+    </row>
+    <row>
+      <entry><para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid">http://localhost:8080/inca/HTML/rest/sampleSuite/defaultGrid</ulink></para><para>equivalent to:</para><para><ulink url="http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid">http://localhost:8080/inca/jsp/status.jsp?suiteNames=sampleSuite&amp;resourceIds=defaultGrid</ulink></para></entry>
+      <entry><para>An HTML table of latest results for the specified suite and resource.  Generated by applying an XSL stylesheet to an array of <link linkend="consumer-report-summaries-xml">report summaries</link>.</para><para><graphic fileref="figures/consumer/sum_page2_sm.jpg" align="center"></graphic></para></entry>
+    </row>
+    <row>
+      <entry><para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version</ulink></para><para>equivalent to:</para><para><ulink url="http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&amp;resource=localResource&amp;collected=2010-06-14T12:52:00.000-07:00">http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&amp;resource=localResource&amp;collected=2010-06-14T12:52:00.000-07:00</ulink> (collected param would vary)</para></entry>
+      <entry><para>An HTML table of the *latest* <link linkend="consumer-report-details-xml">report details</link>
+        for the specified suite, resource and series.</para><para> <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic> </para></entry>
+    </row>
+    <row>
+      <entry><para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/2010-06-14T12:52:00.000-07:00</ulink></para><para>equivalent to:</para><para><ulink url="http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&amp;resource=localResource&amp;collected=2010-06-14T12:52:00.000-07:00">http://localhost:8080/inca/jsp/instance.jsp?nickname=ant_version&amp;resource=localResource&amp;collected=2010-06-14T12:52:00.000-07:00</ulink></para></entry>
+      <entry><para>An HTML table of the <link linkend="consumer-report-details-xml">report details</link>
+        for the specified suite, resource, series and timestamp.</para><para> <graphic fileref="figures/consumer/inst_sm.jpg" align="center"></graphic> </para></entry>
+    </row>
+    <row>
+      <entry><para><ulink url="http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week">http://localhost:8080/inca/HTML/rest/sampleSuite/localResource/ant_version/week</ulink></para><para>equivalent to:</para><para><ulink url="http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource&amp;startDate=060710">http://localhost:8080/inca/jsp/graph.jsp?series=ant_helloworld_compile_test,localResource&amp;startDate=060710</ulink> (startDate param would vary)</para></entry>
+      <entry><para>Graph of weekly historical results the specified suite, resource and series (also available for month, quarter or year). Generated by graphing an array of <link linkend="consumer-graph-instance-xml">graph instances</link>.</para><para><graphic fileref="figures/consumer/graph_sm.jpg" align="center"></graphic></para></entry>
+    </row>
+  </tbody>
+  </tgroup>
+</table>
+      
+     <para>If you want to fetch the data in XML, just replace HTML 
+      as below:</para>
+
+      <para><ulink url="http://localhost:8080/inca/XML/rest/sampleSuite/localResource">http://localhost:8080/inca/XML/rest/sampleSuite/localResource</ulink></para>
+
+      <para>If you would like to change the id 'rest' to a more transparent id
+      such as 'kit-status-v1', edit &lt;context-param&gt; in 
+      <filename>$INCA_DIST/webapps/inca/WEB-INF/web.xml</filename> and restart the consumer.
+      For example, change </para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;rest&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+
+      <para>to</para>
+
+      <screen>
+      &lt;context-param&gt;
+        &lt;param-name&gt;restId&lt;/param-name&gt;
+        &lt;param-value&gt;kit-status-v1&lt;/param-value&gt;
+      &lt;/context-param&gt;
+      </screen>
+      
+    </section>
+
+  <section id="custom-display">
+    <title>Changing the Look</title>
+
+    <section id="custom-color">
+      <title>Colors and Fonts</title>
+      <para>
+      Properties such as colors and fonts are controlled by the default CSS
+      (Cascading Style Sheet) file
+      <filename>$INCA_DIST/webapps/inca/css/inca.css</filename>.  The drop
+      down nav bar in the header is controlled by
+      <filename>$INCA_DIST/webapps/inca/css/nav.css</filename>.  You can edit
+      these files to customize the consumer display.
+      For example, to change the color in the reporter detail pages header bar,
+      edit <filename>inca.css</filename> and change lines 111-112 to:
+        <screen>.header {
+          background-color: #D07651;</screen>
+        The details pages will now look like:
+        <graphic fileref="figures/consumer/color-change.jpg" align="center"></graphic>
+      </para>
+      <para>For general information, visit the [ <ulink url="http://www.w3schools.com/css/">CSS tutorial</ulink> ].</para>
+    </section>
+
+    <section id="custom-html">
+      <title>HTML Layout</title>
+
+      <para>
+      To modify the default HTML layout, edit the XSL stylesheet that is
+      being applied to the JSP or create a new stylesheet 
+      in <filename>$INCA_DIST/webapps/inca/xsl</filename> and pass it in the
+      JSP "xsl" parameter.
+      The default JSP and XSL files are described in
+      <xref linkend="file-desc">.</para>
+      <para>For general information about editing stylesheets,
+        visit the [ <ulink url="http://www.w3schools.com/xsl/">XSL tutorial</ulink> ].</para>
+
+      <section id="custom-html-values">
+        <title>Custom Values in HTML Table Cells</title>
+        <para>To display report values other
+          than the default text of either a software version, "pass", or "error"
+          on the suite results pages, edit <filename>default.xsl</filename>.  </para>
+        <para> For example, to change the default suite status to print the time successful
+          reporters ran and a truncated error message for failures like:
+        </para>
+        <para><graphic fileref="figures/consumer/text-change.jpg" align="center"></graphic></para>
+        <para>Edit <filename>default.xsl</filename>, add a new variable for the custom table cell text and
+          print the custom cell text rather than the default text:
+        </para>
+        <para>
+          <screen>188  &lt;xsl:variable name="cellText"&gt;
+            189    &lt;xsl:choose&gt;
+            190      &lt;xsl:when test="string($instance)=''"&gt;
+            191        &lt;xsl:value-of select="''" /&gt;
+            192      &lt;/xsl:when&gt;
+            193      &lt;xsl:when test="string($result/body)!=''
+            194             and string($result/errorMessage)=''
+            195             and ($comparitor='Success' or count($comparitor)=0)"&gt;
+            196               passed:&#160;
+            197        &lt;!-- get yyyy-mm-dd from gmt timestamp --&gt;
+            198        &lt;xsl:value-of select="substring($result/gmt, 1, 10)" /&gt;&#160;
+            199        &lt;!-- get HH:MM from gmt timestamp --&gt;
+            200        &lt;xsl:value-of select="substring($result/gmt, 12, 5)" /&gt;
+            201      &lt;/xsl:when&gt;
+            202      &lt;xsl:otherwise&gt;
+            203               error:
+            204        &lt;xsl:value-of select="substring($result/errorMessage, 1, 30)" /&gt;
+            205      &lt;/xsl:otherwise&gt;
+            206    &lt;/xsl:choose&gt;
+            207  &lt;/xsl:variable&gt;
+            208  &lt;xsl:choose&gt;
+            209    &lt;xsl:when test="$exit!=''"&gt;
+            210      &lt;td class="{$exit}"&gt;
+            211        &lt;a href="{$href}"&gt;&lt;xsl:value-of select="$cellText"/&gt;&lt;/a&gt;
+            212        &lt;xsl:if test="$url[matches(., 'markOld')]"&gt;</screen>
+        </para>
+      </section>
+  </section>
+      <section id="custom-html-header">
+        <title>Custom Page Header</title>
+
+        <para>The default page header is generated by the inclusion of the
+          <filename>header.xsl</filename> file in other xsl files.  The header
+          is a navigation bar with drop down links to a set of default status
+          pages:
+          <graphic fileref="figures/consumer/googleMapMenu.png" align="center"></graphic>
+        </para>
+        <para>The header's navigation bar is an HTML unordered list that is
+        formatted with the <filename>nav.css</filename> stylesheet.  To add
+        or remove links in the navigation bar, open <filename>header.xsl</filename>
+          and change the appropriate link.  For example, to show a table of suite
+          results for a new suite called "newSuite" on a new resource called "newResource":
+        <screen>57  &lt;li&gt;&lt;h2&gt;Current Data&lt;/h2&gt;
+58    &lt;ul&gt;
+59      &lt;li&gt;
+60        &lt;a href="'status.jsp?xsl=default.xsl&amp;amp;suiteNames=newSuite&amp;amp;resourceIds=newResource'"&gt;
+61           table of newSuite results&lt;/a&gt;
+62      &lt;/li&gt;</screen>
+        </para>
+        <para>Any other link can be added or removed as a list element.  The
+          stylesheet supports additional levels of nested list links.  Note that
+          the top level list elements are displayed from bottom to top (i.e., CURRENT DATA
+          is listed last in <filename>header.xsl</filename> so it is displayed
+          the furthest left in the top level navigation bar).
+        </para>
+
+        <para>Another example of customizing the HTML header would be to add a call to a custom header stylesheet in the
+          "printBodyTitle" template.  Edit <filename>inca-common.xsl</filename>:</para>
+        <para><screen>13  <emphasis role="red">&lt;xsl:include href="custom-header.xsl"/&gt;</emphasis>
+          ...
+          24  &lt;xsl:template name="printBodyTitle"&gt;
+          25    &lt;xsl:param name="title"/&gt;
+          26    <emphasis role="red">&lt;xsl:call-template name="custom-header"/&gt;</emphasis>
+          27    &lt;xsl:variable name="datenow" select="date:new()" /&gt;
+          28    &lt;xsl:variable name="dateformat" select="sdf:new('MM-dd-yyyy hh:mm a (z)')"/&gt;
+          29    &lt;table width="100%" border="0"&gt;
+          30      &lt;tr align="left"&gt;</screen></para>
+
+        <para>Create a <filename>$INCA_DIST/webapps/xsl/custom-header.xsl</filename> like:</para>
+
+        <para><screen>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+          &lt;!-- ================================================ --&gt;
+          &lt;!-- Prints out custom header for Inca status pages   --&gt;
+          &lt;!-- ================================================ --&gt;
+          &lt;xsl:stylesheet version="1.0"
+          xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+          xmlns="http://www.w3.org/1999/xhtml"&gt;
+
+          &lt;xsl:template name="custom-header"&gt;
+          &lt;table class="header" width="100%"&gt;
+          &lt;tr&gt;
+          &lt;td bgcolor="#003366"&gt;
+          &lt;img class="logo" src="img/header.jpg"/&gt;
+          &lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;/table&gt;
+          &lt;table class="menu" width="100%"&gt;
+          ... custom navigation ...
+          &lt;/table&gt;
+          &lt;/xsl:template&gt;
+
+          &lt;/xsl:stylesheet&gt;</screen></para>
+
+        <para>The resulting page would look something like: </para>
+        <para><graphic fileref="figures/consumer/custom-header.jpg" align="center"></graphic></para>
+      </section>
+    </section>
+
+  <section id="consumer-neutral-errs">
+    <title>Displaying Errors Neutrally</title>
+    <para>You may wish to display certain errors neutrally in historical reports.  For example, if an error message 
+        indicates that a machine was down when the report was collected, you may want to display that error neutrally 
+        (i.e. neither as a pass nor a fail).  By default, Inca marks error messages that start with "DOWNTIME" or "NOT_AT_FAULT" 
+        neutrally because they are generally the result of report filtering (see <xref
+        linkend="report-filtering">).  Errors that contain "Inca error" or "Unable to fetch proxy for reporter execution" are 
+        also marked neutrally since the error may be due to the Inca framework instead of the machine being tested.  To change the 
+        errors that are marked neutrally, edit the regular expression that is matched as follows:
+    </para>
+    <itemizedList>
+      <listItem>
+        <para>Open the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and edit 
+          the inca.consumer.ignoreErrors property:
+          <screen>inca.consumer.ignoreErrors=(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*)</screen>
+        </para>
+      </listItem>
+      <listItem> <para>Restart the consumer: </para>
+        <screen>% cd $INCA_DIST; ./bin/inca restart consumer</screen>
+      </listItem>
+    </itemizedList>
+
+    <para>Now error messages matching the pattern you chose will be marked neutrally.  For example, the four reports that have 
+    error messages that begin with "NOT_AT_FAULT" are marked neutrally as "unknown" in the graph below:
+    <graphic fileref="figures/consumer/neutral-results.jpg" align="center"></graphic></para>
+  </section>
+
+  <section id="consumer-alt-location">
+    <title>Changing the Installation Location</title>
+    <para>You can install the data consumer in a non-default location (e.g., on a machine where the depot and agent are not running) if you: </para>
+    <itemizedList>
+      <listItem>
+        <para>
+          Copy the <filename>incaInstall.sh</filename> script to the machine where the consumer will run.
+        </para>
+        <screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh</screen>
+      </listItem>
+      <listItem>
+        <para>
+          Install consumer on the new machine:
+        </para>
+        <screen>% ./incaInstall.sh $INCA_DIST consumers</screen>
+      </listItem>
+      <listItem>
+        <para>
+          Copy the consumer key, certificate, and trusted directory from the machine where the agent/depot are running (orig.machine)
+          to the new machine:
+        </para>
+        <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumerkey.pem $INCA_DIST/etc/; \
+          scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/consumercert.pem $INCA_DIST/etc/;
+          scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/;</screen>
+      </listItem>
+      <listItem>
+        <para>Edit the <filename>$INCA_DIST/etc/common/inca.properties</filename> local file and specify the full hostname
+          of the machine where the agent and depot are running:
+          <screen>114 inca.consumer.agent=incas://<emphasis role="red">agent.hostname</emphasis>:6323
+            ...
+            128 inca.consumer.depot=incas://<emphasis role="red">depot.hostname</emphasis>:6324</screen>
+        </para>
+      </listItem>
+      <listItem> <para> Start the consumer component on the new machine: </para>
+        <screen>% cd $INCA_DIST; ./bin/inca start consumer</screen>
+      </listItem>
+    </itemizedList>
+  </section>
+
+  <section id="consumer-port">
+    <title>Changing Ports</title>
+    <para>
+      By default, the consumer is started on port 8080 (HTTP) and 8443
+      (HTTPS).  To change the port numbers, edit $INCA_DIST/etc/jetty.xml.
+      For example to change the HTTP  port to 9080, search for
+      'SelectChannelConnector' and change the following line:
+    </para>
+
+    <screen>
+      &lt;Set name="port"&gt;8080&lt;/Set&gt;
+    </screen>
+
+    <para>to: </para>
+
+    <screen>
+      &lt;Set name="port"&gt;9080&lt;/Set&gt;
+    </screen>
+
+    <para>Likewise to change the HTTPS port to 9443, search for
+    'SslSocketConnector' and change the following line: </para>
+
+    <screen>
+      &lt;Set name="port"&gt;8443&lt;/Set&gt;
+    </screen>
+
+    <para>to: </para>
+
+    <screen>
+      &lt;Set name="port"&gt;9443&lt;/Set&gt;
+    </screen>
+
+    <para>If you also have the HTTP port enabled, change the confidentialPort
+    tag under its configuration from: </para>
+
+    <screen>
+      &lt;Set name="confidentialPort"&gt;8443&lt;/Set&gt;
+    </screen>
+
+    <para>to: </para>
+
+    <screen>
+      &lt;Set name="confidentialPort"&gt;9443&lt;/Set&gt;
+    </screen>
+  </section>
+
+  <section id="disable-http-consumer">
+    <title>Disabling HTTP</title>
+    <para>
+      By default, the consumer is configured as both an HTTP and HTTPS server.
+      To disable HTTP, edit
+      <filename>$INCA_DIST/etc/jetty.xml</filename> and
+      comment out the section "Add a HTTP listener on port 8080"
+    </para>
+
+    <screen>
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;!-- Add a HTTP listener on port 8080                                --&gt;
+      &lt;!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
+      &lt;!--
+      &lt;Call name="addConnector"&gt;
+        &lt;Arg&gt;
+            &lt;New class="org.mortbay.jetty.nio.SelectChannelConnector"&gt;
+              &lt;Set name="host"&gt;&lt;SystemProperty name="jetty.host" /&gt;&lt;/Set&gt;
+              &lt;Set name="port"&gt;&lt;SystemProperty name="jetty.port" default="8080"/&gt;&lt;/Set&gt;
+              &lt;Set name="maxIdleTime"&gt;30000&lt;/Set&gt;
+              &lt;Set name="Acceptors"&gt;2&lt;/Set&gt;
+              &lt;Set name="statsOn"&gt;false&lt;/Set&gt;
+              &lt;Set name="confidentialPort"&gt;8443&lt;/Set&gt;
+        &lt;Set name="lowResourcesConnections"&gt;5000&lt;/Set&gt;
+        &lt;Set name="lowResourcesMaxIdleTime"&gt;5000&lt;/Set&gt;
+            &lt;/New&gt;
+        &lt;/Arg&gt;
+      &lt;/Call&gt;
+      --&gt;
+    </screen>
+
+    <para>Then restart the consumer. </para>
+
+    <screen>
+      % ./bin/inca restart consumer
+    </screen>
+  </section>
+
+  <section id="https-creds">
+    <title>Changing HTTPS credential</title>
+
+    <para>By default, the HTTPS server will use the credential stored in
+      <filename>$INCA_DIST/etc/consumerKeystore</filename>.  Its DN is
+      "cn=Inca Consumer SSL, o=SDSC, l=San Diego, st=California, c=US".  If you'd
+      like to generate a certificate with a different DN, run the keytool command as
+      follows:
+    </para>
+
+    <screen>
+% rm -f etc/consumerKeystore
+% keytool -keystore etc/consumerKeystore -alias jetty -genkey -keyalg RSA -dname <emphasis role="red">your_DN</emphasis>
+    </screen>
+
+    <para>keytool will prompt you for a keystore password and a key password.  You can
+      either make them different or use the same one.  If you use the password
+      "consumer", no further changes are needed.  Otherwise, you will have to modify
+      &lt;Set name="keyPassword"&gt;, &lt;Set name="password"&gt;, and
+      &lt;Set name="trustPassword"&gt; in the
+      "Add a HTTPS SSL listener on port 8443" section in
+      <filename>$INCA_DIST/etc/jetty.xml</filename>.  You can either put the
+      password in there in plain text or obfuscate it using Jetty's password
+      utility as follows:
+    </para>
+
+    <para id="jetty-password">
+      <screen>% java -classpath lib/jetty-6.1.7.jar:lib/jetty-util-6.1.7.jar org.mortbay.jetty.security.Password <emphasis role="red">your_password</emphasis>
+      </screen>
+    </para>
+
+    <para>It will output two lines such as follows:</para>
+
+    <screen>
+    OBF:1t3b1uh61ugk1t2v
+    MD5:482b9f833150f58964b78ddbfa5ab23d
+    </screen>
+
+    <para>Edit <filename>$INCA_DIST/etc/jetty.xml</filename> and replace the
+    string beginning with OBF in both &lt;Set name="KeyPassword"&gt; and
+    &lt;Set name="Password"&gt; with the string
+      provided by Jetty's password utility:
+    </para>
+    <screen>
+      &lt;Set name="password"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+      &lt;Set name="keyPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+      &lt;Set name="trustPassword"&gt;OBF:1v8w1v2h1wg01z0d1z0h1wfy1v1x1v9q&lt;/Set&gt;
+    </screen>
+
+  </section>
+
+  <section id="password-consumer">
+    <title>Adding Password Protection</title>
+    <para>
+      By default, a password is only required on the
+      <filename>query.jsp</filename> and <filename>status-auth.jsp</filename>
+      pages.  To expand or remove password protection,
+      edit the section 'require authentication on specific status pages'
+      in <filename>$INCA_DIST/webapps/inca/WEB-INF/web.xml</filename>.
+    </para>
+
+    <screen>
+    &lt;security-constraint&gt;
+      &lt;web-resource-collection&gt;
+        &lt;web-resource-name&gt;Inca Status Pages&lt;/web-resource-name&gt;
+        &lt;url-pattern&gt;/jsp/admin.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/query.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/runNow.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/status-auth.jsp&lt;/url-pattern&gt;
+      &lt;/web-resource-collection&gt;
+      &lt;auth-constraint&gt;
+        &lt;role-name&gt;*&lt;/role-name&gt;
+      &lt;/auth-constraint&gt;
+      &lt;user-data-constraint&gt;
+        &lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;
+      &lt;/user-data-constraint&gt;
+    &lt;/security-constraint&gt;
+    </screen>
+
+    <para>Modify or add <filename>url-pattern</filename> tags to modify
+    password access.  For example to apply password access to all
+    Inca status pages, modify the <filename>url-pattern</filename> tag to below:
+    </para>
+
+    <screen>
+        ...
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+        ...
+    </screen>
+
+    <para>Or to add password protection to another JSP page like
+    <filename>config.jsp</filename>, add another
+    <filename>url-pattern</filename> tag like below:
+    </para>
+
+    <screen>
+        ...
+        &lt;url-pattern&gt;/jsp/query.jsp&lt;/url-pattern&gt;
+        &lt;url-pattern&gt;/jsp/config.jsp&lt;/url-pattern&gt;
+        ...
+    </screen>
+
+    <para>By default, the username and password for the pages will be "inca".  To
+      change this, edit <filename>$INCA_DIST/etc/realm.properties</filename> and customize the
+      username and password for your installation.  If you do not want to store the
+      password in plain text, use Jetty's password utility described in <xref
+        linkend="https-creds">.</para>
+
+    <para>Then restart the consumer. </para>
+
+    <screen>% ./bin/inca restart  consumer</screen>
+
+    <para>The next time you view the status pages, you should see a login like:</para>
+
+    <graphic fileref="figures/consumer/ug-consumer-password.png" align="center"></graphic>
+
+  </section>
+  
+</section>

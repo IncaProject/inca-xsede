@@ -1,0 +1,2384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Writing Custom Data Consumers</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Inca 2.6 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Data Display (Data Consumers)"
+HREF="userguide-consumer.html"><LINK
+REL="NEXT"
+TITLE="Reporters and Repositories"
+HREF="userguide-reporters.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.6 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-WRITING-CONSUMER"
+>7. Writing Custom Data Consumers</A
+></H1
+><P
+>The default Inca consumers described in <A
+HREF="userguide-consumer.html#FILE-DESC"
+>Section 6.7</A
+> are created by 
+fetching XML report data from the Inca depot and applying XSL and JSP to produce HTML tables and graphs.  
+XML can be fetched for
+specific Inca suites (or stored queries), resources, series and time frames.  A number of methods are available
+for fetching Inca XML: <A
+HREF="userguide-consumer.html#REST"
+>REST URLs</A
+>, <A
+HREF="userguide-writing-consumer.html#USERGUIDE-APIS"
+>Inca Client APIs</A
+>, and <A
+HREF="userguide-webservices.html"
+>Web Services</A
+>.  The different types of XML returned from these methods are described in <A
+HREF="userguide-writing-consumer.html#UNDERSTANDING-XML"
+>Section 7.1</A
+>.  
+    </P
+><P
+>Once custom XML is retrieved (see <A
+HREF="userguide-writing-consumer.html#RETRIEVING-DATA"
+>Section 7.2</A
+>), addtional XSL can be created to display the results according to individual requirements or the XML can be consumed by custom JSPs or other code.  Examples of XSL and <A
+HREF="userguide-consumer.html#FILE-DESC"
+>JSPs</A
+> are located in the <TT
+CLASS="FILENAME"
+>webapps/inca/xsl</TT
+> and <TT
+CLASS="FILENAME"
+>webapps/inca/jsp</TT
+> directories respectively.  Below are 
+some examples of the way XML can be transformed to produce the basic status pages.</P
+><P
+><A
+HREF="userguide-writing-consumer.html#PASS-FAIL-TABLE"
+>Figure 18</A
+> shows an example of XML that is transformed via XSL to produce a pass/fail table of test results. The XML is an array of <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
+>report summaries</A
+>, which are the result of querying for a suite or stored query.  The exit status or body of each report summary is matched to a resource by the XSL to show the latest result for each resource. If the report summary has a comparison result, it will be used instead of the exit status to determine whether the test passed or failed.  Comparison results are checks that are added before the report is stored - one example might be checking whether the software version found in the report was greater than a certain version number.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PASS-FAIL-TABLE"
+></A
+><P
+><B
+>Figure 18. Pass/Fail Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>Another consumer example using <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
+>report summaries</A
+> XML is shown in <A
+HREF="userguide-writing-consumer.html#PERF-TABLE"
+>Figure 19</A
+>.  Here the XML is transformed via XSL to produce a table of performance results. Like the pass/fail table, the XSL matches results and resources, but here XPath is used to display a statistic in the body instead of a pass/fail exit status. </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PERF-TABLE"
+></A
+><P
+><B
+>Figure 19. Performance Body Stats Table</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-perf.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>Simple pass/fail graphs are produced by transforming the <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph instance</A
+> XML as shown in <A
+HREF="userguide-writing-consumer.html#GRAPH-EXAMPLE"
+>Figure 20</A
+>.  The graph is produced by using the exit status values for the y-axis and the collected date values for the x-axis.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="GRAPH-EXAMPLE"
+></A
+><P
+><B
+>Figure 20. Pass/Fail Graph</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-graph.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>The w3schools site offers an <A
+HREF="http://www.w3schools.com/xsl/"
+TARGET="_top"
+>XSL tutorial</A
+> and an <A
+HREF="http://www.w3schools.com/xpath/xpath_intro.asp"
+TARGET="_top"
+>XPath tutorial</A
+> for more general information about XSL and XPath.</P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="UNDERSTANDING-XML"
+>7.1. Understanding Inca XML Data</A
+></H2
+><P
+>Inca reporters are executable programs that measure some aspect of the system or installed software. 
+Reporters support a set of command-line options and write XML reports to stdout.  The report schema is flexible and 
+can capture multiple types of data.
+<P
+><IMG
+SRC="figures/reporter/reporter-to-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>The XML document produced by Inca reporters is called a report and it has a header, body and footer.  The header contains metadata, the body contains the data
+collected by the reporter and has a 4000 character limit, and the footer captures whether the report was successfully gathered or not:
+<P
+><IMG
+SRC="figures/reporter/reporter-xml.jpg"
+ALIGN="CENTER"></P
+></P
+><P
+>Most of the Inca XML types relate to the basic report type.  Some definitions to help understand the XML schemas
+are:
+<P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>report series (or series for short)</TT
+></DT
+><DD
+><P
+>  set of reports collected at different points in time by executing a reporter with a 
+  set of arguments in a context on a particular resource
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>series config</TT
+></DT
+><DD
+><P
+>  used to create the report series and has hostname, args, reporter name/version, schedule, comparitor (extra check to determine pass/fail), and context (optional string used when executing the reporter, e.g. to add a softenv key: "soft add +atlas; cluster.math.atlas.version -args")
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>suite</TT
+></DT
+><DD
+><P
+>  group of series configs that share a common theme, for example data management, job management, or file transfer
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>resource group</TT
+></DT
+><DD
+><P
+>  two or more related resources that share a characteristic like a site, architecture or virtual organization.  A resource can be a cluster, supercomputer, or server.  The resource group XML is returned along with queries so that they can be matched to test results.  Below is a figure to illustrate resource groups:
+<P
+><IMG
+SRC="figures/consumer/resource-groups.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>runtime data</TT
+></DT
+><DD
+><P
+>  in addition to the main body of data returned by reports, other runtime information is calculated after the report is executed and returned with it.  This data includes logged commands, usage information (how much memory, CPU and wallclock time a reporter consumes during execution) and comparison results (extra tests used to calculate whether a test passed or fails, e.g. whether the software version found matches a version requirement)
+  </P
+></DD
+></DL
+></DIV
+>
+
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="SCHEMAS"
+></A
+><P
+><B
+>Figure 21. Some Inca XML Types</B
+></P
+><P
+><IMG
+SRC="figures/arch/uml-schemas.jpg"
+ALIGN="CENTER"></P
+></DIV
+></P
+><P
+>An important concept within Inca is the comparitor.  As shown above,
+every report has an exitStatus to indicate whether an Inca reporter was able
+to complete successfully or not.  For reporters that are more complex, the
+exitStatus may not be sufficient.  For example, a version reporter may
+successfully collect the version of GCC but the version collected may be
+too old.  Or a performance reporter may successfully collect the bandwidth
+of a GridFTP transfer but the bandwidth is so low that it could be considered
+a failure.  In these cases, a comparitor can be used to interpret a reporter
+result.  For a version reporter, a simple comparitor would be for example:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>gcc &#62;= 4.2</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>For a performance reporter, a simple comparitor would be for example:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>bandwidthMB &#62;= 100</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>When a comparitor is specified by an Inca administrator, an additional
+field, <TT
+CLASS="FILENAME"
+>comparisonResult</TT
+>, is returned with the Inca
+data and contains either a '<TT
+CLASS="FILENAME"
+>Success</TT
+>' or
+'<TT
+CLASS="FILENAME"
+>Failure:reasons</TT
+>' value.  The <TT
+CLASS="FILENAME"
+>reason</TT
+>
+value will be the part of the comparitor that failed, e.g., gcc or
+bandwidthMB.  </P
+><P
+>A comparitor is also specified when an Inca administrator
+sets up email notification on a series.  Therefore a common comparitor is
+to check that the errorMessage is empty as shown below:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>errorMessage==''</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>If a report with an error is sent to the depot, the errorMessage will be
+set causing the comparitor to fail and an email notification to be
+sent.</P
+><P
+>In summary, when interpreting the result of a report, first check to
+if a comparisonResult exists.  If it does, then use that value.  Otherwise,
+use the body or errorMessage to interpret the result.  Please see pseudo-code
+below for an example:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>if ( exists comparisonResult ) {
+  if ( comparisonResult == 'Success' ) {
+    println "Pass"
+  } else {
+    println "Failed: " + comparisonResult; 
+    if ( exists errorMessage ) {
+      println errorMessage;
+    }
+  }
+} else {
+  if ( body != '' ) { // or you could use if ( errorMessage == '' )
+    println "Pass";
+  } else {
+    println errorMessage;
+  }
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Below is an example of a series that gets a version of gcc.  The series originally has a comparitor that requires 
+a specific version of gcc (&#62;=4.2).  The series fails until the comparitor requirement is removed.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="GRAPH-COMPARITOR-EXAMPLE"
+></A
+><P
+><B
+>Figure 22. Pass/Fail Graph for Series with Comparitor</B
+></P
+><P
+><IMG
+SRC="figures/consumer/build-consumer-comparitor-graph.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>Inca depot query results are formatted as XML, most are an array of reporter execution <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
+>summary</A
+>, <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph</A
+> or <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-DETAILS-XML"
+>detail</A
+> information. These results can be retrieved from the REST, JSP, Client and Web services interfaces described in 
+    <A
+HREF="userguide-writing-consumer.html#RETRIEVING-DATA"
+>Section 7.2</A
+>.</P
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="CONSUMER-REPORT-SUMMARIES-XML"
+>7.1.1. Report Summaries</A
+></H3
+><P
+>Report summaries return XML formatted like the following (tags are described below):
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&#62;
+ &#60;hostname xmlns=""&#62;localResource&#60;/hostname&#62;
+ &#60;targetHostname xmlns=""/&#62;
+ &#60;uri xmlns=""&#62;file:///Inca-Reporter-5.12450/bin/cluster.compiler.any.unit&#60;/uri&#62;
+ &#60;nickname xmlns=""&#62;java_hello_world&#60;/nickname&#62;
+ &#60;seriesConfigId xmlns=""&#62;5&#60;/seriesConfigId&#62;
+ &#60;instanceId xmlns=""&#62;49&#60;/instanceId&#62;
+ &#60;gmt xmlns=""&#62;2010-06-08T15:25:01.000-07:00&#60;/gmt&#62;
+ &#60;gmtExpires xmlns=""&#62;2010-06-08T15:45:01.027-07:00&#60;/gmtExpires&#62;
+ &#60;body xmlns=""&#62;
+  &#60;unitTest xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1"&#62;
+   &#60;ID&#62;javac&#60;/ID&#62;
+  &#60;/unitTest&#62;
+ &#60;/body&#62;
+ &#60;errorMessage xmlns=""/&#62;
+ &#60;comparisonResult xmlns=""&#62;Success&#60;/comparisonResult&#62;
+&#60;/reportSummary&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+><P
+>Report summaries use a prefix with a tag name that references the
+http://inca.sdsc.edu/queryResult/reportSummary_2.0 namespace.</P
+><P
+>The following tags are defined within query results:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>hostname</TT
+></DT
+><DD
+><P
+>  resource id where the reporter executed
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>targetHostname</TT
+></DT
+><DD
+><P
+>  resource id of the resource group whose macros were used in configuring the report series.  For example, if a
+  reporter executes on resource A, but it uses macros from resource B to get a hostname parameter for the test, the
+  resource id for resource B will be the targetHostname.
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>uri</TT
+></DT
+><DD
+><P
+>  the URI of the reporter repository and the location of the reporter
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>nickname</TT
+></DT
+><DD
+><P
+>  the nickname (short name) for the report series
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>seriesConfigId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the series configuration information for this report summary (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>instanceId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the instance information for the particular time this report series executed (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>gmt</TT
+></DT
+><DD
+><P
+>  the time this report series executed (ISO 8601 format)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>gmtExpires</TT
+></DT
+><DD
+><P
+>  the time when results from this report will become stale (ISO 8601 format)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>body</TT
+></DT
+><DD
+><P
+>  results of the reporter's testing
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>errorMessage</TT
+></DT
+><DD
+><P
+>  optional string indicating why the reporter failed to complete
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>comparisonResult</TT
+></DT
+><DD
+><P
+>  if series was configured with a comparison, the result of the comparison for this particular report series execution
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="CONSUMER-GRAPH-INSTANCE-XML"
+>7.1.2. Graph Instances</A
+></H3
+><P
+>Graph instances return XML formatted like the following (tags are described below):
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;row&#62;
+ &#60;resource&#62;sapa&#60;/resource&#62;
+ &#60;nickname&#62;cvs_repo&#60;/nickname&#62;
+ &#60;instanceId&#62;41518967&#60;/instanceId&#62;
+ &#60;reportId&#62;20958820&#60;/reportId&#62;
+ &#60;configId&#62;20437465&#60;/configId&#62;
+ &#60;collected&#62;2010-06-01T00:11:03.000-07:00&#60;/collected&#62;
+ &#60;exit_status&#62;0&#60;/exit_status&#62;
+ &#60;exit_message/&#62;
+ &#60;body xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1"/&#62;
+ &#60;comparisonResult&#62;Success&#60;/comparisonResult&#62;
+&#60;/row&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+><P
+>Graph instances use a prefix with a tag name that references the
+http://inca.sdsc.edu/dataModel/graphSeries_2.0 namespace.</P
+><P
+>The following tags are defined within query results:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>resource</TT
+></DT
+><DD
+><P
+>  resource id where the reporter executed
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>nickname</TT
+></DT
+><DD
+><P
+>  the nickname (short name) for the report series
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>instanceId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the instance information for the particular time this report series executed (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>reportId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the report information for the particular result from this report series (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>configId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the series configuration information for this report summary (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>collected</TT
+></DT
+><DD
+><P
+>  the time this report series executed (ISO 8601 format)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>exit_status</TT
+></DT
+><DD
+><P
+>boolean indicating whether or not the reporter successfully completed its testing
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>exit_message</TT
+></DT
+><DD
+><P
+>  optional string indicating why the reporter failed to complete
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>body</TT
+></DT
+><DD
+><P
+>  results of the reporter's testing
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>comparisonResult</TT
+></DT
+><DD
+><P
+>  if series was configured with a comparison, the result of the comparison for this particular report series execution
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="CONSUMER-REPORT-DETAILS-XML"
+>7.1.3. Report Details</A
+></H3
+><P
+>The individual report details are generated by a depot query that returns XML formatted like the following (tags are described below):
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;reportDetails xmlns="http://inca.sdsc.edu/dataModel/reportDetails_2.1"&#62;
+  &#60;suiteId xmlns=""&#62;8140012&#60;/suiteId&#62;
+  &#60;seriesConfigId xmlns=""&#62;8156370&#60;/seriesConfigId&#62;
+  &#60;seriesId xmlns=""&#62;1712066&#60;/seriesId&#62;
+  &#60;reportId xmlns=""&#62;28430963&#60;/reportId&#62;
+  &#60;instanceId xmlns=""&#62;30977056&#60;/instanceId&#62;
+  &#60;seriesConfig xmlns=""&#62;
+    &#60;series&#62;
+      &#60;name&#62;cluster.compiler.gcc.version&#60;/name&#62;
+      &#60;version&#62;2&#60;/version&#62;
+      &#60;uri&#62;http://inca.sdsc.edu/2.0/ctssv3/bin/cluster.compiler.gcc.version&#60;/uri&#62;
+      &#60;args&#62;
+        &#60;arg&#62;
+          &#60;name&#62;log&#60;/name&#62;
+          &#60;value&#62;5&#60;/value&#62;
+        &#60;/arg&#62;
+        &#60;arg&#62;
+          &#60;name&#62;version&#60;/name&#62;
+          &#60;value&#62;no&#60;/value&#62;
+        &#60;/arg&#62;
+        &#60;arg&#62;
+          &#60;name&#62;help&#60;/name&#62;
+          &#60;value&#62;no&#60;/value&#62;
+        &#60;/arg&#62;
+        &#60;arg&#62;
+          &#60;name&#62;verbose&#60;/name&#62;
+          &#60;value&#62;1&#60;/value&#62;
+        &#60;/arg&#62;
+      &#60;/args&#62;
+      &#60;limits&#62;
+        &#60;wallClockTime&#62;600.0&#60;/wallClockTime&#62;
+        &#60;memory&#62;-1.0&#60;/memory&#62;
+        &#60;cpuTime&#62;-1.0&#60;/cpuTime&#62;
+      &#60;/limits&#62;
+      &#60;context&#62;&#60;![CDATA[bash -l -c 'set -a; cd /usr/users/9/inca/inca2install; export PERL5LIB=/usr/users/9/inca/inca2install/var/reporter-packages/lib/perl:${HOME}/inca/install/lib/perl &#38;&#38;cluster.compiler.gcc.version -help="no" -log="5" -verbose="1" -version="no";';]]&#62;&#60;/context&#62;
+      &#60;nice&#62;false&#60;/nice&#62;
+    &#60;/series&#62;
+    &#60;nickname&#62;compiler-gnu-version-as-4.0.1&#60;/nickname&#62;
+    &#60;resourceHostname&#62;psc-bigben&#60;/resourceHostname&#62;
+    &#60;schedule&#62;
+      &#60;cron&#62;
+        &#60;min&#62;2&#60;/min&#62;
+        &#60;hour&#62;17&#60;/hour&#62;
+        &#60;mday&#62;*&#60;/mday&#62;
+        &#60;wday&#62;*&#60;/wday&#62;
+        &#60;month&#62;*&#60;/month&#62;
+      &#60;/cron&#62;
+      &#60;numOccurs&#62;-1&#60;/numOccurs&#62;
+      &#60;suspended&#62;false&#60;/suspended&#62;
+    &#60;/schedule&#62;
+    &#60;acceptedOutput&#62;
+      &#60;comparitor&#62;ExprComparitor&#60;/comparitor&#62;
+      &#60;comparison&#62;gcc=~".*"&#60;/comparison&#62;
+      &#60;notifications&#62;
+        &#60;notification&#62;
+          &#60;notifier&#62;EmailNotifier&#60;/notifier&#62;
+          &#60;target&#62;FailTo:inca@sdsc.edu&#60;/target&#62;
+        &#60;/notification&#62;
+      &#60;/notifications&#62;
+    &#60;/acceptedOutput&#62;
+    &#60;action&#62;add&#60;/action&#62;
+  &#60;/seriesConfig&#62;
+  &#60;report xmlns=""&#62;...&#60;/report&#62;
+  &#60;comparisonResult xmlns=""&#62;Success&#60;/comparisonResult&#62;
+  &#60;sysusage xmlns=""&#62;
+    &#60;wallClockTime&#62;0.929562&#60;/wallClockTime&#62;
+    &#60;memory&#62;0.0&#60;/memory&#62;
+    &#60;cpuTime&#62;0.556034&#60;/cpuTime&#62;
+  &#60;/sysusage&#62;
+  &#60;stderr xmlns=""/&#62;
+&#60;/reportDetails&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+><P
+>Report detail output is surrounded by &#60;reportDetails&#62; tags.
+A prefix with a tag name that references
+http://inca.sdsc.edu/dataModel/reportDetails_2.1, which is the namespace that defines
+the report schema, can also be used.</P
+><P
+>The following tags are defined within a &#60;reportDetails&#62;:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FILENAME"
+>suiteId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the suite id number this report series belongs to (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>seriesConfigId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the series configuration information for this report series (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>seriesId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the series information for this report series (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>reportId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the report information for the particular result from this report series (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>instanceId</TT
+></DT
+><DD
+><P
+>  (internal) the database identifier for the instance information for the particular time this report series executed (used in further queries)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>seriesConfig</TT
+></DT
+><DD
+><P
+>  all of the configuration options for this report series: name (of reporter), version (of reporter), uri (for reporter), args, limits (for consumption of wall clock time, memory, and cpu time), context (command to execute series), nickname (of series), resourceHostname (where series will execute), schedule (cron for executing series), acceptedOutput (can include "comparison" string to match in the report and "notification" actions to take if the comparison fails)
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>report</TT
+></DT
+><DD
+><P
+>  report XML like that described in <A
+HREF="userguide-reporters.html#REPORTER-OUTPUT"
+>Section 8.2.2</A
+>
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>comparisonResult</TT
+></DT
+><DD
+><P
+>  if series was configured with a comparison, the result of the comparison for this particular report series execution
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>sysusage</TT
+></DT
+><DD
+><P
+>  amount of wall clock time, memory and cpu time this particular report series execution consumed
+  </P
+></DD
+><DT
+><TT
+CLASS="FILENAME"
+>stderr</TT
+></DT
+><DD
+><P
+>  standard error, if any, for this particular report series execution 
+  </P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="RETRIEVING-DATA"
+>7.2. Retrieving Data</A
+></H2
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="REST-API"
+>7.2.1. REST APIs</A
+></H3
+><P
+>The simplest way to retrieve Inca data is through its REST APIs.
+      By default, the consumer recognizes a REST URL using the following
+      format:
+      </P
+><P
+><TT
+CLASS="FILENAME"
+>http://localhost:8080/inca/XML|HTML/rest/&#60;suiteName&#62;|&#60;queryName&#62;[/&#60;resourceId&#62;[/&#60;seriesNickname&#62;[/&#60;timestamp&#62;|week|month|quarter|year]]]</TT
+></P
+><P
+>Note the <TT
+CLASS="FILENAME"
+>rest</TT
+> keyword may be vary by
+      Inca deployment.  Please check with your Inca administrator for a
+      non-default keyword.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN1790"
+></A
+><P
+><B
+>Table 5. Examples of Inca REST URLs</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+><STRONG
+><FONT
+>REST URL</FONT
+></STRONG
+></P
+></TH
+><TH
+><P
+><STRONG
+><FONT
+>Returns</FONT
+></STRONG
+></P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite</A
+></P
+></TD
+><TD
+><P
+>Returns the latest results for the specified suite (or query) as an array of <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
+>report summaries</A
+>.</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/defaultGrid"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/defaultGrid</A
+></P
+></TD
+><TD
+><P
+>Returns the latest results for the specified suite (or
+      query) and resource or resource group as an array of <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-SUMMARIES-XML"
+>report summaries</A
+>.</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version</A
+></P
+></TD
+><TD
+><P
+>Returns the latest details for a specific series within the
+      specified suite and resource according to the 
+      <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-DETAILS-XML"
+>report details schema</A
+> 
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/2011-05-11T16:04:00.000-07:00"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/2011-05-11T16:04:00.000-07:00</A
+></P
+></TD
+><TD
+><P
+>Returns the details of the instance executed at the given timestamp for a specific series within the
+      specified suite and resource according to the 
+      <A
+HREF="userguide-writing-consumer.html#CONSUMER-REPORT-DETAILS-XML"
+>report details schema</A
+> 
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/week</A
+></P
+></TD
+><TD
+><P
+>Returns the last week of historical results for the specified
+      series as an array of <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph instances</A
+>.</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/month</A
+></P
+></TD
+><TD
+><P
+>Returns the last month of historical results for the
+      specified series as an array of 
+      <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph instances</A
+>.
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/quarter</A
+></P
+></TD
+><TD
+><P
+>Returns the last quarter (3 months) of historical results
+      for the specified series as an array of 
+      <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph instances</A
+>.
+      </P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year"
+TARGET="_top"
+>http://localhost:8080/inca/XML/rest/sampleSuite/localResource/ant_version/year</A
+></P
+></TD
+><TD
+><P
+>Returns the last year of historical results
+      for the specified series as an array of 
+      <A
+HREF="userguide-writing-consumer.html#CONSUMER-GRAPH-INSTANCE-XML"
+>graph instances</A
+>.
+      </P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>For example, if you fetch the first REST URL specified above using the 
+<TT
+CLASS="FILENAME"
+>wget</TT
+> command, it would look like the following:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>wget -O - http://rocks-101.sdsc.edu:8080/inca/XML/rest/sampleSuite
+--09:24:30--  http://rocks-101.sdsc.edu:8080/inca/XML/rest/sampleSuite
+           =&#62; `-'
+Resolving rocks-101.sdsc.edu... done.
+Connecting to rocks-101.sdsc.edu[198.202.88.101]:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6,990 [text/xml]
+
+ 0% [                                   ] 0             --.--K/s    ETA --:--
+
+...
+
+&#60;quer:object
+xmlns:quer="http://inca.sdsc.edu/dataModel/queryResults_2.0"&#62;&#60;row&#62;&#60;reportSummary
+xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&#62;
+  &#60;hostname xmlns=""&#62;localResource&#60;/hostname&#62;
+  &#60;targetHostname xmlns=""/&#62;
+  &#60;uri
+xmlns=""&#62;file:///home/inca/2.6/./bin/../Inca-Reporter-5.13359/bin/grid.wget.unit&#60;/uri&#62;
+  &#60;nickname xmlns=""&#62;wget_page_test&#60;/nickname&#62;
+  &#60;seriesConfigId xmlns=""&#62;1&#60;/seriesConfigId&#62;
+  &#60;instanceId xmlns=""&#62;1053&#60;/instanceId&#62;
+  &#60;gmt xmlns=""&#62;2010-08-24T09:20:02.000-07:00&#60;/gmt&#62;
+  &#60;gmtExpires xmlns=""&#62;2010-08-24T09:40:02.963-07:00&#60;/gmtExpires&#62;
+  &#60;body xmlns=""&#62;
+    &#60;unitTest xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1"&#62;
+      &#60;ID&#62;wget&#60;/ID&#62;
+    &#60;/unitTest&#62;
+  &#60;/body&#62;
+  &#60;errorMessage xmlns=""/&#62;
+&#60;/reportSummary&#62;&#60;/row&#62;...&#60;row&#62;&#60;reportSummary
+xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&#62;
+  &#60;hostname xmlns=""&#62;localResource&#60;/hostname&#62;
+  &#60;targetHostname xmlns=""/&#62;
+  &#60;uri
+xmlns=""&#62;file:///home/inca/2.6/./bin/../Inca-Reporter-5.13359/bin/cluster.admin.ant.version&#60;/uri&#62;
+  &#60;nickname xmlns=""&#62;ant_version&#60;/nickname&#62;
+  &#60;seriesConfigId xmlns=""&#62;10&#60;/seriesConfigId&#62;
+  &#60;instanceId xmlns=""&#62;1055&#60;/instanceId&#62;
+  &#60;gmt xmlns=""&#62;2010-08-24T09:22:03.000-07:00&#60;/gmt&#62;
+  &#60;gmtExpires xmlns=""&#62;2010-08-24T09:42:03.987-07:00&#60;/gmtExpires&#62;
+  &#60;body xmlns=""&#62;
+    &#60;package xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1"&#62;
+      &#60;ID&#62;ant&#60;/ID&#62;
+      &#60;version&#62;1.6.5&#60;/version&#62;
+    &#60;/package&#62;
+  &#60;/body&#62;
+  &#60;errorMessage xmlns=""/&#62;
+&#60;/reportSummary&#62;&#60;/row&#62;&#60;/quer:object&#62;
+
+
+100%[==================================&#62;] 6,990        273.05K/s    ETA 00:00
+
+09:24:30 (273.05 KB/s) - `-' saved [6990/6990]&#13;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-WEBSERVICES-API"
+>7.2.2. Web Services API</A
+></H3
+><P
+>To query the Inca data via an API interface, you can utilize the Inca Web Services
+API.  Please check with your Inca administrator first to check that the Web
+Services component is installed as described in 
+<A
+HREF="userguide-webservices.html"
+>Section 9</A
+>.  Next either ask your Inca administrator for
+the WSDL file for their deployment or download it directly from the Inca
+releases directory <A
+HREF="http://inca.sdsc.edu/releases/2.6/wsdocs/IncaWS_wsdl.html"
+TARGET="_top"
+>here</A
+>.  
+Then find the Inca Web Services hostname and port from your Inca
+administrator and edit the following portion of the file.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>      ...
+      &#60;port binding="tns:IncaWS_Binding" name="IncaWS_Port"&#62;
+        &#60;soap:address location="http://<STRONG
+><FONT
+COLOR="RED"
+>localhost</FONT
+></STRONG
+>:<STRONG
+><FONT
+COLOR="RED"
+>8001</FONT
+></STRONG
+>"/&#62;
+      &#60;/port&#62;
+      ...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The Web Services API encompasses a subset of the client APIs described
+in <A
+HREF="userguide-writing-consumer.html#USERGUIDE-APIS"
+>Section 7.2.3</A
+>.  Documentation for the API can be found in
+the below link: </P
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/wsdocs/IncaWS_wsdl.html"
+TARGET="_top"
+>http://inca.sdsc.edu/releases/2.6/wsdocs/IncaWS_wsdl.html</A
+></P
+><P
+>The following shows an example of how to access the Inca web services
+from Perl using the Perl module <A
+HREF="http://www.soaplite.com/"
+TARGET="_top"
+>SOAP::Lite</A
+>.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>use SOAP::Lite;
+use Cwd;
+
+my $cwd = getcwd();
+my $ws = SOAP::Lite-&#62;service("file:<STRONG
+><FONT
+COLOR="RED"
+>$cwd/etc/IncaWS.wsdl</FONT
+></STRONG
+>");
+
+# check agent and depot are available
+print $ws-&#62;pingAgent('hello agent'), "\n";
+print $ws-&#62;pingDepot('hello depot'), "\n";
+
+# get the Inca configuration
+print $ws-&#62;getConfig(), "\n";
+my $guid = $ws-&#62;queryGuids();
+
+# get the latest instances of a suite
+my $results = $ws-&#62;querySuite( $guid );
+for my $result ( @{$results} ) {
+  print $result;
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Place the above code in a file called <TT
+CLASS="FILENAME"
+>$INCA_DIST/sampleWS.pl</TT
+> and edit the highlighted portion to reflect the location of the
+<TT
+CLASS="FILENAME"
+>IncaWS.wsdl</TT
+> file.  Set the environment variable PERL5LIB 
+reflect the location of the SOAP::Lite library if it is not installed in
+the default path.  Or if you are on the same machine as the Inca server, set
+it to <TT
+CLASS="FILENAME"
+>$INCA_DIST/lib/perl</TT
+>.  Then type, </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% perl sampleWS.pl</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>When run against the default installation, the results should look
+similar to below.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hello agent
+hello depot
+&#60;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&#62;
+&#60;repositories&#62;
+  &#60;repository&#62;http://inca.sdsc.edu/repository/latest&#60;/repository&#62;
+&#60;/repositories&#62;
+&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+        &#60;name&#62;defaultGrid&#60;/name&#62;
+        &#60;xpath&#62;//resource[matches(name, "localSite")]&#60;/xpath&#62;
+      &#60;macros&#62;
+ ...
+  &#60;/resources&#62;
+&#60;/resourceConfig&#62;
+&#60;suites&#62;
+  &#60;suite&#62;
+    &#60;seriesConfigs&#62;
+      &#60;seriesConfig&#62;
+        &#60;series&#62;
+          &#60;name&#62;cluster.math.atlas.version&#60;/name&#62;
+          &#60;uri&#62;http:// ... cluster.math.atlas.version&#60;/uri&#62;
+          &#60;args&#62;
+            &#60;arg&#62;
+              &#60;name&#62;cc&#60;/name&#62;
+              &#60;value&#62;cc&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;dir&#60;/name&#62;
+              &#60;value/&#62;&#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;help&#60;/name&#62;
+              &#60;value&#62;no&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;log&#60;/name&#62;
+              &#60;value&#62;3&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;verbose&#60;/name&#62;
+              &#60;value&#62;1&#60;/value&#62;
+            &#60;/arg&#62;
+ ...
+        &#60;action&#62;add&#60;/action&#62;
+      &#60;/seriesConfig&#62;
+    &#60;/seriesConfigs&#62;
+    &#60;name&#62;sampleSuite&#60;/name&#62;
+    &#60;guid&#62;incas://rocks-101.sdsc.edu:6323/sampleSuite&#60;/guid&#62;
+    &#60;description/&#62;
+    &#60;version&#62;1&#60;/version&#62;
+  &#60;/suite&#62;
+&#60;/suites&#62;
+&#60;/inca:inca&#62;
+
+&#60;reportSummary xmlns="http://inca.sdsc.edu/queryResult/reportSummary_2.0"&#62;
+  &#60;hostname xmlns=""&#62;localResource&#60;/hostname&#62;
+  &#60;targetHostname xmlns=""/&#62;
+  &#60;uri xmlns=""&#62;http:// ... cluster.math.atlas.version&#60;/uri&#62;
+  &#60;nickname xmlns=""&#62;atlas_version&#60;/nickname&#62;
+  &#60;seriesConfigId xmlns=""&#62;1&#60;/seriesConfigId&#62;
+  &#60;instanceId xmlns=""&#62;24&#60;/instanceId&#62;
+  &#60;gmt xmlns=""&#62;2007-02-01T13:21:01.000-08:00&#60;/gmt&#62;
+  &#60;body xmlns:rep="http://inca.sdsc.edu/dataModel/report_2.1" xmlns=""/&#62;
+  &#60;errorMessage xmlns=""&#62;Cannot locate ATLAS installation; use
+-dir&#60;/errorMessage&#62;                    
+&#60;/reportSummary&#62;
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-APIS"
+>7.2.3. Inca Client APIs</A
+></H3
+><P
+>An alternate method of accessing Inca data is through the the Inca Agent
+and Depot Client APIs.  You can use this method if the Inca deployment is
+setup without authentication or by acquiring a set of credentials from your
+Inca administrator.  </P
+><P
+>Currently, we provide Perl and Java client APIs to the Inca agent and
+depot. A number of the API functions return XML that can be used in custom Inca data consumers. For example, the DepotClient's queryInstance, queryLatest, and queryPeriod functions respectively return the report details, report summary, and graph instance XML document types described in <A
+HREF="userguide-writing-consumer.html#UNDERSTANDING-XML"
+>Section 7.1</A
+>.  A summary of the available APIs and links to further documentation is shown in the below table.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN1889"
+></A
+><P
+><B
+>Table 6. Inca client APIs</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+><P
+><STRONG
+><FONT
+>Component</FONT
+></STRONG
+></P
+></TH
+><TH
+><P
+><STRONG
+><FONT
+>Java API</FONT
+></STRONG
+> (<A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-common-java-bin.tar.gz"
+TARGET="_top"
+>download</A
+>)</P
+></TH
+><TH
+><P
+><STRONG
+><FONT
+>Perl API</FONT
+></STRONG
+> (<A
+HREF="http://inca.sdsc.edu/releases/2.6/Inca-WS.tar.gz"
+TARGET="_top"
+>download</A
+>)</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>client</P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/javawsdocs/edu/sdsc/inca/Client.html"
+TARGET="_top"
+>edu.sdsc.inca.Client</A
+></P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/wsdocs/Inca/Client.html"
+TARGET="_top"
+>Inca::Client</A
+></P
+></TD
+></TR
+><TR
+><TD
+><P
+>agent</P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/javawsdocs/edu/sdsc/inca/AgentClient.html"
+TARGET="_top"
+>edu.sdsc.inca.AgentClient</A
+></P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/wsdocs/Inca/AgentClient.html"
+TARGET="_top"
+>Inca::AgentClient</A
+></P
+></TD
+></TR
+><TR
+><TD
+><P
+>depot</P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/javawsdocs/edu/sdsc/inca/DepotClient.html"
+TARGET="_top"
+>edu.sdsc.inca.DepotClient</A
+></P
+></TD
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/wsdocs/Inca/DepotClient.html"
+TARGET="_top"
+>Inca::DepotClient</A
+></P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-APIS-PERL"
+>7.2.3.1. Inca Perl Client APIs</A
+></H4
+><P
+>The Perl Client API can be accessed on the Inca server at
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/lib/perl</TT
+> or by downloading the incaws tar
+ball,
+<A
+HREF="http://inca.sdsc.edu/releases/2.6/Inca-WS.tar.gz"
+TARGET="_top"
+>Inca-WS.tar.gz</A
+>.  To install <TT
+CLASS="FILENAME"
+>Inca-WS.tar.gz</TT
+>, perform the following
+steps.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Untar the <TT
+CLASS="FILENAME"
+>Inca-WS.tar.gz</TT
+> file 
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% tar zxvf Inca-WS.tar.gz</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Install the module using the following command where <TT
+CLASS="FILENAME"
+>$PREFIX</TT
+> indicates the desired destination directory.
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd Inca-WS-*
+% perl Makefile.PL PREFIX=$PREFIX LIB=$PREFIX/lib/perl
+% make
+% make install</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the credentials from your Inca administrator over to the new
+  installation.  The file <TT
+CLASS="FILENAME"
+>trusted.0</TT
+> will actually be
+  the hash of the CA certificate and will look something like <TT
+CLASS="FILENAME"
+>51b63f6c.0</TT
+>.
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% mkdir $PREFIX/etc; mkdir $PREFIX/etc/trusted
+% cp <STRONG
+><FONT
+COLOR="RED"
+>clientcert.pem</FONT
+></STRONG
+> $PREFIX/etc
+% cp <STRONG
+><FONT
+COLOR="RED"
+>clientkey.pem</FONT
+></STRONG
+> $PREFIX/etc
+% cp <STRONG
+><FONT
+COLOR="RED"
+>trusted.0</FONT
+></STRONG
+> $PREFIX/etc/trusted</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    </P
+></LI
+></OL
+><P
+>Below is a sample of code using the Perl APIs that pings the Agent and
+queries for its configuration.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Inca::AgentClient;
+
+print "Please enter a password:  ";
+chomp( my $pass = &#60;STDIN&#62; );
+my $agentclient = new Inca::AgentClient(
+  host =&#62; '<STRONG
+><FONT
+COLOR="RED"
+>localhost</FONT
+></STRONG
+>',
+  port =&#62; 6323,
+  auth =&#62; 1,
+  cert =&#62; '<STRONG
+><FONT
+COLOR="RED"
+>etc/clientcert.pem</FONT
+></STRONG
+>',
+  key =&#62; '<STRONG
+><FONT
+COLOR="RED"
+>etc/clientkey.pem</FONT
+></STRONG
+>',
+  password =&#62; $pass,
+  trusted =&#62; '<STRONG
+><FONT
+COLOR="RED"
+>etc/trusted/51b63f6c.0</FONT
+></STRONG
+>'
+);
+if ( defined $agentclient-&#62;getError() ) {
+  die "Unable to connect:" . $agentclient-&#62;getError();
+}
+
+# check agent is available
+print $agentclient-&#62;ping('hello agent'), "\n";
+
+# get the Inca configuration
+print $agentclient-&#62;getConfig(), "\n";</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Place the code in a file called <TT
+CLASS="FILENAME"
+>inca-test-agent</TT
+>
+within the <TT
+CLASS="FILENAME"
+>$INCA_DIST/bin</TT
+> directory and replace all of
+the highlighted areas with values appropriate to your installation.  To run
+the program, you will need to provide the path to the Inca Perl APIs which
+reside in <TT
+CLASS="FILENAME"
+>$INCA_DIST/lib/perl</TT
+>.  One choice is to execute
+the 
+following:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>env PERL5LIB=$PREFIX/lib/perl perl bin/inca-test-agent</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Type in the password provided to you by your Inca administrator
+when prompted.  You should see something like this:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hello agent
+&#60;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&#62;
+&#60;repositories&#62;
+  &#60;repository&#62;http://inca.sdsc.edu/repository/latest&#60;/repository&#62;
+&#60;/repositories&#62;
+&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+        &#60;name&#62;defaultGrid&#60;/name&#62;
+        &#60;xpath&#62;//resource[matches(name, "localSite")]&#60;/xpath&#62;
+      &#60;macros&#62;
+ ...
+  &#60;/resources&#62;
+&#60;/resourceConfig&#62;
+&#60;suites&#62;
+  &#60;suite&#62;
+    &#60;seriesConfigs&#62;
+      &#60;seriesConfig&#62;
+        &#60;series&#62;
+          &#60;name&#62;cluster.math.atlas.version&#60;/name&#62;
+          &#60;uri&#62;http:// ... cluster.math.atlas.version&#60;/uri&#62;
+          &#60;args&#62;
+            &#60;arg&#62;
+              &#60;name&#62;cc&#60;/name&#62;
+              &#60;value&#62;cc&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;dir&#60;/name&#62;
+              &#60;value/&#62;&#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;help&#60;/name&#62;
+              &#60;value&#62;no&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;log&#60;/name&#62;
+              &#60;value&#62;3&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;verbose&#60;/name&#62;
+              &#60;value&#62;1&#60;/value&#62;
+            &#60;/arg&#62;
+ ...
+        &#60;action&#62;add&#60;/action&#62;
+      &#60;/seriesConfig&#62;
+    &#60;/seriesConfigs&#62;
+    &#60;name&#62;sampleSuite&#60;/name&#62;
+    &#60;guid&#62;incas://rocks-101.sdsc.edu:6323/sampleSuite&#60;/guid&#62;
+    &#60;description/&#62;
+    &#60;version&#62;1&#60;/version&#62;
+  &#60;/suite&#62;
+&#60;/suites&#62;
+&#60;/inca:inca&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Alternatively, you can leverage the <TT
+CLASS="FILENAME"
+>inca</TT
+> script to
+set the path for you.  It looks for scripts that begin with
+<TT
+CLASS="FILENAME"
+>inca-</TT
+> in the <TT
+CLASS="FILENAME"
+>bin</TT
+> such as
+<TT
+CLASS="FILENAME"
+>inca-some-command</TT
+>.  Then you can invoke your
+script by typing <TT
+CLASS="FILENAME"
+>./sbin/inca someCommand</TT
+> which will 
+automatically set the PERL5LIB for you.  To execute the
+<TT
+CLASS="FILENAME"
+>inca-test-agent</TT
+> script, type the following:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $PREFIX; ./sbin/inca testAgent -P stdin:pass</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Type in the password provided to you by your Inca administrator
+when prompted.  You should see the output as above.  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-APIS-JAVA"
+>7.2.3.2. Inca Java Client APIs</A
+></H4
+><P
+>The Java Client API can be accessed on the Inca server at
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/lib/inca-common.jar</TT
+> or by downloading the
+inca-common tar ball,
+<A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-common-java-bin.tar.gz"
+TARGET="_top"
+>inca-common-java-bin.tar.gz</A
+>.
+To install <TT
+CLASS="FILENAME"
+>inca-common-java-bin.tar.gz</TT
+> in a directory
+called <TT
+CLASS="FILENAME"
+>$PREFIX</TT
+>, perform the following steps.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Untar the <TT
+CLASS="FILENAME"
+>inca-common-java-bin.tar.gz</TT
+> file 
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% mkdir $PREFIX; tar -C $PREFIX -zxvf inca-common-java-bin.tar.gz</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the credentials from your Inca administrator over to the new
+  installation.  The file <TT
+CLASS="FILENAME"
+>trusted.0</TT
+> will actually be
+  the hash of the CA certificate and will look something like <TT
+CLASS="FILENAME"
+>51b63f6c.0</TT
+>.
+    <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% mkdir $PREFIX/etc; mkdir $PREFIX/etc/trusted
+% cp <STRONG
+><FONT
+COLOR="RED"
+>clientcert.pem</FONT
+></STRONG
+> $PREFIX/etc
+% cp <STRONG
+><FONT
+COLOR="RED"
+>clientkey.pem</FONT
+></STRONG
+> $PREFIX/etc
+% cp <STRONG
+><FONT
+COLOR="RED"
+>trusted.0</FONT
+></STRONG
+> $PREFIX/etc/trusted</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    </P
+></LI
+></OL
+><P
+>Below is a sample of code using the Java APIs that pings the Agent and
+queries for its configuration.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>import edu.sdsc.inca.AgentClient;
+
+public class AgentClientTest {
+  public static void main(String args[]) {
+    AgentClient agentClient = new AgentClient();
+    agentClient.setServer("<STRONG
+><FONT
+COLOR="RED"
+>rocks-101.sdsc.edu</FONT
+></STRONG
+>", <STRONG
+><FONT
+COLOR="RED"
+>6323</FONT
+></STRONG
+>);
+    agentClient.setCertificatePath("<STRONG
+><FONT
+COLOR="RED"
+>clientcert.pem</FONT
+></STRONG
+>");
+    agentClient.setKeyPath("<STRONG
+><FONT
+COLOR="RED"
+>clientkey.pem</FONT
+></STRONG
+>");
+    agentClient.setTrustedPath("<STRONG
+><FONT
+COLOR="RED"
+>trusted</FONT
+></STRONG
+>");
+    System.out.print( "Please enter a password: " );
+    try {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      String password = br.readLine();
+      agentClient.setPassword(password);
+    } catch ( IOException e  ) {
+      System.err.println( "Problems reading password" );
+      e.printStackTrace();
+    }
+    try {
+      agentClient.connect();
+      System.out.println( agentClient.commandPing("hello agent") );
+      System.out.println( agentClient.getConfig() );
+    } catch ( Exception e ) {
+      System.err.println( "Connection error to agent" );
+      e.printStackTrace();
+    }
+  }
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Place the code in a file called <TT
+CLASS="FILENAME"
+>AgentClientTest.java</TT
+>
+within the <TT
+CLASS="FILENAME"
+>$INCA_DIST</TT
+> directory and replace all of
+the highlighted areas with values appropriate to your installation.  Note that
+the API looks for certificate files in the classpath so just the name of
+the file needs to be specified rather than a complete path.  First
+set your classpath to include the jars in <TT
+CLASS="FILENAME"
+>$INCA_DIST/lib</TT
+>
+as below: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% setenv CLASSPATH `perl -e "print join(':',glob('lib/*'))"`
+
+or
+
+% export CLASSPATH=`perl -e "print join(':',glob('lib/*'))"`</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Then compile the program as below: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% javac AgentClientTest.java</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>This will create the file <TT
+CLASS="FILENAME"
+>AgentClientTest.class</TT
+>.
+To run the program, you will also need to specify the directory
+where your credentials reside (specified below as <TT
+CLASS="FILENAME"
+>etc</TT
+>),
+the <TT
+CLASS="FILENAME"
+>etc/common</TT
+> directory, and <TT
+CLASS="FILENAME"
+>.</TT
+>
+where the <TT
+CLASS="FILENAME"
+>AgentClientTest.class</TT
+> resides.  Execute
+ as follows:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% java -cp .:etc:etc/common:$CLASSPATH AgentClientTest</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Type in the password provided to you by your Inca administrator
+when prompted.  You should see something like this:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>hello agent
+&#60;inca:inca xmlns:inca="http://inca.sdsc.edu/dataModel/inca_2.0"&#62;
+&#60;repositories&#62;
+  &#60;repository&#62;http://inca.sdsc.edu/repository/latest&#60;/repository&#62;
+&#60;/repositories&#62;
+&#60;resourceConfig&#62;
+  &#60;resources&#62;
+    &#60;resource&#62;
+        &#60;name&#62;defaultGrid&#60;/name&#62;
+        &#60;xpath&#62;//resource[matches(name, "localSite")]&#60;/xpath&#62;
+      &#60;macros&#62;
+ ...
+  &#60;/resources&#62;
+&#60;/resourceConfig&#62;
+&#60;suites&#62;
+  &#60;suite&#62;
+    &#60;seriesConfigs&#62;
+      &#60;seriesConfig&#62;
+        &#60;series&#62;
+          &#60;name&#62;cluster.math.atlas.version&#60;/name&#62;
+          &#60;uri&#62;http:// ... cluster.math.atlas.version&#60;/uri&#62;
+          &#60;args&#62;
+            &#60;arg&#62;
+              &#60;name&#62;cc&#60;/name&#62;
+              &#60;value&#62;cc&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;dir&#60;/name&#62;
+              &#60;value/&#62;&#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;help&#60;/name&#62;
+              &#60;value&#62;no&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;log&#60;/name&#62;
+              &#60;value&#62;3&#60;/value&#62;
+            &#60;/arg&#62;
+            &#60;arg&#62;
+              &#60;name&#62;verbose&#60;/name&#62;
+              &#60;value&#62;1&#60;/value&#62;
+            &#60;/arg&#62;
+ ...
+        &#60;action&#62;add&#60;/action&#62;
+      &#60;/seriesConfig&#62;
+    &#60;/seriesConfigs&#62;
+    &#60;name&#62;sampleSuite&#60;/name&#62;
+    &#60;guid&#62;incas://rocks-101.sdsc.edu:6323/sampleSuite&#60;/guid&#62;
+    &#60;description/&#62;
+    &#60;version&#62;1&#60;/version&#62;
+  &#60;/suite&#62;
+&#60;/suites&#62;
+&#60;/inca:inca&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Data Display (Data Consumers)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Reporters and Repositories</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

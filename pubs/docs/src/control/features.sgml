@@ -1,0 +1,114 @@
+<section id="control-features">
+<title>Feature Summary</title>
+
+<variableList>
+<varListEntry>
+<term><emphasis>Requirement:</emphasis>  The Inca framework should have a
+minimal impact on the resources it is monitoring.</term>
+<listItem>
+<para>
+  <itemizedList>
+	<listItem>
+		<para>In order to maintain a low impact on the system, we identify two
+		distinct components of the control system:  a reporter manager and a
+		reporter agent.  A reporter manager is a thin client which resides on a
+		resource to manage the execution of a reporter suite.  A reporter agent
+		manages one or more reporter managers and handles the bulk of the control
+		processing.  
+		</para>
+  </listItem>
+  <listItem>
+  <para>
+	The reporter manager will need to have multiple threads of control in order
+	to accept commands from the reporter agent and local command-line GUI plus
+	perform scheduling and monitoring of reporters.  These threads of control
+	will be implemented efficiently in order to avoid unnecessary memory
+	consumption.
+  </para>
+  </listItem>
+  <listItem>
+  <para>
+  Each reporter will be profiled while it executes.  This information will
+  be used to create timeouts on either wall clock time, CPU time, and/or memory.
+  It will also be sent back with the report and logged in the depot so system
+  administrators can use the information to tune the impact on the system.
+	(also addresses Self Monitoring requirement)
+  </para>
+  </listItem>
+  </itemizedList>
+</para>
+</listItem>
+</varListEntry>
+
+<varListEntry>
+<term><emphasis>Requirement:</emphasis> Data collection should be configurable
+and extensible on a per-resource basis.</term>
+<listItem>
+<para>
+  <itemizedList>
+	<listItem>
+		<para>There will be two types of data collection:  scheduled and
+		on-demand.  Scheduled execution will run a single reporter or 
+		group of reporters continuously on its own schedule.  There will be a set
+		of schedulers to choose from such as:  a queue scheduler, cross-site
+		scheduler, pairwise measurement scheduler, etc.  The scheduling engine
+		resides on the reporter agent.
+		</para>
+  </listItem>
+  </itemizedList>
+</para>
+</listItem>
+</varListEntry>
+
+<varListEntry>
+<term><emphasis>Requirement</emphasis>:  Installation, setup, and maintenance
+of the Inca deployment should be simple, straightforward, configurable, and
+pain-free.</term>
+<listItem>
+<para>
+  <itemizedList>
+	<listItem>
+		<para>Once installed (see <xref linkend="deployment">), the user should
+		be able to describe their VO and the reporters they want to run using a
+		GUI or configuration file.  
+		</para>
+  </listItem>
+	<listItem>
+		<para>The configuration of an Inca deployment should be done from a single
+	 machine.  The user should be able to describe their requirements and
+	 the reporter suites they want to run using a GUI or configuration file.  
+		Each participating site will have some local control on their reporter
+		manager as well and should be able to use a GUI to interact with it.
+		</para>
+  </listItem>
+	<listItem>
+		<para>Changes to an Inca deployment configuration should be done from a
+		single machine and propagated down to the reporter managers.
+		</para>
+  </listItem>
+  </itemizedList>
+</para>
+</listItem>
+</varListEntry>
+
+<varListEntry>
+<term><emphasis>Requirement</emphasis>:  In order to test Grid functionality,
+access to a valid credential is needed from a reporter.
+</term>
+<listItem>
+<para>
+  <itemizedList>
+	<listItem>
+		<para>The reporter manager will run under a regular user account with a
+		valid set of credentials with a DN that maps to that account.
+		</para>
+  </listItem>
+  </itemizedList>
+</para>
+</listItem>
+</varListEntry>
+
+</variableList>
+
+</section>
+

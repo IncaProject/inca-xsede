@@ -1,0 +1,500 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Component Man Pages</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Inca 2.6 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Advanced Configuration"
+HREF="userguide-advanced-config.html"><LINK
+REL="NEXT"
+TITLE="Troubleshooting"
+HREF="userguide-troubleshooting.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.6 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-advanced-config.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-troubleshooting.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-MAN"
+>12. Component Man Pages</A
+></H1
+><P
+>Each of the inca components has options that can be set in either the inca.properties file or on the command line as described in <A
+HREF="userguide-advanced-config.html#COMP-OPTIONS"
+>Section 11.1</A
+>.  To see a list components use the bin/inca help command:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST
+% bin/inca help
+Usage:  inca &#60;subcommand&#62; [options] [args]
+
+Type 'inca help &#60;component&#62;' for help on a specific component
+
+Available subcommands:
+  createauth
+  default
+  init
+  help
+  restart
+  start
+  stop
+  version
+  agent
+  depot
+  incat
+  incaws 
+  reporter-manager 
+  consumer</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>For example, here are the options for the depot, agent, reporter-manager, consumer and incat components:</P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-DEPOT"
+>12.1. Depot</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help depot
+java edu.sdsc.inca.Depot
+  P|password   str     Specify how to obtain encryption password
+  V|version    null    Display program version
+  a|auth       boolean Authenticated (secure) connection?
+  c|cert       path    Path to the authentication certificate
+  d|dbinit     null    init depot DB tables
+  h|help       null    Print help/usage
+  h|hostname   str     Hostname the server should provide to clients
+  i|init       path    Path to properties file
+  k|key        path    Path to the authentication key
+  l|logfile    str     Route log messages to a file
+  n|numthreads int     # threads in worker pool
+  p|port       int     Server listening port
+  r|remove     null    remove depot DB tables
+  t|trusted    path    Path to authentication trusted certificate dir
+  v|var        path    Absolute path to server temp dir</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-AGENT"
+>12.2. Agent</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help agent
+java edu.sdsc.inca.Agent
+  C|check            str     check the reporter manager on resources
+  D|depot            str     Depot specification; host:port
+  H|hostname         str     Hostname where the server is running
+  P|password         str     Specify how to obtain encryption password
+  R|refreshPkgs      int     repository check period for package updates
+  S|server           str     Server specification; host:port
+  S|startAttempt     int     re-start attempt period fpr the manager
+  U|upgradeTargets   str     makefile targets to execute during upgrade
+  V|version          null    Display program version
+  a|auth             boolean Authenticated (secure) connection?
+  b|buildscript      str     path to reporter manager build script
+  c|cert             path    Path to the authentication certificate
+  e|email            str     email to send notices of manager restarts
+  h|help             null    Print help/usage
+  i|init             path    Path to properties file
+  k|key              path    Path to the authentication key
+  l|logfile          str     Route log messages to a file
+  n|numthreads       int     # threads in worker pool
+  p|port             int     Server listening port
+  r|rmdist           str     path to reporter manager tarball distribution
+  s|stayAlive        int     stay alive ping period for the manager
+  t|trusted          path    Path to authentication trusted certificate dir
+  u|upgradeResources str     upgrade managers in specified resource group
+  v|var              path    Absolute path to server temp dir</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-RM"
+>12.3. Reporter Manager</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% sbin/inca help reporter-manager
+Usage:
+    reporter-manager [-a|-s] [options]
+
+Options:
+    a|--agent
+         A string containing the URI to the Reporter Agent process that will
+         be responsible for the reporter manager. Either this option or -s
+         must be specified. Currently accepted URIs include:
+
+         incas://host:port inca://host:port
+
+    -c|--cert
+         A path to a valid certificate file [default: none]
+
+    -d|--depot
+         A string containing the URI of a depot to send its reporter data
+         to. Currently accepted URIs include:
+
+         incas://host:port inca://host:port file://path
+
+         This option can be specified more than once. The report will be
+         sent to the first specified depot. If the first depot is
+         unreacheable, the next depots in the list will be tried.
+
+    -e|--error-reporter
+         A string containing a path to the error reporter. E.g.,
+         inca-null-reporter
+
+    -h|--help
+         Print help/usage information
+
+    -i|-id
+         The resource identifier supplied by the reporter agent that the
+         reporter manager will use to identify itself back to the reporter
+         agent.
+
+    -k|--key
+         A path to a valid key file [default: none]
+
+    -l|--logfile
+         A string containing a path to the file where the log messages can
+         be stored. If not specified, log messages will be printed to the
+         console.
+
+    -L|--level
+         A string containing the log message level (i.e., print statements
+         of this level and higher). [default: INFO]
+
+    -P|--passphrase
+         Read a passphrase for key from stdin
+
+    -r|--reporter-cache
+         A string containing the path to the local cache of reporters.
+
+    -R|--rim
+         A string containing a path to the reporter-instance-manager script.
+         If not specified, this script will look into the directory where
+         itself is located.
+
+    -s|--suite
+         A string containing a path to the Inca suite file containing the
+         reporters to be executed.
+
+    -t|--trusted
+         A path to either a directory or file of trusted certificates
+         [default: none]
+
+    -v|--var
+         A string containing a path to a temporary file space that Inca can
+         use while executing reporters
+
+    -w|--wait
+         A positive integer indicating the period in seconds of which to
+         check the reporter for a timeout [default: 2]</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-CONSUMER"
+>12.4. Consumer</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help consumer
+java edu.sdsc.inca.Consumer
+  P|password str     Specify how to obtain encryption password
+  V|version  null    Display program version
+  a|agent    str     URI to the Inca agent
+  a|auth     boolean Authenticated (secure) connection?
+  c|cert     path    Path to the authentication certificate
+  d|depot    str     URI to the Inca depot
+  h|help     null    Print help/usage
+  i|init     path    Path to properties file
+  k|key      path    Path to the authentication key
+  l|logfile  str     Route log messages to a file
+  m|maxWait  int     Max wait time a JSP tag should wait on a cached item
+  r|reload   int     Reload period for cached objects (e.g., suites)
+  t|trusted  path    Path to authentication trusted certificate dir
+  v|var      path    Path to temporary directory</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-INCAT"
+>12.5. Incat</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bin/inca help incat
+java incat
+  A|agent    str     Agent specification; host:port
+  P|password str     Specify how to obtain encryption password
+  V|version  null    Display program version
+  a|auth     boolean Authenticated (secure) connection?
+  c|cert     path    Path to the authentication certificate
+  f|file     path    Inca installation configuration file path
+  h|help     null    Print help/usage
+  i|init     path    Path to properties file
+  k|key      path    Path to the authentication key
+  l|logfile  str     Route log messages to a file
+  t|trusted  path    Path to authentication trusted certificate dir</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="MAN-INCAWS"
+>12.6. Inca Web Services</A
+></H2
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca help incaws
+incaws [opts] depot agent
+  --auth=yes/no
+  --cert=path
+  --help=yes/no
+  --init=path
+  --key=path
+  --logfile=path
+  --password=str
+  --port=int
+  --trusted=path
+  --version=yes/no</PRE
+></FONT
+></TD
+></TR
+></TABLE
+> </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-advanced-config.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-troubleshooting.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Advanced Configuration</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Troubleshooting</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

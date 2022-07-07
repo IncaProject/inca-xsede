@@ -1,0 +1,135 @@
+<section id="control-agent">
+<title>Reporter Agent</title>
+
+<para>
+A reporter agent is responsible for collecting a specified data set 
+at regular intervals and configuring its storage requirements.  The data set
+is collected by delegating the execution of a corresponding reporter suite to
+a locally managed set of reporter managers (a reporter manager runs on each
+resource); if a reporter suite cannot be filled completely by local reporter
+managers, it is passed to a set of appropriate trusted reporter agents.
+A reporter agent is composed of three main parts shown in
+<xref linkend="control-agent-architecture-figure">.
+</para>
+
+<figure id="control-agent-architecture-figure" float=1>
+<title>Reporter Agent Architecture</title>
+<mediaobject>
+  <imageobject>
+    <imagedata align="center" fileref="figures/reporter_agent.png" scale="60">
+  </imageobject>
+</mediaobject>
+</figure>
+
+<variableList>
+  <varListEntry>
+	  <term>Suite Request Engine</term>
+		<listItem>
+		  <para>The Suite Request Engine (SRE) takes as input a suite request 
+			and generates a subscription request and storage policy. 
+			A <emphasis>suite request</emphasis> is an XML document that
+			describes the data suite to be collected and a set of resources.  Each
+			resource contains one or more host addresses
+			<footnote>
+				<para>A resource can have multiple host addresses if it has multiple
+				points of access.  For example, several TerGrid resources round-robin
+				login requests to one of several front-end nodes.  If Inca were
+				installed on only one front-end node and that node goes down for 
+				maintenance, then it too would be down (even though there are other
+				login nodes active).  In this case, we want Inca on all nodes and
+				could then just switch to another login node.
+				</para>
+			</footnote>.
+			The data suite contains the submission type (i.e., add, replace, delete)
+			and one or more data elements which describe the reporter, input
+			arguments, frequency of execution, archiving policy, accepted values,
+			execution priority (i.e., nice), and execution type
+			(single, pairwise, all2all, intel2all).  The SRE looks at the execution
+			type and extracts a set of reporter descriptions (e.g., for an all2all
+			execution, it will extract NxN reporter descriptions) which get
+			formatted as a <emphasis>subscription</emphasis> and given to the
+			Scheduler.  It will then extract the reporter ids, volatility, archiving
+			information, and accepted values and place them in a <emphasis>storage
+			policy</emphasis> which it
+			sends to its Depots.  
+			</para>
+		</listItem>
+  </varListEntry>
+  <varListEntry>
+	  <term>Scheduler</term>
+		<listItem>
+			<para>
+			The Scheduler takes as input an subscription. The
+			<emphasis>subscription</emphasis> contains a submission type (i.e., add,
+			replace, or delete) and a list of reporter elements, where each reporter
+			element lists the reporter name, a resource, list of input
+			arguments, frequency of execution, and execution priority.  The
+			scheduler then determines what parts of the subscription request it can
+			fulfill, resolves duplicates, stores it, and then passes
+			it to the Reporter Manager Controller.  If it cannot fulfill all of the
+			subscription request, it will ask its trusted agents.  Likewise, it
+			should accept suscription requests from other trusted reporter agents
+			and scheduling modifications.  For each reporter that it can handle
+			locally, it will pass it through to the Reporter Repository Mirror
+			Maintainer for download of requested reporters.
+			</para>
+		</listItem>
+  </varListEntry>
+  <varListEntry>
+	  <term>Reporter Repository Mirror Maintainer</term>
+		<listItem>
+			<para>
+			The Reporter Repository Mirror Maintaner (RRMM) is responsible for 
+			maintaining a repository of reporters that its reporter managers
+			are executing.  When the Scheduler receives a subscription request
+			and determines the reporters that will be executing locally, it will
+			feed the list to the RRMM.  The RRMM will download the necessary
+			reporters and then the Reporter Manager Controller will be responsible
+			for handing them to the reporter managers.
+			</para>
+		</listItem>
+  </varListEntry>
+  <varListEntry>
+	  <term>Reporter Manager Controller</term>
+		<listItem>
+			<para>
+			The Reporter Manager Controller (RMC) manages a set of reporter managers.
+			Reporter managers can be specified at startup and/or added/deleted during
+			runtime.  A reporter manager can be registered such that the reporter
+			agent is responsible for startup/shutdown (e.g., via SSH) or not (i.e.,
+			if a local administrator prefers to maintain control).  When the RMC
+			receives a subscription request, it will parcel it out to the
+			appropriate reporter managers for execution.  Furthermore, the Inca
+			administrator can interact with individual reporter managers, e.g.,
+			ping, list schedule, and run reporter on-demand.  If there are multiple
+			reporter managers for a single resource, the reporter agent will pick
+			one to execute on.  If one of the reporter managers becomes inactive
+			(doesn't respond to a "ping" within a timeout), it will switch to
+			another reporter manager.  If there are no responsive reporter managers,
+			a notification email can be sent to an Inca administrator.  Or, if
+			specified, the reporter agent can attempt to spawn a new reporter
+			manager (will supply SSH as default method).
+			</para>
+		</listItem>
+  </varListEntry>
+</variableList>
+
+<para>Authentication/Authorization are discussed further in 
+<xref linkend="security">.
+</para>
+
+<para>
+The lifecycle of the reporter agent is shown in
+<xref linkend="control-agent-lifecycle-figure">.
+</para>
+
+<figure id="control-agent-lifecycle-figure" float=1>
+<title>Reporter Agent Lifecycle</title>
+<mediaobject>
+  <imageobject>
+    <imagedata align="center" fileref="figures/reporter_agent_lifecycle.png" scale="50">
+  </imageobject>
+</mediaobject>
+</figure>
+
+</section>

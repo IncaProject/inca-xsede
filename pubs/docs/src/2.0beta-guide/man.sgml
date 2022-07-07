@@ -1,0 +1,197 @@
+<section id="userguide-man">
+<title>Component Man Pages</title>
+<para>Each of the inca components has options that can be set in either the inca.properties file or on the command line as described in <xref linkend="comp-options">.  To see a list components use the bin/inca help command:
+<screen>% cd $INCA_DIST
+% bin/inca help
+Usage:  inca &lt;subcommand&gt; [options] [args]
+
+Type 'inca help &lt;component&gt;' for help on a specific component
+
+Available subcommands:
+  createauth
+  default
+  init
+  help
+  start
+  stop
+  version
+  agent
+  depot
+  incat
+  reporter-manager
+  consumer
+</screen>
+</para>
+<para>For example, here are the options for the depot, agent, reporter-manager, consumer and incat components:</para>
+<section id="man-depot">
+<title>Depot</title>
+<para><screen>% bin/inca help depot
+java edu.sdsc.inca.Depot
+  P|password   str     Specify how to obtain encryption password
+  V|version    null    Display program version
+  a|auth       boolean Authenticated (secure) connection?
+  c|cert       path    Path to the authentication certificate
+  d|dbinit     null    init depot DB tables
+  h|help       null    Print help/usage
+  h|hostname   str     Hostname the server should provide to clients
+  i|init       path    Path to properties file
+  k|key        path    Path to the authentication key
+  l|logfile    str     Route log messages to a file
+  n|numthreads int     # threads in worker pool
+  p|port       int     Server listening port
+  r|remove     null    remove depot DB tables
+  t|trusted    path    Path to authentication trusted certificate dir
+  v|var        path    Absolute path to server temp dir
+</screen></para>
+</section>
+<section id="man-agent">
+<title>Agent</title>
+<para><screen>% bin/inca help agent
+java edu.sdsc.inca.Agent
+  C|check        str     check the reporter manager stage on resources
+  D|depot        str     Depot specification; host:port
+  P|password     str     Specify how to obtain encryption password
+  R|refreshPkgs  int     refresh period for checking for package updates
+  S|server       str     Server specification; host:port
+  S|startAttempt int     period between re-start attempts of the manager
+  V|version      null    Display program version
+  a|auth         boolean Authenticated (secure) connection?
+  b|buildscript  str     path to reporter manager build script
+  c|cert         path    Path to the authentication certificate
+  e|email        str     email to send notifications of manager restarts
+  h|help         null    Print help/usage
+  h|hostname     str     Hostname the server should provide to clients
+  i|init         path    Path to properties file
+  k|key          path    Path to the authentication key
+  l|logfile      str     Route log messages to a file
+  n|numthreads   int     # threads in worker pool
+  p|port         int     Server listening port
+  r|rmdist       str     path to reporter manager tarball distribution
+  s|stayAlive    int     period between stay alive pings of the manager
+  t|trusted      path    Path to authentication trusted certificate dir
+  u|upgrade      str     upgrade the reporter manager install on resources
+  v|var          path    Absolute path to server temp dir
+</screen></para>
+</section>
+<section id="man-rm">
+<title>Reporter Manager</title>
+<para><screen>
+% sbin/inca help reporter-manager
+Usage:
+    reporter-manager [-a|-s] [options]
+
+Options:
+    a|--agent
+         A string containing the URI to the Reporter Agent process that will
+         be responsible for the reporter manager. Either this option or -s
+         must be specified. Currently accepted URIs include:
+
+         incas://host:port inca://host:port
+
+    -c|--cert
+         A path to a valid certificate file [default: none]
+
+    -d|--depot
+         A string containing the URI of a depot to send its reporter data
+         to. Currently accepted URIs include:
+
+         incas://host:port inca://host:port file://path
+
+         This option can be specified more than once. The report will be
+         sent to the first specified depot. If the first depot is
+         unreacheable, the next depots in the list will be tried.
+
+    -e|--error-reporter
+         A string containing a path to the error reporter. E.g.,
+         inca-null-reporter
+
+    -h|--help
+         Print help/usage information
+
+    -i|-id
+         The resource identifier supplied by the reporter agent that the
+         reporter manager will use to identify itself back to the reporter
+         agent.
+
+    -k|--key
+         A path to a valid key file [default: none]
+
+    -l|--logfile
+         A string containing a path to the file where the log messages can
+         be stored. If not specified, log messages will be printed to the
+         console.
+
+    -L|--level
+         A string containing the log message level (i.e., print statements
+         of this level and higher). [default: INFO]
+
+    -P|--passphrase
+         Read a passphrase for key from stdin
+
+    -r|--reporter-cache
+         A string containing the path to the local cache of reporters.
+
+    -R|--rim
+         A string containing a path to the reporter-instance-manager script.
+         If not specified, this script will look into the directory where
+         itself is located.
+
+    -s|--suite
+         A string containing a path to the Inca suite file containing the
+         reporters to be executed.
+
+    -t|--trusted
+         A path to either a directory or file of trusted certificates
+         [default: none]
+
+    -v|--var
+         A string containing a path to a temporary file space that Inca can
+         use while executing reporters
+
+    -w|--wait
+         A positive integer indicating the period in seconds of which to
+         check the reporter for a timeout [default: 2]
+</screen> </para>
+</section>
+<section id="man-consumer">
+<title>Consumer</title>
+<para><screen>
+% bin/inca help consumer
+java edu.sdsc.inca.Consumer
+  P|password str     Specify how to obtain encryption password
+  V|version  null    Display program version
+  a|agent    str     URI to the Inca agent
+  a|auth     boolean Authenticated (secure) connection?
+  c|cert     path    Path to the authentication certificate
+  d|depot    str     URI to the Inca depot
+  h|help     null    Print help/usage
+  i|init     path    Path to properties file
+  k|key      path    Path to the authentication key
+  l|logfile  str     Route log messages to a file
+  m|maxWait  int     Max wait time a JSP tag should wait on a cached item
+  p|port     int     Server listening port
+  r|reload   int     Reload period for cached objects (e.g., suites)
+  t|trusted  path    Path to authentication trusted certificate dir
+  v|var      path    Path to temporary directory
+  w|webapp   str     Path to consumer war file
+</screen> </para>
+</section>
+<section id="man-incat">
+<title>Incat</title>
+<para><screen>
+% bin/inca help incat
+java incat
+  A|agent    str     Agent specification; host:port
+  P|password str     Specify how to obtain encryption password
+  V|version  null    Display program version
+  a|auth     boolean Authenticated (secure) connection?
+  c|cert     path    Path to the authentication certificate
+  f|file     path    Inca installation configuration file path
+  h|help     null    Print help/usage
+  i|init     path    Path to properties file
+  k|key      path    Path to the authentication key
+  l|logfile  str     Route log messages to a file
+  t|trusted  path    Path to authentication trusted certificate dir
+</screen> </para>
+</section>
+</section>

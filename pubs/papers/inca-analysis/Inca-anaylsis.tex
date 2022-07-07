@@ -1,0 +1,218 @@
+\documentclass{IEEEtran}
+\usepackage{graphicx,subfigure,url, amsmath} 
+
+\begin{document}
+
+\title{Experiences with long-term monitoring of a large-scale distributed and heterogenous cyberinfrastructure}
+
+\author{\IEEEauthorblockN{Shava Smallen and Sameer Tilak}
+\IEEEauthorblockA{ University of California, San Diego \\
+La Jolla, CA, USA, Email: {\{ssmallen,stilak\}}@ucsd.edu}
+}
+
+\maketitle
+
+\begin{abstract} 
+
+Large-scale Inca is a user-level monitoring tool that has been used successfully in cyberinfrastructure projects such as the TeraGrid and other similar projects.  Its flexible architecture enables multiple types of functionality and performance data to easily be collected about the systems it is monitoring. A unique centralized monitoring configuration approach makes Inca easy to setup and maintain on multiple systems and lends to consistent monitoring results.  We are experimenting with using Inca in Cloud environments where users are interested in monitoring the functionality and performance of their personal Clouds as they are re-instantiated on different machines and locations. We believe Inca’s flexibility, easy-to-use administrative interfaces, and other features make it a natural fit for Cloud environments.   
+
+\end{abstract}
+
+\section{Introduction} (0.5 page) (Sameer and Shava)
+
+\section{FutureGrid Overview} (0.5 page) (Shava) 
+
+Add description of load -- vm count, hrs. etc.
+
+The FutureGrid Project provides a geographically distributed experimental platform for computer scientists to understand the behavior and utility of cloud computing approaches. The platform will allow these computer scientists to tackle complex research challenges in the areas ranging from authentication, authorization, scheduling, virtualization, middleware design, interface design and cybersecurity to the optimization of grid-enabled and cloud-enabled computational schemes for researchers in astronomy, chemistry, biology, engineering, atmospheric science and epidemiology. The FutureGrid is a key component of NSF's high-performance cyberinfrastructure and supports innovative computer science research requiring access to lower levels of the grid software stack, the networking software stack, and to virtualization and workflow orchestration tools.
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | }
+ \hline
+Resource & HPC  & Eucalyptus & Nimbus  & Openstack   \\
+  \hline
+Site 1 resource 1 (1136 cores) & 44.7\% (508 cores) & 21.1\% (240 cores) & &  19.7\% (224 cores) \\  \hline
+Site1 resource 2(664 cores) & 100\% (664 cores) & & & \\  \hline
+Site 2 (705.28 cores) & 86.2\% (608 cores) & & 13.8\% (97.28 cores) &  \\  \hline
+Site 3 (640 cores) & 48.8\% (312 cores) & & 51.2\% (328 cores) &  \\  \hline
+Site 4 (632 cores) & 43\% (272 cores) & 15.2\% (96 cores) & 22.8\% (144 cores) & 3.8\% (24 cores)   \\  \hline
+Site 5 (192 cores) & & & 95.8\% (184 cores) &   \\  \hline
+
+\end{tabular}
+\caption{FutureGrid: Machine Partition Information (A small percentage of nodes may be unavailable or used for management) }
+ \label{tab:fg-machine-allocation} 
+
+\end{table*}
+
+
+\section{Inca Architecture} (0.5 page) (Shava)
+
+Cyberinfrastructure (CI) aggregates multiple complex and interdependent systems that span several administrative domains. This complexity poses challenges for both administrators who build and maintain CI resources and scientists who use them.  These challenges and the cutting-edge nature of the infrastructure make it susceptible to failures, which frustrate and even dissuade users.  In order to provide scientists with persistent and reliable CI, the user-level functionality and performance of the system must be monitored.  Developed in 2003, Inca [1] is a tool that provides user-level monitoring for CI systems. It has proven to be a valuable tool for the TeraGrid [2] and eleven other production CI projects [3], and is currently monitoring over a hundred machines.   Inca differs from other monitoring tools with its user-level monitoring approach, flexibility to collect multiple types of monitoring data, and full archiving support.  Inca also uses a unique centralized monitoring configuration approach, which is essential for providing consistent monitoring results and a unified and coherent infrastructure for users. 
+
+Inca automates the installation, execution, and maintenance of a large variety and number of reporters (monitoring scripts) consistently across Grid resources.   Monitoring results are collected, archived, and displayed through web status pages.   The core of the Inca architecture is formed by four server components: the agent, depot, data consumer, and reporter repository (see Figure 1).  The agent controls the deployment and maintenance of the Inca installation, while the depot provides data storage.  A reporter repository contains a set of tests and benchmarks, and the data consumer displays the collected results as web status pages.  An additional Inca component called the reporter manager runs on each monitored resource to collect status and performance data.  The final component of Inca is a GUI tool (incat) used by Inca administrators to configure and maintain their Inca deployments. 
+
+
+Recently, we have been exploring how to leverage Inca in virtual Cloud environments as part of the work we are doing in FutureGrid [4].  FutureGrid is an experimental testbed that will be used to develop and test novel approaches to parallel, grid, and cloud computing.  It supports user “experiments” that can be run either on the bare hardware or on virtual machines using Cloud technologies Nimbus or Eucalyptus.   In particular, we are interested in using Inca to validate a user’s virtual environment started up by these tools both in terms of functionality and performance.  For example, a user may want to know how the performance of their virtual cluster compares to a month earlier when they last instantiated it. We are also interested in using Inca to validate individual virtual machine images as well.  
+
+
+
+\section{Monitoring data analysis} (3 - 4 pages) 
+
+\subsection{Test suite description} (2 pages, 0.5 page/class) (Shava)
+Description of the methodology -- how data was filtered and interpreted.
+
+\subsection{Results} (Sameer)
+
+\subsection{SSH data}
+\subsubsection{Failure Classification:} What types of failures do we see?
+
+\begin{figure*}
+\begin{center}
+\includegraphics[scale=0.60]{figs/fg-failure-counts}
+\caption{Failure Classification}
+\label{fig:fg-failure-counts}
+\end{center}
+\end{figure*}    
+
+\subsection{site-level}: How do different sites compare in terms of reliability.
+
+%$\begin{equation} \label{eq:MTBF}
+$ MTBF$ =  $\Sigma$ (start of downtime - start of uptime) $/$ (number of failures)
+% \end{equation}
+
+
+\begin{figure*}
+\centering
+\mbox{
+\subfigure[MTBF for all FutureGrid sites ]{
+   \includegraphics[scale =0.70] {figs/MTBF}
+   \label{fig:subfig1}
+ }\quad
+
+ \subfigure[Failure counts for all FugureGrid sites]{
+   \includegraphics[scale =0.70] {figs/site-level-failure-count}
+   \label{fig:subfig2}
+ }
+}
+\centering
+\label{myfigure}
+\caption{Android software stack and its comparison with Linux}
+\end{figure*}
+
+
+\subsubsection{Failures distribution:} Are failures independent or related?
+\subsubsection{predictability} Is this system system predictable in terms of resource availability or failures.
+
+
+\subsection{cloud-stats}
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | }
+ \hline
+Nimbus & tacc-alamo  & uc-hotel & ucsd-sierra  & ufl-foxtrot   \\
+  \hline
+clientStatus & 98\% & 96\% &  81\% &  80\% \\  \hline
+create-publicvm & 93\%& 89\% &  91\% & 58\% \\  \hline
+storage & 100\% & 97\% & 98\% &  99\% \\  \hline
+
+\end{tabular}
+\caption{Nimbus: Reliability across FutureGrid machines}
+ \label{tab:nimbus-fg-reliability} 
+
+\end{table*}
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | }
+ \hline
+Eucalyptus & iu-india  & ucsd-sierra    \\
+  \hline
+clientStatus & 96\% & 93\%  \\  \hline
+create-publicvm & 77\%& 56\%  \\  \hline
+storage & 100\% & 97\%   \\  \hline
+
+\end{tabular}
+\caption{Eucalyptus: Reliability across FutureGrid machines}
+ \label{tab:eucalyptus-fg-reliability} 
+\end{table*}
+
+ssh key -- test improvements.
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | }
+ \hline
+Openstack & iu-india      \\
+  \hline
+clientStatus & 97\%   \\  \hline
+create-publicvm & 71\%  \\  \hline
+storage & 80\%  \\  \hline
+
+\end{tabular}
+\caption{Openstack: Reliability across FutureGrid machines}
+ \label{tab:openstack-fg-reliability} 
+
+\end{table*}
+
+\subsection{hpc-stats:} benchmarks, version numbers.
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | c | c | c | }
+ \hline
+HPC jobs & iu-bravo & iu-delta & iu-india  & iu-xray  & tacc-alamo & uc-hotel & ucsd-sierra \\
+  \hline
+batch-testjob & & & 88\% & 97\% &   77\% &  100 & 99\% \% \\  \hline
+batch-testjob\_to\_bravo & 99\% & & & & & & \\  \hline
+batch-testjob\_to\_delta &  & 95\% & & & & & \\  \hline
+CUDA-testjob\_to\_delta &  & 95\% & & & & & \\  \hline
+myhadoop &  & & 54\% & & 59\% & 89\% & 47\%  \\  \hline
+
+\end{tabular}
+\caption{HPC jobs: Reliability across FutureGrid machines}
+ \label{tab:hpc-fg-reliability} 
+
+\end{table*}
+
+\begin{table*}
+
+\begin{tabular}{| l | c | c | c | c | }
+ \hline
+HPCC jobs & iu-india  & iu-xray & ucsd-sierra    \\
+  \hline
+hpcc8 & 99\% & 97\% & 72\% \\  \hline
+hpcc16 & 99\% & 96\% & \\  \hline
+hpcc32 &  & 95\% &   \\  \hline
+hpcc64 & 97\% & 96\% &  \\  \hline
+hpcc128 & 93\% & 93\% &   \\  \hline
+hpcc256 & 79\% & 71\% &   \\  \hline
+hpcc512 & & 93\% &   \\  \hline
+hpcc672 & & 99\%  &  \\  \hline
+
+\end{tabular}
+\caption{HPCC jobs: Reliability across FutureGrid machines}
+ \label{tab:hpcc-fg-reliability} 
+\end{table*}
+
+
+
+\subsection{sw-stack-level}: How do different layers of the s/w stack compare? Where do failures occur the most? Middleware, Apps, OS, etc....
+\subsection{software-level:} Should we upgrade? History shows newer releases make the system more stable or less stable.
+\subsection{upgrade stats:} Patches done every month. 
+
+
+\section{Lessons Learned / Best Practices} (1 page) (Shava and Sameer)
+ 
+\section{Related Work} (0.5 page) (Shava and Sameer)
+
+\section{Future Work} (0.25 page) (Shava and Sameer)
+
+\section{Conclusion} (0.25 page) (Shava and Sameer)
+
+
+\bibliographystyle{abbrv}
+\bibliography{wsn-dc}
+
+ \end{document}

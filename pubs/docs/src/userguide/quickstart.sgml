@@ -1,0 +1,315 @@
+<section id="userguide-quickstart">
+<title>Quick Start</title>
+
+<para>
+This section describes how to download, install and verify the Inca &ugVersion 
+binary release. The figure below represents a typical installation. 
+</para>
+        <figure id="install-arch">
+          <title>Inca Installation</title>
+          <graphic fileref="figures/arch/arch-install.jpg" align="center"></graphic>
+        </figure>
+
+<simplelist type=horiz columns=1>
+<member>Step <xref linkend="qs-step1">: Download the installer script</member> 
+<member>Step <xref linkend="qs-step2">: Run the installer script</member> 
+<member>Step <xref linkend="qs-step3">: Change to the Inca installation directory</member> 
+<member>Step <xref linkend="qs-step4">: Create credentials for Inca components</member> 
+<member>Step <xref linkend="qs-step5">: Start up Inca components with a sample default configuration</member> 
+<member>Step <xref linkend="qs-step6">: View the Inca web server pages</member> 
+<member>Step <xref linkend="qs-step7">: View the sample default configuration using the Inca GUI tool</member> 
+</simplelist>
+
+<orderedList>
+  <listItem id="qs-step1">
+    <para>
+     Download the <filename>incaInstall.sh</filename> script:
+    </para>
+    <para>
+    <screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh</screen>
+    </para>
+  </listItem>
+  <listItem id="qs-step2">
+    <para>
+    Execute the install script to download the binary distribution from our
+    website and unpack it into an installation directory.  The installation directory is represented by 
+    the $INCA_DIST environment variable - it may be useful to set this variable now. 
+    </para>
+    <screen>% sh incaInstall.sh $INCA_DIST core</screen>
+    <para>$INCA_DIST is the location of the directory where you want to
+    install Inca.  You should see something like:
+    <screen>
+Retrieving http://inca.sdsc.edu/releases/current/
+inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/
+inca-common-java-bin.tar.gz
+=> `inca-common-java-bin.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5,921,461 [application/x-tar]
+
+100%[======================>] 5,921,461    1.23M/s  ETA 00:00
+
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz'
+saved [5921461/5921461] 
+...
+common-java installed ...
+agent installed ...
+consumers installed ...
+depot installed ...
+incat installed</screen>
+      </para>
+  </listItem>
+  <listItem id="qs-step3">
+    <para>
+    Change to the top level directory of your Inca installation:
+    </para>
+    <para>
+    <screen>% cd $INCA_DIST</screen>
+    </para>
+  </listItem>
+  <listItem id="qs-step4">
+    <para>
+    Create certificates for the Inca components (enables secure component
+    communication): 
+    </para>
+    <screen>% ./bin/inca createauth</screen>
+    <para>
+    <emphasis role="red">NOTE:</emphasis> the default life of &ugVersion 
+    certificates is 5 years (1 year in earlier releases).
+    To replace expired certificates, execute "bin/inca createauth" again to 
+    create new certificates and "bin/inca agent -u &lt;resource group&gt; 
+    -logfile var/upgrade.log" to update the certificates on the reporter managers.
+    </para>
+    <para>
+    Output from "bin/inca createauth" looks similar to the text below.  When 
+    completed, you should see a certificate/key created for each of the 
+    four Inca components and stored in $INCA_DIST/etc: 
+    </para>
+    <para>
+    <screen>
+password> (choose a password for your Inca installation administration)
+Confirm password> (reenter the same password)
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'clientx.sdsc.edukey.pem'
+-----
+agent
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'agentkey.pem' ...
+writing new private key to 'consumerkey.pem' ...
+writing new private key to 'depotkey.pem' ...
+writing new private key to 'incatkey.pem' ...</screen>
+  </para>
+  </listItem>
+  <listItem id="qs-step5">
+    <para>
+    Start the Inca server components and deploy the sample default
+    configuration (<emphasis role="red">NOTE:</emphasis> this command only needs to 
+be executed ONCE.  The components started in this step can later be stopped with "./bin/inca stop all" and started with 
+"./bin/inca start all".  A restart command is also available).  The Inca server components are agent, depot, and consumer
+    and will be started on ports 6323, 6324, and 8080 respectively.  Please
+    edit the inca.properties file in etc/common to change the default ports
+    for the agent and depot.  For the consumer, the port number can be
+    customized in etc/jetty.xml.  More information can be found in <xref
+    linkend="userguide-advanced-config">.
+    </para>
+    <screen>% ./bin/inca default</screen>
+    <para>
+    You should see something like:
+    <screen>
+password> (enter password from the last step)
+Preparing to deploy default Inca configuration...
+Initializing Inca configuration...
+** Warning:  this will erase any previously collected reporter
+    state on the Inca depot and configuration on the agent 
+    Do you wish to continue (y/n)? y
+Initializing depot...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@90....
+Database Initialization Completed
+done
+Initializing agent
+done
+Started Inca agent
+Started Inca consumer
+Started Inca depot
+Sleeping for 20 seconds while the components come online
+Deploying default configuration
+</screen>
+      </para>
+      <para>During this step:</para>
+      <itemizedList>
+        <listItem><para>three server components are started on localhost:</para>
+<screen>
+% ps | grep java
+3527 p1 S 0:14.21 /usr/bin/java -Xmx256m edu.sdsc.inca.Agent -l agent.log
+3560 p1 S 0:17.63 /usr/bin/java -Xmx256m edu.sdsc.inca.Depot -l depot.log
+3593 p1 S 0:15.43 /usr/bin/java -Xmx256m edu.sdsc.inca.Consumer consumer.log
+</screen>
+</listItem>
+        <listItem><para>a sample test suite called <emphasis>sampleSuite</emphasis> is sent to the
+        agent.  The sample suite contains a schedule for executing each of the following reporters
+	every ten minutes:</para>
+<screen>
+cluster.admin.ant.unit  			(ant_helloworld_compile_test)
+cluster.admin.ant.version  			(ant_version)
+cluster.compiler.any.unit  			(gcc_hello_world)
+cluster.compiler.gcc.version  			(gcc_version)
+cluster.compiler.any.unit  			(java_hello_world)
+cluster.java.sun.version  			(java_version)
+cluster.interactive_access.openssh.version	(openssh_version)
+cluster.security.openssl.version		(openssl_version)
+viz.lib.vtk-nvgl.version			(vtk-nvgl_version)
+grid.wget.unit					(wget_page_test)
+</screen>
+        </listItem>
+        <listItem><para>a client component is started on localhost:</para>
+	<screen>% ps | grep Manager
+5382 p1 S 0:02.14 /usr/bin/perl reporter-manager
+                  -d incas://client64-236.sdsc.edu:6324 -c etc/rmcert.
+</screen>
+	<itemizedList>
+	<listItem><para>The agent receives <emphasis>sampleSuite</emphasis> suite and installs a reporter 
+          manager on the localhost in <filename>~/incaReporterManager</filename> (takes 1-5 minutes - view progress of build in 
+          <filename>~/incaReporterManager/build.log</filename>)
+        </para></listItem>
+        <listItem><para>After the reporter manager is built, it registers itself with 
+          the agent.  The agent will send the reporter manager the set of
+          reporters, libraries, and execution schedule. 
+        </para></listItem>
+        <listItem><para>
+          The reporter manager executes reporters based on the execution
+          schedule and sends reports to the depot.  
+        </para></listItem>
+      </itemizedList>
+    </listItem>
+      </itemizedList>
+    </listItem>
+    <listItem id="qs-step6">
+    <para>To view results and verify that your Inca installation is
+    working correctly, open the URL below in a browser.
+    Starting a web server is not required, but you may need to replace "localhost" with the full hostname of your
+    machine.
+    <screen>http://<emphasis role="red">localhost</emphasis>:8080</screen>
+    </para>
+    <para>
+    You should see a start up screen similar to the figure below initially
+    indicating an empty Inca configuration.  
+        <figure id="inca.startup.empty.fig">
+          <title>Default Inca start up page.</title>
+          <graphic fileref="figures/consumer/index1.gif" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    After a few minutes (when the consumer cache is refreshed), reload the
+    page and you should see a start up screen similar to the figure below 
+    showing one suite called <emphasis>sampleSuite</emphasis> 
+    (our default sample configuration), a resource group called
+    <emphasis>defaultGrid</emphasis>, a resource group called
+    <emphasis>localSite</emphasis>, and one resource called
+    <emphasis>localResource</emphasis> which is a nickname for the machine you 
+    installed an Inca reporter manager on.
+        <figure id="inca.startup.fig">
+          <title>Default Inca start up page with suite and resources.</title>
+          <graphic fileref="figures/consumer/index2.gif" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    Select <emphasis>sampleSuite</emphasis> and
+    <emphasis>defaultGrid</emphasis> and press the <emphasis>Submit</emphasis>
+    button.  You should see a page similar to the figure below with
+    the reporter series scheduled to execute on localhost.  The reporters test a small set of compiler, 
+    grid services, math library and
+    scientific visualization packages.  Each reporter may perform
+    a software package version query (e.g., gcc) and/or unit test (e.g., java --
+    unit test name is java_hello_world).  Most boxes should be have the ? icon
+    indicating that the reports have not yet been received. 
+        <figure id="inca.default.results.empty.fig">
+          <title>Default Inca results page without all results.</title>
+          <graphic fileref="figures/consumer/sum_page1.gif" align="center"></graphic>
+        </figure>
+    </para>
+    <para>
+    Refresh the page after a few minutes and you should begin to see more
+    boxes filled in until it looks like the below figure.  If you do not see a
+    results filled in, check the .log files in $INCA_DIST/var for
+    <filename>ERROR</filename> or <filename>Exception</filename>. See
+    <xref linkend="userguide-logging"> for more information about logging.
+    </para> 
+    <para>You can also navigate to this page from the "table of sampleSuite 
+    results" link under "Current Data" in the page header.</para>
+        <figure id="inca.default.results.fig">
+          <title>Default Inca results page with results.</title>
+          <graphic fileref="figures/consumer/sum_page2.gif" align="center"></graphic>
+        </figure>
+    <para>Click on any red/green box to see the details of how the result was
+    collected.  The figure below shows the details of the 
+    <filename>cluster.compiler.any.unit</filename> reporter that compiles
+    and executes a small hello world java program.  
+        <figure id="inca.java.fig">
+          <title>Reporter details page.</title>
+          <graphic fileref="figures/consumer/details_annotated.jpg"></graphic>
+        </figure>
+    </para>
+    </listItem>
+    <listItem id="qs-step7">
+    <para>View the Inca sample default configuration using the Inca GUI tool, incat (Inca Administration Tool).
+      You can use incat to make changes to the default configuration (e.g., add
+      a new resource to <emphasis>defaultGrid</emphasis> or add new tests to
+      <emphasis>sampleSuite</emphasis>).  See <xref linkend="userguide-incat"> for more information about using incat.</para>
+     <para> Use the following command to start incat: <screen>% ./bin/inca start incat -A localhost:6323 </screen> </para>
+      <para> You should now see the Java GUI window appear on your local machine. 
+      If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, 
+      it is probable that X-Window forwarding is not set up correctly between the 
+      machine where you installed Inca and your local machine.
+        You can either configure X-Window forwarding, or you can start incat on a local machine as described in step <xref linkend="qs-step8">.
+      </para>
+      <para>
+        <figure id="retrieve.fig">
+          <title>incat Agent Screen</title>
+          <graphic fileref="figures/incat/starting-up.jpg" align="center"></graphic>
+        </figure>
+        Once incat has information from the agent, the following screen will display:
+      </para>
+      <figure id="default.fig">
+        <title>Default incat Screen</title>
+        <graphic fileref="figures/incat/repository-tab.jpg" align="center"></graphic>
+      </figure>
+    </listItem>
+    <listItem id="qs-step8">
+      <para><emphasis role="red">THIS STEP IS OPTIONAL.</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">, you can use this step to install incat on a local machine. </para>
+      <itemizedList>
+        <listItem>
+          <para>
+            Copy the <filename>incaInstall.sh</filename> script to a local machine.
+          </para>
+    	  <screen>% wget http://inca.sdsc.edu/releases/&ugVersion/incaInstall.sh</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Install incat on a local machine:
+          </para>
+          <screen>% ./incaInstall.sh $INCA_DIST incat</screen>
+        </listItem>
+        <listItem>
+          <para>
+            Copy the incat key, certificate, and trusted directory from the original machine 
+        to your local machine:
+          </para>
+          <screen>
+% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatkey.pem $INCA_DIST/etc/
+% scp <emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/incatcert.pem $INCA_DIST/etc/
+% scp "<emphasis role="red">orig.machine:$ORIG_INCA_DIST</emphasis>/etc/trusted/*" $INCA_DIST/etc/trusted/</screen>
+        </listItem>
+        <listItem> <para> Start the incat component on a local machine with the agent hostname from the original machine: </para>
+          <screen>% cd $INCA_DIST; ./bin/inca start incat -A <emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
+    	</listItem>
+      </itemizedList>
+    
+     </listItem>
+  </orderedList>
+
+</section>
+

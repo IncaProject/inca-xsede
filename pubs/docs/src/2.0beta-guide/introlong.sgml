@@ -1,0 +1,262 @@
+<section id="userguide-intro">
+<title>Introduction</title>
+
+<para>
+Running an application on the Grid implies the use of multiple resources and
+the software and services deployed on them. This can benefit users by 
+enabling them to shorten the turnaround time of the application or execute their
+application at a larger scale.  However, as users increase the number of
+dependencies in their application, their probability of failure during
+execution increases as well.  To illustrate, <xref linkend="sampleApp.fig">
+shows a simple Grid application where a user logs in to a resource, starts an
+application which transfers data to a resource to run a computation, and then
+transfers the results to a third resource for data archiving.  The red arrows
+show where a failure in data transfer can occur.  The source of the failures
+could be software-related (e.g., faulty installation, misconfiguration,
+environment problems, bugs, etc.), hardware-related (e.g., power failure,
+overheating, unplugged cable), or networking-related.
+
+<figure id="sampleApp.fig" pgwide="0" float="1">
+  <title>Indicates where a data transfer error could occur for a simple
+  Grid application.</title>
+  <graphic fileref="figures/ug-sampleapp.png" align="center">
+  </graphic>
+</figure>
+</para>
+
+<para>
+While there can be several sources of failure on a Grid, a user will view
+the Grid as up if they can run their application on their set of resources,
+access their datasets, and get reasonable performance.  This may seem
+straightforward but there are many things that need to be working underneath
+the hood for that happen. For example, consider the application in 
+<xref linkend="sampleApp2.fig">.  Below is a list of some of the software
+and services requirements that would need to be met for the application to
+execute without error.
+</para>
+
+<itemizedList>
+  <listItem>
+    <para>GSI-SSH server on resource A is up.</para>
+  </listItem>
+  <listItem>
+    <para>GridFTP client on resource A is installed and compatible with the
+    GridFTP server on resource B.</para>
+  </listItem>
+  <listItem>
+    <para>GRAM client on resource A is installed and compatible with the
+    GRAM server on resource B.</para>
+  </listItem>
+  <listItem>
+    <para>The batch scheduler on resource B is up.</para>
+  </listItem>
+  <listItem>
+    <para>GridFTP client on resource B is installed and compatible with the
+    GridFTP server on resource C.</para>
+  </listItem>
+  <listItem>
+    <para>SRB client on resource C is up.</para>
+  </listItem>
+</itemizedList>
+
+<para>
+When a virtual organization considers the requirements of the community of
+of users they want to support, requirements such as these can grow quite
+large.
+<figure id="sampleApp2.fig" pgwide="0" float="1">
+  <title>Simple Grid application.</title>
+  <graphic fileref="figures/ug-sampleapp2.png" align="center">
+  </graphic>
+</figure>
+</para>
+
+<para>
+One way to verify a user's requirements are being met is through periodic,
+automated testing (as you do with software) so that you can have some
+confidence that when a user logs in they are able to get work done. 
+We define this as a four-step process:
+</para>
+
+<orderedList>
+  <listItem><para>Define a set of concrete requirements (i.e., requirements
+  can be expressed in a machine-readable format and tested automatically and
+  periodically).  These sets of requirements can come directly from the user
+  documentation or from talking to users.  
+  </para></listItem>
+  <listItem><para>Write tests (e.g., a Perl or shell script) to 
+  verify each requirement.  For example, running <filename>globusrun -r
+  blue.ufo.edu -a </filename> verifies the GRAM 2 server on that machine is
+  running.  
+  </para></listItem>
+  <listItem><para>Execute the tests periodically (which is important
+  in dynamic Grid environments) and collect the data.
+  </para></listItem>
+  <listItem><para>Publish the data and provide different views of it
+  for the various types of consumers.  For example,  a system administrator
+  will be interested in detailed output of the tests (e.g., the commands that
+  were executed, their output, and at what time the result was collected.
+  While a manager will be more interested in summary statistics (e.g., the
+  number of tests that are succeeding and failing at each of the sites).
+  </para></listItem>
+</orderedList> 
+
+<para>
+  While Steps 1 and 2 are manual processes, Steps 3 and 4 can and should be
+  automated.  
+</para>
+
+<note><para>
+  We note that in our experience defining a set of requirements is an
+  iterative refinement process because of resource heterogeneity (e.g., a
+  resource may be unable to provide a package because of portability
+  problems), site policy differences, and because the Grid environment itself
+  will change over time as new software is deployed, packages are upgraded,
+  etc.  
+</para></note>
+
+<para>
+Testing a Grid deployment entails testing at the deployment level.  
+<xref linkend="testing.fig"> illustrates how deployment level testing
+differs from unit and integration testing frameworks such as JUnit and
+Tinderbox which performs detailed testing of the various software features.
+It also differs from the type of testing that occurs at the software
+stack level where package version interoperability is the focus (e.g., NMI)
+Deployment level testing entails checking whether packages are installed,
+running, and configured correctly.  This tests can be something as simple as
+pinging a Globus gatekeeper service to a more complicated test such as a
+scaled down version of an application
+</para>
+
+<para>
+<figure id="testing.fig" pgwide="0" float="1">
+  <title>Deployment level testing.</title>
+  <graphic fileref="figures/ug-testing.png" align="center">
+  </graphic>
+</figure>
+</para>
+
+<para>
+There are different consumers of the testing results: Grid/VO, system
+administrators, and end users.   Our view is that responsibility of the
+testing should occur at the Grid/VO level.  Based on the goals of the Grid,
+they decide what should be tested and then collect the results - the goal
+being to detect problems before the users do While the Grid/VO will decide
+what to test, system administrators from each of the participating sites will
+need to be notified of failures and be able to understand how the test was
+conducted so they can debug their system. This implies that the need to trust
+the results.  While ideally, we hope that the failures will be caught before
+users notice them, in practice this is hard to achieve.  Therefore, the
+results of our testing should be made available to users so if they are
+having a problem, they can check the results to see if it might be system
+related.  They should also be able to use the tests to debug user
+account/environment issues specific to their account (e.g., removing an
+environment variable accidentally prevents a package from working) For more
+advanced users, they could even feedback useful tests to the Grid/VO level.
+</para>
+
+<para>
+To this end, we have developed Inca as a framework for the automated testing,
+benchmarking and monitoring of Grid resources.  It provides scheduled
+execution of information gathering scripts called
+<emphasis>reporters</emphasis> and data collection, archiving, and publishing.
+</para>
+
+<para> 
+The Inca Test Harness and Reporting Framework (Inca) is a generic
+framework for the automated testing, benchmarking and monitoring of Grid
+resources.  Inca provides the scheduled execution of information gathering
+scripts (reporters) and collects, archives, and publishes the data resulting
+from these scripts.
+</para>
+
+<para>
+The architecture of Inca and a description of its components is shown in the
+below figures.  
+</para>
+
+<figure id="arch.fig">
+  <title>Inca architecture</title>
+  <graphic fileref="figures/arch.png" align="center">
+  </graphic>
+</figure>
+
+<informaltable frame=none>
+<tgroup cols=2>
+<tbody>
+<row>
+  <entry align="center"><graphic fileref="figures/reporter_icon.png"></graphic></entry>
+  <entry><para> 
+  A <emphasis>reporter</emphasis> is an executable program that tests or
+  measures some aspect of the system or installed software.
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/report_icon.png"></graphic></entry>
+  <entry><para> 
+  A <emphasis>report</emphasis> is the output of a reporter and is a XML
+  document complying to the reporter schema in Section TODO in the appendix.
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/suite_icon.png"></graphic></entry>
+  <entry><para> 
+  A <emphasis>suite</emphasis> specifies a set of reporters to execute on
+  selected resources, their configuration, and frequency of execution.
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/repository_icon.png"></graphic></entry>
+  <entry><para>
+  A <emphasis>reporter repository</emphasis> contains a collection of reporters and is available
+  via an URL.
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/manager_icon.png"></graphic></entry>
+  <entry><para>
+  A <emphasis>reporter manager</emphasis> is responsible for managing the
+  schedule and execution of reporters on a single resource.
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/agent_icon.png"></graphic></entry>
+  <entry><para>
+  A <emphasis>agent</emphasis> is a server that implements the configuration
+  specified by the Inca Administrator.  
+  </para></entry>
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/incat_icon.png"></graphic></entry>
+  <entry><para>
+  <emphasis>incat</emphasis> is a GUI used by the Inca administrator to
+  control and configure the Inca deployment on a set of resources.
+  </para></entry> 
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/depot_icon.png"></graphic></entry>
+  <entry><para>
+  A <emphasis>depot</emphasis> is a server that is responsible for storing the
+  data produced by reporters. 
+  </para></entry> 
+</row>
+
+<row>
+  <entry align="center"><graphic fileref="figures/consumer_icon.png"></graphic></entry>
+  <entry><para>
+  A <emphasis>data consumer</emphasis> is typically a web page client that
+  queries a depot for data and displays it in a user-friendly format. 
+  </para></entry> 
+</row>
+
+</tbody>
+</tgroup>
+</informaltable>
+
+</section>

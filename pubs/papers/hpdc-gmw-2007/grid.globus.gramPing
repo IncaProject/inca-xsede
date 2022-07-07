@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+use Inca::Reporter::SimpleUnit;
+my $reporter = new Inca::Reporter::SimpleUnit(
+ name => 'grid.globus.gramPing',
+ version => 2,
+ description => 
+   'Checks gatekeeper is accessible from local machine',
+ url => 'http://www.globus.org',
+ unit_name => 'gramPing'
+);
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('host', 'gatekeeper host');
+$reporter->processArgv(@ARGV);
+my $host = $reporter->argValue('host');
+my $out = $reporter->loggedCommand
+  ("globusrun -a -r $host", 30);
+if (!$out) {
+ $reporter->unitFailure("globusrun failed: $!");
+} elsif($out !~ /GRAM Authentication test successful/) {
+ $reporter->unitFailure("globusrun failed: $out");
+} else {
+ $reporter->unitSuccess();
+}
+$reporter->print();

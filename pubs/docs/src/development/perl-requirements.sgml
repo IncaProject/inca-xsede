@@ -1,0 +1,203 @@
+<section id="development-perl-requirements">
+<title>Requirements for Perl components</title>
+
+<section id="development-perl-dirstruct">
+<title>Directory Structure</title>
+
+<para>
+The directory structure for each perl component should follow the same
+pattern.  The following outlines the directory structure during development.
+The development structure does not have all of the directories that a release
+will have.
+</para>
+
+<note>
+<para>
+Anything that can be automatically generated should <emphasis>never</emphasis>
+be checked into the repository.
+</para>
+</note>
+
+<note>
+<para>
+The contrib directory should not be checked into the repository.  All
+contributed files
+that belong in the contrib directory should be kept in the trunk/contrib
+directory.
+</para>
+</note>
+
+<variableList>
+<varListEntry>
+<term>version</term>
+<listItem>
+<para>
+Contains the version information for the package.  Update automatically --
+should never be hand edited.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>lib</term>
+<listItem>
+<para>
+The src directory contains all of the source code specifically developed 
+for this project.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>etc</term>
+<listItem>
+<para>
+The etc directory should only exist if there are relavant configuration files
+or other files needed by the package.  The configuration files should be
+populated with default values that will work immediatly upon installation.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>README.txt</term>
+<listItem>
+<para>
+Required.  The readme file must follow the format given in the templates
+directory.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>Makefile.PL/Makefile</term>
+<listItem>
+<para>
+The build file must have a minimum set of targets.  A sample Makefile.PL and
+Makefile is
+given in the templates directory.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>Dependencies</term>
+<listItem>
+<para>
+This file lists the names of the contributed packages that can be found in contrib
+that are required by this package.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>COPYRIGHT</term>
+<listItem>
+<para>
+This file contains the Inca copyright and can be found in the templates
+directory.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>MANIFEST.SKIP</term>
+<listItem>
+<para>
+This file contains regular expressions used to prevent files that are in SVN
+from ending up in a distribution. 
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>t</term>
+<listItem>
+<para>
+This directory contains all of the tests for the modules.
+</para>
+</listItem>
+</varListEntry>
+</variableList>
+
+</section>
+
+<section id="development-perl-buildfile">
+<title>Makefile Requirements</title>
+
+<para>
+There are a few required targets for the Makefile in each package.
+There is a sample build file that has all of the required targets implemented
+in inca/admin/templates
+</para>
+
+<para>Required Targets</para>
+<note>
+<para>
+A template Makefile.PL and Makefile file is provided and all of these targets have been
+implemented.
+</para>
+</note>
+<variableList>
+<varListEntry>
+<term>devel-help</term>
+<listItem>
+<para>
+Should list all of these required targets with descriptions.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>realclean</term>
+<listItem>
+<para>
+Takes you back to the files that belong in SVN.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>dist</term>
+<listItem>
+<para>
+Creates a binary distribution.  
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>release-candidate</term>
+<listItem>
+<para>
+Increments the major version and creates a branch.
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>release</term>
+<listItem>
+<para>
+Creates a tag.  A release cannot be edited!
+</para>
+</listItem>
+</varListEntry>
+<varListEntry>
+<term>populate-contrib</term>
+<listItem>
+<para>
+Copies the files from contrib in svn to contrib in this working copy.
+</para>
+</listItem>
+</varListEntry>
+</variableList>
+</section>
+
+<section id="development-perl-docs">
+<title>perl docs</title>
+<para>
+TO DO
+</para>
+</section>
+
+<section id="development-perl-tests">
+<title>Tests</title>
+<para>
+Unit Tests
+</para>
+<para>
+Integration Tests
+</para>
+
+</section>
+</section>
+

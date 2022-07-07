@@ -1,0 +1,985 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+
+<article>
+    <title id="top">
+        Inca 2.0 Installation Guide
+    </title>
+
+    <section id="intro-overview">
+        <title>Introduction</title>
+        <para>
+            The Inca Test Harness and Reporting Framework (Inca) is a generic
+            framework for the automated testing, benchmarking and monitoring of Grid resources.
+            Inca provides the scheduled execution of information gathering scripts (reporters)
+            and collects, archives, and publishes the data resulting from these scripts.
+        </para>
+        <para>
+            Inca is composed of five main components:
+            <orderedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Reporter</emphasis> - script or executable that performs
+                        a test, benchmark, or query and formats its results in Inca compliant XML.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Reporter Repository</emphasis> - a trusted authority that hosts
+                        a directory of reporters and reporter libraries that can be fetched
+                        from a reporter agent and used in an Inca deployment to collect data from
+                        resources.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Reporter Manager</emphasis> - a thin client of the 
+			Inca control framework which executes on the monitored resources.  It handles
+                        scheduled and local-execution of reporters and stores the resulting data
+                        into a depot.  A reporter manager trusts one and only one reporter agent who
+                        it registers with and accepts control changes from.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Reporter Agent</emphasis> - configures 
+			data collection at various intervals by delegating the execution of a 
+			corresponding reporter suite to a set of reporter managers.  
+			Configures data storage requirements.  
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Depot</emphasis> - stores reporter data collected by
+                        the reporter managers and handles all data queries.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+        <para>
+            Inca's data is displayed by <emphasis role="strong">data consumers</emphasis> (e.g. Web scripts, command line scripts, or Java GUIs)
+            that query the depot for data.  The Inca software is administered via a Java GUI called the
+            Inca Administration Tool (<emphasis role="strong">incat</emphasis>).
+        </para>
+        <figure id="arch.fig">
+            <title>Inca architecture</title>
+            <graphic fileref="figures/arch.jpg" align="center">
+            </graphic>
+        </figure>
+        <para>[ <link linkend="top">top of page</link> ]</para>
+    </section>
+
+
+    <section id="install">
+        <title>Get Inca</title>
+        <para>
+            This section describes how to obtain, install and verify the Inca 2.0 software.
+        </para>
+
+        <section id="prereq">
+            <title>Prerequisites</title>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>
+                            JDK 1.4.2_09 or later
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Perl 5.8.6 or later
+                        </para></listitem>
+                    <listitem>
+                        <para>
+                            OpenSSL
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            gtar
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="recommend">
+            <title>Recommendations</title>
+            <para>
+                We recommend that Inca be run under a regular user account and not as root for the following reasons:
+            </para>
+            <itemizedList>
+                <listItem>
+                    <para>
+                        To best detect user-level problems, it is best that Inca run as a regular
+                        use account with the default environment setup.
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        Inca does not require any special privileges to run.
+                    </para>
+                </listItem>
+            </itemizedList>
+            <para>
+                Furthermore, we recommend that a valid GSI credential be obtained for this regular user
+                account so that Grid tests requiring proxy certificates can be executed. Please request a
+                GSI credential from your virtual organization's Certificate Authority (CA) and consult your
+                organization's security policy regarding GSI credential use.  Note that because Inca is
+                an automated system, it will need continual access to valid proxy
+                credentials on each resource for certain tests.
+            </para>
+            <note>
+                <para>
+                    <emphasis> The following sections assume that you are installing
+                        Inca under a regular user account called inca. </emphasis>
+                </para>
+            </note>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+        <section id="install-bin">
+            <title>Install Binary Distribution</title>
+            <orderedList>
+                <listItem>
+                    <para>
+                        Currently, we are providing binary distributions of Inca 
+			(source distributions will be added later).  To install the 
+			a binary distribution, first download
+			 the <filename>incaInstall.sh</filename> script:
+                    </para>
+                    <screen>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</screen>
+                </listItem>
+                <listItem>
+                    <para>
+                        Execute the install script. The install script requires the location of the directory where you want to install Inca
+                        (in the example below this is $INCA_INSTALL - either set the environment variable or replace $INCA_INSTALL
+                        with your own install directory path) and the Inca components you wish to install (options are "all", "server" and "incat"):
+                    </para>
+                    <screen>% chmod 755 incaInstall.sh; ./incaInstall.sh $INCA_INSTALL all</screen>
+                    <para>
+                        The script will download the binary distributions from
+                        our website and unpack them in the installation
+                        directory you specified.  You should see something like:
+                        <screen>Retrieving http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+--12:49:38--  http://inca.sdsc.edu/releases/current/inca-common-java-bin.tar.gz
+=> `inca-common-java-bin.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5,921,461 [application/x-tar]
+
+100%[======================>] 5,921,461      1.23M/s    ETA 00:00
+
+12:49:43 (1.18 MB/s) - `inca-common-java-bin.tar.gz' saved [5921461/5921461] ...
+common-java installed ...
+agent installed ...
+consumers installed ...
+depot installed ...
+incat installed</screen>
+                    </para>
+                </listItem>
+                <listItem>
+                    <para>
+                        Change to the top level directory of your Inca
+                        installation:
+                    </para>
+                    <screen>% cd $INCA_INSTALL</screen>
+                </listItem>
+                <listItem>
+                    <para>
+                        Create certificates for the Inca components (enables secure component communication):
+                    </para>
+                    <screen>% ./bin/inca createauth</screen>
+                    <para>
+                        You should now see a certificate/key created for each of the four Inca components and stored in $INCA_INSTALL/etc:
+                    </para>
+                    <screen>Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'clientx.sdsc.edukey.pem'
+-----
+agent
+Generating a 512 bit RSA private key
+.++++++++++++
+writing new private key to 'agentkey.pem' ...
+writing new private key to 'consumerkey.pem' ...
+writing new private key to 'depotkey.pem' ...
+writing new private key to 'incatkey.pem' ...</screen>
+                </listItem>
+                <listItem>
+                    <para>
+                        Start the Inca components: agent, depot, and consumer.  By default, they will be started on ports 6323, 6324, and 8080 respectively.  Please edit the inca.properties file in etc/common to change these defaults.
+		</para>
+		<note><para>
+			 The following command will start all four Inca components, but you can also start or stop components with
+			 "<filename>./bin/inca [start|stop] [all|agent|depot|consumer|incat]</filename>".  
+			The command below is a special case for initializing components.
+                    </para></note>
+                    <screen>% ./bin/inca default</screen>
+                    <para>
+                        You should see something like:
+                        <screen>** Warning:  this will erase any previously collected reporter state 
+   on the Inca depot and configuration on the agent
+Do you wish to continue (y/n)? y
+Initializing depot...
+Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@904b13 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@58bc22 [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, maxIdleTime -> 1800, maxPoolSize -> 10, maxStatements -> 50, maxStatementsPerConnection -> 0, minPoolSize -> 3, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@e8b5fe [ description -> null, driverClass -> null, factoryClassLocation -> null, jdbcUrl -> jdbc:hsqldb:test, properties -> {user=******, password=******} ] , preferredTestQuery -> null, propertyCycle -> 300, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, usesTraditionalReflectiveProxies -> false ] , factoryClassLocation -> null, numHelperThreads -> 3, poolOwnerIdentityToken -> 904b13 ] 
+Database Initialization Completed
+done
+Initializing agent
+done
+Started Inca agent
+Started Inca consumer
+Started Inca depot
+Sleeping for 20 seconds while the components come online
+Deploying default configuration
+Suite GUIDs are:
+  client.host.name:6323/TestSuiteLocal</screen>
+                    </para>
+		    <para>During this step:</para>
+			<itemizedList>
+				<listItem><para>the Depot is initialized</para></listItem>
+				<listItem><para>Reporter Agent, Depot, and Consumer servers are started</para></listItem>
+				<listItem><para>there is a 20 second wait to wait for servers to start up</para></listItem>
+				<listItem><para>a "TestSuiteLocal" suite is sent to the Reporter Agent requesting 
+					reporters to be started on localhost using the schedule:</para>
+<screen>1-59/10 * * * * cluster.math.atlas.version
+2-59/10 * * * * cluster.compiler.gcc.version
+3-59/10 * * * * cluster.security.openssl.version
+4-59/10 * * * * cluster.interactive_access.openssh.version
+5-59/10 * * * * cluster.interactive_access.openssh.unit
+6-59/10 * * * * viz.lib.vtknvgl.version
+7-59/10 * * * * viz.lib.chromium.version
+8-59/10 * * * * cluster.compiler.any.unit</screen>
+				</listItem>
+				<listItem><para>
+					the Reporter Agent receives "TestSuiteLocal" suite and installs a reporter manager 
+					on the localhost in <filename>~/inca2install</filename> 
+					(takes 1-5 minutes - view progress of build in <filename>~/inca2install/build.log</filename>)
+				</para></listItem>
+				<listItem><para>
+					after Reporter Manager is built, it registers itself with 
+					Reporter Agent.  Reporter Agent sends reporters, libraries, and schedule to Reporter Manager.
+				</para></listItem>
+				<listItem><para>
+					Reporter Manager executes reporters based on schedule.  Should see at least one 
+					box filled in the step below within 3 minutes.
+				</para></listItem>
+				<listItem><para>
+					Inca components are started on the following default ports:
+					<screen>
+Depot           6324
+Reporter Agent  6323
+Data Consumer   8080</screen>
+				</para></listItem>
+			</itemizedList>
+                </listItem>
+                <listItem>
+		<para>A sample set of reporters runs when the depot and agent start up for the first time.  To see the results and 
+			verify that your Inca installation is working correctly, 
+			point your browser to (replace "your.host.name" with the name 
+			of the machine running the Inca consumers component - starting a Web server is not required): 
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+		</para>
+		<para>If you do not see a grid of results, check the .log files in $INCA_INSTALL/var.  There is more information about data display in <xref linkend="display">.</para>
+                </listItem>
+                <listItem>
+                    <para>
+                        View the Inca Administration Tool (<emphasis role="strong">incat</emphasis>):
+                    </para>
+                    <para>
+                        Use the following command to start <emphasis role="strong">incat</emphasis>:
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A localhost:6323 &amp;</screen>
+                    </para>
+                    <para>
+			<emphasis role="red">OPTIONAL:</emphasis>  If you don't see Java GUI windows pop up like those in <xref linkend="retrieve.fig"> and <xref linkend="default.fig">
+                        after starting all components in the step above, it is probable that X-Window forwarding is not set up correctly between the 
+			machine where you installed Inca and your local machine.
+                        You can either configure X-Window forwarding, or you can start <emphasis role="strong">incat</emphasis> on a local machine:
+                    </para>
+                    <itemizedList>
+                        <listItem>
+                            <para>
+                                Copy the <filename>incaInstall.sh</filename> script to a local machine.
+                            </para>
+                    		<screen>% wget http://inca.sdsc.edu/downloads/incaInstall.sh</screen>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Install the <emphasis role="strong">incat</emphasis> component on a local machine:
+                            </para>
+                            <screen>% ./incaInstall.sh $INCA_INSTALL incat</screen>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Copy the <emphasis role="strong">incat</emphasis> key, certificate, and trusted directory from the original machine 
+				to your local machine:
+                            </para>
+                            <screen>% scp <emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/incatkey.pem $INCA_INSTALL/etc/; \
+  scp <emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/incatcert.pem $INCA_INSTALL/etc/;
+  scp "<emphasis role="red">orig.machine:$ORIG_INCA_INSTALL</emphasis>/etc/trusted/*" $INCA_INSTALL/etc/trusted/;</screen>
+                        </listItem>
+                        <listItem>
+                            <para>Change the agent key/cert to incat key/cert in the 
+				<filename>$INCA_INSTALL/etc/common/inca.properties</filename> local file:
+                                <screen>#---------------------------------------------------------------------------
+# agent
+#---------------------------------------------------------------------------
+
+inca.agent.auth=true
+inca.agent.password=
+<emphasis role="red">inca.agent.cert=incatcert.pem
+inca.agent.key=incatkey.pem</emphasis>
+inca.agent.trusted=trusted</screen>
+                            </para>
+                        </listItem>
+                        <listItem>
+                            <para>
+                                Start the <emphasis role="strong">incat</emphasis> component on a local machine with the agent hostname from the original machine:
+                            </para>
+                            <screen>% cd $INCA_INSTALL; ./bin/inca start incat -A <emphasis role="red">ORIGHOST</emphasis>:6323 &amp;</screen>
+                            <para>
+                                You should now see the Java GUI window appear on your local machine.
+                            </para>
+                        </listItem>
+                    </itemizedList>
+                    <para>
+                        <figure id="retrieve.fig">
+                            <title>incat Agent Screen</title>
+                            <graphic fileref="figures/incat_retrieve_agent.jpg" align="center"></graphic>
+                        </figure>
+                        Once <emphasis role="strong">incat</emphasis> has information from the agent, the following screen will display:
+                    </para>
+                    <figure id="default.fig">
+                        <title>Default incat Screen</title>
+                        <graphic fileref="figures/incat_default.jpg" align="center"></graphic>
+                    </figure>
+                </listItem>
+            </orderedList>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+    </section>
+        <section id="display">
+            <title>Display Data</title>
+            <para>
+                An installation of Inca is working if reporter results can be displayed by data consumers 
+		(e.g. Web scripts, command line scripts, or Java GUIs) that query the depot for data.  A data consumer for displaying software
+            stack reporter suite data is provided in the 2.0 release of Inca.  The following steps describe the
+            configuration of the sample data consumer, a jsp script called <filename>xslt.jsp</filename>.
+        </para>
+            <para>
+                Inca uses Jetty, a Java HTTP server and servlet container, to run its jsp data consumer.  Jetty starts on port 8080 by
+                default, but can be configured to start on another port.  A separate Web server (like Apache)
+                is not required.  More information about Jetty is available at the <ulink url="http://jetty.mortbay.org/jetty/">Jetty homepage</ulink>.
+            </para>
+        <section id="run-stack">
+            <title>Software Stack Data Consumer</title>
+            <para>
+                The results from the sample suite that executed when the depot and agent were started should now be visible from
+                the xslt.jsp page.  The jsp requires two input parameters to display either suite results or a series results.
+            </para>
+            <para>
+                To display suite results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>suiteName</emphasis>: the name of the suite from <emphasis role="strong">incat</emphasis> (e.g. "TestSuiteLocal")
+                            and a </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>resourceID</emphasis>: the resource group name from <emphasis role="strong">incat</emphasis> (e.g. "defaultvo")
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then combines:
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            an XML array of reportSummary results (one for each of the series in the suite) from the depot
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            XML resource configuration information from <emphasis role="strong">incat</emphasis>
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            software package information from an XML file called $INCA_INSTALL/etc/common/swStack.xml (can be edited to change appearance of page)
+                        </para>
+                    </listItem>
+                </itemizedList>
+
+            </para>
+            <para>
+                and then either displays the XML or displays formatted XML (see <xref linkend="summary.fig">).  Formatted XML, an HTML grid, is displayed if xslt.jsp is also given the path to an xsl file (an example xsl file called $INCA_INSTALL/etc/swStack.xsl is provided).  The sample xsl file uses a cascading style sheet ($INCA_INSTALL/etc/inca.css) which can be changed along with the xsl to customize the appearance of the pages.
+            </para>
+            <para>
+
+            </para>
+            <para>
+                The URL to display the sample suite results from the xslt.jsp page is (replace "your.host.name" with the name of the machine running the 
+		Inca consumers component):
+            </para>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <para>
+                The URL to display the sample suite results with a local xsl file is (replace "your.host.name" as above and replace "/path/to/xsl/" with the directory your xsl file is in):
+            </para>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=<emphasis role="red">/path/to/xsl</emphasis>/swStack.xsl&amp;resourceID=defaultvo&amp;suiteName=TestSuiteLocal</screen>
+            <figure id="summary.fig">
+                <title>Software Stack Summary Page</title>
+                <graphic fileref="figures/consumer_reporter_summary.jpg" align="center">
+                </graphic>
+            </figure>
+            <para>
+                To display a series results the jsp requires a:
+                <orderedList>
+                    <listItem>
+                        <para>
+                            <emphasis>configID</emphasis>: the reportSummary/reportSeriesConfigId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"  and an
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            <emphasis>instanceID</emphasis>: the reportSummary/instanceId of a series from the XML created by "<filename>xslt.jsp?suiteName=X&amp;resourceID=Y</filename>"
+                        </para>
+                    </listItem>
+                </orderedList>
+            </para>
+            <para>
+                The jsp then gets the series XML result and then either displays the XML or displays formatted XML (see <xref linkend="details.fig">).  The formatted XML, an HTML table, is again displayed if the jsp is given the path to an xsl file.
+            </para>
+            <para>
+                Individual series results are linked from the suite results page with URLs like the following (this is an example, your URLs will have different instanceID and configID values):
+            </para>
+            <screen>http://<emphasis role="red">your.host.name</emphasis>:8080/xslt.jsp?xsl=http://<emphasis role="red">your.host.name</emphasis>:8080/swStack.xsl&amp;instanceID=24&amp;configID=1</screen>
+            <figure id="details.fig">
+                <title>Software Stack Details Page</title>
+                <graphic fileref="figures/consumer_reporter_details.jpg" align="center">
+                </graphic>
+            </figure>
+            <para>Note that the <filename>reporters.cgi</filename> script linked from the details page (by clicking on reporter name) will only be executed if 
+		libraries and permissions are set up correctly in the reporter repository location.  If the default repository 
+		(http://inca.sdsc.edu/2.0/repository) is used, the script will be configured by default.  If you create your own repository, 
+		it must be web accessible and you must make an <filename>.htaccess</filename> file with the location of reporter libraries and 
+		permission to execute CGI script like the following (replace $INCA_INSTALL/Inca-Reporter-* with the path 
+		to your reporter lib directory):</para>
+		<screen>SetEnv PERL5LIB <emphasis role="red">/$INCA_INSTALL/Inca-Reporter-*</emphasis>/lib
+Options +ExecCGI
+		</screen>
+		<para>Your webmaster may have to edit <filename>httpd.conf</filename> or otherwise configure permissions if you are unable to set them 
+		in <filename>.htaccess</filename>.
+		</para>
+            <para>[ <link linkend="top">top of page</link> ]</para>
+        </section>
+    </section>
+
+
+
+
+    <section id="incat">
+        <title>Configure Inca Components</title>
+        <section id="incat-intro">
+            <title>The Inca Administration Tool</title>
+            <para>
+                The Inca Administration Tool, or <emphasis role="strong">incat</emphasis>,
+                is designed to make the installation, setup, data collection, and maintenance
+                of the Inca deployment straightforward and configurable.
+                An administrator can use <emphasis role="strong">incat</emphasis> to configure:
+                <itemizedList>
+                    <listItem>
+                        <para>
+                            reporter repositories
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            resource information
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            reporter execution
+                        </para>
+                    </listItem>
+                </itemizedList>
+            </para>
+            <para>
+                <emphasis role="strong">incat</emphasis> is the client interface to a reporter agent.  All
+                information required to configure an Inca installation is stored on the
+                reporter agent and is retrieved by <emphasis role="strong">incat</emphasis> as needed.
+            </para>
+            <para>
+                The Inca administrator first uses <emphasis role="strong">incat</emphasis> to specify which reporter
+                repositories serve as the source of an installation's reporters.  <emphasis role="strong">incat</emphasis>
+                forwards this reporter repository list to the reporter agent,
+                where the agent retrieves and merges catalog information from each reporter repository and
+                returns it to <emphasis role="strong">incat</emphasis> as a complete list of available reporters.
+                The administrator then selects a set of reporters to run on
+                an installation's resources, specifying execution attributes for each reporter on each resource.
+                <emphasis role="strong">incat</emphasis> returns this information to the reporter agent, which uses it to
+                download reporters from the reporter repositories and construct schedules
+                for transmission to the reporter managers.
+            </para>
+            <note>
+                <para>
+                    <emphasis>Remember to commit your changes before quitting <emphasis role="strong">incat</emphasis>
+                        so that they are stored on the agent. </emphasis>
+                </para>
+            </note>
+            <section id="incat-RR">
+                <title>Configure Reporter Repositories</title>
+                <para>
+                    A <emphasis>reporter repository</emphasis> is a trusted authority that hosts
+                    a directory of reporters and reporter libraries that can be fetched
+                    from a reporter agent and used in an Inca deployment to collect data from resources.
+                </para>
+                <para>
+                    Although <emphasis role="strong">incat</emphasis> is preconfigured to use a
+                    standard reporter repository (http://inca.sdsc.edu/2.0/repository),
+                    Inca also offers a convenience tool
+                    (called <emphasis role="strong">incpack</emphasis>) for producing or
+                    updating a catalog for an Inca reporter repository.
+                    <emphasis role="strong">incpack</emphasis> creates local
+                    reporter repositories which may be specified to the
+                    reporter agent as sources for reporter packages.
+                    The <emphasis role="strong">incpack</emphasis> script is
+                    located in $INCA_INSTALL/Inca-Reporter-*/sbin.
+		</para>
+		<para>
+		To add non-reporters (e.g., perl libraries) to a repository, they need a companion file
+with the same name and a .attrib suffix.  For example, this is the
+contents of one such file (Reporter.pm.attrib):
+<screen>name: Inca::Reporter
+version: 1.0
+description: Inca reporter API base class
+url: http://inca.sdsc.edu
+dependencies:</screen>
+The .attrib file has one attribute per line, a name and value pair separated by a colon.  Multi-line
+values are permitted if lines after the first begin with a space (Debian apt format).
+</para>
+<para>
+	  The following example creates the http://inca.sdsc.edu/2.0/repository default repository locally:
+                </para>
+                <screen>% cd $INCA_INSTALL/Inca-Reporter-*; sbin/incpack -I lib bin/[a-z]* lib/Inca/*.pm lib/Inca/*/*.pm lib/Inca/*/*/*.pm</screen>
+                <para>
+                    There should now be a file called "Packages.gz" in the $INCA_INSTALL/Inca-Reporter-X  directory
+                    with information about the reporters and libraries in the new repository.
+                </para>
+                <para>
+                    Once a repository has been created, <emphasis role="strong">incpack</emphasis> needs to
+                    be rerun if any of its reporters or libraries are changed, added or deleted.
+		<emphasis role="strong">incpack</emphasis> takes a "-a" switch to indicate that it should append to an
+		existing Packages.gz; otherwise, it overwrites Packages.gz.
+                </para>
+                <para>
+                    Via <emphasis role="strong">incat</emphasis>, the Inca administrator tells
+                    the reporter agent which repositories to retrieve reporters from by entering
+                    the location of the "Packages.gz" file. If the repository
+                    is located in a Web accessible directory, its location can be entered as
+                    "http://webserver/path/to/repository" (see <xref linkend="repository.fig">).
+                    If the repository is local, it can be entered
+                    as "file:///path/to/inca/install/Inca-Reporter-X/dir" (note the three slashes after file:/// - replace "Inca-Reporter-X" with the name of the Inca-Reporter dir under your installation, e.g. Inca-Reporter-1.2179).
+                </para>
+
+                <figure id="repository.fig">
+                    <title>Reporter Repositories Screen</title>
+                    <graphic fileref="figures/incat_repositories.jpg" align="center"></graphic>
+                </figure>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
+            <section id="incat-resources">
+                <title>Configure Resources</title>
+                <para>
+                    Grid nodes are grouped into virtual resource groups and the groups are assigned macros
+                    (variables that have one or more values).  Groups/macros are then used to configure
+                    how reporters will run on the nodes.
+                </para>
+                <para>
+                    <xref linkend="resources.fig"> illustrates the resource configuration screen in
+                    <emphasis role="strong">incat</emphasis>.  The first window shows the resource group
+                    name(s), the second window shows the members that belong to the resource group
+                    selected in the first window, and the third window shows the macros that are assigned
+                    to the resource group selected in the first window.
+                </para>
+                <figure id="resources.fig">
+                    <title>Resource Configuration Screen</title>
+                    <graphic fileref="figures/incat_resource_config.jpg" align="center"></graphic>
+                </figure>
+                <para>
+                    When adding a new resource group, members can be either hostnames or
+                    other resource group names and are entered as a regular expression.  For example, in
+                    <xref linkend="rg1.fig"> a new group called "teragrid" is being added that contains groups
+                    called "ncsa-ia64", "sdsc-ia64", and "anl-viz".  The regular expression for those three groups is
+                    "(ncsa|sdsc)-ia64|anl-viz".
+                </para>
+                <para>
+                    In <xref linkend="rg1.fig">, the access method
+                    (gram and gridftp servers) is defined with macros. The gram server for the "teragrid" group is @GRAM_SERVER@, which
+                    means that it will look for the GRAM_SERVER macro value to be defined in
+                    each of its subgroups (sdsc-ia64, etc.) and will use the subgroup value for the subgroup nodes.  The
+                    the Inca reporter manager will then be started to execute reporters on the gram server.  Reporters will be
+                    transferred to the reporter manager via the gridftp server.
+                </para>
+                <figure id="rg1.fig">
+                    <title>Add Resource Group (with subgroups) Screen</title>
+                    <graphic fileref="figures/incat_add_rg1.jpg" align="center"></graphic>
+                </figure>
+                <para>
+                    The Inca reporter manager runs on one login node of a cluster.  In the case where login nodes round robin,
+                    a resource group should be created for the cluster and the "Round Robin" box should be checked (see
+                    <xref linkend="rg2.fig">).
+                </para>
+                <figure id="rg2.fig">
+                    <title>Add Resource Group (with round robin cluster) Screen</title>
+                    <graphic fileref="figures/incat_add_rg2.jpg" align="center"></graphic>
+                </figure>
+                <para>
+                    A node gets its macros from the group closest to it.  If a node, like tg-login.ncsa.teragrid.org, is listed
+                    in the ncsa-ia64 group, and the ncsa-ia64 group is listed in the teragrid group, then the ncsa-ia64 group is
+                    closer to the tg-login.ncsa.teragrid.org node than the teragrid group.
+                </para>
+                <para>
+                    When adding macros with more than one value to a resource group (see <xref linkend="rg1.fig">), separate
+                    the values with spaces (e.g. value1 value2).  Macro values that have spaces in them should
+                    always be quoted (e.g. "value 1").  Macros can include other macros by surrounding them with the @ symbol (see
+                    the gram server macro in <xref linkend="rg1.fig">).
+                </para>
+                <figure id="macro.fig">
+                    <title>Add Macro Screen</title>
+                    <graphic fileref="figures/incat_add_macro.jpg" align="center"></graphic>
+                </figure>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
+            <section id="incat-suites">
+                <title>Configure Reporter Execution</title>
+                <para>
+                    A reporter along with its arguments (input parameters), the resource group it runs on, and constraints (setup to be
+                    performed before executing the reporter, cleanup to be performed after executing the reporter,
+                    frequency of execution, maximum resource usage, and expected output) make up a <emphasis>reporter series</emphasis>.
+                    Reporter series are grouped into sets called <emphasis>reporter suites</emphasis>.
+                </para>
+                <para>
+                    <xref linkend="suites.fig"> shows <emphasis role="strong">incat</emphasis>'s suite configuration screen.  To configure
+                    reporter execution, first create a new suite and then add reporter series to the suite.
+                </para>
+                <figure id="suites.fig">
+                    <title>Suites Screen</title>
+                    <graphic fileref="figures/incat_suite_config.jpg" align="center"></graphic>
+                </figure>
+                <para>
+                    A new reporter series is being added in <xref linkend="series.fig">.  Note that the description field
+                    becomes the series name in the suite.
+                </para>
+                <figure id="series.fig">
+                    <title>Add Series Screen</title>
+                    <graphic fileref="figures/incat_add_series.jpg" align="center"></graphic>
+                </figure>
+                <para>[ <link linkend="top">top of page</link> ]</para>
+            </section>
+        </section>
+    </section>
+
+
+    <section id="advanced">
+        <title>Advanced Topics</title>
+        <section id="manual">
+            <title>Manual Access Method</title>
+            <para>
+            If a site in your VO desires to have local control (i.e.,
+            start/stop) over their reporter manager, you can use the access
+            method 'manual' to enable that.  Within incat, choose 'manual'
+            when defining the resource such as below:
+            </para>
+            <figure id="manual.fig">
+              <title>Add Resource Screen</title>
+              <graphic fileref="figures/incat-manual.png" align="center"></graphic>
+            </figure>
+            <para>
+            When you choose 'Commit' from the incat menu, the commands needed
+            to install the reporter manager on the remote machine will be
+            logged as warn messages in $INCA_INSTALL/var/agent.log and tagged
+            with the string '[your-machine-name - manual step]'.  For example, 
+            </para>
+            <screen>22:17:45,632  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash -l /home/inca/inca2install/buildRM.sh -u false /home/inca/inca2install Inca-ReporterManager.tar.gz '
+            </screen>
+            <para>
+            To get all of the commands to install the reporter manager on
+            the specified resource, grep the commands from the
+            $INCA_INSTALL/var/agent.log.  Follow the instructions below
+            to setup the reporter manager on your resource replacing the string
+            'your-machine-name' with the hostname for your resource and 
+            '/home/inca/inca2install' with the directory on the resource
+            where you want to the reporter manager installed.
+            </para>
+            <screenco>
+            <areaspec>
+            <area id="transferRM" coords="8 85">
+            <area id="transferRMBuild" coords="10 85">
+            <area id="transferTrusted1" coords="12 85">
+            <area id="transferTrusted2" coords="15 85">
+            <area id="transferCert" coords="18 85">
+            <area id="transferKey" coords="21 85">
+            <area id="build" coords="28 85">
+            <area id="run" coords="31 85">
+            <area id="subscription" coords="36 85">
+            </areaspec>
+            <screen>
+% grep "your-machine-name - manual" var/agent.log 
+14:09:12,023  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/testscript' to '/home/inca/inca2install'
+14:09:12,024  WARN Manual:71 - [your-machine-name - manual step] command 'cd
+/home/inca/inca2install;/bin/sh testscript inca '
+14:09:22,780  WARN Manual:71 - [your-machine-name - manual step] command '/bin/sh
+-c 'tail -1 /home/inca/inca2install/build.log' '
+14:09:24,751  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'lib/Inca-ReporterManager.tar.gz' to '/home/inca/inca2install'
+14:09:24,753  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'sbin/buildRM.sh' to '/home/inca/inca2install'
+14:09:24,754  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/trusted/trusted0.pem' to
+'/home/inca/inca2install'
+14:09:24,755  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/trusted/trusted1.pem' to
+'/home/inca/inca2install'
+14:09:24,762  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/rmcert.pem' to
+'/home/inca/inca2install'
+14:09:24,763  WARN Manual:51 - [your-machine-name - manual step] Transfer file
+'/private/tmp/incatest/var/rm/your-machine-name/rmkey.pem' to
+'/home/inca/inca2install'
+14:09:24,765  WARN ReporterManager:813 - Skipping cleanup of authorization
+files for 'your-machine-name'
+14:09:24,777  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash
+-l -c echo '
+14:09:24,787  WARN Manual:71 - [your-machine-name - manual step] command '/bin/bash
+-l /home/inca/inca2install/buildRM.sh -u false
+/home/inca/inca2install Inca-ReporterManager.tar.gz '
+14:09:24,811  WARN Manual:92 - [your-machine-name - manual step] command 'cd
+/home/inca/inca2install;/bin/sh sbin/inca reporter-manager -d
+incas://localhost:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t etc/trusted -e
+bin/inca-null-reporter -r . -R sbin/reporter-instance-manager -v var -w 1 -i
+your-machine-name -a incas://your-machine-name:6323 -l etc/log4j.properties -P '
+14:09:24,815  WARN ReporterManager:214 - [your-machine-name - manual step] Writing
+subscription to /private/tmp/incatest/var/rm/your-machine-name/subscription.xml
+</screen>
+             <calloutlist>
+             <callout arearefs="transferRM">
+             <para>
+             Transfer the reporter manager tarball distribution to the
+             resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferRMBuild">
+             <para>
+             Transfer the reporter manager build script to the
+             resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferTrusted1 transferTrusted2">
+             <para>
+             Transfer the certificates the reporter manager should trust to
+             the resource and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferCert">
+             <para>
+             Transfer the certificate for the reporter manager to the resource
+             and place in the directory /home/inca/inca2install.
+             </para>
+            </callout>
+             <callout arearefs="transferKey">
+             <para>
+             Transfer the key for the reporter manager to the resource
+             and place in the directory /home/inca/inca2install.  The
+             key will be encrypted with the password that was used to start
+             the agent.  If you wish to place a different passphrase on the
+             key, use the following openssl command:
+             <screen>
+openssl rsa -in etc/rmkey.pem -out etc/rmkey.pem2 -des
+read RSA key
+Enter PEM pass phrase: agent-passphrase
+writing RSA key
+Enter PEM pass phrase: new-passphrase
+Verifying password - Enter PEM pass phrase: new-passphrase
+             </screen>
+             </para>
+            </callout>
+             <callout arearefs="build">
+             <para>
+             At this point the directory on the remote machine should look
+             like this:
+             <screen>
+% ls
+Inca-ReporterManager.tar.gz  rmcert.pem  trusted0.pem
+buildRM.sh                   rmkey.pem   trusted1.pem
+</screen>
+             Execute the build script on the remote machine.  For example,
+             <screen>
+% /bin/bash -l /home/inca/inca2install/buildRM.sh -u false /home/inca/inca2install Inca-ReporterManager.tar.gz 
+SUCCEEDED
+</screen>
+             </para>
+            </callout>
+             <callout arearefs="run subscription">
+             <para>
+             The subscription that would have been sent to the reporter
+             manager is written to disk in the
+             $INCA_INSTALL/var/rm/your-machine-name directory as
+             subscription.xml.  Transfer over the subscription.xml file to the
+             resource under the directory /home/inca/inca2install.  
+             Furthermore, you will have to transfer the reporters and their
+             libraries over to the resource before starting the reporter
+             manager.  The reporters and libraries are cached on the agent
+             in the directory $INCA_INSTALL/var/repository.  The catalog 
+             of the cached reporters and libraries is stored under the
+             file $INCA_INSTALL/var/repository/repository.xml.  Currently,
+             there are 2 types of entries in the catalog: reporters and
+             perl libraries.  An example of a reporter entry in the catalog is
+             shown below:
+             <screen>
+  &lt;package&gt;
+    &lt;name&gt;cluster.compiler.gcc.version&lt;/name&gt;
+    &lt;repository&gt;http://inca.sdsc.edu/2.0/repository&lt;/repository&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/bin/cluster.compiler.gcc.version&lt;/uri&gt;
+    &lt;version&gt;1.5&lt;/version&gt;
+    &lt;filename&gt;cluster.compiler.gcc.version&lt;/filename&gt;
+    &lt;installPath&gt;bin&lt;/installPath&gt;
+    &lt;permissions&gt;755&lt;/permissions&gt;
+    &lt;dependencies&gt;
+      &lt;dependency&gt;Inca::Reporter&lt;/dependency&gt;
+      &lt;dependency&gt;Inca::Reporter::Version&lt;/dependency&gt;
+    &lt;/dependencies&gt;
+  &lt;/package&gt;
+</screen>
+             This indicates that the version 1.5 of the reporter
+             cluster.compiler.gcc.version was retrieved from the repository
+             http://inca.sdsc.edu/2.0/repository/repository.  It should be
+             installed under the bin directory (the installPath tag) (e.g.,
+             /home/inca/inca2install/bin) with permissions 755.  It also shows
+             what reporter libraries it depends on.  An example of a reporter
+             library entry looks like the following:
+             <screen>
+  &lt;package&gt;
+    &lt;name&gt;Inca::Reporter&lt;/name&gt;
+    &lt;repository&gt;http://inca.sdsc.edu/2.0/repository&lt;/repository&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/lib/Inca/Reporter.pm&lt;/uri&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;filename&gt;Reporter.pm&lt;/filename&gt;
+    &lt;installPath&gt;lib/perl/Inca&lt;/installPath&gt;
+    &lt;permissions&gt;644&lt;/permissions&gt;
+    &lt;dependencies/&gt;
+  &lt;/package&gt;
+</screen>
+             This shows that version 1.0 of the Inca::Reporter perl reporter
+             library was retrieved from the repository
+             http://inca.sdsc.edu/2.0/repository/repository.  It should be
+             installed under the lib/perl/Inca directory (the installPath
+             tag) under the name Reporter.pm (the filename tag) (e.g.,
+             /home/inca/inca2install/lib/perl/Inca/Reporter.pm) with
+             permissions 644.
+             Install all of the reporters and libraries listed in the 
+             repository.xml file to the resource.  Then create a file on 
+             the resource under /home/inca/inca2install called repository.xml
+             which tells the
+             reporter manager the reporters and libraries that are available 
+             to it.  It is similar in structure to the repository.xml file
+             under $INCA_INSTALL/var/repository.  Each package has 3 tags:
+             uri, path, and version.  An example is show below listing 
+             one reporter and two reporter libraries.:
+             <screen>
+&lt;catalog&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/repository/bin/cluster.compiler.gcc.version&lt;/uri&gt;
+    &lt;path&gt;bin/cluster.compiler.gcc.version&lt;/path&gt;
+    &lt;version&gt;1.5&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/testrepository/lib/Inca/Reporter.pm&lt;/uri&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter.pm&lt;/path&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/package&gt;
+  &lt;package&gt;
+    &lt;uri&gt;http://inca.sdsc.edu/2.0/testrepository/lib/Inca/Reporter/Version.pm&lt;/uri&gt;
+    &lt;path&gt;lib/perl/Inca/Reporter/Version.pm&lt;/path&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/package&gt;
+&lt;/catalog&gt;
+</screen>
+             Finally, you can start up
+             the reporter manager on the remote machine using the 
+             command shown in the agent.log except replace the '-a
+             incas://your-machine-name:6323' text with '-s subscription.xml'.
+             For example, 
+             <screen>
+% cd /home/inca/inca2install;/bin/sh sbin/inca reporter-manager -d \
+incas://your-depot-server:6324 -c etc/rmcert.pem -k etc/rmkey.pem -t \
+etc/trusted -e bin/inca-null-reporter -r . -R sbin/reporter-instance-manager \
+-v var -w 1 -i your-machine-name  -s subscription.xml -l etc/log4j.properties -P
+password> your-passphrase
+</screen>
+             To stop the reporter manager at any time, type
+             <screen>
+% ./sbin/inca stop reporter-manager
+</screen>
+              You will need to restart the reporter manager every time you
+              need to make a change to the subscription.xml file.
+             </para>
+            </callout>
+             </calloutlist>
+            </screenco>
+        </section>
+
+        <section id="decrypt-resource-file">
+            <title>Decrypting Resource File</title>
+            <para>
+            By default, the agent will encrypt the resource information it
+            receives from incat in case sensitive information like passwords
+            are stored in the macros.  For debugging purposes, you can
+            decrypt the resoure file using the following command:
+            </para>
+            <screen>
+% cd $INCA_INSTALL;  \
+java -classpath `/bin/echo lib/*.jar | tr ' ' ':'`:etc/common \
+edu.sdsc.inca.agent.ResourceConfigDAO -i var/resources.xml \
+-o var/resources.xml2 -type decode
+Please enter a password to decrypt the file: your-passphrase
+16:53:42,272  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Attempting
+read on encrypted resource config
+16:53:42,775  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Loaded
+resource configuration file 'var/resources.xml'
+16:53:42,780  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration file 'var/resources.xml2' not available...creating blank file
+16:53:42,797  WARN main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration stored to disk without encryption
+         </screen>
+         <para>
+         The '-i' argument is used to pass in the name of the resources
+         file and the -o argument is used to pass in the name of the 
+         output file.  To encrypt the resource file, type
+         </para>
+            <screen>
+% cd $INCA_INSTALL;  \
+java -classpath `/bin/echo lib/*.jar | tr ' ' ':'`:etc/common \
+edu.sdsc.inca.agent.ResourceConfigDAO -i var/resources.xml2 \
+-o var/resources.xml3 -type encode
+Please enter a password to encrypt the file: testit!
+16:58:46,565  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Loaded
+resource configuration file 'var/resources.xml2'
+16:58:47,653  INFO main edu.sdsc.inca.agent.ResourceConfigDAO - Resource
+configuration file 'var/resources.xml3' not available...creating blank file
+</screen>
+         </section>
+   </section>
+
+
+    <section id="contact-us">
+        <title>Troubleshoot</title>
+        <para>
+            Please email <email>inca@sdsc.edu</email> with any questions or problems using Inca software.
+        </para>
+        <para>[ <link linkend="top">top of page</link> ]</para>
+    </section>
+
+
+</article>

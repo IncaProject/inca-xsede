@@ -1,0 +1,1201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Administering Inca with incat</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Inca 2.6 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Quick Start"
+HREF="userguide-quickstart.html"><LINK
+REL="NEXT"
+TITLE="Data Display (Data Consumers)"
+HREF="userguide-consumer.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.6 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-quickstart.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT"
+>5. Administering Inca with incat</A
+></H1
+><P
+>  Inca provides a graphical administration tool, named incat, that allows you
+  to configure your deployment.  Using incat, you can specify the repositories
+  from which Inca should retrieve reporters, the hosts where you wish to
+  run reporters, and which reporters you wish to run on each host.
+  <P
+><IMG
+SRC="figures/arch/arch-incat.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>  You can connect incat to a running Inca Agent via the
+  -A option, e.g., "cd $INCA_DIST; ./bin/inca start incat -A localhost:6323".
+  </P
+><P
+>  As mentioned in the <A
+HREF="userguide-quickstart.html#QS-STEP5"
+>Quick Start guide</A
+>, you
+  can execute "./bin/inca default" from the command line to install a default Inca configuration.
+  The discussion below describes how you would use incat to specify the same
+  configuration.  Before continuing, use the inca script to start both a Depot
+  and an Agent on your host.
+  </P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-REPOS"
+>5.1. Repositories</A
+></H2
+><P
+>  Incat begins by showing the panel for Inca reporter repositories (as shown in <A
+HREF="userguide-incat.html#INCAT.REP.FIG"
+>Figure 10</A
+>).  
+  The default Inca configuration retrieves reporters from the 
+  $INCA_DIST/Inca-Reporter-* repository on the agent machine.  To add this repository to your list, press the Add button in the
+  Repositories section, enter the file:/ location of the Packages.gz file
+  in the pop-up window that appears, then press the OK button.  Within a few
+  seconds you should see the repository appear in the Repositories list, a
+  set of reporters in the Reporters list, and properties for the first reporter
+  in the Reporter Properties list.  Reporter source code is viewable by double clicking on a reporter name or by selecting 
+  the reporter name and pressing the "Show" button.
+  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.REP.FIG"
+></A
+><P
+><B
+>Figure 10. Incat Repositories Tab</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-repository.jpg"
+ALIGN="CENTER"></P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-RESOURCES"
+>5.2. Resource Configuration</A
+></H2
+><P
+>  The default Inca configuration defines three resource groups -- a group called "localResource" that
+  specifies the host where the Inca Agent will launch a new Reporter Manager (localhost) and two container groups called "localSite" (contains "localResource") and "defaultGrid" (contains "localSite") that can be extended to include any other hosts running Reporter Managers.  The default resource configuration 
+  is shown is <A
+HREF="userguide-incat.html#INCAT.RES.FIG"
+>Figure 11</A
+>.  
+  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.RES.FIG"
+></A
+><P
+><B
+>Figure 11. Incat Resource Configuration Tab</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-resource.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>  The configuration above can be duplicated in an empty Inca installation by 
+  pressing the Resource Configuration tab near the top of the incat window and then entering
+  information about the hosts on which you want Inca to run reporters.
+  To define the default groups above in incat, press the Add button in the Resource Groups section to
+  open the resource group edit dialog shown in <A
+HREF="userguide-incat.html#INCAT.RES.ADD.FIG"
+>Figure 12</A
+>.
+  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.RES.ADD.FIG"
+></A
+><P
+><B
+>Figure 12. Incat Add Resource Dialog</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-resource-add.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+>  In the Group Name text box, enter the name "localResource" as a nickname for the machine the Reporter Manager client runs on. 
+  Enter "localhost" in the Members text box and select "local" as the access method (for a description 
+  of access methods see <A
+HREF="userguide-incat.html#ACCESS-METHODS"
+>Section 5.5</A
+>).
+  Press OK to complete entry of this resource group.  Incat will close the
+  resource group edit dialog and will display localResource in the Resource Groups
+  section of the Resource Configuration panel.
+  </P
+><P
+>  Press the Add button again to add a second resource group.  Give this one
+  the name "defaultGrid" and enter "localResource" in the Members text box.  This tells
+  incat that any hosts in the "localResource" group (localhost, in this case) are also
+  part of the defaultGrid group.  If you defined other groups, "siteB", "siteC",
+  etc., you could include these in defaultGrid by listing them in the Members
+  text box, separated by spaces.  Press OK to complete entry of this resource
+  group.  In the Resource Groups list, select each group and notice that localhost is listed in 
+  the Members panel.
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-SUITES"
+>5.3. Suites</A
+></H2
+><P
+>  Pressing the Suites tab near the top of the incat window takes you to incat's
+  suite/series specification panel.  Here you specify the reporters you want to
+  run, the resource groups to run them on, how frequently to run them, and the
+  arguments to use when running them.
+  </P
+><P
+>  The default Inca configuration defines a single suite named sampleSuite
+  that contains eight series as shown in <A
+HREF="userguide-incat.html#INCAT.SUITE.FIG"
+>Figure 13</A
+>.  
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.SUITE.FIG"
+></A
+><P
+><B
+>Figure 13. Incat Suite Tab</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-suite.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
+><P
+>  In a new Inca installation, you can add the default suite above by pressing Add button in the Suites section of
+  the panel, entering "sampleSuite" in the pop-up window, then pressing the OK
+  button.  To add series to the new suite, press the Add
+  button in the Series section to open the incat series dialog and configure each like the gcc_hello_world series in <A
+HREF="userguide-incat.html#INCAT.SERIES.FIG"
+>Figure 14</A
+>.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.SERIES.FIG"
+></A
+><P
+><B
+>Figure 14. Incat Series Configuration</B
+></P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-series.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
+><P
+>  The bottommost box in the series dialog allows you to test the output of the
+  reporter and send email or take other actions if the test fails.  This is
+  covered in <A
+HREF="userguide-incat.html#USERGUIDE-INCAT-COMPARISON"
+>Section 5.10</A
+> below; for this series
+  leave this box blank.  Press the OK button, and incat will close the series
+  dialog box and add the series to the Series list in the
+  suite/series specification panel.
+  </P
+><P
+>  The other nine series in the default Inca configuration are composed
+  similarly to the first one.  Press the Add button in the series section for
+  each of them, then set the values in the series dialog as specified in the
+  table below.  Set the log argument for each series to 3 and the frequency to
+  10 minutes.
+  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN314"
+></A
+><P
+><B
+>Table 1. Default Configuration Series</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+><P
+>Reporter</P
+></TH
+><TH
+><P
+>Nickname</P
+></TH
+><TH
+><P
+>Arguments</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>cluster.admin.ant.unit</P
+></TD
+><TD
+><P
+>ant_helloworld_compile_test</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>cluster.admin.ant.version</P
+></TD
+><TD
+><P
+>ant_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>cluster.compiler.gcc.version</P
+></TD
+><TD
+><P
+>gcc_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>cluster.compiler.any.unit</P
+></TD
+><TD
+><P
+>java_hello_world</P
+></TD
+><TD
+><P
+>compiler: javac; lang: java</P
+></TD
+></TR
+><TR
+><TD
+><P
+>cluster.java.sun.version</P
+></TD
+><TD
+><P
+>java_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>cluster.interactive_access.openssh.version</P
+></TD
+><TD
+><P
+>openssh_version</P
+></TD
+><TD
+><P
+>ssh: ssh</P
+></TD
+></TR
+><TR
+><TD
+><P
+>cluster.security.openssl.version</P
+></TD
+><TD
+><P
+>openssl_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>viz.lib.vtk-nvgl.version</P
+></TD
+><TD
+><P
+>vtk-nvgl_version</P
+></TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+><P
+>grid.wget.unit</P
+></TD
+><TD
+><P
+>wget_page_test</P
+></TD
+><TD
+><P
+>page: http://cnn.com/index.html</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-COMMITS"
+>5.4. Committing/Saving</A
+></H2
+><P
+>  Your Inca deployment configuration is now complete.  At this point, it's a
+  good idea to use the "Save" option in incat's File menu to write the
+  configuration to a file (<A
+HREF="userguide-incat.html#INCAT.SAVE.FIG"
+>Figure 15</A
+>).  That way, you have a local copy of the configuration
+  that you can later modify.  The file is formatted XML; if you're curious, you
+  can read through it to see how incat represents the information you've
+  entered.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.SAVE.FIG"
+></A
+><P
+><B
+>Figure 15. Incat Save Configuration to File</B
+></P
+><P
+><IMG
+SRC="figures/incat/save.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
+><P
+>  Although your configuration is complete, it's not yet active.  To tell Inca
+  to begin running reporters, you need to have incat send your configuration to
+  your Inca Agent.  If you started incat with the -A argument, then you're
+  already connected to your Agent.  Otherwise, use the "Connect" option in
+  incat's Agent menu to establish a connection.  Once you're connected, you can
+  use the "Commit" option in the Agent menu to send the configuration to the
+  Agent (<A
+HREF="userguide-incat.html#INCAT.COMMIT.FIG"
+>Figure 16</A
+>).  In response, the Agent will install the Inca Reporter Manager code on
+  the host specified in incat's "Resource Configuration" panel and begin running the reporters you specified in the "Suite Series" panel.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.COMMIT.FIG"
+></A
+><P
+><B
+>Figure 16. Incat Save Configuration to Agent</B
+></P
+><P
+><IMG
+SRC="figures/incat/commit.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="ACCESS-METHODS"
+>5.5. Resource Access Methods</A
+></H2
+><P
+>  The Inca Agent can use the following access methods to stage and start
+  Reporter Managers on resources:
+  </P
+><P
+></P
+><UL
+><LI
+><P
+>ssh:</P
+><P
+>  The most common access method.  The Agent starts a Reporter Manager on a
+  remote machine using ssh to access the remote machine.  The Agent must have
+  ssh key access to the remote machine.
+  Reporter Manager files are copied from the Agent to the
+  remote machine using sftp.  For ssh resource groups, incat provides text
+  boxes for you to enter the login id, password, and path to the ssh key file
+  on the Agent machine.  For security purposes, incat displays asterisks for
+  the password and encrypts it when you save the configuration to a file.
+  </P
+></LI
+><LI
+><P
+>globus2:</P
+><P
+>  The Agent starts a Reporter Manager on a remote machine using Globus PreWS to
+  access the remote machine.  Reporter Manager files are copied from the Agent
+  to the remote machine using GridFTP.  When you select globus2 in the Access
+  Method pull-down, incat provides text boxes for you to enter contact
+  information for the resource's Globus GRAM and GridFTP servers.  If you leave
+  these boxes blank, Inca defaults to ports 2119 and 2811, respectively, for
+  the first host in the resource group's member list.  Access to Globus hosts
+  requires an active Globus proxy on the Agent's host.  You can either create a
+  manual proxy on the Agent machine before starting, or you can store a proxy
+  on a myproxy server and complete the four incat proxy dialog boxes (see
+  <A
+HREF="userguide-incat.html#PROXIES"
+>Section 5.7</A
+>) so that the Agent can obtain one as needed.
+  </P
+></LI
+><LI
+><P
+>globus4:</P
+><P
+>  The Agent starts a Reporter Manager on a remote machine using Globus WS to
+  access the remote machine.  Reporter Manager files are copied from the Agent
+  to the remote machine using GridFTP.  When you select globus4 in the Access
+  Method pull-down, incat provides text boxes for you to enter contact
+  information for the resource's Globus WS GRAM and GridFTP servers.  If you leave
+  these boxes blank, Inca defaults to ports 8443 and 2811, respectively, for
+  the first host in the resource group's member list.  Access to Globus hosts
+  requires an active Globus proxy on the Agent's host.  You can either create a
+  manual proxy on the Agent machine before starting, or you can store a proxy
+  on a myproxy server and complete the four incat proxy dialog boxes (see
+  <A
+HREF="userguide-incat.html#PROXIES"
+>Section 5.7</A
+>) so that the Agent can obtain one as needed.
+  </P
+></LI
+><LI
+><P
+>local:</P
+><P
+>  The Agent starts a Reporter Manager on the same machine where the Agent is
+  running (localhost).  
+  </P
+></LI
+><LI
+><P
+>manual:</P
+><P
+>  Entering a manual resource group indicates that you want complete, direct
+  control over Inca execution on the group.  For a manual resource group you
+  must start the Reporter Manager on the command line and restart it any time
+  you want to change the reporter series configuration for the group.  The
+  Agent will NOT automatically start a Reporter Manager for a manual resource
+  as it will for local, ssh, or globus2 resources.  See
+  <A
+HREF="userguide-advanced-config.html#USERGUIDE-ADVANCED-MANUAL"
+>Section 11.6</A
+> for more details.
+  </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-CHANGE-APPROVAL"
+>5.6. Requiring Resource Administrator Approval</A
+></H2
+><P
+> By default, Inca installation changes take effect automatically once
+you commit them to the Agent.  In circumstances where Inca changes must be
+approved before they take effect, enter the approver's email address in the
+"Approval Email" text box of the resource edit dialog.  When changes to the
+Inca installation on this resource are committed, Inca will send approval
+instructions to the email specified in the resource dialog.  Note that
+a run now request as described in <A
+HREF="userguide-incat.html#USERGUIDE-INCAT-SUITES"
+>Section 5.3</A
+>
+is not considered a change and will be forwarded automatically if that series
+has already been approved.</P
+><P
+><IMG
+SRC="figures/incat/approval.png"
+ALIGN="CENTER"></P
+><P
+>The emailed approval instructions will look like the image below by
+default and will describe how changes can be approved using Inca's
+<TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command.  To customize the approval
+instruction email edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/approveEmail.txt</TT
+>.</P
+><P
+><IMG
+SRC="figures/admin/ug-approvalEmail.png"
+ALIGN="CENTER"></P
+><P
+> The <TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command allows viewing and
+approval of the individual changes committed using incat.   Use the 
+<TT
+CLASS="FILENAME"
+>--help</TT
+> flag with the <TT
+CLASS="FILENAME"
+>approveChanges</TT
+> 
+command to see all possible options.  After <TT
+CLASS="FILENAME"
+>approveChanges</TT
+> 
+ is invoked, the approver will see a
+text menu like the one in the screen below with a list of proposed changes.
+More information about each change is viewable by hitting ctrl-y.  By default
+all changes are checked.  If any proposed changes are incorrect for their
+system, the approver should uncheck them by hitting space.  After checking only
+correct changes for their resource, the approver should hit ctrl-s to approve
+the selected changes.  The Agent will only transmit approved changes to the
+resource.   The proposed changes not approved will remain in the queue and
+indicate that the Inca administrator has incorrect information about the
+resource.  The approver should notify their Inca administrator of these errors
+to correct their proposed changes list.  </P
+><P
+><IMG
+SRC="figures/admin/ug-approve.png"
+ALIGN="CENTER"></P
+><P
+>The image below shows an example of more information about a change 
+ (viewable by hitting ctrl-y).  In this example a change to the series logging 
+is represented by the before and after values separated by the "=&#62;" symbol and the 
+green color highlighting the new log and context values. If colors aren't viewable 
+in your terminal, try setting the TERM environment variable to "xterm-color".</P
+><P
+><IMG
+SRC="figures/admin/approveChanges.gif"
+ALIGN="CENTER"></P
+><P
+>Here the <TT
+CLASS="FILENAME"
+>approveChanges</TT
+> command was invoked using the 
+<TT
+CLASS="FILENAME"
+>--color=blue,red,green</TT
+> flag to show unchanged attributes in blue, 
+changed attributes in red and new values in green.  Edit the 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/approveEmail.txt</TT
+> file to add your own 
+color preferences.</P
+><P
+><IMG
+SRC="figures/admin/approveChanges-color2.gif"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="PROXIES"
+>5.7. Proxies</A
+></H2
+><P
+>For convenience, the Inca framework can be used to retrieve a proxy for the
+globus2 access method or for reporters that require an active proxy.
+Reporters that require a proxy should use the Inca::Reporter::GridProxy 
+module described in <A
+HREF="userguide-reporters.html#REPORTER-API"
+>Section 8.2.3</A
+>.  </P
+><P
+>Before configuring Inca to retrieve proxies, first store a proxy on a myproxy
+server.  For information about setting up a myproxy server or storing proxies
+on a server, please see <A
+HREF="http://grid.ncsa.uiuc.edu/myproxy/"
+TARGET="_top"
+>the
+official myproxy documentation</A
+>.</P
+><P
+>The Agent can automatically retrieve a proxy from a myproxy server if the proxy
+information is defined in incat as follows:</P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-resource-proxy.jpg"
+ALIGN="CENTER"></P
+><P
+>The dialog boxes are the hostname of the myproxy server, the username and password used to store the proxy, and the lifetime in hours that the agent should retrieve a proxy for (the default is 12 hours).</P
+><P
+>Once proxy information is committed to the agent, it can be retrieved by reporter managers. Each time a reporter manager is ready to run a reporter that needs a proxy it:
+<P
+></P
+><UL
+><LI
+><P
+>requests the MyProxy passphrase from the agent</P
+></LI
+><LI
+><P
+>uses the MyProxy command-line client to retrieve proxy credentials from a MyProxy server</P
+></LI
+><LI
+><P
+>clears the MyProxy passphrase from memory</P
+></LI
+></UL
+></P
+><P
+>The MyProxy passphrase is stored on the agent in the $INCA_DIST/var/resources.xml file and is 
+encrypted with the same passphrase as the agent's private key.  The MyProxy passphrase passes between the 
+reporter manager and agent over their SSL connection.
+  <P
+><IMG
+SRC="figures/arch/arch-proxy.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="SUSPEND"
+>5.8. Suspend Execution</A
+></H2
+><P
+>  If you would like the reporter manager to suspend execution of reporters
+  when a machine is under high load, you can specify a specific load value as
+  shown in the figure below.  When the reporter manager detects a load higher
+  than the specified value, it will skip execution of the reporter and instead
+  return a specific report indicating that the reporter was not executed due
+  to high load.  The consumer will then display it as a neutral value in the
+  display of the reporter history.  Specify the specific load average number of 
+  either 1, 5, or 15 minutes (load1, load5, or load15) and the load value as
+  an integer.
+  </P
+><P
+>    <P
+><IMG
+SRC="figures/incat/incat-annotated-resource-suspend.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-MACROS"
+>5.9. Using Resource Macros</A
+></H2
+><P
+>  Resource macros provide a shorthand for defining multiple, similar series.
+  For example, suppose you wanted to add three series to the configuration
+  defined above to measure the ping time to three different hosts, named
+  blue.ufo.edu, green.ufo.edu, and red.ufo.edu.  One approach would be to
+  define a series for blue, use the Clone button in the Series section
+  of the Suites panel to make two copies, then modify them to ping green and
+  red.
+  </P
+><P
+>  A better approach is to use a macro for the host names and let Inca replicate
+  the series for you.  In the Resource Configuration panel, click on
+  defaultGrid in the Resource Group section.  Next, press the Add button
+  beneath the Macros section.  This opens a dialog box that allows you to enter
+  the name and value(s) of a macro associated with the current resource group.
+  <P
+><IMG
+SRC="figures/incat/incat-annotated-macro-dialog.png"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>  Enter "targets" in the Macro Name text box and "blue" in the macro value edit
+  box, then use the "Add" button or hit "enter/return" to add "green" and
+  "red" as the second and third values of the macro.  Afterwards, press OK.
+  The definition of the targets macro now appears in the Macros section of the
+  Resource Configuration panel.  You may also edit values in the list by
+  selecting them, changing the value in the edit value box, and hitting
+  "enter/return".  To delete macro values, select the value in the list
+  and press the "Delete" button.
+  <P
+><IMG
+SRC="figures/incat/macro1.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>The targets macro is also defined for the other resource groups since
+  the defaultGrid contains all other groups.  As shown in
+  <A
+HREF="userguide-incat.html#INCAT.MACRO2.FIG"
+>Figure 17</A
+>, macros appear grey if they were defined in
+  a resource group other than the one selected.  You can override an inherited
+  macro value by selecting the macro in the Macros panel and pressing the Edit
+  button to open the macro edit dialog.  After you change the macro value and
+  press OK, the updated macro definition will show in black in the Macros
+  panel, indicating that the resource is no longer using the inherited value.
+  <DIV
+CLASS="FIGURE"
+><A
+NAME="INCAT.MACRO2.FIG"
+></A
+><P
+><B
+>Figure 17. Inherited Macro</B
+></P
+><P
+><IMG
+SRC="figures/incat/macro2.jpg"
+ALIGN="CENTER"></P
+></DIV
+>
+  </P
+><P
+>  To make use of the macro you've defined, click the Suites tab, then press the
+  Add button underneath the Series section to open the series edit dialog.  In
+  the dialog, set the reporter to grid.benchmark.performance.ping and the
+  resource group to localResource.
+  </P
+><P
+>  In the host text box in the Arguments section of the dialog, enter
+  "@targets@.ufo.edu".  Macro references in incat are indicated by placing a
+  "@" before and after the macro name.  When the Inca Agent encounters a macro
+  reference in a series, it makes one copy of the series for each value of the
+  macro.  Since the targets macro has three values--blue, green, and red--the
+  Inca Agent will make three copies of this series, substituting a single value
+  for the macro reference in each.  In this case that means that you'll have
+  one series with a host argument of "blue.ufo.edu", one with a host argument
+  of "green.ufo.edu", and one with a host argument of "red.ufo.edu".
+  </P
+><P
+>  The inca web pages use the series nickname when displaying series results.
+  If you leave the series nickname with its default value, the name of the
+  reporter, then all three series will have the same nickname.  Instead, you
+  can enter "ping_to_@targets@" in the nickname text box.  The Inca Agent will
+  expand this reference in parallel with the reference in the host argument, so
+  your three series will have the nicknames ping_to_blue, ping_to_green, and
+  ping_to_red, respectively.
+  </P
+><P
+><IMG
+SRC="figures/incat/macro3.jpg"
+ALIGN="CENTER"></P
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-RESOURCE-MACROS"
+>5.9.1. Using Macros from Other Resources</A
+></H3
+><P
+>Sometimes it's useful to configure a series with macros from resource groups besides
+   the one the test will execute on.  For example, if a test will execute on a local resource to ping a group of 
+   remote resources, it would be helpful to use the macro for the hosts defined in the remote resource group.
+   In the image below, we add a new group
+   called "remoteGrid" to the default Inca configuration.  The "remoteGrid" group contains two resources "remoteResourceA"
+   and "remoteResourceB".  Each of these two resources has a macro called "gramHost" defined with a GRAM gatekeeper 
+   hostname for that resource.</P
+><P
+><IMG
+SRC="figures/incat/resource-macro1.gif"
+ALIGN="CENTER"></P
+><P
+>Now we set up a ping test that is scheduled to execute on the "localResource" group, but is configured using 
+  the "__incaHosts__" macro from the "remoteGrid" group.  The only difference in syntax is to 
+  add the resource group name and an arrow  to the macro name as in the image below.   
+  Since we're executing on "localResource", we have to add a "remoteGrid-&#62;"
+  to the front of the macro name in order to get that group's macro values. </P
+><P
+>In this example we use the "__incaHosts__" macro, which is a special macro that is automatically 
+  created by Inca for each resource group and resolves to the leaf hostnames of each resource group.
+  So the series configuration in the image below will create two ping tests to execute on "localResource": 
+  one that pings the hostname of "remoteResourceA" (sapa.sdsc.edu) and one that pings the 
+  hostname of "remoteResourceB" (cuzco.sdsc.edu).  This is because we're getting all the values 
+  of the "remoteGrid" group's "__incaHosts__" macro, and the "remoteGrid" group 
+  contains "remoteResourceA" and "remoteResourceB".</P
+><P
+><IMG
+SRC="figures/incat/resource-macro2.gif"
+ALIGN="CENTER"></P
+><P
+>We could also configure another series that is identical to the one shown in the image above except we
+   replace the "__incaHosts__" macro with the "gramHost" macro.  In this case, the two new ping tests will 
+   ping the "gramHost" hostname of "remoteResourceA" (gatekeeper.sapa.sdsc.edu) and the "gramHost" hostname 
+   of "remoteResourceB" (gatekeeper.cuzco.sdsc.edu).</P
+><P
+><IMG
+SRC="figures/incat/resource-macro3.gif"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-ALL2ALL"
+>5.9.2. Configuring "all2all" Series</A
+></H3
+><P
+>The "all2all" test results are calculated by the consumer.  Generally "all2all" series 
+  are cross-site tests.  The images below illustrates an example of configuring an "all2all" ping series. 
+  </P
+><P
+>First a new suite called "cross-site" is added to contain the series for our "all2all" tests:
+  <P
+><IMG
+SRC="figures/incat/all2all-suite.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>Next we select the cross-site test that we'll execute (grid.benchmark.performance.ping) and configure 
+  the targets with a "pingHosts" macro.  The consumer detects that this is an all2all series
+  because the nickname and context contain all2all strings as described in the image below:
+  <P
+><IMG
+SRC="figures/incat/incat-annotated-all2all.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>In addition to configuring the actual all2all tests, we also configure a summary series for the
+  latest pass/fail results of each all2all test.  This summary will be used by the All2AllFilter described in <A
+HREF="userguide-advanced-config.html#ALL2ALL-FILTER"
+>Section 11.3.2</A
+> to determine which resource is responsible for a failure.  For example, in the example above we created
+  an all2all ping test to be executed on the defaultGrid resource group.  Each of defaultGrid resources is pinging three other resources: cuzco.sdsc.edu, inca.sdsc.edu and badhost.sdsc.edu.  The summary series will find the latest results for each of the resources being pinged in order to assess whether a new failure is the fault of the resource doing the ping or the resource being pinged.  For example, if two of the three resources in the defaultGrid group are unable to ping badhost.sdsc.edu, when the third resource in defaultGrid goes to ping badhost.sdsc.edu and fails we know that it's the fault of badhost.sdsc.edu and not the third resource (or subsequently any other resource until badhost.sdsc.edu is fixed).  Based on the results of the summary series, the All2AllFilter would mark this third resource as "NOT_AT_FAULT" for failing to ping badhost.sdsc.edu.</P
+><P
+>To configure a summary series for all2all tests, make a new series that will execute the "summary.successpct.performance" reporter with the following parameters:</P
+><P
+></P
+><UL
+><LI
+><P
+>"Context": contains a similar "nickname=all2all:testName_to_.*" string as the all2all tests being summarized. Note that ".*" replaces the "@pingHosts@" macro used above since we're only creating one series.  </P
+></LI
+><LI
+><P
+>"filter": same as the Context string minus "nickname=".  The reporter will get the latest results for all series whose nickname matches this string.</P
+></LI
+><LI
+><P
+>"ignoreErr": the regular expression that the summary reporter looks for in error strings when counting failures and if it finds it then the errors are marked neutrally.</P
+></LI
+><LI
+><P
+>"restId", "server" and "type": tell the reporter where to get the latest test results (in this example via the consumer at rocks-101.sdsc.edu using the "rest" URL).</P
+></LI
+><LI
+><P
+>"suite": the suite the all2all tests being summarized can be found in.</P
+></LI
+><LI
+><P
+>"wgetArgs": extra arguments to use when wget'ing the test results.</P
+></LI
+></UL
+><P
+>  <P
+><IMG
+SRC="figures/incat/incat-annotated-summary-reporter.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>The results of the all2all tests configured above are shown in the following image.  Note that while the single summary series produces all the boxes in the "SUMMARY" column, each of the other boxes represents a unique series.
+  <P
+><IMG
+SRC="figures/consumer/all2all-suite-before-filter.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>After we add the All2AllFilter described in <A
+HREF="userguide-advanced-config.html#ALL2ALL-FILTER"
+>Section 11.3.2</A
+> the results 
+  also show when an individual resource is not at fault for the error.  Error messages are prefixed with 
+  "NOT_AT_FAULT" and marked neutrally in stylesheets ("noFault") and history graphs:
+  <P
+><IMG
+SRC="figures/consumer/all2all-suite-after-filter.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-INCAT-COMPARISON"
+>5.10. Series Comparison and Notification</A
+></H2
+><P
+>  For a particular series, the Inca system by default reports only whether or
+  not the series reporter was able to execute successfully--whether a version
+  reporter was able to determine a package version, a unit reporter was able to
+  run a program, etc.  Using Inca's comparison and notification feature, you
+  can refine a series to define success more precisely and to receive
+  notification from Inca when a series reporter detects a problem.  The bottom
+  text boxes of the series edit dialog provide access to Inca's comparison
+  and notification feature.
+  </P
+><P
+><IMG
+SRC="figures/incat/incat-annotated-gcc-version.jpg"
+ALIGN="CENTER"></P
+><P
+>  The comparison expression can test the content of the report body, the content of the
+  report error message, or the value of any symbols defined in the report body
+  by &#60;ID&#62; tags.  The expression may use any of the boolean operators
+  &#60;, &#60;=, &#62;, &#62;=, ==, and !=, plus perl's pattern match (=~) and
+  mismatch (!~) operators.  One simple test would be "body =~ /./", which would
+  test whether the report body contained any characters.  Tests can be joined
+  together by the &#38;&#38; and || operators.  Using these, you could ignore
+  an expected, minor error with the test
+  "body =~ /./ || errorMessage == 'Try again later'".
+  </P
+><P
+>  As mentioned above, you can include symbols defined in the report body in
+  your tests.  The Inca system uses the content of any subsequent tag as the
+  symbol value.  For example, the body of the output of the gcc version
+  reporter might be
+  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  &#60;body&#62;
+    &#60;package&#62;
+      &#60;ID&#62;gcc&#60;/ID&#62;
+      &#60;version&#62;3.1&#60;/version&#62;
+    &#60;/package&#62;
+  &#60;/body&#62;
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>  Here, Inca will use "3.1" as the value of the symbol "gcc".  With this
+  output, the comparison test "gcc &#62;= 3.0" would succeed, while the
+  comparison "gcc == 3.0" would fail.  If the report body contains an
+  &#60;ID&#62; tag with no subsequent tag, the value of the symbol is defined
+  to be "".
+  </P
+><P
+>The image below illustrates how a comparison for subpackage versions
+        would be configured. 
+  <P
+><IMG
+SRC="figures/incat/incat-annotated-subpackage-version.jpg"
+ALIGN="CENTER"></P
+>
+  </P
+><P
+>  Inca supports the ability to run a script that notifies you of changes in a
+  series comparison.  When you specify a series comparison in the incat series
+  dialog, two additional components become visible.  The Notification Script
+  pull-down menu allows you to select the script to run, and the Script
+  Parameters text box allows you to enter parameters to pass to the script.
+  By default, the Inca installation provides two notification scripts,
+  EmailNotifier and LogNotifier.  The first sends email to each address
+  specified by the script parameters; the second writes a message to the
+  specified log file.  See <A
+HREF="userguide-advanced-config.html#CUSTOM-NOTIFICATION"
+>Section 11.2</A
+>
+  for directions on customizing the notifications you receive.
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-quickstart.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-consumer.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Quick Start</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Data Display (Data Consumers)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

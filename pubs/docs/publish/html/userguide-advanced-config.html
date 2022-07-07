@@ -1,0 +1,2938 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Advanced Configuration</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Inca 2.6 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Security"
+HREF="userguide-security.html"><LINK
+REL="NEXT"
+TITLE="Component Man Pages"
+HREF="userguide-man.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.6 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-man.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-CONFIG"
+>11. Advanced Configuration</A
+></H1
+><P
+>This section describes advanced configuration options such as
+installing components in non-default locations and changing other default properties.</P
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="COMP-OPTIONS"
+>11.1. Inca Component Options</A
+></H2
+><P
+>Each inca component has a set of options that can be set in either the $INCA_DIST/etc/common/inca.properties file or from the command line.  The inca.properties file has a list of name value pairs of the format "inca.component.property=value".  For example, to start the agent on port 5323 instead of 6323 and enter the password on the command line rather than get it from standard in, you could: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>edit $INCA_DIST/etc/common/inca.properties and replace:</P
+><P
+></P
+><UL
+><LI
+><P
+>"inca.agent.port=6323" with "inca.agent.port=5323"</P
+></LI
+><LI
+><P
+>"inca.agent.password=stdin:password&#62;" with "inca.agent.password=pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+>" (where &#60;password&#62; is the password set with the createauth command)</P
+></LI
+></UL
+><P
+>execute:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start agent</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+><STRONG
+><FONT
+COLOR="RED"
+>OR</FONT
+></STRONG
+> execute the following command:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca start agent -p 5323 -P pass:<STRONG
+><FONT
+COLOR="RED"
+>&#60;password&#62;</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>Man pages with component options are described in <A
+HREF="userguide-man.html"
+>Section 12</A
+>.</P
+><P
+>Note:  To change the port of the consumer, see <A
+HREF="userguide-consumer.html#CONSUMER-PORT"
+>Section 6.12</A
+>.</P
+><P
+>Note: if you have more than 5 reporter managers running, increase the number of agent and depot threads in the inca.properties file 
+to be 10 more than the number of reporter managers.  For example, if running 15 reporter managers edit the inca.properties file as follows:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>31 # Maximum number of threads running on the agent
+32 inca.agent.numthreads=25
+...
+82 # Maximum number of threads running on the depot
+83 inca.depot.numthreads=25</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="CUSTOM-NOTIFICATION"
+>11.2. Customizing Series Notification</A
+></H2
+><P
+>  To customize the notification you receive whenever the result of a series
+  comparison changes, you can either modify the default Inca notification
+  scripts (found in the sbin/ subdirectory of your Inca Depot installation) or
+  write your own.  Set inca.incat.notifiers in your inca.property file to add a
+  new script to the options presented in the incat series dialog.  For example,
+  to add a script named "MyNotifier" to the options, you would add the
+  following line to inca.properties.
+  <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>  inca.incat.notifiers=EmailNotifier,LogNotifier,MyNotifier
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+  </P
+><P
+>  The Inca Depot sets environment variables that provide information to the
+  notification script about the series and comparison, and the script can
+  incorporate these variables into its notification.  For example,
+  EmailNotifier uses several of these variables in constructing the email body.
+  These are the environment variable names that the Depot defines:
+  <DIV
+CLASS="TABLE"
+><A
+NAME="AEN2403"
+></A
+><P
+><B
+>Table 9. Email Macro Names</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Name</P
+></TH
+><TH
+><P
+>Meaning</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>incaargs</P
+></TD
+><TD
+><P
+>the arguments passed to the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incabody</P
+></TD
+><TD
+><P
+>the report body</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacollected</P
+></TD
+><TD
+><P
+>the time the reporter ran</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacommited</P
+></TD
+><TD
+><P
+>the time the report was entered in the Depot</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacomparison</P
+></TD
+><TD
+><P
+>the comparison specified for this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacomparisonResult</P
+></TD
+><TD
+><P
+>the output of the comparison for this report, typically "SUCCESS" or "FAIL" followed by a list of identifiers</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacompleted</P
+></TD
+><TD
+><P
+>whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaconfigId</P
+></TD
+><TD
+><P
+>the Inca database id of the series configuration</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacontext</P
+></TD
+><TD
+><P
+>the complete command, including arguments, used to execute the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacpuLimit</P
+></TD
+><TD
+><P
+>the maximum CPU seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incacpuUsage</P
+></TD
+><TD
+><P
+>the actual CPU seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaerrorMessage</P
+></TD
+><TD
+><P
+>any failure message recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incahostname</P
+></TD
+><TD
+><P
+>the name of the host where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incainstanceId</P
+></TD
+><TD
+><P
+>the Inca database id of this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incalog</P
+></TD
+><TD
+><P
+>log messages recorded by the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incamemoryLimit</P
+></TD
+><TD
+><P
+>the maximum memory MB allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incamemoryUsage</P
+></TD
+><TD
+><P
+>the actual memory MB used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incanickname</P
+></TD
+><TD
+><P
+>the nickname of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareportId</P
+></TD
+><TD
+><P
+>the Inca database id of the report</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareporter</P
+></TD
+><TD
+><P
+>the name of the reporter</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incareporterPath</P
+></TD
+><TD
+><P
+>the path to the reporter on the host where it executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaresource</P
+></TD
+><TD
+><P
+>the name of the Inca resource where the reporter executed</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaresult</P
+></TD
+><TD
+><P
+>"PASS" or "FAIL", depending on whether or not the reporter completed execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaschedule</P
+></TD
+><TD
+><P
+>the cron spec for this series' schedule</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaseriesId</P
+></TD
+><TD
+><P
+>the Inca database id of this series</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incastderr</P
+></TD
+><TD
+><P
+>any text written by the reporter to stderr</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incauri</P
+></TD
+><TD
+><P
+>the reporter URI</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaversion</P
+></TD
+><TD
+><P
+>the reporter version</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incawallClockLimit</P
+></TD
+><TD
+><P
+>the maximum wall clock seconds allowed for this reporter to execute</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incawallClockUsage</P
+></TD
+><TD
+><P
+>the actual wall clock seconds used by this reporter execution</P
+></TD
+></TR
+><TR
+><TD
+><P
+>incaworkingDir</P
+></TD
+><TD
+><P
+>the working directory for the reporter manager on the host where the reporter executed</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+>
+  </P
+><P
+>Values that are specified as the "Script Arguments" in incat are
+  passed as arguments to the script.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="REPORT-FILTERING"
+>11.3. Report Filtering</A
+></H2
+><P
+>The Inca Depot allows you to filtering incoming reports before information
+about them is placed in the Inca database.  To do so, you need to write a class
+that extends edu.sdsc.inca.depot.util.ReportFilter and set the property
+inca.depot.reportFilter to the name of the class.</P
+><P
+>An Inca report consists of five elements, all strings: the execution context
+(reporter name and arguments), the name of the resource where the reporter ran,
+the reporter stdout (i.e., report), the reporter stderr, and a report of the
+system resources used by the reporter execution.  Of these, stderr may be null;
+the other four are required.</P
+><P
+>The ReportFilter class provides set and get methods for each of these five
+elements.  If the inca.depot.reportFilter property is set, the Inca Depot
+creates an instance of the named class, then calls each of its set and get
+methods in turn to allow it to make changes to any of the elements.  Changes
+made by the filter are incorporated into the information stored in the Depot
+database.  If a ReportFilter get method for any of the elements other than
+stderr returns null, the Depot discards the report.</P
+><P
+>For example, this class directs the Depot to ignore reports that arrive from
+blue.ufo.edu and modifies report stderr values that contain particular messages.</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>public class MyReportFilter extends edu.sdsc.inca.depot.util.ReportFilter {
+
+  public String getResource() {
+    String resource = super.getResource();
+    return resource.equals("blue.ufo.edu") ? null : resource;
+  }
+
+  public String getStderr() {
+    String stderr = super.getStderr();
+    stderr = stderr.replaceAll("Try again.*\n", "");
+    return stderr;
+  }
+
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>To install your filter, first compile the class.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% javac -classpath lib/inca-depot.jar MyReportFilter.java</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Copy the compiled class to your <TT
+CLASS="FILENAME"
+>$INCA_DIST/lib</TT
+> 
+directory.  For example, </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cp MyReportFilter.class $INCA_DIST/lib</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Then add the inca.depot.reportFilter property to your 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.reportFilter=MyReportFilter
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Finally, restart the depot.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca restart depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="DOWNTIME-FILTER"
+>11.3.1. Downtime Filter</A
+></H3
+><P
+>The depot has a ready to use filter called "DowntimeFilter" that prefixes
+the error messages of resources marked as down with "DOWNTIME: +optionalString+:".  
+By default the consumer will display results with a error message starting with 
+"DOWNTIME:" neutrally - summary pages print the result as "down" instead of "error" and
+historical graphs show the result as "unknown".  The consumer has templates in the 
+<TT
+CLASS="FILENAME"
+>inca-common.xsl</TT
+> stylesheet called "getLink" and "getDownErr" to 
+display errors generated by the downtime filter in the report summary and details pages.</P
+><P
+>The downtime filter is included in the inca-depot.jar and looks like:</P
+><P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>package edu.sdsc.inca.depot.util;
+
+import org.apache.log4j.Logger;
+import java.net.URL;
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.IOException;
+
+/**
+ * Prefixes error messages in depot reports with "DOWNTIME: +optionalString+: "
+ * if the resource the report ran on is in downtime.   Resources are determined
+ * to be in downtime if they are listed in a downtime properties file.  In order
+ * to reduce overhead, the downtime properties file is retrieved and cached at
+ * a refresh interval in the getDowntimes() method instead of being retrieved
+ * for each filter instance.
+ */
+public class DowntimeFilter extends edu.sdsc.inca.depot.util.ReportFilter {
+  private static Logger logger = Logger.getLogger(DowntimeFilter.class);
+  private static Properties downtimes = new Properties();
+  private static long lastRefresh = 0;
+
+  /**
+   * Returns cached property list of resources in downtime.  Gets and caches
+   * property list from file in classpath (downtime.properties) if cache has
+   * expired according to refreshMins.
+   *
+   * The property list file contents can be:
+   *
+   *  downResource1=optionalErrorMessagePrefixStringForResource1
+   *  downResource2=optionalErrorMessagePrefixStringForResource2
+   *
+   * OR
+   *
+   *  downResource1
+   *  downResource2
+   *
+   */
+  synchronized static Properties getDowntimes()  {
+    String downtimePropFile = System.getProperty("inca.depot.downtimeFile");
+    if(downtimePropFile == null) {
+      downtimePropFile  = "downtime.properties";
+    }
+    String downtimeRefresh = System.getProperty("inca.depot.downtimeRefresh");
+    if(downtimeRefresh == null) {
+      downtimeRefresh  = "15";
+    }
+    Integer refreshMins = Integer.parseInt(downtimeRefresh);
+    long minSinceLastRefresh = (System.currentTimeMillis()-lastRefresh)/60000;
+    if (minSinceLastRefresh &#62;= refreshMins){
+      URL url = ClassLoader.getSystemClassLoader().getResource(downtimePropFile);
+      if(url == null) {
+        logger.error( downtimePropFile + " not found in classpath" );
+      }
+      logger.debug( "Located file " + url.getFile() );
+      downtimes.clear();
+      try {
+        InputStream is = url.openStream();
+        downtimes.load(is);
+        is.close();
+      } catch (IOException e){
+        logger.error( "Can't load properties file" );
+      }
+      lastRefresh = System.currentTimeMillis();
+    }
+    return downtimes;
+  }
+
+  /**
+   * Writes new report with modified error message to depot if resource is down
+   *
+   * @return  string with depot report (reporter Stdout)
+   */
+  public String getStdout() {
+    String resourceProp  = getDowntimes().getProperty(super.getResource());
+    if (resourceProp != null){
+      logger.debug( super.getResource() + " is down " + resourceProp );
+      return super.getStdout().replaceFirst(
+          "&#60;errorMessage&#62;", "&#60;errorMessage&#62;DOWNTIME:"+ resourceProp +": ");
+    } else{
+      return super.getStdout();
+    }
+  }
+
+}</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>To use this filter, first 
+write a script that prints the names of down resources to a file called "downtime.properties" 
+in the classpath of the depot (e.g. $INCA_DIST/etc/downtime.properties).  If you prefer to 
+call the file something besides "downtime.properties", set the name of the file in 
+your <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.downtimePropFile=MyDowntimeFilename
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>In order to reduce depot overhead, the properties file is retrieved and 
+cached every 15 minutes by default.  The caching frequency can be changed in 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> to a different number of 
+minutes:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.downtimeRefresh=5
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The "downtime.properties" file contents can be something like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>downResource1=optionalErrorMessagePrefixStringForResource1
+downResource2=optionalErrorMessagePrefixStringForResource2</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+    OR
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>downResource1
+downResource2</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Next add the inca.depot.reportFilter property to your 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Finally, restart the depot.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca restart depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="ALL2ALL-FILTER"
+>11.3.2. All2All Filter</A
+></H3
+><P
+>The depot has a ready to use filter called "All2AllFilter" that prefixes
+error messages in depot reports with "NOT_AT_FAULT: " if the resource the 
+report ran on is not at fault for the "all2all" error and the
+report is not already prefixed with "DOWNTIME" (see <A
+HREF="userguide-incat.html#USERGUIDE-INCAT-ALL2ALL"
+>Section 5.9.2</A
+> 
+for more information about configuring "all2all" tests).  Resources are determined to
+not be at fault if the summary property that matches their nickname has failed. 
+Summary properties are written for any reports with the "summary.successpct.performance" reporter name.</P
+><P
+>By default, errors that begin with "NOT_AT_FAULT" are displayed neutrally 
+(see <A
+HREF="userguide-consumer.html#CONSUMER-NEUTRAL-ERRS"
+>Section 6.10</A
+>). The all2all filter is included in the inca-depot.jar 
+and is configured by adding the inca.depot.reportFilter property to your 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> file</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.depot.reportFilter=edu.sdsc.inca.depot.util.All2AllFilter
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>and restarting the depot.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca restart depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="MULTIPLE-FILTERS"
+>11.3.3. Multiple Filters</A
+></H3
+><P
+>The depot can apply multiple filters to reports.  To specify more than one filter, use a comma 
+separated list for the inca.depot.reportFilter property in <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+>:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>inca.depot.reportFilter=edu.sdsc.inca.depot.util.DowntimeFilter, edu.sdsc.inca.depot.util.All2AllFilter</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+Filters are applied in the order they are listed.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="DB-CONFIG"
+>11.4. Depot Database Configuration</A
+></H2
+><P
+>The Inca depot uses Hibernate to interface to a relational database backend for 
+storing reports and incat configuration.  By default, the Inca depot uses Hibernate's HSQL 
+database but can be configured to use any Hibernate supported database.  
+We have tested the Inca depot with PostgreSQL and Oracle.</P
+><P
+>Steps for using a depot database other than HSQL are as follows: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Stop the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca stop depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Edit $INCA_DIST/etc/hibernate.properties</P
+><P
+></P
+><UL
+><LI
+><P
+>Comment out the first 5 lines which specifies for hibernate to use 
+hsql as its backend database: 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>1 #hibernate.dialect=org.hibernate.dialect.HSQLDialect
+2 #hibernate.connection.driver_class=org.hsqldb.jdbcDriver
+3 #hibernate.connection.url=jdbc:hsqldb:test
+4 #hibernate.connection.username=sa
+5 #hibernate.connection.password=</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Uncomment the block which specifies for hibernate to use your database (i.e., for PostgreSQL uncomment 8-13, 
+for MySQL uncomment 17-21, for Oracle uncomment 24-28). </P
+></LI
+><LI
+><P
+>Change the uncommented hibernate.connection.url, hibernate.connection.username and hibernate.connection.password 
+property values to be the host/db name, login username and password for your database.  </P
+></LI
+></UL
+></LI
+><LI
+><P
+>Put JDBC drivers for your database in the $INCA_DIST/lib directory.  Driver download locations:
+<A
+HREF="http://jdbc.postgresql.org/download.html"
+TARGET="_top"
+>PostgreSQL</A
+>, 
+<A
+HREF="http://www.mysql.com/products/connector/j/"
+TARGET="_top"
+>MySQL</A
+>,
+<A
+HREF="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/"
+TARGET="_top"
+>Oracle</A
+></P
+></LI
+><LI
+><P
+>Initialize the depot (set up the Inca tables):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca depot -d</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You should see something like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Initializing c3p0 pool... 
+... 
+Database Initialization Completed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Start the depot 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/inca start depot</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="PEER-DEPOTS"
+>11.5. Depot Fault Tolerance</A
+></H2
+><P
+>In order to respond to unexpected depot failure, configure
+peer depots to mirror each other so that if one fails another can 
+take over.  NOTE: the depots must be using a database other than 
+the default hibernate database.  There's a bug in hibernate that
+prevents synchronization.  To configure the depot database see
+<A
+HREF="userguide-advanced-config.html#DB-CONFIG"
+>Section 11.4</A
+>. 
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="REDUNDANT-DEPOT"
+></A
+><P
+><B
+>Figure 25. Inca deployment with fault tolerant depot</B
+></P
+><P
+><IMG
+SRC="figures/depot/depot-enhancement.jpg"
+ALIGN="CENTER"></P
+></DIV
+></P
+><P
+>The steps for depots mirroring are as follows: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Install the software for each peer depot
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.6/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST depot;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/depot*.pem</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted/*</TT
+>
+ files from the original 
+depot to the peer depot <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+>
+ directories respectively. Copy any custom notification scripts or filters from the original depot to the peer.</P
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> on both the original and peer depot and 
+uncomment the blocks which specify the peer hosts for your depots.  These should be the full hostname and 
+should not be "localhost" for either.  For example, if your 
+original depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edits on rocks-101.sdsc.edu would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URIs of peer depots
+inca.depot.peers=incas://cuzco.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Edits on cuzco.sdsc.edu would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URIs of peer depots
+inca.depot.peers=incas://rocks-101.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> where the consumer and agent are installed and
+uncomment the block which specifies the hosts for your depots.  For example, if your 
+original depot is on rocks-101.sdsc.edu:6324 and your peer depot is on 
+cuzco.sdsc.edu:6324, your edits would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+inca.agent.depot=incas://rocks-101.sdsc.edu:6324 incas://cuzco.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Restart the agent and consumer. </P
+></LI
+><LI
+><P
+>Start each new peer depot with the "sync" command below and look for "DB synchronization succeeded" in the 
+<TT
+CLASS="FILENAME"
+>$INCA_DIST/var/depot.log</TT
+> files:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; bin/inca start depot --sync</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Stop the original depot and restart it using the "sync" command below and look for "DB synchronization succeeded"
+in <TT
+CLASS="FILENAME"
+>$INCA_DIST/var/depot.log</TT
+>
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; bin/inca stop depot; bin/inca start depot --sync</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>In addition to a redundant depot, the consumer can also be configured for fault
+tolerance as shown in the figure below.
+        <DIV
+CLASS="FIGURE"
+><A
+NAME="REDUNDANT-DEPOT-CONSUMER"
+></A
+><P
+><B
+>Figure 26. Inca deployment with fault tolerant depot and consumer</B
+></P
+><P
+><IMG
+SRC="figures/depot/depot-enhancement2.jpg"
+ALIGN="CENTER"></P
+></DIV
+>&#13;</P
+><P
+>The steps for adding a consumer for each peer depot are as follows: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Install a consumer for each peer depot that doesn't have one 
+(move the inca.properties file if 
+it has already been edited as this step will overwrite it)
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.6/incaInstall.sh;
+% sh incaInstall.sh $INCA_DIST consumers;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Copy the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/consumer.*pem</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted/*</TT
+>
+ files from the original 
+consumer to the peer consumer <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc</TT
+> and <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+>
+ directories respectively. Copy any custom xsl or tag files from the original consumer.</P
+></LI
+><LI
+><P
+>Edit <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/common/inca.properties</TT
+> for each consumer and 
+configure one consumer per depot
+where each consumer/depot pair are usually on the same machine.  For example, if your 
+depot is on rocks-101.sdsc.edu:6324, your edit would look like:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>...
+# URI to the depot -- use incas:// if auth is required and inca:// if not
+inca.consumer.depot=incas://rocks-101.sdsc.edu:6324
+...</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><P
+>Configure a proxy server to accept all traffic 
+and direct it to the appropriate consumer address on the internal network.</P
+></LI
+><LI
+><P
+>Restart each depot and consumer using the --sync flag to start the depots. </P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-MANUAL"
+>11.6. Manual Access Method</A
+></H2
+><P
+>A resource administrator may be unable to start a reporter manager
+using one of the automated methods (ssh, globus2, or local).  In this case, an
+Inca administrator can add the resource using the access method 'manual'. 
+The following steps will need to be taken by the Inca administrator and
+resource administrator:</P
+><P
+>Inca Administrator</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-ADMIN-CERT"
+>3</A
+>: Generate a certificate for the
+reporter manager.</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-ADMIN-ADD"
+>4</A
+>: Add resource in incat with access method 'manual'</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+>Resource Administrator</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-INSTALL"
+>1</A
+>: Install reporter manager</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-CRED"
+>2</A
+>: Generate private key and
+certificate request</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-CERT"
+>5</A
+>: Install certificate and
+trusted certificate.</TD
+></TR
+><TR
+><TD
+>Step <A
+HREF="userguide-advanced-config.html#MAN-SYSADMIN-START"
+>6</A
+>: Start reporter manager</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><A
+NAME="MAN-SYSADMIN-INSTALL"
+></A
+><P
+>RESOURCE ADMIN: install the reporter manager distribution on your resource using the following steps.</P
+><P
+></P
+><OL
+TYPE="a"
+><LI
+><P
+>Create an installation directory for the reporter manager (e.g.,
+$RM_INSTALL_DIR).  Download the reporter manager tarball and build
+script:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR; \
+  wget http://inca.sdsc.edu/releases/2.6/Inca-ReporterManager.tar.gz; \
+  wget http://inca.sdsc.edu/releases/2.6/buildRM.sh</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+> At this point
+      the directory on the remote machine should look something like this:
+      <TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls         
+Inca-ReporterManager.tar.gz    
+buildRM.sh                    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+      </P
+></LI
+><LI
+><P
+>Install the reporter manager and list directories to verify files unpacked correctly:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% bash buildRM.sh $RM_INSTALL_DIR Inca-ReporterManager.tar.gz
+
+% ls $RM_INSTALL_DIR 
+Inca-ReporterManager-9.6764    build.log    lib    share
+Inca-ReporterManager.tar       buildRM.sh   man    var
+bin                            etc          sbin
+      </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></OL
+></LI
+><LI
+><A
+NAME="MAN-SYSADMIN-CRED"
+></A
+><P
+>RESOURCE ADMIN: create a set of credentials for the reporter manager (i.e., private
+    key and certificate request) using the command below.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR; ./sbin/inca createRmCertRequest -P stdin:password: 
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Enter a password for your key (to use when you start up
+    the reporter manager).  Two files will be created in 
+    <TT
+CLASS="FILENAME"
+>$RM_INSTALL_DIR/etc</TT
+>:  
+    an encrypted private key called <TT
+CLASS="FILENAME"
+>rmkey.pem</TT
+> and 
+    a certificate request called <TT
+CLASS="FILENAME"
+>rmreq.pem</TT
+>.  
+    Email <TT
+CLASS="FILENAME"
+>rmreq.pem</TT
+> to your Inca administrator and they
+    will generate a certificate for your reporter manager.
+    </P
+></LI
+><LI
+><A
+NAME="MAN-ADMIN-CERT"
+></A
+><P
+>INCA ADMIN: upon receiving a rmreq.pem file,
+    generate a certificate for a reporter manager using the 
+    command below.  Replace "rmreq.pem" with to the path to the rmreq.pem
+    file that you received from the resource administrator and
+    "rmcert-resource.pem" with the path to the reporter manager certificate
+    that will be generated by the command.
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST; ./bin/inca createRmCert -P stdin:password: <STRONG
+><FONT
+COLOR="RED"
+>rmreq.pem</FONT
+></STRONG
+> <STRONG
+><FONT
+COLOR="RED"
+>rmcert-resource.pem</FONT
+></STRONG
+>
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Enter the password for the inca distribution (i.e., created in
+    Step <A
+HREF="userguide-quickstart.html#QS-STEP4"
+>4</A
+> during the initial installation process).  
+    Email the reporter manager certificate, "rmcert-resource.pem",
+    and trusted certificate to the resource administrator.  The trusted
+    certificate is the file ending with the <TT
+CLASS="FILENAME"
+>.0</TT
+> extension
+    in your <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/trusted</TT
+> directory.  For
+    example <TT
+CLASS="FILENAME"
+>f73fee74.0</TT
+> is the trusted certificate in the
+    following directory:
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ls etc/trusted/
+agentcert.pem  f73fee74.0  rocks-101.sdsc.educert.pem
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><A
+NAME="MAN-ADMIN-ADD"
+></A
+><P
+>INCA ADMIN: add the specified resource within incat
+    and choose 'manual' as below:
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="MANUAL.FIG"
+></A
+><P
+><B
+>Figure 27. Add Resource Screen</B
+></P
+><P
+><IMG
+SRC="figures/incat/manual.jpg"
+ALIGN="CENTER"></P
+></DIV
+><P
+> Make sure the 
+    "Equivalent" box is checked, otherwise the depot may discard reports with 
+    "unattached to any DB config" warnings.  The new "manualResource" will
+    also need to be added to the "defaultGrid" resource in order to run the
+    default sampleSuite.  Select "Agent-&#62;Commit" from the menu to
+    commit the changes.  
+    </P
+></LI
+><LI
+><A
+NAME="MAN-SYSADMIN-CERT"
+></A
+><P
+>RESOURCE ADMIN: install the certificate and trusted certificate from the 
+    Inca admin in your reporter manager installation.  Replace
+    "rmcert-resource.pem" and "trusted.0" with the names of the files
+    received from your Inca administrator.
+    </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR
+% cp <STRONG
+><FONT
+COLOR="RED"
+>rmcert-resource.pem</FONT
+></STRONG
+> $RM_INSTALL_DIR/etc/rmcert.pem
+% mkdir $RM_INSTALL_DIR/etc/trusted
+% cp <STRONG
+><FONT
+COLOR="RED"
+>trusted.0</FONT
+></STRONG
+> $RM_INSTALL_DIR/etc/trusted
+    </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+><LI
+><A
+NAME="MAN-SYSADMIN-START"
+></A
+><P
+>RESOURCE ADMIN: 
+    Finally, you can start up the reporter manager using the commands
+below.  Replace "depotHost" with the hostname where the depot is running and
+replace "manualResource" with the manual resource group name added in step
+<A
+HREF="userguide-advanced-config.html#MAN-ADMIN-ADD"
+>4</A
+>: </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $RM_INSTALL_DIR
+% ./sbin/inca reporter-manager -m \
+ -a incas://<STRONG
+><FONT
+COLOR="RED"
+>agentHost</FONT
+></STRONG
+>:6323 \
+ -d incas://<STRONG
+><FONT
+COLOR="RED"
+>depotHost</FONT
+></STRONG
+>:6324 \
+ -c etc/rmcert.pem \
+ -k etc/rmkey.pem -t etc/trusted \
+ -e bin/inca-null-reporter \
+ -r var/reporter-packages \
+ -R sbin/reporter-instance-manager \
+ -v var \
+ -w 1 \
+ -i <STRONG
+><FONT
+COLOR="RED"
+>manualResource</FONT
+></STRONG
+> \
+ -L DEBUG \
+ -l var/reporter-manager.log \
+ -P true
+<STRONG
+><FONT
+COLOR="RED"
+>&#60;enter your password&#62;</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Command will hang until the password for the reporter manager key is entered.  
+If the private key is not password protected, don't use the -P option in the command above.
+Check to make sure the reporter manager is running by doing a "ps | grep reporter-manager" and 
+make sure there aren't errors by doing a "grep ERROR $RM_INSTALL_DIR/var/*".</P
+><P
+>To stop the reporter manager at any time, type </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./sbin/inca stop reporter-manager</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Make sure all reporter-manager ps are stopped</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> % ps | grep manager </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-BATCH"
+>11.7. Batch Systems</A
+></H2
+><P
+>  The cluster.batch.wrapper reporter can be useful when running Inca on batch
+  systems.  Without an --exec argument, this reporter submits a trivial program
+  to the batch scheduler and reporters the amount of time it spends in the queue
+  before executing.  If given an --exec argument, cluster.batch.wrapper instead
+  submits the argument value (which should contain a reporter invocation) and
+  collects and reports it output.  This use allows reporters to be executed on
+  batch nodes, rather than on the submission host.  For example, this command
+  will report the version of gcc that is installed on the batch nodes of a PBS
+  cluster.
+  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cluster.batch.wrapper --scheduler=pbs --exec=cluster.compiler.gcc.version
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>  The --scheduler argument is the only one required; valid values are cobalt,
+  dqs, loadleveler, lsf, pbs, and sge.  Additional recognized arguments are as
+  follows.
+  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN2792"
+></A
+><P
+><B
+>Table 10. cluster.batch.wrapper options</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><THEAD
+><TR
+><TH
+><P
+>Name</P
+></TH
+><TH
+><P
+>Meaning</P
+></TH
+><TH
+><P
+>Default value</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+>account</P
+></TD
+><TD
+><P
+>User account to charge</P
+></TD
+><TD
+><P
+>none</P
+></TD
+></TR
+><TR
+><TD
+><P
+>nodes</P
+></TD
+><TD
+><P
+>Number of batch nodes to request</P
+></TD
+><TD
+><P
+>1</P
+></TD
+></TR
+><TR
+><TD
+><P
+>poll</P
+></TD
+><TD
+><P
+>How often (in seconds) to check for job completion</P
+></TD
+><TD
+><P
+>10</P
+></TD
+></TR
+><TR
+><TD
+><P
+>queue</P
+></TD
+><TD
+><P
+>The name of the queue to submit to</P
+></TD
+><TD
+><P
+>none</P
+></TD
+></TR
+><TR
+><TD
+><P
+>shell</P
+></TD
+><TD
+><P
+>The shell to use to run the batch job</P
+></TD
+><TD
+><P
+>/bin/sh</P
+></TD
+></TR
+><TR
+><TD
+><P
+>submitparam</P
+></TD
+><TD
+><P
+>Additional batch-scheduler-specific parameters to use in the submission</P
+></TD
+><TD
+><P
+>none</P
+></TD
+></TR
+><TR
+><TD
+><P
+>timeout</P
+></TD
+><TD
+><P
+>The maximum time (in minutes) the job may wait in the batch queue</P
+></TD
+><TD
+><P
+>0 (unlimited)</P
+></TD
+></TR
+><TR
+><TD
+><P
+>type</P
+></TD
+><TD
+><P
+>Submission type, used with LoadLeveler (job_type parameter), PBS (-l nodes parameter) and SGE (-pe parameter)</P
+></TD
+><TD
+><P
+>none</P
+></TD
+></TR
+><TR
+><TD
+><P
+>var</P
+></TD
+><TD
+><P
+>Path to a temp file directory</P
+></TD
+><TD
+><P
+>Current working directory</P
+></TD
+></TR
+><TR
+><TD
+><P
+>walllimit</P
+></TD
+><TD
+><P
+>The amount of time (in minutes) to request for the job </P
+></TD
+><TD
+><P
+>10</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>  Here are some additional examples of using cluster.batch.wrapper to submit
+  Inca reporters to a batch queue.
+  </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cluster.batch.wrapper --scheduler=pbs --account=alf63 \
+  --exec=cluster.compiler.gcc.version
+
+% cluster.batch.wrapper --scheduler=loadleveler --queue=normal --type=parallel \
+  --exec='network.ping.unit --host=ufo.edu'
+
+% cluster.batch.wrapper --scheduler=sge --submitparam='-js 1' \
+  --submitparam='-l h_vmem=600' \
+  --exec='cluster.ps.unit --process=init --psargs=-x'
+  </PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>  In incat, you can specify that cluster.batch.wrapper should be used to submit
+  a series by including its name and arguments in the series context string.
+  Inca stores installed reporters in the directory $INSTALL_DIR/bin, so the
+  path to cluster.batch.wrapper will be $INSTALL_DIR/bin/cluster.batch.wrapper.
+  The figure below shows the context string for the network.ping.unit series
+  mentioned above.
+  </P
+><P
+><IMG
+SRC="figures/incat/ug-incat-batch.png"
+ALIGN="CENTER"></P
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-RUNNOW"
+>11.8. Manual Run Now</A
+></H2
+><P
+>Oftentimes resource or system administrators will want to show that a
+problem has been resolved by independently executing inca tests before they are
+scheduled to run so that their results appear on status pages.  Rather than
+granting resource administrators full privileges just to use incat's "run now"
+button, the inca administrator can provide resource administrators with a
+"manual run now" option - a command line script to execute tests and send
+results to the depot.  A "run now" can also be invoked via the Inca web pages 
+if configured (by default "run now" is not enabled).  See <A
+HREF="userguide-consumer.html#CONSUMER-REPORT-DETAILS"
+>Section 6.5</A
+> for more information. </P
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-RUNNOW-CONFIG"
+>11.8.1. Configuring the Manual Run Now Script</A
+></H3
+><P
+>The instructions below need to be done *once* by the Inca administrator on each 
+resource where the resource administrator would like to manually run tests.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>To allow system administrators or others to execute tests with their own password, 
+copy the reporter manager key and cert for them and change the password. The 
+old password is the same as the password used in the createauth step of installing inca.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST/etc; cp rmkey.pem adminkey.pem
+% cp rmcert.pem admincert.pem
+% chmod 600 adminkey.pem
+% ssh-keygen -p
+
+Enter file in which the key is (/home/.ssh/id_rsa):
+  /home/incaReporterManager/etc/adminkey.pem
+Enter old passphrase: 
+Key has comment '/home/incaReporterManager/etc/adminkey.pem'
+Enter new passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved with the new passphrase.</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+>Create a custom wrapper script for <TT
+CLASS="FILENAME"
+>$INCA_DIST/bin/inca-run-now</TT
+> 
+called <TT
+CLASS="FILENAME"
+>$INCA_DIST/bin/admin-run-now</TT
+> using the script below as an example. 
+Use the agent and depot URIs for your installation as AGENT and DEPOT and the agent's name for the resource as RESOURCE.  
+You may need to add the "-u" parameter for the appropriate user if the reporter manager is not running as inca. 
+Run the script with the "-h" flag for more information about its input parameters:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% setenv PERL5LIB lib/perl:$PERL5LIB; bin/inca-run-now -h</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Example wrapper script:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>#!/bin/sh
+
+AGENT=incas://localhost:6323
+DEPOT=incas://localhost:6324
+RESOURCE=localResource
+
+if ( test -z "${PERL5LIB}" ); then
+PERL5LIB=lib/perl
+else
+PERL5LIB=lib/perl:${PERL5LIB}
+fi
+export PERL5LIB
+
+./bin/inca-run-now -a $AGENT -c etc/admincert.pem -d $DEPOT \
+  -k etc/adminkey.pem -P "stdin:password:" \
+  -t etc/trusted -i $RESOURCE $* </PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+> 
+<STRONG
+><FONT
+COLOR="RED"
+>(optional)</FONT
+></STRONG
+>The command to use the <TT
+CLASS="FILENAME"
+>admin-run-now</TT
+> script could be 
+added to the reporter details status pages.  This would require editing the <TT
+CLASS="FILENAME"
+>$INCA_DIST/etc/instance.xsl</TT
+> 
+file on the machine where the consumer is running and adding the xsl required to print a command like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+> % cd /home/inca/inca2install; ./bin/admin-run-now ant-unit </PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+The xsl would be similar to:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>&#60;tr&#62;
+  &#60;td colspan="2" class="header"&#62;
+    &#60;xsl:text&#62;Run now command (system admins only):&#60;/xsl:text&#62;
+  &#60;/td&#62;
+&#60;/tr&#62;
+&#60;tr&#62;
+  &#60;td colspan="2"&#62;
+    &#60;xsl:variable name="repPath" select="$report/reporterPath"/&#62;
+    &#60;xsl:variable name="incaloc" select=
+      "replace($report/reporterPath, '/var/reporter-packages/bin/.*', '')" /&#62;
+    &#60;p class="code"&#62; &#60;xsl:text&#62;% cd &#60;/xsl:text&#62;
+    &#60;xsl:value-of select="$incaloc"/&#62;
+    &#60;xsl:text&#62;; ./bin/admin-run-now &#60;/xsl:text&#62;
+    &#60;xsl:value-of select="$nickName"/&#62;&#60;/p&#62;
+  &#60;/td&#62;
+&#60;/tr&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECTION"
+><H3
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-RUNNOW-USING"
+>11.8.2. Using the Manual Run Now Script</A
+></H3
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+> 
+Log into the inca account on the desired resource and change to the $INCA_DIST directory.
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+> 
+Execute <TT
+CLASS="FILENAME"
+>admin-run-now</TT
+> script using the series nickname as the 
+input parameter and the password from your inca administrator: 
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now ant_version
+password:*********
+Started Inca reporter-manager</PRE
+></FONT
+></TD
+></TR
+></TABLE
+>
+You can also print the XML result that gets sent to the Inca server 
+in <TT
+CLASS="FILENAME"
+>$INCA_DIST/var/run-now.log</TT
+> 
+by using the "-L DEBUG" flag:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now -L DEBUG ant_version
+password:*********
+Started Inca reporter-manager</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+><LI
+><P
+> 
+Check for errors in <TT
+CLASS="FILENAME"
+>$INCA_DIST/var/run-now.log</TT
+>.
+Wait about 10-15 minutes to view the result on your inca status page (data is 
+cached and takes a few minutes to update).</P
+></LI
+><LI
+><P
+> 
+<STRONG
+><FONT
+COLOR="RED"
+>(optional)</FONT
+></STRONG
+>Execute multiple tests: in order 
+to specify that more than one test be executed, 
+use a Perl regex expression instead of the test name like:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now &#60;perl regex&#62;</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>For example, to execute all ant tests
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now "ant.*"</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>In order to check your regular expression, you can use the "-l" flag. 
+This option will list the tests but will NOT execute them. 
+For example, to display all ant tests that would be executed:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now -l "ant.*"
+Suite:  sampleSuite (2 series)
+ant_helloworld_compile_test
+ant_version</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>To view all tests, use the regular expression ".*" as below:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now -l ".*"</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>You will notice that test names are listed under a "Suite: &#60;name&#62;" header. 
+You can also use that suite name to execute all of the tests included in it. 
+For example, the following shows the tests available in the sampleSuite kit:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Suite:  sampleSuite (10 series)
+ant_helloworld_compile_test
+ant_version
+gcc_hello_world
+gcc_version
+java_hello_world
+java_version
+openssh_version
+openssl_version
+vtk-nvgl_version
+wget_page_test</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>To execute all test in a kit using the suite name, type:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now sampleSuite</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></LI
+></OL
+><P
+>Run the script with the "-h" flag for help information:
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% ./bin/admin-run-now -h</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-ADVANCED-SRCDIST"
+>11.9. Source Distributions</A
+></H2
+><P
+>  Source distributions of the Inca components are also available.  The 
+  following table lists the Inca component source distributions and shows how
+  to build each of them.  Note, that <A
+HREF="http://ant.apache.org"
+TARGET="_top"
+>Apache
+  Ant</A
+> is needed for the Inca components implemented in Java.  </P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN2938"
+></A
+><P
+><B
+>Table 11. Inca component source distributions</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+><P
+>Component</P
+></TH
+><TH
+><P
+>Build</P
+></TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-agent-src.tar.gz"
+TARGET="_top"
+>agent</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-common-java-src.tar.gz"
+TARGET="_top"
+>common</A
+> (used by all Inca Java components)</P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-consumers-src.tar.gz"
+TARGET="_top"
+>consumer</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/inca-depot-src.tar.gz"
+TARGET="_top"
+>depot</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/incat-src.tar.gz"
+TARGET="_top"
+>incat</A
+></P
+></TD
+><TD
+><P
+>ant -Dinstalldir=$INCA_DIST install</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/Inca-Reporter.tar.gz"
+TARGET="_top"
+>reporters</A
+></P
+></TD
+><TD
+><P
+>make &#60;options&#62;</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/Inca-ReporterManager.tar.gz"
+TARGET="_top"
+>reporter manager</A
+></P
+></TD
+><TD
+><P
+>perl Makefile.PL &#60;options&#62;</P
+></TD
+></TR
+><TR
+><TD
+><P
+><A
+HREF="http://inca.sdsc.edu/releases/2.6/Inca-WS.tar.gz"
+TARGET="_top"
+>web services</A
+></P
+></TD
+><TD
+><P
+>perl Makefile.PL &#60;options&#62;</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-man.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Security</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Component Man Pages</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

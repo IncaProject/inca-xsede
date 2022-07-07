@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Web Services</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Inca 2.6 User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Reporters and Repositories"
+HREF="userguide-reporters.html"><LINK
+REL="NEXT"
+TITLE="Security"
+HREF="userguide-security.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="inca.css"></HEAD
+><BODY
+CLASS="SECTION"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Inca 2.6 User's Guide: [<A
+HREF="userguide-one.html"
+TARGET="_top"
+>Single page</A
+>, <A
+HREF="userguide-index.html"
+TARGET="_top"
+>Multiple pages</A
+>]</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="USERGUIDE-WEBSERVICES"
+>9. Web Services</A
+></H1
+><P
+>In oder to enable customized data consumers as described in 
+<A
+HREF="userguide-writing-consumer.html"
+>Section 7</A
+> that utilize the
+Web Services API, you will need to install the
+Inca web services component, <TT
+CLASS="FILENAME"
+>incaws</TT
+>. </P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% wget http://inca.sdsc.edu/releases/2.6/incaInstall.sh
+% sh incaInstall.sh $INCA_DIST incaws</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>The results should look similar to:</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>Retrieving http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+--12:59:23--  http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+           =&#62; `Inca-WS.tar.gz'
+Resolving inca.sdsc.edu... 198.202.75.28
+Connecting to inca.sdsc.edu|198.202.75.28|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1,226,347 (1.2M) [application/x-tar]
+
+100%[====================================&#62;] 1,226,347     --.--K/s             
+
+12:59:23 (81.68 MB/s) - `Inca-WS.tar.gz' saved [1226347/1226347]
+
+Unpacking http://inca.sdsc.edu/releases/latest/Inca-WS.tar.gz
+Inca-WS-1.6421/
+Inca-WS-1.6421/lib/
+...
+Inca-WS-1.6421/etc/IncaWS.wsdl
+Inca-WS-1.6421/version.svn
+Will install Inca prerequisite Net::SSLeay
+Will install Inca prerequisite IO::Socket::SSL
+Will install Inca prerequisite Expat
+Will install Inca prerequisite LWP::UserAgent
+Will install Inca prerequisite MIME::Base64
+Will install Inca prerequisite SOAP::Lite
+Writing Makefile.perl.inc for Inca-WS
+Inca-WS installed</PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>To start incaws, specify the port, credentials, and hostname/port for
+the Inca agent and depot as below.  Replace "origHost", "agentHost" and "depotHost" with the correct names for your installation.</P
+><TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% cd $INCA_DIST
+% ./bin/inca incaws \
+ --auth=yes \
+ --cert=etc/agentcert.pem \
+ --key=etc/agentkey.pem \
+ --trusted=etc/trusted/<STRONG
+><FONT
+COLOR="RED"
+>origHost</FONT
+></STRONG
+>cert.pem \
+ --port=8001 \
+ --password=yes \
+ <STRONG
+><FONT
+COLOR="RED"
+>depotHost</FONT
+></STRONG
+>:6324 \
+ <STRONG
+><FONT
+COLOR="RED"
+>agentHost</FONT
+></STRONG
+>:6323
+<STRONG
+><FONT
+COLOR="RED"
+>enter password (no prompt displayed)</FONT
+></STRONG
+></PRE
+></FONT
+></TD
+></TR
+></TABLE
+><P
+>Check to make sure the incaws is running on port 8001 (error logs are in $INCA_DIST/var):
+<TABLE
+BORDER="1"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><FONT
+COLOR="#000000"
+><PRE
+CLASS="SCREEN"
+>% netstat -an | grep 8001
+tcp4       0      0  *.8001                 *.*                    LISTEN</PRE
+></FONT
+></TD
+></TR
+></TABLE
+></P
+><P
+>Please see <A
+HREF="userguide-writing-consumer.html#USERGUIDE-WEBSERVICES-API"
+>Section 7.2.2</A
+> for documentation and examples of how to use the Inca Web Services API.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="userguide-reporters.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="userguide-security.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Reporters and Repositories</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Security</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
