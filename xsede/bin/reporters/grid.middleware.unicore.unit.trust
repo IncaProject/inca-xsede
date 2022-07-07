@@ -1,0 +1,99 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use Inca::XSEDE::Unicore;
+
+my $reporter = new Inca::Reporter::Performance(
+  name => 'grid.middleware.unicore.unit.trust',
+  version => 2,
+  description => 'This test queries the CAs that the unicore server trusts and compares that to the XSEDE accepted CA list', 
+  url => 'http://www.unicore.eu',
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>0 );
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('tsf', 'remote unicore server to verify');
+$reporter->addArg( 'certUrl', 'URL to CA certificate tarball' );
+$reporter->addArg('wgetArgs', 'wget arguments (e.g. --no-check-certificate)', '');
+$reporter->processArgv(@ARGV);
+my $registry = $reporter->argValue('registry');
+my $tsf = $reporter->argValue("tsf");
+my $url = $reporter->argValue('certUrl');
+my $args = $reporter->argValue('wgetArgs');
+
+# get list of authoratative DNs for xsede-cert.tar.gz
+my $scratchDir = "/tmp/security.ca.unit.$$";
+failClean("Cannot mkdir scratch dir $scratchDir")
+ if ! mkdir($scratchDir); 
+$reporter->tempFile( $scratchDir );
+failClean("Cannot change to scratch dir $scratchDir")
+  if ! chdir($scratchDir);
+my $wgetCmd = "wget $args $url";
+my $wgetOut = $reporter->loggedCommand($wgetCmd);
+failClean("wget failed: $wgetOut $!")
+  if $? != 0;
+failClean("Failed to retrieve $url" )
+ if $wgetOut !~ /([\d.]+) \wB\/s/;
+my ($filename) = $url =~ /([^\/]+)$/;
+my $gunzipOut = $reporter->loggedCommand( "gunzip -f $filename" );
+failClean("gunzip -f $filename failed: $gunzipOut $!")
+  if $? != 0; 
+$filename =~ s/\.gz$//;
+my $tarOut = $reporter->loggedCommand( "tar xvf $filename" );
+failClean("tar xvf $filename failed: $tarOut $!")
+  if $? != 0;
+failClean("Cannot change to tar dir certificates")
+  if ! chdir("certificates");
+my @caFiles = glob( "*.0" );
+my @authoratitiveDNs;
+for my $file (@caFiles) {
+  my $cmd = "openssl x509 -issuer -in \'$file\' -noout";
+  my $issuer = $reporter->loggedCommand($cmd);
+  $issuer =~ s/^[^\/]+//;
+  chomp( $issuer );
+  push( @authoratitiveDNs, $issuer );
+}
+
+# get list of unicore accepted DNs
+my $out = $unicore->loggedCommand( "ucc connect -r $registry" );
+failClean("NOT_AT_FAULT - error connecting to $registry: $out") if $? != 0;
+
+$out = $unicore->loggedCommand( "ucc wsrf g $tsf -r $registry");
+failClean("Error querying $tsf: $out") if $? != 0;
+
+my @acceptedCAList = $out =~ /<typ:AcceptedCA>([^<]+)/g;
+my @unicoreDNs;
+for my $dn ( @acceptedCAList ) {
+  my @parts = split( /,/, $dn );
+  push( @unicoreDNs, "/" . join("/", reverse(@parts)) );
+}
+
+# make sure all are present in Unicore
+my @missing;
+for my $dn ( @authoratitiveDNs ) {
+  push( @missing, $dn ) if ! grep(/^$dn$/, @unicoreDNs);
+}
+
+# note any extras
+my @extras;
+for my $dn ( @unicoreDNs ) {
+  push( @extras, $dn ) if ! grep(/^$dn$/, @authoratitiveDNs);
+}
+$reporter->log( "warn", "Following DNs are accepted by Unicore but not present in $url: " . join(", ", @extras) );
+if ( scalar(@extras) > 0 ) {
+ my $benchmark = $reporter->addNewBenchmark( "zfs" );
+  $benchmark->setStatistic( "warnings", scalar(@extras));
+}
+
+failClean("Unicore server missing the following DNs from $url" . join(", ", @missing ) )
+  if (scalar(@missing) > 0 );
+$reporter->setResult(1);
+$reporter->print();
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}

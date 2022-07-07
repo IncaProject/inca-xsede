@@ -1,0 +1,62 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use File::Basename;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+	name => 'xsede.admin.resourceid.unit',
+	version => 3,
+	description => 'Check ResourceID supplied by xdresourceid and xdusage commands',
+	unit_name => 'resourceid'
+);
+$reporter->addArg( 'registered', 'The resource name in info services' );
+$reporter->processArgv( @ARGV );
+my $registered = $reporter->argValue( 'registered' );
+
+my @err;
+
+my $xdresourceid_cmd = 'xdresourceid -c';
+my %xdresource_out;
+my @xdresource = $reporter->loggedCommand( $xdresourceid_cmd );
+if ( $? != 0 )
+{
+	push( @err, "$xdresourceid_cmd: $!" ); 
+}
+else
+{
+	foreach my $line ( @xdresource ) 
+	{
+		my @val = split( '=', $line );
+		$val[1] =~ s/\"\s+$//;
+		$val[1] =~ s/^\"//;
+		if ( $val[0] !~ /^\s*$/ and $val[1] !~ /^\s*$/ )
+		{
+			$xdresource_out{ $val[0] } = $val[1];
+		}
+	}
+}
+
+if ( %xdresource_out )
+{
+	if ( $registered ne $xdresource_out{'ResourceID'} )
+	{
+		push( @err, "xdresourceid ResourceID (" . $xdresource_out{'ResourceID'} . ") and registered ($registered) names differ" );
+	}
+	if ( $xdresource_out{'Title'} =~ /^\s*$/ )
+	{
+		push( @err, "xdresourceid Title is empty" );
+	}
+	if ( $xdresource_out{'SiteID'} =~ /^\s*$/ )
+	{
+		push( @err, "xdresourceid SiteID is empty" );
+	}
+}
+
+if ( @err )
+{
+	$reporter->failPrintAndExit( join( "\n\n", @err ) ); 
+}
+$reporter->unitSuccess();
+$reporter->print();

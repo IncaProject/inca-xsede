@@ -1,0 +1,13 @@
+Notes on how the incat xml config is currently generated for TeraGrid
+
+1) Lastest incat file is checked into devel/projects/teragrid/incat.  
+
+2) Resources register kits for testing that we configure tests based on.  A web view of this is: http://info.teragrid.org:8080/webmds/webmds?info=tgislocal&xsl=kitsregistration - we also have a script that gets the same information in xml form to compare updates to.  The script is checked into devel/projects/teragrid/bin/query-mds.  
+
+3) We need to develop kit definitions for each new kit that is registered so we know what tests go with with kits and which are optional vs. which are mandatory.  JP Navarro at ANL is working on this too.  Drafted a schema for this in devel/projects/teragrid/xml/schemas/ctssKitDefinition.xsd
+
+4) We need to develop resource definitions for each new resource that is registered for macros that aren't registered.  Some of these include the pre/post macros for the series context, admin email contact, project to charge jobs to, other resource groups that the resource should belong to, agent connection information, etc.
+
+5) We need to test everything that is registered in a kit with a name that ends in .teragrid.org.  We aren't currently doing this since they just changed the number of things that can be registered - opening up to more types of resources.  Some of them that just have a website registered will need to be tested remotely.  JP is also talking about getting us a dedicated server for remote testing since we use repo.teragrid.org now and it gets bogged down.
+
+6) We test a few things that aren't registered:  tests of inca itself (processes, memory use, etc) and tests for specific TG working groups like security, gig-pack, user portal.

@@ -1,0 +1,76 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use JSON qw( decode_json );
+use Data::Dumper;
+
+my $reporter = new Inca::Reporter::Performance(
+	name => 'data.rdr.info.unit',
+	version => 1,
+	description => 'Lists Information Services Resource Ids for a given RDR Resource',
+	measurement_name => 'rdr_info'
+);
+
+$reporter->addDependency( 'JSON' );
+$reporter->addArg( 'url', 'Base RDR URL to fetch', 'https://dirsdev.psc.edu/rdr_ui/xsede-api/provider/rdr/v1' );
+$reporter->addArg( 'resource', 'RDR resource', 'compute_resources' );
+$reporter->addArg( 'min_resources', 'Minimum number of Information Services Resource Ids to find', '1', '[0=9]*' );
+$reporter->addArg( 'cparam', 'Params to pass to cURL', '-s -k -H "XA_CLIENT:XSEDE" -H "XA-KEY-FORMAT:underscore"' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue( 'url' );
+my $resource = $reporter->argValue( 'resource' );
+my $min_resources = $reporter->argValue( 'min_resources' );
+my $cparam = $reporter->argValue( 'cparam' );
+
+my $out = $reporter->loggedCommand( "curl $cparam '$url/$resource'" );
+if ( $? != 0 || $out !~ /{/ )
+{
+	$reporter->failPrintAndExit( 'cURL command failed: ' . $! . $out );
+}
+
+# $reporter->log( 'debug', "cURL output: $out" );
+
+my $data;
+eval
+{
+	$data = decode_json( $out );
+};
+if ($@)
+{
+	$reporter->failPrintAndExit( 'Could not decode as JSON data: ' . $@ );
+}
+
+my $dump = Dumper( $data );
+$reporter->log( 'debug', "JSON output: $dump" );
+
+if ( ! exists $data->{$resource} || ref( $data->{$resource} ) ne 'ARRAY' )
+{
+	$reporter->failPrintAndExit( "No data for $resource" );
+}
+$data = $data->{$resource};
+
+my @ids;
+foreach my $rdr_resource ( @{$data} )
+{
+		if( exists( $rdr_resource->{'info_resourceid'} ) ) 
+		{ 
+			push( @ids, $rdr_resource->{'info_resourceid'} ); 
+		}
+}
+
+@ids = sort { "\L$a" cmp "\L$b" } @ids;
+my $num_ids = scalar( @ids );
+$reporter->log( 'info', "Found $num_ids $resource info_resourceids: " . join( ', ', @ids ) );
+
+my $benchmark = $reporter->addNewBenchmark( $resource );
+$benchmark->setStatistic( 'Resources', $num_ids );
+
+if( $num_ids < $min_resources )
+{
+		$reporter->failPrintAndExit( "Expected at least $min_resources but found $num_ids" );
+}
+
+$reporter->setResult(1);
+$reporter->print();

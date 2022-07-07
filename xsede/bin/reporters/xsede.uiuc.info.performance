@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use Time::HiRes qw( gettimeofday tv_interval );
+use POSIX qw( strftime );
+
+my $reporter = new Inca::Reporter::Performance(
+	name => 'xsede.uiuc.info.performance',
+	version => 5,
+	description => 'Monitors responsiveness of UIUC Research IT Portal Search enabled by XSEDE Information Services',
+	measurement_name => 'uiuc_info',
+);
+
+$reporter->addArg( 'url', 'URL prefix for API calls', 'https://info.xsede.org/wh1/resource-api/v3/' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue('url');
+
+my $fmt = "%Y-%m-%d";
+my @time = localtime time;
+my $today = strftime( $fmt, @time );
+$time[3] += 7;
+my $next_week = strftime( $fmt, @time );
+my @bench = (
+	[ 'providers', 'resource_esearch?affiliation=uiuc.edu&resource_groups=organizations&page=1&results_per_page=20' ],
+	[ 'events', 'event_search/?affiliation=uiuc.edu&results_per_page=4&page=1' ],
+	[ 'events_week', 'event_search/?affiliation=uiuc.edu&start_date=' . $today . 'T00:00:00-05:00&end_date=' . $next_week . 'T00:00:00-05:00' ],
+	[ 'resource_search', 'resource_esearch?search_terms=aws' ],
+);
+
+my $err = '';
+for( my $i=0; $i<=$#bench; $i++ )
+{
+	my $page = $url . $bench[$i][1];
+	my $cmd = 'wget -O /dev/null "' . $page . '"';
+	my $t0 = [gettimeofday];
+	my $output = $reporter->loggedCommand( $cmd );
+	if( $? )
+	{
+		$err .= "$cmd failed: $output $!\n\n";
+	}
+	else
+	{
+		my $mark = $bench[$i][0];
+		my $benchmark = $reporter->addNewBenchmark( $mark );
+		$benchmark->setParameter( 'page', $page );
+
+		my ($url_host) = $url =~ /:\/\/(.[^\/]+)\//;
+		my ($ip) = $output =~ /Connecting to $url_host \($url_host\)\|([\d.]+)/;
+		my $nslookup = `nslookup $ip 2>&1`; 
+		my ($host) = $nslookup =~ /name = (.+)\./;
+		$reporter->log( 'debug', "wget for $mark connected to $ip ($host)" );
+
+		my $t1 = [gettimeofday];
+		my $elapsed = tv_interval $t0,$t1;
+		$elapsed = sprintf( "%.2f", $elapsed );
+
+		my ($bw, $unit) = $output =~ /([\d.]+) (.B\/s)/;
+	
+		$benchmark->setStatistic( $mark . '_bandwidth', $bw, $unit );
+		$benchmark->setStatistic( $mark . '_time', $elapsed, 'secs' );
+	}
+}
+
+if( $err ne '' )
+{
+	$err =~ s/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/<timestamp>/g;
+	$reporter->setResult( 0, $err );
+}
+else
+{
+	$reporter->setResult( 1 );
+}
+$reporter->print();

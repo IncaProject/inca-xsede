@@ -1,0 +1,424 @@
+#!/usr/bin/env perl
+# This Inca reporter finds inconsistencies between the local
+#  grid-mapfile and the TeraGrid Central DataBase (TGCDB).  When adding
+#  this test to a new resource, this script may need to be updated with
+#  the translation of login node hostnames to TGCDB resource names.
+# Dependencies:
+#  Perl database interface module (DBI)
+#  Perl database driver for PostgreSQL (DBD::Pg)
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use Net::Domain qw(hostfqdn);
+use DBI;
+use Time::Local;
+
+my %dnmapDB;     # Maps DNs to usernames from the TGCDB
+my %usermapDB;   # Maps usernames to DNs from the TGCDB
+my %dnmapF;      # Maps DNs to usernames from the grid-mapfile
+my %usermapF;    # Maps usernames to DNs from the grid-mapfile
+my %errorlists;  # Hash of various warning and error messages
+my %errordescs;  # Hash of descriptions for each error code
+my %is_community;# Hash contains community usernames for this resource
+                 #   (according to TGCDB)
+
+# elements of this errorCodes list are keys for
+#  the %errorlists and %errordescs hashes
+my @errorCodes = (
+'errorNotMapped',
+'errorPartiallyMapped',
+'errorLocalGT4ized',
+'errorOnlyInGridmap',
+'errorMultipleUsernames',
+'errorRedundantMappings',
+'errorCommunityUser',
+'errorFormat'
+);
+
+# Initialize the hash of errors to an empty list for each type
+for my $errorCode (@errorCodes) {
+  @{$errorlists{$errorCode}} = ();
+}
+
+my $reporter = new Inca::Reporter::Performance(
+  name => 'grid.mapfile.verify',
+  version => 6,
+  description => 'Verifies the local system grid-mapfile against TGCDB',
+  short => 1,
+  measurement_name => 'grid-mapfile'
+);
+$reporter->addDependency('DBI');
+$reporter->addDependency('DBD::Pg');
+$reporter->processArgv(@ARGV);
+
+# This is a mapping of local hostnames (FQDN) to TGCDB resource_names
+my %hostmap = (
+  'tg-t\d*\.uc\.teragrid\.org'              => 'dtf.anl.teragrid',
+  'tg-grid\d*\.uc\.teragrid\.org'           => 'dtf.anl.teragrid',
+  'tg-login\d*\.uc\.teragrid\.org'          => 'dtf.anl.teragrid',
+  'tg-viz-login\d*\.uc\.teragrid\.org'      => 'viz.anl.teragrid',
+  's10c2b6.dim'                             => 'bigred.iu.teragrid',
+  'qb\d*\.loni\.org'                        => 'queenbee.loni-lsu.teragrid',
+  'fr\d*en\.ncar\.teragrid\.org'            => 'frost.ncar.teragrid',
+  'honest\d*\.ncsa\.uiuc\.edu'              => 'abe.ncsa.teragrid',
+  'ember\.ncsa\.illinois\.edu'              => 'ember.ncsa.teragrid',
+  'co-login\d*\.ncsa\.uiuc\.edu'            => 'cobalt.ncsa.teragrid',
+  'tg-login\d*\.ncsa\.teragrid\.org'        => 'dtf.ncsa.teragrid',
+  'kraken\d*\.nics\.teragrid\.org'          => 'kraken.nics.teragrid',
+  'login\d*\.athena\.nics\.utk\.edu'        => 'athena.nics.teragrid',
+  'grid\.nics\.utk\.edu'		    => 'kraken.nics.teragrid',
+  'tg-login\d*\.ornl\.teragrid\.org'        => 'nstg.ornl.teragrid',
+  'tg-login\d*\.bigben\.psc\.teragrid\.org' => 'bigben.psc.teragrid',
+  'tg-login\d*\.pople\.psc\.teragrid\.org'  => 'pople.psc.teragrid',
+  'tg-condor\d*\.rcac\.purdue\.edu'         => 'condor.purdue.teragrid',
+  'tg-steele\d*\.rcac\.purdue\.edu'         => 'steele.purdue.teragrid',
+  'tg-login\d*\.sdsc\.teragrid\.org'        => 'dtf.sdsc.teragrid',
+  'login\d\.longhorn'       		    => 'longhorn.tacc.teragrid',
+  'lslogin\d*\.ls\.tacc\.utexas\.edu'       => 'lonestar.tacc.teragrid',
+  'login\d*\.ranger\.tacc\.utexas\.edu'     => 'ranger.tacc.teragrid',
+  'spur\d*\.tacc\.utexas\.edu'              => 'spur.tacc.teragrid',
+  'dido\d*\.ncsa\.uiuc\.edu'                => 'dtf.ncsa.teragrid',
+  'portia\.rcac\.purdue\.edu'               => 'brutus.purdue.teragrid',
+);
+
+# Map the local hostname (FQDN) to a resource_name in the TGCDB
+my $hostfqdn = hostfqdn();
+my $resource_name = "";
+while ( my($key,$value) = each(%hostmap) ) {
+  if ($hostfqdn =~ /$key/) {
+    $resource_name = $value;
+    last;
+  }
+}
+
+if (length($resource_name) == 0) {
+  failClean($reporter,"Can't find a resource_name in TGCDB for host "
+    . "'$hostfqdn'");
+}
+
+# descriptions for each errorCode
+$errordescs{'errorNotMapped'} =
+ " instances of a TGCDB user having zero DN/username mappings" .
+ " in the grid-mapfile.";
+$errordescs{'errorPartiallyMapped'} = 
+ " instances of a DN/username mapping appearing in TGCDB but not" .
+ " in the grid-mapfile, but other mappings do exist for the user.";
+$errordescs{'errorLocalGT4ized'} = 
+ " instances where an errorPartiallyMapped resulted from the DN" .
+ " in the grid-mapfile conforming to GT4 standards, but only the" .
+ " non-conformant DN existing in the TGCDB.";
+$errordescs{'errorOnlyInGridmap'} = 
+ " instances of a DN/username mapping appearing in the grid-mapfile" .
+ " but not in TGCDB for resource '$resource_name'. ";
+$errordescs{'errorMultipleUsernames'} = 
+ " instances of a single DN mapping to multiple usernames" .
+ " in the grid-mapfile.";
+$errordescs{'errorRedundantMappings'} = 
+ " instances of a DN/username mapping appearing more than once".
+ " in the grid-mapfile.";
+$errordescs{'errorCommunityUser'} = 
+ " instances of a Community User DN mapping to a" .
+ " non-community username in the grid-mapfile.";
+$errordescs{'errorFormat'} = 
+ " instances of a poorly formatted line in the grid-mapfile.";
+
+# Connect to the readonly portion of the TGCDB
+my $dbh = DBI->connect("DBI:Pg:dbname=teragrid;".
+                       "host=tgcdb.teragrid.org;".
+                       "port=5432",
+                       "readonly","readonly",
+                       { RaiseError=>1, PrintError=>1 }
+);
+if (!$dbh) {
+  failClean($reporter,"Unable to connect to TGCDB");
+}
+
+# Find all the usernames and DNs for the local resource_name
+my $query = qq {
+  select sa.username, dn.dn, al.end_date, al.remaining_allocation
+  from acct.resources r, acct.system_accounts sa, acct.distinguished_names dn,
+acct.accounts_access aa, acct.allocation_states ax, acct.accounts a,
+acct.allocations al
+  where sa.resource_id=r.resource_id
+  and sa.person_id=dn.person_id
+  and dn.is_active
+  and aa.person_id=sa.person_id
+  and aa.site_resource_id=sa.resource_id
+  and aa.state_id=ax.state_id
+  and a.account_id=aa.account_id
+  and al.account_id=aa.account_id
+  and ax.state_name='active'
+  and r.resource_name='$resource_name'
+};
+
+my $sth = $dbh->prepare($query);
+$sth->execute();
+
+# Create the hashmaps for DN->username and username->DN for TGCDB
+while (my @datarow = $sth->fetchrow()) {
+  my $username = strip_spaces($datarow[0]);
+  my $dnnormal = normalize_dn($datarow[1]);
+  my $end_date = strip_spaces($datarow[2]);
+  my $su_remain= $datarow[3];
+
+  # Ignore the user if the allocation is overused or expired
+  #  but for some reason still lingering as 'active'
+  if ($su_remain > 0) {
+    (my $year, my $month, my $day) = split('-', $end_date);
+    my $end_time = timelocal(0, 0, 0, $day, $month - 1, $year);
+    if (time() < $end_time) {
+      # Ignore the user if they are not in the passwd file
+      if ((length($username) > 0) && (length($dnnormal) > 0) &&
+          (defined getpwnam($username))) {
+        $dnmapDB{$dnnormal}{$username} += 1;
+        $usermapDB{$username}{$dnnormal} += 1;
+      }
+    }
+  }
+}
+
+# Find all usernames for the local resource_name that are associated
+#  with a "Community User" TGCDG person
+$query = qq {
+  select sa.username
+  from acct.resources r, acct.people p, acct.system_accounts sa
+  where p.person_id=sa.person_id
+  and sa.resource_id=r.resource_id
+  and r.resource_name='$resource_name'
+  and p.last_name='Community User'
+};
+
+$sth = $dbh->prepare($query);
+$sth->execute();
+
+# Create a hash of usernames that are community usernames
+while (my @datarow = $sth->fetchrow()) {
+  my $username = strip_spaces($datarow[0]);
+  if (length($username) > 0) {
+    $is_community{$username} = 1;
+  }
+}
+
+$dbh->disconnect();
+
+# Read in the grid-mapfile 
+my $gridmapfile = "/etc/grid-security/grid-mapfile";
+open(INFILE,"<$gridmapfile") or
+  failClean($reporter,"Cannot open $gridmapfile");
+my @lines = <INFILE>;
+close INFILE;
+
+# Create the hashmaps for DN->username and username->DN for the grid-mapfile.
+# Also count the number of "good" lines in the grid-mapfile.
+my $totalLinesGridmapFile = 0;
+foreach my $line (@lines) {
+  if ($line =~ /\"(.+)\"\s+(.+)/) {
+    my $dn = $1;
+    my @users = split /,/, $2;
+    $totalLinesGridmapFile += 1;
+    foreach my $user (@users) {
+      $user = strip_spaces($user);
+      $dnmapF{$dn}{$user} += 1;
+      $usermapF{$user}{$dn} += 1;
+    }
+  } else {
+    if ($line !~ /^\s*#/) {
+      push(@{$errorlists{'errorFormat'}},
+           "In $gridmapfile, poorly formatted line: '$line'");
+    }
+  }
+}
+
+# Scan through the TGCDB DN->username hashmap, check for problems:
+# (1) The DN->username mapping does not appear in the grid-mapfile, broken
+# down into two results:
+# (1a, errorNotMapped) The TGCDB username has zero DN/username mappings.
+# (1b, errorPartiallyMapped) The DN/username mapping doesn't exist,
+#      but there are other mappings for the given TGCDB username.
+# (1b', errorLocalGT4ized) For (1b) the DN can be GT4-ized to a shorter
+# version and THAT
+#       shorter DN/username mapping appears in the grid-mapfile.
+
+my %errorNotMapped;
+for my $dn (sort keys %dnmapDB) {
+  my @users = sort keys %{$dnmapDB{$dn}};
+  for my $user (@users) {
+    if (%usermapF) {
+      if (exists($usermapF{$user})) {
+        if (exists($usermapF{$user}{$dn})) {
+          ; # Do nothing - simply here to avoid autovivifying hash keys
+        } else { # User has at least one other mapping in grid-mapfile
+          push(@{$errorlists{'errorPartiallyMapped'}},
+               "The DN/username mapping '\"$dn\" $user' " .
+               "appears in TGCDB but not in the grid-mapfile, ".
+               "but other mappings exist for the user");
+
+          # See if the "shortened" GT4 version of the subject matches
+          my $shortdn = gt4_subject($dn);
+          if (%dnmapF &&
+              (exists($dnmapF{$shortdn})) &&
+              (exists($dnmapF{$shortdn}{$user})) &&
+              ($dnmapF{$shortdn}{$user} > 0)) {
+            push(@{$errorlists{'errorLocalGT4ized'}},
+                 "Making \"$dn\" GT4-compatible as \"$shortdn\" for" .
+                 " user $user already appears in the grid-mapfile");
+          }
+        }
+      } else {  # (!exists($usermapF{$user}))
+        # Keep track of usernames with 0 mappings in the grid-mapfile
+        $errorNotMapped{$user} += 1;
+      }
+    }
+  }
+}
+
+for my $user (sort keys %errorNotMapped) {
+  push(@{$errorlists{'errorNotMapped'}},
+       "The TGCDB user $user has 0 mappings in the grid-mapfile");
+}
+
+# Scan through the grid-mapfile DN->username hashmap, check for problems:
+# (1, errorMultipleUsernames) DN maps to multiple usernames
+# (2, errorRedundantMappings) the DN->username mapping occurs more than once
+# (3, errorOnlyInGridmap) The DN->username mapping does not appear in the
+# TGCDB
+# (4, errorCommunityUser) Community account credentials map only to community
+# account users
+
+for my $dn (sort keys %dnmapF) {
+  my @users = sort keys %{$dnmapF{$dn}};
+  if (scalar(@users) > 1) {
+    push(@{$errorlists{'errorMultipleUsernames'}},
+        "In grid-mapfile, the DN '$dn' maps to " . 
+        scalar(@users) . " usernames: " .  join(",",@users));
+  }
+  for my $user (@users) {
+    if ((exists $dnmapF{$dn}) &&
+        (exists $dnmapF{$dn}{$user}) &&
+        ($dnmapF{$dn}{$user} > 1)) {
+      push(@{$errorlists{'errorRedundantMappings'}},
+          "In grid-mapfile, the DN/username mapping '\"$dn\" $user' " .
+          "appears " . $dnmapF{$dn}{$user} . " times");
+    }
+    if (%dnmapDB &&
+        (exists($dnmapDB{$dn})) &&
+        (exists($dnmapDB{$dn}{$user})) &&
+        ($dnmapDB{$dn}{$user} > 0)) {
+      ; # Do nothing - simply here to avoid autovivifying hash keys
+    } else {
+      # Only care about users listed in the TGCDB
+      if (%usermapDB && (exists($usermapDB{$user}))) {
+        push(@{$errorlists{'errorOnlyInGridmap'}},
+             "The DN/username mapping '\"$dn\" $user' ".
+             "appears in the grid-mapfile but not in TGCDB");
+      }
+    }
+    if ($dn =~ /community\s+user/i) {
+      my ($name,$pw,$uid,$gid,$quota,$cmt,$gcos,@rest) = getpwnam($user);
+      if (!exists($is_community{$user}) && defined($gcos)) {
+        $gcos = strip_spaces($gcos);
+        if ((length($gcos) > 0) && ($gcos !~ /community\s+user/i)) {
+          push(@{$errorlists{'errorCommunityUser'}},
+               "In grid-mapfile, the Community User DN \"$dn\" maps to a" .
+               " non-community user $user");
+        }
+      }
+    }
+  }
+}
+
+# Add benchmark for size statistics of grid-mapfile & TGCDB for this resource
+my $dnusermapDB = 0;
+my $dnusermapF = 0;
+
+for my $dn (sort keys %dnmapDB) {
+  for my $user (sort keys %{$dnmapDB{$dn}}) {
+     if ((exists($dnmapDB{$dn})) &&
+         (exists($dnmapDB{$dn}{$user}))) {
+       $dnusermapDB += $dnmapDB{$dn}{$user};
+     }
+   }
+ }
+
+for my $dn (sort keys %dnmapF) {
+  for my $user (sort keys %{$dnmapF{$dn}}) {
+    if ((exists($dnmapF{$dn})) &&
+        (exists($dnmapF{$dn}{$user}))) {
+      $dnusermapF += $dnmapF{$dn}{$user};
+    }
+  }
+}
+
+my $benchmark = new Inca::Reporter::Performance::Benchmark();
+$benchmark->setStatistic('tgcdb_usernames', scalar(keys %usermapDB));
+$benchmark->setStatistic('tgcdb_DNs', scalar(keys %dnmapDB));
+$benchmark->setStatistic('tgcdb_mappings', scalar($dnusermapDB));
+$benchmark->setStatistic('mapfile_usernames', scalar(keys %usermapF));
+$benchmark->setStatistic('mapfile_DNs', scalar(keys %dnmapF));
+$benchmark->setStatistic('mapfile_mappings', $dnusermapF);
+$benchmark->setStatistic('mapfile_lines', $totalLinesGridmapFile);
+$reporter->addBenchmark('grid_size', $benchmark);
+
+$benchmark = new Inca::Reporter::Performance::Benchmark();
+
+my $totalErrors = 0;
+# For each type of error, add a statistic for a coherency benchmark
+for my $errorCode (@errorCodes) {
+  my $numErrors = scalar(@{$errorlists{$errorCode}});
+  $benchmark->setStatistic($errorCode, $numErrors);
+  $totalErrors += $numErrors;
+}
+$benchmark->setStatistic('totalErrors', $totalErrors);
+
+$reporter->addBenchmark('grid_coherency', $benchmark);
+
+# For each error code, add the list of errors to the reporters error log
+for my $errorCode (@errorCodes) {
+  foreach (@{$errorlists{$errorCode}}) {
+    $reporter->log("error", "$errorCode: " . $_);
+  }
+}
+
+$reporter->setCompleted(1);
+$reporter->print();
+
+# Removes leading and trailing spaces from a string.
+sub strip_spaces {
+  my $string = shift;
+  $string =~ s/^\s*//;   # Remove leading spaces
+  $string =~ s/\s*$//;   # Remove trailing spaces
+  return $string;
+}
+
+# Takes a DN and "normalizes" it by removing leading/trailing spaces as well
+# as any proxy certificate extensions.  Borrowed from gx-map.
+sub normalize_dn {
+  my $string = shift;
+  $string = strip_spaces($string);
+  # Remove any proxy certificate extensions
+  while ($string =~ m</CN=proxy$> or $string =~ m</CN=[0-9]+$>) {
+    $string =~ s</[^/]*$><>;
+  }
+  return $string;
+}
+
+# Takes a DN and GT4-izes it by changing all "old" extensions to the GT4
+# standard extensions.  Borrowed from gx-map.
+sub gt4_subject {
+  my $string = shift;
+  $string =~ s(/0\.9\.2342\.19200300\.100\.1\.1=)(/userid=)g;
+  $string =~ s(/UID=)(/userid=)gi;
+  $string =~ s(/EMAIL=)(/emailAddress=)gi;
+  $string =~ s(/E=)(/emailAddress=)g;
+  return $string;
+}
+
+# If there is a significant error, print a fatal error message.
+sub failClean {
+  my $reporter = shift;
+  my $err = shift;
+  $err =~ s/--\d{2}:\d{2}:\d{2}--/--xx:xx:xx--/g;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}

@@ -1,0 +1,34 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Inca::XSEDE::Unicore;
+
+my $reporter = new Inca::Reporter::SimpleUnit
+(
+	name => 'grid.middleware.unicore.unit.target.clean',
+	version => 1,
+	description => 'Destroys all target system instances - to be run ad hoc if duplicate instances',
+	url => 'http://www.unicore.eu',
+	unit_name => 'ucc_clean'
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>1 );
+$reporter->addDependency( 'Inca::Reporter::GridProxy' );
+$reporter->addArg( 'registry', 'URL(s) to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry,https://giu1.psc.xsede.org:8080/REGISTRY/services/Registry?res=default_registry' );
+$reporter->processArgv( @ARGV );
+my $registry = $reporter->argValue( 'registry' );
+
+my $out = $unicore->loggedCommand( "ucc list-sites -r $registry" );
+$reporter->log( 'debug', "Before clean:\n $out" );
+
+my @targets = $out =~ / (http.[^\s]*)/g;
+for my $target ( @targets )
+{
+	$out = $unicore->loggedCommand( "ucc wsrf d $target" );
+}
+
+$out = $unicore->loggedCommand( "ucc list-sites -v -r $registry" );
+$reporter->log( 'debug', "After clean:\n $out" );
+$reporter->unitSuccess();
+$reporter->print();

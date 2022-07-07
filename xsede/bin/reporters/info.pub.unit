@@ -1,0 +1,63 @@
+#!/usr/bin/env perl
+
+use Inca::Reporter::SimpleUnit;
+use JSON;
+use Date::Parse;
+use strict;
+use warnings;
+
+my $buffer = 60;
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'info.pub.unit',
+  version => 6,
+  description => 'Checks that XSEDE Information Services Warehouse has fresh data for a specific topic and resource',
+  unit_name => 'info'
+);
+$reporter->addArg( "url", "status url of Information Services Warehouse", "https://info.xsede.org/wh1/processing-status/record/?format=json" );
+$reporter->addArg( "topic", "The AMQP topic last read by the Warehouse" );
+$reporter->addArg( "resource", "Name of the resource publishing information" );
+$reporter->addArg( "age", "The age of data to be considered as stale (s)", 3600 );
+$reporter->addArg( "initscript", "Name of the init script that generates data", "");
+$reporter->addDependency('TimeDate');
+$reporter->addDependency('JSON');
+
+$reporter->processArgv(@ARGV);
+
+my $url = $reporter->argValue( "url" );
+my $topic = $reporter->argValue( "topic" );
+my $resource = $reporter->argValue( "resource" );
+my $age = $reporter->argValue( "age" );
+my $initscript = $reporter->argValue( "initscript" );
+my $scripthelp = $initscript eq "" ? "" : "Please verify that the $initscript init script is running on your server.";
+
+my $wgetCmd = "wget --no-check-certificate -q -O - $url";
+my $wgetOut = $reporter->loggedCommand($wgetCmd);
+if ( $? ) {
+  $reporter->failPrintAndExit("wget failed: $wgetOut $!");
+}
+
+my $this_status = undef;
+my $id = "$topic:$resource";
+my $statuses_ref = decode_json($wgetOut); 
+my %statuses = %$statuses_ref;
+my $record_list = $statuses{'record_list'}; 
+for my $status ( @{$record_list} ) {
+  if ( $status->{'ID'} eq $id ) {
+    $this_status = $status;
+  }
+}
+if ( ! defined $this_status ) {
+  $reporter->failPrintAndExit("Unable to find the topic $topic for resource $resource in warehouse. $scripthelp");
+}
+$reporter->log("debug", "ProcessingStart is " . $this_status->{'ProcessingStart'});
+$reporter->log("debug", "ProcessingEnd is " . $this_status->{'ProcessingEnd'});
+my $last_timestamp = $this_status->{'ProcessingEnd'} ? $this_status->{'ProcessingEnd'} : $this_status->{'ProcessingStart'};
+$reporter->log("debug", "Selected timestamp " . $last_timestamp);
+my $lastread = str2time($last_timestamp);
+my $elapsed_secs = int(time() - $lastread);
+$reporter->log("info", "Age of data $id is $elapsed_secs seconds");
+if ( $elapsed_secs > $age ) {
+  $reporter->failPrintAndExit("Warehouse data $id is older than $age seconds. $scripthelp");
+}
+$reporter->unitSuccess();
+$reporter->print();

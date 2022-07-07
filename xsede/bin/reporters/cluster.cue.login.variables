@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'cluster.cue.login.variables',
+  version => 1,
+  description => 'Reports all CUE Login Environment variables',
+  unit_name => 'check_cue_login_vars'
+);
+
+$reporter->processArgv(@ARGV);
+
+# "module load cue-login-env" should be added to the reporter context 
+my $grep = "^CUE_";
+my $output = $reporter->loggedCommand("env | grep $grep | sort");
+if ($? || $output !~ /$grep/) {
+  $reporter->failPrintAndExit("$grep variables not found: $output $!");
+} else {
+  $reporter->log('info',$output);
+  $reporter->unitSuccess();
+  $reporter->print();
+}

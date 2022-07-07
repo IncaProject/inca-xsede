@@ -1,0 +1,23 @@
+Status pages
+  - Available from inca.xsede.org
+  - Some top-level pages are pregenerated from a cron script on capac
+  - We store regular expressions for resources to show external tests and 
+    handle notifications correctly in a few places:
+    -- google.xml
+    -- files for kits that have external tests (data movement and remote compute)
+    -- quarry runs most of the external tests and repeats some hostname macros, but 
+       this will be fixed once we implement Jen's resource->macro syntax on TG
+    -- etc/filter.properties is used for the downtime filter
+    -- sbin/EmailNotifier is used for external test notification
+
+Email notifications
+  - Some notifications are in the sbin/EmailNotifier until the resource->macro
+    syntax can handle external tests.  Otherwise, most email is defined on 
+    the leaf resource (sdsc-dash) or site (e.g. SDSC) level
+
+Deployment Information
+  - Values for macros are based off information from MDS from
+    http://info.teragrid.org:8080/webmds/webmds?info=tgislocal&xsl=kitsregistration
+  - Backups of db and var directory are stored in /localdisk/inca/backups if a
+    restore is needed
+- Contacts:  Stephen McNally (smcnally@utk.edu)

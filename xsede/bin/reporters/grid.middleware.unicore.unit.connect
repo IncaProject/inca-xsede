@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Inca::XSEDE::Unicore;
+
+my @CMDS = qw(ucc myproxy-logon-unicore);
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'grid.middleware.unicore.unit.connect',
+  version => 9,
+  description => 'This test verifies that unicore is registered in IIS, can connect to the registry, and the site is present',
+  url => 'http://www.unicore.eu',
+  unit_name => 'connect'
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>0 );
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('resource', 'IIS resource name');
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('id', 'UNICORE site name to verify');
+$reporter->processArgv(@ARGV);
+my $resource = $reporter->argValue('resource');
+my $registry = $reporter->argValue('registry');
+my $site = $reporter->argValue("id");
+
+my @errors;
+
+my $iisXml = $reporter->loggedCommand("wget -O - http://info.xsede.org/restdemo/xml/tg/software/unicore-ucc-client 2>/dev/null | grep $resource" );
+push( @errors, "missing unicore-ucc-client IIS registration") if $iisXml eq '';
+
+for my $service ( qw(unicore.bes unicore.tsf) ) {
+  $iisXml = $reporter->loggedCommand("wget -O - http://info.xsede.org/restdemo/xml/tg/services/$service 2>/dev/null | grep $resource" );
+  push( @errors, "missing $service IIS registration") if $iisXml eq '';
+}
+
+for my $cmd ( @CMDS ) {
+  my $path = `which $cmd`;
+  push( @errors, "missing cmd $cmd") if $path !~ /$cmd/; 
+}
+
+my @registries = split( /,/, $registry );
+for my $reg ( @registries ) {
+  my $out = $unicore->loggedCommand( "ucc connect -r $reg" );
+  if ( $? == 0 || $out !~ /error/i ) {
+    $out = $unicore->loggedCommand( "ucc list-sites -v -r $reg" );
+    my @sitedata = $out =~ /([^\n]*http\S+$site\S+)/g;
+    if ( grep(/$site/, @sitedata) ) {
+      push( @errors,  "inca does not have access to $site")
+         if grep( /No accessible/, @sitedata);
+    } else {
+      push( @errors, "$site is not in the registry $reg" );
+    }
+  } else {
+    failClean("NOT_AT_FAULT - error querying $reg: $out");
+  }
+}
+
+if(scalar(@errors) > 0 ) {
+  failClean("Error(s): " . join(", ", @errors) );
+} else {
+  $reporter->unitSuccess();
+  $reporter->print();
+}
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}

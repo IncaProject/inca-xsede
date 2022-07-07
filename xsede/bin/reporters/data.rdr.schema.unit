@@ -1,0 +1,74 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::Performance;
+use JSON qw( decode_json );
+use Data::Dumper;
+
+my $reporter = new Inca::Reporter::Performance(
+	name => 'data.rdr.schema.unit',
+	version => 1,
+	description => 'Lists RDR Schemas',
+	measurement_name => 'rdr_schema'
+);
+
+$reporter->addDependency( 'JSON' );
+$reporter->addArg( 'url', 'RDR Schema URL', 'https://dirsdev.psc.edu/rdr_ui/xsede-api/schema/rdr/v1' );
+$reporter->addArg( 'min_schemas', 'Minimum number of schemas', '5', '[0=9]*' );
+$reporter->addArg( 'cparam', 'Params to pass to cURL', '-s -k -H "XA_CLIENT:XSEDE" -H "XA-KEY-FORMAT:underscore"' );
+$reporter->processArgv(@ARGV);
+my $url = $reporter->argValue( 'url' );
+my $min_schemas = $reporter->argValue( 'min_schemas' );
+my $cparam = $reporter->argValue( 'cparam' );
+
+my $out = $reporter->loggedCommand( "curl $cparam '$url'" );
+if ( $? != 0 || $out !~ /{/ )
+{
+	$reporter->failPrintAndExit( 'cURL command failed: ' . $! . $out );
+}
+
+# $reporter->log( 'debug', "cURL output: $out" );
+
+my $data;
+eval
+{
+	$data = decode_json( $out );
+};
+if ($@)
+{
+	$reporter->failPrintAndExit( 'Could not decode as JSON data: ' . $@ );
+}
+
+my $dump = Dumper( $data );
+$reporter->log( 'debug', "JSON output: $dump" );
+
+if ( ! exists $data->{'schemas'} || ref( $data->{'schemas'} ) ne 'ARRAY' )
+{
+	$reporter->failPrintAndExit( "No data for schemas" );
+}
+$data = $data->{'schemas'};
+
+my @ids;
+foreach my $schema ( @{$data} )
+{
+		if( exists( $schema->{'name'} ) ) 
+		{ 
+			push( @ids, $schema->{'name'} ); 
+		}
+}
+
+@ids = sort { "\L$a" cmp "\L$b" } @ids;
+my $num_ids = scalar( @ids );
+$reporter->log( 'info', "Found $num_ids schemas: " . join( ', ', @ids ) );
+
+my $benchmark = $reporter->addNewBenchmark( 'schemas' );
+$benchmark->setStatistic( 'Schemas', $num_ids );
+
+if( $num_ids < $min_schemas )
+{
+		$reporter->failPrintAndExit( "Expected at least $min_schemas but found $num_ids" );
+}
+
+$reporter->setResult(1);
+$reporter->print();

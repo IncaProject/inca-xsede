@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $upperLimit = 94; # % full
+
+open( DF, "df | grep dev | tr -s ' ' | cut -f5,6 -d' '|" ) || die "unable to run df";
+my $line;
+while ( ($line=<DF>) ) {
+  my ( $usage, $partition ) = $line =~ /(\d+)% (\S+)/;
+  #print "\n$partition: $usage\n";
+  if ( $usage >= $upperLimit ) {
+    `echo $usage | mail -s "$partition is over $upperLimit% full on sapa" inca\@sdsc.edu`;
+  }
+}

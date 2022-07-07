@@ -1,0 +1,22 @@
+look at svn log for incat to see which machines were added/deleted
+
+to calculate num reporters created/modified:
+
+  cd reporters/bin
+
+  get revision dates: svn log | more
+
+    r11377 | jhayes | 2008-12-12 10:31:27 -0800
+    r8917 | kericson | 2008-01-04 16:55:35 -0800
+
+  svn update -r 8917
+  svn update -r 11377 > diff; sort diff > diff.sort
+
+
+to get pieces of test data collected:
+ 
+ teragrid=# select count(incaseries_id) from incaseriesconfig where incadeactivated IS NULL and incatype='cron' ;
+ count 
+-------
+  2538
+(1 row) 

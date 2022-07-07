@@ -1,0 +1,146 @@
+#! /usr/bin/perl -w
+
+################################################################################
+
+=head1 NAME
+
+EmailNotifier -- an Inca Depot notifier that sends email
+
+=head1 SYNOPSIS
+
+  perl EmailNotifier target [...]
+
+=head1 DESCRIPTION
+
+  This is an Inca Depot notifier that uses either sendmail or mailx to send
+  email to one or more addresses when the results of a series comparison
+  change.  Each target argument to the script is an email address, optionally
+  preceded by a "Pass:" or "Fail:" prefix.  Those addresses with a prefix only
+  receive emails for passing or failing comparisons; those with no prefix
+  receive both.  The format of the email subject and body can be modified by
+  changing the values of the $subject and $body variables defined below.
+
+=cut
+
+################################################################################
+
+use strict;
+use warnings;
+use Date::Manip;
+
+exit if scalar(@ARGV) < 1;
+
+#exit if $ENV{incanickname} =~ /XDCDB_connect/;
+#exit if $ENV{incanickname} =~ /ca-crl-check-5.0.0/;
+#@ARGV = qw(ssmallen@sdsc.edu) if $ENV{incareporter} =~ /securemds/;
+#exit if $ENV{incanickname} =~ /WS MDS/;
+#exit if $ENV{incaresource} =~ /capac/ || $ENV{incanickname} =~ /capac/;
+#exit if $ENV{incaresource} =~ /quarry/ || $ENV{incanickname} =~ /quarry/;
+#exit if $ENV{incaresource} =~ /kraken/ || $ENV{incanickname} =~ /kraken/;
+#exit if $ENV{incaresource} =~ /blacklight/ || $ENV{incanickname} =~ /blacklight/;
+#exit if $ENV{incaresource} =~ /ranger/ || $ENV{incanickname} =~ /ranger/;
+#exit if $ENV{incaresource} =~ /spur/ || $ENV{incanickname} =~ /spur/;
+#exit if $ENV{incaresource} =~ /forge/ || $ENV{incanickname} =~ /forge/;
+
+exit if $ENV{incaschedule} =~ /immediate/;
+
+my $err = $ENV{incaerrorMessage};
+my $noemail = defined($err) && $err =~ /(^DOWNTIME:.*|^NOT_AT_FAULT.*|.*Inca error.*|.*Unable to fetch proxy for reporter execution.*|.*Execution of reporter skipped due to high load:.*|.*Error occurred during initialization of VM.*)/;
+if ( $ENV{incareporter} eq 'summary.successpct.performance' && ! defined $err && 
+     defined $ENV{incacomparisonResult} && $ENV{incacomparisonResult} =~ /Failure.*pct/ ) {
+  my ($cstest) = $ENV{incacomparisonResult} =~ /Failure:(\S+)-pct/;
+  my @lines = split( /\n/, $ENV{incabody} );
+  my %metrics;
+  for ( my $i = 0; $i <= $#lines; $i++ ) {
+    if ( $lines[$i] =~ /<ID>$cstest/ ) {
+      my ($metric) = $lines[$i] =~ /-(\w+)<\/ID>$/;
+      my ($value) = $lines[$i+1] =~ /(\d+)/;
+      $metrics{$metric} = $value;
+    }
+  }
+  my $total = $metrics{fail} + $metrics{success};
+  $err = "$cstest failed on $metrics{fail} of $total XSEDE resources ($metrics{pct} %)\n";
+}
+
+if (!$noemail){
+  my $name = $ENV{incanickname} || $ENV{incareporter};
+  my $resource = defined $ENV{incatargetHostname} && $ENV{incatargetHostname} =~ /\w/ ?
+                 "to $ENV{incatargetHostname}" : "on $ENV{incaresource}";
+  my $target = defined $ENV{incatargetHostname} && $ENV{incatargetHostname} =~ /\w/ ?
+               "&target=$ENV{incatargetHostname}" : "";
+  my $subject =
+  "Inca XSEDE Notification: $name $resource $ENV{incaresult}";
+  my $nickname = $ENV{incanickname};
+  $nickname =~ s/ /%20/g;
+  my $body =
+  "The following Inca test has $ENV{incaresult}ED:\n\n" .
+  "RAN AT:  $ENV{incacollected}\n\n" .
+  "RAN ON:  $ENV{incahostname}\n\n" .
+  "RAN TO:  $ENV{incatargetHostname}\n\n" .
+  "TEST:  $ENV{incareporter}\n\n" .
+  "INPUT PARAMETERS:  $ENV{incaargs}\n\n" .
+  (defined($ENV{incalog}) ? "LOGGED COMMANDS: $ENV{incalog}\n\n" : "") .
+  (defined($err) ?  "ERROR MESSAGE: $err\n\n" : '') .
+  (defined($ENV{incastderr}) ? "STANDARD ERROR: $ENV{incastderr}\n\n" : "") .
+  "\n\n" .
+  "details at http://inca.xsede.org/inca/jsp/instance.jsp?" .
+  "&nickname=$nickname&resource=$ENV{incaresource}$target&collected=$ENV{incacollected}\n\n";
+
+  #my $baseDateString = "Tue Feb 19 10:00:00 PST 2008";
+  #my $baseDate = ParseDate( $baseDateString );
+  #if ( Date_Cmp($date, $baseDate) < 0 ) {
+  #  `date >> email.log`;
+  #  `echo "Ignoring old report $ENV{incacollected}" >> email.log`;
+  #  exit 0;
+  #}
+
+  my $mailPath = "/usr/sbin/sendmail"; # or my $mailPath = `which mailx`;
+  my $subjectPrefix = 'Subject:'; # or my $subjectPrefix = '~s';
+ 
+  my $failed = defined($ENV{incacomparisonResult}) &&
+             $ENV{incacomparisonResult} =~ /^Failure/;
+  my @emails = @ARGV;
+  foreach my $email(split(/[\s,;]+/, join(' ', @emails))) {
+    my @pieces = split(/:/, $email);
+    my $to = $pieces[$#pieces];
+    if(scalar(@pieces) == 1 || ($failed && $pieces[0] =~ /^Fail/) ||
+     (!$failed && $pieces[0] !~ /^Fail/)) {
+      if ($to eq "help\@teragrid.org"){
+        $subject = "Inca XSEDE Notification: $name $ENV{incaresult}";
+        my $assign = getHelpAssignment($name);
+        my $newbody = "Ticket assignment group: $assign\n\n$body";
+        $body = $newbody;
+        }
+      `date >> email.log`;
+      `echo "Sending email for $name to $to ($subject)\n$body" >> email.log`;
+      open(MAIL, "|$mailPath $to");
+      print MAIL "$subjectPrefix$subject\n";
+      print MAIL "To:$to\n" if $mailPath =~ /sendmail/;
+      print MAIL $body;
+      close(MAIL);
+    }
+  }
+}else{
+  #`date >> email.log`;
+  #`echo "No email for $ENV{incanickname} report with error: $err (instance: $ENV{incainstanceId}, config: $ENV{incaconfigId})" >> email.log`;
+  exit 0;
+}
+
+sub getHelpAssignment{
+  my $name = shift;
+  my %map = ( 
+    "hostcert-check-" => "RP RESOURCE ADMIN",
+    "ca-crl-check-" => "If expired, contact the appropriate CA at http://security.teragrid.org/TG-CAs.html.  Otherwise assign to RP RESOURCE ADMIN",
+    "TGCDB_connect" => "TGCDB",
+    "myproxy_unit" => "TG GIG SERVICES",
+    "info.teragrid.org" => "TG GIG SERVICES"
+  );    
+  my $assign = "";
+  for my $test ( keys %map ) {
+    my $group = $map{$test};
+    if ($name =~ /^$test.*/){
+      $assign = $group;
+    }
+  }
+  return $assign;
+}

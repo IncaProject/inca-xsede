@@ -1,0 +1,45 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Inca::Reporter::SimpleUnit;
+use Inca::XSEDE::Unicore;
+
+my $reporter = new Inca::Reporter::SimpleUnit(
+  name => 'grid.middleware.unicore.unit.registry',
+  version => 3,
+  description => 'This test verifies that the Unicore registry is up using connect',
+  url => 'http://www.unicore.eu',
+  unit_name => 'registry'
+);
+my $unicore = new Inca::XSEDE::Unicore( $reporter, debug=>0 );
+$reporter->addDependency('Inca::Reporter::GridProxy');
+$reporter->addArg('registry', 'URL to the XSEDE UNICORE registry', 'https://unicore-registry.nics.utk.edu:8080/REGISTRY/services/Registry?res=default_registry');
+$reporter->addArg('targets', 'Number of expected target systems', '1');
+$reporter->addArg('minTargets', 'Number of minimum expected target systems', '1');
+$reporter->processArgv(@ARGV);
+my $registry = $reporter->argValue('registry');
+my $targets = $reporter->argValue('targets');
+my $minTargets = $reporter->argValue('minTargets');
+
+my $out = $unicore->loggedCommand( "ucc connect -r $registry" );
+$out =~ s/Please enter your keystore password:\n\*+//;
+
+failClean( "Error connecting to $registry: $out" )
+  if $out =~ /There are no target system factories in the selected registry/; 
+
+my ($numTargets) = $out =~ /You can access (\d+) target system\(s\)/m;
+failClean( "Inca error - expected between $minTargets and $targets target systems but found $numTargets" )
+  if $numTargets > $targets || $numTargets < $minTargets; 
+
+$out =~ s/\n//g;
+$reporter->log( 'debug', $out );
+
+$reporter->unitSuccess();
+$reporter->print();
+
+sub failClean {
+  my $err = shift;
+  $err =~ s/$$/PID/g;
+  $reporter->failPrintAndExit($err);
+}

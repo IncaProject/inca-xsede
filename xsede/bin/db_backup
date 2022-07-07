@@ -1,0 +1,42 @@
+#!/usr/local/bin/perl
+
+my $backupdir = "/misc/inca/backups/";
+my $date = `date +%a`; 
+chomp($date); 
+
+my $varbak = $backupdir . $date . "-var-backup";
+`rm -rf $varbak`;
+my $ulink = $backupdir . $date . "-dbbackup-teragrid.gz";
+unlink $ulink;
+
+#backup up teragrid dbs
+my $bin = "/misc/inca/postgresql-8.1.3/install/bin/";
+my @dbnames = ("teragrid");
+
+for my $dbname (@dbnames){
+  my $dbcopy = $date . "-dbbackup-" . $dbname;
+  my $dbfile = $backupdir . $dbcopy;
+  unlink $dbfile;
+  `touch $dbfile`;
+  my $dbdump = $bin . "pg_dump -f " .  $dbfile . " " . $dbname;
+  `$dbdump`;
+  `gzip -f $dbfile`;
+}
+
+#backup var dir
+my $var = "/misc/inca/install-2r5/var";
+`rm -rf $varbak`;
+`mkdir $varbak`;
+`cp -r $var/suites $varbak`;
+`cp -r $var/repository $varbak`;
+`cp -r $var/rm $varbak`;
+`cp $var/*.log $varbak`;
+`cp $var/*.xml $varbak`;
+`gzip $varbak/*.log`;
+
+#copy to cuzco
+my $cuzco = "cuzco.sdsc.edu:/misc/inca/backups";
+my $scp = "/usr/sdsc/bin/scp -i ~/.ssh/id_rsa_for_cuzco";
+`$scp -r $varbak $cuzco; $scp $ulink $cuzco`;
+`rm -rf $varbak`;
+unlink $ulink;

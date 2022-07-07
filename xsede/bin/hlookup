@@ -1,0 +1,51 @@
+#!/bin/csh
+
+# hlookup -- search the .hhosts data base
+# See accompanying man page for details
+# Author: Jim Hayes
+
+if ($#argv == 0) then
+  echo "hlookup [-l <login>] [<login>@]<machine>"
+  exit 1
+endif
+
+if ("$argv[1]" == "-l") then
+  shift
+  set loginPat = "$argv[1]"
+  shift
+else
+  set loginPat = ""
+endif
+
+set machinePat = "$1"
+
+if ("$machinePat" =~ *@*) then
+  set machinePat = ( `echo "$1" | sed 's/@/ /'` )
+  if($#machinePat > 1) then
+    set loginPat = "$machinePat[1]"
+    set machinePat = "$machinePat[2]"
+  endif
+endif
+
+set hhosts = "$HOME/.hhosts"
+if (-r ./.hhosts) then
+  set hhosts = "./.hhosts"
+endif
+
+set exitStatus = 1
+set line = 0
+
+foreach machine ( `awk ' {print $2 "." $1}' < $hhosts` )
+  @ line += 1
+  if ("$machine" !~ *$machinePat*) continue
+  set entry = ( `head -$line $hhosts | tail -1` )
+  if ("$entry[1]" == "#") continue
+  if ("$loginPat" != "") then
+    if ($exitStatus == 1) set exitStatus = 2
+    if ("$entry[3]" !~ $loginPat*) continue
+  endif
+  echo "$entry"
+  set exitStatus = 0
+end
+
+exit $exitStatus
