@@ -1,0 +1,22 @@
+#!/bin/sh
+
+javaexec="java -cp ./lib/inca-common.jar:./lib/incaXmlBeans.jar:./lib/log4j-1.2.15.jar:./lib/saxon9-dom.jar:./lib/saxon9.jar:./lib/xbean-2.4.jar:./lib/xbean_xpath-2.4.jar  edu.sdsc.inca.util.SuiteStagesWrapper"
+
+if [ "$1" = "auto" ]; then
+  #if [ ! -d "../xsede/var/suites" ]; then
+  #  echo "Cannot find teragrid var/suites directory at ../xsede/var/suites" >&2
+  #  exit 1;
+  #fi
+  echo "Expanding inca-auto-new.xml to newsuites";
+  if [ -d "newsuites" ]; then
+    rm -fr "newsuites";
+  fi
+  $javaexec expand -i xsede-incat-auto-new.xml -s xsede-newsuites
+  echo "Suite expanded into xsede-newsuites dir"
+  echo "Diffing suites";
+  $javaexec diff -s1 xsede-newsuites -s2 ../inca/var/suites -it true -iu true -a true > xsede-diff.log
+  echo "Check xsede-diff.log for results (search for ERROR for errors)";
+else
+  $javaexec $*
+fi
+

@@ -1,0 +1,36 @@
+<iis:Kit xmlns:iis="http://www.xsede.org/iis">
+  <Name>remote-compute</Name>
+  <Version>5.0.1</Version>
+  <Release>r1</Release>
+  <Fixed>true</Fixed>
+  <Service>
+    <Name>globus-mds</Name>
+    <Required>true</Required>
+  </Service>
+  <Service>
+    <Name>globus-mds-secure</Name>
+    <Required>true</Required>
+  </Service>
+  <Service>
+    <Name>ws-delegation</Name>
+    <Required>true</Required>
+  </Service>
+  <Service>
+    <Name>ws-gram</Name>
+    <Required>true</Required>
+    <Variable Name="scheduler">Condor|LoadLeveler|LSF|PBS|SGE|Fork</Variable>
+    <Group Name="scheduler-batch">Condor|LoadLeveler|LSF|PBS|SGE</Group>
+  </Service>
+  <Service>
+    <Name>prews-gram</Name>
+    <Required>true</Required>
+    <Variable Name="scheduler">condor|loadleveler|lsf|pbs|sge|fork</Variable>
+    <Group Name="scheduler-batch">condor|loadleveler|lsf|pbs|sge</Group>
+  </Service>
+  <Service>
+    <Name>gram5</Name>
+    <Required>false</Required>
+    <Variable Name="scheduler">condor|loadleveler|lsf|pbs|sge|fork|slurm</Variable>
+    <Group Name="scheduler-batch">condor|loadleveler|lsf|pbs|sge|slurm</Group>
+  </Service>
+</iis:Kit>

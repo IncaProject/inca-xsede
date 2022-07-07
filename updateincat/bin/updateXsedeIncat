@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+file_list="lib/saxon-9.7.0.4.jar lib/saxon9-dom.jar lib/saxon9.jar lib/log4j-1.2.15.jar lib/inca-common.jar"
+classpath="build/update-incat.jar"
+#loglevel="" # warn
+loglevel="-DLOGLEVEL=INFO"
+
+for jar_file in $file_list; do
+  classpath="$classpath:$jar_file"
+done
+
+if [ "$1" = "auto" ]; then
+  java -Xms256M -Xmx1024M -ea -cp "$classpath" $loglevel edu.sdsc.inca.UpdateIncat xsede-config-auto.xml xsede-info.xml xsede-incat-auto-new.xml
+  xmllint --format xsede-incat-auto-new.xml > /tmp/temp.xml
+  mv /tmp/temp.xml xsede-incat-auto-new.xml
+else
+  java -Xms256M -Xmx1024M -ea -cp "$classpath" $loglevel edu.sdsc.inca.UpdateIncat $@
+fi
