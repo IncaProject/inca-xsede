@@ -7,6 +7,4 @@ Enter short summary of what is involved with the shutdown
 
 ## Code and configuration preservation/final state: 
 
-## Final usage transmission: 
-
 ## Log preservation/archiving: 
